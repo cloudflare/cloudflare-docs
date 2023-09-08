@@ -26,13 +26,13 @@ Only roles with **Log Share** edit permissions can read and configure Logpush jo
 
 The **Administrator Read only** and **Log Share Reader** roles only have access to Instant Logs and Logpull. This role does not have permissions to view the configuration of Logpush jobs.
 
-### Assigning or removing a role 
+### Assign or remove a role
 
 To check the list of members in your account, or to manage roles and permissions:
 
-1.  Navigate to the Cloudflare dashboard (https://dash.cloudflare.com/login) and select your account.
-2.  From your Account Home, navigate to **Manage Account** > **Members**.
-3.  Enter a member’s email address to add them to your account, and click **Invite**.
+1.  Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2.  From your Account Home, go to **Manage Account** > **Members**.
+3.  Enter a member’s email address to add them to your account, and select **Invite**.
 4.  Alternatively, scroll down to the **Members** card to find a list of members with their status and role.
 
 For more information, refer to [Managing roles within your Cloudflare account](/fundamentals/account-and-billing/members/).

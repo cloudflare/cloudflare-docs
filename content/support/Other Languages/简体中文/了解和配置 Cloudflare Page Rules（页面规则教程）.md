@@ -32,42 +32,11 @@ ___
 允许的页面规则默认数量取决于域的计划，如下表所示。
 
 | **计划** | **允许的页面规则** |
-| --- | --- |
-| 
-免费
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-企业
-
- | 
-
-125
-
- |
+| -------- | ------------------ |
+| 免费     | 3                  |
+| Pro      | 20                 |
+| Business | 50                 |
+| 企业     | 125                |
 
 对于 Free、Pro 和 Business 计划中的域名，您可以[购买额外的规则](https://www.cloudflare.com/features-page-rules/) （最多 100 条）。
 
@@ -196,9 +165,9 @@ ___
 
 **计划**
 
- |
-| --- | --- | --- |
-| 
+ |     |
+ | --- ||  |
+ |     |
 
 始终使用 HTTPS
 
@@ -245,7 +214,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-控制客户端浏览器缓存的资源在多久时间内保持有效。对于非 Enterprise 域，Cloudflare UI 和 API 都会禁止将**浏览器缓存 TTL** 设置为 _0_。[了解更多](/cache/about/edge-browser-cache-ttl)。
+控制客户端浏览器缓存的资源在多久时间内保持有效。对于非 Enterprise 域，Cloudflare UI 和 API 都会禁止将**浏览器缓存 TTL** 设置为 _0_。[了解更多](/cache/how-to/edge-browser-cache-ttl/)。
 
  | 
 
@@ -289,7 +258,7 @@ _参见下文中的其他详细信息，以了解支持的少量正则表达式�
 
  | 
 
-根据访问者的设备类型，分隔缓存的内容。[了解更多](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)。
+根据访问者的设备类型，分隔缓存的内容。[了解更多](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)。
 
  | 
 
@@ -317,7 +286,7 @@ Web 缓存欺骗防护
 
 也称为_自定义缓存键_。
 
-专门用于控制在决定要缓存哪些资源时要包括的变量。这允许客户基于除了 URL 之外的其他内容来确定缓存内容。[了解更多](/cache/about/cache-keys)。
+专门用于控制在决定要缓存哪些资源时要包括的变量。这允许客户基于除了 URL 之外的其他内容来确定缓存内容。[了解更多](/cache/how-to/cache-keys/)。
 
  | 
 
@@ -340,7 +309,7 @@ Web 缓存欺骗防护
 
 **标准 -** 缓存具有查询字符串的所有静态内容。
 
-**全部缓存** \-  将所有内容视为静态内容，并缓存 [Cloudflare 默认缓存内容](/cache/about/default-cache-behavior#default-cached-file-extensions)之外的所有内容类型。尊重来自源 Web 服务器的缓存标头，除非页面规则中也设置了**边缘缓存 TTL**。与**边缘缓存 TTL** > _0_ 组合使用时，**全部缓存**会移除来自源 Web 服务器响应的 Cookie。  
+**全部缓存** \-  将所有内容视为静态内容，并缓存 [Cloudflare 默认缓存内容](/cache/concepts/default-cache-behavior#default-cached-file-extensions)之外的所有内容类型。尊重来自源 Web 服务器的缓存标头，除非页面规则中也设置了**边缘缓存 TTL**。与**边缘缓存 TTL** > _0_ 组合使用时，**全部缓存**会移除来自源 Web 服务器响应的 Cookie。  
 
 
  | 
@@ -540,7 +509,7 @@ Mirage
 -   所有
 
  |
-| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/about/cache-control)，Enterprise 域则默认禁用此设置。 | 
+| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/concepts/cache-control/)，Enterprise 域则默认禁用此设置。 | 
 
 -   所有
 
@@ -716,11 +685,11 @@ ___
 
 **根本原因**：这可能是由于 Page Rule 的配置问题造成的。在创建使用两个通配符的 Page Rule（例如_转发 URL_ 规则）时，可以创建一个用 $2 占位符提及第二个通配符的规则。请参阅下面的示例：
 
-![“示例页面规则”配置（带有两个通配符）。转发 URL 包含一个 $2 的占位符，它将被替换为第二个 ](/support/static/page-rule-create.png)
+![“示例页面规则”配置（带有两个通配符）。转发 URL 包含一个 $2 的占位符，它将被替换为第二个 ](/images/support/page-rule-create.png)
 
 在更新同一规则时，您可以删除**如果 URL 匹配**字段中的其中一个通配符，然后保存。请参阅下面的示例：
 
-![“不正确的页面规则”配置（带有一个通配符）所匹配的内容，但仍然使用转发 URL 中的 $2 占位符。此配置会导致 ](/support/static/page-rule-update.png)
+![“不正确的页面规则”配置（带有一个通配符）所匹配的内容，但仍然使用转发 URL 中的 $2 占位符。此配置会导致 ](/images/support/page-rule-update.png)
 
 如果您这样做，$2 占位符就会引用一个不再存在的通配符，因此，当一个 URL 触发 Page Rule 时，就会引发_错误 500（内部服务器错误）_。
 
@@ -771,7 +740,7 @@ ___
 
 ### 将页面规则用于 Workers
 
-如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/platform/workers-with-page-rules/)。
+如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/configuration/workers-with-page-rules/)。
 
 ___
 

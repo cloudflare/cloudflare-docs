@@ -28,4 +28,4 @@ The File Check device posture attribute checks for the presence of a file on a d
 
 1. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/analytics/logs/posture-logs) that the file check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the file check is returning the expected results.

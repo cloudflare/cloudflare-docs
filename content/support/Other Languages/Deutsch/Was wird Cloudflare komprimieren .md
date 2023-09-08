@@ -17,4 +17,4 @@ title: Was wird Cloudflare komprimieren
 4.  Klicken Sie auf die Registerkarte **Optimierung**.
 5.  Stellen Sie den **Brotli**\-Umschalter auf _Ein_.
 
-![brotli_on.png](/support/static/brotli_on.png)
+![brotli_on.png](/images/support/brotli_on.png)

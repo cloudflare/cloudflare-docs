@@ -12,7 +12,7 @@ meta:
 
 To prevent issues and simplify the advertisement process during an attack scenario, complete the following tasks.
 
-- **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](https://support.cloudflare.com/hc/articles/205065067#12345682).
+- **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](/fundamentals/account-and-billing/members/).
 
 - **Get a list of the Prefix IDs you want to manage.** Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. To obtain Prefix IDs, review [obtain prefix IDs](/byoip/how-to/configure-dynamic-advertisement/#obtain-prefix-ids) from the dashboard or use the [list prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
 

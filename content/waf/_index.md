@@ -51,7 +51,7 @@ Displays information about all incoming HTTP requests, including those not affec
 
 {{<resource-group>}}
 
-{{<resource header="WAF managed rules (previous version)" href="https://support.cloudflare.com/hc/articles/200172016" icon="documentation-clipboard">}}
+{{<resource header="WAF managed rules (previous version)" href="/waf/reference/legacy/old-waf-managed-rules/" icon="documentation-clipboard">}}
 Documentation on the previous implementation of WAF managed rules.
 {{</resource>}}
 

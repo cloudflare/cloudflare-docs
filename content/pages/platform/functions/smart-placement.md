@@ -22,7 +22,7 @@ Smart Placement on Pages currently has some caveats. While assets are always mea
 
 {{<Aside type= "note">}}
 
-To understand how Smart Placement works, refer to [Smart Placement](/workers/platform/smart-placement/).
+To understand how Smart Placement works, refer to [Smart Placement](/workers/configuration/smart-placement/).
 
 {{</Aside>}}
 
@@ -40,7 +40,7 @@ To enable Smart Placement via the dashboard:
 4. Select **Settings** > **Functions**.
 5. Under **Placement**, choose **Smart**.
 6. Send some initial traffic (approximately 20-30 requests) to your Pages Functions. It takes a few minutes after you have sent traffic to your Pages Function for Smart Placement to take effect.
-7. View your Pages Function's [request duration metrics](/workers/learning/metrics-and-analytics) under Functions Metrics.
+7. View your Pages Function's [request duration metrics](/workers/observability/metrics-and-analytics/) under Functions Metrics.
 
 ## Give feedback on Smart Placement
 

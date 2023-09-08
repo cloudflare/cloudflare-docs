@@ -9,7 +9,7 @@ title: FetchEvent
 
 In Workers, any incoming HTTP requests are referred to as `"fetch"` events. A Worker will respond to the HTTP request with the handler method that was assigned to the `"fetch"` event.
 
-Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-module-worker) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
+Both the [Service Worker](#syntax-service-worker) and [ES modules](#syntax-es-modules) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
 
 ---
 
@@ -53,15 +53,15 @@ addEventListener('fetch', event => {
 
 ### Bindings
 
-When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/platform/environment-variables/) will be made available as global runtime variables.
+When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/configuration/environment-variables/) will be made available as global runtime variables.
 
 ---
 
-## Syntax: Module Worker
+## Syntax: ES modules
 
-In the Module Worker format, events are handled by defining and exporting an object with method handlers corresponding to event names.
+In the [ES modules format](/workers/learning/migrate-to-module-workers/), events are handled by defining and exporting an object with method handlers corresponding to event names.
 
-While an incoming HTTP request is still given the `"fetch"` name, a Module Worker does not surface the `FetchEvent` interface. Instead, Module Workers receive the [`Request`](/workers/runtime-apis/request/) and must reply with a [`Response`](/workers/runtime-apis/response/) directly.
+While an incoming HTTP request is still given the `"fetch"` name, a Worker using ES modules format does not surface the `FetchEvent` interface. Instead, Workers using ES modules format receive the [`Request`](/workers/runtime-apis/request/) and must reply with a [`Response`](/workers/runtime-apis/response/) directly.
 
 ```js
 export default {
@@ -81,7 +81,7 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/platform/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
+  - The [bindings](/workers/configuration/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
 
 - {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -95,7 +95,7 @@ export default {
 
 ### Bindings
 
-When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
+When deploying a Worker using ES modules, any [bindings](/workers/configuration/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
 
 ---
 
@@ -111,7 +111,7 @@ Intercepts the request and allows the Worker to send a custom response.
 
 The `respondWith` method is only applicable to the Service Worker format.
 
-With the Module Worker format, return a `Response` from the handler directly.
+With the ES modules format, return a `Response` from the handler directly.
 
 {{</Aside>}}
 
@@ -138,7 +138,7 @@ The `waitUntil` command extends the lifetime of the `"fetch"` event. It accepts 
 
 With the Service Worker format, `waitUntil` is available within the `event` because it is a native `FetchEvent` property.
 
-With the Module Worker format, `waitUntil` is moved and available on the `context` parameter object.
+With the ES modules format, `waitUntil` is moved and available on the `context` parameter object.
 
 ```js
 ---
@@ -170,7 +170,7 @@ async function handler(event) {
 ---
 filename: module-worker.mjs
 ---
-// Format: Module Worker
+// Format: ES modules
 export default {
   async fetch(request, env, context) {
     // Forward / Proxy original request
@@ -198,7 +198,7 @@ To prevent JavaScript errors from causing entire requests to fail on uncaught ex
 
 With the Service Worker format, `passThroughOnException` is added to the `FetchEvent` interface, making it available within the `event`.
 
-With the Module Worker format, `passThroughOnException` is available on the `context` parameter object.
+With the ES modules format, `passThroughOnException` is available on the `context` parameter object.
 
 ```js
 ---
@@ -216,7 +216,7 @@ addEventListener('fetch', event => {
 ---
 filename: module-worker.mjs
 ---
-// Format: Module Worker
+// Format: ES modules
 export default {
   async fetch(request, env, context) {
     // Proxy to origin on unhandled/uncaught exceptions

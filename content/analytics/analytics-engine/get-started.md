@@ -21,28 +21,44 @@ There are four steps to get started with Workers Analytics Engine:
 
 All data in Workers Analytics Engine is written to a dataset. A dataset is conceptually like a table in SQL: the rows and columns should have consistent meaning.
 
-To access your dataset from the Workers runtime, you need to create a binding using [Wrangler](/workers/wrangler/configuration/). A binding is like an [environment variable](/workers/platform/environment-variables/) that you can use in the Workers runtime which enables you to write to a dataset. A dataset is created implicitly after you define your binding and begin writing to it from a Worker.
+To access your dataset from the Workers runtime, you need to create a binding using [Wrangler](/workers/wrangler/configuration/). A binding is like an [environment variable](/workers/configuration/environment-variables/) that you can use in the Workers runtime which enables you to write to a dataset. A dataset is created implicitly after you define your binding and begin writing to it from a Worker.
 
 In this guide, we will show you how to start using a dataset.
 
-To define an Analytics Engine binding you must be using at least version 2.6.0 of Wrangler.
+{{<Aside type="note">}}
+  
+To define an Analytics Engine binding you must be using at least version 2.6.0 of [Wrangler](/workers/wrangler/install-and-update/).
+
+{{</Aside>}}
+
 Add the binding to your `wrangler.toml` file, for example:
 
 ```toml
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>" }
-]
+---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
 ```
 
-By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
+By default, the dataset name is the same as the binding name.
+
+* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables).
+* For example, `binding = "MY_DATASET"` or `binding = "metricsDataset"` would both be valid names for the binding.
+* Your binding is available in your Worker at `env.<BINDING_NAME>` and exposes the `writeDataPoint` method.
+
+If you want, you can also specify the dataset name:
 
 ```toml
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
 
-Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
+Save the changes that you made to your `wrangler.toml` file. Redeploy your Worker by running `npx wrangler deploy` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
 
 ## 3. Write data from your Worker
 
@@ -147,10 +163,19 @@ GROUP BY t, city
 ORDER BY t, avg_humidity DESC
 ```
 
-This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
+This query first rounds the `timestamp` field to the nearest five minutes. Then, it groups by that field and city and calculates the average humidity in each city for a five minute period.
 
 Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-engine/grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
 
 ## Limits
 
-Cloudflare will accept up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes. Finally, there is also a limit of 25 writes per request.
+The following limits apply to Analytics Engine:
+
+* Analytics Engine will accept up to twenty blobs, twenty doubles, and one index per request.
+* The total size of all blobs in a request must not exceed 5120 bytes.
+* Each index must not be more than 96 bytes.
+* There is also a limit of 25 writes (`writeDataPoint` invocations) per client HTTP request.
+
+## Data retention
+
+* Data will be stored in Workers Analytics Engine for three months. In the future, we plan to offer longer retention periods.

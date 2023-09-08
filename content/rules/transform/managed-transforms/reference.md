@@ -64,10 +64,11 @@ layout: list
         <ul>
           <li><code>cf-ipcity</code>: The visitor's city (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-city"><code>ip.src.city</code></a> field).</li>
           <li><code>cf-ipcountry</code>: The visitor's country (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-country"><code>ip.src.country</code></a> field).</li>
-          <li><code>cf-ipcontinent</code>: The visitor's continent (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-geoip-continent"><code>ip.geoip.continent</code></a> field).</li>
+          <li><code>cf-ipcontinent</code>: The visitor's continent (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-continent"><code>ip.src.continent</code></a> field).</li>
           <li><code>cf-iplongitude</code>: The visitor's longitude (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-lon"><code>ip.src.lon</code></a> field).</li>
           <li><code>cf-iplatitude</code>: The visitor's latitude (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-lat"><code>ip.src.lat</code></a> field).</li>
-          <li><code>cf-region-code</code>: The code of the visitor's <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> first-level region (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-region_code"><code>ip.src.region_code</code></a> field).</li>
+          <li><code>cf-region</code>: The visitor's region (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-region"><code>ip.src.region</code></a> field).</li>
+          <li><code>cf-region-code</code>: The visitor's region code (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-region_code"><code>ip.src.region_code</code></a> field).</li>
           <li><code>cf-metro-code</code>: The visitor's metro code (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-metro_code"><code>ip.src.metro_code</code></a> field).</li>
           <li><code>cf-postal-code</code>: The visitor's postal code (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-postal_code"><code>ip.src.postal_code</code></a> field).</li>
           <li><code>cf-timezone</code>: The name of the visitor's timezone (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-timezone-name"><code>ip.src.timezone.name</code></a> field).</li>

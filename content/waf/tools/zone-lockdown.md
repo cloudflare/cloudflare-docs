@@ -46,11 +46,11 @@ Issue a `POST` request for the [Create a Zone Lockdown rule](/api/operations/zon
 For example:
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/lockdowns" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '{
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/lockdowns" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Block all traffic to staging and wiki unless it comes from HQ or branch offices",
   "urls": [
     "staging.example.com/*",
@@ -107,7 +107,7 @@ This example would not protect an internal wiki located on a different directory
 
 A visitor from an unauthorized IP will get the following error when there is a match for a Zone Lockdown rule:
 
-![Example of Error 1106 (access denied) received by a user accessing the zone from an unauthorized IP address](/waf/static/tools/zone-lockdown-rule-error-1106-access-denied.png)
+![Example of Error 1106 (access denied) received by a user accessing the zone from an unauthorized IP address](/images/waf/tools/zone-lockdown-rule-error-1106-access-denied.png)
 
 ---
 

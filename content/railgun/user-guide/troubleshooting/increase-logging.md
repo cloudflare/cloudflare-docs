@@ -6,6 +6,8 @@ weight: 1
 
 # Increase logging for Railgun
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 When troubleshooting or testing the Railgun Listener, it may be necessary to raise the level of verbosity to capture more log data for debugging.
 
 To increase logging, set the `log.level` within `railgun.conf` to `5` so that all events within the listener instance are captured during troubleshooting.

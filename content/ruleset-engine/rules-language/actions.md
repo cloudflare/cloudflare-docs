@@ -240,6 +240,26 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       </td>
       <td>No</td>
     </tr>
+    <tr>
+      <td>
+        <strong>Compress Response</strong><br />
+        <br />
+        API value:<br />
+        <code>compress_response</code>
+      </td>
+      <td>
+        <p>
+          Defines compression settings for delivering responses to website visitors.
+        </p>
+        <p>
+          Only available for <a href="/rules/compression-rules/">Compression Rules</a>, in the <code>http_response_compression</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/compression-rules/create-dashboard/">create a compression rule</a>.
+        </p>
+      </td>
+      <td>No</td>
+    </tr>
   </tbody>
 </table>
 

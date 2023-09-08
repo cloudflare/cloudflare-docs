@@ -25,8 +25,8 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 ## Related topics
 
 - [SSL/TLS Encryption Modes](/ssl/origin-configuration/ssl-modes/)
-- [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## Limitations
 
-Authenticated Origin Pulls is not compatible with [Railgun](/railgun/) and does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
+Authenticated Origin Pulls is not compatible with [Railgun](/railgun/) (deprecated) and does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.

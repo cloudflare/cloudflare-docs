@@ -7,7 +7,7 @@ title: Cloudflare 1XXX エラーのトラブルシューティング
 
 # Cloudflare 1XXX エラーのトラブルシューティング
 
-_Clouodflareのプロキシされたサイトの1XXXエラーを診断し、解決します。_
+_Cloudflareのプロキシされたサイトの1XXXエラーを診断し、解決します。_
 
 ### 本記事の内容
 
@@ -82,7 +82,7 @@ ___
 -   Cloudflareを使っていない外部ドメインに、Cloudflare上でアクティブなドメインへのCNAMEレコードがある。
 -   DNS CNAMEレコードの対象が解決していない。
 -   Cloudflare DNSアプリでCNAMEレコードが、現在オフラインになっているDNSプロバイダーを経由する解決策を必要としている。
--   [Always Online](/cache/about/always-online)が、[カスタムホスト名（SSL for SaaS）](/ssl/ssl-for-saas)ドメイン向けに有効になっている。
+-   [Always Online](/cache/how-to/always-online/)が、[カスタムホスト名（SSL for SaaS）](/ssl/ssl-for-saas)ドメイン向けに有効になっている。
 
 ### 解決方法
 
@@ -90,7 +90,7 @@ ___
 
 [Cloudflare CNAME のセットアップ](/dns/zone-setups/partial-setup)に使われるDNSレコードへの直接アクセスを試行すると、エラー1001が発生します（例_：www.example.com.cdn.cloudflare.net_）。
 
-[カスタムホスト名（SSL for SaaS）](/ssl/ssl-for-saas)を使う場合は、[Always Online](/cache/how-to/enable-always-online)を無効にします。
+[カスタムホスト名（SSL for SaaS）](/ssl/ssl-for-saas)を使う場合は、[Always Online](/cache/how-to/always-online/#enable-always-online)を無効にします。
 
 ___
 
@@ -376,7 +376,7 @@ CloudflareネットワークにあるWebサイト（`tunnel.example.com`）の�
 ### 解決方法
 
 -   **このWebサイトの訪問者の方は**：数分後にもう一度お試しください。
--   **Webサイトの所有者の方は**：_Cloudflare_が実行中であり、ネットワークにアクセスできることを確認してください。トンネルの[負荷分散](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)を有効化することもできます。
+-   **Webサイトの所有者の方は**：_Cloudflare_が実行中であり、ネットワークにアクセスできることを確認してください。トンネルの[負荷分散](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)を有効化することもできます。
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 考えられる原因
 
-Cloudflare Worker が[CPU時間制限](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)を超過しています。CPU時間は、コード（たとえば、ループ、JSOの解析など）実行に費やす時間のことです。ネットワークリクエスト（フェッチング、レスポンディング）にかかった時間はCPU時間にカウントされません。
+Cloudflare Worker が[CPU時間制限](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions)を超過しています。CPU時間は、コード（たとえば、ループ、JSOの解析など）実行に費やす時間のことです。ネットワークリクエスト（フェッチング、レスポンディング）にかかった時間はCPU時間にカウントされません。
 
 ### 解決方法
 

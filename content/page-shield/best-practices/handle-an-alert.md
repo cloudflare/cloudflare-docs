@@ -1,9 +1,10 @@
 ---
 title: Handle an alert
-pcx_content_type: best-practices
+pcx_content_type: tutorial
 weight: 2
 meta:
   title: Handle a Page Shield alert
+updated: 2023-03-23
 ---
 
 # Handle a Page Shield alert

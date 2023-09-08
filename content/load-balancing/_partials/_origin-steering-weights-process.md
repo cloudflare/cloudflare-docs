@@ -26,7 +26,7 @@ A significant amount of traffic is required for the distribution to converge on 
 </div>
 </details>
 
-An origin with a weight of **0** should not receive any traffic sent to that pool (though the origin will still receive health checks).
+An origin with a weight of **0** should not receive any traffic sent to that pool (though the origin will still receive health monitor requests).
 
 You can also see this value in the **Percent** field when creating or editing a pool in the dashboard.
 

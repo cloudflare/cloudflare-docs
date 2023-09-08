@@ -175,7 +175,7 @@ Les actions de limitation de taux sont basées sur l'offre du domaine, comme ind
 
 -   **Block** (Bloquer) **–** Cloudflare émet une erreur HTTP 429 en cas de dépassement du seuil.
 -   **Legacy CAPTCHA** (CAPTCHA hérité) **\-** Le visiteur doit répondre à une vérification par captcha.  S'il réussit, Cloudflare autorise la requête.
--   **JS Challenge** (Défi JS) **–** Le visiteur doit résoudre un défi Javascript de Cloudflare. S'il réussit, Cloudflare autorise la requête.
+-   **JS Challenge** (Défi JS) **–** Le visiteur doit résoudre un défi JavaScript de Cloudflare. S'il réussit, Cloudflare autorise la requête.
 -   **Journalisation** Les requêtes sont enregistrées dans les [journaux Cloudflare](https://support.cloudflare.com/hc/articles/216672448). Ceci permet de tester les règles avant de les appliquer à la production.
 
 #### **Durée de l'interdiction**
@@ -216,7 +216,7 @@ Cliquez pour afficher des informations détaillées sur la création des deux ty
 
 4\. Cliquez sur **Create a custome rule** (Créer une règle personnalisée).  Une boîte de dialogue s'affiche, vous permettant de saisir les détails de votre nouvelle règle.
 
-![Boîte de dialogue contextuelle de création d'une règle Rate Limiting avec un exemple de configuration de règle. La règle bloquera les requêtes provenant d'adresses IP qui dépassent les 150 requêtes par minute pendant une heure.](/support/static/previous-rate-limiting-create-rule.png)
+![Boîte de dialogue contextuelle de création d'une règle Rate Limiting avec un exemple de configuration de règle. La règle bloquera les requêtes provenant d'adresses IP qui dépassent les 150 requêtes par minute pendant une heure.](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. Saisissez un **nom de règle** descriptif.
 
@@ -251,7 +251,7 @@ Pour configurer vos critères avancés pour une règle nouvelle ou existante, su
 
 1\. Développez **Advanced Criteria** (Critères avancés).
 
-![Champs disponibles lors de la configuration des critères avancés pour une règle Rate Limiting.](/support/static/previous-rate-limiting-advanced-criteria.png)
+![Champs disponibles lors de la configuration des critères avancés pour une règle Rate Limiting.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. Sélectionnez une valeur dans la liste déroulante **Method(s)** (Méthodes). _ANY_ est une valeur par défaut qui correspond à toutes les méthodes HTTP.
 
@@ -277,7 +277,7 @@ Pour configurer une réponse en texte brut ou JSON :
 
 1\. Développez **Advanced Response** (Réponse avancée).
 
-![Champs disponibles lors de la configuration de la réponse avancée pour une règle Rate Limiting.](/support/static/previous-rate-limiting-advanced-response.png)
+![Champs disponibles lors de la configuration de la réponse avancée pour une règle Rate Limiting.](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. Sélectionnez un format **Response type** (Type de réponse) autre que celui par défaut : _Custom JSON_ (JSON personnalisé) ou _Custom TEXT_ (TEXTE personnalisé).
 
@@ -326,7 +326,7 @@ ___
 
 2\. Dans la zone de texte **Bypass rule for these URLs** (Ignorer la règle pour ces URL), saisissez les URL que vous souhaitez exempter de la règle de limitation de taux. Saisissez chaque URL sur sa propre ligne. Toute spécification de HTTP ou HTTPS dans l'URL est automatiquement supprimée lorsque la règle est enregistrée et, au lieu de cela, s'applique à la fois à HTTP et HTTPS.
 
-![Configuration de deux URL à ignorer dans le cadre d'une règle Rate Limiting (une par ligne).](/support/static/previous-rate-limiting-bypass.png)
+![Configuration de deux URL à ignorer dans le cadre d'une règle Rate Limiting (une par ligne).](/images/support/previous-rate-limiting-bypass.png)
 
 3\. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
 

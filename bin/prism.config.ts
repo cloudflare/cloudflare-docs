@@ -290,6 +290,7 @@ export function highlight(code: string, lang: string, file: string): string {
   if (frontmatter.header) output += `<span class="CodeBlock--header">${frontmatter.header}</span>`;
   else if (frontmatter.filename)
     output += `<span class="CodeBlock--filename">${frontmatter.filename}</span>`;
+  else output += `<span class="CodeBlock--header"><br/></span>`;
 
   output += '<code>';
   output += '<span class="CodeBlock--rows">';

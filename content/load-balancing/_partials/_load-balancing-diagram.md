@@ -8,7 +8,7 @@ _build:
 ```mermaid
     flowchart LR
       accTitle: Load balancing flow
-      accDescr: Load balancing involves a load balancer, pools, origins, monitors, and health checks.
+      accDescr: Load balancing involves a load balancer, pools, origins, monitors, and health monitors.
       B[Request 1] --> A
       C[Request 2] --> A
       D[Request 3] --> A

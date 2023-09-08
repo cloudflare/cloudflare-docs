@@ -62,6 +62,6 @@ Understand and analyze which videos and live streams are viewed most and break d
 
 {{<resource-group>}}
 
-{{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Join the Stream developer community {{</resource>}}
+{{<resource header="Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}} Join the Stream developer community {{</resource>}}
 
 {{</resource-group>}}

@@ -39,6 +39,13 @@ This page lists the default account limits for rules, applications, fields, and 
 | Number of Network policies per account              | 500   |
 | Number of source IP addresses per proxy endpoint    | 2,000 |
 
+## Data Loss Prevention
+
+| Feature                | Limit   |
+| ---------------------- | ------- |
+| Custom entries         | 25      |
+| Exact Data Match cells | 100,000 |
+
 ## Cloudflare Tunnel
 
 | Feature                                  | Limit |
@@ -46,6 +53,12 @@ This page lists the default account limits for rules, applications, fields, and 
 | Tunnels per account                      | 1,000 |
 | IP routes per account                    | 1,000 |
 | Active `cloudflared` replicas per tunnel | 25    |
+
+## Digital Experience Monitoring
+
+| Feature           | Limit |
+| ----------------- | ----- |
+| Tests per account | 10    |
 
 ## Maximum number of characters
 

@@ -48,7 +48,7 @@ Klicken Sie auf die Schaltfläche **Page Rule erstellen** und geben Sie Ihre D
 
 Wenn Sie auf Ihrer Drupal-Website zusätzliche Cookies verwenden, müssen Sie sicherstellen, dass diese in der Regex-Anweisung enthalten sind: : _SESS.\*|phpsessid=.\*_
 
-![page_rules_caching_static_HTML_with_drupal.png](/support/static/page_rules_caching_static_HTML_with_drupal.png)
+![page_rules_caching_static_HTML_with_drupal.png](/images/support/page_rules_caching_static_HTML_with_drupal.png)
 
 Wenn Cloudflare jetzt zwischengespeicherte Dateien bereitstellt, wird ein _CF-Cache-Status: HIT_\-Header an den Browser zurückgesendet.
 

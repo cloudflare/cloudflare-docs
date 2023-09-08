@@ -39,11 +39,11 @@ There are 2 branch offices each with distinct subnets.
 - The east branch office has a `10.3.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
 - The west branch office has a `10.30.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
 
-![Table of branch subnet information](/magic-wan/static/branch-subnets.png)
+![Table of branch subnet information](/images/magic-wan/third-party/aruba-edge-connect/branch-subnets.png)
 
 Below is an example of the **east_branch** deployment on the Orchestrator.
 
-![GCP East deployment configuraiton](/magic-wan/static/east-branch-deployment.png)
+![GCP East deployment configuration](/images/magic-wan/third-party/aruba-edge-connect/east-branch-deployment.png)
 
 The Deployment screenshot displays several different IP addresses and interfaces. From left to right:
 - **Next Hop 10.3.0.1**  - This example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP. 
@@ -65,11 +65,11 @@ The central branch office has a `10.22.0.0/24` network with an EdgeConnect termi
 
 The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the Anycast IPsec tunnel.
 
-![IPsec tunnel values for east and west branches](/magic-wan/static/central-west-branch-ipsec.png)
+![IPsec tunnel values for east and west branches](/images/magic-wan/third-party/aruba-edge-connect/central-west-branch-ipsec.png)
 
 Below is an example of the **central_branch** deployment on the Orchestrator.
 
-![Values for central branch configuration within Orchestrator](/magic-wan/static/orchestrator-ipsec.png)
+![Values for central branch configuration within Orchestrator](/images/magic-wan/third-party/aruba-edge-connect/orchestrator-ipsec.png)
 
 The Deployment screenshot displays several different IP addresses and interfaces. From left to right:
 - **Next Hop 10.22.0.1**  - This example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP. 
@@ -101,7 +101,7 @@ To create the overlay policy:
 
 1. Create a compound application, which is a combination of all [Cloudflare public IPs](https://www.cloudflare.com/ips/) and ICMP packets.
 
-![Application definition screen with IP values](/magic-wan/static/app-definition.png)
+![Application definition screen with IP values](/images/magic-wan/third-party/aruba-edge-connect/app-definition.png)
 
 2. Create a breakout Business Intent Overlay (BIO) to bypass the GRE tunnel as the first policy and use this newly created application as the match criteria. 
 
@@ -109,7 +109,7 @@ To create the overlay policy:
 
 The service name used to send traffic through the tunnel created in the next step is **Cloudflare_GRE**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic & Internet bound north-south traffic through Cloudflare’s Secure Web Gateway). 
 
-![Business Intent Overlay screen with breakout and CF overlays](/magic-wan/static/biz-intent-overlay.png)
+![Business Intent Overlay screen with breakout and CF overlays](/images/magic-wan/third-party/aruba-edge-connect/biz-intent-overlay.png)
 </div>
 </details>
 
@@ -125,7 +125,7 @@ To create the overlay policy:
 
 1. Create a compound application, which is a combination of all [Cloudflare public IPs](https://www.cloudflare.com/ips/) and ICMP packets.
 
-![Application definition screen with IP values](/magic-wan/static/app-definition.png)
+![Application definition screen with IP values](/images/magic-wan/third-party/aruba-edge-connect/app-definition.png)
 
 2. Create a breakout Business Intent Overlay (BIO) to bypass the IPsec tunnel as the first policy and use this newly created application as the match criteria. 
 
@@ -133,7 +133,7 @@ To create the overlay policy:
 
 The service name used to send traffic through the tunnel created in the next step is **Cloudflare_IPsec**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic and Internet bound north-south traffic through Cloudflare’s Secure Web Gateway). 
 
-![Business Intent Overlay screen with breakout and CF overlays for IPsec](/magic-wan/static/biz-intent-overlay-ipsec.png)
+![Business Intent Overlay screen with breakout and CF overlays for IPsec](/images/magic-wan/third-party/aruba-edge-connect/biz-intent-overlay-ipsec.png)
 </div>
 </details>
 
@@ -145,18 +145,18 @@ The service name used to send traffic through the tunnel created in the next ste
 </summary>
  <div class="special-class" markdown="1">
 
-![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](/magic-wan/static/gcp-edgeconnect-diagram.png)
+![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram.png)
 
 1. Create a tunnel on the EdgeConnect using Cloudflare’s assigned public Anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies). 
 2. Create a Virtual Tunnel Interface (VTI) using the private IP pair shared with CF GRE tunnel endpoint and the passthrough tunnel to match the newly created tunnel alias (**CF_GRE_east** in our example).
 
-![Modify Passthrough Tunnel screen](/magic-wan/static/modify-passthrough.png)
+![Modify Passthrough Tunnel screen](/images/magic-wan/third-party/aruba-edge-connect/modify-passthrough.png)
 
-![Edit Virtual Tunnel Interface screen](/magic-wan/static/edit-vti.png)
+![Edit Virtual Tunnel Interface screen](/images/magic-wan/third-party/aruba-edge-connect/edit-vti.png)
 
 3. Define a GRE tunnel on the Cloudflare dashboard using the EdgeConnect appliance’s public IP and the private IP pair /31 shared with the appliance. 
 
-![GRE tunnels information for each branch](/magic-wan/static/gre-tunnels-edgeconnect.png)
+![GRE tunnels information for each branch](/images/magic-wan/third-party/aruba-edge-connect/gre-tunnels-edgeconnect.png)
 </div>
 </details>
 
@@ -166,9 +166,9 @@ The service name used to send traffic through the tunnel created in the next ste
 </summary>
  <div class="special-class" markdown="1">
 
-![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](/magic-wan/static/gcp-edgeconnect-diagram-ipsec.png)
+![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram-ipsec.png)
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)
@@ -180,11 +180,21 @@ For additional information on creating IPsec tunnels, refer to [API documentatio
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: XXXXXXXXXX" \
-     -H "Content-Type: application/json" \
-     --data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
+curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ipsec_tunnels":[
+      {
+        "name":"EdgeConnect_IPSEC_1",
+        "customer_endpoint":"35.188.72.56",
+        "cloudflare_endpoint":"172.64.241.205",
+        "interface_address":"192.168.10.11/31",
+        "description":"Tunnel for EdgeConnect - GCP Central"
+        }
+      ]
+  }'
 ```
 
 2. Create a new IPsec tunnel
@@ -193,11 +203,21 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: XXXXXXXXXX" \
-     -H "Content-Type: application/json" \
---data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ipsec_tunnels":[
+    {
+      "name":"EdgeConnect_IPSEC_1",
+      "customer_endpoint":"35.188.72.56",
+      "cloudflare_endpoint":"172.64.241.205",
+      "interface_address":"192.168.10.11/31",
+      "description":"Tunnel for EdgeConnect - GCP Central"
+      }
+    ]
+  }'
 ```
 
 ```json
@@ -238,28 +258,28 @@ Use the tunnel ID from the response in Step 2. Save the pre-shared key generated
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels/e70536b11daa47e09ff046fbb9800e4f/psk_generate?validate_only=true" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: XXXXXXXXXX" \
-     -H "Content-Type: application/json"
+curl --request POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json"
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_id": "<ipsec_id>",
-"ipsec_tunnel_id": "<tunnel_id>",
-"psk": "XXXXXXXXXXXXXXXXX",
-"psk_metadata": {
-"last_generated_on": "2022-04-14T20:05:29.756514071Z"
-}
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+  "ipsec_id": "<ipsec_id>",
+  "ipsec_tunnel_id": "<tunnel_id>",
+  "psk": "XXXXXXXXXXXXXXXXX",
+  "psk_metadata": {
+  "last_generated_on": "2022-04-14T20:05:29.756514071Z"
+  }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -267,15 +287,15 @@ header: Response
 
 You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in [configure overlay policy](/magic-wan/third-party/aruba-edgeconnect/#2-configure-overlay-policies). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
 
-![Modify Passthrough Tunnel dialog with General values](/magic-wan/static/general-modify-passthrough.png)
+![Modify Passthrough Tunnel dialog with General values](/images/magic-wan/third-party/aruba-edge-connect/general-modify-passthrough.png)
 
-![Modify Passthrough Tunnel dialog with IKE values](/magic-wan/static/ike-modify-passthrough.png)
+![Modify Passthrough Tunnel dialog with IKE values](/images/magic-wan/third-party/aruba-edge-connect/ike-modify-passthrough.png)
 
-![Modify Passthrough Tunnel dialog with IPsec values](/magic-wan/static/ipsec-modify-passthrough.png)
+![Modify Passthrough Tunnel dialog with IPsec values](/images/magic-wan/third-party/aruba-edge-connect/ipsec-modify-passthrough.png)
 
 **Create a Virtual Tunnel Interface (VTI) on the EdgeConnect appliance**
 
-![Values for Edit VTI Interface](/magic-wan/static/vti-interface-ipsec.png)
+![Values for Edit VTI Interface](/images/magic-wan/third-party/aruba-edge-connect/vti-interface-ipsec.png)
 </div>
 </details>
 
@@ -291,13 +311,13 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
     In the example below, the traffic to subnet `10.3.0.0/16` attached to the **east_branch** EdgeConnect appliance has a next hop of `10.40.8.10`.
 
-![Static route information for each branch](/magic-wan/static/static-routes-cf.png)
+![Static route information for each branch](/images/magic-wan/third-party/aruba-edge-connect/static-routes-cf.png)
 
 2. Define static routes on the Orchestrator so Cloudflare can route traffic between sites. 
 
     In the example below, we create a route for the subnet `10.30.0.0/24` on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
 
-![Static route information for each branch](/magic-wan/static/static-routes-edgeconnect.png)
+![Static route information for each branch](/images/magic-wan/third-party/aruba-edge-connect/static-routes-edgeconnect.png)
 </div>
 </details>
 
@@ -307,15 +327,15 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 </summary>
  <div class="special-class" markdown="1">
 
-![Static route values from Cloudflare dashboard](/magic-wan/static/static-routes-ipsec.png)
+![Static route values from Cloudflare dashboard](/images/magic-wan/third-party/aruba-edge-connect/static-routes-ipsec.png)
 
 **Static routes for central branch on EdgeConnect**
 
-![Static route values from EdgeConnect for central branch](/magic-wan/static/static-routes-central-ipsec.png)
+![Static route values from EdgeConnect for central branch](/images/magic-wan/third-party/aruba-edge-connect/static-routes-central-ipsec.png)
 
 **Static routes for west branch on EdgeConnect**
 
-![Static route values from EdgeConnect for west branch](/magic-wan/static/static-routes-west-ipsec.png)
+![Static route values from EdgeConnect for west branch](/images/magic-wan/third-party/aruba-edge-connect/static-routes-west-ipsec.png)
 </div>
 </details>
 
@@ -331,17 +351,17 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 To validate traffic flow from the local subnet through Cloudflare’s Secure Web Gateway, perform a curl as show in the example below.
 
-![Curl example for validating Secure Web Gateway](/magic-wan/static/validate-swg-curl.png)
+![Curl example for validating Secure Web Gateway](/images/magic-wan/third-party/aruba-edge-connect/validate-swg-curl.png)
 
 You can validate the request went through Gateway with the presence of the `Cf-Team` response header, or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
-![Dashboard example for validating Secure Web Gateway](/magic-wan/static/dash-validate-swg.png)
+![Dashboard example for validating Secure Web Gateway](/images/magic-wan/third-party/aruba-edge-connect/dash-validate-swg.png)
 
 **Validate east-west traffic**
 
 To validate east-west traffic flow, perform a traceroute as shown in the example.
 
-![Traceroute example for verifying east-west traffic](/magic-wan/static/validate-traceroute.png)
+![Traceroute example for verifying east-west traffic](/images/magic-wan/third-party/aruba-edge-connect/validate-traceroute.png)
 
 The example shows a client in GCP East (`10.3.0.3`), which can ping the private IP of a client in GCP West (`10.30.0.4`). 
 
@@ -365,17 +385,17 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 To validate traffic flow from the local subnet through Cloudflare’s Secure Web Gateway, perform a cURL as shown in the example below.
 
-![cURL example for validating traffic](/magic-wan/static/static-routes-west-ipsec.png)
+![cURL example for validating traffic](/images/magic-wan/third-party/aruba-edge-connect/static-routes-west-ipsec.png)
 
 You can validate the request was sent through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
-![Dashboard example for validating Secure Web Gateway](/magic-wan/static/dash-validation-ipsec.png)
+![Dashboard example for validating Secure Web Gateway](/images/magic-wan/third-party/aruba-edge-connect/dash-validation-ipsec.png)
 
 **Validate east-west traffic**
 
 To validate east-west traffic flow, perform a traceroute as shown in the example.
 
-![Traceroute example for IPsec validation](/magic-wan/static/traceroute-ipsec.png)
+![Traceroute example for IPsec validation](/images/magic-wan/third-party/aruba-edge-connect/traceroute-ipsec.png)
 
 The example shows a client in GCP Central (`10.22.0.9`), which can ping the private IP of a client in GCP West (`10.77.0.10`).
 
@@ -393,4 +413,4 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's global network, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays. 
 
-To begin filtering traffic and gathering analytics, refer to the [Magic Firewall documentation](/magic-firewall/) to learn how to create filters for east-west inter-branch traffic and the [Secure Web Gateway documentation](/cloudflare-one/policies/filtering/) to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.
+To begin filtering traffic and gathering analytics, refer to the [Magic Firewall documentation](/magic-firewall/) to learn how to create filters for east-west inter-branch traffic and the [Secure Web Gateway documentation](/cloudflare-one/policies/gateway/) to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.

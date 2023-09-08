@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-05-15</td>
-      <td>2023-05-22</td>
+      <td>2023-08-24</td>
+      <td>2023-09-04</td>
       <td>...4a95ba67</td>
       <td>HTTP requests with unusual HTTP headers or URI path (signature #32).</td>
-      <td>N/A</td>
-      <td>log</td>
-      <td></td>
+      <td>ddos_dynamic</td>
+      <td>ddos_dynamic</td>
+      <td>Expand the scope of the rule to catch more attacks</td>
     </tr>
   </tbody>
 </table>

@@ -8,7 +8,7 @@ title: Deploy a real-time chat application
 
 # Deploy a real-time chat application
 
-In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/workers/learning/using-durable-objects/). 
+In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/). 
 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 
@@ -32,12 +32,12 @@ After you have cloned the repository, authenticate Wrangler by running:
 $ wrangler login
 ```
 
-## Publish your project
+## Deploy your project
 
 When you are ready to deploy your application, run:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 Your application will be deployed to your `*.workers.dev` subdomain. 
@@ -90,7 +90,7 @@ tag = "v2"
 deleted_classes = ["ChatRoom", "RateLimiter"]
 ```
 
-Then run `wrangler publish`.
+Then run `npx wrangler deploy`.
 
 To delete your Worker:
 

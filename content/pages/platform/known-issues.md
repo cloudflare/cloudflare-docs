@@ -30,7 +30,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
 
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/platform/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
 ## Custom Domains
 
@@ -45,11 +45,11 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - When adding a custom domain, the domain will not verify if Cloudflare cannot validate a request for an SSL certificate on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/acme-challenge/*`.
 
-- [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to SSL for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
+- [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
 ## Pages Functions
 
-- [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
+- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
@@ -63,7 +63,7 @@ If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams
 2. From Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Pages project.
 4. Go to **Settings** > **Enable access policy**.
-5. Select **Edit** on the Acccess policy created for your preview deployments.
+5. Select **Edit** on the Access policy created for your preview deployments.
 6. In Edit, go to **Overview**.
 7. In the **Subdomain** field, delete the wildcard (`*`) and select **Save application**. You may need to change the **Application name** at this step to avoid an error.
 
@@ -87,9 +87,9 @@ If you do not configure an Access policy for your custom domain, an Access authe
 
 If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
 
-## Delete a project with a high amount of deployments
+## Delete a project with a high number of deployments
 
-You may not be able to delete your Pages project if it has a high amount (over 800) of deployments. The Cloudflare team is tracking this issue.
+You may not be able to delete your Pages project if it has a high number (over 800) of deployments. The Cloudflare team is tracking this issue.
 
 As a workaround, review the following steps to delete all deployments in your Pages project. After you delete your deployments, you will be able to delete your Pages project.
 

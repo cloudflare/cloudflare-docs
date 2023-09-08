@@ -25,6 +25,6 @@ However, unlike legacy VPN applications, we never designed WARP or 1.1.1.1 to hi
 
 {{<Aside type="note">}}
 
-Client IP Geolocation is different from the <strong>Cloudflare IP Geolocation</strong> setting in the <strong>Network</strong> app. For more details about Cloudflare IP Geolocation — which helps you capture country codes for visitors — refer to [our Support documentation](https://support.cloudflare.com/hc/articles/200168236).
+Client IP Geolocation is different from the <strong>Cloudflare IP Geolocation</strong> setting in the <strong>Network</strong> app. For more details about Cloudflare IP Geolocation — which helps you capture country codes for visitors — refer to [our Support documentation](/support/network/configuring-ip-geolocation/).
 
 {{</Aside>}}

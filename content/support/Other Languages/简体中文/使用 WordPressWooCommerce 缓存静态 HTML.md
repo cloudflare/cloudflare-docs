@@ -15,15 +15,15 @@ Enterprise Cloudflare 客户可使用_Custom Cache Keys_来进一步提升性能
 
 在开始之前，务必确保将 Cloudflare 设置为遵循来自原始 Web 服务器的 _Cache-Control_ 标头；否则，您可能发现 _Cache-Control_ 标头被 Cloudflare 使用在**Browser Cache Expiration**选项中设置的值覆盖。要设置_Respect Existing Headers_选项，请访问 Cloudflare 控制面板中的**Caching**应用：
 
-![](/support/static/Screen_Shot_2016-12-21_at_01.58.16.png)
+![](/images/support/Screen_Shot_2016-12-21_at_01.58.16.png)
 
 向下滚动页面，找到**Browser Cache Expiration**选项，然后选择_Respect Existing Headers_值：
 
-![](/support/static/Screen_Shot_2016-12-20_at_23.22.51.png)
+![](/images/support/Screen_Shot_2016-12-20_at_23.22.51.png)
 
 完成此操作后，设置**Bypass Cache on Cookie** 规则。您可以在 Cloudflare 控制面板的**Page Rules**应用中执行此操作：
 
-![](/support/static/VFGgnIk.png)
+![](/images/support/VFGgnIk.png)
 
 下一步，单击**Create Page Rule**，以便设置在我们站点上进行的静态 HTML 缓存。
 
@@ -31,7 +31,7 @@ Enterprise Cloudflare 客户可使用_Custom Cache Keys_来进一步提升性能
 
 在此处的示例中，WordPress 正在 https://junade.com 上运行，因此 Page Rule 应与 https://junade.com/\* 相匹配。
 
-![Screen_Shot_2017-03-09_at_16.54.36.png](/support/static/Screen_Shot_2017-03-09_at_16.54.36.png)
+![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
 然后，您可以设置要应用的规则。
 

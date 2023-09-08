@@ -11,7 +11,7 @@ Cloudflare provides an unlimited number of scripts for Workers for Platforms cus
 ​​
 ## Bindings
 
-You can use Workers [bindings](/workers/platform/bindings) with the dynamic dispatch Worker or any namespaced Workers. Your user Workers cannot be defined as Durable Objects. User Workers can have a Durable Objects binding.  
+You can use Workers [bindings](/workers/configuration/bindings) with the dynamic dispatch Worker or any namespaced Workers. Your user Workers cannot be defined as Durable Objects. User Workers can have a Durable Objects binding.  
 
 Bindings for your dynamic dispatch Worker or any user Workers can be defined on multipart script uploads in the metadata blob.
 

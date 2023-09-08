@@ -82,7 +82,7 @@ ___
 -   Un domaine externe qui n'utilise pas Cloudflare comporte un enregistrement CNAME renvoyant vers un domaine actif sur Cloudflare.
 -   La cible de l'enregistrement DNS CNAME n'est pas résolue.
 -   Un enregistrement CNAME dans votre application Cloudflare DNS nécessite une résolution via un fournisseur DNS actuellement hors ligne.
--   L'option [Always Online](/cache/about/always-online) (Toujours en ligne) est activée pour un domaine [Custom Hostnames (SSL for SaaS](/ssl/ssl-for-saas)).
+-   L'option [Always Online](/cache/how-to/always-online/) (Toujours en ligne) est activée pour un domaine [Custom Hostnames (SSL for SaaS](/ssl/ssl-for-saas)).
 
 ### Résolution
 
@@ -90,7 +90,7 @@ Un domaine hors de Cloudflare ne peut pas comporter un enregistrement CNAME renv
 
 Toute tentative d'accéder directement aux enregistrements DNS utilisés dans les [configurations CNAME de Cloudflare](/dns/zone-setups/partial-setup) entraîne également une erreur 1001 (exemple : _www.exemple.com.cdn.cloudflare.net_).
 
-Désactivez [Always Online](/cache/how-to/enable-always-online) (Toujours en ligne) si vous utilisez [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas).
+Désactivez [Always Online](/cache/how-to/always-online/#enable-always-online) (Toujours en ligne) si vous utilisez [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas).
 
 ___
 
@@ -376,7 +376,7 @@ Vous avez demandé une page d'un site web (`tunnel.example.com`) figurant sur le
 ### Résolution
 
 -   **Si vous êtes un visiteur de ce site web** : veuillez réessayer dans quelques minutes.
--   **Si vous êtes le propriétaire de ce site web** : assurez-vous que _cloudflared_ est en cours d'exécution et qu'il peut atteindre le réseau. Vous devrez peut-être activer [Load Balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) pour votre tunnel.
+-   **Si vous êtes le propriétaire de ce site web** : assurez-vous que _cloudflared_ est en cours d'exécution et qu'il peut atteindre le réseau. Vous devrez peut-être activer [Load Balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) pour votre tunnel.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### Cause courante
 
-Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
+Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
 
 ### Résolution
 

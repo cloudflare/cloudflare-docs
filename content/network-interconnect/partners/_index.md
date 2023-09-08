@@ -19,13 +19,21 @@ the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com
 
 {{</Aside>}}
 
-*   [Console Connect](/network-interconnect/partners/console-connect/)
-*   [Equinix Fabric](/network-interconnect/partners/equinix-fabric/)
-*   [Megaport](/network-interconnect/partners/megaport/)
-*   [PacketFabric](/network-interconnect/partners/packet-fabric/)
-*   CoreSite OCX (*coming soon*)
-*   Epsilon Infiny (*coming soon*)
-*   Zayo (*coming soon*)
+- [365 Partners](https://www.cloudflare.com/partners/technology-partners/365-data-centers/)
+- [Console Connect](/network-interconnect/partners/console-connect/)
+- [CoreSite](https://www.cloudflare.com/partners/technology-partners/coresite/)
+- [Cyxtera](https://www.cloudflare.com/partners/technology-partners/cyxtera/)
+- [Digital Realty](https://www.cloudflare.com/partners/technology-partners/digital-realty/)
+- [Edge Connex](https://www.cloudflare.com/partners/technology-partners/edgeconnex/)
+- [Epsilon](https://www.cloudflare.com/partners/technology-partners/epsilon/)
+- [Equinix Fabric](/network-interconnect/partners/equinix-fabric/)
+- [Megaport](/network-interconnect/partners/megaport/)
+- [Netrality](https://www.cloudflare.com/partners/technology-partners/netrality/)
+- [PacketFabric](/network-interconnect/partners/packet-fabric/)
+- [Teraco](https://www.cloudflare.com/partners/technology-partners/teraco/)
+- BBIX
+- Databrink
+- Zayo
 
 {{<Aside type="note">}}
 

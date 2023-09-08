@@ -8,33 +8,35 @@
  *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
 export const OWNERS: Record<string, string[]> = {
-  "1.1.1.1": ["haleycode"],
+  "1.1.1.1": ["RebeccaTamachiro"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
   "argo-smart-routing": ["dcpena"],
   "automatic-platform-optimization": ["dcpena"],
   bots: ["patriciasantaana"],
-  byoip: [], // TODO
+  "browser-rendering": ["deadlypants1973"],
+  byoip: ["patriciasantaana"],
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
-  "cloudflare-for-platforms": ["kodster28"],
+  "cloudflare-for-platforms": ["jason-cf"],
   "cloudflare-one": ["ranbel"],
   constellation: ["deadlypants1973"],
-  d1: ["deadlypants1973"],
+  d1: ["Maddy-Cloudflare"],
   "data-localization": ["angelampcosta"],
   "ddos-protection": ["pedrosousa"],
   "dmarc-management": ["marciocloudflare"],
   dns: ["RebeccaTamachiro"],
-  "email-routing": ["marciocloudflare"],
+  "durable-objects": ["Maddy-Cloudflare"],
+  "email-routing": ["deadlypants1973"],
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
-  fundamentals: ["kodster28"],
-  "health-checks": ["patriciasantaana"],
+  fundamentals: ["jason-cf"],
+  "health-checks": ["RebeccaTamachiro"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
-  "load-balancing": ["patriciasantaana"],
+  "load-balancing": ["RebeccaTamachiro"],
   logs: ["angelampcosta"],
   "magic-firewall": ["marciocloudflare"],
   "magic-network-monitoring": ["marciocloudflare"],
@@ -42,6 +44,7 @@ export const OWNERS: Record<string, string[]> = {
   "magic-wan": ["marciocloudflare"],
   "network-error-logging": ["dcpena"],
   "network-interconnect": ["dcpena"],
+  notifications: ["patriciasantaana"],
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
   "privacy-gateway": ["kodster28"],
@@ -57,8 +60,10 @@ export const OWNERS: Record<string, string[]> = {
   "ruleset-engine": ["pedrosousa"],
   "security-center": ["jason-cf"],
   spectrum: ["angelampcosta"],
-  ssl: ["kodster28"],
+  speed: ["angelampcosta"],
+  ssl: ["RebeccaTamachiro"],
   stream: ["dcpena"],
+  "style-guide": ["haleycode"],
   support: ["jedecf"],
   tenant: ["kodster28"],
   terraform: ["ranbel"],
@@ -74,14 +79,15 @@ export const OWNERS: Record<string, string[]> = {
 };
 
 export const REVIEWERS: Record<string, string[]> = {
-  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit"], // todo: re-add "soheiokamoto", "tlozoot"
+  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit", "soheiokamoto", "tlozoot"],
   d1: ["elithrar", "rozenmd"],
-  "data-localization": [], // todo: re-add "soheiokamoto", "tlozoot"
+  "data-localization": ["soheiokamoto", "tlozoot"],
   radar: ["meddulla", "G4brym"],
-  logs: ["jherre", "bharatnc", "victor-perov"], // todo: re-add "soheiokamoto", "tlozoot"
+  logs: ["jherre", "bharatnc", "victor-perov", "soheiokamoto", "tlozoot"],
   pages: ["WalshyDev"],
   "pub-sub": ["CharlieBurnett", "elithrar"],
   queues: ["CharlieBurnett", "elithrar"],
-  turnstile: ["migueldemoura", "punkeel"], // todo: re-add "worenga"
+  support: ["shanecloudflare", "zeinjaber", "rprice74", "ngayerie"],
+  turnstile: ["migueldemoura", "punkeel", "worenga"],
   "waiting-room": ["aolache"],
 };

@@ -301,7 +301,7 @@ Once the worker is deployed, your website will use Cloudflare Images with the or
 
 For more information about how to publish a Worker on your Cloudflare account, refer to Cloudflare's [Workers documentation](/workers/get-started/guide/).
 
-Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in **Workers & Pages** > in **Overview**, select your Worker > **Triggers** > **Routes**. For more information, refer to [Routes](/workers/platform/triggers/routes/).
+Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in **Workers & Pages** > in **Overview**, select your Worker > **Triggers** > **Routes**. For more information, refer to [Routes](/workers/configuration/routing/routes/).
 
 In this case, the Worker was set up to trigger on the route `imagejam.net/images/*`
 
@@ -327,8 +327,6 @@ You can get them both in your Cloudflare dashboard 👇:
 #### `CF_IMAGES_ACCOUNT_ID`
 
 This refers to your Cloudflare Image account ID. You can get this value in your Cloudflare Images dashboard.
-
-![Where to find your Cloudflare Images account ID](/images/images/tutorials/integrate-cloudflare-images/step-02-accountid.jpg)
 
 #### `CF_IMAGES_API_KEY`
 

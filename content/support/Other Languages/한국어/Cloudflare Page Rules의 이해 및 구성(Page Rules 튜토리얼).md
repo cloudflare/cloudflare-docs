@@ -241,7 +241,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-클라이언트 브라우저가 캐시한 자원이 유효한 상태로 유지되는 기간을 제어합니다. Cloudflare UI 및 API 모두 Enterprise 도메인이 아닌 경우, **브라우저 캐시 TTL** 을 _0_으로 설정할 수 없습니다. [자세히 알아보세요](/cache/about/edge-browser-cache-ttl).
+클라이언트 브라우저가 캐시한 자원이 유효한 상태로 유지되는 기간을 제어합니다. Cloudflare UI 및 API 모두 Enterprise 도메인이 아닌 경우, **브라우저 캐시 TTL** 을 _0_으로 설정할 수 없습니다. [자세히 알아보세요](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -285,7 +285,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  | 
 
-방문자의 장치 유형에 따라 캐시하는 콘텐츠를 구분합니다. [자세히 알아보세요.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+방문자의 장치 유형에 따라 캐시하는 콘텐츠를 구분합니다. [자세히 알아보세요.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -313,7 +313,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  _사용자 정의 캐시 키_라고도 합니다.
 
-어떤 자원을 캐시할지 결정할 때 포함할 변수를 구체적으로 제어합니다. 이를 통해, URL만이 아니라 다른 정보에 따라 어떤 것을 캐시할지 결정할 수 있습니다. [자세히 알아보세요](/cache/about/cache-keys).
+어떤 자원을 캐시할지 결정할 때 포함할 변수를 구체적으로 제어합니다. 이를 통해, URL만이 아니라 다른 정보에 따라 어떤 것을 캐시할지 결정할 수 있습니다. [자세히 알아보세요](/cache/how-to/cache-keys/).
 
  | 
 
@@ -336,7 +336,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
 **표준 -** 쿼리 문자열이 있는 모든 정적 콘텐츠를 캐시합니다.
 
-**모두 캐시** - 모든 콘텐츠를 정적인 것으로 간주하고 [Cloudflare 기본 캐시 콘텐츠](/cache/about/default-cache-behavior#default-cached-file-extensions) 이외의 모든 파일 유형을 캐시합니다. 페이지 규칙에서 **Edge Cache TTL**도 설정하지 않았다면, 원본 웹 서버의 캐시 헤더를 따릅니다. **Edge Cache TTL > 0과 결합된 경우**_0_,**모두 캐시**는 원본 웹 서버 응답에서 쿠키를 제거합니다.   
+**모두 캐시** - 모든 콘텐츠를 정적인 것으로 간주하고 [Cloudflare 기본 캐시 콘텐츠](/cache/concepts/default-cache-behavior#default-cached-file-extensions) 이외의 모든 파일 유형을 캐시합니다. 페이지 규칙에서 **Edge Cache TTL**도 설정하지 않았다면, 원본 웹 서버의 캐시 헤더를 따릅니다. **Edge Cache TTL > 0과 결합된 경우**_0_,**모두 캐시**는 원본 웹 서버 응답에서 쿠키를 제거합니다.   
 
 
  | 
@@ -536,7 +536,7 @@ Cloudflare **SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **Cloudflare �
 -   전체
 
  |
-| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/about/cache-control)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
+| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/concepts/cache-control/)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
 
 -   전체
 
@@ -712,11 +712,11 @@ ___
 
 **근본 원인**: Page Rule의 문제로 인한 것일 수 있습니다. _전달 URL_ 규칙처럼 두 개의 와일드카드를 쓰는 Page Rule을 만들 때는 두 번째 와일드카드를 $2 자리표시자로 언급하는 경우가 있습니다. 다음 예를 참조하세요.
 
-![두 개의 와일드카드가 있는 Page Rule 구성 예. 전달 URL에 $2 자리 표시자가 포함되어 있는데 이는 일치하는 내용으로 대체됩니다 ](/support/static/page-rule-create.png)
+![두 개의 와일드카드가 있는 Page Rule 구성 예. 전달 URL에 $2 자리 표시자가 포함되어 있는데 이는 일치하는 내용으로 대체됩니다 ](/images/support/page-rule-create.png)
 
 동일한 규칙을 업데이트할 때는 **If the URL matches** 필드의 와일드카드 하나를 제거하고 저장하면 됩니다. 다음 예를 참조하세요.
 
-![전달 URL에 $2 자리 표시자가 포함되어 있으며 하나의 와일드 카드가 있는 잘못된 Page Rule. 이  ](/support/static/page-rule-update.png)
+![전달 URL에 $2 자리 표시자가 포함되어 있으며 하나의 와일드 카드가 있는 잘못된 Page Rule. 이  ](/images/support/page-rule-update.png)
 
 그렇게 하면 $2 자리표시자가 존재하지 않는 와일드카드를 참조하므로 URL이 해당 페이지 규칙을 트리거할 때 "_오류 500(내부 서버 오류)"_가 발생하게 됩니다.
 
@@ -767,7 +767,7 @@ Page Rule을 저장할 때, Cloudflare는 **URL이 일치하는 경우** 필드�
 
 ### Workers와 함께 Page Rules 사용하기
 
-현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/platform/workers-with-page-rules/)를 참조하시기 바랍니다.
+현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/configuration/workers-with-page-rules/)를 참조하시기 바랍니다.
 
 ___
 

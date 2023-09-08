@@ -12,7 +12,7 @@ Cloudflare performs a validation check for every request. The Validation compone
 
 The following example shows a request blocked by the Validation component due to a malformed `User-Agent` HTTP request header:
 
-![Activity log displaying an example of a validation check event](/waf/static/analytics-validation.png)
+![Activity log displaying an example of a validation check event](/images/waf/validation-service.png)
 
 In the downloaded JSON file for the event, the `ruleId` value indicates the detected issue — in this case, it was a Shellshock attack.
 

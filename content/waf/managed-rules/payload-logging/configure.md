@@ -18,11 +18,9 @@ Do the following:
 
 1.  Open **Security** > **WAF** > **Managed rules**.
 
-    ![Example Managed Rules configuration in the Managed rules tab under Security > WAF](/waf/static/waf-managed-rules-tab.png)
+    ![Example Managed Rules configuration in the Managed rules tab under Security > WAF](/images/waf/waf-managed-rules-tab.png)
 
-2.  To configure payload logging for a ruleset you had already deployed in the WAF, select **Edit** next to the managed ruleset name.
-
-    To deploy a managed ruleset and configure payload logging, select **Configure** next to the managed ruleset under **Managed Rulesets**.
+2.  To configure payload logging for a ruleset you had already deployed in the WAF, select the managed ruleset name.
 
 3.  At the bottom of the page, select **Configure payload logging**.
 

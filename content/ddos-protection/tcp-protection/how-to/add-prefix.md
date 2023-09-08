@@ -6,12 +6,6 @@ weight: 2
 
 # Add a prefix
 
-## Before you start
-
-Cloudflare recommends that you switch any Advanced TCP Protection rules currently in mitigation mode to monitoring mode before adding a new prefix to Advanced TCP Protection. Refer to [Rule settings](/ddos-protection/tcp-protection/rule-settings/#mode) for more information on execution modes.
-
----
-
 To add a [prefix](/ddos-protection/tcp-protection/concepts/#prefixes) to Advanced TCP Protection:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.

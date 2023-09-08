@@ -7,6 +7,6 @@ _build:
 
 A few ways to optimize Cloudflare caching include:
 
-- Creating [cache rules](/cache/about/cache-rules/) to customize the cache properties of specific HTTP requests.
-- Enabling the [Tiered Cache](/cache/about/tiered-cache/) feature, which dramatically increases cache hit ratios.
+- Creating [cache rules](/cache/how-to/cache-rules/) to customize the cache properties of specific HTTP requests.
+- Enabling the [Tiered Cache](/cache/how-to/tiered-cache/) feature, which dramatically increases cache hit ratios.
 - Reviewing our other various [configuration options](/cache/get-started/), which may vary based on your plan and application setup.

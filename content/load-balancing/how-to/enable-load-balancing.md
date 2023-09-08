@@ -11,6 +11,9 @@ meta:
 
 Load balancing is an add-on for your account, meaning your account needs a [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
 
+{{<Aside type="note">}}
+Load Balancing is not available with [China Network](/china-network/).{{</Aside>}}
+
 To enable [Load Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing):
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.

@@ -21,7 +21,7 @@
     <ul class="tab-active" block-id="{{ $unique_id }}">
       {{ range $idx, $file := $files }}
       <li class="tab-label-wrapper">
-        <a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{ $file.name }}"
+        <a class="tab-label noCodeLabel" href="#" data-link="tab-{{ $file.name }}"
            data-id="{{ lower $unique_id }}">
           {{ $file.name }}{{ if eq $file.status "beta" }}<div class="DocsMarkdown--pill DocsMarkdown--pill-tab DocsMarkdown--pill-beta">Beta</div>{{ end }}
         </a>

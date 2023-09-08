@@ -82,7 +82,7 @@ ___
 -   一个不使用 Cloudflare 的外部域具有指向 Cloudflare 上活跃域的 CNAME 记录
 -   无法解析 DNS CNAME 记录的目标。
 -   您的 Cloudflare DNS 应用中的 CNAME 记录需要通过某一 DNS 提供商解析，但该提供商目前已离线。
--   为[自定义主机名（SSL for SaaS）](/ssl/ssl-for-saas)启用了 [Always Online](/cache/about/always-online)。
+-   为[自定义主机名（SSL for SaaS）](/ssl/ssl-for-saas)启用了 [Always Online](/cache/how-to/always-online/)。
 
 ### 解决方案
 
@@ -90,7 +90,7 @@ ___
 
 试图直接访问用于 [Cloudflare CNAME 设置](/dns/zone-setups/partial-setup)的 DNS 记录也会导致错误 1001（示例：_www.example.com.cdn.cloudflare.net_）。
 
-如果使用[自定义主机名（SSL for SaaS）](/ssl/ssl-for-saas)，请禁用 [Always Online](/cache/how-to/enable-always-online)。
+如果使用[自定义主机名（SSL for SaaS）](/ssl/ssl-for-saas)，请禁用 [Always Online](/cache/how-to/always-online/#enable-always-online)。
 
 ___
 
@@ -376,7 +376,7 @@ ___
 ### 解决方案
 
 -   **如果您是该网站的访问者**：请在几分钟后重试。
--   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)。
+-   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)。
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 常见原因
 
-Cloudflare Worker 超过了 [CPU 时间限值](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)。CPU 时间是执行代码（如循环或分析 JSON 等）所花费的时间。网络请求（获取、响应）所花费的时间不计入 CPU 时间。
+Cloudflare Worker 超过了 [CPU 时间限值](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions)。CPU 时间是执行代码（如循环或分析 JSON 等）所花费的时间。网络请求（获取、响应）所花费的时间不计入 CPU 时间。
 
 ### 解决方案
 

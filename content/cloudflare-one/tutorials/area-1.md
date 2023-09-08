@@ -66,7 +66,7 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
    1. In Zero Trust, copy the **SSO Endpoint** for your application.
 
-      ![Copy SSO settings for a SaaS application from Zero Trust](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+      ![Copy SSO settings for a SaaS application from Zero Trust](/images/cloudflare-one/applications/saas-sso-endpoint.png)
 
    2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
 
@@ -74,7 +74,7 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 6. Return to the Area 1 portal and paste the metadata into **Metadata XML**.
 
-   ![Configure SSO in the Area 1 portal](/cloudflare-one/static/documentation/applications/area1-sso-config.png)
+   ![Configure SSO in the Area 1 portal](/images/cloudflare-one/applications/area1-sso-config.png)
 
 7. Select **Update Settings**.
 

@@ -25,7 +25,7 @@ De forma predeterminada, Cloudflare almacena [contenido estático en la memoria 
 
 5. También puedes cambiar el _TTL de caducidad de la memoria caché perimetral_ para determinar durante cuánto tiempo almacena Cloudflare en la memoria caché los recursos en nuestro perímetro. Las opciones de TTL varían de dos (2) horas a un mes. 
 
-![page_rule_spike_or_surge_in_traffic.png](/support/static/page_rule_spike_or_surge_in_traffic.png)
+![page_rule_spike_or_surge_in_traffic.png](/images/support/page_rule_spike_or_surge_in_traffic.png)
 
 Con la opción Almacenar todo en la memoria caché habilitada, Cloudflare gestionará todo el sitio liberando la carga del servidor y agilizando tu sitio al máximo.
 

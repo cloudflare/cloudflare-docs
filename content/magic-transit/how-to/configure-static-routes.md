@@ -10,4 +10,4 @@ meta:
 
 {{<render file="_static-routes2-prefixes-smaller-24.md">}}
 
-{{<render file="_static-routes3.md" withParameters="**Magic Transit** > **Manage Magic Transit configuration** > **Configure**;;/magic-transit/how-to/configure-tunnels/">}}
+{{<render file="_static-routes3.md" withParameters="**Magic Transit** > **Configuration**;;/magic-transit/how-to/configure-tunnels/">}}

@@ -136,19 +136,11 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 
 ## Step 2 — Create Cloudflare-issued certificates
 
-Before you can use API Shield to protect your API or web application, you must create Cloudflare-issued client certificates.
+Before you can use API Shield to protect your API or web application, create Cloudflare-issued client certificates.
 
 You can [create a client certificate in the Cloudflare dashboard](/ssl/client-certificates/create-a-client-certificate/).
 
 However, since most developers working at scale generate their own private keys and certificate signing requests via API, this example uses the Cloudflare API to create client certificates.
-
-{{<Aside type="warning" header="Important">}}
-
-You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
-
-If you need to use a different CA, contact a Cloudflare customer success manager.
-
-{{</Aside>}}
 
 To create a bootstrap certificate for the iOS application and the IoT device, this example uses [Cloudflare’s public key infrastructure toolkit, CFSSL](https://github.com/cloudflare/cfssl):
 
@@ -411,4 +403,4 @@ After creating Cloudflare-issued certificates, the next step is to [enable mTLS]
 
 ## Step 6 — Configure API Shield to require client certificates
 
-To configure API Shield to require client certificates, [create a mTLS rule](/firewall/cf-dashboard/create-mtls-rule/).
+To configure API Shield to require client certificates, [create a mTLS rule](/api-shield/security/mtls/configure/#create-an-mtls-rule/).

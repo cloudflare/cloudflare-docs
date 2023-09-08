@@ -24,7 +24,13 @@ The number of consumers concurrently invoked for a queue will autoscale based on
 * The ratio of failed (versus successful) invocations.
 * The value of `max_concurrency` set for that consumer.
 
-Where possible, Queues will optimize for keeping your backlog from growing exponentialy, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
+Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
+
+{{<Aside type="warning" header="Consumer concurrency and retried messages">}}
+
+Retrying messages with `retry()` or calling `retryAll()` on a batch will count as a failed invocation and cause the consumer to cease any increase in autoscaling. Continued `retry()` / `retryAll()` invocations will cause the consumers autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+
+{{</Aside>}}
 
 ### Example
 
@@ -47,13 +53,20 @@ Concurrency settings can be configured in each projects' `wrangler.toml` file an
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > **Queues**.
 3. Select your queue > **Settings**.
-4. Set **Maximum consumer invocations** to a value between `1` and `10`. This value represents the maximum number of concurrent consumer invocations available to your queue.
+4. Select **Edit Consumer** under Consumer details.
+5. Set **Maximum consumer invocations** to a value between `1` and `10`. This value represents the maximum number of concurrent consumer invocations available to your queue.
 
 To remove a fixed maximum value, select **auto (recommended)**.
 
 Note that if you are writing messages to a queue faster than you can process them, messages may eventually reach the [maximum retention period](/queues/platform/limits/) set for that queue. Individual messages that reach that limit will expire from the queue and be deleted.
 
 ### Set concurrency settings via `wrangler.toml`
+
+{{<Aside type="note">}}
+
+Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is only supported in wrangler [`2.13.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%402.13.0) or greater. 
+
+{{</Aside>}}
 
 To set a fixed maximum number of concurrent consumer invocations for a given queue, configure a `max_concurrency` in your `wrangler.toml` file:
 
@@ -66,7 +79,7 @@ filename: wrangler.toml
   max_concurrency = 1
 ```
 
-To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `wrangler publish` to push your configuration update. 
+To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update. 
 
 <!-- Not yet available but will be very soon 
 ### wrangler CLI

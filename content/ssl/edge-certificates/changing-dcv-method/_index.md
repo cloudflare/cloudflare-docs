@@ -1,40 +1,44 @@
 ---
-title: Domain Control Validation (DCV)
+title: Domain control validation (DCV)
 pcx_content_type: concept
 layout: single
 weight: 5
 meta:
-  title: Domain Control Validation (DCV) — SSL/TLS
+  title: Domain control validation (DCV)
   description: Learn when and how to perform Domain Control Validation when using Cloudflare SSL/TLS.
 ---
 
-# Domain Control Validation (DCV) — SSL/TLS
+# Domain control validation (DCV)
 
 {{<render file="_dcv-definition.md">}}
 <br/>
 
-## DCV situations
+{{<Aside type="note">}}
 
-### No DCV required (Full DNS setup)
+Refer to [Domain control validation flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) to learn more about the steps and parties involved in the DCV process.
 
-If your domain is on a [**full setup**](/dns/zone-setups/full-setup/) — meaning that Cloudflare runs your authoritative nameservers — Cloudflare handles DCV automatically on your behalf using a TXT record. For more details, refer to [Enabling Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#minimize-downtime).
+{{</Aside>}}
+
+For [custom certificates](/ssl/edge-certificates/custom-certificates/), DCV will always be handled by you, when you request the certificate from the CA.
+
+For certificates issued through Cloudflare, this process may be done automatically or it may require you to take action, as described in the following sections.
 
 ---
 
-### DCV sometimes required (Partial DNS setup)
+## Full DNS setup - no action required
 
-If your application is on a [partial DNS setup](/dns/zone-setups/partial-setup/) — meaning that someone else runs your authoritative nameservers — you may need to perform additional steps to complete DCV.
+If your domain is on a [**full setup**](/dns/zone-setups/full-setup/) — meaning that Cloudflare runs your authoritative nameservers — Cloudflare handles DCV automatically on your behalf using a TXT record. For more details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup).
 
-#### Non-wildcard certificates
+---
+
+## Partial DNS setup - action sometimes required
+
+If your application is on a [partial DNS setup](/dns/zone-setups/partial-setup/) — meaning that Cloudflare does not run your authoritative nameservers — you may need to perform additional steps to complete DCV.
+
+### Non-wildcard certificates
 
 {{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
 
-#### Wildcard certificates
+### Wildcard certificates
 
 {{<render file="_partial-zone-acm-dcv-wildcard.md">}}
-
----
-
-### DCV outside of Cloudflare (Custom certificates)
-
-If your domain is using a [**custom certificate**](/ssl/edge-certificates/custom-certificates/), you need to handle DCV on your own when you obtain certificates from a CA.

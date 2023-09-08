@@ -4,55 +4,44 @@ pcx_content_type: how-to
 type: overview
 weight: 4
 meta:
-  title: Create a Configuration Rule via API
+  title: Create a configuration rule via API
 ---
 
-# Create a Configuration Rule via API
+# Create a configuration rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Configuration Rules via API.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create configuration rules via API.
 
-When creating a Configuration Rule via API, make sure you:
+## Basic rule settings
+
+When creating a configuration rule via API, make sure you:
 
 * Set the rule action to `set_config`.
 * Define the parameters in the `action_parameters` field according to the [settings](/rules/configuration-rules/settings/) you wish to override for matching requests.
 * Deploy the rule to the `http_config_settings` phase at the zone level.
 
-***
+## Procedure
 
-Follow this workflow to create a Configuration Rule for a given zone via API:
+{{<render file="_rules-creation-workflow.md" withParameters="a configuration rule;;http_config_settings">}}
 
-1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method to check if there is already a ruleset for the `http_config_settings` phase at the zone level.
+Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
 
-2. If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
-
-    * **kind**: `zone`
-    * **phase**: `http_config_settings`
-
-3. Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add a Configuration Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](/ruleset-engine/rulesets-api/create/) request mentioned in the previous step.
-
-## Required API token permissions
-
-The API token used in API requests to manage Configuration Rules must have at least the following permission:
-
-* _Zone_ > _Config Rules_ > _Edit_
-
-## Examples
+## Example requests
 
 <details>
 <summary>Example: Add a rule that enables Auto Minify for CSS files and enables Hotlink Protection</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Configuration Rule — enabling Auto Minify for CSS files and Hotlink Protection for the `assets.example.com` hostname — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Auto Minify for CSS files and Hotlink Protection for the `assets.example.com` hostname — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "http.host eq \"assets.example.com\"",
@@ -78,17 +67,17 @@ $ curl -X PUT \
 <summary>Example: Add a rule that enables Email Obfuscation and Browser Integrity Check</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Configuration Rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "starts_with(http.request.uri.path, \"/contact-us/\")",
@@ -110,17 +99,17 @@ $ curl -X PUT \
 <summary>Example: Add a rule that sets the Security Level to <em>High</em></summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Configuration Rule — changing the Security Level to _High_ for the administration area — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — changing the Security Level to _High_ for the administration area — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "http.host eq \"admin.example.com\"",
@@ -136,3 +125,11 @@ $ curl -X PUT \
 
 </div>
 </details>
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage configuration rules must have at least the following permission:
+
+* _Zone_ > _Config Rules_ > _Edit_

@@ -8,13 +8,13 @@ meta:
 
 # GraphQL Analytics
 
-Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to your configured firewall rules.
+Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to rules matching your traffic. This contains both rules you configured in the Magic Firewall dashboard, and the rules managed by Cloudflare as a part of [Magic Firewall Managed rules](/magic-firewall/how-to/enable-managed-rulesets/) and [Magic Firewall IDS](/magic-firewall/about/ids/) features.
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 
-## Obtain Cloudflare Account ID and Magic Firewall rule ID
+## Obtain Cloudflare Account ID
 
-To construct a Magic Firewall GraphQL query for an object, you will need a Cloudflare Account ID and the rule ID for each firewall rule.
+To construct a Magic Firewall GraphQL query for an object, you will need a Cloudflare Account ID
 
 ### Obtain your Cloudflare Account ID
 
@@ -22,6 +22,8 @@ To construct a Magic Firewall GraphQL query for an object, you will need a Cloud
 2. The URL in your browser's address bar should show `https://dash.cloudflare.com/` followed by a hex string. The hex string is your Cloudflare Account ID.
 
 ### Obtain the rule ID for a firewall rule
+
+To construct queries to gather analytics for a particular rule, you need the rule ID for each firewall rule.
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Firewall**.
@@ -59,7 +61,7 @@ query {
 }
 ```
 
-## Example query for Magic Firewall
+## Example queries for Magic Firewall
 
 ### Obtain analytics for a specific rule
 
@@ -94,6 +96,77 @@ query{
               ipDestinationAddress
               ipSourceAddress
               outcome
+            }
+        }
+    }
+}
+}
+```
+
+### Obtain IDS analytics
+
+Use the example below to display the total number of packets and bits for the top 10 traffic streams that Magic Firewall IDS has detected in the last hour.
+
+By setting `verdict` to `drop` and `outcome` as `pass`, we are filtering for traffic that was marked as a detection (i.e. verdict was drop) but was not dropped (for example, outcome was `pass`). This is because currently, Magic Firewall IDS only detects malicious traffic but does not drop the traffic.
+
+For each stream, display the:
+
+- Source and destination IP addresses.
+- Ingress Cloudflare data centers that received it.
+- Total traffic volume in bits and packets received within the hour.
+
+```graphql
+query{
+    viewer {
+      accounts(filter: {accountTag: "<ACCOUNT_ID>"}) {
+        magicIDPSNetworkAnalyticsAdaptiveGroups(
+        filter: {
+            datetime_geq: "2022-01-12T10:00:00Z",
+            datetime_leq: "2022-01-12T11:00:00Z",
+            verdict: drop,
+            outcome: pass
+  }
+        limit: 10,
+        orderBy: [avg_packetRateFiveMinutes_DESC])
+        {
+            sum {
+              bits
+              packets
+            }
+            dimensions {
+              coloCity
+              ipDestinationAddress
+              ipSourceAddress
+            }
+        }
+    }
+}
+}
+```
+
+Alternatively, to inspect all traffic that was analyzed, but grouped into malicious traffic and other traffic, the example below can be used. The response will contain two entries for each five minute timestamp. `verdict` will be set to `drop` for malicious traffic, and `verdict` will be set to `pass` for traffic that did not match any of the IDS rules.
+
+```graphql
+query{
+    viewer {
+      accounts(filter: {accountTag: "<ACCOUNT_ID>"}) {
+        magicIDPSNetworkAnalyticsAdaptiveGroups(
+        filter: {
+            datetime_geq: "2022-01-12T10:00:00Z",
+            datetime_leq: "2022-01-12T11:00:00Z"
+  }
+        limit: 10,
+        orderBy: [avg_packetRateFiveMinutes_DESC])
+        {
+            sum {
+              bits
+              packets
+            }
+            dimensions {
+              coloCity
+              ipDestinationAddress
+              ipSourceAddress
+              verdict
             }
         }
     }

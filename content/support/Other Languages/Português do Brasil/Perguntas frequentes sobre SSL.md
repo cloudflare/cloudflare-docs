@@ -7,29 +7,6 @@ title: Perguntas frequentes sobre SSL
 
 # Perguntas frequentes sobre SSL
 
-_Encontre as respostas para dúvidas comuns sobre o aplicativo **SSL/TLS** da Cloudflare._
-
-### Neste artigo
-
--   [Tenho vários certificados da Cloudflare. Qual será usado?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_e2bd076d-beb3-40e8-adbe-075ba5a8851e)
--   [Ter o SSL da Cloudflare será útil para o SEO?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_29550926411548959889544)
--   [Quanto tempo leva para o SSL da Cloudflare ser ativado?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_7dc4564e-f93a-4e1d-a338-90903a812b95)
--   [O que significa uma verificação de marca de SSL inválida?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_62d0852f-0bc5-4d54-a83f-971ca452398d)
--   [Como faço para redirecionar todos os visitantes para HTTPS/SSL?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_a61bfdef-08dd-40f8-8888-7edd8e40d156)
--   [O SSL da Cloudflare oferece suporte a Nomes de Domínio Internacionalizados (IDN)?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_406905917121548959897352)
--   [O SSL funciona para parceiros de hospedagem?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_848554486311548959913241)
--   [Os certificados de SSL da Cloudflare são compartilhados?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_293541339461548959928672)
--   [Tenho um certificado SSL instalado no meu site, por que estou vendo um certificado da Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_865954806521548960003696)
--   [Quero que a Cloudflare use um certificado SSL que comprei em outro lugar](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_406415940571548960012266)
--   [Como faço para forçar meu site a só usar HTTPS/SSL?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_999722138611548960019807)
--   [O Projeto Galileu inclui o suporte a SSL?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_745887958641548960026645)
--   [Habilitar a Cloudflare afeta a exigência de TLS 1.2 do PayPal?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_100356045661548960034406) 
--   [Como posso servir um certificado SSL nos data centers da Cloudflare na China?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_853db670-78aa-4c98-99d4-3aa3d38f8d59)
--   [A Cloudflare oferece suporte à autenticação de cliente TLS?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_db0bcd71-24f9-4b0c-8cfc-7a5ed0f27649)
--   [Como faço para ativar o Universal SSL com o GitHub?](https://support.cloudflare.com/hc/pt-br/articles/204144518-Perguntas-frequentes-sobre-SSL#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
-
-___
-
 ### Tenho vários certificados da Cloudflare. Qual será usado?
 
 Os certificados da Cloudflare são priorizados por [tipo de certificado](https://support.cloudflare.com/hc/articles/203295200) e também pelo hostname mais específico.  Em geral, a priorização de certificado SSL ocorre da seguinte forma, da prioridade mais alta para a mais baixa:

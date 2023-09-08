@@ -2,12 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/200172016-WAF-verwaltete-Regeln-Web-Application-Firewall-verstehen
-title: WAF-verwaltete Regeln (Web Application Firewall) verstehen 
+title: WAF-verwaltete Regeln (Web Application Firewall) verstehen
 ---
 
-# WAF-verwaltete Regeln (Web Application Firewall) verstehen 
-
-
+# WAF-verwaltete Regeln (Web Application Firewall) verstehen
 
 ## Überblick
 
@@ -48,7 +46,7 @@ Die verwalteten Regeln sind für Pro, Business und Enterprise Pläne für alle [
 -   Verwaltete Regeln analysieren JSON-Antworten, um auf APIs abzielende Schwachstellen zu identifizieren. Das Parsen von JSON-Nutzdaten ist auf 128 KB begrenzt.
 -   Verwaltete Regeln bekämpfen Padding-Techniken. Wir empfehlen Folgendes:
     1.  Aktivieren Sie die Regel _100048_. Diese Regel schützt jetzt vor Angriffen vom Typ Padding. Sie wird standardmäßig nicht bereitgestellt, da sie in Kundenumgebungen viele falsch-positive Ergebnisse erzeugt. Die Kunden müssen die Konfiguration ihrer verwalteten Regeln jedoch unbedingt abstimmen. Cloudflare arbeitet an einer besseren, langfristigen Lösung.
-    2.  Erstellen Sie mit dem [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) eine Firewall-Regel, je nachdem, ob Sie Header und/oder Body prüfen müssen, um größere Nutzdaten (> 128 KB) zu blockieren. Testen Sie Ihre Firewall-Regel zunächst im _Protokollmodus_, da sie unter Umständen zu falsch-positiven Ergebnissen führen kann.
+    2.  Erstellen Sie mit dem [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) eine Firewall-Regel, je nachdem, ob Sie Header und/oder Body prüfen müssen, um größere Nutzdaten (> 128 KB) zu blockieren. Testen Sie Ihre Firewall-Regel zunächst im _Protokollmodus_, da sie unter Umständen zu falsch-positiven Ergebnissen führen kann.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Es gibt eine Handvoll verwalteter Regeln, die Cloudflare auch dann nicht deaktiviert, wenn die Option **Verwaltete Regeln** im Cloudflare-Dashboard _ausgeschaltet_ ist, wie die Regel-IDs _WP0025B_, _100043A_ und _100030_.

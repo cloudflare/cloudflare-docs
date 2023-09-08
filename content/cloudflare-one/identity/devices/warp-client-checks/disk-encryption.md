@@ -22,7 +22,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 1. Either enable disk encryption for all volumes, or input the specific volume(s) you want to check for encryption (for example, `C`).
 1. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/analytics/logs/posture-logs) that the disk encryption check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the disk encryption check is returning the expected results.
 
 ## How WARP checks for encryption
 
@@ -53,7 +53,7 @@ Operating systems determine disk encryption in various ways. The following infor
 
 ### On Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
 1. **Protection Status** must be set to **On** for the disk to be considered encrypted.
 

@@ -20,7 +20,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
+- **Name**: A subdomain or the zone apex (`@`), which must:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
@@ -96,7 +96,7 @@ header: Response
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
+- **Name**: A subdomain or the zone apex (`@`), which must:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
@@ -222,7 +222,7 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 
 A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
 
-At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or a [Cloudflare for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
 You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
@@ -341,6 +341,6 @@ You only need to add NS records when you are [creating custom or vanity nameserv
 
 [DS and DNSKEY](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) records help implement DNSSEC, which cryptographically signs DNS records to prevent domain spoofing.
 
-Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/dns/additional-options/dnssec/).
+Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/dns/dnssec/).
 
 {{<render file="_api-field-definitions.md">}}

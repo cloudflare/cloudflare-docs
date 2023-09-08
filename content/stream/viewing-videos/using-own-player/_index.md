@@ -17,7 +17,7 @@ Platform-specific guides:
 
 ## Fetch HLS and Dash manifests
 
-### URL 
+### URL
 
 Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
@@ -44,7 +44,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### API
 
-Refer to the [Stream video details API documentation](/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](/api/operations/stream-videos-retrieve-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 
@@ -84,9 +84,9 @@ We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cr
 
 ### Examples
 
-* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback)
-* [SRT playback with ffplay](/stream/examples/srt_playback)
+* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback/)
+* [SRT playback with ffplay](/stream/examples/srt_playback/)
 
 ## Limitations
 
-[Client-side Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+[Client-side Analytics](/stream/getting-analytics/fetching-bulk-analytics/#client-side-analytics) are not available if you use your own player.

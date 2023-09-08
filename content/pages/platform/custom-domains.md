@@ -9,7 +9,7 @@ When deploying your Pages project, you may wish to point custom domains (or subd
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/#purge-everything) in the dashboard to ensure the latest build gets served.
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) in the dashboard to ensure the latest build gets served.
 
 {{</Aside>}}
 
@@ -23,7 +23,7 @@ To add a custom domain:
 4. Select **Set up a domain**.
 5. Provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
-![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
+![Adding a custom domain for your Pages project through the Cloudflare dashboard](/images/pages/platform/domains.png)
 
 ### Add a custom apex domain
 
@@ -37,6 +37,12 @@ To use a custom apex domain (for example, `example.com`) with your Pages project
 
 If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site. To deploy your Pages project to a custom apex domain, that custom domain must be a zone on the Cloudflare account you have created your Pages project on.
 
+{{<Aside type="note">}}
+
+If the zone is on the Enterprise plan, make sure that the you [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
+
+{{</Aside>}}
+
 #### Add a custom CNAME record 
 
 If you do not want to point your nameservers to Cloudflare, you must create a custom CNAME record to use a subdomain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain, for example, `shop.example.com`. This record should point to your custom Pages subdomain, for example, `<YOUR_SITE>.pages.dev`.
@@ -49,7 +55,7 @@ If your site is already managed as a Cloudflare zone, the CNAME record will be a
 
 {{<Aside type="note">}}
 
-To ensure a custom domain is added successfully, you must go through the [Add a custom domain](#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Add a custom domain](#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-522-connection-timed-out).
 
 {{</Aside>}}
 

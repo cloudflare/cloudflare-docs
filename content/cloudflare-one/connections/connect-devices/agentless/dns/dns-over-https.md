@@ -26,78 +26,83 @@ Obtain your location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
 
 Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway DNS location as your DoH endpoint, otherwise DNS filtering will not occur in that browser.
 
+{{<render file="gateway/_doh-instructions.md">}}
+
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
+
+### Configure operating system for DoH
+
 <details>
-<summary>Mozilla Firefox</summary>
+<summary>Windows 11</summary>
 <div>
 
-1. In Firefox, go to **Settings**.
-2. In the General menu, scroll down to **Network Settings**.
-3. Select **Settings**.
-4. Select **Enable DNS over HTTPS**.
-5. In the **Use Provider** drop-down menu, select _Custom_.
-6. In the **Custom** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
-7. Select **OK**.
-8. Enter **about:config** in the address bar.
-9. Select **Accept the risk!** if you see a prompt from Firefox.
-10. Set **network.trr.bootstrapAddress** to `162.159.36.5`.
-11. Set **network.trr.mode** to `3`.
+1. Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
 
-{{<Aside type="note">}}
+   1. Run the following command to obtain your `A` record values:
 
-If you want to disable DoH for your organization so that Gateway can be enforced, create a policy to block [this canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet).
+   ```bash
+   nslookup -type=A <your-subdomain>.cloudflare-gateway.com
+   ```
 
-{{</Aside>}}
+   2. Obtain your `AAAA` record values.
+
+   ```bash
+   nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
+   ```
+
+   3. Copy the resulting IP addresses.
+
+2. Add the addresses to your list of known DoH servers.
+
+   1. Run the following command for each address:
+
+   ```bash
+   Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
+   ```
+
+   2. Confirm the addresses were added.
+
+   ```bash
+   Get-DnsClientDohServerAddress
+   ```
+
+3. In Windows, go to **Settings** > **Network & internet** > your active Internet connection. This option may be either **Ethernet** or **Wi-Fi**.
+4. Under **DNS server assignment**, select **Edit**.
+5. In the drop-down menu, choose _Manual_.
+6. Enable **IPv4**.
+7. In **Preferred DNS** and **Alternate DNS**, enter the IPv4 addresses from your `A` record command. Set **DNS over HTTPS** to _On (automatic template)_.
+8. Enable **IPv6**.
+9. In **Preferred DNS** and **Alternate DNS**, enter the IPv6 addresses from your `AAAA` record command. Set **DNS over HTTPS** to _On (automatic template)_.
 
 </div>
 </details>
 
 <details>
-<summary>Google Chrome</summary>
+<summary>Windows Server 2022</summary>
 <div>
 
-1. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
-2. Scroll down and turn on **Use secure DNS**.
-3. Select **With Custom**.
-4. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
 
-Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
+1. Run the following command to obtain your `A` record values:
+
+```bash
+nslookup -type=A <your-subdomain>.cloudflare-gateway.com
+```
+
+2. Obtain your `AAAA` record values.
+
+```bash
+nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
+```
+
+3. Copy the resulting IP addresses.
+4. [Add the addresses](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#add-a-new-doh-server-to-the-list-of-known-servers) to your list of known DoH servers.
+5. [Configure the Windows Server client](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configure-the-dns-client-to-support-doh) or [set up a Group Policy](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configuring-doh-through-group-policy) to use DoH.
+
+For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
 </div>
 </details>
-
-<details>
-<summary>Microsoft Edge</summary>
-<div>
-
-1. In Microsoft Edge, go to **Settings**.
-2. Select **Privacy, Search, and Services**, and scroll down to **Security**.
-3. Turn on **Use secure DNS**.
-4. Select **Choose a service provider**.
-5. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
-
-</div>
-</details>
-
-<details>
-<summary>Brave</summary>
-<div>
-
-1. In Brave, go to **Settings** > **Security and Privacy** > **Security**.
-2. Turn on **Use secure DNS**.
-3. Select **With Custom**.
-4. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
-
-</div>
-</details>
-
-<details>
-<summary>Safari</summary>
-<div>
-As of today, Safari does not support DNS over HTTPS.
-</div>
-</details>
-
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
 
 ## Filter DoH requests by user
 
@@ -147,13 +152,13 @@ highlight: [3, 4, 7]
 ### 2. Enable DoH functionality for the service token
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
+curl --request PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
+     --header "X-Auth-Email: <YOUR_EMAIL>" \
+     --header "X-Auth-Key: <API_KEY>" \
+     --header "Content-Type: application/json"
 ```
 
-If you get an `access.api.error.service_token_not_found` error,  check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
 
 <details>
 <summary>Example response</summary>
@@ -245,8 +250,8 @@ Request a DoH token for the user, using your service token to authenticate into 
 ```bash
 curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
      -H "Cf-Access-Client-Id: <CLIENT_ID>" \
-     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>"
-     -H "Content-Type: application/json" \
+     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>" \
+     -H "Content-Type: application/json"
 ```
 
 The response contains a unique DoH token associated with the user. This token expires in 24 hours. We recommend setting up a refresh flow for the DoH token instead of generating a new one for every DoH query.
@@ -272,7 +277,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
 
-If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/filtering/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
+If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/gateway/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
 
 <details>
 <summary>Example response</summary>
@@ -306,5 +311,4 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </div>
 </details>
 
-You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
-
+You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/gateway/identity-selectors/).

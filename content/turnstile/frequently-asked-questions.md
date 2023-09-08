@@ -34,6 +34,7 @@ We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evalu
 {{<faq-answer>}}
 
 A full Turnstile Challenge Token Flow consists of a few things:
+
 * A challenge is rendered (issued).
 * A challenge is solved on the front end and a token is harvested (solved).
 * The token is passed to siteverify, and it is consumed (siteverified).
@@ -195,8 +196,25 @@ Yes, you can refer to the [Turnstile API documentation](/api/operations/accounts
 {{<faq-question level=2 text="I am seeing a 401 error in your console during a Turnstile security check, is this a problem?" >}}
 {{<faq-answer>}}
 
-You can safely ignore the error. It is requesting a PAT that your device or browser does not support yet.
-Learn more: https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/
+You can safely ignore the error. It is requesting a [Private Access Token (PAT)](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/) that your device or browser does not support yet.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="How can I obtain the Ray ID or QR code for troubleshooting?" >}}
+{{<faq-answer>}}
+
+You will need to provide a [Ray ID](/fundamentals/reference/cloudflare-ray-id/) or QR code when debugging issues. The Ray ID is found at the end of the challenge page. You can obtain the QR code by clicking the success/failure/spinner logo on the widget four times.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="What if I encounter an endless challenge loop?" >}}
+{{<faq-answer>}}
+
+If you encounter an endless challenge loop, try disabling your browser extensions.
 
 {{</faq-answer>}}
 {{</faq-item>}}

@@ -108,7 +108,7 @@ export default {
 
 ### Match a cookie with a user in your backend
 
-Zaraz exposes all cookies automatically under the `system.cookies` object, so they are always available. Accesing the cookie and using it to query your backend could look like this:
+Zaraz exposes all cookies automatically under the `system.cookies` object, so they are always available. Accessing the cookie and using it to query your backend might look like this:
 
 ```js
 export default {
@@ -158,7 +158,7 @@ export default {
 
     const { email } = client;
 
-    return new Response(await digestMessage(text));
+    return new Response(await digestMessage(email));
   },
 };
 ```

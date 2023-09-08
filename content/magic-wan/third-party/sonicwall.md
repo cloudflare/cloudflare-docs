@@ -52,7 +52,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 ## 3. Add a VPN configuration in SonicWall
 
-1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
+1. Go to **Network** > **IPsec VPN** > **Rules and Settings**.
 2. Select **Add**.
 3. In **General** > **Security Policy** group, add the following settings:
     - **Authentication Method**: _IKE Using Preshared Secret_.
@@ -68,7 +68,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 </div>
 
-5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples bellow.
+5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples below.
 6. In the **IKE (Phase 1) Proposal** group, select the following settings:
     - **Exchange**: _IKEv2 Mode_
     - **DH Group**: _Group 14_
@@ -181,10 +181,11 @@ You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-hea
 
 ```bash
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/ipsec_tunnels/<tunnel_identifier> \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
-  --data '{
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
     "health_check": {
         "enabled":true,
         "target":"SONICWALL_WAN_IP",
@@ -198,9 +199,4 @@ Health checks might take some time to stabilize after the configuration is chang
 
 ## 9. Verify tunnel status on Cloudflare dashboard
 
-You can check if your tunnels are healthy on the Cloudflare dashboard. 
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and choose your account. 
-2. Go to **Magic WAN** > **Tunnel health**, and select **View**.
-
-This dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
+{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic WAN** > **Tunnel health**" >}}

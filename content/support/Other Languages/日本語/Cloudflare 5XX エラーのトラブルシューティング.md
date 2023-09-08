@@ -7,7 +7,7 @@ title: Cloudflare 5XX エラーのトラブルシューティング
 
 # Cloudflare 5XX エラーのトラブルシューティング
 
-_Clouodflareのプロキシされたサイトの5XXエラーを診断し、解決します。_
+_Cloudflareのプロキシされたサイトの5XXエラーを診断し、解決します。_
 
 ### 本記事の内容
 
@@ -87,7 +87,7 @@ CloudflareがオリジンWebサーバーとの接続を確立できない時にH
 
 CloudflareがCloudflare名を含むHTTP 502または504エラーを返すのは、標準HTTP 502 bad gateway、または504 gateway timeout エラーでオリジンWebサーバーが応答した場合です。
 
-![Cloudflare名を含む502エラーの例](/support/static/image1.png)
+![Cloudflare名を含む502エラーの例](/images/support/image1.png)
 
 **解決方法**
 
@@ -101,7 +101,7 @@ CloudflareがCloudflare名を含むHTTP 502または504エラーを返すのは�
 
 Cloudflareから発生した502、または504 エラーは次のように表示されます。
 
-![ブランド名が含まれない502エラーの例](/support/static/image5.png)
+![ブランド名が含まれない502エラーの例](/images/support/image5.png)
 
 エラーに「cloudflare」の記載がない場合は、[オリジンからの502/504エラー](https://support.cloudflare.com/hc/ja/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b)について、ホスティングプロバイダーに連絡し、サポートを受けてください。
 
@@ -287,7 +287,7 @@ ___
 -   オリジンWebサーバーがポートSSL ポート443経由の接続を受け入れているか
 -   [Cloudflareを一時的に停止して](https://support.cloudflare.com/hc/articles/200169176)、[https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) を開いて（www.example.com をホスト名とドメインに置き換える）オリジンSSL証明書に問題がないことを確認する：
 
-![SSL証明書にエラーがないことを示す画面](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![SSL証明書にエラーがないことを示す画面](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 オリジンサーバーが自己署名の証明書を使用している場合は、ドメインを_Full SSL (strict)_の代わりに_Full_ _SSL_を使うように設定します。[ご自分のオリジンに合わせて推奨されるSSL設定](/ssl/origin-configuration/ssl-modes)を参照してください。
 

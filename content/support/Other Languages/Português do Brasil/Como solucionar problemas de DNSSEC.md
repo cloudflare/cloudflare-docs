@@ -90,11 +90,11 @@ ___
 3.  Se o DNSViz nunca analisou o site antes, clique no botão **Analisar** que aparecer.
 4.  Se o site tiver sido analisado pelo DNSViz antes,
 
-![Screen_Shot_2018-09-18_at_10.31.54_AM.png](/support/static/Screen_Shot_2018-09-18_at_10.31.54_AM.png)
+![Screen_Shot_2018-09-18_at_10.31.54_AM.png](/images/support/Screen_Shot_2018-09-18_at_10.31.54_AM.png)
 
-![Screen_Shot_2018-10-16_at_2.png](/support/static/Screen_Shot_2018-10-16_at_2.png)
+![Screen_Shot_2018-10-16_at_2.png](/images/support/Screen_Shot_2018-10-16_at_2.png)
 
-![Screen_Shot_2018-09-18_at_10.25.49_AM.png](/support/static/Screen_Shot_2018-09-18_at_10.25.49_AM.png)
+![Screen_Shot_2018-09-18_at_10.25.49_AM.png](/images/support/Screen_Shot_2018-09-18_at_10.25.49_AM.png)
 
 ___
 

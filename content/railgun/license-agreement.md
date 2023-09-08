@@ -8,6 +8,8 @@ meta:
 
 # License
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 SERVICES AGREEMENT
 
 Your installation of this software is symbol of your signature indicating that you accept the terms of this Services Agreement (this “Agreement”). This Agreement is a legal agreement between you (either an individual or a single entity) and CloudFlare Inc. for the services being provided to you by CloudFlare or its authorized representative (the “Services”), including any computer software and any associated media, printed materials, and “online” or electronic documentation provided in connection with the Services (the “Software” and together with the Services are hereinafter collectively referred to as the “Solution”). If the user is not an individual, then “you” means your company, its officers, members, employees, agents, representatives, successors and assigns. BY USING THE SOLUTION, YOU ARE INDICATING THAT YOU HAVE READ, AND AGREE TO BE BOUND BY, THE POLICIES, TERMS, AND CONDITIONS SET FORTH BELOW IN THEIR ENTIRETY WITHOUT LIMITATION OR QUALIFICATION, AS WELL AS BY ALL APPLICABLE LAWS AND REGULATIONS, AS IF YOU HAD HANDWRITTEN YOUR NAME ON A CONTRACT. IF YOU DO NOT AGREE TO THESE TERMS AND CONDITIONS, YOU MAY NOT USE THE SOLUTION.

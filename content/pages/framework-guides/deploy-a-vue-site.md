@@ -14,8 +14,7 @@ In this guide, you will create a new Vue application and deploy it using Cloudfl
 First, install the Vue CLI using npm, and then run `vue create` in your terminal to create a new project called `my-vue-app`:
 
 ```sh
-$ npm install -g @vue/cli
-$ vue create my-vue-app
+$ npx @vue/cli create my-vue-app
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -32,11 +31,7 @@ To deploy your site to Pages:
 
 <div>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `dist`          |
+{{<pages-build-preset framework="vue">}}
 
 </div>
 

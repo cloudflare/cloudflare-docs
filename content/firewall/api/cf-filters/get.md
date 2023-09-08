@@ -8,16 +8,15 @@ weight: 5
 
 ## Get all filters
 
-This example returns all filters in zone with ID `<ZONE_ID>`.
+This example returns all filters in zone with ID `{zone_id}`.
 
 ```bash
 ---
 header: Request
 ---
-curl -X GET \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/filters" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -71,16 +70,15 @@ header: Response
 
 ## Get by filter ID
 
-This example returns the filter with ID `<FILTER_ID>`.
+This example returns the filter with ID `{filter_id}`.
 
 ```bash
 ---
 header: Request
 ---
-curl -X GET \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/filters/{filter_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
