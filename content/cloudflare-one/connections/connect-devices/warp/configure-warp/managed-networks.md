@@ -19,13 +19,13 @@ The TLS certificate can be hosted by any device on your network. However, the en
 
 If you do not already have a TLS endpoint on your network, you can set one up as follows:
 
-1. Generate a new certificate:
+1. Generate a TLS certificate:
 
 ```sh
 $ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
 ```
 
-The command will output a PEM certificate and key. Store these files in a secure place.
+The command will output a certificate in PEM format and its private key. Store these files in a secure place.
 
 {{<Aside type="note">}}
 The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
