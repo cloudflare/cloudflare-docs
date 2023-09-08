@@ -7,7 +7,7 @@ title: Secrets
 
 ## Background
 
-Secrets are [environment variables](/workers/configuration/environment-variables/) that are encrypted and not visible after they are set. Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-es-modules).
+Secrets are [environment variables](/workers/configuration/environment-variables/) that are encrypted and not visible after they are set. Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-es-modules).When developing locally, Wrangler fetches secrets from the .dev.vars file and doesn't retrieve remote secrets. Therefore, for local development, secrets must be added to the .dev.vars file as bindings.
 
 ## Add secrets to your project
 
