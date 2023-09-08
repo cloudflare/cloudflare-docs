@@ -5,16 +5,18 @@
 {{- $changelogDataEntries := index $changelogData "entries" -}}
 {{- $changelogDataEntries = sort $changelogDataEntries "date" "desc" -}}
 {{- $permalink := .Permalink -}}
+{{- $product := $changelogData.productName -}}
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{{ $title }}</title>
     <link>{{ $permalink }}</link>
-    <description>Updates to Cloudflare's {{$changelogData.productName}} product.</description>
+    <description>Updates to Cloudflare's {{$product}} product.</description>
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
     {{- range $changelogDataEntries -}}
+    {{- $entry := . -}}
     {{- $link := "" -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
@@ -23,10 +25,44 @@
     {{- else -}}
     {{- $link = print $permalink "#" (urlize .publish_date) -}}
     {{- end -}}
+    {{- with .link -}}
+    {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- end -}}
     <item>
     <title>{{- with .title -}}{{ . }}{{ else }}{{ .publish_date }}{{ end }}</title>
     <link>{{ $link }}</link>
+    {{- with .table -}}
+    <description>
+    <table>
+    <thead>
+    <tr>
+    <th>Ruleset</th>
+    <th>Rule ID</th>
+    <th>Legacy Rule ID</th>
+    <th>Description</th>
+    <th>Previous Action</th>
+    <th>New Action</th>
+    <th>Comments</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{- range index $entry "entries" -}}
+    <tr>
+    <td>{{- .ruleset -}}</td>
+    <td>{{- .rule_id -}}</td>
+    <td>{{- .legacy_id -}}</td>
+    <td>{{- .description -}}</td>
+    <td>{{- .previous_action -}}</td>
+    <td>{{- .new_action -}}</td>
+    <td>{{- .comments -}}</td>
+    </tr>
+    {{- end -}}
+    </tbody>
+    </table>
+    </description>
+    {{- else -}}
     <description>{{ $description }}</description>
+    {{- end -}}
     <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
     </item>
     {{- end -}}

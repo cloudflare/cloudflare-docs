@@ -27,13 +27,12 @@
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with .title -}}
-    {{- if or (eq $product "WAF") (eq $product "DDoS") -}} 
-    {{- $link = print "https://developers.cloudflare.com" $rellink (urlize .) -}} 
-    {{- else -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
-    {{- end -}}
     {{- else -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- end -}}
+    {{- with .link -}}
+    {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
     {{- with .table -}}
     {{ $description = printf "For more details, refer to the dedicated page for [WAF entries - %s](%s)." $title $link | $.Page.RenderString | htmlUnescape -}}

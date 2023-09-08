@@ -5,6 +5,7 @@ entries:
 - publish_date: '2023-09-04'
   title: '2023-09-04'
   table: true
+  link: '/waf/change-log/2023-09-04/'
   entries:
   - ruleset: 'Cloudflare Specials'
     rule_id: '...c5f041ac'
@@ -43,6 +44,7 @@ entries:
     comments: 'N/A'
 - publish_date: '2023-08-21'
   title: '2023-08-21'
+  link: '/waf/change-log/2023-08-21/'
   table: true
   entries:
   - ruleset: 'Cloudflare Specials'
@@ -61,6 +63,7 @@ entries:
     comments: 'N/A'
 - publish_date: '2023-08-17'
   title: '2023-08-17 - Emergency Release'
+  link: '/waf/change-log/2023-08-17---emergency-release/'
   table: true
   entries:
   - ruleset: 'Cloudflare Specials'
