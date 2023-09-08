@@ -59,3 +59,14 @@ entries:
     previous_action: 'N/A'
     new_action: 'Disabled'
     comments: 'N/A'
+- publish_date: '2023-08-17'
+  title: '2023-08-17 - Emergency Release'
+  table: true
+  entries:
+  - ruleset: 'Cloudflare Specials'
+    rule_id: '...cac42ce2'
+    legacy_id: '100596'
+    description: 'Citrix Content Collaboration ShareFile - Remote Code Execution - CVE:CVE-2023-24489'
+    previous_action: 'N/A'
+    new_action: 'Block'
+    comments: 'N/A'
