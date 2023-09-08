@@ -28,7 +28,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 
 You can now [test your connection](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.
 
-## Example API Configuration
+## Example API configuration
 
 ```json
 {
