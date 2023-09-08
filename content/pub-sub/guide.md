@@ -78,8 +78,9 @@ This API token requirement will be lifted prior to Pub/Sub becoming Generally Av
 4. Choose **Get Started** next to **Create Custom Token** 
 5. Name the token - e.g. "Pub/Sub Write Access"
 6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
-7. Click **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission
-8. Click **Create Token**, and copy the token value.
+7. Select **Add More**  below the newly created permission. Choose **User**, select **Memberships** from the first drop-down, and **Edit** as the permission.
+8. Click **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission
+9. Click **Create Token**, and copy the token value.
 
 In your terminal, configure a `CLOUDFLARE_API_TOKEN` environmental variable with your Pub/Sub token. When this variable is set, `wrangler` will use it to authenticate against the Cloudflare API.
 
@@ -218,10 +219,20 @@ $ which node
 $ npm i mqtt --save
 ```
 
-Generate a credential and store it in the `BROKER_TOKEN` environmental variable so the MQTT client can access it.
+Set your environment variables.
 
 ```sh
-export BROKER_TOKEN=$(curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?number=2&type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0].value')
+#Tip: If you want these to persist across boots, store the below variables in your `.zshrc`, `.bashrc`, or `.profile` files in your home folder
+$ export CLOUDFLARE_API_TOKEN="YourAPIToken"
+$ export CLOUDFLARE_ACCOUNT_ID="YourAccountID"
+$ export DEFAULT_NAMESPACE="TheNamespaceYouCreated"
+$ export BROKER_NAME="TheBrokerYouCreated"
+```
+
+Generate a credential and store it in the `BROKER_TOKEN` environmental variable so the MQTT client can access it.
+
+```console
+export BROKER_TOKEN=$(curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0].value')
 ```
 
 Create a file called `index.js ` and make sure to update the `brokerEndpoint` with the address of your Pub/Sub broker.
@@ -232,6 +243,9 @@ const mqtt = require('mqtt')
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
 const options = {
   port: 8883,
+  //If password alone does not successfully auth, uncomment the lines below and try again
+  //clientID: "First portion of token generated above",
+  //username: "Your username",
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
