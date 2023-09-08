@@ -222,7 +222,6 @@ $ npm i mqtt --save
 Set your environment variables.
 
 ```sh
-#Tip: If you want these to persist across boots, store the below variables in your `.zshrc`, `.bashrc`, or `.profile` files in your home folder
 $ export CLOUDFLARE_API_TOKEN="YourAPIToken"
 $ export CLOUDFLARE_ACCOUNT_ID="YourAccountID"
 $ export DEFAULT_NAMESPACE="TheNamespaceYouCreated"
