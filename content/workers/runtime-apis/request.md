@@ -15,33 +15,26 @@ The most common way you will encounter a `Request` object is as a property of an
 ---
 highlight: [2]
 ---
-addEventListener("fetch", event => {
-  let request = event.request // Request object
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) { 
+		return new Response('Hello World!');
+	},
+};
 ```
 
 You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
 
 ```js
-addEventListener("fetch", event => {
-  const request = event.request
-  const url = "https://example.com"
-
-  const modifiedRequest = new Request(url, request)
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) { 
+        const url = "https://example.com";
+        const modifiedRequest = new Request(url, request);
+		// ...
+	},
+};
 ```
 
-The global `fetch` method itself invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to `fetch`.
-
-{{<Aside type="note" header="Learn more">}}
-
-Review the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event/) for a deeper understanding of these fundamental Workers concepts.
-
-{{</Aside>}}
+The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
 
 ---
 

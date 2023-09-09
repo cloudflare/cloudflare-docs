@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: ScheduledEvent
+title: Scheduled Handler
 ---
 
 # ScheduledEvent
