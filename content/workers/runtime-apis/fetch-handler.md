@@ -1,15 +1,21 @@
 ---
 pcx_content_type: configuration
-title: FetchEvent
+title: Fetch Handler
 ---
 
-# FetchEvent
+# Fetch Handler
 
 ## Background
 
-In Workers, any incoming HTTP requests are referred to as `"fetch"` events. A Worker will respond to the HTTP request with the handler method that was assigned to the `"fetch"` event.
+Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [request](https://developer.mozilla.org/en-US/docs/Web/API/Request) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
 
-Both the [Service Worker](#syntax-service-worker) and [ES modules](#syntax-es-modules) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		return new Response('Hello World!');
+	},
+};
+```
 
 ---
 
@@ -56,10 +62,6 @@ addEventListener('fetch', event => {
 When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/configuration/environment-variables/) will be made available as global runtime variables.
 
 ---
-
-## Syntax: ES modules
-
-In the [ES modules format](/workers/learning/migrate-to-module-workers/), events are handled by defining and exporting an object with method handlers corresponding to event names.
 
 While an incoming HTTP request is still given the `"fetch"` name, a Worker using ES modules format does not surface the `FetchEvent` interface. Instead, Workers using ES modules format receive the [`Request`](/workers/runtime-apis/request/) and must reply with a [`Response`](/workers/runtime-apis/response/) directly.
 
