@@ -65,7 +65,7 @@
         {{- with .link -}}
         {{ $link = . }}
         {{- end -}}        
-        <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print .url "index.xml" -}}">
+        <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print $rellink "index.xml" -}}">
           <td>{{ $product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
           <td class="changelogDate">{{ .publish_date }}</td>
