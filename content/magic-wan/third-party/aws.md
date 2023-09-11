@@ -9,9 +9,9 @@ This tutorial provides information and examples of how to configure IPsec VPN be
 
 ## Prerequisites
 
-You need to have an AWS transit gateway created in your AWS account. This is needed to route traffic between your AWS virtual private cloud (VPC) and Cloudflare Magic WAN. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) to learn more about creating a transit gateway.
+You need to have an AWS transit gateway created in your AWS account. This is needed to route traffic between your AWS virtual private cloud (VPC) and Cloudflare Magic WAN. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) to learn more about creating a transit gateway.
 
-Additionally, you also need to create the necessary routes on AWS. Specifically, you need to create the virtual private cloud and transit gateway route tables to route traffic between your VPC, transit gateway VPN attachment to Magic WAN, and back. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
+Additionally, you also need to create the necessary routes on AWS. Specifically, you need to create the virtual private cloud and transit gateway route tables to route traffic between your VPC, transit gateway VPN attachment to Magic WAN, and back. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
 
 ## AWS
 
@@ -29,10 +29,10 @@ Additionally, you also need to create the necessary routes on AWS. Specifically,
 ### Configure the VPN connection
 
 1. Select the VPN connection you created > **Actions** > **Modify VPN tunnel options**.
-2. From the **VPN tunnel outside IP address** dropdown menu, choose one of tunnels.
+2. From the **VPN tunnel outside IP address** drop-down menu, choose one of tunnels.
 3. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
 4. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**.  You will need it to create the IPsec tunnel on Cloudflare’s side.
-5. In **Inside IPv4 CIDR**, there should be a size `/30` IP block. This IP address will be assigned as the internal IPsec tunnel interface. For this example, we will use `169.254.244.0/30` as the CIDR block for the IPsec tunnel: `169.254.244.1` for the AWS side of the tunnel, and `169.254.244.2` for the Cloudflare side side of the tunnel.
+5. In **Inside IPv4 CIDR**, there should be a size `/30` IP block. This IP address will be assigned as the internal IPsec tunnel interface. For this example, we will use `169.254.244.0/30` as the CIDR block for the IPsec tunnel: `169.254.244.1` will be the IP address for the AWS side of the tunnel, and `169.254.244.2` will be the IP for the Cloudflare side of the tunnel.
 6. Configure the following settings for the IPsec tunnel. Note that the **Startup action** needs to be set to **Start**, which means the AWS side will initiate IPsec negotiation. Settings not mentioned here can be left at their default settings:
     - **Phase 1 encryption algorithms**: `AES256-GCM-16`
     - **Phase 2 encryption algorithms**: `AES256-GCM-16`
@@ -57,12 +57,12 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 1. Refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
     - **Tunnel name**: `tunnel01`
     - **Interface address**: The `/30`CIDR block enforced by AWS. For example, `169.xx.xx.xx/30`.
-    - **Customer endpoint**: This is IP address from AWS’s VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
+    - **Customer endpoint**: The IP address from AWS’s VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
     - **Cloudflare endpoint**: Enter the first of your two Anycast IPs (typically begins with `162.x.x.x`).
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
     - **Replay protection**: Select **Enabled**.
-    - Select **Save**.
-2. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
+2. Select **Save**.
+3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 
 ### Static routes
 
