@@ -205,7 +205,7 @@
         },
         "retention": {
           "title": "Retention period",
-          "free": "",
+          "free": "N/A",
           "pro": "7 days",
           "biz": "30 days",
           "ent": "30 days"
