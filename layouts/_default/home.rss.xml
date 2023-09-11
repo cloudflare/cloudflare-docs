@@ -35,7 +35,11 @@
     {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
     {{- with .table -}}
-    {{ $description = printf "For more details, refer to the dedicated page for [WAF entries - %s](%s)." $title $link | $.Page.RenderString | htmlUnescape -}}
+    {{ $description = printf "For more details, refer to the dedicated page for [%s - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
+    {{- end -}}
+    {{- with .scheduled -}}
+    {{ $title = print "Scheduled - $title" -}}
+    {{ $description = printf "For more details, refer to the dedicated page for [%s scheduled changes - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
     {{- end -}}
     <item>
     <title>{{- with .title -}}{{ printf "%s · %s" $product . }}{{ else }}{{ printf "%s · %s" $product .publish_date }}{{ end }}</title>

@@ -1,0 +1,25 @@
+---
+link: "/ddos-protection/change-log/network/"
+productName: DDoS protection
+entries:
+- publish_date: '2023-07-31'
+  title: '2023-07-31'
+  table: true
+  link: '/ddos-protection/change-log/network/2023-07-31/'
+  entries:
+  - ruleset: 'Network-layer DDoS'
+    rule_id: '...aa772b5c'
+    description: 'Adaptive DDoS Protection for Location-Based UDP (Available only to Enterprise accounts).'
+    previous_action: 'N/A'
+    new_action: 'Log'
+    comments: 'Enable UDP geolocation Adaptive DDoS rule'
+- publish_date: '2023-04-17'
+  title: '2023-04-17'
+  link: '/ddos-protection/change-log/network/2023-04-17/'
+  table: false
+  description: |-
+    Previously, only a subset of rules were exposed publicly. In rare situations, these rules can cause false positives. When this happens, you can customize their behavior using overrides.
+
+    Besides these rules, the DDoS managed rules contain other rules that do not cause issues. Until now, these rules were not shown in the dashboard or referenced in the documentation.
+
+    Cloudflare now shows all rules in the dashboard, including these high-confidence rules. This means that packets matching these rules will now have the correct rule identifier. The newly published rules are read-only and you cannot disable them.

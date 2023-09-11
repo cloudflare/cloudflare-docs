@@ -72,7 +72,7 @@
           <!-- Custom logic for products with separate pages -->
           {{- with .table -}}
           <td>
-            <p>For more details, refer to the dedicated page for {{ printf "[WAF entries - %s](%s)" $title $link | $.Page.RenderString }}.</p>
+            <p>For more details, refer to the dedicated page for {{ printf "[%s - %s](%s)" $product $title $link | $.Page.RenderString }}.</p>
           </td>
           <!-- End custom logic -->
           {{- else -}}

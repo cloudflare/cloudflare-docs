@@ -4,7 +4,7 @@ title: Changelog
 meta:
     description: Review recent changes to Cloudflare Workers.
 layout: changelog
-changelog_file_name: workers
+changelog_file_name: [workers]
 outputs:
     - html
     - rss

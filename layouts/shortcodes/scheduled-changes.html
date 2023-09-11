@@ -1,22 +1,27 @@
-{{- $date := .Get "date" -}}
+{{- $ruleset := .Get "ruleset" -}}
 {{- $product := .Page.Params.changelog_file_name -}}
 {{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
-{{- $changelogEntry := dict -}}
+{{- $scheduledChanges := slice -}}
 
 {{- range $changelogData -}}
+{{- $entry := . -}}
 
-{{- if (eq .publish_date $date) -}}
+{{- with .scheduled -}}
 
-{{ $changelogEntry = . }}
+{{- $scheduledChanges = $scheduledChanges | append $entry -}}
 
 {{- end -}}
 {{- end -}}
+
+{{- $changelogEntry := dict -}}
+
 <div class="DocsMarkdown--table-wrap">
 <div class="DocsMarkdown--table-wrap-inner">
 <table style="width: 100%">
 <thead>
 <tr>
-<th>Ruleset</th>
+<th>Announcement Date</th>
+<th>Release Date</th>
 <th>Rule ID</th>
 {{- if (eq $product "WAF") -}}
 <th>Legacy Rule ID</th>
@@ -30,7 +35,8 @@
 <tbody>
 {{- range index $changelogEntry "entries" -}}
 <tr>
-<td>{{- .ruleset -}}</td>
+<td>{{- .announce_date -}}</td>
+<td>{{- .release_date -}}</td>
 <td>{{- .rule_id -}}</td>
 {{- if (eq $product "WAF") -}}
 <td>{{- .legacy_id -}}</td>

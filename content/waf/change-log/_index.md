@@ -5,7 +5,7 @@ weight: 20
 meta:
   title: Changelog for managed rulesets
 layout: changelog
-changelog_file_name: waf
+changelog_file_name: [waf]
 outputs:
     - html
     - rss

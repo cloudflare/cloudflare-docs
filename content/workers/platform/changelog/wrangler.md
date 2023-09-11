@@ -5,7 +5,7 @@ meta:
     title: Wrangler Changelog
     description: Review recent changes to Cloudflare Wrangler.
 layout: changelog
-changelog_file_name: wrangler
+changelog_file_name: [wrangler]
 outputs:
     - html
     - rss
