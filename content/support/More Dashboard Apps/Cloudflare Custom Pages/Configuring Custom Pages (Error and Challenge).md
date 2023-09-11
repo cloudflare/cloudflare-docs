@@ -46,6 +46,11 @@ exceed 1.43 MB. Also, it must include HTML *\<head\>* and *\</head\>*
 tags.
 {{</Aside>}}
 
+{{<Aside type="warning">}}
+Please make sure that the meta tag `referrer` is not present in the HTML code your custom error page as it might disrupt the Cloudflare Challenge:
+`meta name="referrer"`
+{{</Aside>}}
+
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
 
 ### Custom Page example
