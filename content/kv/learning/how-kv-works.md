@@ -20,6 +20,10 @@ When you write to KV, your data is written to central data stores. Your data is 
 
 Initial reads from a location do not have a cached value. Data must be read from the nearest regional tier, followed by a central tier, degrading finally to the central store for a truly cold global read. While the first access is slow globally, subsequent requests are faster, especially if requests are concentrated in a single region.
 
+{{<Aside type="note" header="Hot and cold read">}} 
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/). A cold read means that the data is not cached, so you have to fetch it from the storage provider.
+{{</Aside>}}
+
 ![Initial reads will miss the cache and go to the nearest central data store first.](/images/kv/kv-slow-read.svg)
 
 Frequent reads from the same location return the cached value without reading from anywhere else, resulting in the fastest response times. KV operates diligently to keep the latest value in the cache by refreshing from upper tiers and the central data stores in the background. 
