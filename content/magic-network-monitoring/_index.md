@@ -60,6 +60,6 @@ Connects your network infrastructure directly with Cloudflare – rather than us
  
 {{<resource-group>}}
  
-{{<resource header="Developer Discord" href="https://discord.com/invite/cloudflaredev" icon="logo-Discord">}}Connect with the Magic Network Monitoring community on Discord to ask questions, and share feedback.{{</resource>}}
+{{<resource header="Discord" href="https://discord.com/invite/cloudflaredev" icon="logo-Discord">}}Connect with the Magic Network Monitoring community on Discord to ask questions, and share feedback.{{</resource>}}
  
 {{</resource-group>}}
