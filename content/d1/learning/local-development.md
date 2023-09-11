@@ -71,7 +71,7 @@ Your `wrangler.toml` should resemble the following:
 ---
 filename: wrangler.toml
 ---
-# Note: If you are only using Pages + D1, you only need the below in your wrangler.toml to interact with D1 locally
+# If you are only using Pages + D1, you only need the below in your wrangler.toml to interact with D1 locally.
 [[d1_databases]]
 binding = "DB" # Should match preview_database_id
 database_name = "YOUR_DATABASE_NAME"
