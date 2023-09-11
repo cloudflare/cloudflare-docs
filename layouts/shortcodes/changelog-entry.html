@@ -11,6 +11,9 @@
 
 {{- end -}}
 {{- end -}}
+
+{{- with $changelogEntry.table -}}
+
 <div class="DocsMarkdown--table-wrap">
 <div class="DocsMarkdown--table-wrap-inner">
 <table style="width: 100%">
@@ -45,3 +48,9 @@
 </table>
 </div>
 </div>
+
+{{- else -}}
+
+{{- $changelogEntry.description | $.Page.RenderString -}}
+
+{{- end -}}
