@@ -55,7 +55,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Page Shield Read | Grants write access to [Page Shield](/page-shield/) across the whole account. |
 | Hyperdrive Read | Grants read access to Hyperdrive database configuration. |
 | Hyperdrive Write | Grants write access to Hyperdrive database configuration. |
-| SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
+| SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for [DNS](/dns/) and [Firewall](/waf/). |
 | Trust & Safety | Can access trust and safety related services. |
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |
 | Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
