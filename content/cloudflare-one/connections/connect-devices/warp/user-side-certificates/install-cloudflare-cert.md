@@ -78,8 +78,6 @@ To install the Cloudflare certificate in macOS, you can use either the Keychain 
 
 The root certificate is now installed and ready to be used.
 
-{{<Aside type="note" header="Change certificate access scope">}}If you want to change user access to the Cloudflare certificate, you can open Keychain Access and move the certificate to a different keychain on the left sidebar.{{</Aside>}}
-
 {{</tab>}}
 {{<tab label="terminal" no-code="true">}}
 
@@ -91,7 +89,7 @@ The root certificate is now installed and ready to be used.
 $ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <path-to-Cloudflare_CA.crt>
 ```
 
-   This keychain will allow all users on the system access to the certificate. If you want to install the certificate to a different keychain, replace `System.keychain` with the name of that keychain. For information on the scope of each keychain, refer to [Keychain Access](#keychain-access).
+   This keychain will allow all users on the system access to the certificate. If you want to install the certificate to a different keychain, replace `System.keychain` with the name of that keychain.
 
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
@@ -99,8 +97,12 @@ $ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.ke
 $ echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
 ```
 
+The root certificate is now installed and ready to be used.
+
 {{</tab>}}
 {{</tabs>}}
+
+{{<Aside type="note" header="Change certificate access scope">}}If you want to change user access to the Cloudflare certificate, you can open Keychain Access and move the certificate to a different keychain on the left sidebar.{{</Aside>}}
 
 ### Windows
 
