@@ -44,16 +44,19 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 13. Fill in the following information:
 
-    - **Name**: Name your identity provider
-    - **App ID**: Enter your Okta Client ID.
-    - **Client secret**: Enter your Okta Client secret.
+    - **Name**: Name your identity provider.
+    - **App ID**: Enter your Okta client ID.
+    - **Client secret**: Enter your Okta client secret.
     - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
 
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims):
+    1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
+    2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
+    3. Under **Optional configurations**, enter the claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
-16. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
 17. Select **Save**.
 
