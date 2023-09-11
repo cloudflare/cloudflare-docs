@@ -81,7 +81,7 @@ header: Output
 
 ### Create a secret key
 
-You must create a secret key to connect to the database from your Worker. 
+You must create a secret key to connect to the database from your Worker.
 
 To create a secret key, go to **Explorer** in the Fauna dashboar, hover over your database name, and select the key icon to manage your keys.
 
@@ -291,7 +291,7 @@ If you place the handler first, you cannot retrieve the instance of the Fauna cl
 
 {{</Aside>}}
 
-This route applied an FQL query in the `fql` function that creates a new document in the **Product** collection:
+This route applied an FQL query in the `fql` function that creates a new document in the **Products** collection:
 
 ```js
 ---
