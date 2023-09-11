@@ -134,10 +134,7 @@ Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-
 | `idempotency_key` | Optional | The UUID to be associated with the response. |
 
 {{<Aside type="note">}}
-
-Remote IP helps prevent abuses by ensuring that the current visitor is the one who received the token.
-The `remoteip` parameter helps preventing abuse by ensuring the current visitor is the one who received the token. Note that this is currently not strictly validated.
-
+Remote IP helps prevent abuses by ensuring that the current visitor is the one who received the token. The `remoteip` parameter helps to prevent abuse by ensuring the current visitor is the one who received the token. This is currently not strictly validated.
 {{</Aside>}}
 
 The siteverify endpoint behaves similar to reCAPTCHA’s or hCaptcha's siteverify endpoint.
