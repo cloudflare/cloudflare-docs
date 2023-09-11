@@ -270,12 +270,12 @@ Some applications require the use of a publicly trusted certificate — they do 
 
 ### Browsers
 
-#### Chromium-based browsers
+#### Chrome
 
-In macOS and Windows, [Chromium browsers use the operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows). In other operating systems, such as Linux and ChromeOS, you may have to install the Cloudflare certificate to your browser manually.
+In macOS and Windows, [Chrome uses the operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows). In other operating systems, such as Linux and ChromeOS, you may have to install the Cloudflare certificate to your browser manually.
 
 1. Download the [Cloudflare certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) in `.pem` format.
-2. In your browser, go to **Settings** > **Privacy and security** > **Security**.
+2. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
 3. Select **Manage certificates**.
 4. Go to **Authorities**. Select **Import**.
 5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded and select **Open**.
