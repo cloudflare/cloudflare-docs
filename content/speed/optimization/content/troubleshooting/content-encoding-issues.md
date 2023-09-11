@@ -1,9 +1,9 @@
 ---
 pcx_content_type: troubleshooting
-title: Content encoding Issues
+title: Content encoding issues
 ---
 
-# Content encoding Issues
+# Content encoding issues
 
 If you are noticing any encoding errors with your HTML pages, we recommend verifying that the impacted pages are explicitly setting the correct charset in the `Content-Type` header from your origin for all text/html pages, for example `Content-Type: text/html; charset=utf-8`. This is particularly important if you are not using UTF-8 encoding. Alternatively you can set the correct charset within the HTML.
 
