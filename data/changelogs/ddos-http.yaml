@@ -1,6 +1,7 @@
 ---
 link: "/ddos-protection/change-log/http/"
-productName: DDoS protection (HTTP)
+productName: DDoS protection
+topLevelLink: "/ddos-protection/change-log/"
 entries:
 - publish_date: '2023-09-05'
   title: '2023-09-05 - Emergency'

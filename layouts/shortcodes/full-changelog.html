@@ -4,8 +4,12 @@
 {{- range $index, $product := $changelogData -}} 
 {{- $products = $products | append $product.productName -}}
 {{- range $index2, $item := $product.entries -}} 
+{{- $placeholderDict := (dict "product" $product.productName "url" $product.link) -}}
+{{- with $product.topLevelLink -}}
+{{- $placeholderDict = merge $placeholderDict (dict "topLevelLink" .) -}}
+{{- end -}}
 {{- $changelogRendered = $changelogRendered 
-  | append (merge $item (dict "product" $product.productName "url" $product.link )) -}} 
+  | append (merge $item $placeholderDict) -}} 
 {{- end -}} 
 {{- end -}}
 
@@ -55,6 +59,9 @@
         {{- $link := "" -}} 
         {{- $rellink := .url -}} 
         {{- $title := "" -}} 
+        {{- with .topLevelLink -}}
+        {{- $rellink = . -}}
+        {{- end -}}
         {{- with .title -}} 
         {{- $title = . -}}
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}} 
