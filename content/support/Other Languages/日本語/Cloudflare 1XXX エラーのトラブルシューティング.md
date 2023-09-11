@@ -7,7 +7,7 @@ title: Cloudflare 1XXX エラーのトラブルシューティング
 
 # Cloudflare 1XXX エラーのトラブルシューティング
 
-_Clouodflareのプロキシされたサイトの1XXXエラーを診断し、解決します。_
+_Cloudflareのプロキシされたサイトの1XXXエラーを診断し、解決します。_
 
 ### 本記事の内容
 

@@ -1,12 +1,11 @@
 ---
-title: Dynamic advertisement
+title: Best practices
 pcx_content_type: reference
-weight: 3
 meta:
   title: Best practices for dynamic advertisement
 ---
 
-# Best practices for dynamic advertisement
+# Dynamic advertisement best practices
 
 ## Verify user roles & obtain prefix IDs
 
@@ -18,28 +17,26 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 ## Enable prefix advertisement
 
-To avoid latency and the possibility of dropped routes, enable prefix advertisement from Cloudflare **before** you withdraw the advertisement from your data center.
+To avoid latency and the possibility of dropped routes, enable prefix advertisement from Cloudflare before you withdraw the advertisement from your data center.
 
-1.  To enable prefix advertisement, refer to [configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/). This operation requires your Account ID, Prefix IDs, and API key. Enablement takes 2–7 minutes.
-
-2.  Verify the advertisement using looking glass of your choice—[Hurricane Electric Internet Services](https://lg.he.net/), for example. Use the Cloudflare ASN (13335) to track the advertisement route.
-
+1.  To enable prefix advertisement, refer to [configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/). This operation requires your Account ID, Prefix IDs, and API key.
+2.  Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/). Use the Cloudflare ASN (13335) to track the advertisement route.
 3.  Remove the prefix advertisement that originates from your data center.
 
-{{<Aside>}}
+{{<Aside type="note">}}
+If you do not remove the advertisement from your data center, some of your traffic may not route through Cloudflare for protection, depending on which routes your ISP prefers. 
 
-If you do not remove the advertisement from your data center, some of your traffic may not route through Cloudflare for protection, depending on which routes your ISP prefers. If you want to continue advertising from your data center while using Magic Transit, one option is to advertise a less specific route (eg. a /23) and have Cloudflare advertise more specific routes (eg. /24s).
-
+If you want to continue advertising from your data center while using Magic Transit, one option is to advertise a less specific route and have Cloudflare advertise more specific routes.
 {{</Aside>}}
+
+Enablement takes approximately five to seven minutes.
 
 ## Disable prefix advertisement
 
 To disable (withdraw) prefix advertisement, reverse the steps you used to enable it:
 
 1.  Add the prefix advertisement to your data center.
-
-2.  _Optional._ Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/).
-
+2.  (Optional) Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/).
 3.  To disable prefix advertisement at Cloudflare’s edge, refer to [configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/). This operation requires your Account ID, Prefix IDs, and API key.
 
 Disablement takes approximately 15 minutes.

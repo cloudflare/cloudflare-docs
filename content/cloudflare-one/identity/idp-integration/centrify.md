@@ -48,11 +48,6 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
-         {{<Aside>}}
-
-    Do not use the forward slash from the **Settings** tab.
-    {{</Aside>}}
-
 1.  Go to the **User Access** tab.
 
 1.  Select the roles to grant access to your application.

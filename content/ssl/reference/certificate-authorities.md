@@ -7,7 +7,7 @@ weight: 5
 
 # Certificate authorities
 
-For publicly trusted certificates, Cloudlfare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and browser compatibility](#features-limitations-and-browser-compatibility).
+For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and browser compatibility](#features-limitations-and-browser-compatibility).
 
 ## Availability per certificate type and encryption algorithm
 

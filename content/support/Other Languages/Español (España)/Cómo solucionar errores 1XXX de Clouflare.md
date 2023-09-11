@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: spanish
 source: https://support.cloudflare.com/hc/es-es/articles/360029779472-C%C3%B3mo-solucionar-errores-1XXX-de-Clouflare
-title: Cómo solucionar errores 1XXX de Clouflare
+title: Cómo solucionar errores 1XXX de Cloudflare
 ---
 
-# Cómo solucionar errores 1XXX de Clouflare
+# Cómo solucionar errores 1XXX de Cloudflare
 
 
 

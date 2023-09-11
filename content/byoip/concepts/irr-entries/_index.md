@@ -1,6 +1,7 @@
 ---
 title: Internet Routing Registry
 pcx_content_type: concept
+weight: 2
 ---
 
 # Internet Routing Registry
@@ -13,4 +14,4 @@ To announce your subnet prefixes, Cloudflare requires accurate IRR entries for y
 
 When you configure network infrastructure for services such as [Magic Transit](/magic-transit/about/), [verify your IRR entries](/byoip/how-to/verify-irr-entries/).
 
-For help with adding missing IRR entries or updating inaccurate entries, refer to the [best practices for IRR entries](/byoip/best-practices/irr-entries/).
+For help with adding missing IRR entries or updating inaccurate entries, refer to the [best practices for IRR entries](/byoip/concepts/irr-entries/best-practices/).

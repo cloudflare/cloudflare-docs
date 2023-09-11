@@ -1,13 +1,17 @@
-{{- $changelogData := index .Site.Data "changelogs" -}} {{- $changelogRendered
-:= slice -}} {{- $products := slice -}} {{- range $index, $product :=
-$changelogData -}} {{- $products = $products | append $product.productName -}}
-{{- range $index2, $item := $product.entries -}} {{- $changelogRendered =
-$changelogRendered | append (merge $item (dict "product" $product.productName
-"url" $product.link )) -}} {{- end -}} {{- end -}}
+{{- $changelogData := index .Site.Data "changelogs" -}} 
+{{- $changelogRendered := slice -}} 
+{{- $products := slice -}} 
+{{- range $index, $product := $changelogData -}} 
+{{- $products = $products | append $product.productName -}}
+{{- range $index2, $item := $product.entries -}} 
+{{- $changelogRendered = $changelogRendered 
+  | append (merge $item (dict "product" $product.productName "url" $product.link )) -}} 
+{{- end -}} 
+{{- end -}}
 
 <!-- Order and remove dupe values -->
-{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}} {{-
-$products = sort ($products | uniq) . "asc" -}}
+{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}} 
+{{- $products = sort ($products | uniq) . "asc" -}}
 
 <div class="selectorDropdowns">
   <div>
@@ -45,12 +49,17 @@ $products = sort ($products | uniq) . "asc" -}}
         </tr>
       </thead>
       <tbody id="tableBody">
-        {{- range $changelogRendered -}} {{- $link := "" -}} {{- $rellink :=
-        .url -}} {{- $title := "" -}} {{ with .title }} {{- $title = . -}} {{-
-        $link = print "https://developers.cloudflare.com" $rellink "#" (urlize
-        .) -}} {{ else }} {{- $title = printf "%s · %s" .product .publish_date
-        -}} {{- $link = print "https://developers.cloudflare.com" $rellink "#"
-        (urlize .publish_date) -}} {{- end -}}
+        {{- range $changelogRendered -}} 
+        {{- $link := "" -}} 
+        {{- $rellink := .url -}} 
+        {{- $title := "" -}} 
+        {{- with .title -}} 
+        {{- $title = . -}} 
+        {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}} 
+        {{ else }} 
+        {{- $title = printf "%s · %s" .product .publish_date -}} 
+        {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}} 
+        {{- end -}}        
         <tr class="data-row" data-product="{{.product | lower}}">
           <td>{{ .product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>

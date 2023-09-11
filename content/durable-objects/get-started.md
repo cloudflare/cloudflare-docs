@@ -45,7 +45,7 @@ $ yarn create cloudflare@latest
 {{</tab>}}
 {{</tabs>}}
 
-Running `create cloudlfare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
+Running `create cloudflare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
 In your terminal, you will be asked a series of questions related to your project: 
 

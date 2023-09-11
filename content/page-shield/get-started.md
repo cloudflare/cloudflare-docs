@@ -44,7 +44,13 @@ Only available to customers on a Business or Enterprise plan.
 Only available to Enterprise customers with a paid add-on.
 {{</Aside>}}
 
-Policies define allowed resources on your websites. [Create policies](/page-shield/policies/create-dashboard/) to implement a positive security model [^1].
+[Policies](/page-shield/policies/) define allowed resources on your websites. Create policies to implement a positive security model [^1].
+
+1. [Create a policy](/page-shield/policies/create-dashboard/) with the _Log_ action.
+
+2. After some time, [review the list of policy violations](/page-shield/policies/violations/) to make sure the policy is correct. Update the policy if needed.
+
+3. Change the policy action to _Allow_ to start blocking resources not covered by the policy.
 
 [^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.
 
