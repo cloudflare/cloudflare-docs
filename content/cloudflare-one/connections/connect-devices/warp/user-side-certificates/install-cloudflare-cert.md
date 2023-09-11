@@ -232,7 +232,7 @@ The root certificate is now installed and ready to be used.
 
 ChromeOS devices use different methods to store and deploy root certificates. Certificates may fall under the **VPN and apps** or **CA certificate** settings. Follow the procedure that corresponds with your device.
 
-{{<tabs labels="VPN and apps | CA certificate">}}
+{{<tabs labels="VPN and apps | CA Certificate">}}
 {{<tab label="vpn and apps" no-code="true">}}
 
 {{<render file="_chromeos-cert-settings.md" withParameters="**Install from SD card**">}}
