@@ -30,7 +30,7 @@ Fauna is a document-based database with a flexible schema. This allows you to de
 - **weightLbs** - A floating point number that represents the weight in pounds of the product.
 - **quantity** A non-negative integer that represents how many items of a particular product there are in the inventory.
 
-Documents are stored in the **Products** [collection](https://docs.fauna.com/fauna/current/reference/schema_entities/collection/). Collections in document databases are groups of related documents.
+Documents are stored in a [collection](https://docs.fauna.com/fauna/current/reference/schema_entities/collection/). Collections in document databases are groups of related documents.
 
 For this tutorial, all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna](https://fauna.com/blog/choosing-an-authentication-strategy-with-fauna) for more information on authenticating users to your applications with Fauna.
 
