@@ -20,7 +20,7 @@ Jekyll is written in Ruby, meaning that you will need a functioning Ruby install
 To install Ruby on your computer, follow the [`rbenv` installation instructions](https://github.com/rbenv/rbenv#installation) and select a recent version of Ruby by running the `rbenv` command in your terminal. The Ruby version you install will also be used to configure the Pages deployment for your application.
 
 ```sh
-$ rbenv install $RUBY_VERSION # For instance, 3.1.3
+$ rbenv install <RUBY_VERSION> # For example, 3.1.3
 ```
 
 With Ruby installed, you can install the `jekyll` Ruby gem:
