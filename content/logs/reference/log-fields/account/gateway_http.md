@@ -38,6 +38,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | PolicyName | The name of the gateway policy applied to the request, if any. | string |
 | Referer | Contents of the referer header in the HTTP request. | string |
 | RequestID | Cloudflare request ID. This might be empty on bypass action. | string |
+| SessionID | Network session ID. | string |
 | SourceIP | Source ip of the request. | string |
 | SourceInternalIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | SourcePort | Source port of the request. | string |

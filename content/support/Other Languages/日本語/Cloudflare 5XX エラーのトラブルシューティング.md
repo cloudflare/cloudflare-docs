@@ -7,7 +7,7 @@ title: Cloudflare 5XX エラーのトラブルシューティング
 
 # Cloudflare 5XX エラーのトラブルシューティング
 
-_Clouodflareのプロキシされたサイトの5XXエラーを診断し、解決します。_
+_Cloudflareのプロキシされたサイトの5XXエラーを診断し、解決します。_
 
 ### 本記事の内容
 

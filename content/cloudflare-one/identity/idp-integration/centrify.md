@@ -50,11 +50,6 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
   - **OpenID Connect Issuer URL**
   - **Application ID** from the **Settings** tab
 
-  {{<Aside type="note">}}
-
-  Do not include the forward slash in the Application ID.
-  {{</Aside>}}
-
 15. Go to the **User Access** tab.
 
 16. Select the roles to grant access to your application.

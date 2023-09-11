@@ -44,6 +44,7 @@ export const OWNERS: Record<string, string[]> = {
   "magic-wan": ["marciocloudflare"],
   "network-error-logging": ["dcpena"],
   "network-interconnect": ["dcpena"],
+  notifications: ["patriciasantaana"],
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
   "privacy-gateway": ["kodster28"],

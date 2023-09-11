@@ -201,9 +201,7 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## Subrequests
 
-### Can a Worker make subrequests to load other sites on the Internet?
-
-Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary requests to other Internet resources.
+A subrequest is any request that a Worker makes to another Internet resource using the [Fetch API](/workers/runtime-apis/fetch/).
 
 ### How many subrequests can I make?
 
@@ -271,6 +269,10 @@ App Workers do not count towards this limit.
 
 Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
+## Number of routed zones per Worker
+
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
 ---
 
 ## Cache API
@@ -284,30 +286,6 @@ Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/).
 The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
 {{</Aside>}}
-
----
-
-## Durable Objects
-
-- Unlimited Durable Objects within an account or of a given class
-
-- 50 GB total storage per account (can be raised by contacting Cloudflare)
-
-- No storage limit per Durable Object separate from the account limit
-
-- No storage limit per Durable Object class separate from the account limit
-
-- Storage keys of up to 2 KiB (2048 bytes)
-
-- Storage values of up to 128 KiB (131072 bytes)
-
-- WebSocket messages of up to 1 MiB (1048576 bytes). This limit applies to messages received, not sent or proxied through.
-
-- 30s of CPU time per request, including websocket messages
-
-Durable Objects scale well across Objects, but each object is inherently single-threaded. A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
-
-Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.
 
 ---
 

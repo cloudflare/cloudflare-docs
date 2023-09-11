@@ -8,7 +8,7 @@ aliases:
 
 # Security Level
 
-Cloudflare's **Security Level** uses the IP reputation of a visitor to decide whether to present a [Managed Challenge](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended) page. Once the visitor enters the correct Managed Challenge, they receive the appropriate website resources.
+Cloudflare's **Security Level** uses the IP reputation of a visitor to decide whether to present a [Managed Challenge](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) page. Once the visitor enters the correct Managed Challenge, they receive the appropriate website resources.
 
 {{<Aside type="note">}}
 When [I'm Under Attack mode](/fundamentals/security/under-attack-mode/) is enabled, Security Level presents a JS challenge page.

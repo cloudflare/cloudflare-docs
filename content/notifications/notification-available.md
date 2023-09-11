@@ -70,6 +70,83 @@ Review your usage of the product and adjust the configuration and/or increase th
 </div>
 </details>
 
+## Brand Protection
+
+<details>
+<summary>Brand Protection Alerts</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
+
+**Other options / filters**
+
+Can be set up on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
+
+**Included with**
+
+Professional plans or higher.
+
+**What should you do if you receive one?**
+
+Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
+
+</div>
+</details>
+
+<details>
+<summary>Brand Protection Digest</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
+
+**Other options / filters**
+
+Can be set up on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
+
+**Included with**
+
+Professional plans or higher.
+
+**What should you do if you receive one?**
+
+Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
+
+</div>
+</details>
+
+## Cloudflare Status
+
+<details>
+<summary>Maintenance Notification</summary>
+<div>
+
+**Who is it for?**
+
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+
+Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar.
+
+During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
+
+</div>
+</details>
+
 ## DNS
 
 <details>
@@ -445,7 +522,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
+If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/concepts/dynamic-advertisement/).
 
 </div>
 </details>
@@ -728,35 +805,6 @@ Purchase of BYOIP.
 **What should you do if you receive one?**
 
 Confirm your traffic is healthy: reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.
-
-</div>
-</details>
-
-## Scheduled Maintenance
-
-<details>
-<summary>Maintenance Notification</summary>
-<div>
-
-**Who is it for?**
-
-Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
-
-Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-All plans.
-
-**What should you do if you receive one?**
-
-If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar.
-
-During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
 
 </div>
 </details>

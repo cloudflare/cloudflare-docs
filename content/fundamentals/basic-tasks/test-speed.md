@@ -19,7 +19,7 @@ Once your domain is [active on Cloudflare](/fundamentals/get-started/setup/add-s
 
 This speed test will provide information about critical loading times, performance with and without [Cloudflare's proxy](/fundamentals/get-started/concepts/how-cloudflare-works/), and recommended optimizations.
 
-If you experience any issues, make sure you are not blocking specific [user agents](/fundamentals/get-started/reference/cloudflare-site-crawling/#other-situations).
+If you experience any issues, make sure you are not blocking specific [user agents](/fundamentals/reference/cloudflare-site-crawling/#other-situations).
 
 ### Using third-party tools
 
@@ -39,7 +39,7 @@ If you use these third-party tools, you should do the following to test website 
 5. Run a second speed test to get your baseline performance with Cloudflare.
 
 
-[^1]: The results of your first speed test with Cloudflare will likely contain uncached results, which will provide inaccurate results.<br/><br/>One of the key ways Cloudflare speeds up your site is through [caching](/fundamentals/get-started/concepts/how-cloudflare-works/#performance), which will appear in the results of the second test.
+[^1]: The results of your first speed test with Cloudflare will likely contain uncached results, which will provide inaccurate results.<br/><br/>One of the key ways Cloudflare speeds up your site is through [caching](/fundamentals/concepts/how-cloudflare-works/#performance), which will appear in the results of the second test.
 
 ### Improve speed
 

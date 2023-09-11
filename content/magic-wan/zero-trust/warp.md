@@ -49,3 +49,21 @@ Refer to [Deploy WARP to your organization](/cloudflare-one/connections/connect-
 You should be able to access Private IP addresses specified in the Split Tunnel configuration.
 
 {{<Aside type="note">}}You must log out and log back in with at least one WARP device to ensure the configuration updates on your device.{{</Aside>}}
+
+## Test WARP integration
+
+Before testing, be sure to [configure domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#configure-local-domain-fallback) for the server or service in WARP settings. This is needed because by default Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processing.
+
+If WARP integration has been enabled for the account within the last day, log off and on again in the WARP client before testing.
+
+To check if WARP is working correctly as an on-ramp, you can do a resolution test on a [fully qualified domain name (FQDN)](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) for a server or service in the Magic WAN. Test this from a user with a WARP device.
+
+For example:
+
+```sh
+$ nslookup <SERVER_BEHIND_MAGIC_WAN>
+```
+
+This DNS lookup should return a valid IP address associated with the server or service you are testing for.
+
+Next, test with a browser that you can connect to a service on the WAN by opening a web page that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.

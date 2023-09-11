@@ -17,7 +17,7 @@ Refer to [Create a list in the dashboard](/fundamentals/global-configurations/li
 ## Managed IP Lists
 
 {{<Aside type="note">}}
-The available Managed IP Lists depend on your Cloudflare plan and product subscriptions. Refer to [Availability](/fundamentals/global-configurations/lists/#availability) for details.
+The available Managed IP Lists depend on your Cloudflare plan and product subscriptions. Refer to [Availability](/waf/tools/lists/#availability) for details.
 {{</Aside>}}
 
 Use Managed IP Lists to access Cloudflare's IP threat intelligence.
