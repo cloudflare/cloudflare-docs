@@ -1,6 +1,6 @@
 ---
 pcx_content_type: integration-guide
-title: AWS Transit Gateway
+title: Amazon AWS Transit Gateway
 meta:
     title: Amazon AWS Transit Gateway
 ---
