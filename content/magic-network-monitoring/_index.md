@@ -55,3 +55,11 @@ Provides HTTP DDoS attack protection for zones onboarded to Cloudflare in additi
 
 Connects your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
 {{</related>}}
+
+## More resources
+ 
+{{<resource-group>}}
+ 
+{{<resource header="Developer Discord" href="https://discord.com/invite/cloudflaredev" icon="logo-Discord">}}Connect with the Magic Network Monitoring community on Discord to ask questions, and share feedback.{{</resource>}}
+ 
+{{</resource-group>}}
