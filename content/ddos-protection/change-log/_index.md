@@ -2,10 +2,13 @@
 title: Changelog
 pcx_content_type: concept
 weight: 20
-layout: single
 meta:
   title: Changelog for managed rulesets
-rss: folder
+layout: changelog
+changelog_file_name: ddos
+outputs:
+    - html
+    - rss
 ---
 
 # Changelog for managed rulesets
