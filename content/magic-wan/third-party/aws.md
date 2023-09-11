@@ -45,6 +45,9 @@ Additionally, you also need to create the necessary routes on AWS. Specifically,
 7. Select **Save changes**.
 8. Repeat the steps above to configure the second VPN connection. Use the second outside IP address, and make the appropriate changes to IP addresses as well when configuring Cloudflare's side of the tunnel.
 
+{{<Aside type="note">}}ECMP over two VPN tunnels is not supported with a static routing configuration. You will need to configure dynamic routing for the VPN between the transit gateway and the customer gateway device. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html) for more information.
+{{</Aside>}}
+
 ## Magic WAN
 
 After configuring the AWS transit gateway VPN connection and the tunnel as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnel and static routes on the Magic WAN side.
@@ -59,7 +62,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
     - **Replay protection**: Select **Enabled**.
     - Select **Save**.
-2. Repeat the above steps for `tunnel02`, and choose the settings from AWS relative to the second VPN tunnel.
+2. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 
 ### Static routes
 
