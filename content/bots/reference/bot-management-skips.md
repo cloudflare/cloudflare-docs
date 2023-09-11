@@ -24,7 +24,7 @@ Requests such as `/cdn-cgi/` are handled individually and will never receive a B
 
 ### Same zone edgeworker and Grey Cloud sub-requests
 
-Same zone edgeworker subrequests will not receive a bot score or have JavaScript injected.
+Same zone edgeworker subrequests will receive a bot score and have JavaScript injected, but do not execute [custom rules](/waf/custom-rules/).
 
 ### Purge requests
 
