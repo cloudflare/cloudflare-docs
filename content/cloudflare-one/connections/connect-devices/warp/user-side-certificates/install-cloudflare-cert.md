@@ -230,9 +230,9 @@ The root certificate is now installed and ready to be used.
 
 ### ChromeOS
 
-ChromeOS has multiple methods that can be used to deploy the Cloudflare root certificate. Each method depends on what device is used and where that devices stores root certificates. Use the procedure that your device most closely follows.
+ChromeOS devices use different methods to store and deploy root certificates. Certificates may fall under the **VPN and apps** or **CA certificate** settings. Follow the procedure that corresponds with your device.
 
-{{<tabs labels="VPN and apps | CA Certificate">}}
+{{<tabs labels="VPN and apps | CA certificate">}}
 {{<tab label="vpn and apps" no-code="true">}}
 
 {{<render file="_chromeos-cert-settings.md" withParameters="**Install from SD card**">}}
@@ -256,7 +256,7 @@ ChromeOS has multiple methods that can be used to deploy the Cloudflare root cer
 {{</tab>}}
 {{</tabs>}}
 
-You may also have to [install the certificate in your browser](#browsers).
+After adding the Cloudflare certificate to ChromeOS, you may also have to [install the certificate in your browser](#browsers).
 
 ## Add the certificate to applications
 
