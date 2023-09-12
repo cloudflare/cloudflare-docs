@@ -60,17 +60,15 @@ Bypass does not enforce any Access security controls and requests are not logged
 
 {{</Aside>}}
 
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure that on-site employees have direct permanent access to your internal applications.
 
-A Bypass policy based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field:
+For example, you could create the following Bypass policy for an internal application, where `Value` is the IP range of your office network:
 
 | Action | Rule type  | Selector  | Value             |
 |--------| ------- | --------- | ----------------- |
 | Bypass  | Include | IP ranges | `192.xxx.xxx.xxx` |
 
-This means Access won’t be enforced on the set of IP addresses you have specified. To complete the setup, you need an additional rule to ensure that anyone asking to access your application from a different IP address will only be granted access if they only meet certain criteria, like email addresses ending with a given domain.
-
-To do so, set up an additional Allow policy like the following:
+To complete the setup, you need an additional Allow policy to ensure that remote employees will only be granted access if they meet certain criteria, like email addresses ending with a given domain:
 
 | Action | Rule    | Selector       | Value                              |
 | ------- | ------- | ---------------- | ---------------------------------- |
