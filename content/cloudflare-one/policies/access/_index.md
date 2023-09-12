@@ -60,21 +60,13 @@ Bypass does not enforce any Access security controls and requests are not logged
 
 {{</Aside>}}
 
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure that on-network employees have direct permanent access to your internal applications.
-
-For example, you could create the following Bypass policy for an internal application, where `Value` is the IP range of your office network:
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. Bypass is typically used to enable applications that require specific endpoints to be public. For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the following Bypass policy:
 
 | Action | Rule type  | Selector  | Value             |
 |--------| ------- | --------- | ----------------- |
-| Bypass  | Include | IP ranges | `192.xxx.xxx.xxx` |
+| Bypass  | Include | Everyone | `Everyone` |
 
-To complete the setup, you need an additional Allow policy to ensure that remote employees will only be granted access if they meet certain criteria, like email addresses ending with a given domain:
-
-| Action | Rule    | Selector       | Value                              |
-| ------- | ------- | ---------------- | ---------------------------------- |
-| Allow | Include | Emails ending in | `@contractors.com`, `@company.com` |
-
-This ensures that everyone connecting from outside your specified IP range will be prompted to authenticate.
+As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/) and have users connect through WARP.
 
 {{<Aside type="note">}}
 
