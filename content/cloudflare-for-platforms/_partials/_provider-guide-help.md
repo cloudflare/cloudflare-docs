@@ -6,6 +6,6 @@ _build:
 inputParameters: providerName
 ---
 
-If you are a $1 customer setting up your own Cloudflare account, contact your Cloudflare account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for help in resolving issues. 
+If you are a $1 customer and have setup your own Cloudflare Zone with O2O enabled on specific hostnames, contact your Cloudflare Account Team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for help resolving issues in your own Zone.
 
 Cloudflare will turn to $1 if there are technical issues that Cloudflare cannot resolve.

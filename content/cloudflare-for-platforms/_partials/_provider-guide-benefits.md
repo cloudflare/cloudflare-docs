@@ -6,6 +6,4 @@ _build:
 inputParameters: providerName
 ---
 
-O2O benefits include your own version of Cloudflare’s [WAF](/waf/), [Bot Management](/bots/plans/bm-subscription/), and [Waiting Room](/waiting-room/).
-
-Additionally, O2O routing also enables you to take advantage of Cloudflare zones specifically customized for $1 traffic.
+O2O's benefits include applying your own Cloudflare Zone's services and settings, such as [WAF](/waf/), [Bot Management](/bots/plans/bm-subscription/), [Waiting Room](/waiting-room/) and more, on the traffic destined for your $1 environment.
