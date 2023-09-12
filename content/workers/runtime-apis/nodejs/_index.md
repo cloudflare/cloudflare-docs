@@ -21,6 +21,7 @@ import { Buffer } from 'node:buffer';
 // Do not do this:
 import { Buffer } from 'buffer';
 ```
+Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
 
 ## Enable Node.js with Workers
 
