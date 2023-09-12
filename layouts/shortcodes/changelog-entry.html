@@ -1,14 +1,26 @@
 {{- $date := .Get "date" -}}
+{{- $title := default "" (.Get "title") -}}
 {{- $product := .Page.Params.changelog_file_name -}}
 {{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
 {{- $changelogEntry := dict -}}
 
 {{- range $changelogData -}}
 
+{{- if (ne $title "") -}}
+
+{{- if and (eq .publish_date $date) (eq .title $title) -}}
+
+{{ $changelogEntry = . }}
+
+{{- end -}}
+
+{{- else -}}
+
 {{- if (eq .publish_date $date) -}}
 
 {{ $changelogEntry = . }}
 
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
