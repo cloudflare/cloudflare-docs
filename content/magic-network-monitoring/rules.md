@@ -38,7 +38,7 @@ Follow the previous steps to [create](#create-rules) or [edit](#edit-or-delete-r
 | **Rule name**           | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`).  Max 256 characters. |
 | **Rule threshold type** | Can be defined in either bits per second or packets per second. |
 | **Rule threshold**      | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
-| **Rule duration**       | The amount of time in seconds the rule threshold must exceed to send an alert notification. There are eight possible values: `60`, `300`, `600`, `900`, `1200`, `1800`, `2700`, and `3600`.|
+| **Rule duration**       | The amount of time in seconds the rule threshold must exceed to send an alert notification. There are eight values you can choose from: `60`, `300`, `600`, `900`, `1200`, `1800`, `2700`, and `3600`. Different values will be rejected. |
 | **Auto-advertisement**  | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. |
 | **Rule IP prefix**      | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. |
 
