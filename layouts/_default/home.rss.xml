@@ -21,15 +21,17 @@
     <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
     {{- range $changelogRendered -}}
     {{- $link := "" -}}
+    {{- $title := "" -}}
     {{- $rellink := .url -}}
     {{- $product := .product -}}
-    {{- $title := .title -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with .title -}}
+    {{ $title = printf "%s - %s" $product . }}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
     {{- else -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- $title = printf "%s - %s" $product .publish_date -}}
     {{- end -}}
     {{- with .link -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
@@ -38,13 +40,13 @@
     {{ $description = printf "For more details, refer to the dedicated page for [%s - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
     {{- end -}}
     {{- with .scheduled -}}
-    {{ $title = print "Scheduled - $title" -}}
+    {{ $title = print "Scheduled - " $title -}}
     {{ $description = printf "For more details, refer to the dedicated page for [%s scheduled changes - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
     {{- end -}}
     <item>
-    <title>{{- with .title -}}{{ printf "%s · %s" $product . }}{{ else }}{{ printf "%s · %s" $product .publish_date }}{{ end }}</title>
+    <title>{{- $title -}}</title>
     <link>{{ $link }}</link>
-    <description>{{ $description }}</description>
+    <description>{{- $description -}}</description>
     <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
     <product>{{- $product -}}</product>
     </item>

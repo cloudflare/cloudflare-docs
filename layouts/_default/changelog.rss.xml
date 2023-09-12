@@ -16,11 +16,11 @@
 {{- $atomLink := print $permalink "index.xml" -}}
 
 {{- $product := default (index (index $changelogData 0) "productName") ($.Params.changelog_name) }}
-{{- $title := printf "%s · %s" .Title $product -}}
+{{- $mainTitle := printf "%s · %s" .Title $product -}}
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ $title }}</title>
+    <title>{{ $mainTitle }}</title>
     <link>{{ $permalink }}</link>
     <description>Updates to Cloudflare's {{$product}} product.</description>
     <language>en-us</language>
@@ -29,24 +29,30 @@
     {{- range $changelogDataEntries -}}
     {{- $entry := . -}}
     {{- $link := "" -}}
+    {{- $title := "" -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with .title -}}
     {{- $link = print $permalink "#" (urlize .) -}}
+    {{- $title = . -}}
     {{- else -}}
     {{- $link = print $permalink "#" (urlize .publish_date) -}}
+    {{- $title = .publish_date -}}
     {{- end -}}
     {{- with .link -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
     {{- with .scheduled -}}
-    {{ $title = printf "Scheduled - %s" $title -}}
+    {{ $title = print "Scheduled - " $title -}}
     {{ $description = printf "For more details, refer to the dedicated page for [%s scheduled changes - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
     {{- end -}}
     <item>
-    <title>{{- with .title -}}{{ . }}{{ else }}{{ .publish_date }}{{ end }}</title>
+    <title>{{- $title }}</title>
     <link>{{ $link }}</link>
     {{- with .table -}}
+    {{- with $entry.scheduled -}}
+    <description>{{ $description }}</description>
+    {{- else -}}
     <description>
     <table>
     <thead>
@@ -79,6 +85,7 @@
     </tbody>
     </table>
     </description>
+    {{- end -}}
     {{- else -}}
     <description>{{ $description }}</description>
     {{- end -}}

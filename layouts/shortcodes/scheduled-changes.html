@@ -1,4 +1,3 @@
-{{- $ruleset := .Get "ruleset" -}}
 {{- $product := .Page.Params.changelog_file_name -}}
 {{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
 {{- $scheduledChanges := slice -}}
@@ -13,7 +12,7 @@
 {{- end -}}
 {{- end -}}
 
-{{- $changelogEntry := dict -}}
+{{- $scheduledChanges = sort $scheduledChanges "publish_date" "desc" -}}
 
 <div class="DocsMarkdown--table-wrap">
 <div class="DocsMarkdown--table-wrap-inner">
@@ -21,9 +20,9 @@
 <thead>
 <tr>
 <th>Announcement Date</th>
-<th>Release Date</th>
+<th>Change Date</th>
 <th>Rule ID</th>
-{{- if (eq $product "WAF") -}}
+{{- if (eq $product "waf") -}}
 <th>Legacy Rule ID</th>
 {{- end -}}
 <th>Description</th>
@@ -33,18 +32,33 @@
 </tr>
 </thead>
 <tbody>
-{{- range index $changelogEntry "entries" -}}
+{{- if (ge (len $scheduledChanges) 1) }}
+{{- range index (index $scheduledChanges 0) "entries" -}}
 <tr>
-<td>{{- .announce_date -}}</td>
-<td>{{- .release_date -}}</td>
+<td>{{- .announcement_date -}}</td>
+<td>{{- .change_date -}}</td>
 <td>{{- .rule_id -}}</td>
-{{- if (eq $product "WAF") -}}
+{{- if (eq $product "waf") -}}
 <td>{{- .legacy_id -}}</td>
 {{- end -}}
 <td>{{- .description -}}</td>
 <td>{{- .previous_action -}}</td>
 <td>{{- .new_action -}}</td>
 <td>{{- .comments -}}</td>
+</tr>
+{{- end -}}
+{{- else -}}
+<tr>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+{{- if (eq $product "waf") -}}
+<td>N/A</td>
+{{- end -}}
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
 </tr>
 {{- end -}}
 </tbody>

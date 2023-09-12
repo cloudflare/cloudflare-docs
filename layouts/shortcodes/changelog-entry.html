@@ -21,7 +21,7 @@
 <tr>
 <th>Ruleset</th>
 <th>Rule ID</th>
-{{- if (eq $product "WAF") -}}
+{{- if (eq $product "waf") -}}
 <th>Legacy Rule ID</th>
 {{- end -}}
 <th>Description</th>
@@ -35,7 +35,7 @@
 <tr>
 <td>{{- .ruleset -}}</td>
 <td>{{- .rule_id -}}</td>
-{{- if (eq $product "WAF") -}}
+{{- if (eq $product "waf") -}}
 <td>{{- .legacy_id -}}</td>
 {{- end -}}
 <td>{{- .description -}}</td>

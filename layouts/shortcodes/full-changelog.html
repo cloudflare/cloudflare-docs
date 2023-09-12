@@ -59,6 +59,7 @@
         {{- $link := "" -}} 
         {{- $rellink := .url -}} 
         {{- $title := "" -}} 
+        {{- $description := .description -}}
         {{- with .topLevelLink -}}
         {{- $rellink = . -}}
         {{- end -}}
@@ -66,25 +67,25 @@
         {{- $title = . -}}
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}} 
         {{ else }} 
-        {{- $title = printf "%s · %s" $product .publish_date -}} 
+        {{- $title = printf "%s - %s" $product .publish_date -}} 
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}} 
         {{- end -}}
         {{- with .link -}}
         {{ $link = . }}
+        {{- end -}}
+        <!-- Custom logic for products with separate pages -->
+        {{- with .table -}}
+        {{ $description = printf "For more details, refer to the dedicated page for [%s - %s](%s)." $product $title $link -}}
+        {{- end -}}
+        {{- with .scheduled -}}
+        {{ $title = print "Scheduled - " $title -}}
+        {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
         {{- end -}}        
         <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print $rellink "index.xml" -}}">
           <td>{{ $product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
           <td class="changelogDate">{{ .publish_date }}</td>
-          <!-- Custom logic for products with separate pages -->
-          {{- with .table -}}
-          <td>
-            <p>For more details, refer to the dedicated page for {{ printf "[%s - %s](%s)" $product $title $link | $.Page.RenderString }}.</p>
-          </td>
-          <!-- End custom logic -->
-          {{- else -}}
-          <td>{{ .description | $.Page.RenderString }}</td>
-          {{- end -}}
+          <td>{{ $description | $.Page.RenderString }}</td>
         </tr>
         {{- end -}}
       </tbody>
