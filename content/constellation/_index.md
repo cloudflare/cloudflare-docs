@@ -19,14 +19,13 @@ Cloudflare provides a curated list of verified models, or you can train and uplo
 
 Functionality you can deploy to your application with Constellation:
 
+* Content generation, summarization, or similarity analysis
+* Question answering
+* Audio transcription
 * Image or audio classification
 * Object detection
 * Anomaly detection
-* Text translation, summarization, or similarity analysis
-* Natural language processing (NLP)
 * Sentiment analysis
-* Speech recognition (or text to speech)
-* Question answering
 
 ---
 
