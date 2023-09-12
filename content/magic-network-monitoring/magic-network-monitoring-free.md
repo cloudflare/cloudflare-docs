@@ -1,10 +1,10 @@
 ---
-title: Free version
+title: Free version (beta)
 pcx_content_type: reference
 weight: 7
 ---
 
-# Magic Network Monitoring free version
+{{<beta>}} Magic Network Monitoring free version{{</beta>}}
 
 A free version of Magic Network Monitoring (MNM) is available to all customers with a Cloudflare account. The free version includes all the features of the enterprise version, but has network flow volume and configuration limitations. Refer to [Limitations](#limitations) for more information.
 
