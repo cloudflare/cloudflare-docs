@@ -93,6 +93,9 @@ The `pinecone.ts` file contains the `IndexToPineconeHandler` class used to index
 Examine the content of `pinecone.ts`:
 
 ```typescript
+---
+filename: src/pinecone.ts
+---
 // Import necessary libraries
 import { NotionAPILoader } from "langchain/document_loaders/web/notionapi";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
@@ -106,9 +109,12 @@ class IndexToPineconeHandler {
   pinecone = new PineconeClient();  // Initialize a Pinecone client
 ```
 
-This first part imports the necessary libraries for fetching and processing data from Notion, converting it into vector embeddings with OpenAI, and storing it in Pinecone database. It then defines a class `IndexToPineconeHandler`, which will handle indexing Notion content to Pinecone.
+This first part imports the necessary libraries for fetching and processing data from Notion, converting it into vector embeddings with OpenAI, and storing it in Pinecone database. The class `IndexToPineconeHandler` handles indexing Notion content to Pinecone.
 
 ```typescript
+---
+filename: src/pinecone.ts
+---
   async createIndex(dimension) {
     const indexes = await this.pinecone.listIndexes()
     const index = indexes.find(i => i === this.#env.PINECONE_INDEX_NAME)
@@ -131,6 +137,9 @@ This first part imports the necessary libraries for fetching and processing data
 The `createIndex()` function checks for an existing index in Pinecone and, if none exists, creates a new one. The `createIndex()` function makes use of the `dimension` argument to define the number of dimensions in the vector space of the index. If the index the `createIndex()` function is looking for is already in Pinecone, the function skips the creation step.
 
 ```typescript
+---
+filename: src/pinecone.ts
+---
   async generatePineconeDocumentsForNotion() {
     console.log("Loading documents from Notion...")
 
@@ -161,11 +170,14 @@ The `createIndex()` function checks for an existing index in Pinecone and, if no
   }
 ```
 
-The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of "pages" which are then loaded and "split" using Langchain. 
+The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain. 
 
-This section is the most complex part of this process, and explaining how it works in detail is out of scope for this tutorial. In short, it takes the content in Notion and splits it into smaller documents, which are then converted into vector embeddings using OpenAI. These vector embeddings are then stored in Pinecone.
+This function is the most complex part of this process, and explaining how it works in detail is out of scope for this tutorial. In short, the function takes the content in Notion and splits it into smaller documents, which are then converted into vector embeddings using OpenAI. These vector embeddings are then stored in Pinecone.
 
 ```typescript
+---
+filename: src/pinecone.ts
+---
   async handle(request: Request, env, ctx) {
     this.#env = env;
 
@@ -199,7 +211,7 @@ export const IndexToPinecone = (request, env, ctx) => {
 }
 ```
 
-Finally, the `handle()` function is the entry point of the _____ class. The `handle()` function first validates the incoming request to check if the user is authorized. If the user is not authorized, the `handle()` function returns an HTTP `401 Unauthorized` response. If the user is authorized, the `handle()` function initializes the Pinecone client, creates an index in Pinecone, loads pages from Notion, transforms these pages into vectors, and stores these vector embeddings into the Pinecone index. The function returns a `Done` message once these steps are completed.
+Finally, the `handle()` function is the entry point of the `IndexToPineconeHandler` class. The `handle()` function first validates the incoming request to check if the user is authorized. If the user is not authorized, the `handle()` function returns an HTTP `401 Unauthorized` response. If the user is authorized, the `handle()` function initializes the Pinecone client, creates an index in Pinecone, loads pages from Notion, transforms these pages into vectors, and stores these vector embeddings into the Pinecone index. The function returns a `Done` message once these steps are completed.
 
 The last part of the code exports a function `IndexToPinecone` as a handler which invokes the `handle()` function of an instantiated `IndexToPineconeHandler` class object. The `IndexToPinecone` function is what is being used in the main Worker code to handle requests related to indexing the Notion content into Pinecone.
 
@@ -207,7 +219,7 @@ The last part of the code exports a function `IndexToPinecone` as a handler whic
 
 This API can take a very long time to run, and can quickly go over the subrequest limit for standard Workers functions, even on modestly-sized Notion workspaces. It is recommended that you enable [Workers Unbound](/workers/platform/pricing/#workers) on your deployed application, which will allow additional subrequests to be made.
 
-Alternatively, you can use the Node.js script in the `local-indexing` directory to run this function locally. For more instructions on how to do this, refer to the [README](URL) on GitHub.
+Alternatively, you can use the Node.js script in the `local-indexing` directory to run this function locally. For more instructions on how to do this, refer to the [README](https://github.com/kristianfreeman/chatgpt-pinecone-workers-plugin) on GitHub.
 
 {{</Aside>}}
 
@@ -218,6 +230,9 @@ The `search.ts` file implements the `GetSearch` class designed to provide search
 In the content of `search.ts`, the TypeScript module defines a class `GetSearch` that extends the `OpenAPIRoute` class from the `@cloudflare/itty-router-openapi` library. The main purpose of this `GetSearch` class is to provide a specific API route that handles and responds to user queries with relevant content from Notion pages that have been indexed into Pinecone database.
 
 ```typescript
+---
+filename: src/search.ts
+---
 // Importing necessary libraries
 import { OpenAI } from "langchain/llms/openai";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
@@ -230,6 +245,9 @@ import { VectorDBQAChain } from "langchain/chains";
 These are the necessary libraries for the `GetSearch` class to interact with OpenAI, Pinecone, and Langchain. It also uses the `OpenAPIRoute` class from the `@cloudflare/itty-router-openapi` library to define an OpenAPI-compliant API route, which is necessary for a ChatGPT plugin.
 
 ```typescript
+---
+filename: src/search.ts
+---
 export class GetSearch extends OpenAPIRoute {
 	static schema = {
 		// OpenAPI schema defining the tags, summary, parameters, and responses for this route
@@ -239,6 +257,9 @@ export class GetSearch extends OpenAPIRoute {
 In the above code block, `GetSearch` extends `OpenAPIRoute`, which means it inherits methods and properties from the `OpenAPIRoute` class. The schema object indicates the tags, summary, parameters, and responses for this route.
 
 ```typescript
+---
+filename: src/search.ts
+---
 async handle(request: Request, env, ctx, data: Record<string, any>) {
 	// Instantiates a new Pinecone client and initializes it with the environment and API key
 		const pinecone = new PineconeClient();
@@ -254,6 +275,9 @@ async handle(request: Request, env, ctx, data: Record<string, any>) {
 The `handle()` method in the above code block is where the main functionality happens. The `handle()` method is an asynchronous function that gets triggered when a request hits the registered API route. The `handle()` method first initializes the Pinecone client, and then fetches necessary information from the request and environment variables.
 
 ```typescript
+---
+filename: src/search.ts
+---
 const pineconeIndex = pinecone.Index(env.PINECONE_INDEX_NAME)
 const vectorStore = await PineconeStore.fromExistingIndex(
 	new OpenAIEmbeddings({ openAIApiKey: env.OPENAI_API_KEY }),
@@ -264,6 +288,9 @@ const vectorStore = await PineconeStore.fromExistingIndex(
 In the above code block, the Pinecone index is retrieved and then used to create a `VectorStore` from the existing index. This `VectorStore` will be used to perform searches in the vector database.
 
 ```typescript
+---
+filename: src/search.ts
+---
 const model = new OpenAI({
 	openAIApiKey: env.OPENAI_API_KEY,
 });
@@ -276,6 +303,9 @@ const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
 In the above code block, a new instance of Langchain's OpenAI LLM (Large Language Model) interface is initialized using the OpenAI API key. This is combined with the `vectorStore` to initialize a Vector Database Query Chain. Explaining the functionality of this chain is out of scope, but it can be thought of as an interface to correctly send formatted queries to the Pinecone database.
 
 ```typescript
+---
+filename: src/search.ts
+---
 const response = await chain.call({ query: data.q });
 
 return new Response(JSON.stringify(response), {
@@ -287,13 +317,16 @@ Finally, the query from the client request is passed to the query chain, the res
 
 ## 6. Add the indexing and search routes
 
-Now that you've created the indexing and search functionality, you'll need to add the routes to your application, using the `index.ts` file.
+Now that you have created the indexing and search functionality, you will need to add the routes to your application, using the `index.ts` file.
 
 The imported `GetSearch` from "./search" and `IndexToPinecone` from './pinecone' are classes that each define a different route handler for the API.
 
 Below is a breakdown of each part of the code:
 
 ```typescript
+---
+filename: src/index.ts
+---
 // Import necessary libraries and route handlers
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
 import { GetSearch } from "./search";
@@ -303,6 +336,9 @@ import { IndexToPinecone } from './pinecone'
 The code above first imports the necessary libraries. `OpenAPIRouter` is a function for creating open API routers, `GetSearch` and `IndexToPinecone` are two route handlers that have been defined earlier in other modules.
 
 ```typescript
+---
+filename: src/index.ts
+---
 // Create a default router with some descriptions
 export const router = OpenAPIRouter({
 	schema: {
@@ -330,6 +366,9 @@ export const router = OpenAPIRouter({
 The part above creates a new `OpenAPIRouter` instance and defines the schema, documentation URL and plugin properties using a configuration object.
 
 ```typescript
+---
+filename: src/index.ts
+---
 // Define routes
 router.get("/search", GetSearch); // Search method
 router.original.get("/pinecone", IndexToPinecone); // Indexing method
@@ -341,6 +380,9 @@ router.all("*", () => new Response("Not Found.", { status: 404 }));
 The section above defines one `GET` route for each of the imported handlers. Whenever a `GET` request is sent to `YOUR_WORKER_URL/search`, it will pass the request to `GetSearch` handler. Similarly, `YOUR_WORKER_URL/pinecone` is handled by `IndexToPinecone`. Any other routes will result in a `Not Found` message with HTTP status code `404`.
 
 ```typescript
+---
+filename: src/index.ts
+---
 // Export default handler
 export default {
 	fetch: router.handle,
@@ -360,12 +402,12 @@ $ npx wrangler secret put <SECRET_NAME>
 ```
 
 - `AUTHORIZATION`(optional): An optional authorization token that can be used to secure your application. If you do not want to use this, you can leave it blank.
-- `NOTION_INTEGRATION_TOKEN`: The Notion integration token you created in step __.
+- `NOTION_INTEGRATION_TOKEN`: The Notion integration token you created in step three.
 - `NOTION_PAGE_ID`: The ID of the Notion page you want to index.
-- `OPENAI_API_KEY`: this is the OpenAI API key you created earlier.
-- `PINECONE_API_KEY`: this is the Pinecone API key you created earlier.
-- `PINECONE_ENVIRONMENT`: this is the environment that Pinecone deploys to.
-- `PINECONE_INDEX_NAME`: this is the name of the Pinecone index you created earlier.
+- `OPENAI_API_KEY`: Your OpenAI API key you can find on the [API Keys page](https://platform.openai.com/account/api-keys).
+- `PINECONE_API_KEY`: The Pinecone API key you created in step two.
+- `PINECONE_ENVIRONMENT`: The environment that Pinecone deploys to.
+- `PINECONE_INDEX_NAME`: The name of the Pinecone index you created in step two.
 
 To deploy your Worker application to the Cloudflare global network:
 
@@ -391,7 +433,12 @@ The ChatGPT Plugins API is currently in alpha. This means that the instructions 
 
 ChatGPT Plugins, which are in alpha, allow you to augment ChatGPT's functionality with custom functionality. When it is appropriate, ChatGPT will query your plugin to provide additional information to the user.
 
-To add a new ChatGPT plugin, select the "Alpha" option at the top of ChatGPT's UI for the model option, and select "Plugins". A new button appear with the test "No plugins enabled". Select this button and select the "Plugin store" option.
+To add a new ChatGPT plugin:
+
+1. Log in to [ChatGPT](https://chat.openai.com).
+2. Select the **Alpha** option at the top of ChatGPT's dashboard for the model option.
+3. Select **Plugins**.
+3. A new button appear with the text `No plugins enabled`. Select this button and select the **Plugin store** option.
 
 In the new modal popup, select **Develop your own plugin**. This will allow you to enter a custom plugin URL and use your own plugins directly in ChatGPT. Enter the deployed Workers URL, as seen below:
 
