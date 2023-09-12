@@ -533,10 +533,26 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 
 ### Eclipse
 
+To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to Eclipse's Java VM.
+
+<details>
+<summary>macOS</summary>
+<div>
+
 ```sh
 $ export JAVA_HOME=$(echo /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.*/jre/)
 $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
 ```
+
+</div>
+</details>
+
+<details>
+<summary>Windows</summary>
+<div>
+
+</div>
+</details>
 
 ### Minikube
 
