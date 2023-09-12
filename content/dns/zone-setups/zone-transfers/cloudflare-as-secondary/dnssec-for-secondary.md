@@ -46,7 +46,19 @@ If your primary DNS provider uses NSEC3 instead of NSEC, Cloudflare will fail to
 ### Steps
 
 1. Enable DNSSEC at your primary DNS provider.
-2. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable pre-signed DNSSEC on your Cloudflare secondary zone.
+2. Enable DNSSEC for your zone at Cloudflare, using either the Dashboard or the API.
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+a. Select your zone and go to **DNS** > **Settings**.
+
+b. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set the `dnssec_presigned` value to `true`.
 
 ```bash
 curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
@@ -57,6 +69,10 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
    "dnssec_presigned":true
   }'
 ```
+ 
+{{</tab>}}
+{{</tabs>}}
+
 
 3. Make sure Cloudflare nameservers are added at your registrar. You can see your Cloudflare nameservers on the dashboard by going to **DNS** > **Records**.
 
