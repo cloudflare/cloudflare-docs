@@ -24,10 +24,11 @@ You can only enable O2O on the Cloudflare Enterprise plan.
 
 To enable O2O for a specific hostname within a Cloudflare Zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with a target of the `CNAME` provided by SFCC Business Manager, which is the dashboard used by SFCC customers to configure their storefront environment.
 
-The `CNAME` provided by SFCC Business Manager will resemble `commcloud.prod-abcd-example-com.cc-ecdn.net` and contains 3 distinct parts. For each hostname routing traffic through SFCC, be sure to update each part of the example `CNAME` to match your configuration.
-1. Environment: `prod` should be changed to `prod` or `dev` or `stg`
-2. Realm: `abcd` should be changed to the Realm ID assigned to you by SFCC
-3. Domain Name: `example-com` should be changed to match your domain name in a hypenated format
+The `CNAME` provided by SFCC Business Manager will resemble `commcloud.prod-abcd-example-com.cc-ecdn.net` and contains 3 distinct parts. For each hostname routing traffic through SFCC, be sure to update each part of the example `CNAME` to match your configuration:
+
+1. **Environment**: `prod` should be changed to `prod` or `dev` or `stg`.
+2. **Realm**: `abcd` should be changed to the Realm ID assigned to you by SFCC.
+3. **Domain Name**: `example-com` should be changed to match your domain name in a hyphenated format.
 
 | Type | Name | Target | Proxy status |
 | --- | --- | --- | --- |
