@@ -60,6 +60,12 @@ To create a Keyless certificate in the dashboard:
 
 To create a Keyless certificate with the API, send a [`POST`](/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request.
 
+{{<Aside type="warning">}}
+
+{{<render file="_certificate-api-formatting.md">}}
+
+{{</Aside>}}
+
 {{</tab>}}
 {{</tabs>}}
 

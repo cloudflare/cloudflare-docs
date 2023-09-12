@@ -38,11 +38,23 @@ For hostname:
 
 1.  [Upload the new certificate](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
+{{<Aside type="warning">}}
+
+{{<render file="_certificate-api-formatting.md">}}
+
+{{</Aside>}}
+
 2.  [Enable Authenticated Origin Pulls for that specific hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
 
 For global:
 
 1.  [Upload the new certificate](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate).
+
+{{<Aside type="warning">}}
+
+{{<render file="_certificate-api-formatting.md">}}
+
+{{</Aside>}}
 
 2.  [Check whether new certificate is Active](/api/operations/zone-level-authenticated-origin-pulls-get-certificate-details).
 

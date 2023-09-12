@@ -14,6 +14,12 @@ When you enable Authenticated Origin Pulls per hostname, all proxied traffic to 
 
 First, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
+{{<Aside type="warning">}}
+
+{{<render file="_certificate-api-formatting.md">}}
+
+{{</Aside>}}
+
 In the API response, save the certificate `id` since it is required for the next step.
 
 ## 2. Enable Authenticated Origin Pulls (globally)
