@@ -60,7 +60,7 @@ Bypass does not enforce any Access security controls and requests are not logged
 
 {{</Aside>}}
 
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure that on-site employees have direct permanent access to your internal applications.
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure that on-network employees have direct permanent access to your internal applications.
 
 For example, you could create the following Bypass policy for an internal application, where `Value` is the IP range of your office network:
 
