@@ -1,5 +1,5 @@
 ---
-title: Free customers
+title: Free version
 pcx_content_type: reference
 weight: 7
 ---
