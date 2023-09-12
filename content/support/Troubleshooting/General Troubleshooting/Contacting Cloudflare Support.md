@@ -29,7 +29,8 @@ As a Cloudflare customer, you can contact Cloudflare for support via the communi
 
 |   | Enterprise  | Business | Pro | Free |
 |---|---|---|---|---|
-|  [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes  | Yes  | Recommended  | Recommended  |
+| [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes  | Yes  | Recommended  | Recommended  |
+| [Discord](https://discord.cloudflare.com/)<br/>Join the Discord community to ask basic troubleshooting questions (mainly focused on the Developer Platform). | Yes  | Yes  | Recommended  | Recommended  |
 | [Support Ticket](#getting-help-with-an-issue)<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | Yes | No* |
 | **Chat**<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | No | No |
 | **Emergency Phone**<br/>Use phone support to reach out during emergencies such as site outages or DDoS attacks. | Yes | No | No | No |

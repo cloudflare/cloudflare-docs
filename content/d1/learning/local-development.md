@@ -61,6 +61,33 @@ Note that `wrangler dev` separates local and production (remote) data. A local s
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
+## Develop locally with Pages
+
+You can develop against a _local_ (only) D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
+
+Your `wrangler.toml` should resemble the following:
+
+```toml
+---
+filename: wrangler.toml
+---
+# If you are only using Pages + D1, you only need the below in your wrangler.toml to interact with D1 locally.
+[[d1_databases]]
+binding = "DB" # Should match preview_database_id
+database_name = "YOUR_DATABASE_NAME"
+database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
+preview_database_id = "DB" # Required for Pages local development
+```
+
+You can then execute queries and/or run migrations against a local database as part of your local development process:
+
+```sh
+$ wrangler d1 execute YOUR_DATABASE_NAME \
+  --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);" --local
+```
+
+The preceding command would execute queries the **local only** version of your D1 database.
+
 ## Persist data
 
 {{<Aside type="note" heading="Changes in wrangler v3">}}

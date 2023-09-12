@@ -19,48 +19,123 @@ The TLS certificate can be hosted by any device on your network. However, the en
 
 If you do not already have a TLS endpoint on your network, you can set one up as follows:
 
-1. Create a local certificate:
+1. Generate a TLS certificate:
 
-   ```sh
-   $ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
-   ```
+```sh
+$ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+```
 
-   The command will output a PEM certificate and key. Store these files in a secure place.
+The command will output a certificate in PEM format and its private key. Store these files in a secure place.
 
 {{<Aside type="note">}}
 The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
 {{</Aside>}}
 
-2. Run a simple HTTPS server to host the certificate:
+2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
 
-   1. Create a Python 3 script called `myserver.py`:
+<details>
+<summary>Python</summary>
+<div>
 
-      ```txt
-      ---
-      filename: myserver.py
-      ---
-      import ssl, http.server
+To serve the TLS certificate using Python:
 
-      class BasicHandler(http.server.BaseHTTPRequestHandler):
-          def do_GET(self):
-              self.send_response(200)
-              self.send_header('Content-type', 'text/html')
-              self.end_headers()
-              self.wfile.write(b'OK')
-              return
+1. Create a Python 3 script called `myserver.py`:
 
-      server = http.server.HTTPServer(('0.0.0.0', 4443), BasicHandler)
-      sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-      sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
-      server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
-      server.serve_forever()
-      ```
+   ```txt
+   ---
+   filename: myserver.py
+   ---
+   import ssl, http.server
 
-   2. Run the script:
+   class BasicHandler(http.server.BaseHTTPRequestHandler):
+         def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b'OK')
+            return
 
-      ```sh
-      $ python3 myserver.py
-      ```
+   server = http.server.HTTPServer(('0.0.0.0', 3333), BasicHandler)
+   sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+   sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
+   server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
+   server.serve_forever()
+   ```
+
+2. Run the script:
+
+   ```sh
+   $ python3 myserver.py
+   ```
+
+</div>
+</details>
+
+<details>
+<summary>nginx in Docker</summary>
+<div>
+
+To serve the TLS certificate from an nginx container in Docker:
+
+1. Create an nginx configuration file called `nginx.conf`:
+
+   ```txt
+   ---
+   filename: nginx.conf
+   ---
+   events {
+   worker_connections  1024;
+   }
+
+   http {
+      server {
+         listen              443 ssl;
+         ssl_certificate     /certs/example.pem;
+         ssl_certificate_key /certs/example.key;
+         location / {
+               return 200;
+         }
+      }
+   }
+   ```
+
+If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
+
+2. Add the nginx image to your Docker compose file:
+
+   ```yml
+   ---
+   filename: docker-compose.yml
+   ---
+   version: '3.3'
+   services:
+   nginx:
+      image: nginx:latest
+      ports:
+         - 3333:443
+      volumes:
+         - ./nginx.conf:/etc/nginx/nginx.conf:ro
+         - ./certs:/certs:ro
+   ```
+
+    If needed, replace `./nginx.conf` and `./certs` with the locations of your nginx configuration file and certificate.
+
+3. Start the server:
+
+   ```sh
+   $ docker-compose up -d
+   ```
+
+</div>
+</details>
+
+3. To test that the server is working, run a curl command from the end user's device:
+
+```sh
+$ curl -v --insecure https://<private-server-IP>:3333/
+```
+
+You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
 
 ## 2. Extract the SHA-256 fingerprint
 
@@ -81,13 +156,10 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Network locations** and select **Add new**.
 3. Name your network location.
-4. In **Host and Port**, enter the private IP address and port number of the TLS endpoint (for example, `192.168.185.198:4443`).
-
-   The [example TLS endpoint](#create-a-new-tls-endpoint) created above would use the IP of the device running the Python script and the port configured for the HTTPS server.
-
+4. In **Host and Port**, enter the private IP address and port number of your [TLS endpoint](#create-a-new-tls-endpoint) (for example, `192.168.185.198:3333`).
 5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate.
 
-WARP will automatically exclude the IP address of the TLS endpoint from all [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configurations. This prevents remote users from accessing the endpoint through the WARP tunnel on any port. 
+WARP will automatically exclude the IP address of the TLS endpoint from all [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configurations. This prevents remote users from accessing the endpoint through the WARP tunnel on any port.
 
 ## 4. Configure device profile
 
@@ -100,6 +172,14 @@ WARP will automatically exclude the IP address of the TLS endpoint from all [Spl
 4. Save the profile.
 
 Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing Wi-Fi networks), the WARP client will determine its network location and apply the corresponding settings profile.
+
+## 5. Verify managed network
+
+To check if the WARP client detects the network location:
+
+1. Turn on WARP.
+2. Disconnect and reconnect to the network.
+3. Open a terminal and run `warp-cli get-alternate-network`.
 
 {{<Aside type="note">}}
 The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
