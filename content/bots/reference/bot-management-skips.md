@@ -8,6 +8,8 @@ weight: 0
 
 There are instances in which Bot Management does not run and certain fields, such as the [JA3 field](/bots/concepts/ja3-fingerprint/), are not populated because it has been determined that running Bot Management would not be necessary.
 
+Refer to [Bot scores](/bots/concepts/bot-score/#not-computed) for more information about why a request is not scored. 
+
 ## Common reasons for Bot Management to not score a request
 
 ### Requests to internal endpoints
@@ -21,10 +23,6 @@ Requests such as `/cdn-cgi/` are handled individually and will never receive a B
 | `/cdn-cgi/trace` |
 | `/cdn-cgi/challenge-platform/…` |
 | `/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js` |
-
-### Same zone edgeworker and Grey Cloud sub-requests
-
-Same zone edgeworker subrequests will receive a bot score and have JavaScript injected, but do not execute [custom rules](/waf/custom-rules/).
 
 ### Purge requests
 
