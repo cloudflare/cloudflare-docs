@@ -26,9 +26,11 @@ layout: list
       <td>2023-09-11</td>
       <td>2023-09-18</td>
       <td>Disabled</td>
+      <td>N/A</td>
       <td>...e9245e46</td>
       <td>SSRF - Cloud - Beta</td>
       <td>This rule will replace ...25ba9d7c</td>
     </tr>
   </tbody>
 </table>
+{{</table-wrap>}}
