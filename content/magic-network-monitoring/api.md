@@ -8,11 +8,14 @@ weight: 7
 
 The Magic Network Monitoring API is divided into [Account configuration](/api/operations/magic-network-monitoring-configuration-list-account-configuration) and [Rules configuration](/api/operations/magic-network-monitoring-rules-list-rules).
 
-Refer to [Account configuration](/api/operations/magic-network-monitoring-configuration-list-account-configuration) to set up aspects related to your Magic Network Monitoring account, such as:
-- Create a new network monitoring configuration
-- List default sampling and router IPs for your account
-- Update fields in an existing network monitoring configuration
+## Account configuration
+
+Refer to [Account configuration](/api/operations/magic-network-monitoring-configuration-list-account-configuration) to:
+- Create, list, update, and delete Magic Network Monitoring configurations
+- List default sampling, router IPs, and rules for account
+
+## Rules configuration
 
 Refer to [Rules configuration](/api/operations/magic-network-monitoring-rules-list-rules) to:
 - Create, list, update, and delete rules
-- Update advertisement for rule
+- Update advertisement for a rule
