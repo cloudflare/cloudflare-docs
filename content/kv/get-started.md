@@ -177,6 +177,13 @@ In your Worker script, add your KV namespace in the `Env` interface:
 ```js
 	YOUR_KV_NAMESPACE: KVNamespace;
 ```
+
+Use the KV `put()` method to create a new key-value pair, or to update the value for a particular key.
+
+```js
+let value = await NAMESPACE.put(key, value);
+```
+
 Use the KV `get()` method to fetch the data you stored in your KV database:
 
 ```js
@@ -203,7 +210,6 @@ $ npx wrangler deploy
 ```
 
 Preview your Workers KV at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
-
 
 At the end of this tutorial, you have learned how to create, test and a deploy a Workers KV globally.
 
