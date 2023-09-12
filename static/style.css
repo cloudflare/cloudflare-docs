@@ -1362,7 +1362,6 @@ div>code,
 li>code,
 td>code,
 .DocsMarkdown--aside>code,
-code,
 .InlineCode {
   font-family: var(--monospace-font-family);
   font-size: var(--inline-code-font-size);
