@@ -40,10 +40,9 @@ You can use the following custom error template to start building your page:
 </html>
 ```
 
-{{<Aside type="warning">}}
-Your custom error page must include a custom error token and cannot
-exceed 1.43 MB. Also, it must include HTML *\<head\>* and *\</head\>*
-tags.
+{{<Aside type="warning" header="Warnings">}}
+* Your custom error page must include a custom error token and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
@@ -182,5 +181,6 @@ ___
 -   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
 -   [IP Access Rules](/waf/tools/ip-access-rules/)
 -   [Cloudflare Web Application Firewall (WAF)](/waf/)
+-   [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)

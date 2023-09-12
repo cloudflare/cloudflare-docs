@@ -2,6 +2,10 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-09-11'
+  title:
+  description: |-
+    * **Reddit Managed Component**: Support new "Account ID" formats (e.g. "ax_xxxxx").
 - publish_date: '2023-09-06'
   title:
   description: |-
