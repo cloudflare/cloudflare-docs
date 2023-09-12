@@ -406,7 +406,9 @@ On some systems you may need to set the following in your path/export list:
 $ export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
 ```
 
-### Google Cloud SDK
+### Google Cloud
+
+#### Google Cloud SDK
 
 The commands below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
 
@@ -438,11 +440,11 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-run to point `gcloud` to the file's new location.
 {{</Aside>}}
 
-#### Google Cloud SDK and Kaniko
+##### Google Cloud SDK and Kaniko
 
 Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate).
 
-### Google Drive for desktop
+#### Google Drive for desktop
 
 To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
