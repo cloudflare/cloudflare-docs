@@ -220,3 +220,20 @@ gpupdate /force
 {{</tabs>}}
 
 - **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.
+
+## Remote Browser third party storage partitions
+
+Chromium is experimenting with rolling out a feature that partitions local storage in browsers. When this is enabled, the Cloudflare Browser Isolation client can inadvertently send client storage to wrong Remote Browser, most notably when rapidly switching between tabs.
+
+How to identify if your browser is impacted:
+
+1. Navigate to chrome://version/?show-variations-cmd
+2. Search for `ThirdPartyStoragePartitioning/Enabled`
+3. If you find a match, you likely need to forcibly disable this feature (see below)
+
+How to disable this experimental feature:
+
+1. Navigate to chrome://flags/#third-party-storage-partitioning
+2. Ensure that Third Party Storage Partitioning is `Disabled`
+3. Press "Relaunch" for this change to be applied
+
