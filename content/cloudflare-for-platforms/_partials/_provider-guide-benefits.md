@@ -6,4 +6,4 @@ _build:
 inputParameters: providerName
 ---
 
-O2O's benefits include applying your own Cloudflare Zone's services and settings, such as [WAF](/waf/), [Bot Management](/bots/plans/bm-subscription/), [Waiting Room](/waiting-room/) and more, on the traffic destined for your $1 environment.
+O2O's benefits include applying your own Cloudflare Zone's services and settings - such as [WAF](/waf/), [Bot Management](/bots/plans/bm-subscription/), [Waiting Room](/waiting-room/), and more - on the traffic destined for your $1 environment.
