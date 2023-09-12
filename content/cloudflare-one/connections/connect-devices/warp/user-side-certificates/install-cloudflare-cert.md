@@ -531,6 +531,13 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 - [Rider](https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html)
 - [WebStorm](https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html)
 
+### Eclipse
+
+```sh
+$ export JAVA_HOME=$(echo /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.*/jre/)
+$ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
+```
+
 ### Minikube
 
 Instructions on how to install the Cloudflare root certificate are available [here](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority)
