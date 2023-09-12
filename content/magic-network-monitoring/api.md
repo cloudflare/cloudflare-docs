@@ -6,7 +6,7 @@ weight: 7
 
 # Magic Network Monitoring API
 
-The Magic Network Monitoring API is divided into [Account configuration](/api/operations/magic-network-monitoring-configuration-list-account-configuration) and [Rules configuration](/api/operations/magic-network-monitoring-rules-list-rules).
+Use Magic Network Monitoring's API to configure your [account](/api/operations/magic-network-monitoring-configuration-list-account-configuration) and [rules](/api/operations/magic-network-monitoring-rules-list-rules).
 
 ## Account configuration
 
