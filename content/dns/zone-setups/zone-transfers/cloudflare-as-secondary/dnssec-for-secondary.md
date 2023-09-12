@@ -24,9 +24,34 @@ Refer to [Set up multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/setup/) an
 
 ## Enable DNSSEC for hidden primary setup
 
-If you use Cloudflare secondary nameservers as the only nameservers authoritatively responding to DNS queries, you can enable DNSSEC for your zone by setting a `status` of `active` through the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status).
+If you use Cloudflare secondary nameservers as the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can enable on-the-fly signing DNSSEC to have Cloudflare sign the records for your zone.
 
 In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Select your zone and go to **DNS** > **Settings**.
+
+2. Under **DNSSEC with Secondary DNS** select **On-the-fly signing**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
+
+```bash
+curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <KEY>' \
+--header 'Content-Type: application/json' \
+--data '{
+   "status": "active"
+  }'
+```
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -66,7 +91,7 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 --header 'X-Auth-Key: <KEY>' \
 --header 'Content-Type: application/json' \
 --data '{
-   "dnssec_presigned":true
+   "dnssec_presigned": true
   }'
 ```
  
@@ -76,4 +101,4 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 
 3. Make sure Cloudflare nameservers are added at your registrar. You can see your Cloudflare nameservers on the dashboard by going to **DNS** > **Records**.
 
-4. Make sure there is a DS record added at your registrar. The DS record is obtained from your primary DNS provider (the signer of the zone). The DS record communicates to resolvers that a zone has DNSSEC enabled.
+4. Make sure there is a DS record added at your registrar. The DS record is obtained from your primary DNS provider (the signer of the zone) and is what indicates to DNS resolvers that your zone has DNSSEC enabled.
