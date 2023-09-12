@@ -74,11 +74,9 @@ $ npm install @cloudflare/ai
 
 ## 4. Run an inference task in your Worker
 
-Now we are ready to run an inference task in our our worker. In this case 
+Now we are ready to run an inference task in our our worker. In this case, we will use an LLM, like lambda-2, to answer a questions.
 
-First, go to your `d1-tutorial` Worker and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
-
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
+Go to your `workers-ai-app` and update the `worker.ts` with the following code: 
 
 ```typescript
 ---
@@ -150,7 +148,6 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 }
 ```
 
-To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
 
 ## 6. Deploy your AI Worker
 
@@ -176,8 +173,3 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 ## Next steps
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
-
-- [todo]()
-- [todo]() within your Worker.
-- Explore [todo]().
-
