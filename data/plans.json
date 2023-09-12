@@ -479,7 +479,7 @@
     },
     "lists": {
       "title": "Lists",
-      "link": "/fundamentals/global-configurations/lists/",
+      "link": "/waf/tools/lists/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -491,7 +491,7 @@
         },
         "ip_lists": {
           "title": "IP Lists",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/",
+          "link": "/waf/tools/lists/ip-lists/",
           "free": 1,
           "pro": 10,
           "biz": 10,
@@ -499,7 +499,7 @@
         },
         "open_proxies_list": {
           "title": "Cloudflare Open Proxies Managed IP List",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "link": "/waf/tools/lists/ip-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -507,7 +507,7 @@
         },
         "z_all_managed_ip_lists": {
           "title": "All Managed IP Lists",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "link": "/waf/tools/lists/ip-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",

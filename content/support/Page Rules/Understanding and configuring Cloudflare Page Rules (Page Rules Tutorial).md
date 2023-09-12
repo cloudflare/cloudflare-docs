@@ -277,7 +277,7 @@ Note that `example.com/some-path/cloudflare.com` will be saved _without_ a final
 
 If you specify a port in the **If the URL matches** field of a Page Rule, it must be one of the following:
 
--   One of the HTTP/HTTPS ports [compatible with Cloudflare’s proxy](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   One of the HTTP/HTTPS ports [compatible with Cloudflare’s proxy](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
 -   A custom port of a [Cloudflare Spectrum](/spectrum/) HTTPS application.
 
 ### Using Page Rules with Workers
