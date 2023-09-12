@@ -55,7 +55,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - `passThroughOnException()` is not currently as resilient as it is in Workers. We currently wrap Pages Functions code in a `try`/`catch` block and fallback to calling `env.ASSETS.fetch()`. This means that any critical failures (such as exceeding CPU time or exceeding memory) may still throw an error.
 
-## Enabling Access on your `*.pages.dev` domain
+## Enable Access on your `*.pages.dev` domain
 
 If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams-access/)] for your preview deployments and your `*.pages.dev` domain, you must:
 
