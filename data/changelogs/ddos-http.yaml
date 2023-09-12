@@ -87,15 +87,6 @@ entries:
   table: true
   scheduled: true
   link: '/ddos-protection/change-log/http/scheduled-changes/'
-  entries:
-  - ruleset: 'HTTP DDoS'
-    announcement_date: '2023-08-24'
-    change_date: '2023-09-04'
-    rule_id: '...4a95ba67'
-    description: 'HTTP requests with unusual HTTP headers or URI path (signature #32).'
-    previous_action: 'ddos_dynamic'
-    new_action: 'ddos_dynamic'
-    comments: 'Expand the scope of the rule to catch more attacks'
 - publish_date: '2023-08-16'
   title: '2023-08-16 - Emergency'
   table: true

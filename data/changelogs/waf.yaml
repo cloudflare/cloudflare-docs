@@ -2,6 +2,10 @@
 link: "/waf/change-log/"
 productName: WAF
 entries:
+- publish_date: '2023-09-11'
+  table: true
+  scheduled: true
+  link: '/waf/change-log/scheduled-changes/'
 - publish_date: '2023-09-04'
   title: '2023-09-04'
   table: true
