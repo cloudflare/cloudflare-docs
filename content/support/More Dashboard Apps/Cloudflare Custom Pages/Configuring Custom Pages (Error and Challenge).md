@@ -91,7 +91,6 @@ Only one page-specific custom error token can be used per page.
 | ::IM\_UNDER\_ATTACK\_BOX:: | JS Challenge |
 | ::CLOUDFLARE\_ERROR\_500S\_BOX:: | 5XX Errors |
 | ::CLOUDFLARE\_ERROR\_1000S\_BOX:: | 1XXX Errors |
-| ::ALWAYS\_ONLINE\_NO\_COPY\_BOX:: | Always Online (deprecated token) |
 
 ___
 
