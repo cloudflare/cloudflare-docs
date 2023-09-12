@@ -12,7 +12,7 @@ Use Magic Network Monitoring's API to configure your [account](/api/operations/m
 
 Refer to [account configuration](/api/operations/magic-network-monitoring-configuration-list-account-configuration) to:
 - Create, list, update, and delete Magic Network Monitoring configurations
-- List default sampling, router IPs, and rules for account
+- List default sampling, router IPs, and rules for an account
 
 ## Rules configuration
 
