@@ -79,7 +79,7 @@ This API token requirement will be lifted prior to Pub/Sub becoming Generally Av
 5. Name the token - e.g. "Pub/Sub Write Access"
 6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
 7. Select **Add More**  below the newly created permission. Choose **User**, select **Memberships** from the first drop-down, and **Edit** as the permission.
-8. Click **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission
+8. Select **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission.
 9. Click **Create Token**, and copy the token value.
 
 In your terminal, configure a `CLOUDFLARE_API_TOKEN` environmental variable with your Pub/Sub token. When this variable is set, `wrangler` will use it to authenticate against the Cloudflare API.
