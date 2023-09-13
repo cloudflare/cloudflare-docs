@@ -34,7 +34,7 @@ Refer to the page about each list type for details.
 
 The name of a list must comply with the following requirements:
 * The name uses only lowercase letters, numbers, and the underscore (`_`) character in the name. A valid name satisfies this regular expression: `^[a-z0-9_]+$`.
-* The maximum length of a list name is 50 characters.
+* The maximum length of a list name is 20 characters.
 
 ## Working with lists
 
