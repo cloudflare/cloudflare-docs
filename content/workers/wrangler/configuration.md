@@ -171,13 +171,47 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 ## Types of routes
 
-There are four types of routes.
+There are three types of [routes](/workers/configuration/routing/).
+
+###  Custom Domains
+
+This will use a Custom Domain. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+
+{{<definitions>}}
+
+- `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The pattern that your Worker should be run on, for example, `"example.com"`.
+
+- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+route = { pattern = "example.com", custom_domain = true }
+```
+
+### Routes
 
 ### Simple route
 
 This is a simple route that only requires a pattern.
 
-Example: `"example.com/*"`
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+route = "example.com/*"
+```
 
 ### Zone ID route
 
@@ -190,10 +224,6 @@ Example: `"example.com/*"`
 - `zone_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -210,10 +240,6 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 - `zone_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The name of the zone that your `pattern` is associated with. If you are using API tokens, this will require the `Account` scope.
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
