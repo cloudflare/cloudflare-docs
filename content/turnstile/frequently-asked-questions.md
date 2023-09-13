@@ -223,7 +223,7 @@ If you encounter an endless challenge loop, try disabling your browser extension
 {{<faq-question level=2 text="What languages does Turnstile support?" >}}
 {{<faq-answer>}}
 
-The following languages are currently supported: `ar-eg`, `ar`, `de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`, `pt`, `pt-br`,`ru`, `tlh`, `tr`, `uk`, `uk-ua`, `zh`, `zh-cn` and `zh-tw`.
+The following languages are currently supported: `ar-eg`, `ar`, `de`, `en`, `es`, `fa`, `fr`, `id`, `it`, `ja`, `ko`, `nl`, `pl`, `pt`, `pt-br`, `ru`, `tlh`, `tr`, `uk`, `uk-ua`, `zh`, `zh-cn`, and `zh-tw`.
 
 {{</faq-answer>}}
 {{</faq-item>}}
