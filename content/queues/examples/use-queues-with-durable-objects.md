@@ -32,6 +32,8 @@ name = "my-worker"
 bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ]
+```
+
 Configure your `wrangler.toml` file as follows:
 
 ```toml
