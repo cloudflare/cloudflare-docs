@@ -35,7 +35,7 @@ export default {
     let url = new URL(req.url)
     let roomIdParam = url.searchParams.get("roomId")
 
-    if (roomId) {
+    if (roomIdParam) {
       // Create (or get) a Durable Object based on that roomId.
       let durableObjectId = env.YOUR_DO_CLASS.idFromName(roomIdParam);
       // Get a "stub" that allows us to call that Durable Object
