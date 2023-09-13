@@ -1,12 +1,12 @@
 ---
-title: Hibernatable WebSockets API
+title: WebSockets API
 pcx_content_type: concept
 weight: 16
 ---
 
-{{<beta>}}Hibernatable WebSockets API{{</beta>}}
+{{<beta>}}WebSockets API{{</beta>}}
 
-The Hibernatable WebSockets API allows a Durable Object that is not currently running an event handler (such as handling a WebSocket message, HTTP request, or [alarms](/durable-objects/api/alarms-in-durable-objects/)) to be removed from memory while keeping its WebSockets connected ("hibernation").
+The WebSockets API allows a Durable Object to manage clients connected over a WebSocket, enabling you to build real-time, multiplayer and/or broadcast messaging architectures on top of Durable Objects.
 
 Durable Objects WebSockets support includes:
 
@@ -14,7 +14,7 @@ Durable Objects WebSockets support includes:
 * Related methods on the `state` of the Durable Object. 
 * Handler methods that a Durable Object can implement for processing WebSocket events.
 
-The Hibernatable WebSocket API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
+The WebSockets API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
 
 For WebSocket proxy use-cases, refer to the [standard WebSocket API documentation](/workers/runtime-apis/websockets/use-websockets/#write-a-websocket-client).
 
@@ -92,6 +92,12 @@ WebSockets do not hibernate when using local development environments such as `w
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
 
 ### `webSocketMessage()` handler method
+
+{{<Aside type="warning">}}
+
+Note that logging via `console.log` or related methods is currently a no-op within the `webSocketMessage`, `webSocketClose` and `webSocketError` methods.
+
+{{</Aside>}}
 
 The system calls the `webSocketMessage()` method when an accepted WebSocket receives a message. 
 
