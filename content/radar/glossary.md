@@ -141,7 +141,7 @@ On Cloudflare Radar's Security & Attacks page, you can view connection tampering
 * **Immediately post-handshake (Post-ACK)**: Connections matching signatures for tampering after the receipt of a SYN packet and ACK packet, meaning the TCP connection was successfully established but the server did not receive any subsequent packets. These signatures can occur when the first packet from the client containing application-layer data gets dropped. Among these signatures, middleboxes may or may not inject RSTs to the server.
 * **After first data packet (Post-PSH)**: Connections matching signatures for tampering after the receipt of a packet with PSH flag set, following connection establishment. PSH packets typically contain data such as the Server Name Indication (SNI) in TLS or the HTTP Host that could trigger middlebox tampering.
 * **After multiple data packets (Later in Flow)**: Connections matching signatures for tampering later in the connection, after the transfer of multiple data packets. Tampering in these cases could be triggered by keywords later in a cleartext HTTP session, or by commercial devices that have visibility into encrypted traffic
-* **Normal** Connections that do not match any tampering signatures.
+* **None** Connections that do not match any tampering signatures.
 
 ## Traffic type filter
 
