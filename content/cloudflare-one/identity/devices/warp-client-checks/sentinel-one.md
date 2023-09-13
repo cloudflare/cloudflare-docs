@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: SentinelOne
 weight: 11
+meta:
+   title: SentinelOne - WARP client checks
 ---
 
 # SentinelOne
