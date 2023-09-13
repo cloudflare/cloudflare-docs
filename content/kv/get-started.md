@@ -190,6 +190,26 @@ Use the KV `get()` method to fetch the data you stored in your KV database:
 let value = await <YOUR_BINDING>.get("KEY");
 ```
 
+Your Worker code should look like this:
+
+```js
+export interface Env {
+  	YOUR_KV_NAMESPACE: KVNamespace;
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+
+    await env.YOUR_KV_NAMESPACE.put("KEY", "VALYE");        
+    const value = await env.YOUR_KV_NAMESPACE.get("KEY");        
+    if (value === null) {            
+      return new Response("Value not found", { status: 404 });        
+      }        
+    return new Response(value);    
+	}, 	
+};
+```
+
 ## 5. Develop locally with Wrangler
 
 While in your project directory, test your KV locally by running:
