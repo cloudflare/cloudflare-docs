@@ -1,6 +1,6 @@
 ---
 title: Use KV from Durable Objects
-summary: Read & write to/from KV within a Durable Object
+summary: Read and write to/from KV within a Durable Object
 pcx_content_type: configuration
 weight: 20
 layout: example
@@ -8,16 +8,29 @@ meta:
   title: Durable Objects - Use KV within Durable Objects
 ---
 
-The following Worker script shows how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/workers/learning/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to both serialize writes to KV and/or broadcast a single read from KV to potentially hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/hibernatable-websockets-api/).
+The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/workers/learning/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/hibernatable-websockets-api/).
 
-The example requires:
+Prerequisites:
 
-* That you have [created a KV namespace](/workers/runtime-apis/kv/) via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/)
-* You have [configured a binding](/workers/runtime-apis/kv/#kv-bindings) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml`
-* A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects) is also configured.
+* A [KV namespace](/workers/runtime-apis/kv/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
+* A [configured binding](/workers/runtime-apis/kv/#kv-bindings) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
+* A configured [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
-The Worker script creates (or retrieves an existing) Durable Object stub based on a user ID, reads a key from KV, writes a key to KV, and return sa 
+Configure your `wrangler.toml` file as follows:
 
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker"
+
+kv_namespaces = [
+  { binding = "YOUR_KV_NAMESPACE", id = "<id_of_your_namespace>" }
+]
+
+[durable_objects]
+bindings = [
+  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ```ts
 ---
 filename: src/worker.ts
@@ -77,20 +90,6 @@ export class YourDurableObject implements Durable Object {
 }
 ```
 
-The example Worker script above assumes a `wrangler.toml` as follows:
 
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker"
-
-kv_namespaces = [
-  { binding = "YOUR_KV_NAMESPACE", id = "<id_of_your_namespace>" }
 ]
-
-[durable_objects]
-bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
-]
-```
