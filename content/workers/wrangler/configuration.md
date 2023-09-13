@@ -171,7 +171,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 ## Types of routes
 
-There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/) and `workers.dev`.
+There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and `workers.dev`.
 
 ### Custom Domains
 
@@ -206,7 +206,7 @@ routes = [
 
 ### Routes
 
-[Routes](/workers/configuration/routing/routes/) allow users to map a URL pattern to a Worker. A route can be configured as a zone ID route, a zone name route or a simple route.
+[Routes](/workers/configuration/routing/routes/) allow users to map a URL pattern to a Worker. A route can be configured as a zone ID route, a zone name route, or a simple route.
 
 #### Zone ID route
 
