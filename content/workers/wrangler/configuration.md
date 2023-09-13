@@ -171,11 +171,11 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 ## Types of routes
 
-There are three types of [routes](/workers/configuration/routing/).
+There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/) and `workers.dev`.
 
-###  Custom Domains
+### Custom Domains
 
-This will use a Custom Domain. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+[Custom Domains](/workers/configuration/routing/custom-domains/) allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management.
 
 {{<definitions>}}
 
@@ -185,7 +185,7 @@ This will use a Custom Domain. Refer to [Custom Domains](/workers/configuration/
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
 
 {{</definitions>}}
 
@@ -196,24 +196,19 @@ Example:
 header: wrangler.toml
 ---
 route = { pattern = "example.com", custom_domain = true }
+
+# or
+
+routes = [
+	{ pattern = "shop.example.com", custom_domain = true }
+]
 ```
 
 ### Routes
 
-### Simple route
+[Routes](/workers/configuration/routing/routes/) allow users to map a URL pattern to a Worker. A route can be configured as a zone ID route, a zone name route or a simple route.
 
-This is a simple route that only requires a pattern.
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-route = "example.com/*"
-```
-
-### Zone ID route
+#### Zone ID route
 
 {{<definitions>}}
 
@@ -227,9 +222,18 @@ route = "example.com/*"
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_id = "foo" }`
+Example:
 
-### Zone name route
+```toml
+---
+header: wrangler.toml
+---
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
+]
+```
+
+#### Zone name route
 
 {{<definitions>}}
 
@@ -243,23 +247,20 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
+Example: 
 
-### Custom Domain route
+```toml
+---
+header: wrangler.toml
+---
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
+]
+```
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+#### Simple route
 
-{{<definitions>}}
-
-- `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The pattern that your Worker should be run on, for example, `"example.com"`.
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
-
-{{</definitions>}}
+This is a simple route that only requires a pattern.
 
 Example:
 
@@ -267,7 +268,7 @@ Example:
 ---
 header: wrangler.toml
 ---
-route = { pattern = "example.com", custom_domain = true }
+route = "example.com/*"
 ```
 
 ## Triggers
