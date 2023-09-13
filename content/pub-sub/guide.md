@@ -242,9 +242,6 @@ const mqtt = require('mqtt')
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
 const options = {
   port: 8883,
-  //If password alone does not successfully auth, uncomment the lines below and try again
-  //clientID: "First portion of token generated above",
-  //username: "Your username",
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
