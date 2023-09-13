@@ -14,7 +14,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate. You will need to add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps will need to be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 
@@ -406,9 +406,11 @@ On some systems you may need to set the following in your path/export list:
 $ export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
 ```
 
-### Google Cloud SDK
+### Google Cloud
 
-The commands below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
+#### Google Cloud SDK
+
+The commands below will set the Google Cloud SDK to use the Cloudflare certificate. For more information on configuring the Google Cloud SDK, refer to the [Google Cloud documentation](https://cloud.google.com/sdk/docs/proxy-settings).
 
 1. Get curl's `cacert` bundle.
 
@@ -435,14 +437,14 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
    ```
 
 {{<Aside type="note">}}
-The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-run to point `gcloud` to the file's new location.
+The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved, then you must re-run step 3 to point `gcloud` to the file's new location.
 {{</Aside>}}
 
-#### Google Cloud SDK and Kaniko
+##### Kaniko
 
-Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate).
+If you use Kaniko with Google Cloud SDK, you must install the Cloudflare certificate in the [Kaniko CA store](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). For more information, refer to the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit).
 
-### Google Drive for desktop
+#### Google Drive for desktop
 
 To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
@@ -501,6 +503,10 @@ $ reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile
 </details>
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
+
+#### Google Apps Manager (GAM)
+
+Google Apps Manager (GAM) uses its own certificate store. To add the Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
 
 ### AWS CLI
 
