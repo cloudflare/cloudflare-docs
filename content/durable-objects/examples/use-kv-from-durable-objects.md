@@ -92,4 +92,3 @@ export class YourDurableObject implements Durable Object {
 
 
 ]
-  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
