@@ -3,6 +3,8 @@ title: Rule categories
 pcx_content_type: reference
 weight: 5
 layout: list
+meta:
+    title: Rule categories — HTTP DDoS
 ---
 
 # Rule categories

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Service bindings
+meta:
+  title: Service bindings - Runtime APIs
 ---
 
 # Service bindings
