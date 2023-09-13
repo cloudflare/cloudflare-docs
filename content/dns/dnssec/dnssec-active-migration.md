@@ -41,7 +41,19 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 --data '{"status": "active"}'
 ```
 
-4. Enable multi-signer DNSSEC using the following request. This step can only be achieved via the [API](/api/operations/dnssec-edit-dnssec-status).
+4. Enable Multi-signer DNSSEC, via either the dashboard or the API.
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+a. Select your zone and go to **DNS** > **Settings**.
+
+b. Enable **Multi-signer DNSSEC**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC.
 
 ```bash
 $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \ 
@@ -50,6 +62,9 @@ $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnss
 --header 'Content-Type: application/json' \ 
 --data '{"dnssec_multi_signer": true}'
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## 2. Cross-import ZSKs
 
