@@ -1,5 +1,5 @@
 ---
-updated: 2023-08-29
+updated: 2023-09-13
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -42,7 +42,7 @@ Open the [Fauna dashboard](https://dashboard.fauna.com/) in your browser and log
 
 {{<Aside type="note" header="Fauna Account">}}
 
-If you do not have a Fauna account, you can [sign up](https://dashboard.fauna.com/register) and deploy this template using the free tier.
+If you do not have a Fauna account, [sign up](https://dashboard.fauna.com/register) and deploy this template using the free tier.
 
 {{</Aside>}}
 
@@ -53,9 +53,9 @@ In the Fauna dashboard:
 3. Select a [Region Group](https://docs.fauna.com/fauna/current/administration/region_groups).
 4. Select **CREATE**.
 
-### Create the products catalog
+### Create a collection
 
-To create the products catalog, enter the FQL query in the **SHELL** window on right side of the screen.
+To create a collection named **Products**, enter the FQL query in the **SHELL** window on right side of the screen.
 
 ```js
 ---
@@ -83,13 +83,11 @@ header: Output
 
 You must create a secret key to connect to the database from your Worker.
 
-To create a secret key, go to **Explorer** in the Fauna dashboar, hover over your database name, and select the key icon to manage your keys.
+To create a secret key:
 
-![Hover over the database name to reveal the Keys icon](/images/workers/tutorials/fauna/keys-icon.png)
-
-Choose **Server Role** and enter a key name.
-
-![Create a new key in the Fauna dashboard](/images/workers/tutorials/fauna/new-server-key.png)
+1. Go to **Explorer** in the Fauna dashboard.
+2. Hover over your database name, and select the key icon to manage your keys.
+3. Choose **Server Role** and enter a key name.
 
 The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
 
@@ -145,9 +143,9 @@ header: wrangler.toml
 name = "fauna-workers"
 ```
 
-### Add your Fauna secret as an environment variable
+### Add your Fauna secret key as a secret
 
-Before developing your Worker, add your Fauna secret key as an [environment variable](/workers/configuration/environment-variables/).
+Before developing your Worker, add your Fauna secret key as a [secret](/workers/configuration/secrets/).
 
 There are two types of secrets for [development](/workers/configuration/secrets/#secrets-in-development) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
 
@@ -160,7 +158,7 @@ header: .dev.vars
 FAUNA_SECRET=<YOUR SECRET>
 ```
 
-For production, your secret safely with [`wrangler secret put` command](/workers/wrangler/commands/#put-3):
+For production, store your secret safely with [`wrangler secret put` command](/workers/wrangler/commands/#put-3):
 
 ```sh
 ---
@@ -171,7 +169,7 @@ $ npx wrangler secret put FAUNA_SECRET
 
 When prompted, paste the Fauna server secret you obtained earlier.
 
-The `FAUNA_SECRET` environment variable is now injected automatically into your Worker code at runtime.
+The `FAUNA_SECRET` secret is now injected automatically into your Worker code at runtime.
 
 ### Install dependencies
 
@@ -632,14 +630,6 @@ $ yarn deploy
 
 {{</tab>}}
 {{</tabs>}}
-
-## Clean up
-
-To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage application** > **Delete**.
-
-Finally, delete your Fauna database from its settings in the Fauna dashboard:
-
-![Delete your Fauna database in the Fauna dashboard](/images/workers/tutorials/fauna/delete-database.png)
 
 ## Related resources
 
