@@ -20,27 +20,27 @@ R2 currently has two datasets:
 
 ### Operations Dataset
 
-| Field | Description |
-| ----- | ----------- |
-| actionType | The name of the operation performed. |
-| actionStatus | The status of the operation. Can be `success`, `userError`, or `internalError`. |
-| bucketName | The bucket this operation was performed on if applicable. For buckets with a jurisdiction specified, you must include the jurisdiction followed by an underscore before the bucket name. For example: eu_your-bucket-name |
-| objectName | The object this operation was performed on if applicable. |
-| responseStatusCode | The http status code returned by this operation. |
-| datetime | The time of the request. |
+| Field               | Description |
+| ------------------- | ------------------------------------------------------------- |
+| actionType          | The name of the operation performed. |
+| actionStatus        | The status of the operation. Can be `success`, `userError`, or `internalError`. |
+| bucketName          | The bucket this operation was performed on if applicable. For buckets with a jurisdiction specified, you must include the jurisdiction followed by an underscore before the bucket name. For example: eu_your-bucket-name |
+| objectName          | The object this operation was performed on if applicable. |
+| responseStatusCode  | The http status code returned by this operation. |
+| datetime            | The time of the request. |
 
 
 
 ### Storage Dataset
 
-| Field | Description |
-| ----- | ----------- |
-| bucketName | The bucket this storage value is for. For buckets with a jurisdiction specified, you must include the jurisdiction followed by an underscore before the bucket name. For example: eu_your-bucket-name |
-| payloadSize | The size of the objects in the bucket. |
-| metadataSize | The size of the metadata of the objects in the bucket. |
-| objectCount | The number of objects in the bucket. |
-| uploadCount | The number of pending multipart uploads in the bucket. |
-| datetime | The time that this storage value represents. |
+| Field         | Description |
+| ------------- | ----------- |
+| bucketName    | The bucket this storage value is for. For buckets with a jurisdiction specified, you must include the [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) followed by an underscore before the bucket name. For example: `eu_your-bucket-name` |
+| payloadSize   | The size of the objects in the bucket. |
+| metadataSize  | The size of the metadata of the objects in the bucket. |
+| objectCount   | The number of objects in the bucket. |
+| uploadCount   | The number of pending multipart uploads in the bucket. |
+| datetime      | The time that this storage value represents. |
 
 
 Metrics can be queried (and are retained) for the past 31 days. These datasets require an `accountTag` filter with your Cloudflare account ID.
