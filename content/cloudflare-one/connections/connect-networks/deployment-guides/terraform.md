@@ -4,6 +4,7 @@ title: Terraform
 weight: 7
 meta:
   description: Learn how to deploy a Cloudflare Tunnel using Terraform and our lightweight server-side daemon, cloudflared.
+  title: Deploy Tunnels with Terraform
 ---
 
 # Deploy Tunnels with Terraform

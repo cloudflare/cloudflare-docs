@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Configuration
 weight: 2
+meta:
+   title: Configure a remote tunnel
 ---
 
 # Configure a remote tunnel

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Tanium
 weight: 4
+meta:
+   title: Integrate Tanium with Access
 ---
 
 # Tanium

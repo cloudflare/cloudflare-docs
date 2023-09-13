@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Known limitations
 weight: 9
+meta:
+   title: Known limitations - Browser Isolation
 ---
 
 # Known limitations
