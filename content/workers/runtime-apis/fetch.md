@@ -11,39 +11,35 @@ The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [M
 
 {{<Aside type="note">}}
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/workers/runtime-apis/fetch-event/#respondwith). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
+Asynchronous tasks such as `fetch` are not executed at the top level in a Worker and must be executed within your `FetchEvent` handler. Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
 {{</Aside>}}
 
 {{<Aside type="warning" header="Worker to Worker">}}
 
-Worker-to-Worker `fetch` requests are now possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+Worker-to-Worker `fetch` requests is possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
 
 {{</Aside>}}
 
 ---
 
-## Constructor
+## Syntax
 
-<!-- This code example needs more work -->
-
-```js
+```javascript
 ---
-highlight: [8]
+header: ES Modules
+highlight: [3,4,5,6,7]
 ---
-addEventListener('fetch', event => {
-  // NOTE: can’t use fetch here, as we’re not in an async scope yet
-  event.respondWith(eventHandler(event));
-});
-
-async function eventHandler(event) {
-  // fetch can be awaited here since `event.respondWith()` waits for the Promise it receives to settle
-  const resp = await fetch(event.request);
-  return resp;
+export default {
+  async fetch(request) {
+    return await fetch("https://example.com", {
+      headers: {
+        "X-Source": "Cloudflare-Workers",
+      },
+    });
+  }
 }
 ```
-
-<!-- Where do we have the return type in this format? -->
 
 {{<definitions>}}
 
