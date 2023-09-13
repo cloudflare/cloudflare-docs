@@ -522,7 +522,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
+If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/concepts/dynamic-advertisement/).
 
 </div>
 </details>

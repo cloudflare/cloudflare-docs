@@ -46,6 +46,7 @@
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
