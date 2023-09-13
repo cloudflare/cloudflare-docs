@@ -32,6 +32,22 @@ name = "my-worker"
 bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ]
+Configure your `wrangler.toml` file as follows:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker"
+
+[[queues.producers]]
+  queue = "my-queue"
+  binding = "YOUR_QUEUE"
+
+[durable_objects]
+bindings = [
+  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
+]
 The following Worker script creates (or retrieves an existing) Durable Object stub based on a userId, passes request data to the Durable Object, and publishes to a queue from within the Durable Object. Importantly, the `constructor` in the Durable Object makes our `Environment` available (in scope) on `this.env` to the `fetch` handler in the Durable Object.
 
 ```ts
