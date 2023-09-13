@@ -1,6 +1,6 @@
 ---
 title: Use Queues from Durable Objects
-summary: Publish to a Queue from within a Durable Object
+summary: Publish to a queue from within a Durable Object
 pcx_content_type: configuration
 weight: 20
 layout: example
@@ -8,15 +8,31 @@ meta:
   title: Queues - Use Queues and Durable Objects
 ---
 
-The following Worker script shows how to publish to a [Cloudflare Queue](/queues/) from within a [Durable Object](/durable-objects/).
+The following example shows you how to write a Worker script to publish to [Cloudflare Queues](/queues/) from within a [Durable Object](/durable-objects/).
 
-The example requires:
+Prerequisites:
 
-* That you have [created a queue](/queues/get-started/#3-create-a-queue) via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/)
-* You have [configured a **producer** binding](/queues/platform/configuration/#producer) in the Cloudflare dashboard or `wrangler.toml`
-* A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects) is also configured.
+* A [queue created](/queues/get-started/#3-create-a-queue) via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
+* A [configured **producer** binding](/queues/platform/configuration/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
+* A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
-The Worker script creates (or retrieves an existing) Durable Object stub based on a userId, passes request data to the Durable Object, and publishes to a queue from within the Durable Object. Importantly, the `constructor` in the Durable Object makes our `Environment` available (in scope) on `this.env` to the `fetch` handler in the Durable Object.
+Configure your `wrangler.toml` file as follows:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker"
+
+[[queues.producers]]
+  queue = "my-queue"
+  binding = "YOUR_QUEUE"
+
+[durable_objects]
+bindings = [
+  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
+]
+The following Worker script creates (or retrieves an existing) Durable Object stub based on a userId, passes request data to the Durable Object, and publishes to a queue from within the Durable Object. Importantly, the `constructor` in the Durable Object makes our `Environment` available (in scope) on `this.env` to the `fetch` handler in the Durable Object.
 
 ```ts
 ---
@@ -38,13 +54,12 @@ export default {
     if (userIdParam) {
       // Create (or get) a Durable Object based on that userId.
       let durableObjectId = env.YOUR_DO_CLASS.idFromName(userIdParam);
-      // Get a "stub" that allows us to call that Durable Object
+      // Get a "stub" that allows you to call that Durable Object
       let durableObjectStub = env.YOUR_DO_CLASS.get(durableObjectId);
 
       // Pass the request to that Durable Object and await the response
       // This invokes the constructor once on your Durable Object class (defined further down)
       // on the first initialization, and the fetch method on each request.
-      //
       // We pass the original Request to the Durable Object's fetch method
       let response = await durableObjectStub.fetch(req);
 
@@ -76,20 +91,5 @@ export class YourDurableObject implements Durable Object {
 }
 ```
 
-The example Worker script above assumes a `wrangler.toml` as follows:
 
-```toml
 ---
-filename: wrangler.toml
----
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "YOUR_QUEUE"
-
-[durable_objects]
-bindings = [
-  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
-]
-```
