@@ -33,11 +33,11 @@ export default {
     // In a production application, this will likely be a roomId defined by your application
     // that you validate (and/or authenticate) first.
     let url = new URL(req.url)
-    let userIdParam = url.searchParams.get("roomId")
+    let roomIdParam = url.searchParams.get("roomId")
 
     if (roomId) {
       // Create (or get) a Durable Object based on that roomId.
-      let durableObjectId = env.YOUR_DO_CLASS.idFromName(roomId);
+      let durableObjectId = env.YOUR_DO_CLASS.idFromName(roomIdParam);
       // Get a "stub" that allows us to call that Durable Object
       let durableObjectStub = env.YOUR_DO_CLASS.get(durableObjectId);
 
