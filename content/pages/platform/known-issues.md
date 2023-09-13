@@ -49,7 +49,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Pages Functions
 
-- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
+- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
