@@ -1,5 +1,5 @@
 ---
-title: Debug D1
+title: Database commands
 weight: 20
 pcx_content_type: concept
 ---
