@@ -14,7 +14,7 @@ Prerequisites:
 
 * A [KV namespace](/workers/runtime-apis/kv/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
 * A [configured binding](/workers/runtime-apis/kv/#kv-bindings) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
-* A configured [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
+* A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your `wrangler.toml` file as follows:
 
