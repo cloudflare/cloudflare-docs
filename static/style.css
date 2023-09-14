@@ -5365,11 +5365,11 @@ pre {
 .littlefoot__content p {
   font-size: 1em;
   font-weight: 350;
-  font-family: var(--font-family);
   font-size: var(--html-font-size);
-  font-family: var(--font-family);
+  font-family: var(--font-family) !important;
   line-height: var(--line-height);
   color: var(--color);
+  width: 100% !important;
 }
 
 [theme="dark"] .littlefoot__content {
