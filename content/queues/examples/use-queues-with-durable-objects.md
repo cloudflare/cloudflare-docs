@@ -1,6 +1,6 @@
 ---
 title: Use Queues from Durable Objects
-summary: Publish to a queue from within a Durable Object
+summary: Publish to a queue from within a Durable Object.
 pcx_content_type: configuration
 weight: 20
 layout: example
@@ -36,11 +36,11 @@ bindings = [
 
 The following Worker script:
 
-1. Creates (or retrieves an existing) Durable Object stub based on a userId
-2. Passes request data to the Durable Object
-3. Publishes to a Queue from within the Durable Object.
+1. Creates a Durable Object stub, or retrieves an existing one based on a userId.
+2. Passes request data to the Durable Object.
+3. Publishes to a queue from within the Durable Object.
 
-Importantly, the `constructor` in the Durable Object makes our `Environment` available (in scope) on `this.env` to the `fetch` handler in the Durable Object.
+The `constructor()` in the Durable Object makes your `Environment` available (in scope) on `this.env` to the [`fetch()` handler](/durable-objects/how-to/access-durable-object-from-a-worker/#3-use-fetch-handler-method) in the Durable Object.
 
 ```ts
 ---
@@ -53,8 +53,8 @@ interface Env {
 
 export default {
   async fetch(req: Request, env: Environment): Promise<Response> {
-    // We assume each Durable Object is mapped to a userId in a query parameter
-    // In a production application, this will likely be a userId defined by your application
+    // Assume each Durable Object is mapped to a userId in a query parameter
+    // In a production application, this will be a userId defined by your application
     // that you validate (and/or authenticate) first.
     let url = new URL(req.url)
     let userIdParam = url.searchParams.get("userId")
@@ -71,7 +71,7 @@ export default {
       // We pass the original Request to the Durable Object's fetch method
       let response = await durableObjectStub.fetch(req);
 
-      // This would return "wrote to queue", but we could return any response.
+      // This would return "wrote to queue", but you could return any response.
       return response;
     }
   }
@@ -80,7 +80,7 @@ export default {
 export class YourDurableObject implements Durable Object {
   constructor(public state: DurableObjectState, env: Env) {
       this.state = state;
-      // Ensure we pass our bindings and environmental variables into
+      // Ensure you pass your bindings and environment variables into
       // each Durable Object when it is initialized
       this.env = env;
     }
@@ -88,13 +88,12 @@ export class YourDurableObject implements Durable Object {
 
   async fetch(request: Request) {
     // Error handling elided for brevity.
-    // Publish to our queue
+    // Publish to your queue
     await this.env.YOUR_QUEUE.send({
-      id: this.state.id // Write the ID of the Durable Object to our queue
-      // Write any other properties to our queue
+      id: this.state.id // Write the ID of the Durable Object to your queue
+      // Write any other properties to your queue
     });
 
     return new Response("wrote to queue")
   }
-}
 ```
