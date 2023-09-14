@@ -200,7 +200,7 @@ export interface Env {
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 
-    await env.YOUR_KV_NAMESPACE.put("KEY", "VALYE");        
+    await env.YOUR_KV_NAMESPACE.put("KEY", "VALUE");        
     const value = await env.YOUR_KV_NAMESPACE.get("KEY");        
     if (value === null) {            
       return new Response("Value not found", { status: 404 });        
@@ -218,7 +218,7 @@ While in your project directory, test your KV locally by running:
 $ wrangler dev
 ```
 
-When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Hello World!`.
+When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see your value printed on the browser.
 
 ## 6. Deploy your KV
 
