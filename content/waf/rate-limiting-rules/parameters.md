@@ -21,7 +21,7 @@ The available rate limiting rule parameters are the following:
   - If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
   - In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
-- **With the same characteristics** {{<type>}}Array&lt;String&gt;{{</type>}}
+- <a id="characteristics"></a>**With the same characteristics** {{<type>}}Array&lt;String&gt;{{</type>}}
 
   - Field name in the API: `characteristics`.
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
