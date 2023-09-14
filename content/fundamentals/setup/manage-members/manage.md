@@ -27,7 +27,6 @@ To view members using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Members**.
-3. Go to **Members**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
