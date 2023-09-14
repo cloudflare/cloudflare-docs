@@ -24,15 +24,13 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 
 Workers are available under two Usage Models: Bundled and Unbound. Usage Models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of CPU time your Worker can use per invocation.
 
-Workers on the Bundled usage model are billed purely base
-
 {{<table-wrap>}}
 
-|             |  Requests<sup>1</sup>                                           | Duration                                           | CPU time [limits](/workers/platform/limits/#worker-limits) |
-| ----------- | --------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------- |
-| **Free**    |  100,000 per day                                                | no charge for duration                             | 10 milliseconds of CPU time per invocation   |
-| **Bundled** |  10 million included per month, +$0.50 per additional million   | no charge for duration                             | 50 milliseconds CPU time per invocation      |
-| **Unbound** |  1 million included per month, +$0.15 per additional million    | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup>  | 30 seconds of CPU time per invocation, 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation        |
+|             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time [limits](/workers/platform/limits/#worker-limits) |
+| ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **Free**    |  100,000 per day                                                    | no charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
+| **Bundled** |  10 million included per month <br /> +$0.50 per additional million | no charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
+| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2,3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation        |
 
 {{</table-wrap>}}
 
