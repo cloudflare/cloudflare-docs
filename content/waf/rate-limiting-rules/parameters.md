@@ -56,12 +56,7 @@ The available rate limiting rule parameters are the following:
   - For more information on the `lookup_json_string`, `lookup_json_integer`, and `substring` functions, refer to [Functions](/ruleset-engine/rules-language/functions/) in the Ruleset Engine documentation.
   - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/).
   - Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
-
-{{<Aside type="note">}}
-
-Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/) for details.
-
-{{</Aside>}}
+  - Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/) for details.
 
 - **Use custom counting expression** > **Increment counter when** {{<type>}}String{{</type>}}
 
@@ -89,13 +84,37 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - Action to perform when the rate specified in the rule is reached.
   - Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
 
-- **For duration** {{<type>}}Number{{</type>}}
+- <a id="duration"></a>**For duration** {{<type>}}Number{{</type>}}
 
   - Field name in the API: `mitigation_timeout`.
   - Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
   - In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
-  - You cannot define a duration when using one of the challenge actions. In this case, when visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
-  - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
+  - Configuring the rule in the Cloudflare dashboard with one of the challenge actions will enable request throttling. With this behavior, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+  - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`. This will enable request throttling.
+
+    {{<Aside type="note">}}
+Some Enterprise customers can also [throttle requests](#with-the-following-behavior) with the _Block_ action.
+    {{</Aside>}}
+
+- <a id="with-the-following-behavior"></a> **With the following behavior** {{<type>}}Integer{{</type>}}
+
+  - Field name in the API: `mitigation_timeout`.
+
+  - Defines the exact behavior of the selected action.
+
+    {{<Aside type="note">}}
+Only Enterprise customers with a paid add-on can throttle requests using the _Block_ action. Other users can throttle requests using a challenge action, or perform the action during a period of time — refer to [Duration](#duration) for details.
+    {{</Aside>}}
+
+  - The behavior can be one of the following:
+
+      - **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration.<br>To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [For duration](#duration) for more information.
+
+          ![Chart displaying the action of a rate limiting rule configured to apply its action during the entire mitigation period](/images/waf/rate-limiting-rules/behavior-apply-action-for-duration.png)
+
+      - **Throttle requests over the maximum configured rate**: Applies the selected action to incoming requests over the configured limit, allowing other requests.<br>To configure this behavior via API, set `mitigation_timeout` to `0` (zero).
+
+          ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
 
 - **With response type** {{<type>}}String{{</type>}}
 

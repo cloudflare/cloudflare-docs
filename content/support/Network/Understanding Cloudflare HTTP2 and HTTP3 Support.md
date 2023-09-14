@@ -18,7 +18,7 @@ ___
 
 HTTP/2 uses the TCP transport protocol and TLS to secure communications. It improves page load times via:
 
--   Request and response multiplexing - A single network connection can be used to fetch multiple resources. Responses are prioritized to ensure important assets are sent first, which impreoves page rendering times.
+-   Request and response multiplexing - A single network connection can be used to fetch multiple resources. Responses are prioritized to ensure important assets are sent first, which improves page rendering times.
 -   HTTP header compression - can reduce the number of bytes required to exchange headers, which speeds up requests and responses.
 
 Note:
