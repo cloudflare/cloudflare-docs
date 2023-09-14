@@ -5369,6 +5369,9 @@ pre {
   font-family: var(--font-family) !important;
   line-height: var(--line-height);
   color: var(--color);
+}
+
+.littlefoot__content {
   width: 100% !important;
 }
 
