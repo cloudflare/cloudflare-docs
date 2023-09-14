@@ -15,6 +15,10 @@ meta:
 
 **Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will retry around five times over five minutes. However, note that this number and time are just approximations. If Cloudflare persistently receives errors from your destination, and cannot keep up with incoming batches, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
 
+## Should there ever be a gap in what's sent via logpush?
+
+During high request per second periods, data may not be sent 100% to the destination. This ensures that during high traffic spikes the destination instance is not overloaded.
+
 ## Can I adjust how often logs are pushed?
 
 No. Cloudflare pushes logs in batches as soon as possible.
