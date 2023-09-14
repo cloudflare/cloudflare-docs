@@ -64,6 +64,17 @@ To revoke a member's access to your account:
 4. Click **Revoke**.
 5. Click **Yes, revoke access**.
 
+
+## Manage Account Members using API
+
+* [List Members](https://developers.cloudflare.com/api/operations/account-members-list-members)
+* [Add new member](https://developers.cloudflare.com/api/operations/account-members-add-member)
+* [Remove member](https://developers.cloudflare.com/api/operations/account-members-remove-member)
+
+
+
+
+
 [^1]: {{<render file="_account-member-manage-limitation.md">}}
 [^2]: {{<render file="_account-member-manage-limitation.md">}}
 [^3]: {{<render file="_account-member-manage-limitation.md">}}
