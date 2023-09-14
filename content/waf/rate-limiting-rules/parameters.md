@@ -108,7 +108,7 @@ Only Enterprise customers with a paid add-on can throttle requests using the _Bl
 
   - The behavior can be one of the following:
 
-      - **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration.<br>To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [Duration](#duration) for more information.
+      - **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration.<br>To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [For duration](#duration) for more information.
 
           ![Chart displaying the action of a rate limiting rule configured to apply its action during the entire mitigation period](/images/waf/rate-limiting-rules/behavior-apply-action-for-duration.png)
 
