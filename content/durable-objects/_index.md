@@ -19,18 +19,17 @@ A globally distributed coordination API with strongly consistent storage.
 
 {{<plan type="paid">}}
 
-Durable Objects provide a powerful API for coordinating the actions of multiple clients or users, each with private, transactional and strongly consistent storage attached.
+Durable Objects provide a powerful API for coordinating multiple clients or users, each with private, transactional and strongly consistent storage attached.
 
 Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own. 
-
 
 ---
 
 ## Features
 
-{{<feature header="Transactional Storage API" href="/durable-objects/learning/in-memory-state/">}}
+{{<feature header="In-memory state" href="/durable-objects/learning/in-memory-state/">}}
 
-Learn how Durable Objects coordinate connections of multiple clients or events.
+Learn how Durable Objects coordinate connections among multiple clients or events.
 
 {{</feature>}}
 
