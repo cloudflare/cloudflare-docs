@@ -9,5 +9,12 @@ When you activate a domain on a [full setup](/dns/zone-setups/full-setup/), Clou
 
 These nameserver assignments cannot be changed unless you set up [custom or vanity nameservers](/dns/additional-options/custom-nameservers/).
 
-For more background on nameserver assignments, refer to [our blog](https://blog.cloudflare.com/whats-the-story-behind-the-names-of-cloudflares-name-servers/).
+{{<Aside type="warning">}}
 
+To prevent domain hijackings, you can no longer preset Cloudflare nameservers at your registrar before creating the respective zone in Cloudflare. If you preset your nameservers and then add the domain, you will be assigned a new pair of nameservers. 
+
+To keep the same nameservers across your domains, use [Account custom nameservers](/dns/additional-options/custom-nameservers/account-custom-nameservers/).
+
+{{</Aside>}}
+
+For more background on nameserver assignments, refer to [our blog](https://blog.cloudflare.com/whats-the-story-behind-the-names-of-cloudflares-name-servers/).
