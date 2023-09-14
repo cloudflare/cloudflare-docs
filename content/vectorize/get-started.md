@@ -6,12 +6,13 @@ pcx_content_type: get-started
 
 # Get started
 
+Vectorize is Cloudflare's vector database. Vector databases allow you to use machine learning (ML) models to perform semantic search, recommendation, classification and anomaly detection tasks, as well as provide context to LLMs (Large Language Models).
+
 This guide will instruct you through:
 
-* Creating your first database using D1, Cloudflare’s native serverless SQL database.
-* Creating a schema and querying your database via the command-line.
-* Connecting a [Cloudflare Worker](/workers/) to your D1 database to query your D1 database programmatically.
-
+* Creating your first Vectorize index.
+* Connecting a [Cloudflare Worker](/workers/) to your index.
+* Inserting and performing a similarity search by querying your index.
 ## Prerequisites
 
 To continue:
@@ -28,195 +29,133 @@ Refer to [How Workers works](/workers/learning/how-workers-works/) to learn abou
 
 {{</Aside>}}
 
-You will create a new Worker as the container for both your D1 database and the Worker application that you will use to query your database.
+You will create a new Worker as the container for both your Vectorize index and the Worker application that you will use to query your index.
 
-Create a new project named `d1-tutorial` by running:
+Create a new project named `vectorize-tutorial` by running:
 
 ```sh
 $ npm create cloudflare@latest
-
 ```
 
-When setting up your `d1-tutorial` Worker, answering the questions as below:
+When setting up your `vectorize-tutorial` Worker, answering the questions as below:
 
-* Your directory has been titled `d1-tutorial`.
+* Your directory has been titled `vectorize-tutorial`.
 * Choose `"Hello World" script` for the type of application.
 * Select `yes` to using TypeScript.
 * Select `yes` to using Git.
 * Select `no` to deploying.
 
-This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
+This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 
 * A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts` 
-* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your D1 database.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
-For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare@latest vectorize-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 
-## 2. Create a database
+## 2. Create an index
 
-{{<Aside type="note" heading="New, faster storage sub-system">}}
+{{<Aside type="note" heading="Vectorize open beta">}}
 
-D1 has [a new storage sub-system](/d1/changelog/#new-default-storage-subsystem) that dramatically improves query throughput, latency and reliability. This backend is now the default since `wrangler` version `3.4.0`, and is up to 20x faster than the previous alpha backend.
-
-When using a version of `wrangler` prior to `3.4.0`, you will need to pass the `--experimental-backend` flag to `wrangler d1 create` to create a database on this backend.
+Vectorize is currently in open beta. Read [the announcement blog](https://blog.cloudflare.com/vectorize-vector-database-open-beta/) to learn more.
 
 {{</Aside>}}
 
-A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familiar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
+A vector database is distinct from a traditional SQL or NoSQL database: it is designed to store the vector 
 
-To create your first D1 database, change into the directory you just created for your Workers project:
-
-```sh
-$ cd d1-tutorial
-```
-
-Run the following `wrangler d1` command and give your database a name. A good database name is:
-
-* Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces
-* Descriptive of the use-case and environment - for example, "staging-db-web" or "production-db-backend"
-* Only used for describing the database, and is not directly referenced in code.
+To create your first Vectorize index, change into the directory you just created for your Workers project:
 
 ```sh
-$ wrangler d1 create <DATABASE_NAME>
-
-✅ Successfully created DB '<DATABASE_NAME>'
-
-[[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "<DATABASE_NAME>"
-database_id = "<unique-ID-for-your-database>"
+$ cd vectorize-tutorial
 ```
 
-This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
-## 3. Bind your Worker to your D1 database
+* A combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
+* Descriptive of the use-case and environment - for example, "production-doc-search" or "dev-recommendation-engine"
+* Only used for describing the index, and is not directly referenced in code.
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+In addition, you will need to define both the [`dimensions`](/vectorize/learning/what-are-embeddings/) of the vectors you will store in the index, as well as the distance [`metric`](/learning/distance-metrics/) used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
-To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
+{{<Aside type="note" heading="Wrangler version required">}}
+
+Ensure you are using `wrangler` version `3.11.0` or later to use the `wrangler vectorize` commands.
+
+{{</Aside>}}
+
+Run the following `wrangler vectorize` command:
+
+```sh
+$ npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+
+✅ Successfully created index 'tutorial-index'
+
+[[vectorize]]
+binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+index_name = "tutorial-index"
+```
+
+This will create a new vector database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+
+## 3. Bind your Worker to your index
+
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+
+To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 
-[[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "<DATABASE_NAME>"
-database_id = "<unique-ID-for-your-database>"
+[[[vectorize]]
+binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+index_name = "tutorial-index"
 ```
 
 Specifically:
 
 * The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
-* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-* Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/platform/client-api/) is exposed on this binding.
+* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
+* Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/platform/client-api/) is exposed on this binding for use within your Workers application.
 
-{{<Aside type="note">}}
+## 4. Insert vectors
 
-When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/platform/client-api/).
+TODO: insert vectors why / how / etc
 
-{{</Aside>}}
+First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
 
-You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#d1-databases).
-
-## 4. Run a query against your D1 database
-
-### Configure your D1 database
-
-With `wrangler.toml` configured properly, you will set up your database. Use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `d1-tutorial` Worker directory you created in step 1:
-
-```sql
----
-filename: schema.sql
----
-DROP TABLE IF EXISTS Customers;
-CREATE TABLE IF NOT EXISTS Customers (CustomerId INTEGER PRIMARY KEY, CompanyName TEXT, ContactName TEXT);
-INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'), (4, 'Around the Horn', 'Thomas Hardy'), (11, 'Bs Beverages', 'Victoria Ashworth'), (13, 'Bs Beverages', 'Random Name');
-```
-
-You will configure your database to run and test locally first. Bootstrap your new D1 database by running:
-
-```sh
-$ wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
-```
-
-Then validate your data is in your database by running:
-
-```sh
-$ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers'
-```
-
-### Write queries within your Worker
-
-After you have set up your database, you will run an SQL query from within your Worker.
-
-First, go to your `d1-tutorial` Worker and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
-
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
+Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
 
 ```typescript
 ---
 filename: "src/worker.ts"
 ---
-export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "DB" with the variable name you defined.
-  DB: D1Database;
-}
 
-export default {
-  async fetch(request: Request, env: Env) {
-    const { pathname } = new URL(request.url);
 
-    if (pathname === "/api/beverages") {
-      // If you did not use `DB` as your binding name, change it here
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM Customers WHERE CompanyName = ?"
-      )
-        .bind("Bs Beverages")
-        .all();
-      return Response.json(results);
-    }
 
-    return new Response(
-      "Call /api/beverages to see everyone who works at Bs Beverages"
-    );
-  },
-};
 ```
 
 In the code above, you:
 
-* Define a binding to our D1 database in our TypeScript code. This binding matches the `binding` value we set in `wrangler.toml` under `[[d1_databases]]`
-* Query our database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
-* Call `.bind()` to safely and securely bind a value to that placeholder. In a real application, we would allow a user to define the `CompanyName` they want to list results for. Using `.bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against our application and deleting or otherwise modifying your database.
-* Execute the query by calling `.all()` to return all rows (or none, if the query returns none)
-* Return our query results, if any, in JSON format with `Response.json(results)`
+* Define a binding to your Vectorize index from your Workers code. This binding matches the `binding` value you set in `wrangler.toml` under `[[vectorize]]`
+* Specify a set of example vectors that you will query against in the next step
+* Insert those vectors into the index and confirm it was successful.
 
-After configuring your Worker, you can test your project locally before you deploy globally.
 
-## 5. Develop locally with Wrangler
 
-While in your project directory, test your database locally by running:
+## 5. Query vectors (semantic search)
 
-```sh
-$ wrangler dev
-```
+While in your project directo
 
-When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
+## 6. Deploy your Worker
 
-To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
-
-## 6. Deploy your database
-
-Before deploying your D1 database and Worker globally, log in with your Cloudflare account by running:
+Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
 $ wrangler login
@@ -224,38 +163,31 @@ $ wrangler login
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
-To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps _without_ the `--local` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
-
-First, bootstrap your database with the `schema.sql` file you created in step 4:
-
-```sh
-$ wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
-```
-
-Then validate the data is in production by running:
-
-```sh
-$ wrangler d1 execute <DATABASE_NAME> --command='SELECT * FROM Customers'
-```
-
-Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
+From here, you can deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
 $ npx wrangler deploy
-# Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
+# Outputs: https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
-You can now visit the URL for your newly created project to query your live database.
+You can now visit the URL for your newly created project to query your live application! Open the URL in your web browser and you should see the following output:
 
-For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
+```json
 
-By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally.
+```
+
+The output includes:
+
+* similar scores
+* vectors
+* metadata
+
+By finishing this tutorial, you have created a vector database, a Worker to access that database and deployed your project globally.
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com/).
 
-- [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
-- Learn how to use the [D1 client API](/d1/platform/client-api/) within your Worker.
-- Explore [community projects built on D1](/d1/platform/community-projects/).
-
+- 
+- 
+- 

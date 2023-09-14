@@ -1,5 +1,5 @@
 ---
-title: What are embeddings
+title: Embeddings
 pcx_content_type: concept
 weight: 9
 ---

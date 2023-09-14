@@ -1,9 +1,14 @@
 ---
 pcx_content_type: concept
-weight: 10
+weight: 18
 title: Pricing
 ---
 
 # Pricing
 
 TODO
+
+
+
+
+<sup>beta</sup>
