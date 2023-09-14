@@ -78,7 +78,7 @@ This API token requirement will be lifted prior to Pub/Sub becoming Generally Av
 4. Choose **Get Started** next to **Create Custom Token** 
 5. Name the token - e.g. "Pub/Sub Write Access"
 6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
-7. Select **Add More** below the newly created permission. Choose **User** > **Memberships** from the first dropdown and **Edit** as the permission.
+7. Select **Add More** below the newly created permission. Choose **User** > **Memberships** from the first dropdown and **Read** as the permission.
 8. Select **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission.
 9. Select **Create Token** and copy the token value.
 
