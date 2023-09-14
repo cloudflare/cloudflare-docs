@@ -41,7 +41,7 @@ interface Env {
 }
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req: Request, env: Env): Promise<Response> {
     // We assume each Durable Object is mapped to a roomId in a query parameter
     // In a production application, this will likely be a roomId defined by your application
     // that you validate (and/or authenticate) first.
