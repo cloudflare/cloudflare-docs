@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Configuration
+meta:
+  title: Configuration - Wrangler
 ---
 
 # Configure `wrangler.toml`
@@ -45,7 +47,7 @@ kv_namespaces = [
 The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `wrangler deploy --env staging`.
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
 
 The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
@@ -317,7 +319,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
 
-- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
 
@@ -494,7 +496,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The name of another queue to send a message if it fails processing at least `max_retries` times.
-  - If a dead_letter_queue is not defined, messages that repeatedly fail processing will be discarded.
+  - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will be discarded.
   - If there is no queue with the specified name, it will be created automatically.
 
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -535,9 +537,18 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
   - The name of this R2 bucket.
 
+- `jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
 - `preview_bucket_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The preview name of this R2 bucket used during `wrangler dev`.
+  - The preview name of this R2 bucket used during `wrangler dev --remote`.
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket.
+
+{{</Aside>}}
 
 {{</definitions>}}
 
@@ -861,6 +872,6 @@ If you need to make changes to your Worker from the Cloudflare dashboard, the da
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behaviour).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

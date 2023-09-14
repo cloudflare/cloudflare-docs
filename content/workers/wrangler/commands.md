@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Commands
+meta:
+  title: Commands - Wrangler
 ---
 
 # Wrangler commands
@@ -442,7 +444,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 Deploy your Worker to Cloudflare.
 
 ```sh
-$ wrangler deploy [SCRIPT] [OPTIONS]
+$ npx wrangler deploy [SCRIPT] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -471,7 +473,7 @@ None of the options for this command are required. Also, many can be set in your
   - Use the latest version of the Workers runtime.
 - `--assets` {{<type>}}string{{</type>}}
   - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler deploy --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -498,7 +500,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--node-compat` {{<type>}}boolean{{</type>}}
   - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
+  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
@@ -517,7 +519,7 @@ $ wrangler publish [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
+This command has been deprecated as of v3 in favor of [`npx wrangler deploy`](#deploy). It will be removed in v4.
 
 {{</Aside>}}
 
@@ -724,9 +726,9 @@ Exactly one of `VALUE` or `--path` is required.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -795,9 +797,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Only list keys that begin with the given prefix.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -836,17 +838,19 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The key value to get.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to get from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--text` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Decode the returned value as a UTF-8 string.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -885,9 +889,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -934,9 +938,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1022,9 +1026,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1116,6 +1120,10 @@ $ wrangler r2 object get <OBJECTPATH>
 
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The source object path in the form of `{bucket}/{key}`.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1148,6 +1156,10 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
     {{</definitions>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 ### `delete`
 
@@ -1161,6 +1173,10 @@ $ wrangler r2 object delete <OBJECTPATH>
 
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The destination object path in the form of `{bucket}/{key}`.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 

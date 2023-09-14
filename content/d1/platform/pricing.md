@@ -9,10 +9,11 @@ title: Pricing
 While in public Alpha, D1 is currently free to use on all [Workers plans](/workers/platform/pricing/#workers). Refer to the [our recent announcement](https://blog.cloudflare.com/d1-turning-it-up-to-11/)) for more information.
 {{</Aside>}}
 
-D1's billing is based on:
+D1 bills based on:
 
-* *What you use*: queries you issue against D1 will consume read units and/or write units depending on the volume of data read (scanned) or written.
-* *Scale-to-zero*: You are not billed for "hours" or "capacity units": if you are not issuing queries against your database, you are only billed for storage above the included limits of your plan when your database is not in use.
+* **Usage**: Queries you issue against D1 will count as rows read, rows written, or both (for transactions or batches).
+* **Scale-to-zero**: You are not billed for "hours" or "capacity units". If you are not issuing queries against your database, you are not billed for compute.
+* **Storage**: You are only billed for storage above the included [limits](/d1/platform/limits/) of your plan.
 
 ## Billing metrics 
 
@@ -50,7 +51,18 @@ For [Workers Paid tier](/workers/platform/pricing/#workers) users, we intend to 
 
 * How can I estimate my (eventual) bill?
 
-We'll be adding analytics for read units, write units and storage at both the account level and per-database, so you can both track overall usage and assess which database(s) are contributing to your usage ahead of enabling any billing.
+Every query returns a `meta` object that contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for instance, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
+
+```json
+"meta": {
+  "duration": 0.20472300052642825,
+  "size_after": 45137920,
+  "rows_read": 5000,
+  "rows_written": 0
+}
+```
+
+These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/platform/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
 
 * Does D1 charge for data transfer / egress?
 
@@ -64,9 +76,9 @@ D1 itself does not charge for additional compute. Workers querying D1 and comput
 
 Yes: any queries you issue against your database, including `INSERT`ing existing data into a new database, table scans (`SELECT * FROM table`), or creating indexes count as either reads or writes.
 
-* Can I use an index to reduce the number of read units consumed?
+* Can I use an index to reduce the number of rows read by a query?
 
-Yes! [Creating indexes](/d1/learning/using-indexes/) for your most queried tables and filtered columns can reduce how much data is scanned and improve query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Note that writing to columns referenced in an index will add at least one (1) additional write unit to account for updating the index, but this is typically offset by the reduction in read units consumed due to the benefits of an index.
+Yes, you can use an index to reduce the number of rows read by a query. [Creating indexes](/d1/learning/using-indexes/) for your most queried tables and filtered columns reduce how much data is scanned and improve query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
 
 * Does a freshly created database, and/or an empty table with no rows, contribute to my storage?
 

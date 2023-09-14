@@ -10,7 +10,7 @@
       "DDoS protection",
       "Bots"
     ],
-    "category": ["Security"],
+    "product_group": "Application security",
     "elements": [
       {
         "type": "module",
@@ -176,7 +176,7 @@
             "external_link": true,
             "url_path": "/fundamentals/security/security-level/",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
             "url_path": "/fundamentals/security/challenge-passage/",

@@ -60,6 +60,6 @@ If the caller's `fetch()` failed as a result of being unable to reach the Durabl
 
 ## 3. List Durable Objects
 
-The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects/) within a Durable Object namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
+The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a Durable Object namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 
 

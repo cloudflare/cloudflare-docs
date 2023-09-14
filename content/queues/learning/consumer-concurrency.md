@@ -28,7 +28,7 @@ Where possible, Queues will optimize for keeping your backlog from growing expon
 
 {{<Aside type="warning" header="Consumer concurrency and retried messages">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will count as a failed invocation and cause the consumer to autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is something higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+Retrying messages with `retry()` or calling `retryAll()` on a batch will count as a failed invocation and cause the consumer to cease any increase in autoscaling. Continued `retry()` / `retryAll()` invocations will cause the consumers autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is higher, it is usually due to messages being retried, preventing your consumer from scaling up.
 
 {{</Aside>}}
 
@@ -79,7 +79,7 @@ filename: wrangler.toml
   max_concurrency = 1
 ```
 
-To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `wrangler deploy` to push your configuration update. 
+To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update. 
 
 <!-- Not yet available but will be very soon 
 ### wrangler CLI
@@ -107,4 +107,4 @@ Billing for consumers follows the [Workers unbound usage model](/workers/platfor
 
 ### Example
 
-A consumer Worker that takes 2 seconds ([256 GB-seconds](/workers/platform/pricing/#workers-unbound-billing-examples)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).
+A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/workers/platform/pricing/#workers-unbound-billing-examples)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

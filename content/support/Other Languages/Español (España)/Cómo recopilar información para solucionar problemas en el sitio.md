@@ -227,7 +227,7 @@ ___
 
 ## Ejecutar traceroute
 
-Traceroute es una herramienta de diagnóstico que mide la latencia de la ruta de los paquetes en una red. La mayoría de los sistemas operativos admiten el comando _traceroute_. Si tienes problemas de conectividad con el sitio web con proxy de Clouflare y [solicitas ayuda a asistencia de Cloudflare,](https://support.cloudflare.com/hc/articles/200172476), recuerda brindar los resultados de traceroute.
+Traceroute es una herramienta de diagnóstico que mide la latencia de la ruta de los paquetes en una red. La mayoría de los sistemas operativos admiten el comando _traceroute_. Si tienes problemas de conectividad con el sitio web con proxy de Cloudflare y [solicitas ayuda a asistencia de Cloudflare,](https://support.cloudflare.com/hc/articles/200172476), recuerda brindar los resultados de traceroute.
 
 {{<Aside type="tip">}}
 Los tiempos de espera son posibles para los resultados ping, ya que
@@ -278,7 +278,7 @@ ___
 
 ## Agregar el encabezado CF-RAY a tus registros
 
-El encabezado **CF-RAY** rastrea una solicitud de sitio web a través de la red de Cloudflare. Proporciona el encabezado **CF-RAY** de una solicitud web a la asistencia de Clouflare cuando trates de resolver un problema. También puedes agregar el encabezado **CF-RAY** a tus registros mediante la edición de la configuración del servidor web de origen con el fragmento de abajo que corresponda a la marca de tu servidor web.
+El encabezado **CF-RAY** rastrea una solicitud de sitio web a través de la red de Cloudflare. Proporciona el encabezado **CF-RAY** de una solicitud web a la asistencia de Cloudflare cuando trates de resolver un problema. También puedes agregar el encabezado **CF-RAY** a tus registros mediante la edición de la configuración del servidor web de origen con el fragmento de abajo que corresponda a la marca de tu servidor web.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-agent}i\&quot; %{CF-Ray}i&quot; cf_custom</span></div></span></span></span></code></pre>{{</raw>}}

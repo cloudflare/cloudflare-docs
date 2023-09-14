@@ -8,10 +8,10 @@ weight: 5
 
 Enterprise customers can purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
-- `www.example.com/`
-- `www.example.com/foo/`
-- `www.example.com/foo/bar/`
-- `www.example.com/foo/bar/baz/`
+- `www.example.com`
+- `www.example.com/foo`
+- `www.example.com/foo/bar`
+- `www.example.com/foo/bar/baz`
 - `www.example.com/foo/bar/baz/qux.jpg`
 
 Purging by prefix is useful in different scenarios, such as:

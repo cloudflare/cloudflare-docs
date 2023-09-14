@@ -7,10 +7,8 @@ title: JA3 Fingerprint
 
 {{<render file="_ja3-fingerprint.md">}}
 
-{{<Aside type="note" header="Note">}}
-
+{{<Aside type="note">}}
 JA3 Fingerprints are only available to Enterprise customers who have purchased Bot Management.
-
 {{</Aside>}}
 
 ## Analytics

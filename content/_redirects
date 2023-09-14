@@ -60,7 +60,8 @@
 /1.1.1.1/setup-1.1.1.1/macos/ /1.1.1.1/setup/macos/ 301
 /1.1.1.1/setup-1.1.1.1/router/ /1.1.1.1/setup/router/ 301
 /1.1.1.1/setup-1.1.1.1/windows/ /1.1.1.1/setup/windows/ 301
-/1.1.1.1/setup/check-1.1.1.1/ /1.1.1.1/setup/check/ 301
+/1.1.1.1/setup/check-1.1.1.1/ /1.1.1.1/check/ 301
+/1.1.1.1/setup/check/ /1.1.1.1/check/ 301
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/what-is-1.1.1.1/ /1.1.1.1/
 
@@ -149,12 +150,17 @@
 /support/other-languages/한국어/cloudflare-bot-제품/ /bots/troubleshooting/ 301
 
 # byoip
-/byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
-/byoip/dynamic-advertisement/best-practices/ /byoip/best-practices/dynamic-advertisement/ 301
+/byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
+/byoip/best-practices/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
 /byoip/dynamic-advertisement/configure-dynamic-advertisement/ /byoip/how-to/configure-dynamic-advertisement/ 301
 /byoip/irr-records/verify-irr-entries/ /byoip/how-to/verify-irr-entries/ 301
-/byoip/loa/ /byoip/about/loa/ 301
-/byoip/loa/loa-template/ /byoip/about/loa/ 301
+/byoip/about/irr/ /byoip/concepts/irr-entries/ 301
+/byoip/best-practices/irr-entries/ /byoip/concepts/irr-entries/best-practices/ 301
+/byoip/about/loa/ /byoip/concepts/loa/ 301
+/byoip/loa/loa-template/ /byoip/concepts/loa/ 301
+/byoip/about/prefix-delegations/ /byoip/concepts/prefix-delegations/ 301
+/byoip/about/ /byoip/concepts/ 301
+/byoip/cloudflare-ips/ /byoip/get-started/#cloudflare-ips 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
@@ -334,7 +340,6 @@
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
-/fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ 301
@@ -347,6 +352,15 @@
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
+/support/account-management-billing/account-management/ /fundamentals/account-and-billing/ 301
+/support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/español-españa/cómo-añadir-varios-sitios-en-cloudflare-mediante-automatización/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/français-france/ajout-de-plusieurs-sites-à-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/日本語/自動化機能を使ってcloudflareに複数のサイトを追加する/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/português-do-brasil/como-adicionar-vários-sites-à-cloudflare-via-automação/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
 /support/firewall/settings/ /fundamentals/security/ 301
 /support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/security/under-attack-mode/ 301
 /support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /fundamentals/security/browser-integrity-check/ 301
@@ -392,7 +406,8 @@
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
-/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/
+/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
+# more redirects in the /dynamic/ section
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
@@ -479,6 +494,13 @@
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/third-party/strongswan/ 301
 /magic-wan/tutorials/vyos/ /magic-wan/third-party/vyos/ 301
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
+
+# notifications
+/fundamentals/notifications/ /notifications/ 301
+/fundamentals/notifications/create-notifications/ /notifications/create-notifications/ 301
+/fundamentals/notifications/create-notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
+/fundamentals/notifications/create-notifications/configure-webhooks/ /notifications/create-notifications/configure-webhooks/ 301
+/fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -691,7 +713,7 @@
 /r2/learning/data-security/ /r2/reference/data-security/ 301
 /r2/learning/cors/ /r2/buckets/cors/ 301
 /r2/learning/unicode-interoperability/ /r2/reference/unicode-interoperability/ 301
-/r2/learning/data-location/ /r2/buckets/data-location/ 301
+/r2/learning/data-location/ /r2/reference/data-location/ 301
 /r2/platform/pricing/ /r2/pricing/ 301
 /r2/platform/limits/ /r2/reference/limits/ 301
 /r2/platform/changelog/ /r2/reference/changelog/ 301
@@ -704,6 +726,7 @@
 /r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
 /r2/examples/aws4fetch/ /r2/examples/aws/aws4fetch/ 301
 /r2/examples/boto3/ /r2/examples/aws/boto3/ 301
+/r2/buckets/data-location/ /r2/reference/data-location/ 301
 
 # tenant_redirects
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
@@ -994,6 +1017,7 @@
 /zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
 
 # cloudflare-one / zero-trust
+/access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
 /cloudflare-one/analytics/ /cloudflare-one/insights/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/access/ 301
@@ -1184,6 +1208,29 @@
 /fundamentals/speed/speed-test/* /speed/speed-test/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
+/learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301
+/learning-paths/modules/cybersafe/cybersafe-area1-onboarding/* /learning-paths/cybersafe/area1-onboarding/:splat 301
+/learning-paths/modules/cybersafe/cybersafe-concepts/* /learning-paths/cybersafe/concepts/:splat 301
+/learning-paths/modules/cybersafe/cybersafe-gateway-onboarding/* /learning-paths/cybersafe/gateway-onboarding/:splat 301
+/learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
+/learning-paths/modules/get-started/other-features-free/* /learning-paths/get-started-free/other-features/:splat 301
+/learning-paths/modules/get-started/performance-free/* /learning-paths/get-started-free/performance/:splat 301
+/learning-paths/modules/get-started/security-free/* /learning-paths/get-started-free/security/:splat 301
+/learning-paths/modules/performance/load-balancing-concepts/* /learning-paths/load-balancing/concepts/:splat 301
+/learning-paths/modules/performance/load-balancing-planning/* /learning-paths/load-balancing/planning/:splat 301
+/learning-paths/modules/performance/load-balancing-setup/* /learning-paths/load-balancing/setup/:splat 301
+/learning-paths/modules/security/bot-management-concepts/* /learning-paths/bot-management/concepts/:splat 301
+/learning-paths/modules/security/bot-management-planning/* /learning-paths/bot-management/planning/:splat 301
+/learning-paths/modules/security/bot-management-setup/* /learning-paths/bot-management/setup/:splat 301
+/learning-paths/modules/security/ddos-advanced/* /learning-paths/prevent-ddos-attacks/advanced/:splat 301
+/learning-paths/modules/security/ddos-baseline/* /learning-paths/prevent-ddos-attacks/baseline/:splat 301
+/learning-paths/modules/security/ddos-concepts/* /learning-paths/prevent-ddos-attacks/concepts/:splat 301
+/learning-paths/modules/security/dns-filtering-account/* /learning-paths/dns-filtering/account/:splat 301
+/learning-paths/modules/security/dns-filtering-concepts/* /learning-paths/dns-filtering/concepts/:splat 301
+/learning-paths/modules/security/dns-filtering-connect-devices/* /learning-paths/dns-filtering/connect-devices/:splat 301
+/learning-paths/modules/security/dns-filtering-create-policy/* /learning-paths/dns-filtering/create-policy/:splat 301
+/learning-paths/modules/security/dns-filtering-deploy/* /learning-paths/dns-filtering/deploy/:splat 301
+/learning-paths/modules/security/dns-filtering-plan-deployment/* /learning-paths/dns-filtering/plan-deployment/:splat 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
@@ -1222,18 +1269,4 @@
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
-
-# partial redirects (will expand later)
-
-/ssl/_partials/* /ssl/ 301
-/waiting-room/_partials/* /waiting-room/ 301
-/warp-client/_partials/* /warp-client/ 301
-/bots/_partials/* /bots/ 301
-/api-security/_partials/* /api-shield/ 301
-/logs/_partials/* /logs/ 301
-/fundamentals/_partials/* /fundamentals/ 301
-/load-balancing/_partials/* /load-balancing/ 301
-/api-shield/_partials/* /api-shield/ 301
-/registrar/_partials/* /registrar/ 301
-/waf/_partials/* /waf/ 301
-/1.1.1.1/_partials/* /1.1.1.1/ 301
+/fundamentals/notifications/* /notifications/:splat 301

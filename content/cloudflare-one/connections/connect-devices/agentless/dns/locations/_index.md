@@ -7,7 +7,7 @@ weight: 1
 
 # Add locations
 
-{{<render file="_gateway-add-locations.md">}}
+{{<render file="gateway/_add-locations.md">}}
 
 7. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
@@ -17,4 +17,4 @@ weight: 1
 
 You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [DNS Location](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
 
-{{<render file="_gateway-add-locations-static-ip-warning">}}
+{{<render file="gateway/_add-locations-static-ip-warning.md">}}

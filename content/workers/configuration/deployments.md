@@ -23,7 +23,7 @@ Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [
 
 ## Creating a new deployment
 
-New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. Create a new deployment via the Cloudflare dashboard, [Workers API](/api/), or Wrangler (with [`wrangler deploy` command](/workers/wrangler/commands/#deploy) or [`wrangler rollback` command](/workers/wrangler/commands#rollback)) .
+New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. Create a new deployment via the Cloudflare dashboard, [Workers API](/api/), or Wrangler (with [`npx wrangler deploy` command](/workers/wrangler/commands/#deploy) or [`wrangler rollback` command](/workers/wrangler/commands#rollback)) .
 
 Notably, this does not include changes to bound resources. For example, if two Workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Changes to the service binding on Worker A will also not trigger a new deployment for Worker B.
 
@@ -35,23 +35,23 @@ Changing triggers such as routes, custom domains, or cron triggers will not issu
 
 ## Interacting with deployments
 
-### via Wrangler
+### Via Wrangler
 
 Wrangler allows you to view the 10 most recent deployments as well as bindings and metadata for a specific deployment.
 
 For more information on the `wrangler deployments list` and `wrangler deployments view` commands, refer to the [commands documentation](/workers/wrangler/commands#deployments).
 
-### via the Cloudflare Dashboard
+### Via the Cloudflare dashboard
 
 To access your deployments:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
+2. Select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Deployments**. 
 
 Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
 
-### via the API
+### Via the API
 
 To learn more about accessing deployment information via Cloudflare's REST API, refer to the [API documentation](/api/#worker-deployments-properties).
 

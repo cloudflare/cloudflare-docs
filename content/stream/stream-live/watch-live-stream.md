@@ -8,6 +8,8 @@ weight: 3
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
 
+{{<render file="_chromecast_limitations.md">}}
+
 ## Use the API
 
 A live input can have multiple video UIDs associated with it. To get the video UID representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint. 

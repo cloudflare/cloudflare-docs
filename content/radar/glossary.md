@@ -107,6 +107,12 @@ Note that a number of factors may affect the accuracy of the geolocation informa
 
 Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
 
+## IPv6 adoption
+
+The IPv4 vs. IPv6 graph shows the distribution of traffic by IP version, and is intended to highlight IPv6 adoption trends.
+
+Note that prior to January 23, 2023, the IPv6 percentage shown in the chart was calculated as (IPv6 requests / IPv4+IPv6 requests). After that date, the IPv6 percentage is calculated as (IPv6 requests / requests for dual-stacked content).
+
 ## IQI
 
 The Internet Quality Index estimates connection performance under average utilization, such as web browsing. It is based on end user measurements against a fixed set of Cloudflare and third-party targets, providing numbers for bandwidth, round-trip time (latency), and DNS response time, aggregated by continent, country, or ASN.
@@ -121,6 +127,21 @@ Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention syste
 Industry categories include business types grouped by their primary activities, such as information technology and services, retail, or telecommunications. Vertical categories are high-level groupings that incorporate related industries, such as the "Internet and Telecom" vertical, which includes industries such as "Internet" and "Telecommunications".
 
 Network-level DDoS attacks graphs are based on traffic measured in bytes.
+
+## TCP Connection Tampering
+
+A complete TCP connection consists of a 3-way handshake initiated by a client with a SYN packet to the server, then typically a data exchange moderated with ACK and PSH flags in the data packets, and finally a graceful close initiated from either side with a FIN packet. A TCP close is ungraceful or unexpected when triggered by a timeout, or by a RST packet. More details about the TCP protocol can be found in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293#section-3.6).
+
+Timeouts can be triggered, for example, by shutting down applications or devices before they can close connections. Timeouts also can be caused by third-party applications or devices seeking to prevent or break the connection. The RST packet is reserved for use by an endpoint to signal a fatal error or failure of some kind, but it can also inappropriately be transmitted by middleboxes to force endpoints to close their connections (see RFC 3360).
+
+Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in “[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)”).
+
+On Cloudflare Radar's Security & Attacks page, you can view connection tampering statistics derived from a sample of connections to Cloudflare's servers. The plot lines are defined as follows:
+* **Mid-handshake (Post-SYN)**: Connections matching signatures for tampering after the receipt of only a single SYN packet, and before the handshake completes. Tampering at this stage is likely triggered by the destination IP address, as SYN packets typically do not contain application-layer data.
+* **Immediately post-handshake (Post-ACK)**: Connections matching signatures for tampering after the receipt of a SYN packet and ACK packet, meaning the TCP connection was successfully established but the server did not receive any subsequent packets. These signatures can occur when the first packet from the client containing application-layer data gets dropped. Among these signatures, middleboxes may or may not inject RSTs to the server.
+* **After first data packet (Post-PSH)**: Connections matching signatures for tampering after the receipt of a packet with PSH flag set, following connection establishment. PSH packets typically contain data such as the Server Name Indication (SNI) in TLS or the HTTP Host that could trigger middlebox tampering.
+* **After multiple data packets (Later in Flow)**: Connections matching signatures for tampering later in the connection, after the transfer of multiple data packets. Tampering in these cases could be triggered by keywords later in a cleartext HTTP session, or by commercial devices that have visibility into encrypted traffic
+* **None** Connections that do not match any tampering signatures.
 
 ## Traffic type filter
 

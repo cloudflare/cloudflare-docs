@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-To facilitate compliance with CIPA requirements, administrators can [enable a single filtering policy option](/cloudflare-one/policies/gateway/dns-policies/common-policies/#block-cipa-filter). This includes applying the required filter categories to block access to unwanted or harmful online content. 
+To facilitate compliance with CIPA requirements, administrators can [enable a single filtering policy option](/cloudflare-one/policies/gateway/dns-policies/common-policies/#cipa-filter). This includes applying the required filter categories to block access to unwanted or harmful online content. 
 
 {{<Aside type="note">}}
 It is important to note that while our recommended CIPA compliance rule covers the essential filter categories, CIPA is designed to be flexible, allowing administrators to adjust filtering policies based on local standards and requirements. 
