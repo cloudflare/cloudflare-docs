@@ -539,16 +539,43 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 
 ### Eclipse
 
-To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to Eclipse's Java VM.
+To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to Java VM used by Eclipse.
+
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
+2. Find the `java.home` value for your Eclipse installation.
+
+   1. In Eclipse, go to **Eclipse** > **About Eclipse** (or **Help** > **About Eclipse IDE** on Windows and Linux)
+   2. Select **Installation Details**, then go to **Configuration**.
+   3. Search for `java.home`, then locate the path. For example:
+
+   ```txt
+   ---
+   highlight: 2
+   ---
+   *** System properties:
+   java.home=/Users/<username>/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_17.0.8.v20230831-1047/jre
+   ```
+
+   4. Copy the full path after `java.home=`.
+
+3. Add the Cloudflare certificate to Eclipse's Java VM.
 
 <details>
-<summary>macOS</summary>
+<summary>macOS and Linux</summary>
 <div>
+1. Add the `java.home` value you copied as a terminal variable.
 
 ```sh
-$ export JAVA_HOME=$(echo /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.*/jre/)
+$ export JAVA_HOME=$(echo /path/to/java.home)
+```
+
+2. Run `keytool` to install and trust the Cloudflare certificate.
+
+```sh
 $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
 ```
+
+3. Restart Eclipse.
 
 </div>
 </details>
@@ -557,8 +584,24 @@ $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias Cl
 <summary>Windows</summary>
 <div>
 
+1. Add the `java.home` value you copied as a terminal variable.
+
+```bash
+$JAVA_HOME = "\path\to\java.home"
+```
+
+2. Run `keytool` to install and trust the Cloudflare certificate.
+
+```bash
+"$JAVA_HOME\bin\keytool.exe" -import -file "$HOME\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "$JAVA_HOME\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+```
+
+3. Restart Eclipse.
+
 </div>
 </details>
+
+For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse). You may also want to change the [Java keystore password](https://docs.oracle.com/cd/E19957-01/817-3331/6miuccqo3/index.html).
 
 ### Minikube
 
