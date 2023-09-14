@@ -31,6 +31,8 @@ kv_namespaces = [
 [durable_objects]
 bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
+```
+
 ```ts
 ---
 filename: src/worker.ts
