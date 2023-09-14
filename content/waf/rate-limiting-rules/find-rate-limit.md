@@ -3,7 +3,7 @@ title: Find appropriate rate limit
 pcx_content_type: how-to
 weight: 17
 meta:
-  title: How to find an appropriate rate limit
+  title: Find an appropriate rate limit
 ---
 
 # Find an appropriate rate limit
