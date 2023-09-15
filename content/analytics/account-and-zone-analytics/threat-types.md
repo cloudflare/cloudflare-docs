@@ -54,7 +54,7 @@ A /24 IP range that was blocked based on the [user configuration](/waf/tools/ip-
 
 ## New Challenge (user)
 
-[Challenge](/fundamentals/get-started/concepts/cloudflare-challenges/) based on user configurations set for visitor’s IP in either WAF managed rules or firewall rules, configured in **Security** > **WAF**.
+[Challenge](/firewall/cf-firewall-rules/cloudflare-challenges/) based on user configurations set for visitor’s IP in either WAF managed rules or custom rules, configured in **Security** > **WAF**.
 
 ## Challenge error
 
