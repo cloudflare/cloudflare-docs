@@ -46,11 +46,15 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * All rules tagged with `<TAG_NAME>` will have a sensitivity level of `low`.
 * The rule with ID `<MANAGED_RULESET_RULE_ID>` will use the `block` action.
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/ddos_l7/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/ddos_l7/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Execute HTTP DDoS Attack Protection managed ruleset in the zone-level phase entry point ruleset",
   "rules": [
     {
@@ -83,7 +87,7 @@ curl -X PUT \
 The response returns the created (or updated) phase entry point ruleset.
 
 <details>
-<summary>Example response</summary>
+<summary>Response</summary>
 <div>
 
 ```json
@@ -146,11 +150,15 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 Custom rule expressions (different from `"true"`) and the `log` action require an Enterprise plan with the Advanced DDoS Protection subscription.
 {{</Aside>}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/ddos_l7/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/ddos_l7/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Disable a managed ruleset rule for allowlisted IP addresses",
   "rules": [
     {
@@ -176,7 +184,7 @@ curl -X PUT \
 The response returns the created (or updated) phase entry point ruleset.
 
 <details>
-<summary>Example response</summary>
+<summary>Response</summary>
 <div>
 
 ```json

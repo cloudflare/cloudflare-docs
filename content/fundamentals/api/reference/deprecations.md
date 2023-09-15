@@ -1,7 +1,7 @@
 ---
 title: API deprecations
 pcx_content_type: reference
-weight: 22
+weight: 5
 ---
 
 # API v4 deprecations
@@ -11,7 +11,7 @@ Cloudflare occasionally makes updates to our APIs that result in behavior change
 ## ChaCha20 TLS Cipher Removal
 **End of life Date: July 1st, 2023**
 
-Back in 2016 Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2.
+Back in 2016, Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2.
 
 At the time, we introduced two variants of these new suites, the "standard" suites as defined by the IETF RFC 7905, and "draft" suites that followed an earlier draft of said specification.
 
@@ -60,7 +60,7 @@ Deprecated API:
 ## Load Balancing - notification_email
 **End of life date: April 3, 2023**
 
-This field is deprecated and has been moved to [Cloudflare centralized notification service](/fundamentals/notifications/). 
+This field is deprecated and has been moved to [Cloudflare centralized notification service](/notifications/). 
 
 `notification_email` is the email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
 

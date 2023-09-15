@@ -39,6 +39,10 @@ You should apply all possible API Shield protections to these endpoints ([rate l
 
 For more information, refer to our [blog post](https://blog.cloudflare.com/api-sequence-analytics).
 
+### Repeated sequences
+
+Repeated request sequences show true API usage. As a result, some operations are frequently repeated. Sequences that consist of repeated operations are pushed to the top of the list due to its score.
+
 ## Availability
 
 Sequence Analytics is available for all API Shield customers. Pro, Business, and Enterprise customers who have not purchased API Shield can get started by [enabling the API Shield trial](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare Dashboard or contacting your account manager.

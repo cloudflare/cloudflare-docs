@@ -41,7 +41,7 @@ Pour la sécurité du compte, vous devez valider votre identité et la propriét
 
 3\. Cliquez sur **Contact Support** (Contacter le support). Faites défiler l'écran vers le bas jusqu'à la carte _Emergency Phone Support Hotline - Authentication_ (Support téléphonique d'urgence - Authentification).
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4\. Pour vous authentifier à l'aide d'un jeton à usage unique, cliquez sur **Get a single-use token** (Générer un jeton à usage unique). Une fenêtre contextuelle s'affiche avec le code du jeton. Le code s'actualise automatiquement toutes les 30 secondes.
 

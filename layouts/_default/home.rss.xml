@@ -1,0 +1,42 @@
+{{- $permalink := .Permalink -}}
+{{- $atomLink := print .Permalink "index.xml" -}}
+{{- $changelogData := index .Site.Data "changelogs" -}}
+{{- $changelogRendered := slice -}}
+
+{{- range $index, $product := $changelogData -}}
+{{- range $index2, $item := $product.entries -}}
+{{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName "url" $product.link )) -}}
+{{- end -}}
+{{- end -}}
+
+{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloudflare product changelog</title>
+    <link>{{ $permalink }}</link>
+    <description>View updates to various Cloudflare products.</description>
+    <language>en-us</language>
+    <atom:link href="{{$atomLink}}" rel="self" />
+    <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
+    {{- range $changelogRendered -}}
+    {{- $link := "" -}}
+    {{- $rellink := .url -}}
+    {{- $product := .product -}}
+    {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{ $description = replaceRE `Open external link` "" $description -}}
+    {{- with .title -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
+    {{- else -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- end -}}
+    <item>
+    <title>{{- with .title -}}{{ printf "%s · %s" $product . }}{{ else }}{{ printf "%s · %s" $product .publish_date }}{{ end }}</title>
+    <link>{{ $link }}</link>
+    <description>{{ $description }}</description>
+    <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
+    <product>{{- $product -}}</product>
+    </item>
+    {{- end -}}
+  </channel>
+</rss>

@@ -52,15 +52,7 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value                            |
-| -------------------- | -------------------------------- |
-| Production branch    | `main`                           |
-| Build command        | `npm run build -- -c production` |
-| Build directory      | `dist/my-angular-app`            |
-
-</div>
+{{<pages-build-preset framework="angular-cli">}}
 
 {{<Aside type="warning" header="Minimum Node.js version">}}
 

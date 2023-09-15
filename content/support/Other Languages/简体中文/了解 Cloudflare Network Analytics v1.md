@@ -33,7 +33,7 @@ ___
 
 Cloudflare **Network Analytics** 视图提供对网络层和传输层流量模式及 DDoS 攻击的近实时洞察能力。Network Analytics 可视化呈现数据包和位级别的数据，与通过 [GraphQL Analytics API](/analytics/graphql-api/) 提供的数据相同。
 
-![分析面板显示每个类型的数据包摘要](/support/static/na-main-dashboard.png)
+![分析面板显示每个类型的数据包摘要](/images/support/na-main-dashboard.png)
 
 Network Analytics 可以加快恶意流量的报告和调查。您可以按照以下参数来过滤数据：
 
@@ -70,7 +70,7 @@ ___
 
 标题和侧面板提供**时间范围**下拉列表中所选时间段的活动摘要。
 
-![标题和侧面板汇总过去 24 小时的活动情况](/support/static/na-navigate.png)
+![标题和侧面板汇总过去 24 小时的活动情况](/images/support/na-navigate.png)
 
 标题提供数据包或比特总数，以及检测到并缓解的攻击次数。如果有攻击正在进行当中，标题会显示数据包（或比特）最大速率，而不是总数。
 
@@ -82,7 +82,7 @@ ___
 
 当您选择_最近 30 分钟_ 时，**Network Analytics** 视图会显示最近 30 分钟的数据，并且每 20 秒刷新一次。统计信息下拉列表旁边会显示_实时_通知，告诉您视图会不断自动更新：
 
-![Network Analytics 中已启用自动刷新](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Network Analytics 中已启用自动刷新](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 如果选择_自定义范围_ 选项，您可以指定最长 30 天的时间范围，这个时间范围可位于过去 365 天中的任意时间段。
 
@@ -94,13 +94,13 @@ ___
 
 启用**显示注释**切换开关，以在 **Network Analytics** 视图中显示或隐藏已广告/撤销的 IP 前缀事件的注释。点击各个注释了解详情。
 
-![用于在 Network Analytics 图表中显示注释的开关按钮](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![用于在 Network Analytics 图表中显示注释的开关按钮](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### 放大至“数据包”摘要
 
 在图表的某个区域上点击并拖动鼠标以进行放大。使用此技巧时，您可以放大到短至 3 分钟的时间范围。
 
-![放大至“数据包”摘要 ](/support/static/unnamed.gif)
+![放大至“数据包”摘要 ](/images/support/unnamed.gif)
 
 要放大图表，可单击**时间范围**选择器中的 **X** 图标。
 
@@ -148,7 +148,7 @@ ___
 
 2\. 点击**创建 Magic Firewall 规则**。
 
-![Network Analytics 中的“创建防火墙规则”链接](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![Network Analytics 中的“创建防火墙规则”链接](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Magic Firewall 规则编辑器显示了选定的筛选器和值。
 
@@ -432,7 +432,7 @@ ___
 
 选择其中一个**摘要**选项卡，以查看不同维度的数据。
 
-![跨越多个维度直观呈现数据](/support/static/unnamed__1_.gif)
+![跨越多个维度直观呈现数据](/images/support/unnamed__1_.gif)
 
 您可以从以下选项中选择：
 
@@ -455,7 +455,7 @@ ___
 
 要共享您的数据视图，请复制 URL 并将其发送给其他用户，这样他们就能使用同一个视图。
 
-![选择 Network Analytics 页面的 URL](/support/static/hc-dashboard-network-analytics-6.png)
+![选择 Network Analytics 页面的 URL](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

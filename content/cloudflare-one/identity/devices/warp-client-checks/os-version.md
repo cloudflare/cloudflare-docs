@@ -29,8 +29,32 @@ The OS Version device posture attribute checks whether the version of a deviceâ€
 {{<Aside type="note">}}
 The OS version must be specified as a valid Semver. For example, if your device is running OS version `1.2`, you must enter `1.2.0`.
 {{</Aside>}}
+5. (Optional) Configure additional OS-specific fields:
 
-5. (Optional) Configure Linux operating system **Distro name** and **Distro revision** to specify the version you want devices to match. The distro version always matches with an equal-to operator (==), regardless of the **Operator** setting.
+{{<tabs labels="macOS | iOS | Linux">}}
+{{<tab label="macos" no-code="true">}}
+
+In **Version extra**, enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match. Be sure to include the parenthesis around the letter.
+
+Example: `(a)`
+
+{{</tab>}}
+{{<tab label="ios" no-code="true">}}
+
+In **Version extra**, enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match. Be sure to include the parenthesis around the letter.
+
+Example: `(a)`
+
+{{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+In **Distro name** and **Distro revision**, enter the Linux distribution you want devices to match. The distro version always matches with an equal-to operator (==), regardless of the **Operator** setting.
+
+Example: `ubuntu 22.04`
+ 
+{{</tab>}}
+{{</tabs>}}
 
 6. Select **Save**.
 
@@ -51,7 +75,7 @@ Operating systems display version numbers in different ways. This section covers
 
 ### On Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
 
    ```bash

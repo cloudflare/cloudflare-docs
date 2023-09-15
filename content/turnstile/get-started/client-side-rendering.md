@@ -24,9 +24,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
 {{<Aside type="note">}}
-
 Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
-
 {{</Aside>}}
 
 To configure the challenge, refer to [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
@@ -37,11 +35,11 @@ Check out the [demo](https://demo.turnstile.workers.dev/) and its [source code](
 
 Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
 
-For example:
 <div>
 
 ```html
 ---
+header: Example
 highlight: [4]
 ---
 
@@ -58,10 +56,8 @@ highlight: [4]
 
 An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 A form is not protected by having a widget rendered. The corresponding token that is a result of a widget being rendered also needs to be verified using the siteverify API.
-
 {{</Aside>}}
 
 ### Disable implicit rendering
@@ -142,7 +138,11 @@ Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [sourc
 
 ## Access a widget's state
 
-In addition to the `render()` function, Turnstile supports obtaining the widget's response from a `widgetId` via the `turnstile.getResponse(widgetId: string)` function.
+In addition to the `render()` function, Turnstile supports obtaining the widget's response from a `widgetId` via the `turnstile.getResponse(widgetId: string)` function. If you omit the `widgetId`, `turnstile.getResponse()` returns the response from the last created widget.
+
+After some time, a widget may become expired and needs to be refreshed (by calling `turnstile.reset(widgetId: string)`). If a widget has expired, `turnstile.getResponse()` will still return the last response, but the response will no longer be valid because it has expired.
+
+You can check if a widget has expired by either subscribing to the `expired-callback` or using the `turnstile.isExpired(widgetId: string)` function, which returns `true` if the widget is expired. If you omit `widgetId`, `turnstile.isExpired()` returns whether the last created widget is expired or not.
 
 ## Reset a widget
 
@@ -152,6 +152,8 @@ If a given widget has timed out, expired or needs to be reloaded, you can use th
 
 Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
 
+To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
+
 ## Configurations
 
 | JavaScript Render Parameters | Data Attribute | Description |
@@ -160,14 +162,14 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). |
+| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/reference/client-side-errors). |
 | `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback invoked when the token expires and does not reset the widget. |
 | `before-interactive-callback` | `data-before-interactive-callback` | A JavaScript callback invoked before the challenge enters interactive mode. |
 | `after-interactive-callback` | `data-after-interactive-callback` | A JavaScript callback invoked when challenge has left interactive mode. |
 | `unsupported-callback` | `data-unsupported-callback` | A JavaScript callback invoked when a given client/browser is not supported by Turnstile. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
-| `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`zh-cn` and `zh-tw`.|
+| `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). Refer to the [list of supported languages](/turnstile/frequently-asked-questions/#what-languages-does-turnstile-support) for more information. |
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
 | `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge expires. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |

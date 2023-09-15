@@ -29,7 +29,8 @@ As a Cloudflare customer, you can contact Cloudflare for support via the communi
 
 |   | Enterprise  | Business | Pro | Free |
 |---|---|---|---|---|
-|  [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes  | Yes  | Recommended  | Recommended  |
+| [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes  | Yes  | Recommended  | Recommended  |
+| [Discord](https://discord.cloudflare.com/)<br/>Join the Discord community to ask basic troubleshooting questions (mainly focused on the Developer Platform). | Yes  | Yes  | Recommended  | Recommended  |
 | [Support Ticket](#getting-help-with-an-issue)<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | Yes | No* |
 | **Chat**<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | No | No |
 | **Emergency Phone**<br/>Use phone support to reach out during emergencies such as site outages or DDoS attacks. | Yes | No | No | No |
@@ -54,15 +55,15 @@ For account security, you must verify your identity and account ownership in the
 
 2\. In the upper right corner of the Cloudflare dashboard, click **Support** and select **Contact Support**.
 
-![](/support/static/Screen_Shot_2022-09-28_at_11.33.42.png)
+![](/images/support/Screen_Shot_2022-09-28_at_11.33.42.png)
 
 3\. On the right-hand panel there is a section for _Emergency Phone Support Hotline_.
 
-![](/support/static/Screen_Shot_2022-09-28_at_11.41.37.png)
+![](/images/support/Screen_Shot_2022-09-28_at_11.41.37.png)
 
 4\. To authenticate using a single-use token, click **Get a single-use token**. A pop-up window will appear with the token code. The code automatically refreshes every 30 seconds.
 
-![](/support/static/Emergency_Phone_Support.png)
+![](/images/support/Emergency_Phone_Support.png)
 
 5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/#configure-totp-mobile-app-authentication-for-two-factor-cloudflare-login) on the following screen. After configuration, the token code will appear in your mobile authentication application.
 
@@ -74,7 +75,7 @@ ___
 
 To submit a support ticket, follow these steps:
 
-1.  Browse to [https://dash.cloudflare.com/redirect?account=support](https://dash.cloudflare.com/redirect?account=support).
+1.  Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
 2.  Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](/support/account-management-billing/common-account-questions/login-and-account-issues/#cannot-verify-your-email) in order to submit a Support ticket.
 3.  Select the appropriate account requiring assistance.
 4.  Verify that you are now in the Support Portal
@@ -116,7 +117,7 @@ ___
 
 You can also use the **live chat** (Business and Enterprise plans, only) to ask specific questions that don’t require a lot of technical investigation:
 
-1.  Browse to [https://dash.cloudflare.com/redirect?account=support](https://dash.cloudflare.com/redirect?account=support).
+1.  Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
 2.  Enter the email and password for your Cloudflare account. Your email needs to be verified in order to chat live with us.
 3.  Select the appropriate account requiring assistance.
 4.  Click the **Help** icon in the bottom right corner of the screen

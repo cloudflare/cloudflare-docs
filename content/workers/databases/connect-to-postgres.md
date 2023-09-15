@@ -28,14 +28,14 @@ To connect to a Postgres database from a Worker:
 
 There are two ways to connect to a Postgres database:
 
-* [Use a connection string](/workers/databases/connect-to-postgres/#using-a-connection-string) - for example, `postgresql://username:password@ep-aged-sound-175961.us-east-2.aws.neon.tech/neondb`.
-* [Set explicit parameters](/workers/databases/connect-to-postgres/#explicit-host-and-port-parameters) (username, password, host, port and database name).
+* [Use a connection string](/workers/databases/connect-to-postgres/#use-a-connection-string) - for example, `postgresql://username:password@ep-aged-sound-175961.us-east-2.aws.neon.tech/neondb`.
+* [Set explicit parameters](/workers/databases/connect-to-postgres/#set-explicit-host-and-port-parameters) (username, password, host, port and database name).
 
 ### Use a connection string
 
 A connection string combines the username, password, host, port and (optional) database name as a single URL-like string.
 
-To set your connection string as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
+To set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -56,7 +56,7 @@ const result = await client.query({
 
 ### Set explicit host and port parameters
 
-You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/platform/environment-variables/) via the [dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/platform/environment-variables/#environment-variables-via-wrangler), as follows:
+You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/configuration/environment-variables/) via the [dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler), as follows:
 
 ```toml
 ---
@@ -71,7 +71,7 @@ DB_PORT = "5432"
 DB_NAME = "neondb"
 ```
 
-To set your password as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_PASSWORD
@@ -102,7 +102,7 @@ The Socket API currently supports the below SSL modes in PostgreSQL:
 | SSL Mode                                            | Currently Supported                              |
 | --------------------------------------------------- | ------------------------------------------------ |
 | `disable`                                           | Supported (not recommended: insecure)            |
-| `allow`                                             | Supported                                       | 
+| `allow`                                             | Supported                                       |
 | `prefer`                                            | Supported                                       |
 | `require`                                           | Supported (**recommended**)                     |
 | `verify-ca`                                         | Not yet supported (requires Mutual TLS)         |
@@ -120,7 +120,7 @@ To run the example:
 
 * Install the `pg` library via `npm install pg`.
 * Enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your Worker project.
-* Provide the connection string as a secret via [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret).
+* Provide the connection string as a secret via [`wrangler secret put DB_URL`](/workers/wrangler/commands/#secret).
 
 ```toml
 ---
@@ -138,10 +138,10 @@ filename: index.ts
 import { Client } from "pg";
 
 export interface Env {
-  // This should be a valid connection string
-  // For example, "postgres://user:password@your.postgres.database.com
+  // This should be a valid Postgres connection string
+  // For example, "postgres://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs"
   // Use `wrangler secret put DB_URL` to configure a Secret with your connection string
-  DB: string;
+  DB_URL: string;
 }
 
 export default {
@@ -186,7 +186,7 @@ Connectivity to your database is over the public Internet. You may need to allow
 
 ### Mutual TLS support
 
-As documented in the [supported connection modes](#connecting), SSL modes that require support for TLS client certificates are not yet supported.
+As documented in the [supported connection modes](#connect-to-a-postgres-database), SSL modes that require support for TLS client certificates are not yet supported.
 
 ### ORM (Object Relational Mapper) library version requirement
 
@@ -201,14 +201,14 @@ Follow the [changelog](/workers/platform/changelog/) for updates to these caveat
 | Provider                                            | Notes                                           |
 | --------------------------------------------------- | ----------------------------------------------- |
 | [Neon](https://neon.tech/docs/connect/connect-from-any-app) | Enable [connection pooling](https://neon.tech/docs/connect/connection-pooling#enable-connection-pooling) for your Neon database by adding the `-pooler` suffix to your database endpoint ID. |
-| [Supabase](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string) | Ensure you are using port `6543` to use [connection pooling](https://supabase.com/docs/guides/database/connecting-to-postgres#how-connection-pooling-works) with your Supabase database. Supabase also providers a [HTTP API](https://supabase.com/docs/guides/database/connecting-to-postgres#api) that can be accessed directly via Workers. |
-| AWS RDS / Aurora                                    | Use [RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html) to enable connection pooling and ensure your Security Group allows connections from the public Internet. | 
+| [Supabase](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string) | Ensure you are using port `6543` to use [connection pooling](https://supabase.com/docs/guides/database/connecting-to-postgres#how-connection-pooling-works) with your Supabase database. Supabase also provides a [HTTP API](https://supabase.com/docs/guides/database/connecting-to-postgres#api) that can be accessed directly via Workers. |
+| AWS RDS / Aurora                                    | Use [RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html) to enable connection pooling and ensure your Security Group allows connections from the public Internet. |
 | Google Cloud SQL                                    | Configure a [public IP](https://cloud.google.com/sql/docs/mysql/configure-ip) for your instance and add an authorized address range (`0.0.0.0/0`) to allow (authenticated) access over the public Internet. |
 
 {{</table-wrap>}}
 
 ## Next steps
 
-* Refer to the list of [supported database integrations](/workers/learning/integrations/databases/) to understand other ways to connect to existing databases.
+* Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
 * Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
-* Understand the [protocols supported by Workers](/workers/platform/protocols).
+* Understand the [protocols supported by Workers](/workers/learning/protocols/).

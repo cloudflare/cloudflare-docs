@@ -22,4 +22,4 @@ To resolve timeout issues, try one or more of the following options:
 
 ## Other issues
 
-For additional troubleshooting help, refer to [Troubleshooting SSL errors](https://support.cloudflare.com/hc/articles/200170566).
+For additional troubleshooting help, refer to [Troubleshooting SSL errors](/ssl/troubleshooting/).

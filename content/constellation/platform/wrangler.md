@@ -4,21 +4,26 @@ title: Wrangler
 weight: 30
 ---
 
+{{<Aside>}}
+Wrangler local development for Constellation is not supported yet. You need to use the [`--remote`](https://developers.cloudflare.com/workers/wrangler/commands/#dev) flag.
+{{</Aside>}}
+
+
 # Wrangler Support
 
 [Wrangler](/workers/wrangler/) is our command-line tool for configuring, building and deploying applications with Cloudflare developer products. Use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our [catalog](/constellation/platform/data-model/#catalog).
 
 ## Installation
 
-Wrangler for Constellation is still in Beta. To install Wrangler for Constellation, run:
+To install Wrangler for Constellation, run:
 
-```bash
-$ npm install wrangler@beta --save-dev
+```sh
+$ npm install wrangler --save-dev
 ```
 
 Test Wrangler with [npx](https://github.com/npm/npx):
 
-```bash
+```sh
 $ npx wrangler constellation
 wrangler constellation
 
@@ -28,7 +33,7 @@ Commands:
   wrangler constellation project  Manage your projects
   wrangler constellation model    Manage your models
   wrangler constellation catalog  Check the curated model catalog
-  wrangler constellation runtime  Check the suported runtimes
+  wrangler constellation runtime  Check the supported runtimes
 
 Flags:
   -j, --experimental-json-config  Experimental: Support wrangler.json  [boolean]
@@ -43,7 +48,7 @@ Flags:
 
 Use Wrangler to list, create or delete your [projects](/constellation/platform/data-model/#projects).
 
-```bash
+```sh
 $ npx wrangler constellation project --help
 wrangler constellation project
 
@@ -59,7 +64,7 @@ Commands:
 
 Create a Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation project create "<YOUR_PROJECT_NAME>" ONNX
 ```
 
@@ -67,7 +72,7 @@ $ npx wrangler constellation project create "<YOUR_PROJECT_NAME>" ONNX
 
 List your Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation project list
 ```
 
@@ -75,7 +80,7 @@ $ npx wrangler constellation project list
 
 Delete a Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation project delete "<YOUR_PROJECT_NAME"
 ```
 
@@ -83,7 +88,7 @@ $ npx wrangler constellation project delete "<YOUR_PROJECT_NAME"
 
 You can use Wrangler to list, create or delete your [models](/constellation/platform/data-model/#models).
 
-```bash
+```sh
 $ npx wrangler constellation model --help
 wrangler constellation model
 
@@ -99,7 +104,7 @@ Commands:
 
 To upload the [SqueezeNet1.1 CNN model](https://github.com/onnx/models/tree/main/vision/classification/squeezenet#model) to your project, run:
 
-```bash
+```sh
 $ npx wrangler constellation model upload "<YOUR_PROJECT_NAME>" "squeezenet11" squeezenet1.1.onnx
 ```
 
@@ -107,7 +112,7 @@ $ npx wrangler constellation model upload "<YOUR_PROJECT_NAME>" "squeezenet11" s
 
 List the models in your Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation model list "<YOUR_PROJECT_NAME>"
 ```
 
@@ -115,7 +120,7 @@ $ npx wrangler constellation model list "<YOUR_PROJECT_NAME>"
 
 Delete a model in your Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation model delete  "<YOUR_PROJECT_NAME>" "squeezenet11"
 ```
 
@@ -127,13 +132,13 @@ The [catalog](/constellation/platform/data-model/#catalog) has ready-to-use pre-
 
 List the models in the catalog.
 
-```bash
+```sh
 $ npx wrangler constellation catalog list
 ```
 
 ## Bindings
 
-To deploy a Constellation Worker, you must declare one or more [bindings](/workers/platform/bindings/) for the Constellation projects you want to use in your `wrangler.toml` configuration file.
+To deploy a Constellation Worker, you must declare one or more [bindings](/workers/configuration/bindings/) for the Constellation projects you want to use in your `wrangler.toml` configuration file.
 
 ```toml
 ---

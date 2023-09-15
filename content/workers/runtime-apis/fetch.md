@@ -17,7 +17,7 @@ Asynchronous tasks such as `fetch` are not executed at the top level in a Worker
 
 {{<Aside type="warning" header="Worker to Worker">}}
 
-Worker-to-Worker `fetch` requests are now possible with [Service bindings](/workers/platform/bindings/about-service-bindings/).
+Worker-to-Worker `fetch` requests are now possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
 
 {{</Aside>}}
 

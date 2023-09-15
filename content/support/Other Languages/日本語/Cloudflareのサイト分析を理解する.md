@@ -29,11 +29,11 @@ ___
 
 読み込みが完了すると、分析アプリが「**Traffic**」、「**セキュリティ**」、「**パフォーマンス**」、「**DNS**」、「**Workers**」、「**ログ**」（Enterpriseのドメインのみ）に関するタブのセットを表示します。利用できる様々なメトリックを理解するために、次の「_Webサイトメトリックを確認する_」をお読みください。
 
-![Cloudflareダッシュボード上の分析アプリUIでWebトラフィックデータを表示](/support/static/hc-dash-analytics-dashboard_overview.png)
+![Cloudflareダッシュボード上の分析アプリUIでWebトラフィックデータを表示](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Proプラン、Businessプラン、Enterpriseプランでは、最新のWeb分析を「Traffic」タブで見ることができます。
 
-![Proプラン、Business プラン、Enterpriseプランのお客様向けのCloudflare分析ダッシュボードでのUIのスクリーンショット。](/support/static/hc-dash-analytics-web_traffic.png)
+![Proプラン、Business プラン、Enterpriseプランのお客様向けのCloudflare分析ダッシュボードでのUIのスクリーンショット。](/images/support/hc-dash-analytics-web_traffic.png)
 
 ___
 

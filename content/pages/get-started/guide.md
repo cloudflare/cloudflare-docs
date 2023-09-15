@@ -13,7 +13,7 @@ In this guide, you will get started with Cloudflare Pages, and deploy your first
 
 There are three ways to set up a Pages project:
 
-1. Connecting your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages) to Pages.
+1. Connecting your [Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages) to Pages.
 2. Deploying your prebuilt assets right to Pages with [Direct Uploads](/pages/platform/direct-upload/).
 3. Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
@@ -59,7 +59,7 @@ You must have pushed at least one branch to your GitHub or GitLab project in ord
 
 {{</Aside>}}
 
-![Set up builds and deployments page with Project name and Production branch filled in](/pages/get-started/images/configuration.png)
+![Set up builds and deployments page with Project name and Production branch filled in](/images/pages/get-started/configuration.png)
 
 ### Configure your build settings
 
@@ -73,11 +73,11 @@ You do not need a framework to deploy with Cloudflare Pages. You can continue wi
 
 The dashboard provides a number of framework-specific presets. These presets provide the default build command and build output directory values for the selected framework. If you are unsure what the correct values are for this section, refer to [Build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
-![Build setting fields that need to be filled in](/pages/get-started/images/build-settings.png)
+![Build setting fields that need to be filled in](/images/pages/get-started/build-settings.png)
 
 Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
 
-![Root directory field to be filled in](/pages/get-started/images/root-directory.png)
+![Root directory field to be filled in](/images/pages/get-started/root-directory.png)
 
 <details>
 <summary>Understanding your build configuration</summary>
@@ -106,7 +106,7 @@ After you have chosen your _Framework preset_ or left this field blank if you ar
 
 After you have finished setting your build configuration, select **Save and Deploy**. Your project build logs will output as Cloudflare Pages installs your project dependencies, builds the project, and deploys it to Cloudflare's global network.
 
-![Deployment details in the Cloudflare dashboard](/pages/get-started/images/deploy-log.png)
+![Deployment details in the Cloudflare dashboard](/images/pages/get-started/deploy-log.png)
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
@@ -120,7 +120,7 @@ If you encounter a DNS error after visiting your site after your first deploy, t
 
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
-![Site dashboard displaying your environments and deployments](/pages/get-started/images/site-dashboard.png)
+![Site dashboard displaying your environments and deployments](/images/pages/get-started/site-dashboard.png)
 
 ### Delete a project
 

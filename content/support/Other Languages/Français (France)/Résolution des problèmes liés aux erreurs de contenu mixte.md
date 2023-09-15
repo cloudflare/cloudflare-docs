@@ -21,7 +21,7 @@ En général, le problème provient d’une requête de ressources HTTP provenan
 
 Normalement, si votre site Web charge toutes les ressources de manière sécurisée via HTTPS, les visiteurs observent une icône représentant un cadenas (généralement un cadenas vert) dans la barre d’adresse de leur navigateur :
 
-![](/support/static/green-lock-icon.png)
+![](/images/support/green-lock-icon.png)
 
 Cela indique que votre site dispose d’un certificat SSL opérationnel et que toutes les ressources chargées par le site sont chargées via HTTPS. Le cadenas vert assure aux visiteurs que leur connexion est sécurisée. L’un des [symptômes de contenu mixte](https://support.cloudflare.com/hc/fr-fr/articles/200170476-R%C3%A9solution-des-probl%C3%A8mes-li%C3%A9s-aux-erreurs-de-contenu-mixte#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) est que différentes icônes apparaissent à la place du cadenas vert.
 
@@ -35,11 +35,11 @@ Vous trouverez ci-dessous des indications selon lesquelles votre navigateur Web 
 
 Pour les avertissements de contenu mixte, le navigateur Web charge les ressources, mais les utilisateurs ne voient pas l’icône de cadenas vert dans l’URL. Les messages d’avertissement apparaissent dans les outils de débogage du navigateur :
 
-![mixed-content-warning.png](/support/static/mixed-content-warning.png)
+![mixed-content-warning.png](/images/support/mixed-content-warning.png)
 
 Pour les erreurs de contenu mixtes, le navigateur refuse de charger les ressources via une connexion non sécurisée :
 
-![mixed-content-error.png](/support/static/mixed-content-error.png)
+![mixed-content-error.png](/images/support/mixed-content-error.png)
 
 Vous trouverez des informations sur l’utilisation des outils de débogage pour identifier ces problèmes dans la documentation de [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) et [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Vous pouvez également afficher votre source de page et rechercher des références spécifiques à _http://_ pour les chemins d’accès à d’autres ressources.
 

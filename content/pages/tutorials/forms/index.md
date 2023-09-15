@@ -329,5 +329,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
+- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-pages-functions/)
 - [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)

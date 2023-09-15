@@ -33,7 +33,7 @@ O acesso à Análise de Dados de rede exige o seguinte:
 
 A tela do **Network Analytics** da Cloudflare fornece visibilidade quase em tempo real dos padrões de tráfego das camadas de transporte e de rede e dos ataques de DDoS O Network Analytics exibe dados em nível de bits e pacotes, os mesmos dados disponíveis por meio da [API do GraphQL Analytics](/analytics/graphql-api/).
 
-![O painel de análise de dados mostra um resumo dos pacotes por tipo](/support/static/na-main-dashboard.png)
+![O painel de análise de dados mostra um resumo dos pacotes por tipo](/images/support/na-main-dashboard.png)
 
 Aa Análise de Dados de rede acelera os relatórios e a investigação de tráfego malicioso. É possível filtrar dados por estes parâmetros:
 
@@ -72,7 +72,7 @@ ___
 
 O título e os painéis laterais fornecem um resumo da atividade durante o período selecionado na lista suspensa **Período**.
 
-![Os painéis de cabeçalho e lateral resumem atividades nas últimas 24 horas](/support/static/na-navigate.png)
+![Os painéis de cabeçalho e lateral resumem atividades nas últimas 24 horas](/images/support/na-navigate.png)
 
 O título mostra o total de pacotes ou bits e o número de ataques detectados e mitigados. Quando há um ataque em andamento, o título indica a taxa máxima de pacotes (ou bits) em vez da contagem total.
 
@@ -84,7 +84,7 @@ Use a lista suspensa **Período** para alterar o intervalo de tempo durante o qu
 
 Quando você seleciona _Últimos 30 minutos_, a visualização da **Análise de Dados de Rede** mostra os dados dos últimos 30 minutos e atualiza a cada 20 segundos. Uma notificação _Ao vivo_ aparece ao lado da lista suspensa estatística para informar que a visualização está sendo atualizada automaticamente:
 
-![Atualização automática ativada na Análise de Dados de Rede](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Atualização automática ativada na Análise de Dados de Rede](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 Ao selecionar a opção _Período personalizado_, você pode especificar um período de tempo de até 30 dias, em qualquer momento durante o ano anterior.
 
@@ -96,13 +96,13 @@ Escolha uma estatística na lista suspensa para alternar entre a plotagem de _Ta
 
 Ative o controle **Mostrar anotações** para exibir ou ocultar anotações de eventos de exposição/suspensão de prefixo IP na visualização da **Análise de Dados de Rede**. Clique em cada anotação para saber mais detalhes.
 
-![Botão de alternância para exibir anotações no gráfico de Análise de Dados de Rede](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![Botão de alternância para exibir anotações no gráfico de Análise de Dados de Rede](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### Ampliar o resumo de pacotes 
 
 Clique e arraste o mouse em uma região do gráfico para ampliar. Usando essa técnica, você pode ampliar para um intervalo de tempo de até 3 minutos.
 
-![Ampliar o resumo de pacotes ](/support/static/unnamed.gif)
+![Ampliar o resumo de pacotes ](/images/support/unnamed.gif)
 
 Para diminuir o zoom, clique no ícone **X** no seletor de **intervalo de tempo**.
 
@@ -150,7 +150,7 @@ Faça o seguinte:
 
 2\. Clique em **Criar regra de Magic Firewall**. 
 
-![Criar um link para a regra de firewall na Análise de Dados de Rede](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![Criar um link para a regra de firewall na Análise de Dados de Rede](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 O editor de regras do Magic Firewall é exibido com os filtros e os valores selecionados.
 
@@ -434,7 +434,7 @@ ___
 
 Selecione uma das guias de **Resumo** para exibir os dados ao longo de uma dimensão diferente.
 
-![Visualizar dados em várias dimensões](/support/static/unnamed__1_.gif)
+![Visualizar dados em várias dimensões](/images/support/unnamed__1_.gif)
 
 Escolha entre estas opções: 
 
@@ -457,7 +457,7 @@ Quando você adiciona filtros e especifica um intervalo de tempo na página Aná
 
 Para compartilhar sua visualização dos dados, copie a URL e envie-a para outros usuários para que eles possam trabalhar com a mesma visualização.
 
-![Selecionar o URL da página de Análise de Dados de Rede](/support/static/hc-dashboard-network-analytics-6.png)
+![Selecionar o URL da página de Análise de Dados de Rede](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

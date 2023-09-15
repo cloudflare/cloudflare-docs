@@ -96,7 +96,7 @@ You can then follow the steps to [import an existing database](#import-an-existi
 
 ## Troubleshooting
 
-If you receive an error when trying to import an existing schema and/or dataaset into D1:
+If you receive an error when trying to import an existing schema and/or dataset into D1:
 
 * Ensure you are importing data in SQL format (typically with a `.sql` file extension). See [how to convert SQLite files](#converting-sqlite-database-files) if you have a `.sqlite3` database dump.
 * Make sure the schema is [SQLite3](https://www.sqlite.org/docs.html) compatible. You cannot import data from a MySQL or PostgreSQL database into D1, as the types and SQL syntax are not directly compatible.

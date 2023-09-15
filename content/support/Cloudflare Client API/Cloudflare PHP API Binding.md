@@ -17,7 +17,7 @@ This PHP API binding has been deprecated. You should refer to the [REST API docu
 Cloudflare offers a PHP API binding for those using PHP 7.0 or greater; this binding supports the latest version 4 of the Cloudflare API. You can use this SDK for a variety of purposes, including:
 
 -   Manage and automate changes to your DNS records within Cloudflare
--   Programatically add zones to your account
+-   Programmatically add zones to your account
 -   Version and change control for Page Rules
 -   Automatically blocking IPs and User Agents using Zone Lockdown and UserAgent Rules
 -   Fetch Cloudflare's IP ranges for automating your firewall allowlist
@@ -49,7 +49,7 @@ ___
 
 The [Cloudflare PHP API Binding](https://packagist.org/packages/cloudflare/sdk) is available on Packagist as [cloudflare/sdk](https://packagist.org/packages/cloudflare/sdk) and can be installed using Composer by running _composer require cloudflare/sdk:_
 
-![Code - composer require cloudflare/sdk](/support/static/cmd-composer_require_cloudflare_sdk.png)
+![Code - composer require cloudflare/sdk](/images/support/cmd-composer_require_cloudflare_sdk.png)
 
 Alternatively should you wish to look directly at the source code or make contributions, you can find the original source code on GitHub in the [cloudflare/cloudflare-php](https://github.com/cloudflare/cloudflare-php) repository. 
 
@@ -66,7 +66,7 @@ getUserID() . PHP_EOL;
 
 Running this simple script via terminal yields the following output:
 
-![Getting user ID](/support/static/cmd-getting-user-id.png)
+![Getting user ID](/images/support/cmd-getting-user-id.png)
 
 ___
 
@@ -82,7 +82,7 @@ listZones()->result as $zone) {
 
 Running this via the command line yields the following output:
 
-![Script to list all the zones on an account](/support/static/cmd-listing-zones.png)
+![Script to list all the zones on an account](/images/support/cmd-listing-zones.png)
 
 ___
 
@@ -100,13 +100,13 @@ listZones()->result as $zone) {
 
 Here is the output of running this script via the command line:
 
-![Purge Cache on Every Website](/support/static/php-cache-purge-everything.png)
+![Purge Cache on Every Website](/images/support/php-cache-purge-everything.png)
 
 ___
 
 ## Creating Page Rules
 
-The SDK can also be used for programatically adding Page Rules to a Cloudflare Zone, here's a simple example of adding a Cache Bypass rule:
+The SDK can also be used for Programmatically adding Page Rules to a Cloudflare Zone, here's a simple example of adding a Cache Bypass rule:
 
 ```php
 getZoneID("junade.com");
@@ -128,7 +128,7 @@ ___
 
 ## DNS
 
-The SDK can also be used for programatically adding records, here's an example of adding an example DNS record:
+The SDK can also be used for Programmatically adding records, here's an example of adding an example DNS record:
 
 ```php
 getZoneID("junade.com");
@@ -152,4 +152,4 @@ foreach ($dns->listRecords($zoneID)->result as $record) {
 
 Here's the example when I run this script against one of my zones:
 
-![Script to list the type and name of every DNS record on our zone](/support/static/php-list-dns-type-name.png)
+![Script to list the type and name of every DNS record on our zone](/images/support/php-list-dns-type-name.png)

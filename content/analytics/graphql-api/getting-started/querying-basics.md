@@ -264,7 +264,6 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 
 ### Cloudflare specific
 
-* [Understanding the Cloudflare dashboard][4]
 * [How to find your zoneTag using the API][5]
 
 ### General info on the GraphQL framework
@@ -277,7 +276,6 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 [1]: </analytics/graphql-api/features/discovery/introspection/>
 [2]: </analytics/graphql-api/getting-started/compose-graphql-query/>
 [3]: </analytics/graphql-api/getting-started/execute-graphql-query/>
-[4]: <https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard>
 [5]: </fundamentals/get-started/basic-tasks/find-account-and-zone-ids/>
 [6]: <https://www.howtographql.com/>
 [7]: <https://graphql.org/learn/thinking-in-graphs/>

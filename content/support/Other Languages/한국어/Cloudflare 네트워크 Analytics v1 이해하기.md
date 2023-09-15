@@ -33,7 +33,7 @@ ___
 
 Cloudflare **네트워크 Analytics** 보기에서는 네트워크 계층과 통신 계층의 트래픽 패턴 및 DDoS 공격에 대해 거의 실시간 가시성이 제공됩니다. Network Analytics는 [GraphQL Analytics API](/analytics/graphql-api/)를 통해 제공되는 것과 동일한 패킷 및 비트 수준 데이터를 가시화합니다.
 
-![유형별 패킷 요약 정보가 표시된 Analytics 화면](/support/static/na-main-dashboard.png)
+![유형별 패킷 요약 정보가 표시된 Analytics 화면](/images/support/na-main-dashboard.png)
 
 네트워크 Analytics을 이용하면 악의적인 트래픽의 보고 및 조사 속도를 높일 수 있습니다. 다음 매개변수로 데이터를 필터링할 수 있습니다.
 
@@ -70,7 +70,7 @@ ___
 
 상단과 옆면의 패널에는 **시간 범위** 드롭다운 목록에서 선택한 기간 동안의 활동 요약이 표시됩니다.
 
-![지난 24시간 동안의 활동을 요약하는 헤드라인 및 옆면 패털](/support/static/na-navigate.png)
+![지난 24시간 동안의 활동을 요약하는 헤드라인 및 옆면 패털](/images/support/na-navigate.png)
 
 헤드라인에는 총 패킷 또는 비트 수와 감지되고 완환된 공격 수가 표시됩니다. 진행 중인 공격이 있는 경우, 헤드라인에는 총 계수가 아니라 최대 패킷(또는 비트) 비율이 표시됩니다.
 
@@ -82,7 +82,7 @@ ___
 
 _마지막 30분_을 선택하면 **네트워크 Analytics** 보기에 최근 30분 동안의 데이터가 표시되며 20초마다 새로 고쳐집니다. _실시간_ 알림이 통계량 드롭 다운 목록 옆에 표시되므로 보기가 자동으로 업데이트되고 있다는 것을 알 수 있습니다.
 
-![네트워크 Analytics에서 활성화된 자동 새로 고침](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![네트워크 Analytics에서 활성화된 자동 새로 고침](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 _사용자 정의 기간_ 옵션을 선택하면 지난 1년 중 30일 이하의 기간을 임의로 지정할 수 있습니다.
 
@@ -94,13 +94,13 @@ _사용자 정의 기간_ 옵션을 선택하면 지난 1년 중 30일 이하의
 
 **주석 표시**를 이용하여 **네트워크 Analytics** 보기에서 IP 접두어의 공지/취소 이벤트에 대한 주석을 보이게 하거나 감출 수 있습니다. 각 주석을 클릭하면 자세한 내용이 표시됩니다.
 
-![네트워크 Analytics 차트의 주석을 표시하기 위한 토글 버튼](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![네트워크 Analytics 차트의 주석을 표시하기 위한 토글 버튼](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### 패킷 요약 확대 
 
 확대/축소하려면 차트 영역에서 마우스를 클릭하고 끄십시오. 이 기술을 사용하면 시간 범위를 3분까지로 확대할 수 있습니다.
 
-![패킷 요약 확대 ](/support/static/unnamed.gif)
+![패킷 요약 확대 ](/images/support/unnamed.gif)
 
 축소하려면 **시간 범위** 선택기에 있는 **시간 범위** 아이콘을 클릭합니다.
 
@@ -148,7 +148,7 @@ Network Analytics 통계량과 연관된 데이터 유형을 기반으로 필터
 
 2\. **Magic Firewall 규칙 생성**을 클릭합니다.
 
-![네트워크 Analytics의 방화벽 규칙 링크 생성](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![네트워크 Analytics의 방화벽 규칙 링크 생성](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 선택한 필터 및 값과 함께 Magic Firewall 규칙 편집기가 표시됩니다.
 
@@ -432,7 +432,7 @@ ___
 
 **요약** 탭 중 하나를 선택하여 다른 차원에 따른 데이터를 볼 수 있습니다.
 
-![다양한 차원에 따른 데이터 시각화](/support/static/unnamed__1_.gif)
+![다양한 차원에 따른 데이터 시각화](/images/support/unnamed__1_.gif)
 
 다음 옵션 중 선택할 수 있습니다. 
 
@@ -455,7 +455,7 @@ ___
 
 데이터 보기를 공유하려면 URL을 복사하여 다른 사용자에게 전송하면 되며 받는 사람도 동일한 보기로 작업할 수 있습니다.
 
-![네트워크 Analytics 페이지의 URL 선택](/support/static/hc-dashboard-network-analytics-6.png)
+![네트워크 Analytics 페이지의 URL 선택](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

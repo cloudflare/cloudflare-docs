@@ -26,7 +26,7 @@ ___
 
 [分布式拒绝服务攻击](https://www.cloudflare.com/ddos)（DDoS）企图使在线服务无法提供给最终用户使用。对于所有计划类型，Cloudflare 都提供第 3、4 和 7 层 DDoS 攻击未计量缓解。Cloudflare 不按攻击大小计费，也没有攻击大小、类型或持续时间的上限。
 
-Cloudflare 的网络设计旨在自动监测和缓解大型 [DDoS 攻击](https://www.cloudflare.com/ddos)。在 Cloudflare 缓存内容也能防止您的网站遭受小型 DDoS 攻击，但是未缓存的资产需要额外[手动](https://support.cloudflare.com/hc/articles/200170196)应对 DDoS 攻击。
+Cloudflare 的网络设计旨在自动监测和缓解大型 [DDoS 攻击](https://www.cloudflare.com/ddos)。在 Cloudflare 缓存内容也能防止您的网站遭受小型 DDoS 攻击，但是未缓存的资产需要额外[手动](/ddos-protection/best-practices/respond-to-ddos-attacks/)应对 DDoS 攻击。
 
 此外，Cloudflare 也会在以下情况下帮助缓解较小的 DDoS 攻击：
 
@@ -87,7 +87,7 @@ ___
 
 ## 相关资源
 
--   [响应 DDoS 攻击](https://support.cloudflare.com/hc/articles/200170196)
+-   [响应 DDoS 攻击](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [最佳做法：DDoS 预防措施](https://support.cloudflare.com/hc/articles/200170166)
 -   [使用 Cloudflare Logs 来调查 DDoS 流量（仅限 Enterprise）](https://support.cloudflare.com/hc/zh-cn/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [什么是 DDoS 攻击？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

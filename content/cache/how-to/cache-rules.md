@@ -19,9 +19,13 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 1. Cache Rules are stackable. This means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied. If several matching rules set a value for the same setting, the value in the last matching rule wins. For an example of a similar scenario where multiple rules match, refer to the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
 
-2. For conflicting settings (for example, bypass cache vs. eligible for cache), the last matching rule wins. For example, if Cache Rule #1 is set to cache everything on `example.com/images` and Cache Rule #2 is set to bypass cache on `example.com`, then cache will be bypassed for all URLs that match `example.com`, since rule #2 is the last matching rule.
+2. For conflicting settings (for example, bypass cache versus eligible for cache), the last matching rule wins. For example, if Cache Rule #1 is set to cache everything on `example.com/images` and Cache Rule #2 is set to bypass cache on `example.com`, then cache will be bypassed for all URLs that match `example.com`, since rule #2 is the last matching rule.
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, Cloudflare plans on releasing a one-click migration tool for Page Rules.
+
+## Execution order of Rules products
+
+{{<render file="_product_execution_order.md" productFolder="rules">}}
 
 ## Create Cache Rules in the dashboard
 
@@ -31,7 +35,7 @@ To create a new cache rule:
 2. Go to **Caching** > **Cache Rules**.
 3. Select **Create cache rule**.
 4. Enter a descriptive name for the rule in **Rule name**.
-5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/how-to/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+5. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/how-to/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
     To create a wildcard rule that applies to everything under a URI directory (for example, `/images`), select the option _URI_ in **Field**, _starts with_ in **Operator**, and `/images` in **Value**.
 6. Under **Then**, in the **Cache status** section, select **Bypass cache**, if matching requests will bypass cache and fetch a response from the origin server or **Eligible for cache** if requests will be eligible for cache. Note that proper [origin cache-control headers](/cache/concepts/cache-control/) are also required for cache eligibility.
 
@@ -67,7 +71,10 @@ Select if you want to **Respect origin** or **Override origin**. If you wish to 
 <div>
 
 Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
- - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), and [Ignore query string order](/cache/troubleshooting/cache-everything-ignore-query-strings/).
+ - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Enable query string sort](/cache/how-to/cache-keys/#query-string).
+
+Enterprise customers have these additional options for custom cache keys:
+
  - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
  - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
  - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.

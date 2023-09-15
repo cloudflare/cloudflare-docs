@@ -29,7 +29,7 @@ Si gestiona Heroku a través de CLI, puede añadir un dominio con este comando:
 
 Para comenzar, inicie sesión en su cuenta de Cloudflare, vaya a la aplicación **DNS** y añada la entrada _CNAME_ para la aplicación de Heroku.
 
-![Screen_Shot_2018-01-23_at_2.58.16_PM.png](/support/static/Screen_Shot_2018-01-23_at_2.58.16_PM.png)
+![Screen_Shot_2018-01-23_at_2.58.16_PM.png](/images/support/Screen_Shot_2018-01-23_at_2.58.16_PM.png)
 
 ## Añada su dominio raíz
 
@@ -61,7 +61,7 @@ Para forzar todo el tráfico a través de HTTPS, utilice la aplicación **Page R
 
 Una vez que vaya a la aplicación Page Rules, puede empezar a añadir nuevas reglas que abarquen el dominio en su totalidad:
 
-![Capto_Capture_2018-01-23_03-17-19_PM.png](/support/static/Capto_Capture_2018-01-23_03-17-19_PM.png)
+![Capto_Capture_2018-01-23_03-17-19_PM.png](/images/support/Capto_Capture_2018-01-23_03-17-19_PM.png)
 
 Escriba su page rule (p. ej., «http://\*example.com/\*») y haga clic en **Save and Deploy**.
 

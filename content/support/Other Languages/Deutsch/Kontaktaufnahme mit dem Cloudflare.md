@@ -28,7 +28,7 @@ Um die Sicherheit Ihres Kontos zu gewährleisten, müssen Sie Ihre Identität un
 
 3\. Klicken Sie auf **Support kontaktieren**. Scrollen Sie nach unten zur Karte _Support-Hotline für Notfälle Authentifizierung_ .
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4\. Um sich mit einem Einmal-Token zu authentifizieren, klicken Sie auf **Einmal-Token erzeugen**. Es erscheint ein Pop-up-Fenster mit dem Token-Code. Der Code wird automatisch alle 30 Sekunden aktualisiert.
 

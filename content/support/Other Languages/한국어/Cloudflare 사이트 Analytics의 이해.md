@@ -27,11 +27,11 @@ ___
 
 Analytics 앱이 로드되면, **트래픽**, **보안**, **성능**, **DNS**, **Workers**, **Logs**(Enterprise 요금제 도메인 전용) 등 탭이 표시됩니다. 사용 가능한 지표는 아래의 _웹 사이트 지표 검토_를 참조하시기 바랍니다.
 
-![웹 트래픽 데이터가 표시된 Cloudflare Dashboard의 Analytics 앱 UI](/support/static/hc-dash-analytics-dashboard_overview.png)
+![웹 트래픽 데이터가 표시된 Cloudflare Dashboard의 Analytics 앱 UI](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Pro, Business, Enterprise 요금제의 경우, 트래픽 탭 아래에 최신 웹 Analytics가 표시됩니다.
 
-![Pro, Business, Enterprise 고객의 Cloudflare Analytics 대시보드 UI 스크린샷.](/support/static/hc-dash-analytics-web_traffic.png)
+![Pro, Business, Enterprise 고객의 Cloudflare Analytics 대시보드 UI 스크린샷.](/images/support/hc-dash-analytics-web_traffic.png)
 
 ___
 

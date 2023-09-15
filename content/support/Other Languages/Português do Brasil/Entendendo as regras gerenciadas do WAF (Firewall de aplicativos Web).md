@@ -46,7 +46,7 @@ Analise as ameaças bloqueadas por meio do [Firewall Analytics](/waf/analytics/)
 -   As regras gerenciadas analisam as respostas JSON para identificar vulnerabilidades direcionadas a APIs. A análise da carga JSON é limitada a 128 KB.
 -   As regras gerenciadas mitigam técnicas de padding. Recomendamos o seguinte:
     1.  Ative a regra _100048_. Essa regra agora protege contra ataques de padding, mas não é implantada por padrão, pois causa muitos falsos positivos em ambientes de cliente. No entanto, é importante que os clientes ajustem a configuração de regras gerenciadas. A Cloudflare está trabalhando em uma solução melhor no longo prazo.
-    2.  Crie uma regra de firewall usando o [Editor de expressões](/firewall/cf-dashboard/edit-expressions/#expression-editor), dependendo da necessidade de verificar cabeçalhos e/ou corpo para bloquear uma carga maior (> 128 KB). Certifique-se de testar a regra de firewall no modo _Registro_, pois ela pode estar propensa a gerar falsos positivos.
+    2.  Crie uma regra de firewall usando o [Editor de expressões](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor), dependendo da necessidade de verificar cabeçalhos e/ou corpo para bloquear uma carga maior (> 128 KB). Certifique-se de testar a regra de firewall no modo _Registro_, pois ela pode estar propensa a gerar falsos positivos.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Há algumas regras gerenciadas que a Cloudflare não desativa mesmo se a opção **Regras gerenciadas** estiver _Desativada_ no painel de controle da Cloudflare, como os IDs de regras _WP0025B_, _100043A_ e _100030_.

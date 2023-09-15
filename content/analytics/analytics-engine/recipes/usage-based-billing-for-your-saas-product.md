@@ -45,7 +45,7 @@ FROM
 GROUP BY customer_id
 ```
 
-If run in Grafana, this query returns a graph summarising the usage of each customer. The `sum(_sample_interval)` accounts for the sampling - see other Analytics Engine documentation. This query gives you an answer to "which customers are most active?"
+If run in Grafana, this query returns a graph summarising the usage of each customer. The `sum(_sample_interval)` accounts for the sampling - refer to other Analytics Engine documentation. This query gives you an answer to "which customers are most active?"
 
 The example `writeDataPoint` call above writes an endpoint name. If you do that, you can break down customer activity by endpoint:
 

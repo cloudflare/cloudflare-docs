@@ -13,12 +13,12 @@ The available managed rulesets are:
 
 {{<definitions>}}
 
-*   **[HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)**
+* **[HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)**
 
-    *   This ruleset includes rules to detect and mitigate DDoS attacks over HTTP and HTTPS.
+    * This ruleset includes rules to detect and mitigate DDoS attacks over HTTP and HTTPS.
 
-*   **[Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/)**
+* **[Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/)**
 
-    *   This ruleset includes rules to detect and mitigate DDoS attacks on L3/4 of the OSI model such as UDP floods, SYN-ACK reflection attacks, SYN Floods, and DNS floods.
+    * This ruleset includes rules to detect and mitigate DDoS attacks on L3/4 of the OSI model such as UDP floods, SYN-ACK reflection attacks, SYN Floods, and DNS floods.
 
 {{</definitions>}}

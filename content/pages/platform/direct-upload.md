@@ -30,7 +30,7 @@ Below is the supported file types for each Direct Upload options:
 
 ### Set up Wrangler
 
-To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/). Note that Pages relies on Wrangler v2.
+To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/).
 
 #### Create your project
 
@@ -45,26 +45,26 @@ You will then be prompted to specify the project name. Your project will be serv
 Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
 
 
-#### Publish your assets
+#### Deploy your assets
 
-From here, you have created an empty project and can now publish your assets for your first deployment and for all subsequent deployments in your production environment. To do this, execute the following command:
+From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) command:
 
 ```sh
-$ wrangler pages publish <OUTPUT_DIRECTORY>
+$ wrangler pages deploy <OUTPUT_DIRECTORY>
 ```
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
  
 {{<Aside type= "note">}}
 
-Before using the `wrangler publish` command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
+Before using the `wrangler pages deploy` command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
 
 {{</Aside>}}
  
-However, to publish assets to a preview environment, run: 
+To deploy assets to a preview environment, run: 
 
 ```sh
-$ wrangler pages publish <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
+$ wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
 ```
 
 For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`. 
@@ -75,7 +75,7 @@ If you are in a Git workspace, Wrangler will automatically pull the branch infor
 
 {{</Aside>}}
 
-If you would like to streamline the project creation and asset publishing steps, you can also use the publish command to both create and publish assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [`create` command](#create-your-project). 
+If you would like to streamline the project creation and asset deployment steps, you can also use the deploy command to both create and deploy assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [`create` command](#create-your-project). 
 
 #### Other useful commands
 

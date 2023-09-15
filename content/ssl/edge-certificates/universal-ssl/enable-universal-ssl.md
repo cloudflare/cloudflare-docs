@@ -29,7 +29,7 @@ If your website or application is already live and cannot be uncovered while the
 
 For non-authoritative or [partial domains](/dns/zone-setups/partial-setup/), Universal SSL will be:
 
-- Provisioned once the DNS record is [proxied through Cloudflare](/dns/zone-setups/partial-setup/setup/#step-3--add-dns-records).
+- Provisioned once the DNS record is [proxied through Cloudflare](/dns/zone-setups/partial-setup/setup/#add-dns-records).
 - Validated:
 
   - Immediately if you add [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/) records to your authoritative DNS.

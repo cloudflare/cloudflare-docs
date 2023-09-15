@@ -41,7 +41,7 @@ $ wrangler d1 create new-database --location=weur
 
 ### Use the dashboard
 
-To provide a location hint whne creating a database via the dashboard:
+To provide a location hint when creating a database via the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).

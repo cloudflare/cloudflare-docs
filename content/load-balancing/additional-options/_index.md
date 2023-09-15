@@ -18,7 +18,6 @@ Beyond [creating a simple load balancer](/load-balancing/how-to/create-load-bala
 
 *   Bring load balancing to your TCP or UDP applications with [Cloudflare Spectrum](/load-balancing/additional-options/spectrum/)
 *   Further secure origin access with [Cloudflare Tunnel](/load-balancing/additional-options/cloudflare-tunnel/)
-*   Accelerate dynamic content with [Cloudflare Railgun](/load-balancing/additional-options/railgun/)
 
 ## Integrate with 3rd parties
 

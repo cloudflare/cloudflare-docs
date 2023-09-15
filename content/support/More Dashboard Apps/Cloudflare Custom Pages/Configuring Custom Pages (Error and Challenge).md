@@ -20,7 +20,7 @@ avoid breaking specific API endpoints and other web applications.
 Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
 
 {{<Aside type="note">}}
-Enable Origin Error Pages excludes 521 and 522 errors.
+Enable Origin Error Pages excludes errors 520 to 527.
 {{</Aside>}}
 
 ___
@@ -40,10 +40,9 @@ You can use the following custom error template to start building your page:
 </html>
 ```
 
-{{<Aside type="warning">}}
-Your custom error page must include a custom error token and cannot
-exceed 1.43 MB. Also, it must include HTML *\<head\>* and *\</head\>*
-tags.
+{{<Aside type="warning" header="Warnings">}}
+* Your custom error page must include a custom error token and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
@@ -149,11 +148,13 @@ ___
 
 ## Troubleshoot common custom pages issues
 
-### IP/Country Block vs 1000 Class Errors pages
+### Error pages for blocked requests
 
-If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
+If you block countries or IP addresses with [IP Access Rules](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors** custom page.
+
+If you block countries or IP addresses with [WAF custom rules](/waf/custom-rules/), affected visitors will see your **WAF Block** custom page.
 
 ### 1xxx errors
 
@@ -175,9 +176,11 @@ Your custom error page cannot be blank and cannot exceed 1.43 MB. To avoid excee
 
 ___
 
-## Related Resources
+## Related resources
 
 -   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
--   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
+-   [IP Access Rules](/waf/tools/ip-access-rules/)
+-   [Cloudflare Web Application Firewall (WAF)](/waf/)
+-   [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)

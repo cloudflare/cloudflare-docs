@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: spanish
 source: https://support.cloudflare.com/hc/es-es/articles/360029779472-C%C3%B3mo-solucionar-errores-1XXX-de-Clouflare
-title: Cómo solucionar errores 1XXX de Clouflare
+title: Cómo solucionar errores 1XXX de Cloudflare
 ---
 
-# Cómo solucionar errores 1XXX de Clouflare
+# Cómo solucionar errores 1XXX de Cloudflare
 
 
 
@@ -419,7 +419,7 @@ Has solicitado una página en un sitio web (`tunnel.ejemplo.com`) que está en l
 ### Solución
 
 -   **Si eres un visitante del sitio web**: por favor, inténtalo de nuevo en unos minutos.
--   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para tu túnel.
+-   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) para tu túnel.
 
 ___
 
@@ -526,7 +526,7 @@ ___
 
 ### Causas habituales
 
-Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
+Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
 
 ### Solución
 

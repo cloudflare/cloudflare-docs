@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Configuration
 weight: 4
+meta:
+  title: Configuration - Wrangler v1 (deprecated)
 ---
 
 # Configuration
@@ -164,7 +166,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `usage_model` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies the [Usage Model](/workers/platform/pricing/#usage-models) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#bundled-usage-model) and [`unbound`](/workers/platform/limits/#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
+  - Specifies the [Usage Model](/workers/platform/pricing/#usage-models) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#worker-limits) and [`unbound`](/workers/platform/limits/#worker-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
 - `build` {{<type>}}top level{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -174,7 +176,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 ### vars
 
-The `vars` key defines a table of [environment variables](/workers/platform/environment-variables/) provided to your Worker script. All values are plaintext values.
+The `vars` key defines a table of [environment variables](/workers/configuration/environment-variables/) provided to your Worker script. All values are plaintext values.
 
 Usage:
 
@@ -271,7 +273,7 @@ You can also define your `kv_namespaces` using an [alternative TOML syntax](http
 
 ### site
 
-A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#init).
+A [Workers Site](/workers/configuration/sites/start-from-scratch) generated with [`wrangler generate --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#init).
 
 Usage:
 
@@ -619,7 +621,7 @@ globs = ["**/*.js", "**/*.cjs"]
 
   - `globs` {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
+    - UNIX-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
 
   - `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
 

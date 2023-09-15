@@ -499,7 +499,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
 
 ### Supported algorithms
 
-Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI/), as shown in the following table. The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
+Workers implements all operations of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI/), as shown in the following table.
 
 A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.<br>
 An x (✘) indicates that this feature is part of the specification but not implemented.<br>
@@ -514,7 +514,9 @@ If a feature only implements the operation partially, details are listed.
 | RSA OAEP                                           |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | ECDSA                                              | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
 | ECDH                                               |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
-| NODE ED25519<sup><a href="#footnote 1">1</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| Ed25519<sup><a href="#footnote-1">1</a></sup>      | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| X25519<sup><a href="#footnote-1">1</a></sup>       |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
+| NODE ED25519<sup><a href="#footnote-2">2</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
 | AES CTR                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | AES CBC                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | AES GCM                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
@@ -524,7 +526,7 @@ If a feature only implements the operation partially, details are listed.
 | SHA 256                                            |                     |                         | ✓        |                              |               |                           |             |             |
 | SHA 384                                            |                     |                         | ✓        |                              |               |                           |             |             |
 | SHA 512                                            |                     |                         | ✓        |                              |               |                           |             |             |
-| MD5<sup><a href="#footnote 2">2</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
+| MD5<sup><a href="#footnote-3">3</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
 | HKDF                                               |                     |                         |          | ✓                            |               |                           |             | ✓           |
 | PBKDF2                                             |                     |                         |          | ✓                            |               |                           |             | ✓           |
 
@@ -532,14 +534,15 @@ If a feature only implements the operation partially, details are listed.
 
 **Footnotes:**
 
-1.  <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm
-    is non-standard, a few things to keep in mind while using it:
+1.  <a name="footnote-1"></a> Algorithms as specified in the [Secure Curves API](https://wicg.github.io/webcrypto-secure-curves).
+2.  <a name="footnote-2"></a> Legacy non-standard EdDSA is supported for the Ed25519 curve in addition to the Secure Curves version. Since this algorithm is non-standard, note the following while using it:
 
     - Use {{<code>}}NODE-ED25519{{</code>}} as the algorithm and `namedCurve` parameters.
     - Unlike NodeJS, Cloudflare will not support raw import of private keys.
     - The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior. Any notable compatibility notes will be communicated in release notes and via this developer documentation.
 
-2.  <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
+3.  <a name="footnote-3"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
+
 
 ---
 

@@ -33,7 +33,7 @@ L’accès à Network Analytics nécessite les éléments suivants :
 
 L'écran **Network Analytics** de Cloudflare permet de suivre en temps quasi réel les tendances du trafic des couches réseau et transport et les attaques DDoS Network Analytics affiche des données au niveau des paquets et des bits, qui sont les mêmes que celles fournies par l'[API GraphQL Analytics](/analytics/graphql-api/).
 
-![Volet Analytics présentant la synthèse des paquets par type](/support/static/na-main-dashboard.png)
+![Volet Analytics présentant la synthèse des paquets par type](/images/support/na-main-dashboard.png)
 
 Network Analytics accélère la signalisation et l’examen du trafic malveillant. Vous pouvez filtrer les données en fonction des paramètres suivants :
 
@@ -72,7 +72,7 @@ ___
 
 Le haut de page et les panneaux latéraux présentent un résumé de l'activité au cours de la période sélectionnée dans la liste déroulante **période**.
 
-![Titre et volet latéral synthétisant l'activité des dernières 24 heures](/support/static/na-navigate.png)
+![Titre et volet latéral synthétisant l'activité des dernières 24 heures](/images/support/na-navigate.png)
 
 Le titre indique le nombre total de paquets ou de bits et le nombre d’attaques détectées. Lorsqu’une attaque est en cours, le titre affiche le débit maximal de paquets (ou de bits), plutôt que le nombre total. Lorsqu’une attaque est en cours, le titre affiche le débit maximal de paquets (ou de bits), plutôt que le nombre total.
 
@@ -84,7 +84,7 @@ Utilisez la liste déroulante **période** pour modifier la période pour laquel
 
 Lorsque vous sélectionnez _30 dernières minutes_, l'écran **Network Analytics** affiche les données des 30 dernières minutes, en les rafraîchissant toutes les 20 secondes. Une notification _Live_ apparaît à côté de la liste déroulante des statistiques pour vous indiquer que les données sont mises à jour automatiquement :
 
-![Rafraîchissement automatique activé dans Network Analytics](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Rafraîchissement automatique activé dans Network Analytics](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 Si vous sélectionnez l'option _Période déterminée_, vous pouvez déterminer une période allant jusqu'à 30 jours, située à n'importe quel moment de l'année précédente.
 
@@ -96,13 +96,13 @@ Choisissez une statistique dans la liste déroulante pour basculer entre _Taux m
 
 Activez **Afficher les annotations** pour afficher ou masquer les annotations relatives aux événements liés aux préfixes IP annoncés/retirés dans la base de données à l'écran **Network Analytics** . Cliquez sur chaque annotation pour obtenir plus de détails.
 
-![Bouton permettant d'afficher les annotations dans le graphique Network Analytics](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![Bouton permettant d'afficher les annotations dans le graphique Network Analytics](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### Effectuer un zoom sur le récapitulatif des paquets
 
 Cliquez et faites glisser la souris sur une zone du diagramme pour effectuer un zoom. Grâce à cette technique, vous pouvez effectuer un zoom sur un intervalle allant jusqu’à 3 minutes.
 
-![Zoom sur la synthèse des paquets ](/support/static/unnamed.gif)
+![Zoom sur la synthèse des paquets ](/images/support/unnamed.gif)
 
 Pour faire un zoom arrière, cliquez sur l'icône **X** du sélecteur de **période**.
 
@@ -150,7 +150,7 @@ Procédez comme suit :
 
 2\. Cliquez sur **Create Magic Firewall rule**. 
 
-![Création d'un lien de règle de pare-feu dans Network Analytics](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![Création d'un lien de règle de pare-feu dans Network Analytics](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 L'éditeur de règles Magic Firewall s'affiche avec les filtres et les valeurs sélectionnés.
 
@@ -162,269 +162,22 @@ L'éditeur de règles Magic Firewall s'affiche avec les filtres et les valeurs s
 
 Le tableau ci-dessous présente la sélection de champs, d’opérateurs et de valeurs que vous pouvez utiliser pour filtrer les données Network Analytics.
 
-| Champ | Opérateurs | Valeur |
-| --- | --- | --- |
-| 
-Action
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Autoriser : Trafic autorisé par les systèmes de protection DDoS automatisés de Cloudflare. Cela peut également inclure le trafic atténué par les règles de pare-feu, les règles flowtrackd et les règles de la couche 7.
-
-Bloquer : Le trafic est bloqué par les systèmes de protection DDoS automatisés de Cloudflare.
-
-Suivi des connexions : Ne concerne que la couche 7, car Magic Transit est exclu et aucun suivi de connexion n'est effectué pour les préfixes Magic Transit.
-
-Limitation de débit : elle peut être appliquée en fonction de l'adresse IP source, du sous-réseau ou à n'importe quelle connexion. Cette décision est programmée en fonction de critères heuristiques.
-
-Surveiller : Attaques qui ont été identifiées mais que l'on a choisi d'observer simplement et de ne pas atténuer par une quelconque règle.
-
- |
-| 
-
-Attack ID (ID d’attaque)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Numéro d’attaque
-
- |
-| 
-
-Attack Type (Type d’attaque)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-UDP Flood
-
-SYN Flood
-
-ACK flood
-
-RST Flood
-
-LDAP Flood
-
-Christmas Flood
-
-FIN Flood
-
-GRE Flood
-
-ICMP Flood
-
- |
-| 
-
-Destination IP (IP de destination)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Adresse IP
-
- |
-| 
-
-Destination Port (Port de destination)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
-Supérieur à
-
-Supérieur ou égal à
-
-Inférieur à
-
-Inférieur ou égal à
-
- | 
-
-Numéro de port
-
-Plage de ports
-
- |
-| 
-
-Destination IP range (Plage d’IP de destination)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Plage d’adresses IP et masque
-
- |
-| 
-
-IP Version (Version IP)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-4 ou 6
-
- |
-| 
-
-Protocole
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-TCP
-
-UDP
-
-ICMP
-
-GRE
-
- |
-| 
-
-Source ASN (ASN source)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Numéro AS
-
- |
-| 
-
-Source Country (Pays source)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Nom du pays
-
- |
-| 
-
-Source data center (Datacenter source)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Localisation du datacenter
-
- |
-| 
-
-Source IP (IP source)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
- | 
-
-Adresse IP
-
- |
-| 
-
-Source port (Port source)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
-Supérieur à
-
-Supérieur ou égal à
-
-Inférieur à
-
-Inférieur ou égal à
-
- | 
-
-Numéro de port
-
-Plage de ports
-
- |
-| 
-
-TCP Flag (Identifiant TCP)
-
- | 
-
-Est égal à
-
-N’est pas égal à
-
-Contient
-
- | 
-
-SYN, SYN-ACK, FIN, ACK, RST
-
- |
+| Champ                                            | Opérateurs                                                                                                 | Valeur                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Action                                           | Est égal à<br>N’est pas égal à                                                                             | Autoriser : Trafic autorisé par les systèmes de protection DDoS automatisés de Cloudflare. Cela peut également inclure le trafic atténué par les règles de pare-feu, les règles flowtrackd et les règles de la couche 7.<br>Bloquer : Le trafic est bloqué par les systèmes de protection DDoS automatisés de Cloudflare.<br>Suivi des connexions : Ne concerne que la couche 7, car Magic Transit est exclu et aucun suivi de connexion n'est effectué pour les préfixes Magic Transit.<br>Limitation de débit : elle peut être appliquée en fonction de l'adresse IP source, du sous-réseau ou à n'importe quelle connexion. Cette décision est programmée en fonction de critères heuristiques.<br>Surveiller : Attaques qui ont été identifiées mais que l'on a choisi d'observer simplement et de ne pas atténuer par une quelconque règle. |
+| Attack ID (ID d’attaque)                         | Est égal à<br>N’est pas égal à                                                                             | Numéro d’attaque                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Attack Type (Type d’attaque)                     | Est égal à<br>N’est pas égal à                                                                             | UDP Flood<br>SYN Flood<br>ACK flood<br>RST Flood<br>LDAP Flood<br>Christmas Flood<br>FIN Flood<br>GRE Flood<br>ICMP Flood                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Destination IP (IP de destination)               | Est égal à<br>N’est pas égal à                                                                             | Adresse IP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Destination Port (Port de destination)           | Est égal à<br>N’est pas égal à<br>Supérieur à<br>Supérieur ou égal à<br>Inférieur à<br>Inférieur ou égal à | Numéro de port<br>Plage de ports                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Destination IP range (Plage d’IP de destination) | Est égal à<br>N’est pas égal à                                                                             | Plage d’adresses IP et masque                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| IP Version (Version IP)                          | Est égal à<br>N’est pas égal à                                                                             | 4 ou 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Protocole                                        | Est égal à<br>N’est pas égal à                                                                             | TCP<br>UDP<br>ICMP<br>GRE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Source ASN (ASN source)                          | Est égal à<br>N’est pas égal à                                                                             | Numéro AS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Source Country (Pays source)                     | Est égal à<br>N’est pas égal à                                                                             | Nom du pays                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Source data center (Datacenter source)           | Est égal à<br>N’est pas égal à                                                                             | Localisation du datacenter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Source IP (IP source)                            | Est égal à<br>N’est pas égal à                                                                             | Adresse IP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Source port (Port source)                        | Est égal à<br>N’est pas égal à<br>Supérieur à<br>Supérieur ou égal à<br>Inférieur à<br>Inférieur ou égal à | Numéro de port<br>Plage de ports                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| TCP Flag (Identifiant TCP)                       | Est égal à<br>N’est pas égal à<br>Contient                                                                 | SYN, SYN-ACK, FIN, ACK, RST                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
 ___
 
@@ -434,7 +187,7 @@ Vous pouvez représenter les données Network Analytics selon différentes dimen
 
 Sélectionnez l'un des onglets **Résumé** pour visualiser les données sous une autre perspective.
 
-![Visualisation de données sur plusieurs dimensions](/support/static/unnamed__1_.gif)
+![Visualisation de données sur plusieurs dimensions](/images/support/unnamed__1_.gif)
 
 Vous pouvez choisir parmi ces options :
 
@@ -457,7 +210,7 @@ Lorsque vous ajoutez des filtres et spécifiez un intervalle dans Firewall Analy
 
 Pour partager votre vue des données, copiez l’URL et envoyez-la à d’autres utilisateurs afin qu’ils puissent travailler avec la même vue.
 
-![Sélection de l'URL de la page Network Analytics](/support/static/hc-dashboard-network-analytics-6.png)
+![Sélection de l'URL de la page Network Analytics](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

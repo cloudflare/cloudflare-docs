@@ -735,11 +735,11 @@ ___
 
 **Grundlegende Ursache:** Dies kann auf ein Konfigurationsproblem bei einer Page Rule zurückzuführen sein. Wenn Sie eine Page Rule erstellen, die zwei Platzhalter verwendet, wie z. B. eine _URL-Weiterleitungsregel_, ist es möglich, eine Regel zu erstellen, die den zweiten Platzhalter mit dem Platzhalter $2 erwähnt. Siehe das folgende Beispiel:
 
-![Beispiel für die Konfiguration einer Page Rule mit zwei Platzhaltern. Die Weiterleitungs-URL enthält eine Wildcard $2, die durch den Inhalt ersetzt wird, auf den die zweite ](/support/static/page-rule-create.png)
+![Beispiel für die Konfiguration einer Page Rule mit zwei Platzhaltern. Die Weiterleitungs-URL enthält eine Wildcard $2, die durch den Inhalt ersetzt wird, auf den die zweite ](/images/support/page-rule-create.png)
 
 Wenn Sie dieselbe Regel aktualisieren, können Sie eine Wildcard im Feld **Wenn die URL übereinstimmt** entfernen und die Regel speichern. Siehe das folgende Beispiel:
 
-![Konfiguration der fehlerhaften Page Rule mit einer einzelnen Wildcard zutrifft, wobei jedoch weiterhin die Wildcard $2 in der Weiterleitungs-URL verwendet wird. Die Konfiguration sorgt dafür, ](/support/static/page-rule-update.png)
+![Konfiguration der fehlerhaften Page Rule mit einer einzelnen Wildcard zutrifft, wobei jedoch weiterhin die Wildcard $2 in der Weiterleitungs-URL verwendet wird. Die Konfiguration sorgt dafür, ](/images/support/page-rule-update.png)
 
 Wenn Sie dies tun, verweist der Platzhalter $2 auf eine Wildcard, die nicht mehr existiert, sodass ein „_Error 500 (Internal server error)_“ ausgegeben wird, wenn eine URL die Page Rule auslöst.
 
@@ -790,7 +790,7 @@ Wenn Sie einen Port im Page-Rule-Feld **Wenn die URL übereinstimmt** angeben, m
 
 ### Page Rules mit Workers verwenden
 
-Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) übereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation für Entwickler](/workers/platform/workers-with-page-rules/).
+Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) übereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation für Entwickler](/workers/configuration/workers-with-page-rules/).
 
 ___
 

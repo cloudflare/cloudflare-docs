@@ -96,7 +96,7 @@ Dafür gibt es zwei mögliche Ursachen:
 
 Cloudflare gibt einen Cloudflare-gekennzeichneten HTTP-Fehler 502 oder 504 zurück, wenn Ihr Ursprungswebserver mit einem HTTP-Fehler 502 „ungültiges Gateway“ oder 504 „Gateway-Timeout“ antwortet:
 
-![Beispiel eines Cloudflare-gekennzeichneten Fehlers 502.](/support/static/image1.png)
+![Beispiel eines Cloudflare-gekennzeichneten Fehlers 502.](/images/support/image1.png)
 
 **Lösung**
 
@@ -110,7 +110,7 @@ Kontaktieren Sie Ihren Hosting-Provider zur Behebung dieser häufigen Ursachen a
 
 Ein Fehler 502 oder 504, der seinen Ursprung bei Cloudflare hat, erscheint wie folgt:
 
-![Beispiel eines nicht gekennzeichneten Fehlers 502.](/support/static/image5.png)
+![Beispiel eines nicht gekennzeichneten Fehlers 502.](/images/support/image5.png)
 
 Wenn im Fehler nicht „cloudflare“ aufgeführt ist, sollten Sie Ihren Hosting-Provider um Unterstützung für [502/504-Fehler von Ihrem Ursprung](https://support.cloudflare.com/hc/de/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b) bitten.
 
@@ -350,7 +350,7 @@ Bitten Sie Ihren Server-Administrator oder Hosting-Provider, die SSL-Zertifikate
 -   Ihr Ursprungswebserver Verbindungen über SSL-Port 443 akzeptiert.
 -   [Deaktivieren Sie Cloudflare vorübergehend](https://support.cloudflare.com/hc/articles/200169176) und gehen Sie zu [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (ersetzen Sie www.example.com durch Ihren Hostnamen und Ihre Domain), um zu überprüfen, ob keine Probleme mit dem SSL-Zertifikat des Ursprungs vorliegen:
 
-![Der Bildschirm zeigt ein SSL-Zertifikat ohne Fehler.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![Der Bildschirm zeigt ein SSL-Zertifikat ohne Fehler.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 Wenn der Ursprungsserver ein selbstsigniertes Zertifikat verwendet, konfigurieren Sie die Domain für _Full_ _SSL_ anstatt _Full SSL (Strict)_. Siehe [empfohlene SSL-Einstellungen für Ihren Ursprung](/ssl/origin-configuration/ssl-modes).
 

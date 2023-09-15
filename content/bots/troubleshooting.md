@@ -32,11 +32,11 @@ Yandex updates their bots very frequently, you may see more false positives whil
 **Workarounds:**
 
 -   Disable the WAF managed rule with id 100203 temporarily,
--   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [Firewall actions](/firewall/cf-firewall-rules/actions).
+-   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [Firewall actions](/firewall/cf-firewall-rules/actions).
 
 **Solution:**
 
-Once the new Yandex IP is propagated to our system, the requests won't be blocked any more. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, please contact [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+Once the new Yandex IP is propagated to our system, the requests won't be blocked any more. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 ___
 
@@ -52,10 +52,13 @@ ___
 
 ## Why am I seeing a Managed Challenge action for firewall rules?
 
-When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Firewall Events with an **Action Taken** of **Managed Challenge**.
+When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an **Action Taken** of **Managed Challenge**.
 
-You may also see Managed Challenge as a result of a [firewall rule](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+You may also see Managed Challenge because of a [firewall rule](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended).
 
+This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
+
+To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 ___
 
 ## What is the difference between the threat score and bot management score?
@@ -69,9 +72,9 @@ These fields are available via [Cloudflare Firewall Rules](/firewall/cf-firewall
 
 ___
 
-## What is cf.bot\_management.verified\_bot?
+## What is cf.bot\_management.verified\_bot?
 
-A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
+A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
 
 Cloudflare has built an allowlist of good, automated bots, e.g. Google Search Engine, Pingdom, and more.
 
@@ -91,11 +94,11 @@ The JA3 Fingerprint can be null or empty in some cases. The most common case is 
 
 ___
 
-## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
+## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
-As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ___
 
@@ -104,13 +107,11 @@ ___
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
 {{<Aside type="warning">}}
+The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan).
 
-The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan). 
-    
 Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
-    
-Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
 
+Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
 {{</Aside>}}
 
 -   RayIDs
@@ -121,7 +122,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 -   Screenshots of strange activity from the firewall, such as a huge spike in challenged traffic on the graph
 -   Problematic URIs or paths
 -   Rough description of how your domain is configured.
-    -   Is one zone SSL for SaaS while the others are not?
+    -   Is one zone Cloudflare for SaaS while the others are not?
     -   Is most API traffic sent to a particular URI?
     -   How much mobile traffic do you expect?
 
@@ -130,8 +131,8 @@ ___
 ## What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
 
 {{<Aside type="warning" header="Important considerations you need to be aware of before turning on BFM or SBFM">}}
-  
--   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. 
+
+-   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 
 -   BFM has limited control. You cannot bypass or skip BFM using Firewall Rules or Page Rules. BFM will be disabled if there are any IP access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access Rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
@@ -144,8 +145,8 @@ ___
 If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under **Security** > **Bots**.
 
 -   For **Free** plans, toggle the **Bot Fight Mode** option to **Off**
--   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
--   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+-   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+-   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 
 {{<render file="_flexible-sbfm.md">}}
 

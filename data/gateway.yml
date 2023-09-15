@@ -3,5 +3,5 @@ name: Gateway
 product:
   title: Gateway
   group: Cloudflare One
-  url: /cloudflare-one/policies/filtering/
+  url: /cloudflare-one/policies/gateway/
   grid_placeholder: true

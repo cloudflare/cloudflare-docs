@@ -27,11 +27,11 @@ Pour afficher les indicateurs de votre site Web :
 
 Une fois chargée, l’application Analytics affiche un ensemble d’onglets correspondant aux catégories **Traffic** (Trafic), **Security** (Sécurité), **Performance**, **DNS**, **Workers** et **Logs** (Fichiers journaux) (domaines Enterprise uniquement). Pour comprendre les différents indicateurs disponibles, reportez-vous à la section _Examinez les indicateurs de votre site web_ ci-dessous.
 
-![UI de l'application Analytics dans le tableau de bord Cloudflare affichant les données de trafic web](/support/static/hc-dash-analytics-dashboard_overview.png)
+![UI de l'application Analytics dans le tableau de bord Cloudflare affichant les données de trafic web](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Avec les offres Pro, Business et Enterprise, les toutes dernières données Web Analytics sont affichées sur l’onglet Traffic (Trafic).
 
-![Capture d’écran de l’interface utilisateur dans le tableau de bord Cloudflare Analytics pour les clients Pro, Business et Enterprise.](/support/static/hc-dash-analytics-web_traffic.png)
+![Capture d’écran de l’interface utilisateur dans le tableau de bord Cloudflare Analytics pour les clients Pro, Business et Enterprise.](/images/support/hc-dash-analytics-web_traffic.png)
 
 ___
 

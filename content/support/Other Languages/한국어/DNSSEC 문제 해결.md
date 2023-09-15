@@ -101,11 +101,11 @@ ___
 3.  DNSViz가 처음으로 사이트를 분석하는 경우, 표시된 **분석** 버튼을 클릭하세요.
 4.  DNSViz가 사이트를 분석한 적이 있었다면, 표시되는
 
-![Screen_Shot_2018-09-18_at_10.31.54_AM.png](/support/static/Screen_Shot_2018-09-18_at_10.31.54_AM.png)
+![Screen_Shot_2018-09-18_at_10.31.54_AM.png](/images/support/Screen_Shot_2018-09-18_at_10.31.54_AM.png)
 
-![Screen_Shot_2018-10-16_at_2.png](/support/static/Screen_Shot_2018-10-16_at_2.png)
+![Screen_Shot_2018-10-16_at_2.png](/images/support/Screen_Shot_2018-10-16_at_2.png)
 
-![Screen_Shot_2018-09-18_at_10.25.49_AM.png](/support/static/Screen_Shot_2018-09-18_at_10.25.49_AM.png)
+![Screen_Shot_2018-09-18_at_10.25.49_AM.png](/images/support/Screen_Shot_2018-09-18_at_10.25.49_AM.png)
 
 ___
 

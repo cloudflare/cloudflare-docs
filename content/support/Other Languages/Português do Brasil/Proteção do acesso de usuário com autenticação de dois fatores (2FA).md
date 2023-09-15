@@ -29,7 +29,7 @@ Para ativar a autenticação de dois fatores para o seu login no Cloudflare:
 3.  Clique na guia **Autenticação** .
 4.  Role para baixo até a seção Autenticação de dois fatores e clique para alternar para _Ativado_ .
 
-![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176711/2FA_enable.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/support/static/hc-import-2fa_enable.png)
+![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176711/2FA_enable.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_enable.png)
 
 ___
 
@@ -48,13 +48,13 @@ Para ativar o 2FA:
 
 -   Se não conseguir digitalizar o código QR, clique em **Não é possível digitalizar o código QR, Siga as etapas alternativas** para configurar seu aplicativo autenticador manualmente.
 
-![captura de tela de uma tela com instruções sobre como ativar o 2FA, digitalizando um código QR com seu dispositivo móvel](/support/static/2FA_scan_QR_code.png)
+![captura de tela de uma tela com instruções sobre como ativar o 2FA, digitalizando um código QR com seu dispositivo móvel](/images/support/2FA_scan_QR_code.png)
 
 3\. Digite sua senha e clique em **Avançar** novamente para ver seus códigos de revisão de backup.
 
 4\. Depois de ver seus códigos de backup, recomendamos que você os salve em um local seguro. Você pode clicar em **Baixar** , **Imprimir** ou **Copiar** para salvar os códigos e clique em **Avançar** .
 
-![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176771/2FA_review_and_backup_codes_v2.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/support/static/hc-import-2fa_review_and_backup_codes_v2.png)
+![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176771/2FA_review_and_backup_codes_v2.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_review_and_backup_codes_v2.png)
 
 Você pode gerar novamente seus códigos de backup na tela a seguir ou a qualquer momento na guia **Autenticação** .
 
@@ -62,7 +62,7 @@ Você pode gerar novamente seus códigos de backup na tela a seguir ou a qualque
 
 6\. Você também tem a opção de solicitar um novo conjunto de códigos de backup. Clique em **regenerá-los agora** para salvar um novo conjunto de códigos de backup de dois fatores.
 
-![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176791/2FA_configuration_complete.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/support/static/hc-import-2fa_configuration_complete.png)
+![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176791/2FA_configuration_complete.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_configuration_complete.png)
 
 ___
 
@@ -78,7 +78,7 @@ Para desativar o 2FA para sua conta do Cloudflare:
 4.  Role para baixo até a seção **Autenticação de dois fatores** e clique para alternar para _Desativado_ . Você verá uma tela de confirmação.
 5.  Digite sua senha, um código de aplicativo autenticador ou um código de backup e clique em **Desativar** .
 
-![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038195192/2FA_disable.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/support/static/hc-import-2fa_disable.png)
+![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038195192/2FA_disable.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_disable.png)
 
 ___
 
@@ -94,7 +94,7 @@ Ao configurar a 2FA, você foi solicitado a salvar seus códigos de backup em um
 
 3\. Digite o código de backup na tela de logon e clique em **Logon** .
 
-![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176971/2FA_backup_code_login_annontated.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/support/static/hc-import-2fa_backup_code_login_annontated.png)
+![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176971/2FA_backup_code_login_annontated.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_backup_code_login_annontated.png)
 
 4\. Depois de usar um código de backup, ele se torna inválido.
 

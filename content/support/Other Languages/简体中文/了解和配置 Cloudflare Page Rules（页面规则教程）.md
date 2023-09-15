@@ -32,42 +32,11 @@ ___
 允许的页面规则默认数量取决于域的计划，如下表所示。
 
 | **计划** | **允许的页面规则** |
-| --- | --- |
-| 
-免费
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-企业
-
- | 
-
-125
-
- |
+| -------- | ------------------ |
+| 免费     | 3                  |
+| Pro      | 20                 |
+| Business | 50                 |
+| 企业     | 125                |
 
 对于 Free、Pro 和 Business 计划中的域名，您可以[购买额外的规则](https://www.cloudflare.com/features-page-rules/) （最多 100 条）。
 
@@ -196,9 +165,9 @@ ___
 
 **计划**
 
- |
-| --- | --- | --- |
-| 
+ |     |
+ | --- ||  |
+ |     |
 
 始终使用 HTTPS
 
@@ -716,11 +685,11 @@ ___
 
 **根本原因**：这可能是由于 Page Rule 的配置问题造成的。在创建使用两个通配符的 Page Rule（例如_转发 URL_ 规则）时，可以创建一个用 $2 占位符提及第二个通配符的规则。请参阅下面的示例：
 
-![“示例页面规则”配置（带有两个通配符）。转发 URL 包含一个 $2 的占位符，它将被替换为第二个 ](/support/static/page-rule-create.png)
+![“示例页面规则”配置（带有两个通配符）。转发 URL 包含一个 $2 的占位符，它将被替换为第二个 ](/images/support/page-rule-create.png)
 
 在更新同一规则时，您可以删除**如果 URL 匹配**字段中的其中一个通配符，然后保存。请参阅下面的示例：
 
-![“不正确的页面规则”配置（带有一个通配符）所匹配的内容，但仍然使用转发 URL 中的 $2 占位符。此配置会导致 ](/support/static/page-rule-update.png)
+![“不正确的页面规则”配置（带有一个通配符）所匹配的内容，但仍然使用转发 URL 中的 $2 占位符。此配置会导致 ](/images/support/page-rule-update.png)
 
 如果您这样做，$2 占位符就会引用一个不再存在的通配符，因此，当一个 URL 触发 Page Rule 时，就会引发_错误 500（内部服务器错误）_。
 
@@ -771,7 +740,7 @@ ___
 
 ### 将页面规则用于 Workers
 
-如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/platform/workers-with-page-rules/)。
+如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/configuration/workers-with-page-rules/)。
 
 ___
 

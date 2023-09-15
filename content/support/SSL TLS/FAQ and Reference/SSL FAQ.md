@@ -145,7 +145,7 @@ For SSL terms and definitions, go to the [Cloudflare Glossary](/fundamentals/glo
 
 ___
 
-## Redsys doesn't seem to be working with my Let's Encrypt Certificiate?
+## Redsys doesn't seem to be working with my Let's Encrypt Certificate?
 
 The Let's Encrypt Certificate Authority and SNI are not currently supported by Redsys.
 

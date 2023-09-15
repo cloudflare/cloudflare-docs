@@ -36,7 +36,7 @@ Cloudflareは、デフォルトで画像やCSS、JavaScriptのような[静的�
 
 5. _Edge Cache Expire TTL_を変更することもでき、ClouddflareはあなたのEdgeでリソースをキャッシュする時間を決定できるようになります。TTLオプションの範囲は、二(2)時間から一ヶ月です。
 
-![page_rule_spike_or_surge_in_traffic.png](/support/static/page_rule_spike_or_surge_in_traffic.png)
+![page_rule_spike_or_surge_in_traffic.png](/images/support/page_rule_spike_or_surge_in_traffic.png)
 
 Cache Everything (すべてをキャッシュする)オプションが有効になると、Cloudflareはあなたのサイト全体にサービスを提供できるようになり、サーバーの負荷を完全に取り除いてサーバーを最大限までスピーディーにします。
 

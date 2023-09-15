@@ -13,7 +13,7 @@ Take note of any DNS addresses you might have set up, and save them in a safe pl
 ## GNOME (Ubuntu, Fedora, Pop!_OS etc)
 
 1. Go to **Show Applications** > **Settings** > **Network**.
-2. Select the adapter you want to configure — like your Ethernet adapter or WiFi card — and select the **Settings** button.
+2. Select the adapter you want to configure — like your Ethernet adapter or Wi-Fi card — and select the **Settings** button.
 3. On the **IPv4** tab > **DNS** section, disable the **Automatic** toggle.
 4. {{<render file="_all-ipv4.md">}}
 5. Go to **IPv6**.

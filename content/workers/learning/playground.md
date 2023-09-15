@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Playground
-weight: 17
 ---
 
 # Playground
@@ -58,7 +57,7 @@ To test a raw HTTP request — not in an HTML previewer, for example, to test a 
 
 ---
 
-## Devtools
+## DevTools
 
 For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel. The developer tools for the Workers Playground works similar to the developer tools in Chrome or Firefox.
 

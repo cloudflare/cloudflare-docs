@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Keyless SSL
-weight: 6
+weight: 8
 ---
 
 # Keyless SSL
@@ -9,7 +9,7 @@ weight: 6
 {{<render file="_keyless-ssl-definition.md">}}
 <br/>
 
-Prior to configuring Keyless SSL, we suggest you read our [technical background](https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/) on how the technology works and where your infrastructure sits within the scope of the TLS handshake.
+Before configuring Keyless SSL, you should read our [technical background](https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/) on how the technology works and where your infrastructure sits within the scope of the TLS handshake.
 
 The source code for our key server (what you will run) and keyless client (what our servers will contact your key server with) can be [found on GitHub](https://github.com/cloudflare/gokeyless).
 

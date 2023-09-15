@@ -29,6 +29,6 @@ The WAF exception, shown as a rule with a **Skip** action, must appear in the ru
 To check the rule order, use one of the following methods:
 
 * When using the Cloudflare dashboard, the rules listed in **Security** > **WAF** > **Managed rules** run in order.
-* When using the Cloudflare API, the rules in the `rules` object obtained using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) API operation (for your zone and for the `http_request_firewall_managed` phase) run in order.
+* When using the Cloudflare API, the rules in the `rules` object obtained using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation (for your zone and for the `http_request_firewall_managed` phase) run in order.
 
 For more information on creating WAF exceptions, refer to [Create WAF exceptions](/waf/managed-rules/waf-exceptions/).

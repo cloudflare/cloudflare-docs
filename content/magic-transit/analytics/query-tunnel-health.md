@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: configuration
 title: Querying Magic Transit tunnel health check results with GraphQL
 ---
 

@@ -60,7 +60,7 @@ From the abbreviated response below, we can conclude that distributed denial-of-
 }
 ```
 
-For more information refer to [Get layer 7 attacks by mitigation technique, over time](/api/operations/radar_get_AttacksLayer7Timeseries).
+For more information refer to [Get layer 7 attacks by mitigation technique, over time](/api/operations/radar-get-attacks-layer7-timeseries-group).
 
 ### Summary
 
@@ -87,7 +87,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?l
 
 This response means that 75% of all mitigated requests coming from Great Britain were mitigated by the [WAF](/waf/) product.
 
-For more information refer to [Get a summary of layer 7 attacks](/api/operations/radar_get_AttacksLayer7Summary).
+For more information refer to [Get layer 7 attacks summary](/api/operations/radar-get-attacks-layer7-summary).
 
 ### Top
 
@@ -143,7 +143,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locat
 
 During the specified date range, mitigation requests to zones with a billing address located in Belgium represent 18%.
 
-For more information refer to [Get layer 7 top target locations](/api/operations/radar_get_AttacksLayer7TopTargetLocations).
+For more information refer to [Get layer 7 top target locations](/api/operations/radar-get-attacks-layer7-top-target-location).
 
 #### Example: Top attacks
 
@@ -201,7 +201,7 @@ This means that 3.79% of all mitigated requests are from and to the US, 3.6% of 
 
 This response came from a query that is using attack `magnitude` as the sum of mitigated requests. To use the number of unique zones attacked as the metric, for example, use `attack_magnitude=AFFECTED_ZONES`.
 
-For more information refer to [Get layer 7 top attack pairs](/api/operations/radar_get_AttacksLayer7TopAttacks).
+For more information refer to [Get layer 7 top attack pairs](/api/operations/radar-get-attacks-layer7-top-attacks).
 
 ## Next steps
 

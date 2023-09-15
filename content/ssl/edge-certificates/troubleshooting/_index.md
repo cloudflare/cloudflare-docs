@@ -3,7 +3,7 @@ pcx_content_type: navigation
 title: Troubleshooting
 weight: 8
 meta:
-    title: Troubleshooting | Edge certificates
+    title: Troubleshooting edge certificates
 ---
 
 # Troubleshooting edge certificates

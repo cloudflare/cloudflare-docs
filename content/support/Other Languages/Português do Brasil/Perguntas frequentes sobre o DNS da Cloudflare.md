@@ -7,35 +7,6 @@ title: Perguntas frequentes sobre o DNS da Cloudflare
 
 # Perguntas frequentes sobre o DNS da Cloudflare
 
-_Obtenha ajuda para problemas comuns relacionados ao aplicativo de DNS da Cloudflare._
-
-### Neste artigo
-
--   [Onde posso saber mais sobre DNS?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_GceQe7yLNteKL7WN8Fo2V)
--   [A Cloudflare é um provedor de DNS (domain nameserver) gratuito?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_5AzfKIrChBLWiegj2LqTBx)
--   [A Cloudflare cobra ou limita as consultas de DNS?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_2hngeJgVJQtBClJB3cVQgq)
--   [Onde posso alterar meus nameservers para que apontem para a Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_6gPUYJL7OXyKn7OEaAwipE)
--   [A Cloudflare limita o número de registros DNS que um domínio pode ter?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#RW4QZK9AQYTX3499R4SG)
--   [Para quais tipos de registro a Cloudflare não faz proxy?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_6mb72z48vZY69qLaqRO7we)
--   [Posso registrar um CNAME de um domínio que não está na Cloudflare para um domínio que está na Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_5o8rP75kFhX9g6jaDNSoTQ)
--   [A Cloudflare é compatível com entradas de DNS curinga?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_2C7rPZioPs5FIMJgvWiPST)
--   [Quanto tempo demora para uma alteração de DNS efetuada ser propagada?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_14OysgtO7JgA3N8KAtdZCn)
--   [A Cloudflare oferece mascaramento de domínio?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_1POmiVdco4wE6nwRTmsJsf)
--   [Por que não consigo fazer consultas do tipo TODOS nos servidores DNS da Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_7DVKxAlJIDkVgdAiBdpFqs)
--   [Por que preciso remover meu registro DS ao me cadastrar na Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_3yslZOSrNhsasnFQz7E8T1)
--   [O que acontece quando removo o registro DS?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_6yAiPswlhUgChycYuyLwvw)
--   [A Cloudflare é compatível com EDNS0 (mecanismos de extensão para DNS)?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_1sl0Bnvuv1fPoO6NkqWlI4)
--   [O que devo fazer caso altere o endereço de IP do meu servidor ou o provedor de hospedagem?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_48mRDrZWcDoNy86Vh430dJ)
--   [Onde posso encontrar meus nameservers da Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_4DQSdKPOf5WeRRGX4UoSrG)
--   [Por que vejo registros A ou AAAA/endereços de IP da Cloudflare para as respostas DNS do meu domínio?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_2hZzaAXD1FZ85LaoygALPE)
--   [O ícone de nuvem ao lado do meu registro de DNS deve estar em laranja ou cinza?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_4KiZSEaZkCCJXEDGuD9Htf)
--   [Os subdomínios podem ser adicionados diretamente à Cloudflare?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_2TF12dhvaLH91R6POBV0el)
--   [Erro de autenticação 403 ao criar registros DNS usando o Terraform](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_7db6AC21wyy5Xuq8vk17lY)
--   [Por que vejo centenas de registros de DNS aleatórios depois de adicionar meu domínio?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_1lFKZFkAFRGtDPNZetRq52)
--   [Que IP devo usar para o domínio estacionado/redirecionamento somente/configuração sem origem?](https://support.cloudflare.com/hc/pt-br/articles/360017421192-Perguntas-frequentes-sobre-o-DNS-da-Cloudflare#h_5mPkNqCpR3dklDjTvbASCI)
-
-___
-
 ## Onde posso saber mais sobre DNS?
 
 Consulte os [guias de DNS do Centro de Aprendizagem da Cloudflare](https://www.cloudflare.com/learning/dns/what-is-dns/).
@@ -215,7 +186,7 @@ ___
 
 ## Por que vejo centenas de registros de DNS aleatórios depois de adicionar meu domínio?
 
-Isso pode acontecer se você tinha um registro curinga \* configurado em seu DNS autoritativo anterior. Você pode remover esses registros em massa usando a API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record . Ou você também pode excluir seu domínio do Painel de controle da Cloudflare, excluir o registro curinga de seu DNS autoritativo e adicionar novamente o domínio
+Isso pode acontecer se você tinha um registro curinga \* configurado em seu DNS autoritativo anterior. Você pode remover esses registros em massa usando a API: /api/operations/dns-records-for-a-zone-delete-dns-record . Ou você também pode excluir seu domínio do Painel de controle da Cloudflare, excluir o registro curinga de seu DNS autoritativo e adicionar novamente o domínio
 
 ___
 

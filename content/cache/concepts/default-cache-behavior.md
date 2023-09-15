@@ -18,7 +18,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
 
 Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
 
-For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
+For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Default cached file extensions
 
@@ -50,7 +50,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
 - 100MB Free and Pro
 - 200MB Business
-- 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
+- 500MB Enterprise by default. Contact [Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to request a limit increase.
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
 
@@ -125,7 +125,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to <code>no-cache</code>,<code>private</code>, or <code>max-age=0</code> even though
         Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling <a href="/cache/concepts/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
-        your origin web server sends cookies in the response header.
+        your origin web server sends cookies in the response header. If the Request to your origin includes an `Authorization` header, its response will be also BYPASS.
       </td>
     </tr>
     <tr>
