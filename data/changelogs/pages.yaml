@@ -3,7 +3,7 @@ link: "/pages/platform/changelog/"
 productName: Pages
 entries:
 - publish_date: '2023-09-13'
-  title: Support for D1's new storage subsytem and build error message improvements
+  title: Support for D1's new storage subsystem and build error message improvements
   description: |-
     * Added support for D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/). All Git builds and deployments done with Wrangler v3.5.0 and up can use the new subsystem.
     * Builds which fail due to exceeding the [build time limit](https://developers.cloudflare.com/pages/platform/limits/#builds) will return a proper error message indicating so rather than `Internal error`.
