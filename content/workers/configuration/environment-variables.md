@@ -74,11 +74,12 @@ To add environment variables via the dashboard:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings**.
-4. Under **Environment Variables**, select **Add variable**.
-5. Input a **Variable name** and its **value**, which will be made available to your Worker.
-6. (Optional) To add multiple environment variables, select **Add variable**.
-7. Select **Save** to implement your changes.
+3. In **Overview**, select your Worker.
+4. Select **Settings**.
+5. Under **Environment Variables**, select **Add variable**.
+6. Input a **Variable name** and its **value**, which will be made available to your Worker.
+7. (Optional) To add multiple environment variables, select **Add variable**.
+8. Select **Save** to implement your changes.
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
