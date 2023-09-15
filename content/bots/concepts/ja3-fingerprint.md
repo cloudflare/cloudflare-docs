@@ -24,7 +24,7 @@ To get more information about potential bot requests, use these JA3 Fingerprints
 
 To adjust how your application responds to specific fingerprints, use them with:
 
-- [WAF custom rules](/waf/custom-rules/) or firewall rules
+- [WAF custom rules](/waf/custom-rules/)
 - [Transform Rules](/rules/transform/)
 - [Cloudflare Workers](/workers/runtime-apis/request/#incomingrequestcfproperties)
 
@@ -34,7 +34,7 @@ To adjust how your application responds to specific fingerprints, use them with:
 
 A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [custom rule](/waf/custom-rules/) that blocks/challenges the JA3 used for the attack.
 
-Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [WAF custom rule](/waf/custom-rules/) with the _Skip_ action allowing the JA3 seen across good requests. If you do not have access to custom rules, create a firewall rule with the _Allow_ action.
+Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [WAF custom rule](/waf/custom-rules/) with the _Skip_ action allowing the JA3 seen across good requests.
 
 JA3 may also be useful if you want to immediately remedy false positives or false negatives with Bot Management.
 

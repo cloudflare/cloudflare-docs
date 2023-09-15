@@ -20,7 +20,6 @@ You can use `cf.bot_management.detection_ids` fields in tools such as:
 - [Advanced Rate Limiting](/waf/rate-limiting-rules/)
 - [Transform Rules](/rules/transform/)
 - [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
-- Firewall Rules (deprecated)
 
 ## Bot Detection IDs via Logpush
 

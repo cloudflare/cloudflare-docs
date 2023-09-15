@@ -13,8 +13,6 @@ When adding this field to WAF custom rules, use it:
 - After a user's first request to your application (Cloudflare needs at least one HTML request before injecting JavaScript detection).
 - With the [Managed Challenge action](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended), because there are legitimate reasons a user might not have passed a JavaScript detection challenge (network issues, ad blockers, disabled JavaScript in browser, native mobile apps).
 
-If you do not have access to WAF custom rules, you can use a firewall rule.
-
 ### Prerequisites
 
 - You must have JavaScript detections enabled on your zone.

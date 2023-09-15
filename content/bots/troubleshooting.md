@@ -34,10 +34,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 - Create a [WAF exception](/waf/managed-rules/waf-exceptions/) to temporarily skip the managed rule with ID `...f6cbb163` when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
 - Create a [WAF custom rule with the _Skip_ action](/waf/custom-rules/skip/) to temporarily bypass WAF Managed Rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
 
-If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/migration-guides/waf-managed-rules-migration/)):
-
-- Disable the WAF managed rule with ID `100203` temporarily.
-- Alternatively, create a firewall rule ([deprecated](/waf/reference/migration-guides/firewall-rules-to-custom-rules/)) with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
+If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/migration-guides/waf-managed-rules-migration/)), disable the WAF managed rule with ID `100203` temporarily.
 
 **Solution:**
 
@@ -59,7 +56,7 @@ ___
 
 When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an **Action Taken** of **Managed Challenge**.
 
-You may also see Managed Challenge due to a triggered [WAF custom rule](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) or firewall rule.
+You may also see Managed Challenge due to a triggered [WAF custom rule](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended).
 
 This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
 
@@ -73,7 +70,7 @@ The difference is significant:
 -   Threat score (_cf.threat\_score_) is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).
 -   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script**.** The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
 
-These fields are available via [WAF custom rules](/waf/custom-rules/), other products based on the Ruleset Engine, and firewall rules.
+These fields are available via [WAF custom rules](/waf/custom-rules/) and other products based on the Ruleset Engine.
 
 ___
 
@@ -85,7 +82,7 @@ Cloudflare has built an allowlist of good, automated bots, e.g. Google Search En
 
 This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.
 
-To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields#dynamic-fields) field in your WAF custom rule or firewall rule.
+To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields#dynamic-fields) field in your WAF custom rule.
 
 ___
 
@@ -121,7 +118,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 
 -   RayIDs
 -   IP addresses
--   Firewall Rule IDs, rule expression, Challenge solve rates
+-   WAF custom rule IDs, rule expression, Challenge solve rates
 -   Common user-agents among false positives
 -   Common ASNs among false positives
 -   Screenshots of strange activity from the WAF, such as a huge spike in challenged traffic on the graph
@@ -139,9 +136,9 @@ ___
 
 -   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 
--   BFM has limited control. You cannot bypass or skip BFM using Firewall Rules or Page Rules. BFM will be disabled if there are any IP access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access Rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+-   BFM has limited control. You cannot bypass or skip BFM using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
--   SBFM can be bypassed with IP Access `Allow` action rules. You can use the Skip action in [Custom Rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
+-   SBFM can be bypassed with IP Access `Allow` action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
 {{</Aside>}}
 
