@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: Migrate to ES modules format
+title: Migrate from Service Workers to ES Modules
 ---
 
-# Migrate to ES modules format
+# Migrate from Service Workers to ES Modules
 
 This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) format to the [ES modules](https://blog.cloudflare.com/workers-javascript-modules/) format.
 
