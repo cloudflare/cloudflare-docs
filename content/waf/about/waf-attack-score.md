@@ -60,11 +60,11 @@ Requests with an attack score of `100` will have a class of _Unscored_ in the Cl
 
 If you are an Enterprise customer:
 
-* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/) (or a firewall rule) that logs all requests with a WAF Attack Score below 40 (recommended initial threshold). For example, set the rule expression to `cf.waf.score lt 40` and the rule action to _Log_.
+* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/) that logs all requests with a WAF Attack Score below 40 (recommended initial threshold). For example, set the rule expression to `cf.waf.score lt 40` and the rule action to _Log_.
 
 If you are a Business customer:
 
-* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/) (or a firewall rule) matching requests with a WAF Attack Score Class of _Attack_. For example, set the rule expression to `cf.waf.score.class eq "attack"` and the rule action to a challenge action (such as _Managed Challenge_) or _Block_.
+* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/) matching requests with a WAF Attack Score Class of _Attack_. For example, set the rule expression to `cf.waf.score.class eq "attack"` and the rule action to a challenge action (such as _Managed Challenge_) or _Block_.
 
 ### 2. Monitor domain traffic
 

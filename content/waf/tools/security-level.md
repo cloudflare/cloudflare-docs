@@ -49,7 +49,7 @@ To update the Security Level for your entire zone:
 If you wanted to set the Security level more selectively:
 
 - Configure it via a [Configuration Rule](/rules/configuration-rules/).
-- Use the **Threat Score** as a **Field** criteria within [firewall rules](/firewall/cf-firewall-rules/) or [custom rules](/waf/custom-rules/).
+- Use the **Threat Score** as a **Field** criteria within [custom rules](/waf/custom-rules/).
 
 ---
 

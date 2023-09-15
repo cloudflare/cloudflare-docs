@@ -14,8 +14,6 @@ If you wish to perform IP-based or geography-based blocking (geoblocking), Cloud
 
 - For IP-based blocking, use an [IP List](/fundamentals/global-configurations/lists/ip-lists/) in the custom rule expression.
 - For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression.
-
-If you do not have access to WAF custom rules, create a firewall rule.
 {{</Aside>}}
 
 IP Access rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
@@ -28,7 +26,7 @@ IP Access rules are available to all customers.
 
 Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterprise customer and need more rules, contact your account team.
 
-Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [WAF custom rules](/waf/custom-rules/) or firewall rules.
+Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [WAF custom rules](/waf/custom-rules/).
 
 ## Important remarks
 
