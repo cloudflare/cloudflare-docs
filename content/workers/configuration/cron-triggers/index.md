@@ -8,7 +8,7 @@ layout: single
 
 ## Background
 
-Cron Triggers allow users to map a cron expression to a Worker using a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) listener that enables Workers to be executed on a schedule.
+Cron Triggers allow users to map a cron expression to a Worker using a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) that enables Workers to be executed on a schedule.
 
 Cron Triggers are ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
 
@@ -18,7 +18,7 @@ Cron Triggers execute on UTC time.
 
 ### 1. Define a scheduled event listener
 
-To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runtime-apis/scheduled-event/) listener, or export a default `scheduled` handler to your Workers code.
+To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/runtime-apis/handlers/scheduled/) to your Worker.
 
 Refer to the following examples to write your code:
 
