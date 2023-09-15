@@ -26,7 +26,7 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 {{<table-wrap>}}
 
-|             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time [limits](/workers/platform/limits/#worker-limits) |
+|             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | **Free**    |  100,000 per day                                                    | no charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
 | **Bundled** |  10 million included per month <br /> +$0.50 per additional million | no charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
