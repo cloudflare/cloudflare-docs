@@ -12,9 +12,9 @@ Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-
 
 If these issues occur while HTTP DCV is in place, review the following settings:
 
-- **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/), firewall rules, and other configuration [rules](/rules/) to make sure no Cloudflare settings are targeting your zone's path for `/.well-known/*`.
+- **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/) and other configuration [rules](/rules/) to make sure no Cloudflare settings are targeting your zone's path for `/.well-known/*`.
 
-- **Cloudflare WAF rules**: Review your [WAF custom rules](/waf/custom-rules/) (or firewall rules) to ensure that your rules _do not_ enable interactive challenge on the validation URL.
+- **Cloudflare WAF rules**: Review your [WAF custom rules](/waf/custom-rules/) to ensure that your rules _do not_ enable interactive challenge on the validation URL.
 
 - **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](https://support.cloudflare.com/hc/articles/200170076), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
 

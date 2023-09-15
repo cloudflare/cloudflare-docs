@@ -73,4 +73,4 @@ To create a Keyless certificate with the API, send a [`POST`](/api/operations/ke
 
 During TLS handshakes, Cloudflare’s keyless client will initiate connections to the key server hostname or IP address you specify during certificate upload. By default, the keyless client will use a destination TCP port of 2407, but this can be changed during certificate upload or by editing the certificate details after upload.
 
-Create WAF custom rules (or firewall rules) that allow your key server to accept connections from only Cloudflare. We publish our IPv4 and IPv6 addresses [via our API](/api/operations/cloudflare-i-ps-cloudflare-ip-details).
+Create WAF custom rules that allow your key server to accept connections from only Cloudflare. We publish our IPv4 and IPv6 addresses [via our API](/api/operations/cloudflare-i-ps-cloudflare-ip-details).
