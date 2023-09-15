@@ -7,7 +7,7 @@ layout: learning-module
 
 # Setup
 
-Create and evaluate firewall rules using Bot management variables.
+Create and evaluate WAF custom rules using Bot management variables.
 
 ## Objectives
 
