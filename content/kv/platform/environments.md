@@ -24,7 +24,7 @@ kv_namespaces = [
   { binding = "MY_KV", id = "a825455ce00f4f7282403da85269f8ea" }
 ]
 ```
-Using the same binding name for two different KV namespaces keeps your Worker code simple. 
+Using the same binding name for two different KV namespaces keeps your Worker code more readable. 
 
 In the `staging` environment, `MY_KV.get("KEY")` will read from the namespace ID `e29b263ab50e42ce9b637fa8370175e8`. In the `production` environment, `MY_KV.get("KEY")` will read from the namespace ID `a825455ce00f4f7282403da85269f8ea`.
 
