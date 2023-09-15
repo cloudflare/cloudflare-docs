@@ -21,7 +21,7 @@ The available rate limiting rule parameters are the following:
   - If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
   - In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
-- **With the same characteristics** {{<type>}}Array&lt;String&gt;{{</type>}}
+- <a id="characteristics"></a>**With the same characteristics** {{<type>}}Array&lt;String&gt;{{</type>}}
 
   - Field name in the API: `characteristics`.
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
@@ -54,7 +54,7 @@ The available rate limiting rule parameters are the following:
   - If you use the _Header value of_, _Cookie value of_, or _Query value of_ characteristic and the specific header/cookie/parameter name is not present in the request, the rate limiting rule may still apply to the request, depending on your counting expression. If you do not filter out such requests, there will be a specific [request counter](/waf/rate-limiting-rules/request-rate/) for requests where the header/cookie/query parameter is not present, which will be different from the request counter where the header/cookie/query parameter is present with an empty value. For example, to consider only requests where a specific HTTP header is present in the context of a specific rate limiting rule, adjust the rule counting expression so it contains something similar to the following: `and len(http.request.headers["<header_name>"]) > 0`, where `<header_name>` is the same header name used as a rate limiting characteristic.
   - You should not use _Header value of_ or _Cookie value of_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
   - For more information on the `lookup_json_string`, `lookup_json_integer`, and `substring` functions, refer to [Functions](/ruleset-engine/rules-language/functions/) in the Ruleset Engine documentation.
-  - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/).
+  - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
   - Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
   - Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/) for details.
 
