@@ -220,6 +220,15 @@ If you encounter an endless challenge loop, try disabling your browser extension
 {{</faq-item>}}
 
 {{<faq-item>}}
+{{<faq-question level=2 text="What if I receive a 401 network error when developing locally?" >}}
+{{<faq-answer>}}
+
+Cloudflare returns a 401 status as part of the Private Access Token (PAT) challenge on `…/pat/…` URLs. You can use Turnstile on `127.0.0.1` or `localhost` as a domain to allow for local development.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
 {{<faq-question level=2 text="What languages does Turnstile support?" >}}
 {{<faq-answer>}}
 
