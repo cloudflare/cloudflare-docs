@@ -4,11 +4,11 @@ title: Upstash
 ---
 # Upstash
 
-[Upstash](https://upstash.com/) is a serverless database with Redis and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.
+[Upstash](https://upstash.com/) is a serverless database with Redis\* and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.
 
 {{<render file="_database_integrations_definition.md">}}
 
-## Upstash Redis
+## Upstash for Redis
 
 To set up an integration with Upstash:
 
@@ -119,3 +119,5 @@ To set up an integration with Upstash QStash:
     ```
 
 4. Refer to the [Upstash documentation on how to receive webhooks from QStash in your Cloudflare Worker](https://docs.upstash.com/qstash/quickstarts/cloudflare-workers#3-use-qstash-in-your-handler).
+
+\* Redis is a trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Upstash is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Upstash.

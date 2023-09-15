@@ -1,6 +1,8 @@
 ---
 title: Always Online
-pcx_content_type: concept
+pcx_content_type: troubleshooting
+meta:
+    title: Always Online - Troubleshooting
 ---
 
 # Always Online

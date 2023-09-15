@@ -40,10 +40,9 @@ You can use the following custom error template to start building your page:
 </html>
 ```
 
-{{<Aside type="warning">}}
-Your custom error page must include a custom error token and cannot
-exceed 1.43 MB. Also, it must include HTML *\<head\>* and *\</head\>*
-tags.
+{{<Aside type="warning" header="Warnings">}}
+* Your custom error page must include a custom error token and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
@@ -153,7 +152,7 @@ If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rule
 
 If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom response for blocked requests](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) in the rule, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
 
-If you block countries or IP addresses with a [firewall rule](/firewall/) (now deprecated), affected visitors will get your **1000 Class Errors page**.
+If you block countries or IP addresses with a firewall rule (now deprecated), affected visitors will get your **1000 Class Errors page**.
 
 ### 1xxx errors
 
@@ -177,9 +176,10 @@ ___
 
 ## Related resources
 
--   [IP Access rules](/waf/tools/ip-access-rules/)
--   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
--   [Collapsify](https://github.com/cloudflare/collapsify)
 -   [WAF custom rules](/waf/custom-rules/)
+-   [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/)
+-   [Troubleshooting Cloudflare errors](/support/troubleshooting/cloudflare-errors/)
+-   [IP Access rules](/waf/tools/ip-access-rules/)
 -   [Rate limiting rules](/waf/rate-limiting-rules/)
+-   [Collapsify](https://github.com/cloudflare/collapsify)
 -   [Firewall rules](/firewall/cf-firewall-rules/) (deprecated)

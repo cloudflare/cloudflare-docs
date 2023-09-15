@@ -59,7 +59,7 @@ ___
 
 When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an **Action Taken** of **Managed Challenge**.
 
-You may also see Managed Challenge due to a triggered [WAF custom rule](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended) or firewall rule.
+You may also see Managed Challenge due to a triggered [WAF custom rule](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) or firewall rule.
 
 This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
 

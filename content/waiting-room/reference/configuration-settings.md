@@ -81,6 +81,34 @@ You can customize a variety of options for your waiting rooms.
       </td>
     </tr>
     <tr>
+      <td>Additional Hostnames and Paths</td>
+      <td>
+        <code>additional_routes</code>
+      </td>
+      <td>No</td>
+      <td>
+        Add additional hostnames and/or paths to your waiting room coverage.
+      </td>
+      <td>
+        Additional hostnames must be within the same zone. Hostname and path combinations must be unique per waiting room.
+      </td>
+      <td></td>
+    </tr>
+        <tr>
+      <td>Custom Cookie Suffix</td>
+      <td>
+        <code>cookie_suffix</code>
+      </td>
+      <td>Required when using <code>additional_routes</code>.</td>
+      <td>
+        Customize the suffix of your waiting room cookie. Suffix will be added to <code>_cfwaitingroom</code>.
+      </td>
+      <td>
+       Ensure your cookie name is compliant. Do not change this often.
+      </td>
+      <td></td>
+    </tr>
+    <tr>
       <td>Total active users</td>
       <td>
         <code>total_active_users</code>
@@ -134,34 +162,6 @@ You can customize a variety of options for your waiting rooms.
       <td>No</td>
       <td>
         Only available to Enterprise customers with purchase. If true, users only have <code>session duration</code> minutes to browse your site. If false, a user's session cookie is renewed on every request.
-      </td>
-      <td></td>
-    </tr>
-        <tr>
-      <td>Additional Hostnames and Paths</td>
-      <td>
-        <code>additional_routes</code>
-      </td>
-      <td>No</td>
-      <td>
-        Add additional hostnames and/or paths to your waiting room coverage.
-      </td>
-      <td>
-        API only. Additional hostnames must be within the same zone. Hostname and path combinations must be unique per waiting room.
-      </td>
-      <td></td>
-    </tr>
-        <tr>
-      <td>Custom Cookie Suffix</td>
-      <td>
-        <code>cookie_suffix</code>
-      </td>
-      <td>Required when using additional_routes.</td>
-      <td>
-        Customize the suffix of your waiting room cookie. Suffix will be added to <code>_cfwaitingroom</code>.
-      </td>
-      <td>
-        API only. Ensure your cookie name is compliant. Do not change this often.
       </td>
       <td></td>
     </tr>

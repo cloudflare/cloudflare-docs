@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Commands
 weight: 3
+meta:
+  title: Commands - Wrangler v1 (deprecated)
 ---
 
 # Commands

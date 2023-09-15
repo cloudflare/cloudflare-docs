@@ -11,7 +11,7 @@ When a visitor solves a [Cloudflare challenge](/fundamentals/get-started/concept
 
 ## How it works
 
-When a visitor successfully solves a challenge, Cloudflare sets a [`cf_clearance` cookie](/fundamentals/get-started/reference/cloudflare-cookies/#additional-cookies-used-by-the-challenge-platform) in their browser. This cookie specifies the duration your website is accessible to that visitor.
+When a visitor successfully solves a challenge, Cloudflare sets a [`cf_clearance` cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#additional-cookies-used-by-the-challenge-platform) in their browser. This cookie specifies the duration your website is accessible to that visitor.
 
 When that visitor tries to access other parts of your website, Cloudflare evaluates the cookie before presenting another challenge. If the cookie is still valid, no challenges will be shown.
 

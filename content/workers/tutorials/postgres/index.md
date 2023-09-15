@@ -48,7 +48,7 @@ To continue with this guide:
 1. Give your new Worker application a name.
 2. Select `"Hello World" Worker` for the type of application.
 3. Choose `Yes` to using TypeScript.
-4. Select `No` to deploying your application. 
+4. Select `No` to deploying your application.
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
@@ -79,7 +79,7 @@ postgresql://username:password@host:port/database
 
 Replace `username`, `password`, `host`, `port`, and `database` with the appropriate values for your PostgreSQL database.
 
-Set your connection string as a [secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
+Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -106,7 +106,7 @@ DB_PORT = "5432"
 DB_NAME = "productsdb"
 ```
 
-To set your password as a [secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_PASSWORD
@@ -178,7 +178,7 @@ Replace the existing code in your `worker.ts` file with the following code:
 ```typescript
 ---
 filename: worker.ts
---- 
+---
 export default {
   async fetch(
     request: Request,

@@ -69,10 +69,10 @@ If traffic for your domain is destined for a different port than the ones listed
 
 ## How to block traffic on additional ports
 
-To block traffic on ports other than 80 and 443, create a [WAF custom rule](/waf/custom-rules/) (or a firewall rule) for this purpose. For example, you could use a rule configuration similar to the following:
+Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing one of the following:
 
-  - Expression: `not (cf.edge.server_port in {80 443})`
-  - Action: _Block_
+- If you are using [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/), enable rule ID `100015` ("Anomaly:Port - Non Standard Port (not 80 or 443)").
+- If you are using the new [Cloudflare Web Application Firewall (WAF)](/waf/), enable rule ID `8e361ee4328f4a3caf6caf3e664ed6fe` ("Anomaly:Port - Non Standard Port (not 80 or 443)"), which is disabled by default. This rule is part of the Cloudflare Managed Ruleset.
 
 Ports 80 and 443 are the only ports compatible with:
 

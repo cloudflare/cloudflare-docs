@@ -79,6 +79,14 @@ Next, in Account Home, go to **Workers & Pages**:
 
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
 
+## Disable access to `*.pages.dev` subdomain
+
+To disable access to your project's provided `*.pages.dev` subdomain:
+
+1. Use Cloudflare Access over your previews (`*.{project}.pages.dev`). Refer to [Customize preview deployments access](/pages/platform/preview-deployments/#customizing-preview-deployments-access).
+
+2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
+
 ## Known issues
 
 ### CAA records

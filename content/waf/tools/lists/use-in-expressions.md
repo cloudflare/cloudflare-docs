@@ -18,7 +18,7 @@ To use a list in the [Expression Builder](/ruleset-engine/rules-language/express
 
     ![Selecting an IP List from the Value drop-down list when configuring the expression of a WAF custom rule](/images/fundamentals/lists/cf-open-proxies-list.png)
 
-1. Select a list from the **Value** drop-down list. Depending on your plan, you may be able to select a [Managed IP List](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists).
+1. Select a list from the **Value** drop-down list. Depending on your plan, you may be able to select a [Managed IP List](/waf/tools/lists/ip-lists/#managed-ip-lists).
 
 1. To commit your changes and enable the rule, select **Deploy**. If you are not ready to enable the rule, select **Save as Draft**.
 
@@ -40,7 +40,7 @@ Examples:
     not ip.src in $office_network
     ```
 
-* Expression matching requests from IP addresses in the Cloudflare Open Proxies [Managed IP List](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists):
+* Expression matching requests from IP addresses in the Cloudflare Open Proxies [Managed IP List](/waf/tools/lists/ip-lists/#managed-ip-lists):
 
     ```txt
     ip.src in $cf.open_proxies

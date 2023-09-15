@@ -1,0 +1,28 @@
+---
+link: "/zaraz/changelog/"
+productName: Zaraz
+entries:
+- publish_date: '2023-09-13'
+  title:
+  description: |-
+    * **Consent Management**: Add support for custom button translations.
+    * **Consent Management**: Modal stays fixed when scrolling.
+    * **Google Analytics 4 Managed Component**: `hideOriginalIP` and `ga-audiences` can be set from tool event.
+- publish_date: '2023-09-11'
+  title:
+  description: |-
+    * **Reddit Managed Component**: Support new "Account ID" formats (e.g. "ax_xxxxx").
+- publish_date: '2023-09-06'
+  title:
+  description: |-
+    * **Consent Management**: Consent cookie name can now be customized.
+- publish_date: '2023-09-05'
+  title:
+  description: |-
+    * **Segment Managed Component**: API Endpoint can be customized.
+- publish_date: '2023-08-21'
+  title:
+  description: |-
+    * **TikTok Managed Component**: Support setting `ttp` and `event_id`.
+    * **Consent Management**: Accessibility improvements.
+    * **Facebook Managed Component**: Support for using "Limited Data Use" features.

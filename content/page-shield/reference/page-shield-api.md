@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
 title: Page Shield API
-weight: 5
+weight: 6
 ---
 
 # Page Shield API
 
 You can enable and disable Page Shield, configure its settings, and fetch information about detected scripts and connections using the [Page Shield API](/api/operations/page-shield-get-page-shield-settings).
 
-For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
+To authenticate API requests you need an [API token](/fundamentals/api/get-started/create-token/). For more information on the required API token permissions, refer to [Roles and permissions](/page-shield/reference/roles-and-permissions/).
 
 {{<Aside type="note">}}
 Refer to [API deprecations](/fundamentals/api/reference/deprecations/#page-shield) for details on Page Shield API changes.
@@ -58,7 +58,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-* The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50 — scripts with a score value higher than the threshold are considered malicious.
+* The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50. Scripts with a score value lower than the threshold are considered malicious.
 
 * The API provides two separate properties for malicious script/connection categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script and connection categories](/page-shield/how-it-works/malicious-script-detection/#malicious-script-and-connection-categories).
 
@@ -395,12 +395,8 @@ All other scripts would trigger a policy violation, but those scripts would not 
 
 For more information on Content Security Policy directives and values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 
-{{<Aside type="warning">}}
-Currently, you can only create Page Shield policies containing `script-src` directives. Additionally, the supported keywords in these directives are the following:
-- `'self'`
-- `'none'`
-- `'unsafe-inline'`
-- `'unsafe-eval'`
+{{<Aside type="note">}}
+For a list of CSP directives and keywords supported by Page Shield policies, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).
 {{</Aside>}}
 
 ```bash

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: GitHub
 weight: 13
+meta:
+    title: GitHub - IdP Integration
 ---
 
 # GitHub

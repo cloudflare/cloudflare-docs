@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Reference
 weight: 2
+meta:
+    title: Reference - Speed optimizations
 ---
 
 # Reference

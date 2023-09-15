@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
 type: overview
-title: Determining the rate
+title: Request rate calculation
 weight: 12
+meta:
+  title: How Cloudflare determines the request rate
 ---
 
-# Determining the rate
+# How Cloudflare determines the request rate
 
 Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the rule characteristics.
 

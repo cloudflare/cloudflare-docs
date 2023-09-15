@@ -29,7 +29,7 @@ Any additional changes to the `development` branch will continue to update this 
 
 Any custom domains, as well as your `user-example.pages.dev` site, will not be affected by preview deployments.
 
-## Customizing preview deployments access
+## Customize preview deployments access
 
 You can use [Cloudflare Access](/cloudflare-one/policies/access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
 
