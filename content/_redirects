@@ -950,7 +950,7 @@
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 /workers/runtime-apis/headers/ /workers/platform/headers/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
-/workers/runtime-apis/kv/ /kv/learning/methods/ 301
+/workers/runtime-apis/kv/ /kv/api/ 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
