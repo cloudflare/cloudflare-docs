@@ -105,35 +105,35 @@ A Bad IP is the classification for a request that came from an IP address that i
 
 #### Country block
 
-Country block is the classification for a request from countries that were blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+Country block is the classification for a request from countries that were blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IP block (user)
 
-​​IP block (user) is the classification for a request from a specific IP address that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+​​IP block (user) is the classification for a request from a specific IP address that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IP range block (/16)
 
-A /16 IP range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+A /16 IP range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IP range block (/24)
 
-A /24 IP range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+A /24 IP range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 block (user)
 
-Requests from specific IPv6 addresses that were blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+Requests from specific IPv6 addresses that were blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 range block (/64)
 
-A /64 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+A /64 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 range block (/48)
 
-A /48 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+A /48 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 range block (/32)
 
-A /32 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/) or firewall rules.
+A /32 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### Captcha Error
 
@@ -141,7 +141,7 @@ A /32 IPv6 range that was blocked based on the user configuration set in [WAF cu
 
 #### New Captcha (user)
 
-​​New Captcha (user) is a challenge based on user configurations set for visitor’s IP in either the [Web Application Firewall (WAF)](/waf/) or [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+​​New Captcha (user) is a challenge based on user configurations set for visitor’s IP in the [Web Application Firewall (WAF)](/waf/).
 
 ### Traffic
 
@@ -167,4 +167,4 @@ The value `Tor` indicates that the request was made using a Tor browser.
 
 #### WAF Events
 
-WAF Events are events that have been triggered based on [Web Application Firewall rules](/waf/).
+WAF Events are events that have been triggered based on [Web Application Firewall (WAF) rules](/waf/).
