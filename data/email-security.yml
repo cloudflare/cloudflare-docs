@@ -4,12 +4,12 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 
 product:
   title: Area 1 Email Security
   url: /email-security/
+  group: Cloudflare One
 
 meta:
   title: Cloudflare Area 1 Email Security docs
   description: Cloudflare Area 1 Horizon is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email/security
@@ -18,3 +18,8 @@ resources:
 externals:
   - title: Cloudflare Area 1
     url: https://www.cloudflare.com/products/zero-trust/email-security/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: email-security

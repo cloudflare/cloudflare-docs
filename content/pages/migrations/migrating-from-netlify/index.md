@@ -15,17 +15,17 @@ To move your application to Cloudflare Pages, find your build command and build 
 
 In your Netlify Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub repository.
 
-![Selecting a site in the Netlify Dashboard](/pages/migrations/migrating-from-netlify/netlify-deploy-1.png)
+![Selecting a site in the Netlify Dashboard](/images/pages/migrations/netlify-deploy-1.png)
 
 Inside of your site dashboard, select **Site Settings**, and then **Build & Deploy**.
 
-![Selecting Site Settings in site dashboard](/pages/migrations/migrating-from-netlify/netlify-deploy-2.png)
+![Selecting Site Settings in site dashboard](/images/pages/migrations/netlify-deploy-2.png)
 
-![Selecting Build and Deploy in sidebar](/pages/migrations/migrating-from-netlify/netlify-deploy-3.png)
+![Selecting Build and Deploy in sidebar](//images/pages/migrations/netlify-deploy-3.png)
 
 In the **Build & Deploy** tab, find the **Build settings** panel, which will have the **Build command** and **Publish directory** fields. Save these for deploying to Cloudflare Pages. In the below image, **Build command** is `yarn build`, and **Publish directory** is `build/`.
 
-![Finding the Build command and Publish directory fields](/pages/migrations/migrating-from-netlify/netlify-deploy-4.png)
+![Finding the Build command and Publish directory fields](/images/pages/migrations/netlify-deploy-4.png)
 
 ## Migrating redirects and headers
 
@@ -45,13 +45,13 @@ In your form component, remove the `data-netlify = "true"` attribute or the Netl
 
 ## Serverless functions
 
-Netlify functions and Pages Functions share the same filesystem convention using a `functions` directory in the base of your project to handle your serverless functions. However, the syntax and how the functions are deployed differs. Pages Functions run on Cloudflare Workers, which by default operate on the Cloudflare edge network, and do not require any additional code or configuration for edge deployment.
+Netlify functions and Pages Functions share the same filesystem convention using a `functions` directory in the base of your project to handle your serverless functions. However, the syntax and how the functions are deployed differs. Pages Functions run on Cloudflare Workers, which by default operate on the Cloudflare global network, and do not require any additional code or configuration for deployment.
 
 Cloudflare Pages Functions also provides middleware that can handle any logic you need to run before and/or after your function route handler.
 
 ### Functions syntax
 
-Netlify functions export an async event handler that accepts an event and a context as arguments. In the case of Pages Functions, you will have to export a single `onRequest` function that accepts a `context` object. The `context` object contains all the information for the request such as `request`, `env`, `params`, and returns a new Response. Learn more about [writing your first function](/pages/platform/functions/#writing-your-first-function)
+Netlify functions export an async event handler that accepts an event and a context as arguments. In the case of Pages Functions, you will have to export a single `onRequest` function that accepts a `context` object. The `context` object contains all the information for the request such as `request`, `env`, `params`, and returns a new Response. Learn more about [writing your first function](/pages/platform/functions/get-started/)
 
 Hello World with Netlify functions:
 

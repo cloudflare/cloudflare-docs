@@ -1,0 +1,11 @@
+{
+    "title": "Bot management",
+    "path": "/learning-paths/bot-management/",
+    "priority": 3,
+    "description": "Stop bad bots with threat intelligence at scale.",
+    "products": [
+      "Bots",
+      "WAF"
+    ],
+    "product_group": "Application security"
+}

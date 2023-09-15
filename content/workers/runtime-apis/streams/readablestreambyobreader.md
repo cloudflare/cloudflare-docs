@@ -24,19 +24,23 @@ const { readable, writable } = new TransformStream();
 const reader = readable.getReader({ mode: 'byob' });
 ```
 
+---
+
 ## Methods
 
 {{<definitions>}}
 
-- {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
+- {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} : {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
   - Returns a promise with the next available chunk of data read into a passed-in buffer.
 
-- {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
+- {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} : {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
   - Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read.
 
 {{</definitions>}}
+
+---
 
 ## Common issues
 
@@ -50,7 +54,9 @@ In practice, the Workers team has found that `read` typically fills only 1% of t
 
 {{</Aside>}}
 
+---
+
 ## Related resources
 
-- [Using Streams](/workers/learning/using-streams/)
+- [Streams](/workers/runtime-apis/streams/)
 - [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)

@@ -3,6 +3,7 @@ pcx_content_type: faq
 title: Logpush
 weight: 2
 meta:
+    title: Logpush FAQ
     description: Review frequently asked questions about Logpush.
 ---
 
@@ -24,7 +25,11 @@ No. **Logpush** only pushes the logs once as they become available and is unable
 
 ## I have reconfigured the job to a new destination, but why am I still receiving the logs at the old destination?
 
-Typically there will be a delay no greater than 15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic. 
+Although we cannot provide a precise time, we estimate that it will take 10-15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic.
+
+## If I add new fields to an existing Logpush job, how long will it take for the change to become effective? 
+
+We cannot provide a precise time, but we estimate that the new fields will show up within 10-15 minutes.
 
 ## Why am I receiving a validating destination error while setting up a Splunk job? 
 
@@ -62,13 +67,13 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 
 Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
 
-## How can I update my Logpush job from v1 to v2?
+## How can I upgrade my Logpush job from v1 to v2?
 
-Simply updating a Logpush job does not push the job from v1 to v2. To upgrade a job to v2, you must use the API. You will need to use the `logstream` parameter and set it to true to upgrade to v2:
+Simply updating a Logpush job does not push the job from v1 to v2. To upgrade a job to v2, you must use the API. You will need to use the `logstream` parameter and set it to true:
 
 ```bash
 $ curl -sX PUT https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID> \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \
--d '{"logstream":true}' \
+-d '{"logstream":true}'
 ```

@@ -15,7 +15,6 @@ Follow this tutorial to start testing and deploying zone configuration changes w
 ## Step 2 (optional) - Create additional environments
 
 {{<render file="_enable-default-creation.md">}}
-<br/>
 
 These environments each serve a specific purpose and are accessed differently:
 {{<render file="_environment-defaults.md">}}

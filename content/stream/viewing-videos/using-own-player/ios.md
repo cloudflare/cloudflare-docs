@@ -1,6 +1,7 @@
 ---
 title: iOS
 weight: 2
+pcx_content_type: configuration
 ---
 
 # iOS

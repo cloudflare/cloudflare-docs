@@ -20,7 +20,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
+- **Name**: A subdomain or the zone apex (`@`), which must:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
@@ -96,7 +96,7 @@ header: Response
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
+- **Name**: A subdomain or the zone apex (`@`), which must:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
@@ -107,6 +107,8 @@ These records include the following fields:
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 You can use `CNAME` records to point to other `CNAME` records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
+
+Cloudflare uses a process called `CNAME` flattening to deliver better performance. This process supports a few features and can interact with [different setups that depend on `CNAME` records](/dns/cname-flattening/#aspects-to-keep-in-mind). Refer to the [`CNAME` flattening section](/dns/cname-flattening/) to learn more about this.
 
 #### Example API call
 
@@ -190,7 +192,7 @@ A mail exchange (MX) record is required to deliver email to a mail server.
 A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptographically signing emails:
 
 - [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
-- [Create a DKIM record](/dns/manage-dns-records/how-to/email-records/#configure-email-security-records)
+- [Create a DKIM record](/dmarc-management/security-records/#create-security-records)
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -199,7 +201,7 @@ A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptog
 A Sender Policy Framework (SPF) record lists authorized IP addresses and domains that can send email on behalf of your domain.
 
 - [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
-- [Create an SPF record](/dns/manage-dns-records/how-to/email-records/#configure-email-security-records)
+- [Create an SPF record](/dmarc-management/security-records/#create-security-records)
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -208,7 +210,7 @@ A Sender Policy Framework (SPF) record lists authorized IP addresses and domains
 A Domain-based Message Authentication Reporting and Conformance (DMARC) record helps generate aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
 - [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
-- [Create a DMARC record](/dns/manage-dns-records/how-to/email-records/#configure-email-security-records)
+- [Create a DMARC record](/dmarc-management/security-records/#create-security-records)
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -220,7 +222,7 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 
 A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
 
-At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or a [Cloudflare for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
 You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
@@ -234,7 +236,7 @@ The **Content** for TXT records at Cloudflare must be 2048 characters or less.
 
 ### CAA
 
-A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/custom-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
+A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -331,7 +333,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/additional-options/custom-nameservers/) or [delegating subdomains outside of Cloudflare](https://support.cloudflare.com/hc/articles/360021357131).
+You only need to add NS records when you are [creating custom or vanity nameservers](/dns/additional-options/custom-nameservers/) or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -339,6 +341,6 @@ You only need to add NS records when you are [creating custom or vanity nameserv
 
 [DS and DNSKEY](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) records help implement DNSSEC, which cryptographically signs DNS records to prevent domain spoofing.
 
-Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/dns/additional-options/dnssec/).
+Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/dns/dnssec/).
 
 {{<render file="_api-field-definitions.md">}}

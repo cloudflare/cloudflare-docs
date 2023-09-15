@@ -17,7 +17,7 @@ Maximize application performance and availability
 
 Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
 
-Free, Pro, and Business users can enable Load Balancing in their [Cloudflare dashboard](https://dash.cloudflare.com/). Accounts with at least one **Enterprise** plan should contact their account team.
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ---
 

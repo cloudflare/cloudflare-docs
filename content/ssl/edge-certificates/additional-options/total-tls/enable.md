@@ -8,7 +8,7 @@ meta:
 
 # Enable Total TLS
 
-To enable Total TLS - which issue individual certificates for every proxied hostname - follow these instructions:
+To enable Total TLS - which issues individual certificates for your proxied hostnames - follow these instructions:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -23,15 +23,15 @@ To enable Total TLS in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To enable Total TLS with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/total-tls-enable-or-disable-total-tls) request with the `enabled` parameter set to your desired setting (`true` or `false`).
+To enable Total TLS with the API, send a [`PATCH`](/api/operations/total-tls-enable-or-disable-total-tls) request with the `enabled` parameter set to your desired setting (`true` or `false`).
 
 You can also specify a desired certificate authority by adding a value to the `certificate_authority` parameter.
  
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
+## Aspects to consider
 
-If you select a preferred certificate authority, you cannot change your certificate authority without first disabling Total TLS.
+* If you select a preferred certificate authority, you cannot change your certificate authority without first disabling Total TLS.
 
-{{</Aside>}}
+* {{<render file="_total-tls-character-limitation.md">}}

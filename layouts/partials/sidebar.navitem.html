@@ -28,7 +28,13 @@
       <span class="DocsSidebar--nav-link-highlight"></span>
       <span class="DocsSidebar--nav-link-text">{{ .Context.Title }}</span>
       {{- with .Context.Params.external_link }}
+      {{- if strings.HasPrefix . "/api/" -}}
+      <span class="apiSidebarIcon">
+      {{- partialCached "api.icon" . -}}
+      </span>
+      {{- else -}}
       {{- partialCached "external.icon" . -}}
+      {{- end -}}
       {{- end -}}
     </a>
 

@@ -21,7 +21,7 @@ Once you [add a domain](/fundamentals/get-started/setup/add-site/) to Cloudflare
     - Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
     - If your domain is on the Free plan, it will be deleted automatically if not activated within 28 days. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed or the domain is activated or [removed from Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/).
 
-- **Active**: Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-setup/setup/#step-3--update-your-nameservers) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#step-2--verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
+- **Active**: Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-setup/setup/#update-your-nameservers) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
 
 - **Moved**: Your domain has failed multiple DNS checks, indicating that your authoritative DNS no longer points to Cloudflare nameservers. The domain will be deleted automatically after 7 days, unless there is an active plan subscription.
 
@@ -31,7 +31,7 @@ If your domain's status changes, you will receive an email at the address associ
 
 ## Domain removal
 
-If domains remain in the **Pending Nameserver Update** or **Moved** status for too long, Cloudflare automatically [removes them](https://support.cloudflare.com/hc/articles/221327488) from your account and the Cloudflare network.
+If domains remain in the **Pending Nameserver Update** or **Moved** status for too long, Cloudflare automatically [removes them](/dns/zone-setups/troubleshooting/domain-deleted/) from your account and the Cloudflare network.
 
 You can also [manually remove a domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
 

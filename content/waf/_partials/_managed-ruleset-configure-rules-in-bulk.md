@@ -9,7 +9,7 @@ To configure several rules at once in the Browse Managed Ruleset interface:
 
 1. Enter search terms in the available input to find the rules you want to configure. You can search for tags.
 
-    ![Example of filtering rules by the wordpress tag in the Browse rules page](/waf/static/waf-selected-tag.png)
+    ![Example of filtering rules by the wordpress tag in the Browse rules page](/images/waf/waf-selected-tag.png)
 
 2. In the results list, select the checkboxes for all the rules you want to configure.
 
@@ -17,7 +17,7 @@ To configure several rules at once in the Browse Managed Ruleset interface:
 
 3. Update one or more fields for the selected rules using the drop-down lists displayed in the top right corner of the table.
 
-    ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/waf/static/waf-modify-selected-rules.png)
+    ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/images/waf/waf-modify-selected-rules.png)
 
 4. Select **Next**.
 

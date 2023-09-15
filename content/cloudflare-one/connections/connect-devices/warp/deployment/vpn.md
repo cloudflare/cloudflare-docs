@@ -8,7 +8,7 @@ weight: 10
 
 We understand that you may be required to run a legacy third-party VPN alongside the Cloudflare WARP client. Because the WARP client and third-party VPN both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over network traffic.
 
-For the most stable and consistent connection, we recommend using Cloudflare Tunnel to [connect your private network or individual applications](/cloudflare-one/connections/connect-apps/private-net/) to our global edge network. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
+For the most stable and consistent connection, we recommend using Cloudflare Tunnel to [connect your private network or individual applications](/cloudflare-one/connections/connect-networks/private-net/) to our global edge network. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
 
 ## Requirements
 
@@ -23,8 +23,8 @@ The Cloudflare WARP client is compatible with most third-party VPN configuration
 We recommend the following workflow when configuring WARP alongside a third-party VPN service.
 
 1. Disable DNS configuration in your third-party VPN.
-2. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
-3. In your Split Tunnels configuration, [add the following IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-an-ip-address) to your Exclude list:
+2. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) is set to **Exclude IPs and domains**.
+3. In your Split Tunnels configuration, [add the following IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to your Exclude list:
 
     * The IP address of the server your third-party VPN connects to.
     * The private IP address space your third-party VPN exposes.

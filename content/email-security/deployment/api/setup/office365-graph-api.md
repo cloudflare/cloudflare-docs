@@ -4,15 +4,14 @@ pcx_content_type: tutorial
 weight: 4
 meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
+updated: 2023-07-31
 ---
 
-{{<beta>}}Office 365 Graph API set up with Area 1{{</beta>}}
+# Office 365 Graph API set up with Area 1
 
 For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph API is quick and easy. The following email flow shows how this works:
 
-![Email flow when setting up Area 1 with the Microsoft Graph API](/email-security/static/deployment/api-setup/ms-graph/ms-graph.png)
-
-{{<Aside type="note">}}For this beta release, scanning Microsoft 365 domains via the Microsoft Graph API is only available for onboarding new domains. This option will not show up on domains already onboarded on your Area 1 dashboard. If you want to use Microsoft Graph API with a domain already set up, you will need to delete it and add it again.{{</Aside>}}
+![Email flow when setting up Area 1 with the Microsoft Graph API](/images/email-security/deployment/api-setup/ms-graph/ms-graph.png)
 
 ## User roles
 
@@ -40,7 +39,7 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 
     <div class="medium-img">
     
-    ![Select Authorize access to give the correct permissions do Area 1](/email-security/static/deployment/api-setup/ms-graph/step5.png)
+    ![Select Authorize access to give the correct permissions do Area 1](/images/email-security/deployment/api-setup/ms-graph/step5.png)
 
     </div>
 
@@ -58,13 +57,13 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 
     <div class="medium-img">
     
-    ![Now that both authorizations are complete, select Publish domain](/email-security/static/deployment/api-setup/ms-graph/step11.png)
+    ![Now that both authorizations are complete, select Publish domain](/images/email-security/deployment/api-setup/ms-graph/step11.png)
 
     </div>
 
 Your authorized domain will show up in **Email Configuration** > **Domains & Routing** > **Domains**, with messages about the progress of directory syncing between Office 365 and Area 1.
 
-![Now that both authorizations are complete, select Publish domain](/email-security/static/deployment/api-setup/ms-graph/domain-sync-state.png)
+![Now that both authorizations are complete, select Publish domain](/images/email-security/deployment/api-setup/ms-graph/domain-sync-state.png)
 
 ## Azure applications
 

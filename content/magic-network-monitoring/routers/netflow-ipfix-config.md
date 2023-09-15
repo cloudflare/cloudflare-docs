@@ -2,6 +2,8 @@
 title: Netflow/IPFIX configuration
 pcx_content_type: how-to
 weight: 3
+meta:
+    description: A step-by-step configuration guide for exporting NetFlow or IPFIX data to Cloudflare’s network.
 ---
 
 # Netflow/IPFIX configuration
@@ -24,5 +26,11 @@ Magic Network Monitoring supports the NetFlow v5, NetFlow v9, and IPFIX network 
     - `match transport source-port`
     - `match transport destination-port`
     - `match interface input`
+    - `collect transport tcp flag`
+    - `collect counter packets long`
+    - `collect counter bytes long`
+    - `collect flow sampler`
+    - `collect timestamp sys-uptime first`
+    - `collect timestamp sys-uptime last`
 
 5. Confirm your router's Netflow template. It should not contain duplicated fields.

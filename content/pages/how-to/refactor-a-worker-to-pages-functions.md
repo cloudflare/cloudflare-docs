@@ -12,7 +12,7 @@ In this guide, you will learn how to refactor a Worker made to intake form submi
 
 {{<Aside type= "note">}}
 
-You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your Worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
+You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/advanced-mode/) requires writing your Worker with [Module syntax](/workers/learning/migrate-to-module-workers/). 
 
 However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
 
@@ -20,9 +20,9 @@ However, when using the `_worker.js` file in Pages, the entire `/functions` dire
 
 ## General refactoring steps 
 
-1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your Function.
+1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/platform/functions/get-started/) to select the appropriate method for your Function.
 2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
-3. Use middleware to handle logic that must be executed before or after route handlers. Learn more about [using Middleware](/pages/platform/functions/#adding-middleware) in the Functions documentation.
+3. Use middleware to handle logic that must be executed before or after route handlers. Learn more about [using Middleware](/pages/platform/functions/middleware/) in the Functions documentation.
 
 ## Background
 
@@ -42,7 +42,7 @@ An [Airtable](https://airtable.com/) is a low-code platform for building collabo
 
 [Airtable](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [Wrangler](/workers/wrangler/install-and-update/) to initialize a new Worker within a specific folder or at the root of your application. 
 
-This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's edge network after you [configure your project for deployment](/workers/get-started/guide/#7-configure-your-project-for-deployment). Refer to the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
+This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's global network after you [configure your project for deployment](/workers/wrangler/configuration/). Refer to the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
 
 The following code block shows an example of a Worker that handles Airtable form submission.
 
@@ -126,7 +126,7 @@ export async function onRequestPost({ request, env }) {
 
 ```
 
-Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `onRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your function.
+Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `onRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/platform/functions/get-started/) to select the appropriate method for your function.
 
 The above code takes a `request` and `env` as arguments which pass these properties down to the `submitHandler` function, which remains unchanged from the [original Worker](#handle-form-entries-with-airtable-and-workers). However, because Functions allow you to specify the HTTPS request type, you can remove the `request.method` check in your Worker. This is now handled by Pages Functions by naming the `onRequest` handler.
 
@@ -187,7 +187,7 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 };
 ```
 
-You can test your Function [locally using Wrangler](/pages/platform/functions/#develop-and-preview-locally). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
+You can test your Function [locally using Wrangler](/pages/platform/functions/local-development/). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
 
 ## Related resources
 

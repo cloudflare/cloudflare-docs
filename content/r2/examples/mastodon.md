@@ -1,11 +1,12 @@
 ---
-title: Using R2 with Mastodon
-summary: Learn how to configure Mastodon's object storage to use R2.
+title: Mastodon
 pcx_content_type: tutorial
-weight: 1001
+updated: 2023-01-31
 ---
+
 # Use R2 with Mastodon
-[Mastodon](https://joinmastodon.org/) is a popular [fediverse](https://en.wikipedia.org/wiki/Fediverse) software. This guide will explain how to configure R2 to be the object storage for a self hosted Mastodon instance, for either [a new instance](#setting-up-a-new-instance) or [an existing instance](#migration-to-r2).
+
+[Mastodon](https://joinmastodon.org/) is a popular [fediverse](https://en.wikipedia.org/wiki/Fediverse) software. This guide will explain how to configure R2 to be the object storage for a self hosted Mastodon instance, for either [a new instance](#set-up-a-new-instance) or [an existing instance](#migrate-to-r2).
 
 ## Set up a new instance
 
@@ -42,25 +43,25 @@ While configuring your Mastodon instance based on the official [configuration fi
 S3_ENABLED=true
 S3_ALIAS_HOST={{mastodon-files.example.com}}                  # Change to the hostname determined in step 1
 S3_BUCKET={{your-bucket-name}}                                # Change to the bucket name set in step 2
-S3_ENDPOINT=https://{{unique-id}}.r2.cloudflarestorage.com/   # Change the {{unique-id}} to the part of S3 API retrived in step 2
-AWS_ACCESS_KEY_ID={{your-access-key-id}}                      # Change to the Access Key ID retrived in step 2
-AWS_SECRET_ACCESS_KEY={{your-secret-access-key}}              # Change to the Secret Access Key retrived in step 2
+S3_ENDPOINT=https://{{unique-id}}.r2.cloudflarestorage.com/   # Change the {{unique-id}} to the part of S3 API retrieved in step 2
+AWS_ACCESS_KEY_ID={{your-access-key-id}}                      # Change to the Access Key ID retrieved in step 2
+AWS_SECRET_ACCESS_KEY={{your-secret-access-key}}              # Change to the Secret Access Key retrieved in step 2
 S3_PROTOCOL=https
 S3_PERMISSION=private
 ```
 
 After configuration, you can run your instance. After the instance is running, upload a media attachment and verify the attachment is retrieved from the hostname set above. When navigating back to the bucket's page in R2, you should see the following structure.
 
-![Mastodon bucket structure after instance is set up and running](/r2/static/mastodon-r2-bucket-structure.png)
+![Mastodon bucket structure after instance is set up and running](/images/r2/mastodon-r2-bucket-structure.png)
 
 ## Migrate to R2
 
-If you already have an instance running, you can migrate the media files to R2 and benefit from [no egress cost](/r2/platform/pricing/).
+If you already have an instance running, you can migrate the media files to R2 and benefit from [no egress cost](/r2/pricing/).
 
 ### 1. Set up an R2 bucket and start file migration
 
 1. (Optional) To minimize the number of migrated files, you can use the [Mastodon admin CLI](https://docs.joinmastodon.org/admin/tootctl/#media) to clean up unused files.
-2. Set up an R2 bucket ready for file migration by following steps 1 and 2 from [Setting up a new instance](#setting-up-a-new-instance) section above.
+2. Set up an R2 bucket ready for file migration by following steps 1 and 2 from [Setting up a new instance](#set-up-a-new-instance) section above.
 3. Migrate all the media files to R2. Refer to the [examples](/r2/examples/) provided to connect various providers together. If you currently host these media files locally, you can use [`rclone`](/r2/examples/rclone/) to upload these local files to R2.
 
 ### 2. (Optional) Set up file path redirects
@@ -71,7 +72,7 @@ If you had the media files hosted locally, you will likely need to set up redire
 
 [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) are available for all plans. Refer to [Create Bulk Redirects in the dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/) for more information.
 
-![List of Source URLs and their new Target URLs as part of Bulk Redirects](/r2/static/mastodon-r2-bulk-redirects.png)
+![List of Source URLs and their new Target URLs as part of Bulk Redirects](/images/r2/mastodon-r2-bulk-redirects.png)
 
 ### 3. Verify bucket and redirects
 
@@ -79,6 +80,6 @@ Depending on your migration plan, you can verify if the bucket is accessible pub
 
 ### 4. Finalize migration
 
-Your instance may be still running during migration, and during migration, you likely have new media files created either through direct uploads or fetched from other federated instances. To upload only the newly created files, you can use a program like [`rclone`](/r2/examples/rclone/). Note that when re-running the sync program, all existing files will be checked using at least [Class B operations](/r2/platform/pricing/#class-b-operations).
+Your instance may be still running during migration, and during migration, you likely have new media files created either through direct uploads or fetched from other federated instances. To upload only the newly created files, you can use a program like [`rclone`](/r2/examples/rclone/). Note that when re-running the sync program, all existing files will be checked using at least [Class B operations](/r2/pricing/#class-b-operations).
 
 Once all the files are synced, you can restart your Mastodon instance with the new object storage configuration as mentioned in [step 3](#3-configure-r2-for-mastodon) of Set up a new instance.

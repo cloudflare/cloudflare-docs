@@ -9,4 +9,4 @@ meta:
 
 {{<dynamic-learning-path-header file="optimize-site-speed.json">}}
 
-{{<dynamic-learning-path>}}
+<vue-component name="DynamicLearningPath"/>

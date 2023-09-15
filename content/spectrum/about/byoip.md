@@ -22,7 +22,7 @@ BYOIP does not come standard with Spectrum. To enable it, contact your account t
 
 ## Assign an IP address
 
-To use an IP, it must be assigned to a Spectrum app to create the appropriate A (IPv4) or AAAA (IPv6) records. This is done by specifying one or more IP addresses when creating an application through the API. In addition, the DNS "type" field must be updated to "ADDRESS" in order to create a Spectrum app using BYOIP.
+To use an IP, it must be assigned to a Spectrum app to create the appropriate A (IPv4) or AAAA (IPv6) records. This is done by specifying one or more IP addresses when creating an application through the API. In addition, you must update the DNS `"type"` field to `"ADDRESS"` to create a Spectrum app using BYOIP.
 
 ```json
 {
@@ -75,4 +75,4 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \
     }'
 ```
 
-(replace ZONEID, USER_EMAIL and API_KEY with your actual values)
+Replace `ZONEID`, `USER_EMAIL`, and `API_KEY` with your actual values.

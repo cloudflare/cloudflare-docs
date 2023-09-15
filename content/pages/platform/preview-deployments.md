@@ -5,13 +5,17 @@ title: Preview deployments
 
 # Preview deployments
 
-Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments, navigate from the **Account Home** > **Pages** and select your project.
+Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your project and find the deployment you would like to view.
 
 Every time you open a new pull request on your GitHub repository, Cloudflare Pages will create a unique preview URL, which will stay updated as you continue to push new commits to the branch. This is only true when pull requests originate from the repository itself.
 
 For example, if you have a repository called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](/pages/platform/custom-domains) attached to the project.
 
-![User-example repository's deployment status and preview](/pages/platform/media/preview-deployment-mergedone.png)
+![User-example repository's deployment status and preview](/images/pages/platform/preview-deployment-mergedone.png)
 
 While developing `user-example`, you may push new changes to a `development` branch, for example.
 
@@ -19,32 +23,32 @@ In this example, after you create the new `development` branch, Pages will autom
 
 Each new branch you create will receive a new, randomly-generated hash in front of your `pages.dev` subdomain.
 
-![User-example repository's newly generated preview deployment link and status](/pages/platform/media/preview-deployment-generated.png)
+![User-example repository's newly generated preview deployment link and status](/images/pages/platform/preview-deployment-generated.png)
 
 Any additional changes to the `development` branch will continue to update this `373f31e2.user-example.pages.dev` preview address until the `development` branch is merged with the `main` production branch.
 
 Any custom domains, as well as your `user-example.pages.dev` site, will not be affected by preview deployments.
 
-## Customizing preview deployments access
+## Customize preview deployments access
 
-You can use [Cloudflare Access](https://www.cloudflare.com/teams-access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
+You can use [Cloudflare Access](/cloudflare-one/policies/access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
 
-Once enabled, you can [set up a multi-user account](https://support.cloudflare.com/hc/en-us/articles/205065067-Setting-up-Multi-User-accounts-on-Cloudflare) to allow other members of your team to view preview deployments.
+Once enabled, you can [set up a multi-user account](/fundamentals/account-and-billing/members/) to allow other members of your team to view preview deployments.
 
-By default, preview deployments are enabled and available publicly. In your project's settings, you can require visitors to authenticate using [Cloudflare Access](https://www.cloudflare.com/teams-access/) to be able to view preview deployment. This allows you to lock down access to these preview deployments to your teammates, organization, or anyone else you specify via [Access policies](/cloudflare-one/policies/).
+By default, preview deployments are enabled and available publicly. In your project's settings, you can require visitors to authenticate to view preview deployment. This allows you to lock down access to these preview deployments to your teammates, organization, or anyone else you specify via [Access policies](/cloudflare-one/policies/).
 
 To protect your preview deployments behind Cloudflare Access:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. From Account Home, select **Pages**.
-3. Select your Pages project.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
 4. Go to **Settings** > **General** > and select **Enable access policy**.
 
 Note that this will only protect your preview deployments (for example, `373f31e2.user-example.pages.dev` and every other randomly generated preview link) and not your `*.pages.dev` domain or custom domain.
 
 {{<Aside note="warning">}}
 
-If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enabling-access) for instructions.
+If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enabling-access-on-your-pagesdev-domain) for instructions.
 
 {{</Aside>}}
 

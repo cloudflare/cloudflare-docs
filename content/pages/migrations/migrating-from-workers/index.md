@@ -18,7 +18,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 
 {{<Aside type="note">}}
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker).
+When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-es-modules).
 
 {{</Aside>}}
 
@@ -36,7 +36,7 @@ When moving to Cloudflare Pages, remove the Workers application and any associat
 
 ## Migrate headers and redirects
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentation](/pages/platform/redirects/). 
 
 {{<Aside type="note">}}
 
@@ -46,7 +46,7 @@ Make sure that static redirects are before dynamic redirects in your `_redirects
 
 {{</Aside>}}
 
-In addition to an `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
+In addition to a `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/platform/redirects/#surpass-_redirects-limits), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
 
 Your custom headers can also be moved into a `_headers` file in your output directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
@@ -57,7 +57,7 @@ Your custom headers can also be moved into a `_headers` file in your output dire
 
 After you have recorded your **build command** and **build directory** in a separate location, remove everything else from your application, and push the new version of your project up to your git provider. Follow the [Get started guide](/pages/get-started/) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
-If you choose to use a custom domain for your Pages project, you can set it to the same custom domain as your currently deployed Workers application. Follow the steps for [adding a custom domain](/pages/get-started/#adding-a-custom-domain) to your Pages project. 
+If you choose to use a custom domain for your Pages project, you can set it to the same custom domain as your currently deployed Workers application. Follow the steps for [adding a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) to your Pages project. 
 
 {{<Aside type="note">}}
 
@@ -67,12 +67,16 @@ Before you deploy, you will need to delete your old Workers routes to start send
 
 ### Using Direct Upload
 
-If your Workers site has its custom build settings, you can bring your prebuilt assets to Pages with [Direct Uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare edge network by either using the [Wrangler CLI](/workers/wrangler/install-and-update/) or the drag and drop option. 
+If your Workers site has its custom build settings, you can bring your prebuilt assets to Pages with [Direct Uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare global network by either using the [Wrangler CLI](/workers/wrangler/install-and-update/) or the drag and drop option. 
 
-These options allow you to create and name a new project from the CLI or dashboard. After your project deployment is complete, you can set the custom domain by following the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) steps to your Pages project. 
+These options allow you to create and name a new project from the CLI or dashboard. After your project deployment is complete, you can set the custom domain by following the [adding a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) steps to your Pages project. 
 
 ## Cleaning up your old application and assigning the domain
 
-After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your **Workers project** > **Settings** > **Delete**.
+After you have deployed your Pages application, to delete your Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+3. Go to **Manage service** > **Delete**.
 
 With your Workers application removed, requests will go to your Pages application. You have successfully migrated your Workers Sites project to Cloudflare Pages by completing this guide.

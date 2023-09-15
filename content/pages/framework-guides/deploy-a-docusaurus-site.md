@@ -17,45 +17,17 @@ $ npx create-docusaurus@latest my-website classic
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). When creating your repository, do not select to add a README file, .gitignore template or a license as these selections will cause the push to GitHub to fail.
-
-In your terminal, `cd` into your new Docusaurus project directory and run:
-
-```sh
-# Set up the local repository
-$ git init
-$ git remote add origin <YOUR_NEW_GITHUB_REPOSITORY_URL>
-$ git branch -M main
-
-# Commit all initial files
-$ git add -A
-$ git commit -m "<COMMIT_MESSAGE>"
-
-# Send commit to new GitHub repository
-$ git push -u origin main
-```
-
-You have successfully created a GitHub repository and pushed your Docusaurus project to that repository.
+{{<render file="_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Docusaurus* as your **Framework preset**. Your selection will provide the following information.
 
-{{<table-wrap>}}
-
-| Configuration option | Value                       |
-| -------------------- | --------------------------- |
-| Production branch    | `main`                      |
-| Build command        | `npm run build`             |
-| Build directory      | `build`                     |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="docusaurus">}}
 
 4. Go to **Environment variables (advanced)** > **Add variable** > create a `NODE_VERSION` variable with a value of `16`.
 
@@ -65,6 +37,4 @@ Every time you commit new code to your Docusaurus site and push those changes to
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-## Related resources
-
-By completing this guide, you have successfully deployed your Docusaurus site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Docusaurus">}}

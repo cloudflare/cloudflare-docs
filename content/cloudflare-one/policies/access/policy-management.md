@@ -12,7 +12,7 @@ Access policies are properties of applications. When setting up an Access applic
 
 To create an Access policy for an existing application:
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Locate the application for which you want to create the policy and select **Edit**.
 3. Select **Add a policy**.
 4. Enter a **Policy name**. This name will identify your policy in the list of application policies.
@@ -28,7 +28,7 @@ Your new policy is now in effect.
 
 To make changes to an existing policy:
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Locate the application for which you want to change the policies and select **Edit**. You will see a list of existing policies.
 3. Locate the policy you want to update and select **Edit**.
 4. Once you have made the necessary changes, select **Save policy**.
@@ -40,7 +40,7 @@ The updated policy is now in effect.
 
 To delete an Access policy:
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Locate the application for which you want to delete the policy and select **Edit**. You will see a list of existing policies.
 3. Locate the policy you want to delete and select **Delete**.
 4. A pop-up message will ask you to confirm your decision to delete the policy. Select **Delete**.
@@ -54,7 +54,7 @@ You can test your policies against an existing user identity to see if they woul
 
 To check if a user has access to an application:
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Locate the application you want to test and select **Edit**.
 3. Select **Test your policies**.
 4. Enter the user's email address and select **Check user**.

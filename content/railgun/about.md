@@ -6,6 +6,8 @@ weight: 2
 
 # About
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 One of the major advantages of using Cloudflare is that cacheable content (such as images, JavaScript, CSS, and HTML) is both cached by Cloudflare and delivered from our data centers around the world. Because Cloudflare has data centers covering the entire globe, cached content gets delivered quickly to web surfers wherever they are (and overcomes latency problems).
 
 But only about 66% of content is cacheable. The other 34% must be obtained from the real origin web server. Railgun overcomes this problem by using a scheme that is able to cache dynamically generated or personalized web pages dramatically reducing bandwidth used and improving download times.
@@ -22,7 +24,7 @@ Railgun works by recognizing that uncacheable web pages do not change very rapid
 
 CNN sets the caching on this page to 60 seconds. After one minute it is necessary to download the entire page again. But looking inside the page itself not much has changed. In fact, the change between versions is on order of hundreds of bytes out of almost 100 KB. Here is a screenshot of one of the small binary differences between the CNN home page at five minute intervals. The yellow bytes have changed, the rest have not:
 
-![Binary code that makes CNN homepage](/railgun/static/cnn.webp)
+![Binary code that makes CNN homepage](/images/railgun/cnn.webp)
 
 Experiments at Cloudflare have revealed similar change values across the web. For example, Reddit changes by about 2.15% over five minutes and 3.16% over an hour. The New York Times home page changes by about 0.6% over five minutes and 3% over an hour. BBC News changes by about 0.4% over five minutes and 2% over an hour.
 

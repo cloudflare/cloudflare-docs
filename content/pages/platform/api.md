@@ -5,7 +5,7 @@ title: REST API
 
 # REST API
 
-The [Pages API](https://developers.cloudflare.com/api/operations/pages-project-get-projects) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/pages/platform/deploy-hooks/) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
+The [Pages API](/api/operations/pages-project-get-projects) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/pages/platform/deploy-hooks/) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
 ## How to use the API
 
@@ -27,7 +27,7 @@ $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/project
   -H 'Authorization: Bearer {API_token}'
 ```
 
-Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. You can find your `account_id` in the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers).
+Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
 
 ## Examples
 
@@ -56,7 +56,7 @@ export default {
 }
 ```
 
-After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to [Cron Triggers](/workers/platform/triggers/cron-triggers/) for more details.
+After you have deployed the JavaScript Worker, set a cron trigger in your Worker to run this script periodically. Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more details.
 
 ### Deleting old deployments after a week
 
@@ -96,7 +96,7 @@ export default {
 }
 ```
 
-After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/triggers/cron-triggers/) for more details.
+After you have deployed the JavaScript Worker, you can set a cron trigger in your Worker to run this script periodically. Refer to the [Cron Triggers guide](/workers/configuration/cron-triggers/) for more details.
 
 ### Sharing project information
 
@@ -160,6 +160,6 @@ export default {
 
 ## Related resources
 
-- [Pages API Docs](https://developers.cloudflare.com/api/operations/pages-project-get-projects)
+- [Pages API Docs](/api/operations/pages-project-get-projects)
 - [Workers Getting Started Guide](/workers/get-started/guide/)
-- [Workers Cron Triggers](/workers/platform/triggers/cron-triggers/)
+- [Workers Cron Triggers](/workers/configuration/cron-triggers/)

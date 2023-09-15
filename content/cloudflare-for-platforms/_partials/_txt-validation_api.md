@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You can access these tokens using the API with the [`GET` custom hostnames endpoint](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-list-custom-hostnames).
+You can access these tokens using the API with the [`GET` custom hostnames endpoint](/api/operations/custom-hostname-for-a-zone-list-custom-hostnames).
 
 For example, here are two tokens highlighted in the API response for a **wildcard** custom hostname.
 

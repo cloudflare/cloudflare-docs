@@ -60,7 +60,7 @@ WebP         | N/A                                               | 2,560 pixels 
 
 All images have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
-GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
+GIF animations are limited to a total of 50 megapixels (the sum of sizes of all frames). Animations that exceed this will be passed through unchanged without applying any transformations. Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
 
 {{<Aside type="warning" header="Important">}}
 SVG files are passed through without resizing. This format is inherently scalable and does not need resizing. Cloudflare does not support the HEIC (HEIF) format and does not plan to support it.
@@ -68,3 +68,12 @@ SVG files are passed through without resizing. This format is inherently scalabl
 AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
 
 {{</Aside>}}
+
+### Progressive JPEG
+
+While you can use the `format=jpeg` option to generate images in an interlaced progressive JPEG format, we will fallback to the baseline JPEG format for small and large images specified when:
+
+* The area calculated by width x height is less than 150 x 150.
+* The area calculated by width x height is greater than 3000 x 3000.
+
+For example, a 50 x 50 tiny image is always formatted by `baseline-jpeg` even if you specify progressive jpeg (`format=jpeg`).

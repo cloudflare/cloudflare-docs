@@ -1,5 +1,5 @@
 ---
-updated: 2022-11-04
+updated: 2023-04-01
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -26,7 +26,7 @@ To start, install the [Simply Static](https://wordpress.org/plugins/simply-stati
 
 Search for `Simply Static` and confirm that the resulting plugin that you will be installing matches the plugin below.
 
-![Simply Static plugin](../media/simply-static.png)
+![Simply Static plugin](/images/pages/how-to/simply-static.png)
 
 Select **Install** on the plugin. After it has finished installing, select **Activate**.
 
@@ -40,8 +40,8 @@ In the **Activity Log**, find the **ZIP archive created** message and select **C
 
 With your ZIP file downloaded, deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Pages** > **Create a project** > **Direct Upload**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Upload assets**.
 3. Name your project > **Create project**.
 4. Drag and drop your ZIP file or select it from your computer.
 5. After your files have been uploaded, select **Deploy site**.
@@ -64,7 +64,7 @@ By following this guide, you have successfully deployed a static version of your
 
 With a static version of your site being served, you can:
 
-- Move your WordPress site a custom domain or subdomain. Refer to [Custom domains](/pages/platform/custom-domains/) to learn more.
+- Move your WordPress site to a custom domain or subdomain. Refer to [Custom domains](/pages/platform/custom-domains/) to learn more.
 - Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](/pages/platform/preview-deployments/#customizing-preview-deployments-access) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
 - Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting.
 

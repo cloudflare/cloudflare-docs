@@ -7,7 +7,7 @@ _build:
 
 The **Activity log** summarizes security events by date to show the action taken and the applied Cloudflare security feature.
 
-![Example list of events in the Activity log, with one of the events expanded to show its details](/waf/static/analytics-activity-log.png)
+![Example list of events in the Activity log, with one of the events expanded to show its details](/images/waf/events-activity-log.png)
 
 Security events are shown by individual event rather than by request. For example, if a single request triggers three different Firewall features, the security events will show three individual events in the **Activity log**.
 
@@ -30,4 +30,4 @@ Besides the actions you can select when configuring rules in Cloudflare security
 
 For details on these actions, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/#action).
 
-The [*Managed Challenge (Recommended)*](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) action that may appear in the **Activity Log** is available in the following security features and products: firewall rules, IP Access rules, User Agent Blocking rules, rate limiting rules, custom rules, and Bot Fight Mode.
+The [*Managed Challenge (Recommended)*](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) action that may appear in the **Activity Log** is available in the following security features and products: firewall rules, IP Access rules, User Agent Blocking rules, rate limiting rules, custom rules, and Bot Fight Mode.

@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Radar
 ---
 
-{{<beta>}}Cloudflare Radar{{</beta>}}
+# Cloudflare Radar
 
 {{<description>}}
 Get access to Cloudflare's data on global Internet traffic.

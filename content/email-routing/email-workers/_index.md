@@ -1,5 +1,5 @@
 ---
-title: Email Workers
+title: Email Workers (beta)
 pcx_content_type: concept
 layout: single
 weight: 4
@@ -28,7 +28,7 @@ export default {
 }
 ```
 
-Refer to the [Workers Languages](/workers/platform/languages/) for more information regarding the languages you can use with Workers.
+Refer to the [Workers Languages](/workers/learning/languages/) for more information regarding the languages you can use with Workers.
 
 ## How to use Email Workers
 
@@ -44,4 +44,4 @@ For example, say that you create an allowlist Email Worker and bind it to a `hel
 
 ## Limits
 
-If you encounter any allocation errors while using Email Workers, refer to [Known limitations](/email-routing/known-limitations/#email-workers-size-limits) for more information.
+If you encounter any allocation errors while using Email Workers, refer to [Limits](/email-routing/limits/#email-workers-size-limits) for more information.

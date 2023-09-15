@@ -14,7 +14,7 @@ Once you configure load shedding on a pool, that pool will begin diverting traff
 
 Using your internal metrics, identify origins at risk of reaching their failure threshold.
 
-*   If your origin is seeing increased traffic but is not yet at risk of failure, start with [Step 2](#step-2--shed-default-traffic).
+*   If your origin is seeing increased traffic but is not yet at risk of failure, start with [Step 2](#step-2--shed-default-traffic-from-a-pool).
 *   If your origin is about to fail, start with [Step 4](#step-4--shed-additional-traffic-optional).
 
 ## Step 2 — Shed default traffic from a pool
@@ -57,7 +57,7 @@ To enable load shedding for a specific pool via the dashboard:
 
 ### Configure via API
 
-To enable load shedding for a specific pool via the API, [update the values](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-update-pool) for the pool's `load_shedding` object.
+To enable load shedding for a specific pool via the API, [update the values](/api/operations/account-load-balancer-pools-update-pool) for the pool's `load_shedding` object.
 
 <details>
 <summary>Example request</summary>
@@ -120,7 +120,7 @@ A *Random* policy:
 
 *   Randomly sheds the percentage of requests specified in the *Shed %*.
 *   Distributes traffic more accurately because it sheds at the request level.
-*   May cause requests from the same IP to hit different origins, potentially leading to cache misses, inconsistent latency, or session disruption for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-mode).
+*   May cause requests from the same IP to hit different origins, potentially leading to cache misses, inconsistent latency, or session disruption for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing).
 
 An *IP hash* policy:
 

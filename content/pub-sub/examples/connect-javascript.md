@@ -9,9 +9,15 @@ summary: Use MQTT.js with the token authentication mode configured on a broker.
 
 Below is an example using [MQTT.js](https://github.com/mqttjs/MQTT.js#mqttclientstreambuilder-options) with the TOKEN authentication mode configured on a broker. The example assumes you have [Node.js](https://nodejs.org/en/) v16 or higher installed on your system.
 
-Make sure to set the `BROKER_URI` (e.g. `mqtts://YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com`), `BROKER_TOKEN` (a valid auth token), and `BROKER_TOPIC` environmental variables before running the example program.
+Make sure to set the following environmental variables before running the example:
 
-```javascript
+1. `BROKER_URI` (e.g. `mqtts://YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com`)
+2. `BROKER_TOKEN` with a [valid auth token](/pub-sub/platform/authentication-authorization/#generate-credentials)
+3. `BROKER_TOPIC` to publish to - for example, `hello/world`
+
+Before running the example, make sure to install the MQTT library:
+
+```sh
 # Pre-requisite: install MQTT.js
 npm install mqtt --save
 ```

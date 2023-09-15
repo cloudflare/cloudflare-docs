@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 title: Error responses
 weight: 26
 layout: single
@@ -41,7 +41,7 @@ Sample error messages:
 - "cannot request data older than..."
 - "number of fields cannot be more than..."
 
-These messages indicate that the query exceeds what is allowed for the particular dataset under your plan. Refer to [Data accessibility](/analytics/graphql-api/limits/#data-accessibility) for details.
+These messages indicate that the query exceeds what is allowed for the particular dataset under your plan. Refer to [Node limits](/analytics/graphql-api/limits/#node-limits-and-availability) for details.
 
 ### Parsing issues
 

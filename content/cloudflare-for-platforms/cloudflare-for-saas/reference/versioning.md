@@ -22,15 +22,15 @@ To ensure that your service is not disrupted, you need to perform an additional 
 
 ### Recommended validation methods
 
-Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps you avoid downtime during your migration. If you choose to use [CNAME validation](#cname-validation), your domain might fall behind on its [backoff schedule](/ssl/reference/validation-backoff-schedule/).
+Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps you avoid downtime during your migration. If you choose to use [CNAME validation](#cname-validation), your domain might fall behind on its [backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
 
 #### DNS TXT Record
 
-When creating a Custom Hostname with the TXT method through the [API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
+When creating a Custom Hostname with the TXT method through the [API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
 
 #### HTTP Token
 
-When creating a Custom Hostname with the HTTP through the [API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
+When creating a Custom Hostname with the HTTP through the [API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
 
 Cloudflare sends GET requests to the http_url using `User-Agent: Cloudflare Custom Hostname Verification`.
 
@@ -85,7 +85,7 @@ Before your migration, you should:
     - Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
     - Via a CSV file (provided by your SE)
     - Via the Cloudflare dashboard:
-      ![Review SSL migration status in the dashboard](/ssl/static/ssl-migration-status.png)
+      ![Review SSL migration status in the dashboard](/images/cloudflare-for-platforms/ssl-migration-status.png)
 4.  Approve the migration. Your Cloudflare account team will work with you to schedule a migration window for each of your SSL for SaaS zones.
 
 ## During the migration

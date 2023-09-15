@@ -28,11 +28,12 @@ To create a new allowed pattern:
 
         - *Trusted Sender*: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Area 1. Typically, only applies to phishing simulations from vendors such as KnowB4.
         - *Exempt Recipient*: Will exempt messages from all Area 1 [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
-        - *Acceptable Sender*: Will exempt messages from the `Spam`, `Spoof`, and `Bulk` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `Malicious` or `Suspicious`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
+        - *Acceptable Sender*: Will exempt messages from the `SPAM`, `SPOOF`, and `BULK` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `MALICIOUS` or `SUSPICIOUS`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
     
     - **Notes**: Provide additional notes about the allowed pattern.
 
-6. Choose whether to **Verify Sender**, which applies the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for *Trusted Sender* and *Acceptable Sender*). 
+6. If you chose *Trusted Sender* or *Acceptable Sender* in the previous step, you will be able to choose whether to verify the sender. When the **Verify Sender** option is selected, the allow list entry will only be honored if it aligns with a passing authentication by DMARC or SPF or DKIM.
+
 7. Select **Save**.
 
 ### CSV uploads

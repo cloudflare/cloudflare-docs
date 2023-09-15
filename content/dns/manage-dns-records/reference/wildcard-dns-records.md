@@ -10,7 +10,7 @@ Normal DNS records map a domain name to one or multiple IP addresses or other as
 
 Wildcard DNS records allow you to have a many-to-many mapping, for example if you had hundreds or thousands of subdomains you wanted to point to the same resources. Wildcard records are used as the response for all subdomains that are not specifically covered by another DNS record.
 
-Within Cloudflare, wildcard DNS records can be either [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) or DNS-only.
+Within Cloudflare, wildcard DNS records can be either [proxied or DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 ## Create a Wildcard record
 
@@ -37,6 +37,12 @@ You can also create a wildcard DNS record specifically for a deeper subdomain. F
 ## Availability
 
 Customers on all plans can create and proxy wildcard DNS records.
+
+## Limitations
+
+If you are using a [partial zone setup](/dns/zone-setups/partial-setup/) for your DNS, Cloudflare does not automatically provision SSL/TLS certificates for your wildcard record.
+
+{{<render file="_partial-zone-acm-dcv-wildcard.md" productFolder="ssl" >}}
 
 ## Additional information
 

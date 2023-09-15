@@ -45,14 +45,14 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&lim
 }
 ```
 
-For more information refer to [Get Domains Rank top](https://developers.cloudflare.com/api/operations/radar_get_RankingTop).
+For more information refer to [Get top domains](/api/operations/radar-get-ranking-top-domains).
 
 
 #### Example: Download top `x` ranking bucket file
 
 As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank
 for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million,
-etc.. These are available through Cloudflare's [datasets endpoints](https://developers.cloudflare.com/api/operations/radar_get_DatasetList).
+etc.. These are available through Cloudflare's [datasets endpoints](/api/operations/radar-get-reports-datasets).
 
 In the following example we will request the last available domain ranking buckets:
 
@@ -83,7 +83,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets?limit=10&datase
 }
 ```
 
-If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset`](https://developers.cloudflare.com/api/operations/radar_post_DatasetDownload) endpoint.
+If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset download url`](/api/operations/radar-post-reports-dataset-download-url) endpoint.
 
 
 Then you can request a download url:
@@ -109,9 +109,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/radar/datasets/download" \
 #### Example: Get the last top `x` ranking bucket
 
 This endpoint allows you to directly request the latest top x bucket available (optionally at a given date)
-[datasets stream endpoint](https://developers.cloudflare.com/api/operations/radar_get_DatasetStream).
+[Get dataset stream](/api/operations/radar-get-reports-dataset-download) endpoint.
 
-The dataset alias can be retrieved from the [datasets list endpoint](https://developers.cloudflare.com/api/operations/radar_get_DatasetList)
+The dataset alias can be retrieved from the [Get datasets](/api/operations/radar-get-reports-datasets) endpoint
 as the example above.
 
 This stream endpoint is only available for datasets generated after 2023-01-08.

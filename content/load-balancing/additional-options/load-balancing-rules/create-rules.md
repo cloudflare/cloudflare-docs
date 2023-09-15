@@ -30,7 +30,7 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 6.  In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](/load-balancing/additional-options/load-balancing-rules/reference/).
 
-7.  In the **Operator** drop-down list, choose an operator. For more details, see [Operators](/load-balancing/additional-options/load-balancing-rules/reference/#operators).
+7.  In the **Operator** drop-down list, choose an operator. For more details, see [Operators](/load-balancing/additional-options/load-balancing-rules/reference/#operators-and-grouping-symbols).
 
 8.  Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
 

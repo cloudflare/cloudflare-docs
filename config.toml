@@ -6,7 +6,7 @@ DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
 enableRobotsTXT = false
 summaryLength = 30
-disableAliases = true
+disableAliases = false
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 enableEmoji = true
@@ -21,10 +21,14 @@ org = "cloudflareproduction7iy98g48"
 token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"
 tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 
+[outputs]
+  home = ['html']
+  page = ['html']
+  section = ['html']
+
 [sitemap]
-  changefreq = "daily"
+  changefreq = "weekly"
   filename = "sitemap.xml"
-  priority = 0.7
 
 [markup]
 	[markup.goldmark]
@@ -40,3 +44,10 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 		lineNoStart = 1
 		lineNos = false
 		hl_Lines = ""
+
+[security]
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$', '^CF_PAGES_BRANCH$']
+
+[build]
+  noJSConfigInAssets = true

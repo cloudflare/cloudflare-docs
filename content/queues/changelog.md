@@ -1,20 +1,15 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 11
-rss: file
+layout: changelog
+changelog_file_name: queues
+outputs:
+    - html
+    - rss
 ---
 
 # Changelog
 
-## 2022-12-12
+<!-- Actual content lives in /data/changelogs/queues.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
-### Increased per-account limits
-
-Queues now allows developers to create up to 100 queues per account, up from the initial beta limit of 10 per account. This limit will continue to increase over time.
-
-## 2022-12-13
-
-### sendBatch support
-
-The JavaScript API for Queue producers now includes a `sendBatch` method which supports sending up to 100 messages at a time.
+{{<product-changelog>}}

@@ -8,7 +8,7 @@ meta:
 
 # Zone Lockdown migration guide
 
-Currently, any Cloudflare customer on a paid plan can configure Health Checks against any host or IP. [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131) specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. It allows multiple destinations in a single rule as well as IPv4 and IPv6 addresses. IP addresses not specified in the Zone Lockdown rule are denied access to the specified resources.
+Currently, any Cloudflare customer on a paid plan can configure Health Checks against any host or IP. [Zone Lockdown](/waf/tools/zone-lockdown/) specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. It allows multiple destinations in a single rule as well as IPv4 and IPv6 addresses. IP addresses not specified in the Zone Lockdown rule are denied access to the specified resources.
 
 When a customer enables zone lockdown, any Health Checks targeting that zone regardless of ownership will still get through because Cloudflare's ASN is on an allow-list.
 
@@ -22,7 +22,7 @@ Cloudflare's ASN is on an allow-list. This allows health checks to bypass zone l
 4. Create a firewall rule matching on **user agent**.
 5. Set the action to **Bypass** and the corresponding feature to **Zone Lockdown**.
 
-Cloudflare Health Checks have a user agent of the following format: 
+Cloudflare Health Checks have a user agent of the following format:
 `Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;"+https://www.cloudflare.com/; healthcheck-id: XXX)` where `XXX` is replaced with the first 16 characters of the Health Check ID.
 
 To allow a specific Health Check, verify if the user agent contains the first 16 characters of the Health Check ID.
@@ -37,4 +37,4 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rule
      -H "Content-Type: application/json" \
      --data '[{ "description": "bypass zone lockdown - specific healthcheck","action": "bypass","products": ["zoneLockdown"],"filter": {"expression": "(http.user_agent contains \"1234567890abcdef\")"}}]
 
-``` 
+```

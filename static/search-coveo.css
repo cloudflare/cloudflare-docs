@@ -62,6 +62,33 @@
   background-color: var(--gray-00) !important;
 }
 
+[theme="dark"] .CoveoTab.coveo-selected, [theme="dark"] .CoveoTab.coveo-selected:hover, .coveo-small-tabs  {
+  border-bottom: 4px solid orange;
+}
+
+[theme="dark"] .coveo-small-tabs .CoveoTab.coveo-selected,[theme="dark"] .coveo-small-tabs .CoveoTab.coveo-selected:hover  {
+  border-bottom: 4px solid orange !important;
+}
+
+[theme="dark"] .CoveoTab.coveo-selected:hover  {
+  background: var(--gray-1);
+  border-bottom: 4px solid orange;
+}
+
+[theme="dark"] .CoveoTab:hover  {
+  background: var(--gray-1);
+}
+
+[theme="dark"] .coveo-tab-section {
+  background: var(--color-rgb);
+}
+
+@media (max-width: 480px) {
+  [theme="dark"] .CoveoSearchInterface .coveo-tab-section {
+      background-color:var(--color-rgb);
+  }
+}
+
 [theme="dark"] .CoveoResult a.CoveoResultLink, 
 [theme="dark"] .CoveoResultLink, 
 [theme="dark"] a.CoveoResultLink,
@@ -92,4 +119,14 @@
 
 .CoveoQueryDuration::before {
   content: " ";
+}
+
+.coveo-tab-section {
+  display: flex;
+  align-items: space-around;
+}
+
+.CoveoTab {
+  margin-right: 2em;
+  text-transform: none !important;
 }

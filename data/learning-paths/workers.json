@@ -1,0 +1,11 @@
+{
+    "title": "Intro to Cloudflare Workers",
+    "uid": "workers-intro",
+    "path": "https://egghead.io/courses/introduction-to-cloudflare-workers-5aa3",
+    "priority": 4,
+    "description": "Cloudflare Workers is a powerful platform, and this course serves as a great introduction for what it can do.",
+    "products": [
+      "Workers"
+    ],
+    "product_group": "Developer platform"
+}

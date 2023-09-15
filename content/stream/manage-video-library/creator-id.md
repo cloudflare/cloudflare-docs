@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how to
+pcx_content_type: how-to
 title: Manage creators
 ---
 
@@ -74,10 +74,6 @@ highlight: [35]
       "padding": 0.1,
       "scale": 0.1,
       "position": "center"
-    },
-    "nft": {
-      "contract": "0x57f1887a8bf19b14fc0d912b9b2acc9af147ea85",
-      "token": 5
     }
   }
 }
@@ -212,10 +208,6 @@ highlight: [36]
         "padding": 0.1,
         "scale": 0.1,
         "position": "center"
-      },
-      "nft": {
-        "contract": "0x57f1887a8bf19b14fc0d912b9b2acc9af147ea85",
-        "token": 5
       }
     }
   ],
@@ -226,7 +218,7 @@ highlight: [36]
 
 ## tus
 
-Add the Creator ID via the `Upload-Creator` header. For more information, refer to [Using tus](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb).
+Add the Creator ID via the `Upload-Creator` header. For more information, refer to [Using tus](/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos).
 
 ## Query by Creator ID with GraphQL
 

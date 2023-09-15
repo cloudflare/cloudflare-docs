@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Edge certificates
-weight: 3
+weight: 4
 ---
 
 # Edge certificates

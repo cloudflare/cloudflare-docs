@@ -13,11 +13,12 @@ With Deploy Hooks, you can trigger deployments using event sources beyond commit
 
 To create a Deploy Hook:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Pages**.
-2. Select your Pages project.
-3. Go to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
+4. Go to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
 
-![Add a deploy hook on the Cloudflare dashboard](/pages/platform/media/deploy-hooks-add.png)
+![Add a deploy hook on the Cloudflare dashboard](/images/pages/platform/deploy-hooks-add.png)
 
 ## Parameters needed
 
@@ -26,17 +27,17 @@ To configure your Deploy Hook, you must enter two key parameters:
 1.  **Deploy hook name:** a unique identifier for your Deploy Hook (for example, `contentful-site`)
 2.  **Branch to build:** the repository branch your Deploy Hook should build
 
-![Choosing Deploy Hook name and branch to build on Cloudflare dashboard](/pages/platform/media/deploy-hooks-configure.png)
+![Choosing Deploy Hook name and branch to build on Cloudflare dashboard](/images/pages/platform/deploy-hooks-configure.png)
 
 ## Using your Deploy Hook
 
 Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy.
 
-![Reviewing the Deploy Hook's newly generated unique URL](/pages/platform/media/deploy-hooks-details.png)
+![Reviewing the Deploy Hook's newly generated unique URL](/images/pages/platform/deploy-hooks-details.png)
 
 Every time a request is sent to your Deploy Hook, a new build will be triggered. Review the **Source** column of your deployment log to see which deployment were triggered by a Deploy Hook.
 
-![Reviewing which deployment was triggered by a Deploy Hook](/pages/platform/media/deploy-hooks-deployment-logs.png)
+![Reviewing which deployment was triggered by a Deploy Hook](/images/pages/platform/deploy-hooks-deployment-logs.png)
 
 ## Security Considerations
 
@@ -52,7 +53,7 @@ Every CMS provider is different and will offer different pathways in integrating
 
 Contentful supports integration with Cloudflare Pages via its **Webhooks** feature. In your Contentful project settings, go to **Webhooks**, create a new Webhook, and paste in your unique Deploy Hook URL in the **URL** field. Optionally, you can specify events that the Contentful Webhook should forward. By default, Contentful will trigger a Pages deployment on all project activity, which may be a bit too frequent. You can filter for specific events, such as Create, Publish, and many others.
 
-![Configuring Deploy Hooks with Contentful](/pages/platform/media/contentful.png)
+![Configuring Deploy Hooks with Contentful](/images/pages/platform/contentful.png)
 
 ### Ghost
 
@@ -60,19 +61,19 @@ You can configure your Ghost website to trigger Pages deployments by creating a 
 
 Each custom integration created can have multiple **webhooks** attached to it. Create a new webhook by selecting **Add webhook** and **Site changed (rebuild)** as the **Event**. Then paste your unique Deploy Hook URL as the **Target URL** value. After creating this webhook, your Cloudflare Pages application will redeploy whenever your Ghost site changes.
 
-![Configuring Deploy Hooks with Ghost](/pages/platform/media/ghost.png)
+![Configuring Deploy Hooks with Ghost](/images/pages/platform/ghost.png)
 
 ### Sanity
 
 In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below. By default, the Webhook will trigger your Pages Deploy Hook for all datasets inside of your Sanity project. You can filter notifications to individual datasets, such as production, using the **Dataset** field:
 
-![Configuring Deploy Hooks with Sanity](/pages/platform/media/sanity.png)
+![Configuring Deploy Hooks with Sanity](/images/pages/platform/sanity.png)
 
 ### WordPress
 
 You can configure WordPress to trigger a Pages Deploy Hook by installing the free **WP Webhooks** plugin. The plugin includes a number of triggers, such as **Send Data on New Post, Send Data on Post Update** and **Send Data on Post Deletion**, all of which allow you to trigger new Pages deployments as your WordPress data changes. Select a trigger on the sidebar of the plugin settings and then [**Add Webhook URL**](https://wordpress.org/plugins/wp-webhooks/), pasting in your unique Deploy Hook URL.
 
-![Configuring Deploy Hooks with WordPress](/pages/platform/media/wordpress.png)
+![Configuring Deploy Hooks with WordPress](/images/pages/platform/wordpress.png)
 
 ### Strapi
 
@@ -88,7 +89,7 @@ In the Strapi Admin Panel, you can configure your webhook to be triggered based 
 
 Be sure to add the webhook configuration to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi application that powers your Cloudflare site.
 
-![Configuring Deploy Hooks with Strapi](/pages/platform/media/strapi.png)
+![Configuring Deploy Hooks with Strapi](/images/pages/platform/strapi.png)
 
 ### Storyblok
 

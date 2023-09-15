@@ -10,9 +10,9 @@ weight: 1
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Windows           | WARP with Gateway                                                                         | All plans                                                     |
+| macOS, Windows           | WARP not required                                                                 | All plans                                                     |
 
 </div>
 </details>
@@ -30,8 +30,8 @@ Cloudflare Access can integrate with Azure AD's Conditional Access feature to re
 4. In Azure AD, apply your Conditional Access policy to the `Azure AD (device posture)` integration.
 
 5. You can now enable the Conditional Access policy for an Access application:
-    1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Access** > **Applications**.
-    2. Select **Edit** for the application that requires managed device connections.
-    3. Open the **Authentication** tab.
-    4. Enable the `Azure AD (device posture)` identity provider.
-    5. Save the application.
+   1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+   2. Select **Edit** for the application that requires managed device connections.
+   3. Open the **Authentication** tab.
+   4. Enable the `Azure AD (device posture)` identity provider.
+   5. Save the application.

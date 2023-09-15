@@ -21,6 +21,7 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [Google Domains](https://support.google.com/domains/answer/6387342?hl=en)
 - [hover](https://help.hover.com/hc/en-us/articles/217281647-Understanding-and-managing-DNSSEC)
 - [InMotion Hosting](https://www.inmotionhosting.com/support/edu/cpanel/enable-dnssec-cloudflare/)
+- [INWX](https://kb.inwx.com/en-us/3-nameserver/131)
 - [Joker.com](https://joker.com/faq/content/6/461/en/dnssec-support.html)
 - [name.com](https://www.name.com/support/articles/205439058-Managing-DNSSEC)
 - [namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/9722/2232/managing-dnssec-for-domains-pointed-to-custom-dns)
@@ -29,6 +30,7 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [OVH](https://api.ovh.com/console/#/domain/%7BserviceName%7D/dsRecord#POST)
 - [Public Domain Registry](http://manage.publicdomainregistry.com/kb/answer/1909)
 - [registro.br](https://registro.br/tecnologia/dnssec.html?secao=tutoriais-dns)
+- [Porkbun](https://kb.porkbun.com/article/93-how-to-install-dnssec) (do not fill out **keyData**).
 
 </div>
 </details>

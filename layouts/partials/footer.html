@@ -12,7 +12,7 @@
 
       {{ with $DATA.resources.discord }}
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := default "https://discord.gg/cloudflaredev" $DATA.resources.discord -}} {{- partial
+        {{- $url := "https://discord.gg/cloudflaredev" -}} {{- partial
         "external.link" (dict "text" "Discord" "url" $url) }}
       </span>
 
@@ -38,6 +38,13 @@
         "external.link" (dict "text" "Support Portal" "url" $url) }}
       </span>
 
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        <!-- OneTrust Cookies Settings button start -->
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        <!-- OneTrust Cookies Settings button end -->
+      </span>
     </div>
     <div>
       <span class="DocsFooter--edit-on-gh-link-wrapper">

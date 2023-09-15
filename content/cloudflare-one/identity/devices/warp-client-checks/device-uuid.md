@@ -10,9 +10,9 @@ weight: 3
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-|iOS, Android, ChromeOS | WARP with Gateway                                                                         | All plans                                                     |
+| Operating Systems      | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ---------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| iOS, Android, ChromeOS | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -21,17 +21,19 @@ Cloudflare Zero Trust allows you to build Zero Trust rules based on device UUIDs
 
 ## 1. Assign UUIDs to devices
 
+You will need to use a [managed deployment tool](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to assign UUIDs. It is not possible to assign them manually.
+
 1. Generate a unique identifier for each corporate device. For best practices on choosing UUIDs, refer to the [Android documentation](https://developer.android.com/training/articles/user-data-ids#best-practices-android-identifiers).
 
 2. Enter the UUIDs into your MDM configuration file using the [`unique_client_id` key](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#unique_client_id).
 
 ## 2. Create a list of UUIDs
 
-To create rules based on device UUIDs, you first need to create a [Gateway List](/cloudflare-one/policies/filtering/lists/) of UUIDs.
+To create rules based on device UUIDs, you first need to create a [Gateway List](/cloudflare-one/policies/gateway/lists/) of UUIDs.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **My Team** > **Lists**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 
-2. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
+2. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](/api/operations/zero-trust-lists-list-zero-trust-lists).
 
 3. Give your list a descriptive name, as this name will appear when configuring your policies.
 
@@ -47,16 +49,17 @@ Hyphens are automatically stripped from UUIDs. For example, the posture check wi
 
 ## 3. Enable the posture check
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
 2. Scroll down to **WARP client checks** and select **Add new**.
 
 3. Select **Unique Client ID**.
 
 4. You will be prompted for the following information:
-    - **Name**: Enter a unique name for this device posture check.
-    - **Operating system**: Select the operating system of the device.
-    - **List**: Select your [list of UUIDs](#2-create-a-list-of-uuids).
+
+   - **Name**: Enter a unique name for this device posture check.
+   - **Operating system**: Select the operating system of the device.
+   - **List**: Select your [list of UUIDs](#2-create-a-list-of-uuids).
 
 5. Select **Save**.
 

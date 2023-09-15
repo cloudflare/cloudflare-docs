@@ -6,7 +6,7 @@ weight: 49
 
 # Additional configuration
 
-Beyond [creating a simple load balancer](/load-balancing/get-started/), you may want to further customize how your load balancer routes traffic or integrate your load balancer with other Cloudflare products.
+Beyond [creating a simple load balancer](/load-balancing/how-to/create-load-balancer/), you may want to further customize how your load balancer routes traffic or integrate your load balancer with other Cloudflare products.
 
 ## Customize load balancer behavior
 
@@ -18,9 +18,8 @@ Beyond [creating a simple load balancer](/load-balancing/get-started/), you may 
 
 *   Bring load balancing to your TCP or UDP applications with [Cloudflare Spectrum](/load-balancing/additional-options/spectrum/)
 *   Further secure origin access with [Cloudflare Tunnel](/load-balancing/additional-options/cloudflare-tunnel/)
-*   Accelerate dynamic content with [Cloudflare Railgun](/load-balancing/additional-options/railgun/)
 
 ## Integrate with 3rd parties
 
 *   [Deploy containerized applications](/load-balancing/additional-options/deploy-containerized-applications/) across multiple clouds
-*   Increase visibility by [sending health check notifications to Pagerduty](/load-balancing/additional-options/pagerduty-integration/)
+*   Increase visibility by [sending health monitor notifications to Pagerduty](/load-balancing/additional-options/pagerduty-integration/)

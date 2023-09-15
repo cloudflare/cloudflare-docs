@@ -8,19 +8,11 @@ meta:
 
 # Get started with Bot Fight Mode
 
-Bot Fight Mode is a simple, free product that helps detect and mitigate bot traffic on your domain. When enabled, the product:
-
-- Identifies traffic matching patterns of known bots
-- Issues computationally expensive challenges in response to these bots
-- Notifies [Bandwidth Alliance](https://cloudflare.com/bandwidth-alliance/) partners (if applicable) to disable bots
+{{<render file="_bot-fight-mode-definition.md">}}
 
 ## Enable Bot Fight Mode
 
-To start using Bot Fight Mode:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **Bots**.
-3. For **Bot Fight Mode**, select **On**.
+{{<render file="_bot-fight-mode-enable.md">}}
 
 ## Disable Bot Fight Mode
 

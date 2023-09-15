@@ -12,11 +12,17 @@ Cloudflare Access can replace traditional SSH key models with short-lived certif
 
 Cloudflare Access removes the burden on the end user of generating a key, while also improving security of access to infrastructure with ephemeral certificates.
 
-## 1. Secure a server behind Cloudflare Access
+## 1. Secure the server behind Cloudflare Access
 
-Cloudflare Access short-lived certificates can work with any modern SSH server, whether it is behind Access or not. However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals.
+Cloudflare Access short-lived certificates can work with any modern SSH server, whether it is behind Access or not. However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals. 
 
-To secure your server behind Cloudflare Access, follow [these instructions](/cloudflare-one/connections/connect-apps/use_cases/ssh/).
+To secure your server behind Cloudflare Access:
+1. Connect the server to Cloudflare as a [public hostname route](/cloudflare-one/connections/connect-networks/use-cases/ssh/#1-connect-the-server-to-cloudflare-1).
+2. Create a [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) for the server.
+
+{{<Aside type="note">}}
+If you do not wish to use Access, refer instead to our [SSH proxy instructions](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
+{{</Aside>}}
 
 ## 2. Ensure Unix usernames match user SSO identities
 
@@ -26,14 +32,14 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 3. Generate a short-lived certificate public key
 
-1. On the Zero Trust dashboard, navigate to **Access > Service Auth**.
+1. In Zero Trust, go to **Access** > **Service Auth** > **SSH**.
 
-2. In the dropdown, choose the application that represents the resource you secured in Step 1.
+2. In the **Application** dropdown, choose the Access application that represents your SSH server.
 
-3. Click **Generate certificate**. A row will appear with a public key scoped to your application.
+3. Select **Generate certificate**. A row will appear with a public key scoped to your application.
 
 4. Save the key or keep it somewhere convenient for configuring your server.
-    You can return to copy this public key any time in the Service Auth dashboard.
+   You can return to copy this public key any time in the Service Auth dashboard.
 
 ## 4. Save your public key
 
@@ -53,7 +59,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ### Configure your client SSH config
 
-On the client side, [configure your device](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file (`~/.ssh/config`).
+On the client side, [configure your device](/cloudflare-one/connections/connect-networks/use-cases/ssh/) to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file (`~/.ssh/config`).
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 
@@ -77,4 +83,4 @@ End users can connect to the SSH session without any configuration by using Clou
 
 ---
 
-Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/filtering/network-policies/ssh-logging).
+Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/gateway/network-policies/ssh-logging).

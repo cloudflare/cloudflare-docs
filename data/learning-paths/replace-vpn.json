@@ -1,0 +1,193 @@
+{
+    "path": "/learning-paths/replace-vpn/",
+    "title": "Replace your VPN",
+    "priority": 5,
+    "description": "Give users secure, auditable network and application access.",
+    "detailed_description": "This tutorial will show you how to use a combination of Cloudflare products to address use cases typically served by a VPN. Cloudflare provides discrete, Zero Trust enabled application and service access to all TCP and UDP ports in both on-premise and cloud networks. We do this using a combination of an endpoint agent and a network connector, but no other software or hardware is required for this deployment. Additionally, security policy is enforced at the Cloudflare edge and managed in your dashboard.",
+    "products": [
+      "Cloudflare Gateway",
+      "Cloudflare Tunnel",
+      "WARP"
+    ],
+    "product_group": "Cloudflare One",
+    "elements": [
+      {
+        "type": "module",
+        "title": "Concepts",
+        "description": "Concepts explain the basic ideas behind how Cloudflare Zero Trust works. <br />",
+        "pages": [
+          {
+            "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/",
+            "link_title": "What is Cloudflare?"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/",
+            "link_title": "What is a proxy server?"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/access-management/what-is-a-vpn/",
+            "link_title": "What is a VPN?"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/",
+            "link_title": "Why should you replace your VPN?"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/",
+            "link_title": "What is a Secure Web Gateway?"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/access-management/what-is-an-identity-provider/",
+            "link_title": "What is an Identity Provider (IdP)?"
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Review prerequisites",
+        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-networks/downloads/system-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
+      },
+      {
+        "type": "module",
+        "title": "Initial setup - Application services dashboard",
+        "estimated_time": 20,
+        "pages": [
+          {
+            "url_path": "/fundamentals/account-and-billing/account-setup/create-account/",
+            "link_title": "Create a Cloudflare account",
+            "additional_description": "If you have a Cloudflare contact (Enterprise only), ask them to set up your account as a multi-user organization after you finish this step."
+          },
+          {
+            "external_link": true,
+            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
+            "link_title": "Set up two-factor authentication (2FA)"
+          },
+          {
+            "url_path": "/fundamentals/account-and-billing/members/manage/",
+            "link_title": "(Optional) Add public domains and subdomains to Cloudflare",
+            "additional_description": "You will use these domains to test agentless access to web services. Alternatively, you could purchase a new testing domain through <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a>."
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Initial setup - Zero Trust dashboard",
+        "estimated_time": 30,
+        "pages": [
+          {
+            "external_link": true,
+            "url_path": "https://one.dash.cloudflare.com/onboarding",
+            "link_title": "Choose a team name",
+            "additional_description": "The <a href='/cloudflare-one/glossary#team-name'>team name</a> is used to create a unique subdomain for your application portal."
+          },
+          {
+            "url_path": "/cloudflare-one/identity/idp-integration/",
+            "link_title": "Configure your Identity Provider (IdP)"
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Connect private network to Cloudflare",
+        "description": "<a href='/cloudflare-one/connections/connect-networks/'>Cloudflare Tunnel</a> connects applications and services to Cloudflare’s network. Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network.<br/>",
+        "estimated_time": 45,
+        "pages": [
+          {
+            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/",
+            "link_title": "Create a Cloudflare Tunnel",
+            "additional_description": "Cloudflare Tunnel will run on a host locally in your network and make a persistent, outbound QUIC connection to Cloudflare."
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/",
+            "link_title": "Create private network routes in Cloudflare Tunnel",
+            "additional_description": "Routes determine which private IP addresses are available to users in your Zero Trust organization. It's okay to make these routes relatively wide, since you can add granular security control with Zero Trust policies."
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#create-zero-trust-policies",
+            "link_title": "Build Zero Trust policies",
+            "additional_description": "While the Cloudflare Tunnel will advertise a relatively broad range, you can restrict network access by user identity, device posture, domain request, IP, port, protocol, and more."
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Agentless access to private web services",
+        "description": "Cloudflare supports Zero Trust, identity-aware access to internal HTTP applications without the need to use a device client. This step will require an <a href='/dns/zone-setups/reference/domain-status/'>active DNS zone</a> on Cloudflare in the same account in which you are building your Zero Trust policies.<br/><br/>Performing these tasks in this order makes sure your private application is never accessible via the public Internet.",
+        "estimated_time": 20,
+        "pages": [
+          {
+            "url_path": "/cloudflare-one/applications/configure-apps/self-hosted-apps/",
+            "link_title": "Create Access policies for a self-hosted application"
+            
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/#2-connect-an-application",
+            "link_title": "Create public hostname routes in Cloudflare Tunnel"
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Connect user devices to Cloudflare",
+        "description": "The <a href='/cloudflare-one/connections/connect-devices/warp/'>WARP client</a> encrypts designated traffic from a user's device to Cloudflare's edge. It can run alongside other VPN clients so long as there are no route conflicts.<br /><br />This setup uses a positive security model, meaning that only certain IP ranges or domains (local or external) are proxied through Cloudflare's network. Most admins test by downloading the client and authenticating in, but you can also install WARP via <a href='/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/'>Managed deployments</a>.",
+        "estimated_time": 30,
+        "pages": [
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/",
+            "link_title": "Define device enrollment permissions",
+            "additional_description": "With device enrollment rules, you define which users can connect devices to your Zero Trust organization."
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/",
+            "link_title": "Download and deploy WARP",
+            "additional_description": "We recommend <a href='/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/'>manually deploying</a> the client during your pilot and revisiting <a href='/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/'>automated deployments</a> during implementation."
+          },
+          {
+            "url_path": "/cloudflare-one/policies/gateway/initial-setup/network/#connect-devices",
+            "link_title": "Enable the Proxy",
+            "additional_description": "This will allow WARP to build a Wireguard-based, encrypted tunnel on your device to route traffic to Cloudflare."
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/",
+            "link_title": "Authenticate the WARP client",
+            "additional_description": "For initial testing, users should manually authenticate the client to their organization’s Cloudflare Zero Trust instance."
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/",
+            "link_title": "Define split tunnels settings",
+            "additional_description": "This will determine what traffic WARP does and does not proxy.<br/><br/>If you added private network routes in the <code>10.0.0.0</code> range, ensure that these IP addresses are included in WARP."
+          },
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/",
+            "link_title": "Define local domain fallback policies",
+            "additional_description": "These policies allow Cloudflare to proxy requests to internal or private infrastructure without a public DNS record."
+          },
+          {
+            "url_path": "/cloudflare-one/insights/logs/gateway-logs/",
+            "link_title": "Validate that Cloudflare is receiving your WARP traffic",
+            "additional_description": "Review your Gateway logs to make sure traffic is reaching the edge."
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "title": "Congratulations",
+        "description": "You should be finished setting up your VPN replacement.<br/><br/>If you encounter any issues after your initial onboarding, refer to the following resources.",
+        "pages": [
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests",
+            "link_title": "How the WARP client handles DNS requests"
+          },
+          {
+            "url_path": "/cloudflare-one/faq/",
+            "link_title": "Cloudflare Zero Trust FAQs"
+          }
+        ]
+      }
+    ]
+  }

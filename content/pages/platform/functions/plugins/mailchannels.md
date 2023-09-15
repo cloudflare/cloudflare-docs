@@ -6,7 +6,7 @@ weight: 1
 
 # MailChannels Pages Plugin
 
-The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. It then emails these form submissions using the MailChannels API.
+The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. Then, it emails these form submissions using the MailChannels API.
 
 ## Installation
 
@@ -121,7 +121,7 @@ $ echo -n "v=DKIM1;p=" > dkim_record.txt && openssl rsa -in private_key.pem -pub
 This creates a public key from the private key (`openssl rsa -in priv_key.pem -pubout -outform der`), encodes it in base64 (`openssl base 64 -A`), and finally writes it to the `dkim_record.txt` file.
 
 
-2. Copy the contents of the `private_key.txt` file and add that as an environment variable to your Pages project by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > your Pages project > **Settings** > **Environment Variables* > **Add variables**. Set the variable name as `DKIM_PRIVATE_KEY` and the value as the contents of `private_key.txt` file.
+2. Copy the contents of the `private_key.txt` file and add that as an environment variable to your Pages project by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers & Pages** > your Pages project > **Settings** > **Environment Variables** > **Add variables**. Set the variable name as `DKIM_PRIVATE_KEY` and the value as the contents of `private_key.txt` file.
 
 3. Create a DNS record with the content of the generated `dkim_record.txt` file content.
 
@@ -138,7 +138,7 @@ You can choose any value as the selector, as long as it is permitted as a DNS ho
 
 5. Add the content of your `dkim_record.txt` file in the content field.
 
-![Follow the instructions above to add DKIM credentials to your DNS records](/pages/platform/functions/plugins/mailchannel_DKIM_DNS_setup.png)
+![Follow the instructions above to add DKIM credentials to your DNS records](/images/pages/platform/functions/mailchannel_DKIM_DNS_setup.png)
 
 ## Add DKIM fields to personalization object
 

@@ -17,18 +17,24 @@ body:
         - Argo Smart Routing
         - Automatic Platform Optimization
         - Bots
+        - Browser Rendering
         - BYOIP
         - Cache
         - China Network
         - Client IP Geolocation
         - Cloudflare for Platforms
+        - Constellation
+        - D1
         - Data Localization
         - DDoS Protection
+        - DMARC Management
         - DNS
+        - Durable Objects
         - Email Routing
         - Email Security
         - Firewall
         - Fundamentals
+        - Health Checks
         - Image Optimization
         - Load Balancing
         - Logs
@@ -38,8 +44,10 @@ body:
         - Magic WAN
         - Network Error Logging
         - Network Interconnect
+        - Notifications
         - Page Shield
         - Pages
+        - Privacy Gateway
         - Pub/Sub
         - Queues
         - R2
@@ -52,8 +60,10 @@ body:
         - Ruleset Engine
         - Security Center
         - Spectrum
+        - Speed
         - SSL
         - Stream
+        - Style Guide
         - Support
         - Tenant
         - Terraform

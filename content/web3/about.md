@@ -11,7 +11,7 @@ When you [create a gateway](/web3/how-to/manage-gateways/#create-a-gateway), Clo
 
 When the hostname associated with your gateway receives requests, its DNS records route these requests to a Cloudflare Workers script.
 
-![Cloudflare's Web3 gateways provide HTTP-accessible interfaces to the IPFS and Ethereum networks. For more details, continue reading.](/web3/static/web3-gateway-flow-diagram.png)
+![Cloudflare's Web3 gateways provide HTTP-accessible interfaces to the IPFS and Ethereum networks. For more details, continue reading.](/images/web3/web3-gateway-flow-diagram.png)
 
 ## Read operations
 

@@ -31,7 +31,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 {{<Aside type="note" header="Availability notes">}}
 
-- Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+- Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 - Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -59,7 +59,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-http-host">
       <td valign="top"><code>http.host</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the host name used in the full request URI.
+         <p>Represents the hostname used in the full request URI.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">www.example.org</code>
@@ -156,6 +156,53 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">/articles/index</code>
          </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-uri-path-extension">
+      <td valign="top"><code>http.request.uri.path.extension</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>The lowercased file extension in the URI path without the dot (<code>.</code>) character. Corresponds to the string after the last dot in the URI path, without considering the query string.<br/>
+         If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (<code>""</code>). Having a dot as the first character does not represent a file extension and is commonly used in Unix-like systems to represent a hidden file or directory.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table>
+            <tr>
+              <th>URI path</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>/foo</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/.mp3</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/.foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.tar.bz2</code></td>
+              <td><code>"bz2"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.MP3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
       </td>
    </tr>
    <tr id="field-http-request-uri-query">
@@ -262,17 +309,49 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-asnum">
-      <td valign="top"><code>ip.geoip.asnum</code><br />{{<type>}}Number{{</type>}}</td>
+   <tr id="field-ip-src-region">
+      <td valign="top"><code>ip.src.region</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
+         <p>Represents the region name associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">Texas</code>
          </p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-continent">
-      <td valign="top"><code>ip.geoip.continent</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-region_code">
+      <td valign="top"><code>ip.src.region_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         Represents the continent code associated with client IP address:
+         <p>Represents the region code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">TX</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-timezone-name">
+      <td valign="top"><code>ip.src.timezone.name</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the name of the timezone associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">America/Chicago</code>
+         </p>
+         <p>This field is only available in rewrite expressions of <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-asnum">
+      <td valign="top"><code>ip.src.asnum</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
+         </p>
+         <p>This field has the same value as the <code>ip.geoip.asnum</code> field, which is still available.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-continent">
+      <td valign="top"><code>ip.src.continent</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the continent code associated with client IP address:
           <ul>
               <li>AF &#8211; Africa</li>
               <li>AN &#8211; Antarctica</li>
@@ -283,10 +362,12 @@ The Cloudflare Rules language supports these standard fields:
               <li>SA &#8211; South America</li>
               <li>T1 &#8211; Tor network</li>
           </ul>
+        </p>
+        <p>This field has the same value as the <code>ip.geoip.continent</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-country">
-      <td valign="top"><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-country">
+      <td valign="top"><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
          </p>
@@ -294,20 +375,23 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>In the WAF, the <code>ip.geoip.country</code> field (which is still available) is equivalent to <code>ip.src.country</code>.</p>
+         <p><code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-subdivision-1-iso-code">
-      <td valign="top"><code>ip.geoip.subdivision_1_iso_code</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-subdivision-1-iso-code">
+      <td valign="top"><code>ip.src.subdivision_1_iso_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. When the actual value is not available, this field contains an empty string.</p>
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-subdivision-2-iso-code">
-      <td valign="top"><code>ip.geoip.subdivision_2_iso_code</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-subdivision-2-iso-code">
+      <td valign="top"><code>ip.src.subdivision_2_iso_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. When the actual value is not available, this field contains an empty string.
          </p>
@@ -316,13 +400,15 @@ The Cloudflare Rules language supports these standard fields:
          <code class="InlineCode">GB-SWK</code>
          </p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-is-in-european-union">
-      <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
+   <tr id="field-ip-src-is-in-european-union">
+      <td valign="top"><code>ip.src.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
+         <p>This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is still available.</p>
       </td>
   </tr>
   <tr id="field-raw-http-request-full-uri">
@@ -352,6 +438,13 @@ The Cloudflare Rules language supports these standard fields:
       </p>
     </td>
   </tr>
+  <tr id="field-raw-http-request-uri-path-extension">
+      <td valign="top"><code>raw.http.request.uri.path.extension</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Similar to the <a href="#field-http-request-uri-path-extension"><code>http.request.uri.path.extension</code></a> non-raw field. Represents the file extension in the request URI path without any transformation.
+         </p>
+      </td>
+   </tr>
   <tr id="field-raw-http-request-uri-query">
     <td valign="top"><code>raw.http.request.uri.query</code><br />{{<type>}}String{{</type>}}</td>
     <td>
@@ -375,9 +468,11 @@ The Cloudflare Rules language supports these standard fields:
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Notes">}}
 
-Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+* Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+* The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
 {{</Aside>}}
 
@@ -386,7 +481,7 @@ The Cloudflare Rules language supports these dynamic fields:
 <table>
   <thead>
    <tr>
-      <th style="width: 50%;">Field Name</th>
+      <th style="width: 51%;">Field Name</th>
       <th>Description</th>
    </tr>
   </thead>
@@ -406,6 +501,16 @@ The Cloudflare Rules language supports these dynamic fields:
           <p>Represents the likelihood that a request originates from a bot using a score from 1&#8211;99.
           </p>
           <p>A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
+          </p>
+        </td>
+    </tr>
+     <tr id="field-cf-bot_management-static_resource">
+        <td><p><code>cf.bot_management.static_resource</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+          <p>Indicates whether static resources should be included when you create a rule using <code>cf.bot_management.score</code>.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/static-resources/">Static resource protection</a>.
           </p>
         </td>
     </tr>
@@ -450,7 +555,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_ip">
         <td><code>cf.edge.server_ip</code><br />{{<type>}}IP Address{{</type>}}</td>
         <td>
-          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          <p>Represents the global network's IP address to which the HTTP request has resolved to.
           </p>
           <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
           </p>
@@ -459,7 +564,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_port">
         <td><code>cf.edge.server_port</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
-          <p>Represents the port number at which Cloudflare's network received the request.
+          <p>Represents the port number at which the Cloudflare global network received the request.
           </p>
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
         </td>
@@ -467,7 +572,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/workers-for-platforms/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>
@@ -505,6 +610,140 @@ The Cloudflare Rules language supports these dynamic fields:
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
       </p></td>
     </tr>
+    <tr id="field-cf-tls_client_auth-cert_presented">
+      <td><code>cf.tls_client_auth.cert_presented</code><br />{{<type>}}Boolean{{</type>}}</td>
+      <td>
+      <p>
+      Returns <code class="InlineCode">true</code> when a request presents a certificate (valid or not).
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn">
+      <td><code>cf.tls_client_auth.cert_issuer_dn</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn">
+      <td><code>cf.tls_client_auth.cert_subject_dn</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn_rfc2253">
+      <td><code>cf.tls_client_auth.cert_issuer_dn_rfc2253</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in <a href="https://datatracker.ietf.org/doc/html/rfc2253">RFC 2253</a> format.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn_rfc2253">
+      <td><code>cf.tls_client_auth.cert_subject_dn_rfc2253</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in <a href="https://datatracker.ietf.org/doc/html/rfc2253">RFC 2253</a> format.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn_legacy">
+      <td><code>cf.tls_client_auth.cert_issuer_dn_legacy</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+      </p>
+      <p>Example:<br/>
+      <code>"/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn_legacy">
+      <td><code>cf.tls_client_auth.cert_subject_dn_legacy</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+      </p>
+      <p>Example:<br/>
+      <code>"/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_serial">
+      <td><code>cf.tls_client_auth.cert_serial</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>Serial number of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"527E0F20A20EA2A4146C78390F34CE7AF0878CA4"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_serial">
+      <td><code>cf.tls_client_auth.cert_issuer_serial</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>Serial number of the direct issuer of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"2688201DBA77402EA87118876F2E1B24CF8B0395"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha256">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha256</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-256 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha1">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha1</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-1 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"933ad5282c560ae3f482a43ecd73bc9de878a190"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_not_before">
+      <td><code>cf.tls_client_auth.cert_not_before</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The certificate in the request is not valid before this date.
+      </p>
+      <p>Example:<br/>
+      <code>"Mar 21 13:35:00 2022 GMT"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_not_after">
+      <td><code>cf.tls_client_auth.cert_not_after</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The certificate in the request is not valid after this date.
+      </p>
+      <p>Example:<br/>
+      <code>"Mar 21 13:35:00 2023 GMT"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_ski">
+      <td><code>cf.tls_client_auth.cert_ski</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Subject Key Identifier (SKI) of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"27846FAE6EAC4A8DAD9101B519CF1EB460242831"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_ski">
+      <td><code>cf.tls_client_auth.cert_issuer_ski</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
+      </p></td>
+    </tr>
     <tr id="field-cf-waf-score">
         <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
@@ -534,6 +773,13 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-waf-score-class">
+        <td><code>cf.waf.score.class</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>The attack score class of the current request, based on the WAF attack score.<br/>Can have one of the following values: <code>attack</code>, <code>likely_attack</code>, <code>likely_clean</code>, <code>clean</code>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -544,7 +790,9 @@ The Cloudflare Rules language supports these dynamic fields:
   </tbody>
 </table>
 
-## Magic Firewall Fields
+## Magic Firewall fields
+
+{{<Aside type="note">}}Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.{{</Aside>}}
 
 <table>
   <thead>
@@ -621,14 +869,17 @@ The Cloudflare Rules language supports these dynamic fields:
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
-    <tr id="field-ip-geoip-country">
-        <td><p><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</p>
+    <tr id="field-ip-src-country">
+        <td><p><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
-         Example value:
-         <code class="InlineCode">GB</code>
+         <p>Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+            Example value:<br />
+            <code>GB</code>
+         </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will match on either source or destination address.</p>
+         <p> <code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">
@@ -1171,6 +1422,7 @@ The Rules language includes fields that represent properties of HTTP response re
 You can only use HTTP response fields in:
 
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
+* [Compression Rules](/rules/compression-rules/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
 * Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
@@ -1271,10 +1523,52 @@ The Cloudflare Rules language supports these HTTP response fields:
          </p>
       </td>
    </tr>
+   <tr id="field-http-response-content_type-media_type">
+      <td valign="top"><code>http.response.content_type.media_type</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>The lowercased content type (including subtype and suffix) without any parameters such as <code>charset</code>, based on the response's <code>Content-Type</code> header.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table class="Small">
+            <tr>
+              <th><code>Content-Type</code> header</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>text/html</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra; charset=utf-8</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/HTML</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8; other=value</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
+      </td>
+   </tr>
    <tr id="field-cf-response-1xxx_code">
       <td valign="top"><code>cf.response.1xxx_code</code><br />{{<type>}}Integer{{</type>}}</td>
       <td>
-         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="https://support.cloudflare.com/hc/articles/360029779472">Troubleshooting Cloudflare 1XXX errors</a>.
+         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/">Troubleshooting Cloudflare 1XXX errors</a>.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">1020</code>

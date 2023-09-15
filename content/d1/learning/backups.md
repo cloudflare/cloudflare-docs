@@ -1,6 +1,6 @@
 ---
-title: Backups
-weight: 2
+title: Backups (Legacy)
+weight: 9
 pcx_content_type: concept
 ---
 
@@ -8,16 +8,26 @@ pcx_content_type: concept
 
 D1 has built-in support for creating and restoring backups of your databases, including support for scheduled automatic backups and manual backup management.
 
+{{<Aside type="warning" header="Time Travel">}}
+
+The snapshot based backups described in this documentation are deprecated, and limited to the original alpha databases.
+
+Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
+
+To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: beta` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
+
+{{</Aside>}}
+
 ## Automatic backups
 
-D1 automatically backs up your databases every hour on your behalf. Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
+D1 automatically backs up your databases every hour on your behalf, and [retains backups for 24 hours](/d1/platform/limits/). Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
 
 To view and manage these backups, including any manual backups you have made, you can use the `d1 backup list <DATABASE_NAME>` command to list each backup.
 
 For example, to list all of the backups of a D1 database named `existing-db`:
 
 ```sh
-➜  wrangler d1 backup list existing-db
+$ wrangler d1 backup list existing-db
 
 ┌──────────────┬──────────────────────────────────────┬────────────┬─────────┐
 │ created_at   │ id                                   │ num_tables │ size    │
@@ -34,17 +44,17 @@ The `id` of each backup allows you to download or restore a specific backup.
 
 ## Manually back up a database
 
-Creating a manual backup of your database before making large schema changes, manually inserting or deleting data, or otherwise modifying a database you are actively using is a good practice to get into. D1 allows you to make a backup of a database at any time, and stores the backup on your behalf. You should also consider [using migrations](https://developers.cloudflare.com/d1/platform/migrations/) to simplify changes to an existing database.
+Creating a manual backup of your database before making large schema changes, manually inserting or deleting data, or otherwise modifying a database you are actively using is a good practice to get into. D1 allows you to make a backup of a database at any time, and stores the backup on your behalf. You should also consider [using migrations](/d1/platform/migrations/) to simplify changes to an existing database.
 
 To back up a D1 database, you must have:
 
-1. The Cloudflare [Wrangler CLI installed](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+1. The Cloudflare [Wrangler CLI installed](/workers/wrangler/install-and-update/)
 2. An existing D1 database you want to back up.
 
 For example, to create a manual backup of a D1 database named `example-db`, call `d1 backup create`.
 
 ```sh
-➜  wrangler d1 backup create example-db
+$ wrangler d1 backup create example-db
 
 ┌─────────────────────────────┬──────────────────────────────────────┬────────────┬─────────┬───────┐
 │ created_at                  │ id                                   │ num_tables │ size    │ state │
@@ -57,19 +67,19 @@ Larger databases, especially those that are several megabytes (MB) in size with 
 
 ## Downloading a backup locally
 
-To download a backup locally, call `wrangler d1 backup <DATABASE_NAME> <BACKUP_ID>`. Use `wrangler d1 backup list <DATABASE_NAME>` to list the available backups, including their IDs, for a given D1 database.
+To download a backup locally, call `wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>`. Use `wrangler d1 backup list <DATABASE_NAME>` to list the available backups, including their IDs, for a given D1 database.
 
 For example, to download a specific backup for a database named `example-db`:
 
 ```sh
-➜  wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
+$ wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
 
 🌀 Downloading backup 123a81a2-ab91-4c2e-8ebc-64d69633faf1 from 'example-db'
 🌀 Saving to /Users/you/projects/example-db.123a81a2.sqlite3
 🌀 Done!
 ```
 
-The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](https://developers.cloudflare.com//learning/importing-data/) to D1.
+The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](/d1/learning/importing-data/) to D1.
 
 ## Restoring a backup
 
@@ -84,7 +94,7 @@ Restoring a backup will overwrite the current running version of a database with
 To restore a previous backup of a D1 database named `existing-db`, pass the ID of that backup to `d1 backup restore`:
 
 ```sh
-➜  wrangler d1 backup restore existing-db  6cceaf8c-ceab-4351-ac85-7f9e606973e3
+$ wrangler d1 backup restore existing-db  6cceaf8c-ceab-4351-ac85-7f9e606973e3
 
 Restoring existing-db from backup 6cceaf8c-ceab-4351-ac85-7f9e606973e3....
 Done!

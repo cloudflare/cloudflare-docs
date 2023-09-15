@@ -26,9 +26,7 @@ These metrics show changes in the solve rate, widget traffic, and top actions fo
 View the history of your website’s widget solve rate with Turnstile Analytics. 
 
 {{<Aside type="note">}}
-
 You can filter the data by `Action=(free input)` or by time.
-
 {{</Aside>}}
 
 ## Widget Traffic
@@ -41,4 +39,4 @@ Top Actions refer to the custom labels you created for your widgets.
 
 ## GraphQL
 
-You can use the `turnstileAdaptiveGroups` [dataset in GraphQL](/analytics/graphql-api/features/data-sets/#available-datasets) to get Turnstile widget analytics.
+You can use the `turnstileAdaptiveGroups` [dataset in GraphQL](/analytics/graphql-api/features/data-sets/) to get Turnstile widget analytics.

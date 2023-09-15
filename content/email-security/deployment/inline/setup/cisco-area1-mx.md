@@ -5,11 +5,12 @@ weight: 3
 layout: single
 meta:
    title: Deploy and configure Cisco IronPort with Area 1 as MX Record
+updated: 2022-09-30
 ---
 
 # Deploy and configure Cisco IronPort with Area 1 as MX Record
 
-![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/deployment/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
 
 In this tutorial, you will learn how to configure Cisco IronPort with Area 1 as MX record. This tutorial is broken down into several steps.
 
@@ -34,7 +35,7 @@ To add a new Sender Group:
 
 4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
-![Sender group](/email-security/static/deployment/inline-setup/cisco-area1-mx/step1.png)
+![Sender group](/images/email-security/deployment/inline-setup/cisco-area1-mx/step1.png)
 
 ## 2. Configure Incoming Relays
 
@@ -50,8 +51,9 @@ You need to configure the Incoming Relays section to tell IronPort to ignore ups
 
 ## 3. Update your domain MX records
 
-Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX.
+Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX. For example:
 
 {{<render file="_mx-deployment-values.md">}}
+{{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).

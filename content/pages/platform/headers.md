@@ -22,6 +22,8 @@ Header rules are defined in multi-line blocks. The first line of a block is the 
   [name]: [value]
 ```
 
+Using absolute URLs is supported, though be aware that absolute URLs must begin with `https` and specifying a port is not supported. Cloudflare Pages ignores the incoming request's port and protocol when matching against an incoming request. For example, a rule like `https://example.com/path` would match against requests to `other://example.com:1234/path`.
+
 You can define as many `[name]: [value]` pairs as you require on subsequent lines. For example:
 
 ```txt
@@ -46,8 +48,8 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 
 {{<table-wrap>}}
 
-| Request URL                                   | Headers                                                                                                                               |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Request URL                                     | Headers                                                                                                                               |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `https://custom.domain/secure/page`             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
 | `https://custom.domain/static/image.jpg`        | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet`                                                                     |
 | `https://myproject.pages.dev/home`              | `X-Robots-Tag: noindex`                                                                                                               |
@@ -56,7 +58,7 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 
 {{</table-wrap>}}
 
-A project is limited to 100 header rules. Each line in the `_headers` file has a 1,000 character limit. The entire line, including spacing, header name, and value, counts towards this limit.
+A project is limited to 100 header rules. Each line in the `_headers` file has a 2,000 character limit. The entire line, including spacing, header name, and value, counts towards this limit.
 
 If a header is applied twice in the `_headers` file, the values are joined with a comma separator. Headers defined in the `_headers` file override what Cloudflare Pages ordinarily sends, so be aware when setting security headers. Cloudflare reserves the right to attach new headers to Pages projects at any time in order to improve performance or harden the security of your deployments.
 
@@ -87,9 +89,7 @@ The matched value can be referenced within the header value as the `:splat` plac
 
 #### Placeholders
 
-A placeholder can be defined with `:placeholder_name`. A colon (`:`) indicates the start of a placeholder and the name that follows must be composed of alphanumeric characters and underscores (`:\w+`). Every named placeholder can only be referenced once. Placeholders match all characters apart from the delimiter, which when part of the host, is a period (`.`) or a forward-slash (`/`) and may only be a forward-slash (`/`) when part of the path.
-
-Similarly, the matched value can be used in the header values with `:placeholder_name`.
+{{<render file="_headers_redirects_placeholders.md" withParameters="header">}}
 
 ```txt
 ---

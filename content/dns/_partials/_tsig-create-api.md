@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-To create a TSIG using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-tsig)-create-tsig) request.
+To create a TSIG using the API, send a [POST](/api/operations/secondary-dns-(-tsig)-create-tsig) request.

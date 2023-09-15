@@ -22,7 +22,7 @@ let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNING_PATH_DIR = join(ROOT, "assets/json");
+const LEARNING_PATH_DIR = join(ROOT, "data/learning-paths");
 const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
@@ -33,10 +33,15 @@ async function walk(dir: string) {
   await Promise.all(
     files.map(async (name) => {
       let abs = join(dir, name);
-      if (name.endsWith(".html")) return task(abs);
-
-      let stats = await fs.stat(abs);
-      if (stats.isDirectory()) return walk(abs);
+      let supportOtherLangsPath = "/support/other-languages";
+      if (process.platform === "win32") {
+        supportOtherLangsPath = supportOtherLangsPath.replaceAll("/", "\\");
+      }
+      if (!abs.includes(supportOtherLangsPath)) {
+        if (name.endsWith(".html")) return task(abs);
+        let stats = await fs.stat(abs);
+        if (stats.isDirectory()) return walk(abs);
+      }
     })
   );
 }
@@ -177,14 +182,17 @@ async function testREDIRECTS(file: string) {
     let exists = false;
     if (!line.startsWith("#")) {
       const result = line.match(destinationURLRegex);
-
       if (result !== null) {
         const match = result[1];
-        let local = join(PUBDIR, match);
-        exists = existsSync(local);
+        if (match.startsWith('/api/')) {
+          return;
+        } else {
+          let local = join(PUBDIR, match);
+          exists = existsSync(local);
 
-        if (!exists) {
-          REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
+          if (!exists) {
+            REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
+          }
         }
       }
     }
@@ -227,6 +235,12 @@ async function task(file: string) {
           html: content,
           text: `Missing "href" value`,
         });
+      }
+
+      if (target && target.includes("/support/other-languages")) {
+        return;
+      } else if (target && (target.startsWith("/api/") || target === "/api")) {
+        return;
       }
 
       let exists: boolean;
@@ -306,9 +320,9 @@ try {
 try {
   await walkJsonFiles(LEARNING_PATH_DIR);
   if (!JSON_ERRORS && !JSON_WARNS) {
-    console.log("\n~> /assets/json files DONE~!\n\n");
+    console.log("\n~> /data/learning-paths/ files DONE~!\n\n");
   } else {
-    let msg = "\n~> /assets/json files DONE with:";
+    let msg = "\n~> /data/learning-paths/ files DONE with:";
     if (JSON_ERRORS > 0) {
       process.exitCode = 1;
       msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";

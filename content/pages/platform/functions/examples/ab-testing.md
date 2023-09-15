@@ -5,7 +5,7 @@ summary: Set up an A/B test by controlling what page is served based on
   on the origin.
 tags:
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: A/B testing with middleware
 weight: 1001
 layout: example

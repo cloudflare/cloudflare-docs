@@ -4,12 +4,12 @@ logo: <svg width="64" height="65" viewBox="0 0 64 65" xmlns="http://www.w3.org/2
 product:
   title: Health Checks
   url: /health-checks/
+  group: Application performance
 
 meta:
   title: Cloudflare Health Checks docs
   description: Standalone Health Checks monitors an IP address or hostname for origin servers or applications.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/health-checks
@@ -17,3 +17,7 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: health-checks

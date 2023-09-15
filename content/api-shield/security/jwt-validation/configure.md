@@ -30,9 +30,7 @@ Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-va
 | `credentials` | This describes the cryptographic public keys that should be used to validate JWTs. This field must be a JSON web key. | See example below. | See note below. |
 
 {{<Aside type="note">}}
-
 For `credentials`, we support `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them. We allow up to 4 different keys in order to aid in key rollover.
-
 {{</Aside>}}
 
 ## Create a Token Validation Configuration JSON object
@@ -70,12 +68,13 @@ Refer to the example below to view the configuration using information required 
 
 Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-Example using cURL:
-
-```json
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--H 'Content-Type: application/json' \
--d '{
+```bash
+---
+header: Example using cURL
+---
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
+--header "Content-Type: application/json" \
+--data '{
     "token_type": "jwt",
     "title": "example title",
     "description": "example description",
@@ -107,7 +106,7 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Navigate to **Security** > **Events** to view the Firewall Events.
-3. Filter for a specific rule ID. The rule ID used for filtering can be obtained from the response after creating the `POST` command to send the token validation configuration to Cloudflare’s API.
+3. Filter for a specific rule ID. The rule ID used for filtering can be obtained from the response of a `GET` (`GET https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation`) request after having created a token configuration using the `POST` request. The rule ID will be present as soon as the rule has been correctly setup. 
 
 ## Maintenance
 
@@ -118,21 +117,20 @@ It is best practice to rotate keys after some time. To support updating the keys
 The input to updating the keys is the same as when creating a configuration where you supplied the initial keys using the credentials key and needs to be a JWK. 
 
 {{<Aside type="note">}} 
-
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support. 
 
 It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
-
 {{</Aside>}}
 
 Use the `PUT` command to update keys. 
 
-Example with cURL:
-
-```json
-curl -X PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
--H 'Content-Type: application/json' \
--d '{
+```bash
+---
+header: Example using cURL
+---
+curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
+--header 'Content-Type: application/json' \
+--data '{
         "keys": [
             {
                 "kty": "EC",
@@ -163,17 +161,16 @@ You may want to first log requests that fail the policy in the firewall and only
 Use `PATCH` to update other configuration parameters. 
 
 {{<Aside type="note">}} 
-
 You can only modify the following fields with `PATCH`: `title`, `description`, `action`, `enabled`, and `allow_absent_token`. Use `PUT` to modify JWK material. 
-
 {{</Aside>}}
 
-Example with cURL: 
-
-```json
-curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}' \
--H 'Content-Type: application/json' \
--d '{
+```bash
+---
+header: Example using cURL
+---
+curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}" \
+--header "Content-Type: application/json" \
+--data '{
     "description": "example description",
     "allow_absent_token": false,
 }'
@@ -202,20 +199,20 @@ Here is an overview of how JWT Validation processes incoming requests:
 2. We decode the JWT and look for the JWTs header KID claim.
 3. We use the KID and ALG claim to find the correct keys in the list of supplied keys. 
 
-  {{<Aside type="Note">}}
+  {{<Aside type="note">}}
   The absence of matching keys directly marks the JWT as invalid.
   {{</Aside>}}
 
 4. We validate the authenticity of the JWT by checking the signature using the selected key.
 5. Should the JWT contain an EXP claim (expiration time), we validate that the JWT is not expired. 
 
-  {{<Aside type="Note">}} 
+  {{<Aside type="note">}} 
   We allow a mismatch of up to 60 seconds to account for clock drifts between the Cloudflare network and the JWT issuer. A token may still be regarded as valid one minute after it was supposed to expire when both clocks are perfectly in sync.
   {{</Aside>}}
 
 6. Should the JWT contain a NBF claim (not before time), we validate that the JWT is already valid. 
 
-  {{<Aside type="Note">}} 
+  {{<Aside type="note">}} 
   The same accuracy applies as for EXP claims.  As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator.
   {{</Aside>}}
 

@@ -21,17 +21,24 @@ SSH certificates include one or more `principals` in their signature which indic
 
 By default, SSH servers authenticate the Unix username against the principals listed in the user's certificate. You can configure your SSH server to accept principals that do not match the Unix username.
 
+{{<Aside type="note">}}
+Differing usernames do not work with the browser-based terminal. If you would like to use short-lived certificates with the browser-based terminal, you will need your users' usernames to match.
+{{</Aside>}}
+
 **Username matches a different email**
 
 To allow `jdoe@example.com` to log in as the user `johndoe`, add the following to the server's `/etc/ssh/sshd_config`:
 
 ```txt
 Match user johndoe
-  AuthorizedPrincipalsCommand echo 'jdoe'
+  AuthorizedPrincipalsCommand /bin/echo 'jdoe'
   AuthorizedPrincipalsCommandUser nobody
 ```
 
-This tells the SSH server that, when someone tries to authenticate as the user `johndoe`, check their certificate for the principal `jdoe`.
+This tells the SSH server that, when someone tries to authenticate as the user `johndoe`, check their certificate for the principal `jdoe`. This would allow the user `jdoe@example.com` to sign into the server with a command such as:
+```sh
+$ ssh johndoe@server
+```
 
 **Username matches multiple emails**
 
@@ -44,7 +51,7 @@ Match user vmuser
 
 This tells the SSH server to load a list of principles from a file. Then, in `/etc/ssh/vmusers-list.txt`, list the email prefixes that can log in as `vmuser`, one per line:
 
-```text
+```txt
 jdoe
 bwayne
 robin
@@ -56,7 +63,7 @@ To allow any Access user to log in as `vmuser`, add the following command to the
 
 ```txt
 Match user vmuser
-  AuthorizedPrincipalsCommand bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
+  AuthorizedPrincipalsCommand /bin/bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
   AuthorizedPrincipalsCommandUser nobody
 ```
 
@@ -67,7 +74,7 @@ This command takes the certificate presented by the user and authorizes whatever
 To allow any Access user to log in with any username, add the following to the server's `/etc/ssh/sshd_config`:
 
 ```txt
-AuthorizedPrincipalsCommand bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
+AuthorizedPrincipalsCommand /bin/bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
 AuthorizedPrincipalsCommandUser nobody
 ```
 

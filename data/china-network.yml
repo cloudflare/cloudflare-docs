@@ -4,13 +4,19 @@ logo: <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24.3
 product:
   title: China Network
   url: /china-network/
+  group: Application performance
+  additional_groups: [Application security]
 
 meta:
   title: Cloudflare China Network docs
   description: The Cloudflare China Network is a global network that offers a fast experience for visitors inside and outside of China.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: china-network

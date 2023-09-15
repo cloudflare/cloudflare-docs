@@ -1,9 +1,9 @@
 ---
 title: Troubleshooting
 pcx_content_type: navigation
-weight: 11
+weight: 12
 meta:
-  title: Troubleshooting — DNS records
+    title: Troubleshooting — DNS records
 ---
 
 # Troubleshooting — DNS records

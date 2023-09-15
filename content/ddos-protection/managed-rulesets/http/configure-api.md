@@ -22,13 +22,14 @@ You can create overrides at the zone level and at the account level. Account-lev
 
 {{<Aside type="warning" header="Important">}}
 * The HTTP DDoS Attack Protection managed ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
+* {{<render file="managed-rulesets/_read-only-rules-note.md">}}
 * Currently, account-level overrides for the HTTP DDoS Attack Protection managed ruleset are only available via API.
 {{</Aside>}}
 
 ### Creating multiple rules
 
 {{<Aside type="note">}}
-Only customers on an Enterprise plan with the Advanced DDoS Protection subscription can create more than one rule.
+Only available to Enterprise customers with the Advanced DDoS Protection subscription, which can create up to 10 rules.
 {{</Aside>}}
 
 Create multiple rules in the `ddos_l7` phase entry point ruleset to define different overrides for different sets of incoming requests. Set each rule expression according to the traffic whose HTTP DDoS protection you wish to customize.
@@ -45,11 +46,15 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * All rules tagged with `<TAG_NAME>` will have a sensitivity level of `low`.
 * The rule with ID `<MANAGED_RULESET_RULE_ID>` will use the `block` action.
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/ddos_l7/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/ddos_l7/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Execute HTTP DDoS Attack Protection managed ruleset in the zone-level phase entry point ruleset",
   "rules": [
     {
@@ -82,7 +87,7 @@ curl -X PUT \
 The response returns the created (or updated) phase entry point ruleset.
 
 <details>
-<summary>Example response</summary>
+<summary>Response</summary>
 <div>
 
 ```json
@@ -142,14 +147,18 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection managed ruleset (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
 
 {{<Aside type="note">}}
-Custom rule expressions (different from `"true"`) require an Enterprise plan with the Advanced DDoS Protection subscription.
+Custom rule expressions (different from `"true"`) and the `log` action require an Enterprise plan with the Advanced DDoS Protection subscription.
 {{</Aside>}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/ddos_l7/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/ddos_l7/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Disable a managed ruleset rule for allowlisted IP addresses",
   "rules": [
     {
@@ -175,7 +184,7 @@ curl -X PUT \
 The response returns the created (or updated) phase entry point ruleset.
 
 <details>
-<summary>Example response</summary>
+<summary>Response</summary>
 <div>
 
 ```json

@@ -8,15 +8,15 @@ weight: 1
 
 The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record. Cloudflare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records.
 
-![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/dns/static/proxy-status-screenshot.png)
+![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/images/dns/proxy-status-screenshot.png)
 
 ---
 
 ## Proxied records
 
-When an `A`, `AAAA`, or `CNAME` record is **Proxied** — also known as being orange-clouded — DNS queries for these will resolve to Cloudflare Anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
+{{<render file="_proxied-records-definition.md">}}
 
-This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests to your application, as well as protect your origin server from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
+{{<render file="_mix-proxied-and-unproxied.md">}}
 
 Because requests to proxied hostnames go through Cloudflare before reaching your origin server, all requests will appear to be coming from Cloudflare's IP addresses (and could potentially be blocked or rate limited). If you use proxied records, you may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/).
 
@@ -49,12 +49,12 @@ For enhanced security, we recommend rolling your origin IP addresses at your hos
 
 Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records.
 
-To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/).
-
 ---
 
 ## DNS-only records
 
 When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being gray-clouded — DNS queries for these will resolve to the record's normal IP address. 
+
+{{<render file="_mix-proxied-and-unproxied.md">}}
 
 In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) requests to your application.

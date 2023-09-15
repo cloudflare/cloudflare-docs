@@ -48,6 +48,10 @@ After purchasing a gateway subscription, create a gateway.
 
 If you are using your gateway for backend services, you may want to use Cloudflare Zero Trust to [restrict gateway access](/web3/how-to/restrict-gateway-access/).
 
-## Step 5 - Use the gateway
+## Step 5 - Set up usage notifications
+
+{{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}
+
+## Step 6 - Use the gateway
 
 Once you have created a gateway and updated your Cloudflare settings, you can start using your [IPFS](/web3/how-to/use-ipfs-gateway/), [Ethereum](/web3/how-to/use-ethereum-gateway/), or [Polygon](/web3/how-to/use-polygon-gateway/) gateway.

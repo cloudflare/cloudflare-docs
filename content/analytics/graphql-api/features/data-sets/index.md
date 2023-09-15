@@ -16,13 +16,15 @@ identifies the type of data they return:
   name of the relevant product, for instance `loadBalancingRequests*` nodes.
 
 * **Adaptive Sampling** - Nodes that represent data acquired using adaptive
-  sampling incorporate the `Adaptive` suffix. For more details, please see
+  sampling incorporate the `Adaptive` suffix. For more details, refer to
   [sampling][1].
 
 * **Aggregated data** - Nodes that represent aggregated data include the
   `Groups` suffix. For example, the `loadBalancingRequestsAdaptiveGroups` node
   represents aggregated data for Load Balancing requests. Aggregated data is
-  returned in an array of `...Group` objects.
+  returned in an array of `...Group` objects. Please note: we have a node that
+  currently excluded from that naming convention - `workersInvocationsAdaptive`
+  (beta).
 
 * **Raw data** - Raw data nodes, such as `loadBalancingRequestsAdaptive`, are
   not aggregated and so do not incorporate the `Groups` suffix. Raw data is

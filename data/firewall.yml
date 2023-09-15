@@ -4,13 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill-rule="
 product:
   title: Firewall Rules
   url: /firewall/
+  group: Application security
 
 meta:
   title: Cloudflare Firewall Rules docs
   description: Create rules that examine incoming HTTP traffic against a set of
     powerful filters to block, challenge, log, or allow matching requests.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -20,3 +20,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: firewall

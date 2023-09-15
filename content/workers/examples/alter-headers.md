@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Change the headers sent in a request or returned in a response.
+summary: Example of how to add, change, or delete headers sent in a request or returned in a response.
 tags:
   - Headers
   - Middleware
@@ -10,8 +10,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -23,44 +23,51 @@ export default {
 
     // Add a custom header with a value
     newResponse.headers.append(
-      'x-workers-hello',
-      'Hello from Cloudflare Workers'
+      "x-workers-hello",
+      "Hello from Cloudflare Workers"
     );
 
     // Delete headers
-    newResponse.headers.delete('x-header-to-delete');
-    newResponse.headers.delete('x-header2-to-delete');
-    
+    newResponse.headers.delete("x-header-to-delete");
+    newResponse.headers.delete("x-header2-to-delete");
+
     // Adjust the value for an existing header
-    newResponse.headers.set('x-header-to-change', 'NewValue');
+    newResponse.headers.set("x-header-to-change", "NewValue");
     return newResponse;
   },
 };
 ```
+
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts">}}
 
-```js
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+```ts
+const handler: ExportedHandler = {
+  async fetch(request: Request) {
+    const response = await fetch(request);
 
-async function handleRequest(request) {
-  const response = await fetch(request);
-  // Clone the response so that it's no longer immutable
-  const newResponse = new Response(response.body, response);
-  // Add a custom header with a value
-  newResponse.headers.append('x-workers-hello', 'Hello from Cloudflare Workers');
-  // Delete headers
-  newResponse.headers.delete('x-header-to-delete');
-  newResponse.headers.delete('x-header2-to-delete');
-  // Adjust the value for an existing header
-  newResponse.headers.set('x-header-to-change', 'NewValue');
+    // Clone the response so that it's no longer immutable
+    const newResponse = new Response(response.body, response);
 
-  return newResponse;
-}
+    // Add a custom header with a value
+    newResponse.headers.append(
+      "x-workers-hello",
+      "Hello from Cloudflare Workers"
+    );
+
+    // Delete headers
+    newResponse.headers.delete("x-header-to-delete");
+    newResponse.headers.delete("x-header2-to-delete");
+
+    // Adjust the value for an existing header
+    newResponse.headers.set("x-header-to-change", "NewValue");
+    return newResponse;
+  },
+};
+export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
-You can also use the [`custom-headers-example` template](https://github.com/codewithkristian/custom-headers-example) to deploy this code to your custom domain.
+You can also use the [`custom-headers-example` template](https://github.com/kristianfreeman/custom-headers-example) to deploy this code to your custom domain.

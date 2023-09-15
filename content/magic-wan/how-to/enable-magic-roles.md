@@ -1,7 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Enable Magic user roles
-weight: 8
+meta:
+    description: You can determine which users have, or do not have, configuration edit access for Magic products.
 ---
 
-{{<render file="../../magic-transit/_partials/_magic-user-role.md">}}
+{{<render file="_magic-user-role.md" productFolder="magic-transit" >}}

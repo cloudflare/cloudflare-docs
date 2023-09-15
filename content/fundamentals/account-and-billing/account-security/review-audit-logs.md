@@ -2,6 +2,8 @@
 title: Review audit logs
 pcx_content_type: how-to
 weight: 3
+aliases:
+- /fundamentals/account-and-billing/account-security/review-audit-logs/
 ---
 
 # Review audit logs
@@ -26,7 +28,7 @@ You can search these audit logs by user email or domain and filter by date range
 
 ### Using the API
 
-To get audit logs from the Cloudflare API, send a [GET request](https://developers.cloudflare.com/api/operations/audit-logs-get-account-audit-logs).
+To get audit logs from the Cloudflare API, send a [GET request](/api/operations/audit-logs-get-account-audit-logs).
 
 We recommending using the API for downloading historical audit log data.
 

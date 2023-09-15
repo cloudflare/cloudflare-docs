@@ -14,6 +14,4 @@ Firewall rules allow users to create rules that inspect incoming traffic and blo
 Use Cloudflare Firewall Rules if you do not have access to [WAF custom rules](/waf/custom-rules/).
 {{</Aside>}}
 
-Even though firewall rules are not based on the [Ruleset Engine](/ruleset-engine/), you can use the same [Rules language](/ruleset-engine/rules-language/) to define firewall rule expressions.
-
 For more information on firewall rules, refer to [Cloudflare Firewall Rules](/firewall/).

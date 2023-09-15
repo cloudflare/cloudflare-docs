@@ -1,0 +1,8 @@
+name: KV
+
+product:
+  title: KV
+  group: Developer platform
+  additional_groups: [Storage]
+  url: /workers/runtime-apis/kv/
+  grid_placeholder: true

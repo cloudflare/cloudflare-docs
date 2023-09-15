@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
 title: Customize a waiting room
-weight: 2
+weight: 3
 ---
 
-# Customize a waiting room 
+# Customize a waiting room
 
-A waiting room can be customized from the dashboard or via API.
+You can customize your waiting room from the dashboard or via API.
 
 ## Customize a waiting room from the dashboard
 
@@ -96,7 +96,7 @@ The following script within the `<body>` section after `<main>` fetches the wait
 
 #### Available variables
 
-When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room).
+When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/operations/waiting-room-create-waiting-room).
 
 #### Multiple-language support
 
@@ -111,7 +111,7 @@ If you are using images or other resources for your customized waiting room, **d
 To preview the appearance of a waiting room:
 
 1.  In your application, go to **Traffic** > **Waiting Room**.
-2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
+2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
 4.  Select **Preview waiting room**:
 
@@ -120,7 +120,7 @@ To preview the appearance of a waiting room:
 
 ### Troubleshooting
 
-If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
+If you notice something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
 
 ## Customize a waiting room via API
 
@@ -213,7 +213,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 ### Preview the default or current waiting room web page
 
-After [generating a preview URL](https://developers.cloudflare.com/api/operations/waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
+After [generating a preview URL](/api/operations/waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
 ```txt
 GET https://waitingrooms.dev/preview/{preview-id}

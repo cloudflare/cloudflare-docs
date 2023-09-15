@@ -32,9 +32,9 @@ addEventListener("email", (event) => {
 
 ---
 
-## Syntax: Module Worker
+## Syntax: ES modules
 
-`EmailEvent` can be handled in Workers functions written using the Module Worker syntax by adding an `email` function to your module's exported handlers:
+`EmailEvent` can be handled in Workers functions written using the [ES modules format](/workers/learning/migrate-to-module-workers/) by adding an `email` function to your module's exported handlers:
 
 ```js
 export default {
@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-### Properties
+### Parameters
 
 {{<definitions>}}
 
@@ -54,10 +54,10 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - An object containing the bindings associated with your Module Worker, such as KV namespaces and Durable Objects.
+  - An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
 
 - `ctx` {{<type>}}object{{</type>}}
-  - An object containing the context associated with your Module Worker. Currently, this object just contains the `waitUntil` function.
+  - An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
 
 {{</definitions>}}
 
@@ -100,11 +100,11 @@ export default {
 
   - Size of the email message content.
 
-- {{<code>}}setReject(reason{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}setReject(reason{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Reject this email message by returning a permanent SMTP error back to the connecting client, including the given reason.
 
-- {{<code>}}forward(rcptTo{{<param-type>}}string{{</param-type>}}, headers{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}forward(rcptTo{{<param-type>}}string{{</param-type>}}, headers{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Forward this email message to a verified destination address of the account. If you want, you can add extra headers to the email message. Only `X-*` headers are allowed.
   - When the promise resolves, the message is confirmed to be forwarded to a verified destination address.

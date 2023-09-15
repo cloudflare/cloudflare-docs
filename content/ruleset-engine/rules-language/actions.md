@@ -33,14 +33,14 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   <tbody>
     <tr>
       <td>
-        <strong>Legacy CAPTCHA</strong><br />
+        <strong>Interactive Challenge</strong><br />
         <br />
         API value:<br />
         <code>challenge</code>
       </td>
       <td>
         <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
-        <p>The client that made the request must pass a CAPTCHA challenge.</p>
+        <p>The client that made the request must pass an interactive challenge.</p>
         <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
       </td>
       <td>Yes</td>
@@ -80,7 +80,6 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
-          <li>Show a CAPTCHA challenge.</li>
         </ul>
       </td>
       <td>Yes</td>
@@ -237,6 +236,26 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         </p>
         <p>
           In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/configuration-rules/create-dashboard/">create a Configuration Rule</a>.
+        </p>
+      </td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Compress Response</strong><br />
+        <br />
+        API value:<br />
+        <code>compress_response</code>
+      </td>
+      <td>
+        <p>
+          Defines compression settings for delivering responses to website visitors.
+        </p>
+        <p>
+          Only available for <a href="/rules/compression-rules/">Compression Rules</a>, in the <code>http_response_compression</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/compression-rules/create-dashboard/">create a compression rule</a>.
         </p>
       </td>
       <td>No</td>

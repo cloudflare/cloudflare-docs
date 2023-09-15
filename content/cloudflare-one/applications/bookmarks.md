@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Add bookmarks
-weight: 6
+weight: 8
 ---
 
 # Add bookmarks
@@ -10,7 +10,7 @@ With Cloudflare Zero Trust, you can show applications on the [App Launcher](/clo
 
 Links to applications not protected by Access can be added as bookmarks. To add a bookmark:
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application** > **Bookmark**.
 
@@ -22,9 +22,9 @@ Links to applications not protected by Access can be added as bookmarks. To add 
 
 6. (Optional) To add a custom logo for your application, select **Custom** and enter the image URL.
 
-    {{<Aside type="note">}}
-    If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-    {{</Aside>}}
+   {{<Aside type="note">}}
+   If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+   {{</Aside>}}
 
 7. Select **Add application** to save and exit.
 

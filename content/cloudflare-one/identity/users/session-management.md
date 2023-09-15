@@ -29,7 +29,7 @@ If the global session duration is longer than an application’s session length,
 
 You can set a global session duration between 15 minutes and 1 month.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 2. Under **Global session timeout**, select **Edit**,
 3. Select the desired timeout duration from the dropdown menu.
 
@@ -37,7 +37,7 @@ You can set a global session duration between 15 minutes and 1 month.
 
 You can set an application session duration ranging from immediate timeout to 1 month.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the application you want to configure and select **Edit**.
 3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
 
@@ -51,7 +51,7 @@ The authentication process involves Cloudflare Access issuing a signed JSON Web 
 
 To immediately terminate all active sessions for a specific application:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Locate the application for which you would like to revoke active sessions and select **Edit**.
 
@@ -67,11 +67,11 @@ If you want to permanently revoke a user's access:
 
 1. Disable their account in your identity provider so that they cannot authenticate.
 
-2. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Users**.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Users**.
 
-3. Search for and select the user you want to revoke.
+3. Select the checkbox next to the user you want to revoke.
 
-4. Select **Update Status** > **Revoke access**.
+4. Select **Action** > **Revoke access**.
 
 The user will no longer be able to log in to any application protected by Access. The user will still count towards your seat subscription until you [remove the user](/cloudflare-one/identity/users/seat-management) from your account.
 

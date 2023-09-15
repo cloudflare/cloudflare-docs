@@ -4,11 +4,12 @@ pcx_content_type: tutorial
 weight: 5
 meta:
     title: Deliver emails to the junk email folder - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the junk email folder and administrative quarantine
 
-In this tutorial, you will learn to deliver `Suspicious` and `Bulk` messages to the user’s junk email folder, and `Malicious`, `Spam`, and `Spoof` messages to the Administrative Quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to the user’s junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the Administrative Quarantine (this requires an administrator to release the emails).
 
 ## Configure domains
 
@@ -20,4 +21,4 @@ In this tutorial, you will learn to deliver `Suspicious` and `Bulk` messages to 
 
 ## Create transport rules
 
-{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 Deliver to Junk Email folder`;;`SUSPICIOUS`, `BULK`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules.png;;`Area 1 Admin Managed Host Quarantine`;; `MALICIOUS`, `SPAM`, `SPOOF`;;_Redirect the message to_ > _hosted quarantine_;;step10-hosted-quarantine-case5.png">}}
+{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 Deliver to Junk Email folder`;;`SUSPICIOUS`, `BULK`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules.png;;`Area 1 Admin Managed Host Quarantine`;; `MALICIOUS`, `UCE`, `SPOOF`;;_Redirect the message to_ > _hosted quarantine_;;step10-hosted-quarantine-case5.png">}}

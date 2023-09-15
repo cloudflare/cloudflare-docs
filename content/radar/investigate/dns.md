@@ -45,8 +45,6 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain
 
 Returns the following response:
 
-Returns the following response:
-
 ```json
 {
   "clientCountryAlpha2": "RU",
@@ -65,7 +63,7 @@ As expected, most queries come from Russia.
 Note that these examples return the total number of DNS queries from a location to a hostname, _out_ of the total DNS queries to a given hostname. In this sense, it is expected that locations with higher population numbers — like the United States — frequently appear in the top spots, even if the actual percentage is low.
 {{</Aside>}}
 
-You can also provide multiple hostnames. Refer to [Get top locations by DNS queries](https://developers.cloudflare.com/api/operations/radar_get_DnsTopLocations) for more information. This is useful when the application you want to explore uses several hostnames to serve its content (like a hostname for the main website, another hostname dedicated to its API, etc.).
+You can also provide multiple hostnames. Refer to [Get DNS top locations](/api/operations/radar-get-dns-top-locations) for more information. This is useful when the application you want to explore uses several hostnames to serve its content (like a hostname for the main website, another hostname dedicated to its API, etc.).
 
 ## Next steps
 

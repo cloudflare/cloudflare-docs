@@ -10,7 +10,9 @@ meta:
 
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 
-While Cloudflare offers several products that relate to bot traffic, this section reviews our *bot-specific products*, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
+While Cloudflare offers several products that relate to bot traffic, this section reviews our bot-specific products, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Which bot solution do I need?
 
@@ -20,13 +22,44 @@ If you have a large domain with a lot of traffic, we recommend Bot Management fo
 
 To see the differences in features and functionality, visit [Plans](/bots/plans/).
 
-## Availability
+## Features
 
-{{<feature-table id="security.bots">}}
+{{<feature header="Bot Fight Mode" href="/bots/get-started/free/">}}
+Detect and mitigate bot traffic on your domain. {{</feature>}}
 
-## Next steps
+{{<feature header="Super Bot Fight Mode" href="/bots/get-started/">}}
+Identify traffic matching patterns of known bots, challenge or block bots, protect static resources, and view analytics to help you understand bot traffic using Super Bot Fight Mode. {{</feature>}}
 
-{{<button-group>}}
-  {{<button type="primary" href="/bots/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="/bots/concepts/">}}Learn more{{</button>}}
-{{</button-group>}}
+{{<feature header="Bot Analytics" href="/bots/bot-analytics/">}}
+Use Bot Analytics to dynamically examine bot traffic.
+{{</feature>}}
+
+{{<feature header="Firewall variables" href="/bots/reference/bot-management-variables/">}}
+Access several new variables within the Firewall expression builder.
+{{</feature>}}
+
+## Related products
+
+{{<related header="API Shield" href="/api-shield/" product="api-shield">}}
+Identify and address API vulnerabilities using API Shield.
+{{</related>}}
+
+{{<related header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">}}
+Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflare's Autonomous Edge.
+{{</related>}}
+
+{{<related header="Turnstile" href="/turnstile/" product="turnstile">}}
+Use Cloudflare's smart CAPTCHA alternative to run less intrusive challenges.
+{{</related>}}
+
+{{<related header="WAF" href="/waf/" product="waf">}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</related>}}
+
+## More resources
+ 
+{{<resource-group>}}
+
+{{<resource header="Plans" href="https://www.cloudflare.com/plans/#overview" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
+ 
+{{</resource-group>}}

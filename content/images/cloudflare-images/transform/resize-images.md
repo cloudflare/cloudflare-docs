@@ -10,7 +10,7 @@ Resizing images in Cloudflare Images works by creating variants of your image. V
 
 Each variant has several properties, including the width and height of resized images.
 
-![Configure variants in Cloudflare Images](/images/static/variants.png)
+![Configure variants in Cloudflare Images](/images/images/variants.png)
 
 ## How to resize an image
 
@@ -34,7 +34,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
   --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
 ```
 
-Refer to the [API documentation](https://developers.cloudflare.com/api/operations/cloudflare-images-variants-list-variants) for more information regarding creating variants via API.
+Refer to the [API documentation](/api/operations/cloudflare-images-variants-list-variants) for more information regarding creating variants via API.
 
 {{</tab>}}
 {{</tabs>}}

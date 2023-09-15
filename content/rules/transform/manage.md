@@ -8,7 +8,7 @@ weight: 5
 
 You can perform the following operations in the **Transform Rules** page:
 
-- Create new Rewrite URL Rules, HTTP Request Header Modification Rules, and HTTP Response Header Modification Rules.
+- Create new rewrite URL rules, HTTP request header modification rules, and HTTP response header modification rules.
 - Configure Managed Transforms.
 - View a list of existing rules (both active and paused).
 - Activate or pause rules (turn on or off).
@@ -16,15 +16,15 @@ You can perform the following operations in the **Transform Rules** page:
 - Delete rules.
 - Reorder rules.
 
-![The Transform Rules page in the Cloudflare dashboard](/rules/static/transform/transform-rules-tab.png)
+![The Transform Rules page in the Cloudflare dashboard](/images/rules/transform/transform-rules-tab.png)
 
 ## Create rules
 
 In **Transform Rules** you can create the following rules:
 
-- [Rewrite URL Rules](/rules/transform/url-rewrite/create-dashboard/)
-- [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/create-dashboard/)
-- [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-dashboard/)
+- [Rewrite URL rules](/rules/transform/url-rewrite/create-dashboard/)
+- [HTTP request header modification rules](/rules/transform/request-header-modification/create-dashboard/)
+- [HTTP response header modification rules](/rules/transform/response-header-modification/create-dashboard/)
 
 Refer to each linked section for details on creating each rule type.
 
@@ -32,7 +32,7 @@ Refer to each linked section for details on creating each rule type.
 
 Manage your existing Transform Rules using the toggle and the links located on the right of the rule you want to change, or by using the handle located on the left of the rule.
 
-![For each rule in the rules list, you can change its order, enable/disable the rule, edit the rule, or delete the rule.](/rules/static/transform/rule-operations.png)
+![For each rule in the rules list, you can change its order, enable/disable the rule, edit the rule, or delete the rule.](/images/rules/transform/rule-operations.png)
 
 ### Enable or disable a rule
 

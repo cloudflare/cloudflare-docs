@@ -17,17 +17,21 @@ Magic WAN provides secure, performant connectivity and routing for your entire c
 
 With Magic WAN, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 
-Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels, [Cloudflare Network Interconnect](/network-interconnect/), Cloudflare Tunnel, [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners.
+Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels, [Cloudflare Network Interconnect](/network-interconnect/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners.
 
 ---
  
 ## Features
  
-{{<feature header="Health checks" href="/magic-wan/about/health-checks/">}}
-Magic WAN health checks monitor network status and the health of specific network components.
+{{<feature header="Magic WAN Connector" href="/magic-wan/connector/">}}
+Use Magic WAN Connector to automatically connect, steer, and shape any IP traffic.
 {{</feature>}}
 
-{{<feature header="Traffic steering" href="/magic-wan/about/traffic-steering/">}}
+{{<feature header="Probes" href="/magic-wan/reference/probe-construction/">}}
+Magic WAN sends health check probes to monitor network status and the health of specific network components.
+{{</feature>}}
+
+{{<feature header="Traffic steering" href="/magic-wan/reference/traffic-steering/">}}
 Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 

@@ -5,11 +5,11 @@ _build:
   list: never
 ---
 
-For a full list of properties, refer to [Create Load Balancer](https://developers.cloudflare.com/api/operations/load-balancers-create-load-balancer). If you need help with API authentication, refer to [Cloudflare API documentation](/fundamentals/api/).
+For a full list of properties, refer to [Create Load Balancer](/api/operations/load-balancers-create-load-balancer). If you need help with API authentication, refer to [Cloudflare API documentation](/fundamentals/api/).
 
 {{<Aside type="note">}}
 
-Since load balancers only exist on a zone — and not an account — you may need to get the zone `id` with the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) command.
+Since load balancers only exist on a zone — and not an account — you may need to get the zone `id` with the [List Zones](/api/operations/zones-get) command.
 
 {{</Aside>}}
 
@@ -49,6 +49,7 @@ curl -X POST \
     "location_strategy": {
       "prefer_ecs": "always",
       "mode": "resolver_ip"
+    },
     "random_steering": {
       "pool_weights": {
         "de90f38ced07c2e2f4df50b1f61d4194": 0.3,

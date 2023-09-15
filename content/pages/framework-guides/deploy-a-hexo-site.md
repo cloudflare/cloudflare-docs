@@ -49,21 +49,15 @@ $ hexo new "hello hexo"
 
 Inside of `hello-hexo.md`, use Markdown to write the content of the article. You can customize the tags, categories or other variables in the article. Refer to the [Front Matter section](https://hexo.io/docs/front-matter) of the [Hexo documentation](https://hexo.io/docs/) for more information.
 
-## Creating a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
-
-```sh
-$ cd my-hexo-site
-$ git init
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository.md">}}
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -90,12 +84,10 @@ Every time you commit new code to your Hexo site, Cloudflare Pages will automati
 
 Some Hexo themes or plugins have additional requirements for different Node.js versions. To use a specific Node.js version for Hexo:
 
-1. Go to **your Pages project**.
-2. Go to **Settings** > **Environment variables**. 
+1. Go to your Pages project.
+2. Go to **Settings** > **Environment variables**.
 3. Set the environment variable `NODE_VERSION` and a value of your required Node.js version (for example, `14.3`).
 
-![Follow the instructions above to set up an environment variable in the Pages dashboard](/pages/framework-guides/media/node-version-pages.png)
+![Follow the instructions above to set up an environment variable in the Pages dashboard](/images/pages/framework-guides/node-version-pages.png)
 
-## Related resources
-
-By completing this guide, you have successfully deployed your Hexo site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Hexo">}}

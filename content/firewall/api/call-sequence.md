@@ -10,37 +10,36 @@ The API call examples in this site illustrate the **recommended sequence** of ca
 
 The image below depicts this sequence, which can be applied for creating and editing rules. The reverse would apply for delete operations.
 
-![Recommended flow for calling the Cloudflare Filters API and Firewall Rules API when creating or editing rules](/firewall/static/recommended-flow.png)
+![Recommended flow for calling the Cloudflare Filters API and Firewall Rules API when creating or editing rules](/images/firewall/recommended-flow.png)
 
 Cloudflare recommends this sequence because it facilitates filter reusability and allows working with either API independently. Thanks to the standalone nature of Cloudflare Filters, the same filter can be shared in multiple firewall rules and in other future Cloudflare products and features.
 
-For example, a filter that matches all traffic for your API (that is, `http.request.uri.path matches "^/api/.*$"`) may disable caching, disable human CAPTCHAs, configure JSON custom errors, and appear in a firewall rule. With the recommended sequence above, you would just repeat steps 3-6 for every Cloudflare feature to configure against the same filter created in steps 1-2.
+For example, a filter that matches all traffic for your API (that is, `http.request.uri.path matches "^/api/.*$"`) may disable caching, disable human CAPTCHAs, configure JSON custom errors, and appear in a firewall rule. With the recommended sequence above, you would repeat steps 3-6 for every Cloudflare feature to configure against the same filter created in steps 1-2.
 
 However, for a `POST` operation, the **simplified sequence** — shown below — allows you to create both a filter and rule in the same call. In this case, the filter and rule only refer to each other.
 
-![Simple flow for invoking the Firewall Rules API to create both a filter and a rule in a single call](/firewall/static/simple-flow.png)
+![Basic flow for invoking the Firewall Rules API to create both a filter and a rule in a single call](/images/firewall/simple-flow.png)
 
 In this sequence, a single `POST` request to the `/firewall/rules` endpoint takes the filter object in the JSON to create the filter in the Filters API (also via a `POST` request). If successful, the firewall rule is created.
 
 Below is an example call and response using this method:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '[
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '[
   {
     "filter": {
       "expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34"
     },
     "action": "block"
   }
-]' 
+]'
 ```
 
 ```json

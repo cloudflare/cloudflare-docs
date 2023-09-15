@@ -20,7 +20,7 @@ layout: example
 3. Search in Xcode for `m3u8`, and open the `Streams` file
 4. Replace the value of `playlist_url` with the HLS manifest URL for your video.
 
-![Screenshot of a video with Cloudflare watermark at top right](/stream/static/ios-example-screenshot-edit-hls-url.png)
+![Screenshot of a video with Cloudflare watermark at top right](/images/stream/ios-example-screenshot-edit-hls-url.png)
 
 5. Click the Play button in Xcode to run the app, and play your video.
 

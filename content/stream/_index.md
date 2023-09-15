@@ -26,6 +26,8 @@ Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.clou
 {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream dashboard{{</button>}}
 {{</button-group>}}
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ---
 
 ## Features
@@ -60,6 +62,6 @@ Understand and analyze which videos and live streams are viewed most and break d
 
 {{<resource-group>}}
 
-{{<resource header="Billing" href="https://support.cloudflare.com/hc/en-us/articles/360016450871-Billing-for-Cloudflare-Stream" icon="price">}} Understand billing for Cloudflare Stream{{</resource>}}
+{{<resource header="Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}} Join the Stream developer community {{</resource>}}
 
-{{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Join the Stream developer community {{</resource>}}
+{{</resource-group>}}

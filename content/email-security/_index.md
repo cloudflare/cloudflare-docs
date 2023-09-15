@@ -13,9 +13,7 @@ Stop phishing attacks with Area 1 cloud-native email security service.
 
 {{<plan id="email.email_security.properties.availability.summary">}}
 
-Phishing is the root cause of upwards of 90% of breaches that lead to financial loss and brand damage. Cloudflare Area 1 email security is a cloud-native service that stops phishing attacks, the biggest cybersecurity threat, across all threat vectors - email, web, and network - either at the [edge](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) or in the cloud.
-
-With globally distributed sensors and comprehensive attack analytics, Area 1 proactively identifies phishing campaigns, attacker infrastructure, and attack delivery mechanisms during the earliest stages of a phishing attack cycle. Using flexible enforcement platforms, the Area 1 solution allows customers to take preemptive action against targeted phishing, including malware, spoofing attacks, payload-less Business Email Compromise attacks, supply chain phishing, and other advanced threats.
+{{<render file="_email-security-description.md">}}
 
 ---
  
@@ -39,6 +37,10 @@ Attackers often try to impersonate executives within an organization when sendin
  
 {{<related header="Email Routing" href="/email-routing/" product="email-routing">}}
 Email Routing simplifies the way you create and manage custom email addresses. Cloudflare Area 1 helps secure your mail infrastructure from phishing attacks.
+{{</related>}}
+
+{{<related header="DMARC Management" href="/dmarc-management/" product="dmarc-management">}}
+Stop brand impersonation. Track and manage every source that is sending emails from your domain.
 {{</related>}}
 
 ---

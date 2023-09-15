@@ -1,14 +1,14 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: Setup
 weight: 2
 meta:
-    title: Set up authenticated origin pulls
+    title: Set up Authenticated Origin Pulls
 ---
 
-# Set up authenticated origin pulls
+# Set up Authenticated Origin Pulls
 
-To set up authenticated origin pulls - which help ensure requests to your origin server come from the Cloudflare network - choose whether to enable them on [all hostnames in your zone](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or on a [per-hostname basis](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
+To set up Authenticated Origin Pulls - which help ensure requests to your origin server come from the Cloudflare network - choose whether to enable them on [all hostnames in your zone](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or on a [per-hostname basis](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 ---
 
@@ -28,7 +28,7 @@ Since per-hostname certificates are more specific, they take precedence over zon
 
 ### Delete a certificate
 
-Client certificates are not deleted from Cloudflare upon expiration unless a [delete](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-delete-certificate) or [replace](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-upload-certificate) request is sent to the Cloudflare API.
+Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/operations/zone-level-authenticated-origin-pulls-delete-certificate) or [replace](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate) request is sent to the Cloudflare API.
 
 However, requests are dropped at your origin if your origin only accepts a valid client certificate.
 
@@ -36,14 +36,14 @@ However, requests are dropped at your origin if your origin only accepts a valid
 
 For hostname:
 
-1.  [Upload the new certificate](https://developers.cloudflare.com/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
+1.  [Upload the new certificate](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
-2.  [Enable Authenticated Origin Pull for that specific hostname](https://developers.cloudflare.com/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
+2.  [Enable Authenticated Origin Pulls for that specific hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
 
 For global:
 
-1.  [Upload the new certificate](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-upload-certificate).
+1.  [Upload the new certificate](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate).
 
-2.  [Check whether new certificate is Active](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-get-certificate-details).
+2.  [Check whether new certificate is Active](/api/operations/zone-level-authenticated-origin-pulls-get-certificate-details).
 
-3.  Once certificate is active, [delete the previous certificate](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-delete-certificate).
+3.  Once certificate is active, [delete the previous certificate](/api/operations/zone-level-authenticated-origin-pulls-delete-certificate).

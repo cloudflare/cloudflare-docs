@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 11
 ---
@@ -44,7 +44,7 @@ back online.
 
 ### The nodes with the requested content are not publicly addressable.
 
-It's common for people who run an IPFS node on their home WiFi to have very long
+It's common for people who run an IPFS node on their home Wi-Fi to have very long
 wait times or a high rate of request failure. This is because the rest of the
 nodes in the IPFS network have difficulty connecting to them through their NAT
 (Internet router). This can be solved by setting up Port Forwarding on the

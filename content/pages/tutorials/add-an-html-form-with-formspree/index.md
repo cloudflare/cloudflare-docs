@@ -63,7 +63,7 @@ The `action` attribute determines where the form data is sent. You will update t
 
 {{<Aside type="note">}}
 
-Refer to the [HTML Forms tutorial](/pages/tutorials/forms/#Overview) on how to build an HTML form.
+Refer to the [HTML Forms tutorial](/pages/tutorials/forms/) on how to build an HTML form.
 
 {{</Aside>}}
 
@@ -99,7 +99,7 @@ Copy and paste the following content into your `public/index.html` file, which i
 
 Now you have an HTML document containing a Contact Us form with several fields for the user to fill out. However, you have not yet set the `action` attribute to a server that can handle the form data. You will do this in the next section of this tutorial.
 
-{{<Aside type="info" header="GitHub Repository">}}
+{{<Aside type="note" header="GitHub Repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/formspree/formspree-example-cloudflare-html). It is a live Pages application with a [live demo](https://formspree-example-cloudflare-html.pages.dev/) available, too.
 
@@ -115,11 +115,11 @@ Next, create a new form with the **+ New form** button. Name it `Contact-us form
 
 <GatsbyImage image="./new-form-dialog.png" alt="Creating a Formspree form" />
 
-![Creating a Formspree form](/pages/tutorials/add-an-html-form-with-formspree/new-form-dialog.png)
+![Creating a Formspree form](/images/pages/tutorials/new-form-dialog.png)
 
 You will then be presented with instructions on how to integrate your new form.
 
-![Formspree endpoint](/pages/tutorials/add-an-html-form-with-formspree/form-endpoint.png)
+![Formspree endpoint](/images/pages/tutorials/form-endpoint.png)
 
 Copy the `Form Endpoint` URL and paste it into the `action` attribute of the form you created above.
 

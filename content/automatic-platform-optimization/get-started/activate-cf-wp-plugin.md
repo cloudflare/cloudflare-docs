@@ -10,10 +10,11 @@ For users on the free plan, be sure to purchase APO before installing the WordPr
 
 ## Purchase APO
 
-1.  Open your Cloudflare dashboard.
-2.  Select the **Speed** tile and locate the **Optimized Delivery** section.
-3.  From **Automatic Platform Optimization for WordPress**, select **Purchase**.
-4.  Enter your payment information and select **Confirm payment**.
+1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2.  Select your account and zone.
+3.  Go to **Speed** > **Optimization** > **Content Optimization**.
+4.  For **Automatic Platform Optimization for WordPress**, select **Purchase**.
+5.  Enter your payment information and select **Confirm payment**.
 
 ## Install and activate the Cloudflare WordPress plugin
 

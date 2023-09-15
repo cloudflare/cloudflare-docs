@@ -19,7 +19,7 @@ You will learn:
 
 Other features you will learn about:
 
-- [Custom Domain Delivery](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains): How to serve Cloudflare Images from your own domain name.
+- [Custom Domain Delivery](/images/cloudflare-images/serve-images/serve-images-custom-domains/): How to serve Cloudflare Images from your own domain name.
 - [Custom IDs](/images/cloudflare-images/upload-images/custom-id/): How to store and serve your images under their own, SEO friendly Unicode name and path.
 - [Flexible Image transformation](/images/cloudflare-images/transform/flexible-variants/): How to use transformation parameters in the delivery URL to transform an image on the fly.
 - Adaptive Optimized Format Delivery: How Cloudflare Images delivers image formats optimized to every browser, including WebP and AVIF.
@@ -34,11 +34,11 @@ For illustrative purposes, this tutorial uses the [Imagejam demo website](https:
 
 The demo website we are going to use for this tutorial is not (yet) using Cloudflare Images. If you [browse the cake gallery](https://imagejam.net/step-1/cakes/) page for Step 1, you can see many image thumbnails.
 
-![The demo website has lots of thumbnail images of cakes.](/images/static/tutorials/integrate-cloudflare-images/step-01-cakes.jpg)
+![The demo website has lots of thumbnail images of cakes.](/images/images/tutorials/integrate-cloudflare-images/step-01-cakes.jpg)
 
 Selecting an image displays a bigger version of it, as well as its URL, real size and display size.
 
-![Selecting the thumnail shows a bigger version of the image, and its real size.](/images/static/tutorials/integrate-cloudflare-images/step-01-cake.jpg)
+![Selecting the thumnail shows a bigger version of the image, and its real size.](/images/images/tutorials/integrate-cloudflare-images/step-01-cake.jpg)
 
 On this example, the image was served with a very high-resolution of 4288x2848 pixels, but is displayed at a much lower resolution. This means most of the pixels we downloaded were wasted upon display.
 
@@ -71,7 +71,7 @@ You need to start by uploading your images to Cloudflare Images. For that, you n
 
 After signing up, go to [the Cloudflare Images dashboard](https://dash.cloudflare.com/?to=/:account/images).
 
-![The Cloudflare Images dashboard.](/images/static/tutorials/integrate-cloudflare-images/step-02-images-dashboard.jpg)
+![The Cloudflare Images dashboard.](/images/images/tutorials/integrate-cloudflare-images/step-02-images-dashboard.jpg)
 
 From there, you could upload all your website images manually using the dashboard UI. However, we have a lot of images on our website, so we are going to import them in bulk using the [API upload](/images/cloudflare-images/upload-images/custom-id/).
 
@@ -149,7 +149,7 @@ If you need Cloudflare Images API credentials, refer to [Obtain Cloudflare Image
 
 ## Step 2: Use Cloudflare Images on default delivery domain
 
-Now that your website images [have been imported](#migrate-images-to-cloudflare-images), they are already accessible on Cloudflare Images. Zero setup required!
+Now that your website images [have been imported](#step-1---migrate-images-to-cloudflare-images), they are already accessible on Cloudflare Images. Zero setup required!
 
 For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served on the URL `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
@@ -174,7 +174,7 @@ Cloudflare Images ships by default with a single variant named `public`, but you
 
 For this tutorial, we created a second variant named `thumb` with 200x200 pixels, with a `cover` crop.
 
-![The settings for the "thumb" variant created in Cloudflare Images dash](/images/static/tutorials/integrate-cloudflare-images/step-02-variant-thumb.jpg)
+![The settings for the "thumb" variant created in Cloudflare Images dash](/images/images/tutorials/integrate-cloudflare-images/step-02-variant-thumb.jpg)
 
 Using the same image as before but with the `thumb` variant, we get a [much smaller file](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-%E3%83%84.jpg/thumb).
 
@@ -204,7 +204,7 @@ This configuration provides an `image_url` function that is used when building t
 
 Once deployed, your website will have [much smaller thumbnails](https://imagejam.net/step-2/), all resized and optimized by Cloudflare Images. Selecting an image, will show that, as expected, they are being served by Cloudflare Images. Their URL will be similar to `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-![The URL for the image shows it's being served by Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-cake.jpg)
+![The URL for the image shows it's being served by Cloudflare images](/images/images/tutorials/integrate-cloudflare-images/step-02-cake.jpg)
 
 Note as well that the displayed size now matches the real size of the image much more closely, if not perfectly. No more wasted downloaded pixels!
 
@@ -214,17 +214,17 @@ Note as well that the displayed size now matches the real size of the image much
 
 Inspecting the details of this image reveals that Cloudflare Images converted it to AVIF, shaving close to 50% in file size in the process, when compared to a JPG of the same resolution. This was made while maintaining the same quality.
 
-![Inspecting the image in Chrome show it was converted to AVIF.](/images/static/tutorials/integrate-cloudflare-images/step-02-avif.jpg)
+![Inspecting the image in Chrome show it was converted to AVIF.](/images/images/tutorials/integrate-cloudflare-images/step-02-avif.jpg)
 
 This happens because the browser used (Google Chrome in the screenshot) supports AVIF. Chrome advertises its AVIF support in the `Accept: image/avif` header it sends to Cloudflare Images while requesting the image. If you use another browser that does not support AVIF (like Firefox), Cloudflare Images will, instead, serve the image in WebP.
 
-![Inspecting the image in Firefox shows it was converted to WebP](/images/static/tutorials/integrate-cloudflare-images/step-02-webp-firefox.jpg)
+![Inspecting the image in Firefox shows it was converted to WebP](/images/images/tutorials/integrate-cloudflare-images/step-02-webp-firefox.jpg)
 
 ## Step 3: Use Cloudflare Images on custom delivery domain
 
 In [step 2](#step-2-use-cloudflare-images-on-default-delivery-domain), you learned how Cloudflare Images serves images on its default delivery domain.
 
-However, Cloudflare Images can also serve images from [custom domains](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains), no setup required — as long as the domain name is proxied by Cloudflare.
+However, Cloudflare Images can also serve images from [custom domains](/images/cloudflare-images/serve-images/serve-images-custom-domains/), no setup required — as long as the domain name is proxied by Cloudflare.
 
 For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` can be served from the URL `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
@@ -250,7 +250,7 @@ Here is the relevant extract of this file (edited for brevity):
 
 Once deployed, every image will be served from the custom domain. You can check this by [browsing the cake gallery](https://imagejam.net/step-3/cakes/) page for step 3. Selecting any image will show that its URL is as expected `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-![The URL for the image shows that it is being served from a custom domain](/images/static/tutorials/integrate-cloudflare-images/step-03-cake.jpg)
+![The URL for the image shows that it is being served from a custom domain](/images/images/tutorials/integrate-cloudflare-images/step-03-cake.jpg)
 
 ## Step 4: Use Cloudflare Images without changing existing images URLs
 
@@ -293,19 +293,19 @@ function extractVariant(url) {
 }
 ```
 
-In a nutshell, this code receives HTTP requests for images on they original URLs, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
+In a nutshell, this code receives HTTP requests for images on their original URLs, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
 
 Once the worker is deployed, your website will use Cloudflare Images with the original, unchanged URLs. Refer to [Step 4](https://imagejam.net/step-4/) in the demo website the check the result.
 
-![The optimized image by Cloudflare Images, with an unchanged URL](/images/static/tutorials/integrate-cloudflare-images/step-04-url.jpg)
+![The optimized image by Cloudflare Images, with an unchanged URL](/images/images/tutorials/integrate-cloudflare-images/step-04-url.jpg)
 
 For more information about how to publish a Worker on your Cloudflare account, refer to Cloudflare's [Workers documentation](/workers/get-started/guide/).
 
-Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in your Workers dashboard, under the tab **Triggers**. For more information, refer to our documentation on [Workers Routes](/workers/platform/triggers/routes/).
+Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in **Workers & Pages** > in **Overview**, select your Worker > **Triggers** > **Routes**. For more information, refer to [Routes](/workers/configuration/routing/routes/).
 
 In this case, the Worker was set up to trigger on the route `imagejam.net/images/*`
 
-![A Cloudflare Worker configured to intercept the proper images folder](/images/static/tutorials/integrate-cloudflare-images/step-04-worker-route.jpg)
+![A Cloudflare Worker configured to intercept the proper images folder](/images/images/tutorials/integrate-cloudflare-images/step-04-worker-route.jpg)
 
 ## Conclusion
 
@@ -327,8 +327,6 @@ You can get them both in your Cloudflare dashboard 👇:
 #### `CF_IMAGES_ACCOUNT_ID`
 
 This refers to your Cloudflare Image account ID. You can get this value in your Cloudflare Images dashboard.
-
-![Where to find your Cloudflare Images account ID](/images/static/tutorials/integrate-cloudflare-images/step-02-accountid.jpg)
 
 #### `CF_IMAGES_API_KEY`
 

@@ -9,10 +9,11 @@ title: 103 Early Hints
 weight: 1001
 layout: example
 ---
+
 To ensure Early Hints are enabled:
 
 1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
-2. Go to **Speed** -> **Optimization**.
+2. Go to **Speed** -> **Optimization** > **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
 
 {{<Aside type="note">}}
@@ -21,8 +22,9 @@ Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view 
 
 {{</Aside>}}
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
 ```js
 const CSS = "body { color: red; }";
 const HTML = `
@@ -57,11 +59,13 @@ export default {
         },
       });
     }
-  }
-}
+  },
+};
 ```
+
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
+
 ```js
 const CSS = "body { color: red; }";
 const HTML = `
@@ -96,10 +100,11 @@ const handler: ExportedHandler = {
         },
       });
     }
-  }
+  },
 };
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

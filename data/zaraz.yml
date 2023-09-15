@@ -4,13 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M4 14
 product:
   title: Zaraz
   url: /zaraz/
+  group: Developer platform
+  additional_groups: [Application performance, Analytics]
 
 meta:
   title: Cloudflare Zaraz docs
   description: Run third-party tools and services on the cloud, and improve the
     loading speed and security of your website.
   author: '@cloudflare'
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/zaraz/67
@@ -21,3 +22,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: zaraz

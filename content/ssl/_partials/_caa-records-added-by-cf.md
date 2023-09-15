@@ -5,7 +5,12 @@ _build:
   list: never
 ---
 
-If you have [AMP Real URL](https://support.cloudflare.com/hc/articles/360029367652) enabled, Cloudflare automatically adds CAA records for each our CA providers when necessary.
+Cloudflare adds CAA records automatically in two situations:
+
+- When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and add any CAA records to your zone.
+- When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and enable [AMP Real URL](/speed/optimization/other/amp-real-ulr/) or [SXG Signed Exchanges](/speed/optimization/other/signed-exchanges/).
+
+These records make sure Cloudflare can still issue Universal certificates on your behalf.
 
 If Cloudflare has automatically added CAA records on your behalf, these records will not appear in the Cloudflare dashboard. However, if you run a command line query using `dig`, you can see any existing CAA records, including those added by Cloudflare (replacing `example.com` with your own domain on Cloudflare):
 

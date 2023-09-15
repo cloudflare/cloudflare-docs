@@ -16,14 +16,14 @@ However, this behavior can prevent a waiting room from queueing a user properly 
 
 ## Available options
 
-To customize how your waiting room responds to cookies, include the `cookie_attributes` object when you [create a waiting room](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room) (only available via the API).
+To customize how your waiting room responds to cookies, include the `cookie_attributes` object when you [create a waiting room](/api/operations/waiting-room-create-waiting-room) (only available via the API).
 
 Available options include:
 
 *   `samesite`: Configures the `SameSite` attribute on the waiting room cookie:
 
     *   **auto** (default): Meant to be as flexible as possible, defaulting to **lax** but becoming **none** if you have enabled [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/).
-    *   **lax**: Cookies are not sent on normal cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site
+    *   **lax**: Cookies are not sent on typical cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site
     *   **strict**: Cookies will only be sent in a first-party context.
     *   **none**: Cookies will always be sent.
 
@@ -35,7 +35,7 @@ Available options include:
 
 ## Allow cookies to pass through iFrames
 
-If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a waiting room](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room) (only available via the API):
+If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a waiting room](/api/operations/waiting-room-create-waiting-room) (only available via the API):
 
 *   `samesite`: `none`
 *   `secure`: If you have [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) enabled, set to `auto`. If you have it disabled, set to `always`.

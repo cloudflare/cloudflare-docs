@@ -1,6 +1,6 @@
 ---
 title: Importing data
-weight: 1
+weight: 8
 pcx_content_type: concept
 ---
 
@@ -12,8 +12,8 @@ D1 allows you to import existing SQLite tables and their data directly, enabling
 
 To import an existing SQLite database into D1, you must have:
 
-1. The Cloudflare [Wrangler CLI installed](https://developers.cloudflare.com/workers/wrangler/install-and-update/).
-2. A database to use as the target
+1. The Cloudflare [Wrangler CLI installed](/workers/wrangler/install-and-update/).
+2. A database to use as the target.
 3. An existing SQLite (version 3.0+) database file to import.
 
 {{<Aside type="note">}}
@@ -40,7 +40,7 @@ insert into users (id, full_name, created_on) values ('01GREFXCNF67KV7FPPSEJVJME
 With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
-➜  wrangler d1 execute example-db --file=users_export.sql
+$ wrangler d1 execute example-db --file=users_export.sql
 
 🌀 Mapping SQL input into an array of statements
 🌀 Parsing 1 statements
@@ -51,7 +51,7 @@ With your `users_export.sql` file in the current working directory, you can pass
 To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
 
 ```sh
-➜  wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
+$ wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
 
 🌀 Mapping SQL input into an array of statements
 🌀 Parsing 1 statements
@@ -74,7 +74,7 @@ To confirm your table was imported correctly and is queryable, execute a `SELECT
 
 Note that we apply a `LIMIT 100` clause here as a precaution: if you were importing a larger database with hundreds or thousands of rows, you may not want to output every row to the terminal.
 
-From here, you can now query our new table from our Worker [using the D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
+From here, you can now query our new table from our Worker [using the D1 client API](/d1/platform/client-api/).
 
 ## Converting SQLite database files
 
@@ -89,21 +89,22 @@ If you have an existing SQLite database from another system, you can import its 
 For example, if you have a raw SQLite dump called `db_dump.sqlite3`, run the following `sqlite` command to convert it:
 
 ```sh
-$ sqlite3 db_dump.sqlite3 .dump > db.sql`.
+$ sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
 
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
 
 ## Troubleshooting
 
-If you receive an error when trying to import an existing schema and/or dataaset into D1:
+If you receive an error when trying to import an existing schema and/or dataset into D1:
 
-* Ensure you are importing data in SQL format (typically with a `.sql`) file extension. See [how to convert SQLite files](#converting-sqlite-database-files) if you have a `.sqlite3` database dump.
+* Ensure you are importing data in SQL format (typically with a `.sql` file extension). See [how to convert SQLite files](#converting-sqlite-database-files) if you have a `.sqlite3` database dump.
 * Make sure the schema is [SQLite3](https://www.sqlite.org/docs.html) compatible. You cannot import data from a MySQL or PostgreSQL database into D1, as the types and SQL syntax are not directly compatible.
 * If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You can't refer to a table that doesn't yet exist.
+* If you get `"cannot start a transaction within a transaction"`, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
 
 ## Next Steps
 
 * Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation
-* Learn how to [use the D1 client API](https://developers.cloudflare.com/d1/platform/client-api/) from within a Worker
-* Understand how [database migrations work](https://developers.cloudflare.com/d1/platform/migrations/) with D1
+* Learn how to [use the D1 client API](/d1/platform/client-api/) from within a Worker
+* Understand how [database migrations work](/d1/platform/migrations/) with D1

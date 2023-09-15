@@ -48,23 +48,25 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind
 ```
 
 ## Type conversion
-Type conversion from Javascript inputs to D1 inputs is as follows:
 
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the client API to their associated D1 types. The type conversion is as follows:
 
-| Javascript | D1 |
-| ----- | ----- |
-| null | `NULL` |
-| Number | `REAL` |
-| Number[^1] | `INTEGER` |
-| String | `TEXT` |
-| ArrayBuffer | `BLOB` |
+| JavaScript          | D1          |
+| ------------------- | ----------- |
+| null                | `NULL`      |
+| Number              | `REAL`      |
+| Number <sup>1</sup> | `INTEGER`   |
+| String              | `TEXT`      |
+| Boolean <sup>2</sup>| `INTEGER`   |
+| ArrayBuffer         | `BLOB`      |
+| undefined           | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
 
-`[^1]`: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
-
-* Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
+* <sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) are not currently supported in the API yet. JavaScript integers are safe up to [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+* <sup>2</sup> Booleans will be cast to an `INTEGER` type where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
-The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
+
+The methods `stmt.run()`, `stmt.all()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
 {
@@ -72,6 +74,8 @@ The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that co
   success: boolean, // true if the operation was successful, false otherwise
   meta: {
     duration: number, // duration of the operation in milliseconds
+    rows_read: number, // the number of rows read (scanned) by this query
+    rows_written: number // the number of rows written by this query
   }
 }
 ```
@@ -83,8 +87,19 @@ const { duration } = (await db.prepare('INSERT INTO users (name, age) VALUES (?1
 console.log(duration); // 0.172
 ```
 
+The `db.exec()` method returns a `D1ExecResult` object:
+
+```js
+{
+  count: number, // the number of queries executed
+  duration: number // duration of the operation in milliseconds
+}
+```
+
 ## Query statement methods
+
 * The D1 API supports the following query statement methods:
+
 * `await stmt.first( [column] )`
 * `await stmt.all()`
 * `await stmt.raw()`
@@ -115,7 +130,9 @@ If the query returns no rows, then first() will return ```null```.
 
 If the query returns rows, but ```column``` does not exist, then first() will throw the ```D1_ERROR``` exception.
 
-### await stmt.all( [column] )
+stmt.first() does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
+
+### await stmt.all()
 Returns all rows and metadata.
 
 ```js
@@ -198,12 +215,13 @@ return new Response(dump, {
     headers: {
         'Content-Type': 'application/octet-stream'
     }
-};
+});
 ```
 
 
 ### await db.exec()
-Executes one or more queries directly without prepared statements or parameters binding. This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe. Only use this method for maintenance and one-shot tasks (example: migration jobs). The input can be one or multiple queries separated by \n.
+Executes one or more queries directly without prepared statements or parameters binding. This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe. Only use this method for maintenance and one-shot tasks (example: migration jobs). The input can be one or multiple queries separated by `\n`.
+
 If an error occurs, an exception is thrown with the query and error messages (see below for Errors), execution stops and further statements are not executed.
 
 ```js
@@ -217,8 +235,6 @@ console.log(out);
 }
 */
 ```
-
-
 
 ## Reusing prepared statements
 Prepared statements can be reused with new bindings:
@@ -368,38 +384,45 @@ console.log(r);
 */
 ```
 ## Errors
+
 The `stmt.` and `db.` methods will throw a [Error object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) whenever an error occurs.
 
-D1 Javascript Errors use [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for details.
+{{<Aside type="note">}}
 
-```js
-new Error("D1_ERROR", { cause: new Error("Error detail") })
-```
+Prior to [`wrangler` 3.1.1](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1), D1 JavaScript errors used the [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for detailed error messages.
 
+To inspect these errors when using older versions of `wrangler`, you should log `error?.cause?.message`.
 
-To capture exceptions:
+{{</Aside>}}
+
+To capture exceptions, log the `Error.message` value. For example, a query with an invalid keyword - `INSERTZ` instead of `INSERT`:
+
 ```js
 try {
     await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
 } catch (e: any) {
-    console.log({
-        message: e.message,
-        cause: e.cause.message,
+    console.error({
+        message: e.message
     });
 }
-/*
+```
+
+... would throw the following error:
+
+```json
 {
-  "message": "D1_EXEC_ERROR",
-  "cause": "Error in line 1: INSERTZ INTO my_table (name, employees) VALUES (): sql error: near \"INSERTZ\": syntax error in INSERTZ INTO my_table (name, employees) VALUES () at offset 0"
+  "message": "D1_EXEC_ERROR: Error in line 1: INSERTZ INTO my_table (name, employees) VALUES (): sql error: near \"INSERTZ\": syntax error in INSERTZ INTO my_table (name, employees) VALUES () at offset 0"
 }
 */
 ```
-
 ## Error list
+
+D1 will return the following error constants, in addition to the extended (detailed) error message:
 
 | Message | Cause |
 | ---- | ---- |
 | `D1_ERROR` | Generic error |
+| `D1_TYPE_ERROR` | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null` | 
 | `D1_COLUMN_NOTFOUND` | Column not found |
 | `D1_DUMP_ERROR` | Database dump error |
 | `D1_EXEC_ERROR` | Exec error in line x: y error |

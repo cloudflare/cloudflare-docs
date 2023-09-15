@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: reference
 title: API reference
 weight: 3
 meta:
@@ -68,13 +68,32 @@ The following are the properties on the `context` object which are passed throug
       Passes the request through to the next Function or to the asset server if no other Function is available. 
   
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
-  - `params` [{{<type>}}Params&lt;P&gt;{{</type>}}](#params)
-  - `data` [{{<type>}}Data{{</type>}}](#data)
+  - `params` {{<type>}}Params&lt;P&gt;{{</type>}}
+
+      Holds the values from [dynamic routing](/pages/platform/functions/routing/#dynamic-routes).
+
+      In the following example, you have a dynamic path that is `/users/[user].js`. When you visit the site on `/users/nevi` the `params` object would look like:
+
+      ```js
+      {
+        user: "nevi"
+      }
+      ```
+
+      This allows you fetch the dynamic value from the path:
+
+      ```js
+      export function onRequest(context) {
+        return new Response(`Hello ${context.params.user}`);
+      }
+      ```
+
+      Which would return `"Hello nevi"`.
+
+  - `data` {{<type>}}Data{{</type>}}
   
 {{</definitions>}}
 
 ### `EnvWithFetch`
 
-Holds the environment variables, secrets, and bindings for a Function. This also holds the `ASSETS` binding which is how you can fallback to the asset-serving behavior. 
-
-Holds the values from the [dynamic routes](/pages/platform/functions/routing/#dynamic-routes).
+Holds the environment variables, secrets, and bindings for a Function. This also holds the `ASSETS` binding which is how you can fallback to the asset-serving behavior.

@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: how-to
 title: Analytics and logs
 weight: 4
 ---
@@ -18,7 +18,7 @@ For a quick summary, view your DNS analytics in the dashboard:
 2. Select your zone.
 3. Go to **Analytics** > **DNS**.
 
-For more detailed metrics, you can use the [Cloudflare API](https://developers.cloudflare.com/api/operations/dns-analytics-table).
+For more detailed metrics, you can use the [DNS analytics operation](/api/operations/dns-analytics-table) along with the available [Analytics API properties](/dns/reference/analytics-api-properties/).
 
 ## Logs
 

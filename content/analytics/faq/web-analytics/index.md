@@ -1,7 +1,8 @@
 ---
 pcx_content_type: faq
-title: Web Analytics FAQ
+title: Web Analytics FAQs
 layout: single
+weight: 7
 ---
 
 # Web Analytics FAQ
@@ -30,7 +31,7 @@ While Cloudflare Web Analytics uses a JavaScript beacon, Cloudflare’s edge ana
 
 ### Why am I not seeing all the metrics for single-page application (SPA) or multiple-page application (MPA)?
 
-Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger `visibilityState` to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using Ajax (`XmlHttpRequest`), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint.
+Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger `visibilityState` to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using AJAX (`XmlHttpRequest`), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint.
 
 ### For the same site, why would I see more data reported with an automatic setup?
 
@@ -46,7 +47,7 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 ### My website is proxied through Cloudflare, but Web Analytic's automatic setup is not working.
 
-If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information. 
 
 ---
 
@@ -76,13 +77,17 @@ Add the following script:
 
 ### Can I use the same JS Snippet for a different domain?
 
-No. However, if the root domain is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same root domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same root domain, that would work.
+No. However, if the apex domain (also known as "root domain" or "naked domain") is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same apex domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same apex domain, that would work.
 
 ### Can I use automatic setup with a DNS-only domain (CNAME setup)?
 
 No, you can only use the [automatic setup] with JS snippet injection if traffic to your domain is proxied through Cloudflare (orange-clouded).
 
 If you have a DNS-only domain, you will have to do a [manual setup] instead.
+
+### What prevents the JS Snippet from being added to a page?
+
+{{<render file="_web-analytics-troubleshooting.md">}}
 
 ---
 
@@ -114,6 +119,10 @@ Not yet, but we may add support for this in the future.
 ### Can I track more than one website with Web Analytics?
 
 Yes. Right now there is a soft limit of ten sites per account, but that can be adjusted by contacting Cloudflare support.
+
+### When does the beacon send metrics to the `/cdn-cgi/rum/` endpoint?
+
+For traditional websites, not Single Page Applications (SPAs), the Web Analytics beacon reports to the `/cdn-cgi/rum/` endpoint when the page has finished loading (load event) and when the user leaves the page. For Single Page Applications, additional metrics are sent for every route change to capture the page load event.
 
 [manual setup]: /analytics/web-analytics/getting-started/#sites-not-proxied-through-cloudflare
 [automatic setup]: /analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare

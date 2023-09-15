@@ -17,6 +17,8 @@ Develop Web3 applications without having to worry about running infrastructure
 
 Web3, or the distributed web, is a set of technologies that enables hosting of content and web applications in a serverless manner by leveraging distributed systems and consensus protocols.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ---
 
 ## Features

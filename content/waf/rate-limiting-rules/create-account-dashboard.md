@@ -3,18 +3,17 @@ pcx_content_type: how-to
 type: overview
 title: Create in the dashboard for an account
 weight: 15
+meta:
+  title: Create a rate limiting rule in the dashboard for an account
 ---
 
-# Create rate limiting rules in the dashboard for an account
+# Create a rate limiting rule in the dashboard for an account
 
 At the account level, you must first create a custom rate limiting ruleset, containing one or more rate limiting rules, and then deploy it to one or more zones on an Enterprise plan.
-
-Both operations are available in the dashboard in Account Home > **WAF** > **Rate limiting rulesets**.
 
 {{<Aside type="note" header="Notes">}}
 * Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
 * At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rulesets/) with one or more rate limiting rules. The concept of custom rate limiting ruleset exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
-* For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 {{</Aside>}}
 
 ## 1. Create a custom rate limiting ruleset
@@ -23,7 +22,7 @@ To create a new custom rate limiting ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
-2. Navigate to Account Home > **WAF** > **Rate limiting rulesets**.
+2. Go to Account Home > **WAF** > **Rate limiting rulesets**.
 
 3. Under **Your custom rate limiting rulesets**, select **Create new ruleset**.
 
@@ -33,7 +32,7 @@ To create a new custom rate limiting ruleset:
 
 6. In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create rate limiting rule at the account level in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create-account.png)
+    ![Create rate limiting rule at the account level in the Cloudflare dashboard](/images/waf/custom-rules/rate-limiting-create-account.png)
 
 7. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
@@ -63,7 +62,7 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
-2. Navigate to Account Home > **WAF** > **Rate limiting rulesets**.
+2. Go to Account Home > **WAF** > **Rate limiting rulesets**.
 
 3. Under **Your custom rate limiting rulesets** and next to the rate limiting ruleset you wish to deploy, select **Deploy**.
 

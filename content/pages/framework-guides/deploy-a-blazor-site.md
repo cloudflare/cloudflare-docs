@@ -9,46 +9,58 @@ title: Deploy a Blazor Site
 
 ## Install .NET
 
-Blazor uses C#, so you will need to [install the .NET SDK](https://dotnet.microsoft.com/download) by grabbing the newest installation from the [.NET downloads page](https://dotnet.microsoft.com/download) and download and running the installer.
+Blazor uses C#. You will need to [install the .NET SDK](https://dotnet.microsoft.com/download) to continue creating a Blazor project. Download and run the installer.
 
 ## Creating a new Blazor WASM project
 
-There are two types of Blazor projects: Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. Create a new Blazor WASM application by running the following command in your terminal:
+There are two types of Blazor projects: Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. 
+
+Create a new Blazor WASM application by running the following command in a new directory:
 
 ```sh
-$ dotnet new blazorwasm my-blazor-project
+$ dotnet new blazorwasm -o my-blazor-project
 ```
 
-## Creating the build script
+## Create the build script
 
 To deploy, Cloudflare Pages will need a way to build the Blazor project. In the project's directory root, create a `build.sh` file. Populate the file with this:
 
-    #!/bin/sh
-    curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh
-    chmod +x dotnet-install.sh
-    ./dotnet-install.sh -c 6.0 -InstallDir ./dotnet6
-    ./dotnet6/dotnet --version
-    ./dotnet6/dotnet publish -c Release -o output
+```
+#!/bin/sh
+curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh -c 7.0 -InstallDir ./dotnet
+./dotnet/dotnet --version
+./dotnet/dotnet publish -c Release -o output
+```
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
+## Create a `.gitignore` file
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+Creating a `.gitignore` file ensures that only what is needed gets pushed onto your GitHub repository. Create a `.gitignore` file by running the following command:
 
 ```sh
 $ dotnet new gitignore
-$ git init
-$ git add -A
-$ git commit -m "Initial commit"
-$ git remote add origin https://github.com/yourgithubusername/githubrepo.git
-$ git branch -M main
-$ git push -u origin main
 ```
 
-## Deploying with Cloudflare Pages
+{{<render file="_create-github-repository.md">}}
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+{{<Aside type="note">}}
+
+Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`, or commit the file as an executable by running `git add --chmod=+x build.sh`.
+
+{{</Aside>}}
+
+## Deploy with Cloudflare Pages
+
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Select **Create application** > **Pages** > **Connect to Git**.
+
+Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -59,12 +71,6 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 | Build directory      | `output/wwwroot` |
 
 </div>
-
-{{<Aside type="note">}}
-
-Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`, or commit the file as an executable by running `git add --chmod=+x build.sh`.
-
-{{</Aside>}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
 
@@ -81,7 +87,7 @@ Every time you commit new code to your Blazor site, Cloudflare Pages will automa
 
 ### A file is over the 25 MiB limit
 
-If you receive the error message `Error: Asset "/opt/buildhome/repo/output/wwwroot/_framework/dotnet.wasm" is over the 25MiB limit`, you have two options:
+If you receive the error message `Error: Asset "/opt/buildhome/repo/output/wwwroot/_framework/dotnet.wasm" is over the 25MiB limit`, resolve this by doing one of the following actions:
 
 1.  Reduce the size of your assets with the following [guide](https://docs.microsoft.com/en-us/aspnet/core/blazor/performance?view=aspnetcore-6.0#minimize-app-download-size).
 
@@ -89,6 +95,4 @@ Or
 
 2.  Remove the `*.wasm` files from the output (`rm output/wwwroot/_framework/*.wasm`) and modify your Blazor application to [load the Brotli compressed files](https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-6.0#compression) instead.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Blazor site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Blazor">}}

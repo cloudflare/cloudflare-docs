@@ -7,6 +7,8 @@
   {{- $class = $class | append "Button-is-docs-primary" -}}
 {{- else if eq $type "secondary" }}
   {{- $class = $class | append "Button-is-docs-secondary" -}}
+{{- else if eq $type "tertiary" }}
+  {{- $class = $class | append "Button-is-docs-tertiary" -}}
 {{- end -}}
 
 {{- with .Get "class" }}

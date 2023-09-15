@@ -11,4 +11,4 @@ weight: 9
 - **Page load time** - The total amount of time required to load the page.
 - **[Core Web Vitals](https://www.cloudflare.com/learning/performance/what-are-core-web-vitals/)** - Higher-level metrics designed by Google to capture the user experience more completely.
 
-![Web Analytics overview page](/analytics/static/images/web-analytics/dash-web_analytics-overview.png)
+![Web Analytics overview page](/images/analytics/web-analytics/dash-web_analytics-overview.png)

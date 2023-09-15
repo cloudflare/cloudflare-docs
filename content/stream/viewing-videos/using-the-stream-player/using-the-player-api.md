@@ -6,7 +6,7 @@ weight: 2
 
 # Stream Player API
 
-For further control and customization, we provide an additional Javascript SDK that you can use to control video playback and listen for media events.
+For further control and customization, we provide an additional JavaScript SDK that you can use to control video playback and listen for media events.
 
 To use this SDK, add an additional `<script>` tag to your website:
 

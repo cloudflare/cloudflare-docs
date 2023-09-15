@@ -6,13 +6,13 @@ weight: 16
 
 # Override HTTP Host headers
 
-When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), you can customize the `Host` header used in health checks on a per-origin or per-monitor level.
+When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), you can customize the `Host` header used in health monitors on a per-origin or per-monitor level.
 
 {{<Aside type="warning" header="Important">}}
 
 If you set a header override on an individual origin, it will take precedence over a header override set on a monitor.
 
-Also, if you configure an [Origin Rule](/rules/origin-rules/) that overrides the hostname and set up a header override in your Load Balancer configuration, the Origin Rule will take precedence over the Load Balancer configuration.
+Also, if you configure an [Origin Rule](/rules/origin-rules/) that overrides the hostname and set up a header override in your Load Balancer configuration, the Load Balancer configuration will take precedence over the Origin Rule hostname override.
 
 {{</Aside>}}
 
@@ -32,7 +32,7 @@ If you need an origin `Host` header override, add it when [creating](/load-balan
 
 ## Host header prioritization
 
-If you set a header override on an individual origin, it will take precedence over a header override set on a monitor during health checks.
+If you set a header override on an individual origin, it will take precedence over a header override set on a monitor during health monitor requests.
 
 For example, you might have a load balancer for `www.example.com` with the following setup:
 
@@ -50,12 +50,12 @@ For example, you might have a load balancer for `www.example.com` with the follo
 
 - Monitor (`Host` header set to `www.example.com`)
 
-In this scenario, health checks for **Origin 1** would use `lb-app-a.example.com`, health checks for **Origin 4** would use `lb-app-b.example.com`, and all other health checks would default to `www.example.com`. For more information on updating your custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](https://support.cloudflare.com/hc/articles/205893698).
+In this scenario, health monitor requests for **Origin 1** would use `lb-app-a.example.com`, health monitor requests for **Origin 4** would use `lb-app-b.example.com`, and all other health monitor requests would default to `www.example.com`. For more information on updating your custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](https://support.cloudflare.com/hc/articles/205893698).
 
 For a list of origins that override a monitor's `Host` header:
 
 1.  On a monitor, select **Edit**.
-2.  Select **Advanced health check settings**.
+2.  Select **Advanced health monitor settings**.
 3.  If you have origin overrides, you will see **Origin host header overrides**.
 
-![Example configuration of origin host header overrides](/load-balancing/static/images/origin-host-header-override.png)
+![Example configuration of origin host header overrides](/images/load-balancing/origin-host-header-override.png)

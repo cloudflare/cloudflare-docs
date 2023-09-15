@@ -7,11 +7,8 @@ meta:
   description: Secure workforce, workplace, and workloads with Cloudflare Zero Trust - the fastest Zero Trust browsing and application access platform.
   title: Cloudflare Zero Trust - Home
 ---
-<div class="HomeTitle">
-<h1>Looking for a secure and <br /> performant Zero Trust platform?</h1>
-  <p class="StartHere"><strong><a href="/cloudflare-one/setup/">Start here.</a></strong></p>
-</div>
 
+<div class="HeaderBlock">
 <div class="QuadBlockGrid">
 <div>
 {{<quad-block>}}
@@ -20,7 +17,7 @@ meta:
 </div>
 <div>
 {{<quad-block>}}
-  [Gateway](/cloudflare-one/policies/filtering/)
+  [Gateway](/cloudflare-one/policies/gateway/)
 {{</quad-block>}}
 </div>
 <div>
@@ -38,20 +35,21 @@ meta:
   [Email security](/email-security/)
 {{</quad-block>}}
 </div>
-
+  </div>
+<h1 class="leading">Looking for a secure and <br /> performant Zero Trust platform?</h1>
+ <a class="StartHere" href="/cloudflare-one/setup">Start here</a>
 </div>
 
 <div class="TriBlockGrid">
 <div>
 {{<tri-block>}}
 <div class="TriBlockHeader">
-<img src="/popular-icon.svg" aria-hidden="true" />
 <p>Most visited</p>
 </div>
 
-- [Get started with WARP](/cloudflare-one/connections/connect-devices/warp/set-up-warp/)
-- [Set up your first tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)
-- [Zero Trust Roadmap](https://zerotrustroadmap.org/)
+- ![warp](/icons/warp.svg) [Get started with WARP](/cloudflare-one/connections/connect-devices/warp/set-up-warp/)
+- ![warp](/icons/warp.svg)  [Set up your first tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/)
+- ![warp](/icons/warp.svg) [Zero Trust Roadmap](https://zerotrustroadmap.org/)
 
 {{</tri-block>}}
 </div>
@@ -59,31 +57,25 @@ meta:
 <div>
 {{<tri-block>}}
 <div class="TriBlockHeader">
-<img src="/tutorials-icon.svg" aria-hidden="true" />
 <p>Popular tutorials</p>
 </div>
 
-- [Replace your VPN](/learning-paths/replace-vpn/)
-- [Connect with SSH through Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
-- [Zero Trust GitLab SSH & HTTP](/cloudflare-one/tutorials/gitlab/)
-
-<br>
-<br>
-
-[View all tutorials >](/tutorials/#f:@product=[Cloudflare%20Zero%20Trust])
+- ![warp](/icons/warp.svg) [Replace your VPN](/learning-paths/replace-vpn/)
+- ![warp](/icons/warp.svg) [Connect with SSH through Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
+- ![warp](/icons/warp.svg) [Zero Trust GitLab SSH & HTTP](/cloudflare-one/tutorials/gitlab/)
+- ![warp](/icons/warp.svg) [View all tutorials >](/tutorials/#f:@product=[Cloudflare%20Zero%20Trust])
 
 {{</tri-block>}}
 </div>
 <div>
 {{<tri-block>}}
 <div class="TriBlockHeader">
-<img src="/partners-icon.svg" aria-hidden="true" />
 <p>Partners</p>
 </div>
 
-- [Cloudflare One Partner Program](https://www.cloudflare.com/partners/cloudflare-one-partner-program/)
-- [Partner Portal](https://portal.cloudflarepartners.com/)
-- [Area 1 Email Security - Partner Guide](/email-security/partners/)
+- ![warp](/icons/warp.svg) [Cloudflare One Partner Program](https://www.cloudflare.com/partners/cloudflare-one-partner-program/)
+- ![warp](/icons/warp.svg) [Partner Portal](https://portal.cloudflarepartners.com/)
+- ![warp](/icons/warp.svg) [Area 1 Email Security - Partner Guide](/email-security/partners/)
 
 {{</tri-block>}}
 </div>
@@ -122,8 +114,8 @@ meta:
 <div class="FeatureContentHeader">
 <p class="FeatureContentTitle">Connect to private resources over SSH</p>
 <p class="FeaturedContentDescription">With Cloudflare Zero Trust, you can make your SSH server available over the Internet without the risk of opening inbound ports on the server.</p>
-    
-[Create a tunnel >](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
+
+[Create a tunnel >](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
 </div>
 {{</featured-content-block>}}
 </div>
@@ -134,7 +126,7 @@ meta:
 <p class="FeatureContentTitle">Filter DNS or home or office networks</p>
 <p class="FeaturedContentDescription">Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, Network, and HTTP traffic.</p>
 
-[Create gateway policy >](/cloudflare-one/policies/filtering/)
+[Create gateway policy >](/cloudflare-one/policies/gateway/)
 </div>
 {{</featured-content-block>}}
 </div>
@@ -178,62 +170,49 @@ meta:
 <p class="FeatureContentTitle">Build a private network</p>
 <p class="FeaturedContentDescription">With Cloudflare Tunnel, you can connect private networks and the services running in those networks to Cloudflare’s edge.</p>
 
-[Create private networks >](/cloudflare-one/connections/connect-apps/private-net/)
+[Create private networks >](/cloudflare-one/connections/connect-networks/private-net/)
 </div>
 {{</featured-content-block>}}
 </div>
 </div>
 
-<div class="HeroBlockGrid">
-  <div>
+<div class="HeroBlockGrid HeroBlockGrid--full-bleed">
+<div>
 {{<hero-block>}}
   ## Community
 
-  Cloudflare communities are places for Cloudflare users to share ideas, answers, code, and more.
+  The Cloudflare community is a place for Cloudflare users to share ideas, answers, code and compare notes.
 
-  <div class="QuadBlockGrid">
-  <a href="https://discord.com/invite/cloudflaredev/">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/discord-figma.svg" aria-hidden="true" style="padding-left: .5em"/>
-  </div>
-  <div>
-  Discord
-  </div>
-  {{</community-block>}}
-  </div>
-  </a>
-  <a href="https://community.cloudflare.com/">
-  <div>
-  {{<community-block>}}
-  <img src="/community-icon.svg" aria-hidden="true" style="padding-left: 1.15em" />
-  Community
-  {{</community-block>}}
-  </div>
-  </a>
-  <a href="https://twitter.com/CloudflareDev">
-  <div>
-  {{<community-block>}}
-  <img src="/twitter-logo-black.svg" aria-hidden="true" style="padding-left: .25em" />
-  Twitter
-  {{</community-block>}}
-  </div>
-  </a>
-  </div>
-  
+  ![discord](/icons/logo-discord.svg) [Discord](https://discord.com/invite/cloudflaredev/)
+
+  ![twitter](/icons/twitter.svg) [Twitter](https://twitter.com/CloudflareDev)
+
+  ![community](/community-icon.svg) [Community Forum](https://community.cloudflare.com/)
+
 {{</hero-block>}}
 </div>
 
-  <div>
+<div>
 {{<hero-block>}}
-  ## Cloudflare Blog
+  ## Open source
+
+  Cloudflare contributes to the open-source ecosystem in a variety of ways, including:
+
+  ![github](/icons/logo-github.svg) [GitHub Projects](https://github.com/cloudflare)
+
+  ![sponsor](/icons/help-giving.svg) [Sponsorship Projects](/sponsorships/)
+
+{{</hero-block>}}
+</div>
+
+<div>
+{{<hero-block>}}
+  ## Blog
 
   Get the latest news on Cloudflare products, technologies, and culture.
 
-  {{<button type="secondary" href="https://blog.cloudflare.com/">}}
-    Read the blog
-  {{</button>}}
+  ![blog](/icons/learning-center-book.svg) [Read the blog](https://blog.cloudflare.com/)
+
 {{</hero-block>}}
-  </div>
+</div>
 </div>

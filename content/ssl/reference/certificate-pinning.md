@@ -2,6 +2,8 @@
 title: Certificate pinning
 pcx_content_type: reference
 weight: 8
+meta:
+    description: Learn why Cloudflare does not support HTTP public key pinning (HPKP) and consider an alternative solution to prevent certificate misissuance.
 ---
 
 # Certificate pinning

@@ -13,8 +13,8 @@ For example, if you have multiple Cloudflare products managed by different teams
 
 ## Assign permissions
 
-1. Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. From your Account Home, navigate to **Manage Account** > **Members**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. From your Account Home, go to **Manage Account** > **Members**.
 3. Under **Members**, enter an existing user's name and select **Search**.
 4. Expand the menu at the end of the user row.
 5. From the list, locate **Network Services (Magic)**.

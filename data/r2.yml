@@ -4,12 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 
 product:
   title: R2
   url: /r2/
+  group: Developer platform
+  additional_groups: [Storage]
 
 meta:
   title: Cloudflare R2 docs
   description: Store large amounts of unstructured data without egress fees.
   author: '@cloudflare'
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
@@ -19,3 +20,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: r2

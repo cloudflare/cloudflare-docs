@@ -2,6 +2,8 @@
 title: POST example
 pcx_content_type: reference
 weight: 3
+meta:
+  title: POST examples - Firewall rules
 ---
 
 # POST example
@@ -14,16 +16,15 @@ To create a firewall rule you need a [filter](/firewall/api/cf-filters/what-is-a
 
 {{</Aside>}}
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '[
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '[
   {
     "filter": {
       "id": "<FILTER_ID_1>"
