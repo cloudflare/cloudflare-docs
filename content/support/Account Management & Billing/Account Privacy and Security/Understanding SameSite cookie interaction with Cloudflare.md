@@ -35,7 +35,7 @@ ___
 
 ## Known issues with SameSite and cf_clearance cookies
 
-When a visitor solves a [challenge](/fundamentals/get-started/concepts/cloudflare-challenges/) presented due to a [WAF custom rule](/waf/custom-rules/), [firewall rule](/firewall/), or [IP Access rule](/waf/tools/ip-access-rules/), a `cf_clearance` cookie is set in the client browser. The `cf_clearance` cookie has a default lifetime of 30 minutes, which you can configure via [Challenge Passage](/fundamentals/security/challenge-passage/).
+When a visitor solves a [challenge](/fundamentals/get-started/concepts/cloudflare-challenges/) presented due to a [WAF custom rule](/waf/custom-rules/) or an [IP Access rule](/waf/tools/ip-access-rules/), a `cf_clearance` cookie is set in the client browser. The `cf_clearance` cookie has a default lifetime of 30 minutes, which you can configure via [Challenge Passage](/fundamentals/security/challenge-passage/).
 
 Cloudflare uses `SameSite=None` in the `cf_clearance` cookie so that visitor requests from different hostnames are not met with subsequent challenges or errors. When `SameSite=None` is used, it must be set in conjunction with the `Secure` flag.
 

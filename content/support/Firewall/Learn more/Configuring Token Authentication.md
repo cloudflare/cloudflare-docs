@@ -8,7 +8,7 @@ title: Configuring Token Authentication
 
 Cloudflare Token Authentication allows you to restrict access to documents, files, and media to selected users without requiring them to register. This helps protect paid/restricted content from leeching and unauthorized sharing. 
 
-There are two options to configure Token Authentication, via Cloudflare Workers or WAF custom rules. If you do not have access to WAF custom rules, configure a firewall rule.
+There are two options to configure Token Authentication, via Cloudflare Workers or WAF custom rules.
 
 ___
 

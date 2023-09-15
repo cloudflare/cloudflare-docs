@@ -377,7 +377,7 @@ ___
 
 ### Common cause
 
-A client or browser is blocked by a Cloudflare customer’s Firewall Rules.
+A client or browser is blocked by a Cloudflare customer’s Firewall Rules (deprecated).
 
 ### Resolution
 
