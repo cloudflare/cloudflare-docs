@@ -100,7 +100,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 ### Interact with your Durable Object namespaces locally
 
-While developing locally, to interact with a Durable Object namespace run the worker exporting the Durable object via `wrangler dev` and in parallel run `wrangler pages dev` with `--do <BINDING_NAME>=<CLASS_NAME>@<SCRIPT_NAME>` where `CLASS_NAME` indicates the Durable Object class name and `SCRIPT_NAME` the name of your worker. For example, if your worker is called `do-worker` and it declares a Durable Object class called `DurableObjectExample`, access this Durable Object by running your `do-worker` via `npx wrangler dev` (in the worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --do MY_DO=DurableObjectExample@do-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_DO`).
+While developing locally, to interact with a Durable Object namespace, run the Worker exporting the Durable object via `wrangler dev` and in parallel, run `wrangler pages dev` with `--do <BINDING_NAME>=<CLASS_NAME>@<SCRIPT_NAME>` where `CLASS_NAME` indicates the Durable Object class name and `SCRIPT_NAME` the name of your Worker. For example, if your Worker is called `do-worker` and it declares a Durable Object class called `DurableObjectExample`, access this Durable Object by running your `do-worker` via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --do MY_DO=DurableObjectExample@do-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_DO`).
 
 ## R2 buckets
 
