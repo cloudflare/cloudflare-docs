@@ -14,7 +14,7 @@ NAMESPACE.get(key);
 
 The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
 
-The `get()` method may return stale values. If a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. 
+The `get()` method may return stale values. If a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to display.
 
 An example of reading a key from within a Worker:
 

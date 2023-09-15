@@ -47,7 +47,7 @@ $ yarn create cloudflare@latest
 
 Running `create cloudlfare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
-In your terminal, you will be asked a series of questions related to your project. 
+In your terminal, you will be asked a series of questions related to your project:
 
 1. Name your new Worker directory by specifying where you want to create your application.
 2. Select `"Hello World" script` as the type of application you want to create.

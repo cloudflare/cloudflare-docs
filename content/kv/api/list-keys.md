@@ -54,7 +54,7 @@ The `list()` method returns a promise which resolves with an object that looks l
 }
 ```
 
-The `keys` property will contain an array of objects describing each key. That object will have one to three keys of its own: the `name` of the key and optionally, the key's `expiration` and `metadata` values.
+The `keys` property will contain an array of objects describing each key. That object will have one to three keys of its own: the `name` of the key, and optionally the key's `expiration` and `metadata` values.
 
 The `name` is a `string`, the `expiration` value is a number, and `metadata` is whatever type was set initially. The `expiration` value will only be returned if the key has an expiration and will be in the absolute value form, even if it was set in the TTL form. Any `metadata` will only be returned if the given key has non-null associated metadata.
 

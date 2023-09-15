@@ -12,7 +12,7 @@ To delete a key-value pair, call the `delete()` method on any KV namespace you h
 await NAMESPACE.delete(key);
 ```
 
-Calling the `delete()` method will remove the key and value from your KV namespace. As with any operations, it may take some time to see that the key has been deleted from various points in the Cloudflare global network.
+Calling the `delete()` method will remove the key and value from your KV namespace. As with any operations, it may take some time for the key to be deleted from various points in the Cloudflare global network.
 
 This method returns a promise that you should `await` on to verify successful deletion.
 
