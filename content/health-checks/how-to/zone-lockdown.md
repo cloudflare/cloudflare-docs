@@ -24,8 +24,6 @@ To bypass zone lockdown using a WAF custom rule:
 4. Create a custom rule matching on **user agent**.
 5. Set the action to _Skip_ and the corresponding feature to **Zone Lockdown** under **More components to skip**.
 
-If you do not have access to WAF custom rules, create a firewall rule instead.
-
 Cloudflare Health Checks have a user agent of the following format:
 `Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;"+https://www.cloudflare.com/; healthcheck-id: XXX)` where `XXX` is replaced with the first 16 characters of the Health Check ID.
 
