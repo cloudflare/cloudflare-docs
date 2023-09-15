@@ -21,7 +21,7 @@ When you write to KV, your data is written to central data stores. Your data is 
 Initial reads from a location do not have a cached value. Data must be read from the nearest regional tier, followed by a central tier, degrading finally to the central store for a truly cold global read. While the first access is slow globally, subsequent requests are faster, especially if requests are concentrated in a single region.
 
 {{<Aside type="note" header="Hot and cold read">}} 
-A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/). A cold read means that the data is not cached, so you have to fetch it from the storage provider.
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/). A cold read means that the data is not cached, therefore you have to fetch the data from the storage provider.
 {{</Aside>}}
 
 ![Initial reads will miss the cache and go to the nearest central data store first.](/images/kv/kv-slow-read.svg)
@@ -32,10 +32,7 @@ Refreshing from upper tiers and the central data stores in the background is don
 
 ![As mentioned above, frequent reads will return a cached value.](/images/kv/kv-fast-read.svg)
 
-Because KV stores data centrally and uses a hybrid push/pull-based replication to store data in cache, it is generally suitable for use cases where you need to write relatively infrequently, but read quickly and frequently.
-
-KV is optimized for high-read applications. KV reach its full performance when data is being read frequently.
-Infrequently read values are pulled from other data centers or the central store, while more popular values are cached in the data centers they are requested from.
+KV is optimized for high-read applications. It stores data centrally and uses a hybrid push/pull-based replication to store data in cache. KV is suitable for use cases where you need to write relatively infrequently, but read quickly and frequently. Infrequently read values are pulled from other data centers or the central store, while more popular values are cached in the data centers they are requested from.
 
 ## Performance
 

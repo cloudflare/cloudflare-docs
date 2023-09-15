@@ -27,7 +27,7 @@ await NAMESPACE.put(key, value);
 
 {{</definitions>}}
 
-This method returns a `Promise` that you should `await` on to verify a successful update.
+The `put()` method returns a `Promise` that you should `await` on to verify a successful update.
 
 The maximum size of a value is 25 MiB.
 
@@ -51,7 +51,7 @@ A `key` and a `value` are required for each KV pair. The entire request size mus
 
 ## Expiring keys
 
-KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time or after a certain amount of time has passed since the key was last modified.
+KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time, or after a certain amount of time has passed since the key was last modified.
 
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
 
@@ -69,9 +69,9 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtL`, depending on how you want to specify the key’s expiration time. 
+The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTTL`, depending on how you want to specify the key’s expiration time. 
 
-To use `expiration` or `expirationTtL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
+To use `expiration` or `expirationTTL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 
 {{<definitions>}}
 

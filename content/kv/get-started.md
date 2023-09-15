@@ -178,7 +178,7 @@ In your Worker script, add your KV namespace in the `Env` interface:
 	YOUR_KV_NAMESPACE: KVNamespace;
 ```
 
-Use the KV `put()` method to create a new key-value pair, or to update the value for a particular key.
+Use the KV `put()` method to create a new key-value pair, or to update the value for a particular key:
 
 ```js
 let value = await NAMESPACE.put(key, value);

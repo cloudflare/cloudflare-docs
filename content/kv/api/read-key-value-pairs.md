@@ -58,8 +58,8 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 
 Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTTL` is useful if your data is write-once or write-rarely. 
 
-{{<Aside type="note" header="Hot and Cold read">}}
-A cold read is a read that is not cached within the colocated cache. A hot read is (?). 
+{{<Aside type="note" header="Hot and cold read">}} 
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/). A cold read means that the data is not cached, therefore you have to fetch the data from the storage provider.
 {{</Aside>}}
 
 `cacheTTL` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
@@ -76,7 +76,7 @@ The effective `cacheTTL` of an already cached item can be reduced by getting it 
 
 ## Metadata
 
-A metadata is serializable value you append to each KV entry. 
+A metadata is a serializable value you append to each KV entry. 
 
 Get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a KV namespace you have bound in your Worker code:
 
