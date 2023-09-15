@@ -22,7 +22,7 @@ export default {
 };
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the `request` that you receive from the [`fetch()` handler](workers/runtime-apis/fetch-event/) is immutable.
 
 ```js
 export default {
@@ -162,7 +162,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 ## Properties
 
-All properties of an incoming `Request` object (that is, `event.request`) are read only. To modify a request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
+All properties of an incoming `Request` object (the request you receive from the [`fetch()` handler](/workers/runtime-apis/fetch-event/)) are read only. To modify a the properties of an incoming request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
 
 {{<definitions>}}
 
