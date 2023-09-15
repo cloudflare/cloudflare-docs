@@ -41,10 +41,10 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 3. In the **HTTP requests** tab, select a specific time period:
 
-    * To look at the normal rate distribution, specify a period with non-peak traffic.
+    * To look at the regular rate distribution, specify a period with non-peak traffic.
     * To analyze the rate of offending visitors/bots, select a period corresponding to an attack.
 
-4. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, fiter by `/login` URL path).
+4. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, filter by `/login` URL path).
 
 5. (Optional) To focus on non-automated/human traffic, use the bot score quick filter in the sidebar.
 
@@ -64,7 +64,7 @@ Answering the following questions during your adjustments can help you with your
 
 ### 3. Validate your rate
 
-1. Repeat the rate selection process described in the previous section, but selecting a portion of traffic where you know there was an attack or traffic peak. The rate you have chosen should block the outlier traffic during the attack and allow traffic during normal times.
+1. Repeat the rate selection process described in the previous section, but selecting a portion of traffic where you know there was an attack or traffic peak. The rate you have chosen should block the outlier traffic during the attack and allow traffic during regular periods.
 
 2. (Optional) Check the [sampled logs](/waf/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
 
