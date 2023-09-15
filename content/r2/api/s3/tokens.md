@@ -13,7 +13,7 @@ You must purchase R2 before you can generate an API token.
 To create an API token: 
 
 1. In **Account Home**, select **R2**.
-2. Under **Account details**, select [**Manage R2 API tokens**](https://dash.cloudflare.com/?to=/:account/r2/api-tokens).
+2. Under **Account details**, select **Manage R2 API tokens**..
 3. Select [**Create API token**](https://dash.cloudflare.com/?to=/:account/r2/api-tokens).
 4. Select the **R2 Token** text to edit your API token name.
 5. Under **Permissions**, choose a permission types for your token. Refer to [Permissions](#permissions) for information about each option.
