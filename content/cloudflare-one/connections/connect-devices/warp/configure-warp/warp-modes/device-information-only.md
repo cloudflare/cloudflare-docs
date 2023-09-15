@@ -64,8 +64,8 @@ The certificate name should match the **Device ID** in your WARP client **Prefer
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **SSL/TLS** > **Client Certificates**.
     2. Under **Hosts**, add the domain you want to protect with device posture rules.
     3. Select **Create mTLS rule**.
-    4. In the **Hostname** dropdown, select your domain.
-    5. Select **Deploy**. This creates a firewall rule that checks all requests to your domain for a valid client certificate.
+    4. Change the **URI path** field to **Hostname**, and enter the domain you want to protect.
+    5. Select **Deploy**. This creates a WAF custom rule that checks all requests to your domain for a valid client certificate.
 
 Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/identity/devices/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/policies/access/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
 
