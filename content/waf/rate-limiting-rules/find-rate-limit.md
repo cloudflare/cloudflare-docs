@@ -54,6 +54,8 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 2. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
 
+![User adjusting the rate limit in the Rate limit analysis chart to check the impact on recent traffic](/images/waf/rate-limit-adjust.gif)
+
 {{<Aside type="note">}}
 Answering the following questions during your adjustments can help you with your analysis:
 
