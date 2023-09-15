@@ -16,7 +16,7 @@ The **Rate limit analysis** tab is only available to Enterprise customers.
 
 ## User interface overview
 
-The **Rate limit analysis** tab is available in Account Home > **Security Center** > **Security Analytics**.
+The **Rate limit analysis** tab is available at the zone level in **Security** > **Analytics**.
 
 ![Screenshot of the Rate limit analysis tab in Security Analytics](/images/waf/rate-limit-analytics.png)
 
@@ -36,8 +36,8 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 ### 1. Define the scope
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Go to Account Home > **Security Center** > **Security Analytics**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
+2. Go to **Security** > **Analytics**.
 
 3. In the **HTTP requests** tab, select a specific time period:
 
