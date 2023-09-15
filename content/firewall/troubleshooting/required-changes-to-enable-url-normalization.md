@@ -6,6 +6,8 @@ title: Required firewall rule changes to enable URL normalization
 
 # Required firewall rule changes to enable URL normalization
 
+{{<render file="_deprecation-notice.md">}}
+
 On 2021-04-08, Cloudflare announced [URL normalization](/rules/normalization/), a feature that protects zones by normalizing HTTP request URI paths.
 
 Malicious users can craft specific URIs that could be interpreted differently by firewall systems and origin systems. When you enable **Normalize incoming URLs**, all rules filtering on the URI path will receive the URL in a canonical form, which provides an extra layer of protection against these malicious users. 

@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="warning" header="Deprecation notice">}}
-Firewall rules have been deprecated. Cloudflare is gradually moving firewall rules to [WAF custom rules](/waf/custom-rules/). For more information on this change, refer to [Firewall rules are becoming WAF custom rules](/waf/reference/migration-guides/firewall-rules-to-custom-rules/).
+Firewall rules have been deprecated. Cloudflare has moved existing firewall rules to [WAF custom rules](/waf/custom-rules/). For more information on this change, refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/).
 {{</Aside>}}

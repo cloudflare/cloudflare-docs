@@ -9,15 +9,17 @@ layout: single
 
 # Firewall Rules FAQ
 
+{{<render file="_deprecation-notice.md">}}
+
 ## General
 
 ### What should I use instead of firewall rules (now deprecated)?
 
-You should use [WAF custom rules](/waf/custom-rules/) instead. Refer to [Firewall rules are becoming WAF custom rules](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information on this change.
+You should use [WAF custom rules](/waf/custom-rules/) instead. Refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information on this change.
 
-### How many rules can I have on my site?
+### How many firewall rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Availability](/firewall/#availability) for details on what is allowed per customer plan.
+You can create a large number of firewall rules. However, the number of active rules at any given time is limited. Refer to [Availability](/firewall/#availability) for details on what is allowed per customer plan.
 
 ### Can I purchase additional active rules?
 
