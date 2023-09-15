@@ -546,7 +546,7 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
    1. In Eclipse, go to **Eclipse** > **About Eclipse** (or **Help** > **About Eclipse IDE** on Windows and Linux)
    2. Select **Installation Details**, then go to **Configuration**.
-   3. Search for `java.home`, then locate the path. For example:
+   3. Search for `java.home`, then locate the value. For example:
 
    ```txt
    ---
@@ -558,7 +558,7 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
    4. Copy the full path after `java.home=`.
 
-3. Add the Cloudflare certificate to Eclipse's Java VM.
+3. Add the Cloudflare certificate to Eclipse's Java virtual machine.
 
 <details>
 <summary>macOS and Linux</summary>
@@ -601,7 +601,7 @@ $JAVA_HOME = "\path\to\java.home"
 </div>
 </details>
 
-For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse). You may also want to change the [Java keystore password](https://docs.oracle.com/cd/E19957-01/817-3331/6miuccqo3/index.html).
+For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
 
 ### Minikube
 
