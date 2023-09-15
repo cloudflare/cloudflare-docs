@@ -54,7 +54,7 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 2. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
 
-![User adjusting the rate limit in the Rate limit analysis chart to check the impact on recent traffic](/images/waf/rate-limit-adjust.gif)
+    ![User adjusting the rate limit in the Rate limit analysis chart to check the impact on recent traffic](/images/waf/rate-limit-adjust.gif)
 
 {{<Aside type="note">}}
 Answering the following questions during your adjustments can help you with your analysis:
@@ -76,6 +76,6 @@ Answering the following questions during your adjustments can help you with your
 
 2. Select the rule action. Depending on your needs, you can set the rule to log, challenge, or block requests exceeding the selected threshold.
 
-    It is recommended that you first deploy the rule with the _Log_ action to validate the threshold, and change the action later to block or challenge incoming requests when you are confident with the rule behavior.
+    It is recommended that you first deploy the rule with the _Log_ action to validate the threshold, and change the action later to block or challenge incoming requests when you are confident about the rule behavior.
 
 3. To save and deploy your rate limiting rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
