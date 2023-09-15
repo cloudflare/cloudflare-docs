@@ -78,9 +78,9 @@ To add environment variables via the dashboard:
 4. Select **Settings**.
 5. Select **Variables**.
 6. Under **Environment Variables**, select **Add variable**.
-7. Input a **Variable name** and its **value**, which will be made available to your Worker.
+7. Input a **Variable name** and its **Value**, which will be made available to your Worker.
 8. (Optional) To add multiple environment variables, select **Add variable**.
-9. Select **Save** to implement your changes.
+9. Select **Save and deploy** to implement your changes.
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
