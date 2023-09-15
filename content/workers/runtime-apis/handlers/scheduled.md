@@ -3,15 +3,15 @@ pcx_content_type: configuration
 title: Scheduled Handler
 ---
 
-# ScheduledEvent
+# `scheduled()`
 
 ## Background
 
-A `ScheduledEvent` is the event type for scheduled requests to a Worker. It is the `Object` passed through as the `event` when a Worker is invoked by a Worker's [Cron Trigger](/workers/configuration/cron-triggers/).
+When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-triggers/), the `scheduled()` handler handles the invocation.
 
-{{<Aside type="note" header="Testing Scheduled Events">}}
+{{<Aside type="note" header="Testing scheduled() handlers in local development">}}
 
-The recommended way of testing scheduled events is using Wrangler.
+You can test the behavior of your `scheduled()` handler in local development using Wrangler.
 
 Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
@@ -26,8 +26,6 @@ $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 ---
 
 ## Syntax
-
-A `ScheduledEvent` can be handled in Workers functions written using the [ES modules format](/workers/learning/migrate-to-module-workers/) by adding a `scheduled` function to your module's exported handlers:
 
 ```js
 export default {
