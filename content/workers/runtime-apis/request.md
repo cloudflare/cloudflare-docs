@@ -15,24 +15,23 @@ The most common way you will encounter a `Request` object is as a property of an
 ---
 highlight: [2]
 ---
-addEventListener("fetch", event => {
-  let request = event.request // Request object
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) {
+		// ...
+	},
+};
 ```
 
 You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
 
 ```js
-addEventListener("fetch", event => {
-  const request = event.request
+export default {
+	async fetch(request, env, ctx) {
   const url = "https://example.com"
-
-  const modifiedRequest = new Request(url, request)
-
+  const modifiedRequest = new Request(url, request);
   // ...
-})
+	},
+};
 ```
 
 The global `fetch` method itself invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to `fetch`.
@@ -178,6 +177,7 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 *   `cf` {{<type-link href="#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
     *   An object containing properties about the incoming request provided by Cloudflare’s global network.
+    *   This property is read-only. To modify its values, pass in the new values on the [`cf` key of the `init` options argument](/workers/runtime-apis/request/#requestinit) when creating a new Request object
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
@@ -346,10 +346,11 @@ The `Request` context is the context of the `"fetch"` event callback. It is impo
 The `Request` context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
 
 ```js
-addEventListener("fetch", event => {
-  // Request context available here
-  event.respondWith(/*...*/)
-})
+export default {
+	async fetch(request, env, ctx) {
+		// Request context available here
+	},
+};
 ```
 
 ### When passing a promise to fetch event `.respondWith()`
