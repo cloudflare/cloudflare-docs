@@ -13,14 +13,14 @@ The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cl
 
 R2 currently has two datasets:
 
-| Dataset                 | GraphQL Dataset Name        | Description                                                   |
+| <div style="width:100px">Dataset  </div>    | <div style="width:235px">GraphQL Dataset Name </div>       | Description                                                   |
 | ----------------------- | --------------------------- | ------------------------------------------------------------- |
 | Operations              | `r2OperationsAdaptiveGroups`| This dataset consists of the operations taken buckets of an account.  |
 | Storage                 | `r2StorageAdaptiveGroups`   | This dataset consists of the storage of buckets an account.   |
 
 ### Operations Dataset
 
-| Field               | Description |
+| <div style="width:175px"> Field  </div>             | Description |
 | ------------------- | ------------------------------------------------------------- |
 | actionType          | The name of the operation performed. |
 | actionStatus        | The status of the operation. Can be `success`, `userError`, or `internalError`. |
@@ -33,7 +33,7 @@ R2 currently has two datasets:
 
 ### Storage Dataset
 
-| Field         | Description |
+| <div style="width:175px"> Field </div>        | Description |
 | ------------- | ----------- |
 | bucketName    | The bucket this storage value is for. For buckets with a jurisdiction specified, you must include the [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) followed by an underscore before the bucket name. For example: `eu_your-bucket-name` |
 | payloadSize   | The size of the objects in the bucket. |
