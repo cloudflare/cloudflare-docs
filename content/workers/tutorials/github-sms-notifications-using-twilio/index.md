@@ -28,7 +28,7 @@ You will learn how to:
 
 ## Create a project
 
-Start by using `npx create cloudflare` to create a Worker project in the command line:
+Start by using `wrangler init` to create a Worker project in the command line:
 
 ```sh
 ---
@@ -160,7 +160,7 @@ async function checkSignature(formData, headers, githubSecretToken) {
 
 To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set your `GITHUB_SECRET_TOKEN`. This token is the secret you picked earlier when configuring you GitHub webhook:
 ```sh
-$ npx wrangler secret put GITHUB_SECRET_TOKEN
+$ wrangler secret put GITHUB_SECRET_TOKEN
 ```
 
 Add the node_compat flag to your `wrangler.toml` file:
@@ -180,7 +180,8 @@ You will send a text message to you about your repository activity using Twilio.
 
 You can then create a helper function to send text messages by sending a `POST` request to the Twilio API endpoint. [Refer to the Twilio reference](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource) to learn more about this endpoint.
 
-Create a new function called `sendText()` that will handle making the request to Twilio:
+Construct your headers and body in the format shown in the Twilio reference page. Change the `from` value to your Twilio phone number.
+
 ```js
 ---
 filename: worker.js - sendText()
@@ -213,8 +214,8 @@ async function sendText(accountSid, authToken, message) {
 To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/commands/#put-3) in your command line.
 
 ```sh
-$ npx wrangler secret put TWILIO_ACCOUNT_SID
-$ npx wrangler secret put TWILIO_AUTH_TOKEN
+$ wrangler secret put TWILIO_ACCOUNT_SID
+$ wrangler secret put TWILIO_AUTH_TOKEN
 ```
 
 Modify your `githubWebhookHandler` to send a text message using the `sendText` function you just made.
@@ -249,10 +250,10 @@ async fetch(request, env, ctx) {
 },
 ```
 
-Run the `npx wrangler publish` command to deploy your Workers script:
+Run the `wrangler publish` command to deploy your Workers script:
 
 ```sh
-$ npx wrangler publish
+$ wrangler publish
 ```
 
 ![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
