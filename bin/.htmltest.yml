@@ -2,6 +2,7 @@ DirectoryPath: "public"
 EnforceHTTPS: false
 IgnoreURLs:
 - "/api/*"
+- "zero-trust/index.html"
 IgnoreDirs:
 - "support/other-languages/"
 CheckLinks: true
