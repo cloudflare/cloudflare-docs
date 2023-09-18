@@ -118,7 +118,11 @@ The Cloudflare CDN allows customers to configure tiered caching. Note that depen
 
 The different cache topologies allow customers to control how Cloudflare interacts with origin servers to help ensure higher cache hit ratios, fewer origin connections, and reduced latency.
 
-** TABLE HERE ** refer to provided text to update - pg 11
+| **Smart Tiered Cache Topology (all plans)** | **Generic Global Tiered Topology (Enterprise only)** | **Custom Tiered Cache Topology (Enterprise only)** |
+|---|---|---|
+| Recommended for most deployments. It is the default configuration once Tiered Cache is enabled. | Recommended for those who have high traffic that is spread across the globe and desire the highest cache usage and best performance possible. | Recommended for customers who have additional data on their user base and have specific geographic regions they would like to focus on. |
+| Ideal for customers who want to leverage CDN for performance but minimize requests to origin servers and bandwidth utilization between Cloudflare and origin servers. | Generic Global Tiered Topology balances between cache efficiency and latency. Instructs Cloudflare to use all Tier 1 data centers as upper tiers. | Custom Tiered Cache Topology allows customers to set a custom topology that fits specific needs (ex: upper tiers in specific geographic locations serving more customers). |
+| Cloudflare will dynamically find the single best upper tier for an origin using Argo performance and routing data. |               | Engage with a Customer Success Manager (CSM) to build a custom topology. |
 
 ### Traffic flow: Tiered Cache, Smart Tiered Cache topology
 
@@ -126,8 +130,11 @@ In Figure 4, Tiered Caching is enabled with Smart Tiered Cache Topology. The dia
 
 ![Figure 4: HTTP requests and traffic flow through Cloudflare CDN](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-4.png) 
 
-** TABLE HERE ** refer to provided text to update - pg 12
-
+| **Request 1** | **Request 2** |
+|------|---------|
+| First request received in Data Center 1 results in cache miss, as request had not been made previously by any client.| Second request by a different client received in Data Center 3 results in cache miss, as request had not been made previously by any client served by Data Center 3. |
+| No cached content found, so Data Center 1 checks with its upper tier data center to request a copy of the content.  | No cached content found, so Data Center 3 checks with the upper tier data center to request a copy of the content.                                                   |
+| Upper tier data center also does not have content cached locally, so it makes a request to the origin server for content. Upon receiving the content, the upper tier data center caches it locally and relays the content to the requesting lower tier data center. The lower tier data center caches the content and responds to the client. | Cached content found at the upper tier data center. Data Center 3 retrieves and caches this content locally and responds to the client.   |
 
 In Figure 4, the top end user traffic flow displays the traffic flow when a client request is received by a data center closest to the client, Data Center 1. Since there is nothing locally cached on the ingress data center and tiered caching is enabled, a request is sent to the upper tier data center to request a copy of the content to cache. Because the upper tier data center also does not have the content cached, it sends the request to the origin server, caches the received content upon response, and responds to the lower tier data center with the cached content. The lower tier data center caches the content and responds to the client.
 
