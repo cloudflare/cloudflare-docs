@@ -91,7 +91,7 @@ export app;
 
 In this section, we define the route and function responsible for handling file uploads. 
 
-The `POST /files` route listens for POST requests with a query parameter `file`, representing a filename of an uploaded fine-tune document in R2. The function uses the `createFile` function to manage the file upload process.
+The `GET /files` route listens for GET requests with a query parameter `file`, representing a filename of an uploaded fine-tune document in R2. The function uses the `createFile` function to manage the file upload process.
 
 In `createFile`, we read the file from R2 and convert it to a `File` object. We then use the OpenAI API to upload the file and return the response.
 
@@ -116,7 +116,7 @@ const createFile = async (c: Context, r2Object: R2ObjectBody) => {
 	return uploadedFile
 }
 
-app.post('/files', async c => {
+app.get('/files', async c => {
 	const fileQueryParam = c.req.query("file")
 	if (!fileQueryParam) return c.text("Missing file query param", 400)
 
@@ -130,28 +130,28 @@ app.post('/files', async c => {
 
 ### 5. Creating fine-tuned models
 
-This section includes the `POST /models` route and the `createModel` function. The route handles incoming requests for creating a new fine-tuned model. The function `createModel` takes care of specifying the details and initiating the fine-tuning process with OpenAI.
+This section includes the `GET /models` route and the `createModel` function. The route handles incoming requests for creating a new fine-tuned model. The function `createModel` takes care of specifying the details and initiating the fine-tuning process with OpenAI.
 
 ```javascript
 ---
 filename: src/worker.js
 ---
-const createModel = async (c: Context, file: string) => {
+const createModel = async (c: Context, fileId: string) => {
 	const openai: OpenAI = c.get("openai")
 
 	const body = {
-		training_file: file,
+		training_file: fileId,
 		model: "gpt-3.5-turbo",
 	}
 
 	return openai.fineTuning.jobs.create(body)
 }
 
-app.post('/models', async c => {
-	const fileQueryParam = c.req.query("file")
-	if (!fileQueryParam) return c.text("Missing file query param", 400)
+app.get('/models', async c => {
+	const fileId = c.req.query("file_id")
+	if (!fileId) return c.text("Missing file ID query param", 400)
 
-	const model = await createModel(c, fileQueryParam)
+	const model = await createModel(c, fileId)
 	return c.json(model)
 })
 ```
@@ -207,7 +207,13 @@ To use your application, create a new fine-tune job by making a request to the `
 $ curl yourworker/files?file=finetune.jsonl
 ```
 
-Next, visit `/jobs` to see the status of your fine-tune jobs in OpenAI. Once the fine-tune job has completed, you can see the `fine_tuned_model` value, indicating a fine-tuned model has been created.
+When the file is uploaded, issue another request to `/models`, passing the `file_id` query parameter. This should match the `file_id` returned as JSON from the `/files` route:
+
+```sh
+$ curl yourworker/models?file_id=file-abc123
+```
+
+Finally, visit `/jobs` to see the status of your fine-tune jobs in OpenAI. Once the fine-tune job has completed, you can see the `fine_tuned_model` value, indicating a fine-tuned model has been created.
 
 ![Jobs](/images/workers/tutorials/finetune/finetune-jobs.png)
 
