@@ -506,3 +506,52 @@
   .CodeBlock--row>.CodeBlock--row-indicator:empty+.CodeBlock--row-content>.CodeBlock--token-table.CodeBlock--token-table-data-rows:empty+.CodeBlock--token-plain:empty:after {
     content: " ";
   }
+
+.DocsMarkdown-beta {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.DocsMarkdown--pill {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+
+  position: relative;
+  margin-bottom: 0.75em;
+
+  height: 18px;
+  border-radius: 20px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+}
+
+/* Pills on levels lower than H1 */
+.DocsMarkdown-pill-lower {
+  margin-bottom: initial;
+  margin-top: 2.25em;
+}
+
+.DocsMarkdown--pill-tab {
+  top: 0;
+  margin-left: 0.8em;
+}
+
+.DocsMarkdown--pill-beta {
+  width: 42px;
+  background: var(--orange-8);
+  color: var(--orange-1);
+}
