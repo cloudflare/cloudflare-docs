@@ -59,7 +59,7 @@ $ npx wrangler r2 put <PATH> -f <FILE_NAME>
 
 ## 3. Initializing the app and providing OpenAI API Access for All Routes
 
-In our Workers application, we'll set up a new application using Hono, a lightweight framework for building Cloudflare Workers applications. Hono provides a simple interface for defining routes and middleware functions.
+In our Workers application, we'll set up a new application using Hono, a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions.
 
 The `use` code block is a middleware function to add the OpenAI API client to the context of all routes. This allows us to access the client from within any route handler. 
 
