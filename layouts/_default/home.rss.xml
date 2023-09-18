@@ -40,7 +40,7 @@
     {{- with .individual_page -}}
     {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
     {{- $description = $result.content -}}
-    {{- $title = $result.title }}
+    {{- $title = printf "%s - %s" $product $result.title }}
     {{- end -}}
     <item>
     <title>{{- $title -}}</title>
