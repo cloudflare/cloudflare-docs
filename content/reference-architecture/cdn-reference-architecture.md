@@ -90,22 +90,22 @@ The benefits of the Cloudflare CDN can be attributed to the below two points, di
 1. CDNs inherently increase performance by caching content on servers close to the user
 2. The unique Cloudflare architecture and integrated ecosystem
 
-Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global Anycast edge network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin. 
+Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global Anycast network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin. 
 
 ![Figure 2: HTTP request to Cloudflare CDN with Anycast](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-2.png)
 
 ## Cloudflare CDN architecture and design
 
-Figure 3 is a view of the Cloudflare CDN on the global Anycast edge network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
+Figure 3 is a view of the Cloudflare CDN on the global Anycast network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
 
-![Figure 3: Cloudflare CDN with Tiered Cache on global Anycast edge network](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-3.png)
+![Figure 3: Cloudflare CDN with Tiered Cache on global Anycast network](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-3.png)
 
-In the above diagram, there are a few important key points to understand about the Cloudflare CDN and the global Anycast edge network it resides on:
+In the above diagram, there are a few important key points to understand about the Cloudflare CDN and the global Anycast network it resides on:
 
 * An important differentiator is that Cloudflare utilizes one global network and runs every service on every server in every Cloudflare data center, thus providing end users the closest proximity to Cloudflare’s services, with the highest scale, resiliency, and performance.
 * Cloudflare is a reverse proxy, meaning it receives requests from clients and proxies the requests back to the customer’s origin servers. Thus, every request traverses through Cloudflare’s network before reaching the customer’s network. Since Cloudflare has hardened and protected its infrastructure at the edge (ingress), all customers are consequently also protected from infrastructure-level and volumetric DDoS attacks. Requests and traffic must go through the protected Cloudflare network before reaching the customer’s origin server.
-* The Cloudflare CDN leverages the Cloudflare global Anycast edge network. Thus the incoming request is routed to and answered by the node closest to the user (eyeball).
-* The inherent benefits of Anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global Anycast edge network spans more than 300 cities across over 100 countries, reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing over 200 Tbps of network capacity and DDoS protection capability.
+* The Cloudflare CDN leverages the Cloudflare global Anycast network. Thus the incoming request is routed to and answered by the node closest to the user.
+* The inherent benefits of Anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global Anycast network spans more than 300 cities across over 100 countries, reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing over 200 Tbps of network capacity and DDoS protection capability.
 * Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides [DNS](/dns/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and other performance, reliability, and security services using the same edge architecture. 
 * [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/how-to/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution. 
 
@@ -226,6 +226,6 @@ Figure 8 illustrates how Cache Reserve can help reduce load on an origin server 
 
 ## Summary
 
-To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global Anycast edge network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.
+To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global Anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.
 
 
