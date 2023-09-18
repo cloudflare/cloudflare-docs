@@ -3,7 +3,7 @@ pcx_content_type: changelog
 title: Changelog
 meta:
     description: Review recent changes to Cloudflare Workers.
-layout: changelog
+layout: single
 changelog_file_name: workers
 outputs:
     - html
