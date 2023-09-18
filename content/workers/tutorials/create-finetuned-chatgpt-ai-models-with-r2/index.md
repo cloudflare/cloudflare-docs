@@ -56,7 +56,7 @@ Next, you can upload a file using the `wrangler` CLI. `<PATH>` is the combined b
 $ npx wrangler r2 put <PATH> -f <FILE_NAME>
 ```
 
-## 3. Initializing the app and providing OpenAI API Access for All Routes
+## 3. Initializing the app
 
 In our Workers application, we'll set up a new application using Hono, a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions.
 
