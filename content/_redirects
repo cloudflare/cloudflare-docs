@@ -948,6 +948,10 @@
 /workers/get-started/storage-options/ /workers/learning/storage-options 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
+/workers/runtime-apis/headers/ /workers/platform/headers/ 301
+/workers/wrangler/workers-kv/ /kv/ 301
+/workers/runtime-apis/kv/ /kv/api/ 301
+/workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
@@ -1001,6 +1005,9 @@
 /workers/platform/deployments/ /workers/configuration/deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
+/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
+
+
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
