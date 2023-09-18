@@ -1262,7 +1262,7 @@
           "ent": "Yes"
         },
         "firewall_variables": {
-          "title": "Firewall variables",
+          "title": "Bot Management variables",
           "link": "/bots/reference/bot-management-variables/",
           "free": "No",
           "pro": "No",
@@ -1387,7 +1387,7 @@
       }
     },
     "x_firewall_rules": {
-      "title": "Firewall rules",
+      "title": "Firewall rules (deprecated)",
       "link": "/firewall/",
       "properties": {
         "availability": {
@@ -1522,6 +1522,30 @@
           "biz": "Yes",
           "ent": "Yes"
         },
+        "b_custom_rules": {
+          "title": "Number of rules",
+          "free": "5",
+          "lite": "20",
+          "pro": "20",
+          "pro_plus": "40",
+          "biz": "100",
+          "ent": "1,000"
+        },
+        "d_supported_actions": {
+          "title": "Supported actions",
+          "link": "/ruleset-engine/rules-language/actions/",
+          "free": "All except Log",
+          "pro": "All except Log",
+          "biz": "All except Log",
+          "ent": "All"
+        },
+        "f_regex_support": {
+          "title": "Regex support",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
           "link": "/waf/custom-rulesets/",
@@ -1529,7 +1553,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Certain Enterprise plans"
+          "ent": "Paid add-on"
         }
       }
     },

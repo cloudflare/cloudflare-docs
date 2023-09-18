@@ -18,7 +18,7 @@
           "external_link": true,
           "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
           "title": "Cannot add a new account member"
-        }, 
+        },
         {
           "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
           "title": "Proxied DNS records"
@@ -80,7 +80,7 @@
           "external_link": true,
           "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
           "title": "Cannot add a new account member"
-        }, 
+        },
         {
           "external_link": true,
           "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
@@ -443,20 +443,20 @@
       "dashPath": "/:accountId/:zoneName/security",
       "recommendations": [
         {
-          "url_path": "/firewall/cf-firewall-rules/actions/",
-          "title": "Firewall rules actions"
+          "url_path": "/ruleset-engine/rules-language/actions/",
+          "title": "Rule actions"
         },
         {
-          "url_path": "/waf/",
-          "title": "Cloudflare Web Application Firewall (WAF)"
+          "url_path": "/waf/managed-rules/",
+          "title": "WAF Managed Rules"
         },
         {
-          "url_path": "/firewall/cf-firewall-rules/",
-          "title": "Firewall Rules"
+          "url_path": "/waf/custom-rules/",
+          "title": "WAF custom rules"
         },
         {
           "url_path": "/waf/tools/ip-access-rules/",
-          "title": "IP Access Rules"
+          "title": "IP Access rules"
         },
         {
           "url_path": "/waf/security-events/",

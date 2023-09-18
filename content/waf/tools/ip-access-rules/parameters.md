@@ -47,7 +47,7 @@ Cloudflare uses the following special country alpha-2 codes that are not part of
 
 {{<Aside type="note" header="Notes about country blocking">}}
 * Block by country is only available on Enterprise plans.
-* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [firewall rules](/firewall/).
+* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [WAF custom rules](/waf/custom-rules/).
 {{</Aside>}}
 
 ## Autonomous System Number (ASN)

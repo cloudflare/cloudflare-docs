@@ -10,9 +10,10 @@ layout: single
 Use IP Access rules to allowlist, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
 
 {{<Aside type="warning">}}
-If you wish to perform IP-based or geography-based blocking (geoblocking), Cloudflare recommends that you use [Cloudflare Firewall Rules](/firewall/) instead of IP Access rules:
-- For IP-based blocking, use an [IP List](/fundamentals/global-configurations/lists/ip-lists/) in the firewall rule expression.
-- For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the firewall rule expression.
+If you wish to perform IP-based or geography-based blocking (geoblocking), Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of IP Access rules:
+
+- For IP-based blocking, use an [IP List](/fundamentals/global-configurations/lists/ip-lists/) in the custom rule expression.
+- For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression.
 {{</Aside>}}
 
 IP Access rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
@@ -25,7 +26,7 @@ IP Access rules are available to all customers.
 
 Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterprise customer and need more rules, contact your account team.
 
-Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [firewall rules](/firewall/).
+Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [WAF custom rules](/waf/custom-rules/).
 
 ## Important remarks
 

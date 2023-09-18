@@ -766,6 +766,7 @@
 /waf/ddos-l34-mitigation/configure-api/ /ddos-protection/managed-rulesets/network/configure-api/ 301
 /waf/ddos-l7-mitigation/ /ddos-protection/managed-rulesets/http/ 301
 /waf/ddos-l7-mitigation/configure-dashboard/ /ddos-protection/managed-rulesets/http/configure-dashboard/ 301
+/waf/firewall-rules/ /waf/custom-rules/ 301
 /waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rules/reference/cloudflare-managed-ruleset/ 301
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rules/reference/owasp-core-ruleset/ 301
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
