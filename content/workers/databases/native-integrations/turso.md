@@ -78,13 +78,13 @@ To set up an integration with Turso:
     ```
 4. Add the Turso database integration to your Worker:
 
-  1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
     4. Select **Integrations** > **Turso**. 
     5. Follow the setup flow, selecting the database created in step 1.
 
-5. In your Worker, install the Turso client library `libsql/client` library:
+5. In your Worker, install the Turso client library:
 
   ```sh
   $ npm install @libsql/client
@@ -133,10 +133,10 @@ To set up an integration with Turso:
       return createClient({ url, authToken })
     }
   ```
-  Note:
-  - The libSQL client library import ‘@libsql/client/web’ must be imported exactly as shown when working with Cloudflare workers. The non-web import will not work in the Workers environment.
-  - The Env interface contains the environment variable and secret you defined earlier.
-  - The Env interface also caches the libSQL client object and router, which are created on the first request to the Worker.
+
+  - The libSQL client library import `@libsql/client/web` must be imported exactly as shown when working with Cloudflare workers. The non-web import will not work in the Workers environment.
+  - The `Env` interface contains the environment variable and secret you defined earlier.
+  - The `Env` interface also caches the libSQL client object and router, which are created on the first request to the Worker.
   - The Worker uses `buildLibsqlClient` to query the `elements` database and returns the response as a JSON object.
 
   With your environment configured and your code ready, you can now test your Worker locally before you deploy.
