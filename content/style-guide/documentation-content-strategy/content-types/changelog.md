@@ -191,15 +191,9 @@ entries:
 
 - `scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-   - Should be included for scheduled pages
+   - Should be included for scheduled pages. Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
 
 {{</definitions>}}
-
-{{<Aside type="warning">}}
-
-Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
-
-{{</Aside>}}
 
 ## Examples
 
