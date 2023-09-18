@@ -137,7 +137,7 @@ In Figure 4, Tiered Caching is enabled with Smart Tiered Cache Topology. The dia
 
 ![Figure 4: HTTP requests and traffic flow through Cloudflare CDN](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-4.png) 
 
-| **Request 1** | **Request 2** |
+| Request 1 | Request 2 |
 |------|---------|
 | First request received in Data Center 1 results in cache miss, as request had not been made previously by any client.| Second request by a different client received in Data Center 3 results in cache miss, as request had not been made previously by any client served by Data Center 3. |
 | No cached content found, so Data Center 1 checks with its upper tier data center to request a copy of the content.  | No cached content found, so Data Center 3 checks with the upper tier data center to request a copy of the content.                                                   |
