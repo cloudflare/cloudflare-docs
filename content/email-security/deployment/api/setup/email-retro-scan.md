@@ -19,7 +19,7 @@ To scan for threats in your Office 365 inbox:
 5. In **Scan parameters**, choose one or more domains to scan.
 6. Choose your email security system, from **Current email security system**.
 7. Select **Initiate Retro Scan**.
-8. Cloudflare will begin the task of analyzing all your emails for the domains chosen. This might take some time depending on the size of the inbox and number of domains chosen. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan is complete.
+8. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
 
 ## Analyze results
 
