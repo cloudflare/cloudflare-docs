@@ -58,9 +58,9 @@ The components of this example custom rule (using the previous example URL) incl
 
 - Token key = `mysecrettoken`
 - Token expiration time = `10800` seconds
-- Http.request.uri = `/download/cat.jpg`
-- Http.request.timestamp.sec = `1484063787`
-- Separator: len(?verify=) = `8`
+- `http.request.uri` = `/download/cat.jpg`
+- `http.request.timestamp.sec` = `1484063787`
+- Separator: `len("?verify=")` = `8`
 
 To generate tokens for the paths using this custom rule:
 
