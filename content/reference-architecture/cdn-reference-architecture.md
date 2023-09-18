@@ -50,7 +50,7 @@ A CDN helps address the challenges customers face around latency, performance, a
 CDNs decrease latency and increase performance by having many data center locations across the globe that cache the content from the origin. The goal is to have content cached as close as possible to users, so content is cached at the edge of the CDN provider's network. 
 
 ### Impacts
-
+ 
 * **Improved website load time**: Instead of every client making a request to the origin server, which could be located a considerable distance away, the request is routed to a local server that responds with cached content, thus decreasing latency and increasing overall performance. Regardless of where the origin server and clients are located, performance will be more consistent for all users, as the CDN will serve locally cached content when possible.
 
 * **Increased content availability and redundancy:** Because every client request no longer needs to be sent to the origin server, CDNs provide not only performance benefits, but also availability and redundancy. Requests are load balanced over local servers with cached content; these servers respond to local requests, significantly decreasing overall load on the origin server. The origin server only is contacted when needed (when content is not cached or for dynamic non-cacheable content). 
@@ -63,7 +63,7 @@ CDNs decrease latency and increase performance by having many data center locati
 
 An important difference in some CDN implementations is how they route traffic to the respective local CDN nodes. Routing requests to CDN nodes can be done via two different methods:
 
-**1. DNS unicast routing**
+**DNS unicast routing**
 
 In this method, recursive DNS queries redirect requests to CDN nodes; the client’s DNS resolver forwards requests to the CDN’s authoritative nameserver. CDNs based on DNS unicast routing are not ideal in that clients may be geographically dispersed from the DNS resolver. Decisions on closest-proximity CDN nodes are based on the client's DNS server instead of client’s IP address. Also, if any changes are needed for the DNS response, there is a dependency on DNS time to live (TTL) expiration.
 
@@ -71,7 +71,7 @@ Further, since DNS routing uses unicast addresses, traffic is routed directly to
 
 Another challenge with DNS-based CDNs is that DNS is not very graceful upon failover. Typically a new session or application must be started for the DNS resolver with a different IP address to take over.
 
-**2. Anycast routing**
+**Anycast routing**
 
 The Cloudflare CDN, which is discussed in more detail in the next section, uses Anycast routing. Anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
 
