@@ -34,7 +34,7 @@ You can request adjustments to limits that conflict with your project goals by c
 
 Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
 
-* An individual Object has a soft limit of 1,000 requests per second. Note that you can have an unlimited number of individual objects per namespace.
+* An individual Object has a soft limit of 1,000 requests per second. You can have an unlimited number of individual objects per namespace.
 * A simple [storage](/durable-objects/api/transactional-storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
 * Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
 
