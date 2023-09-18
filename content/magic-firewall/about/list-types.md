@@ -10,7 +10,7 @@ weight: 3
 
 Cloudflare handles millions of HTTP requests each second and blocks billions of cyber threats each day. Cloudflare uses that data to detect malicious actors on the Internet and turns that information into a list of known malicious IP addresses. Cloudflare also integrates with a number of third-party vendors to augment the coverage.
 
-The threat intelligence feed categories are described in [Managed IP Lists](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists).  All of these lists are compatible with Magic Firewall.
+The threat intelligence feed categories are described in [Managed IP Lists](/waf/tools/lists/ip-lists/#managed-ip-lists).  All of these lists are compatible with Magic Firewall.
 
 ## IP Lists
 

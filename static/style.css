@@ -5365,11 +5365,14 @@ pre {
 .littlefoot__content p {
   font-size: 1em;
   font-weight: 350;
-  font-family: var(--font-family);
   font-size: var(--html-font-size);
-  font-family: var(--font-family);
+  font-family: var(--font-family) !important;
   line-height: var(--line-height);
   color: var(--color);
+}
+
+.littlefoot__content {
+  width: 100% !important;
 }
 
 [theme="dark"] .littlefoot__content {
@@ -5542,4 +5545,8 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   .tutorialPreReqHeader {
     margin-top: 4em !important;
   }
+}
+
+.footnote-backref {
+  visibility: hidden;
 }

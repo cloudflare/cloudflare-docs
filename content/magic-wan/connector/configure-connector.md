@@ -27,7 +27,7 @@ To add a site:
 3. Select **Add site** to create a new one and start the configuration wizard.
 4. Add a name and description for your new site. 
 5. Under **Connector**, select **Add Connector**. This will show a list of Magic WAN Connector devices associated with your account.
-6. Choose from the list the correct Connector corresponding to the site you are creating, and select **Add Connector**.
+6. Choose from the list the Connector corresponding to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Select **Add Connector** when you are ready to proceed.
     1. (Optional) You can also define an **Interrupt service window** for your site. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Refer to [Set up your Magic WAN Connector](#3-set-up-your-magic-wan-connector) for more details.
 7. Select **Next** to proceed to configuring your network.
 8. Under **WAN configuration**, there should be a **Default WAN interface** automatically created. Select **Edit** in the default interface, or **Create** if there is none. You should only have one WAN interface on this list.
@@ -64,7 +64,7 @@ Select **Save** when you are finished.
 
 The Magic WAN Connector will only establish a connection to the Cloudflare network when it is activated, so we recommend leaving it deactivated until you are ready to establish the connection.
 
-When the Connector is first activated, one of the ports must be connected to the Internet through a route that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the **Site configuration** step.
+When the Connector is first activated, one of the ports must be connected to the Internet through a route that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#2-define-a-site-configuration) step.
 
 When you are ready to connect your Magic WAN Connector to the Cloudflare network, the first step is to navigate to the Cloudflare dashboard and activate the Connector:
 

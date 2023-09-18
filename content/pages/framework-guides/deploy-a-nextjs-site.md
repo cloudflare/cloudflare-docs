@@ -9,7 +9,7 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy a:
 
-* Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
+* Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 * Static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -24,19 +24,27 @@ For more information about the Edge Runtime, refer to [the official Next.js docu
 
 ### Select your Next.js project
 
-If you already have a Next.js project that you wish to deploy, change to its directory and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project:
+If you already have a Next.js project that you wish to deploy, change to its directory and proceed to the next step. Otherwise, use `create-cloudflare` to create a new Next.js project:
 
 ```sh
-$ npx create-next-app my-app
+$ npm create cloudflare@latest my-next-app -- --framework=next
 ```
 
-After creating your project, a new `my-app` directory will be generated using the official default template. Change to this directory to continue.
+`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter, and ask you setup questions.
+
+After creating your project, a new `my-next-app` directory will be generated using the official default template. Change to this directory to continue.
 
 ```sh
-$ cd my-app
+$ cd my-next-app
 ```
 
 ### Configure the application to use the Edge Runtime
+
+{{<Aside type="note">}}
+
+If you created your project using `create-cloudflare`, you can skip this step.
+
+{{</Aside>}}
 
 The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (for example, API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
 
@@ -93,7 +101,7 @@ export async function GET(request: Request) {
 {{</tab>}}
 {{</tabs>}}
 
-For more examples of this and for Next.js versions prior to v13.3.1, refer to [`@cloudflare/next-on-pages` examples](https://github.com/cloudflare/next-on-pages/blob/main/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/docs/supported.md).
+For more examples of this and for Next.js versions prior to v13.3.1, refer to [`@cloudflare/next-on-pages` examples](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/docs/supported.md).
 
 ### Create a GitHub repository
 
@@ -106,6 +114,10 @@ git push -u origin main
 ```
 
 ### Deploy your application to Cloudflare Pages
+
+{{<render file="_deploy-via-c3.md" withParameters="Next.js">}}
+
+### Deploy via the Cloudflare dashboard
 
 To deploy your application to Cloudflare Pages, you need to install the `@cloudflare/next-on-pages` package. This library builds your Next.js project in a format that can be deployed to Pages, and handles the runtime logic for your application.
 
@@ -197,7 +209,7 @@ highlight: [4, 5]
 
 export async function GET(request: Request) {
   // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (process.env as { MY_KV: KVNamespace }));
+  const { MY_KV } = (process.env as { MY_KV: KVNamespace });
 
   return new Response(
     // ...

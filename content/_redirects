@@ -60,7 +60,8 @@
 /1.1.1.1/setup-1.1.1.1/macos/ /1.1.1.1/setup/macos/ 301
 /1.1.1.1/setup-1.1.1.1/router/ /1.1.1.1/setup/router/ 301
 /1.1.1.1/setup-1.1.1.1/windows/ /1.1.1.1/setup/windows/ 301
-/1.1.1.1/setup/check-1.1.1.1/ /1.1.1.1/setup/check/ 301
+/1.1.1.1/setup/check-1.1.1.1/ /1.1.1.1/check/ 301
+/1.1.1.1/setup/check/ /1.1.1.1/check/ 301
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/what-is-1.1.1.1/ /1.1.1.1/
 
@@ -149,12 +150,17 @@
 /support/other-languages/한국어/cloudflare-bot-제품/ /bots/troubleshooting/ 301
 
 # byoip
-/byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
-/byoip/dynamic-advertisement/best-practices/ /byoip/best-practices/dynamic-advertisement/ 301
+/byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
+/byoip/best-practices/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
 /byoip/dynamic-advertisement/configure-dynamic-advertisement/ /byoip/how-to/configure-dynamic-advertisement/ 301
 /byoip/irr-records/verify-irr-entries/ /byoip/how-to/verify-irr-entries/ 301
-/byoip/loa/ /byoip/about/loa/ 301
-/byoip/loa/loa-template/ /byoip/about/loa/ 301
+/byoip/about/irr/ /byoip/concepts/irr-entries/ 301
+/byoip/best-practices/irr-entries/ /byoip/concepts/irr-entries/best-practices/ 301
+/byoip/about/loa/ /byoip/concepts/loa/ 301
+/byoip/loa/loa-template/ /byoip/concepts/loa/ 301
+/byoip/about/prefix-delegations/ /byoip/concepts/prefix-delegations/ 301
+/byoip/about/ /byoip/concepts/ 301
+/byoip/cloudflare-ips/ /byoip/get-started/#cloudflare-ips 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
@@ -334,7 +340,6 @@
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
-/fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ 301
@@ -489,6 +494,13 @@
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/third-party/strongswan/ 301
 /magic-wan/tutorials/vyos/ /magic-wan/third-party/vyos/ 301
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
+
+# notifications
+/fundamentals/notifications/ /notifications/ 301
+/fundamentals/notifications/create-notifications/ /notifications/create-notifications/ 301
+/fundamentals/notifications/create-notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
+/fundamentals/notifications/create-notifications/configure-webhooks/ /notifications/create-notifications/configure-webhooks/ 301
+/fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -701,7 +713,7 @@
 /r2/learning/data-security/ /r2/reference/data-security/ 301
 /r2/learning/cors/ /r2/buckets/cors/ 301
 /r2/learning/unicode-interoperability/ /r2/reference/unicode-interoperability/ 301
-/r2/learning/data-location/ /r2/buckets/data-location/ 301
+/r2/learning/data-location/ /r2/reference/data-location/ 301
 /r2/platform/pricing/ /r2/pricing/ 301
 /r2/platform/limits/ /r2/reference/limits/ 301
 /r2/platform/changelog/ /r2/reference/changelog/ 301
@@ -714,6 +726,7 @@
 /r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
 /r2/examples/aws4fetch/ /r2/examples/aws/aws4fetch/ 301
 /r2/examples/boto3/ /r2/examples/aws/boto3/ 301
+/r2/buckets/data-location/ /r2/reference/data-location/ 301
 
 # tenant_redirects
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
@@ -935,6 +948,10 @@
 /workers/get-started/storage-options/ /workers/learning/storage-options 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
+/workers/runtime-apis/headers/ /workers/platform/headers/ 301
+/workers/wrangler/workers-kv/ /kv/ 301
+/workers/runtime-apis/kv/ /kv/api/ 301
+/workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
@@ -988,6 +1005,9 @@
 /workers/platform/deployments/ /workers/configuration/deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
+/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
+
+
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
@@ -1249,3 +1269,4 @@
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
+/fundamentals/notifications/* /notifications/:splat 301

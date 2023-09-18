@@ -15,6 +15,12 @@ On **October 4, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 On **October 11, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
+{{<Aside type="warning">}}
+
+{{<render file="_digicert-caa-warning.md">}}
+
+{{</Aside>}}
+
 ## Summary of changes
 
 This table provides a summary of the differences between DigiCert and Cloudflare's other CAs.
@@ -103,7 +109,7 @@ For partial zones[^2], the process depends on whether the certificate uses a wil
 
 ##### Fetch DCV tokens
 
-To automatically fetch tokens for certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **Advanced Certificate Alert** events. This notification will include the DCV tokens associated with new or renewed certificates.
+To automatically fetch tokens for certificates that are coming up for renewal, set up [notifications](/notifications/notification-available/#ssltls) for **Advanced Certificate Alert** events. This notification will include the DCV tokens associated with new or renewed certificates.
 
 Notifications can be sent to an email address or a webhook.
 

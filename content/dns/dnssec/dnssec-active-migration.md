@@ -75,7 +75,7 @@ $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_r
    }'
 ```
 
-2. Get Cloudfare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
+2. Get Cloudflare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 
 API example:
 
