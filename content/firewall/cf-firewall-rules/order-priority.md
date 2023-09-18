@@ -69,7 +69,7 @@ While your priority numbering scheme can be arbitrary, keep the following in min
 
 - **The evaluation sequence starts from the lowest priority number** and goes to the highest.
 - **Rules without a priority number are evaluated last**, in order of their action precedence. For example, a rule with the _Log_ action is evaluated before a rule that has the _Block_ action. For more on action precedence, refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/).
-- **Avoid using the number `1` as a priority** so that you can easily maintain and modify rule order.
+- **Avoid using the number `1` as a priority** to make rule order modification easier in the future.
 - **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some examples:
 
     - 5000-9999: Trusted IP addresses

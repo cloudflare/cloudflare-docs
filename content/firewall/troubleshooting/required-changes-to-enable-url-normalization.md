@@ -23,7 +23,7 @@ Cloudflare did not enable URL normalization automatically for zones that would b
 
 ## Why URL normalization is important
 
-Cloudflare strongly recommends that you enable **Normalize incoming URLs** in **Rules** > **Settings** to strengthen your zone's security posture. Not doing so leaves your zone at greater risk of a successful attack. Malicious actors could craft the URL in a way that the rules are not accounting for.
+Cloudflare strongly recommends that you enable **Normalize incoming URLs** in **Rules** > **Settings** to strengthen your zone's security posture. Not doing so leaves your zone at greater risk of a successful attack. Malicious parties could craft the URL in a way that the rules are not accounting for.
 
 For example, a firewall rule with an expression such as `http.request.uri.path contains "/login"` could be bypassed if the malicious actor has encoded the `l` character as `%6C`. In this scenario, and with URL normalization disabled, traffic would not be matched by the firewall rule.
 
