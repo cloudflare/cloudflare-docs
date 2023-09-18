@@ -68,3 +68,7 @@ Because your origin server will receive Cloudflare IP addresses instead of visit
 If you want sampled logs of visitor IP addresses and are on an Enterprise plan, we recommend that you use [Cloudflare Logs](/logs/about/).
 
 Alternatively, if you want non-sampled logs directly from your server or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786). 
+
+### IP range updates
+
+Cloudflare's IP ranges do not change frequently. When they do change, they are added to our [list of IP ranges](https://www.cloudflare.com/en-in/ips/) before being put into production. An email notification will be sent out in advance to give you enough time to make configuration changes. You can also use the Cloudflare API to programmatically keep your configuration updated.

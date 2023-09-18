@@ -2,6 +2,8 @@
 title: GET examples
 pcx_content_type: reference
 weight: 4
+meta:
+  title: GET examples - Firewall rules
 ---
 
 # GET examples

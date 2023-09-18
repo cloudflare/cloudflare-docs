@@ -12,7 +12,7 @@ If you initially set up a partial domain on Cloudflare, you can later migrate it
 
 ## Step 1 — Prepare Cloudflare SSL/TLS
 
-In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading/) for your application.
+In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading/) for your application.[^1]
 
 You also should verify that the [status](/ssl/reference/certificate-statuses/) of your SSL certificate is **Active**.
 
@@ -39,7 +39,7 @@ In the Cloudflare dashboard:
 
 1.  Go to **DNS** > **Settings**.
 2.  Click **Convert to Primary DNS** (this will not affect how your traffic is proxied).
-3.  Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import unproxied (gray-clouded) records.
+3.  Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import [unproxied records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 ## Step 4 — Activate full setup
 
@@ -49,4 +49,10 @@ In the Cloudflare dashboard, we recommend that you also [enable DNSSEC](/dns/dns
 
 Once all the DNS TTLs expire, all your DNS queries will be answered by Cloudflare's global edge network.
 
+<<<<<<< HEAD
 Start proxying additional hostnames by enabling the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.
+=======
+Start proxying additional hostnames by enabling the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.
+
+[^1]: While Universal SSL certificates are supported, it can take [15 minutes](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup) for one to be issued. To minimize downtime, we recommend having a certificate in place beforehand.
+>>>>>>> production

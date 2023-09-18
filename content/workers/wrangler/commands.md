@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Commands
+meta:
+  title: Commands - Wrangler
 ---
 
 # Wrangler commands

@@ -2,6 +2,8 @@
 pcx_content_type: navigation
 title: Configuration
 weight: 1
+meta:
+    title: Configure a local tunnel
 ---
 
 # Configure a local tunnel

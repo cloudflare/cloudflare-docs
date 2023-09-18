@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Configuration
+meta:
+  title: Configuration - Wrangler
 ---
 
 # Configure `wrangler.toml`
@@ -535,9 +537,18 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
   - The name of this R2 bucket.
 
+- `jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
 - `preview_bucket_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The preview name of this R2 bucket used during `wrangler dev`.
+  - The preview name of this R2 bucket used during `wrangler dev --remote`.
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket.
+
+{{</Aside>}}
 
 {{</definitions>}}
 

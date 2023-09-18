@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Configuration
 weight: 4
+meta:
+  title: Configuration - Wrangler v1 (deprecated)
 ---
 
 # Configuration

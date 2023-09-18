@@ -131,9 +131,9 @@
             "additional_description": "Skip the execution of WAF managed rulesets or some of their rules."
           },
           {
-            "url_path": "/firewall/cf-firewall-rules/",
-            "link_title": "Firewall Rules",
-            "additional_description": "Block, challenge, or allow requests based on <a href='/ruleset-engine/rules-language/fields/'>several characteristics</a> (user agents, cookies, referrer, and more)."
+            "url_path": "/waf/custom-rules/",
+            "link_title": "Custom Rules",
+            "additional_description": "Block, challenge, or skip security features for specific requests based on <a href='/ruleset-engine/rules-language/fields/'>several characteristics</a> (user agent, cookies, referrer, and more)."
           },
           {
             "url_path": "/waf/rate-limiting-rules/",
@@ -176,7 +176,7 @@
             "external_link": true,
             "url_path": "/fundamentals/security/security-level/",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
             "url_path": "/fundamentals/security/challenge-passage/",

@@ -51,7 +51,7 @@ Inside of `hello-hexo.md`, use Markdown to write the content of the article. You
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 

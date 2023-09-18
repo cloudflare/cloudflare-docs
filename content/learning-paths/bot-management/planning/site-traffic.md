@@ -31,9 +31,9 @@ If bots are viewing data intended for human eyes only, you may want broader rule
 
 ### Implementation details
 
-Verified bots are blocked by default when you create [firewall rules](/firewall/) using `cf.bot_management.score`.
+Verified bots are blocked by default when you create [WAF custom rules](/waf/custom-rules/) using `cf.bot_management.score`.
 
-To allow verified bots, you would need to include `not (cf.bot_management.verified_bot)` as part of a firewall rule.
+To allow verified bots, you would need to include `not (cf.bot_management.verified_bot)` as part of a custom rule.
 
 ---
 
@@ -79,6 +79,6 @@ You can generally identify mobile traffic with common user agent strings, though
 
 #### Adjust rules
 
-If your application [uses mTLS](/api-shield/security/mtls/), you can also integrate that certificate's presence into your firewall rules using the `cf.tls_client_auth.cert_verified` field.
+If your application [uses mTLS](/api-shield/security/mtls/), you can also integrate that certificate's presence into your WAF custom rules using the `cf.tls_client_auth.cert_verified` field.
 
-Native or progressive web applications should also only use *Block* as a [firewall rule action](/firewall/cf-firewall-rules/actions/).
+Native or progressive web applications should also only use *Block* as a [rule action](/ruleset-engine/rules-language/actions/).

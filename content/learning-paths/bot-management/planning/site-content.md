@@ -32,9 +32,9 @@ If you want to increase protection and minimize bot traffic - common for financi
 {{<render file="_static-resources-bm.md" productFolder="bots" >}}
 <br/>
 
-If you do not explicitly exclude static resources from your firewall rules, you may block good bots — like mail clients — that routinely fetch static resources.
+If you do not explicitly exclude static resources from your custom rules, you may block good bots — like mail clients — that routinely fetch static resources.
 
-To exclude static resources, you would need to include `not (cf.bot_management.static_resource)` as part of a firewall rule.
+To exclude static resources, you would need to include `not (cf.bot_management.static_resource)` as part of a custom rule.
 
 ---
 

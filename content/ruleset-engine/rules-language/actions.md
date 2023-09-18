@@ -266,5 +266,5 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Cloudflare Firewall Rules, a security product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+Cloudflare Firewall Rules, now deprecated, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 {{</Aside>}}
