@@ -1262,7 +1262,7 @@
           "ent": "Yes"
         },
         "firewall_variables": {
-          "title": "Firewall variables",
+          "title": "Bot Management variables",
           "link": "/bots/reference/bot-management-variables/",
           "free": "No",
           "pro": "No",

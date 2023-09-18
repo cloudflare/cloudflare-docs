@@ -16,7 +16,7 @@ A request can trigger multiple detection IDs.
 
 You can use `cf.bot_management.detection_ids` fields in tools such as:
 
-- [Custom Rules](/waf/custom-rules/)
+- [Custom rules](/waf/custom-rules/)
 - [Advanced Rate Limiting](/waf/rate-limiting-rules/)
 - [Transform Rules](/rules/transform/)
 - [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
@@ -43,11 +43,12 @@ You can create or edit their existing Logpush jobs to include the new Bot Detect
 ## Create or edit an expression
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Bots**.
-3. [Create a WAF custom rule](/waf/custom-rules/create-dashboard/) or select **Edit** on an existing custom rule.
-4. Select **Edit expression**.
-5. Add or edit the expression with the new field.
-6. Select **Save**.
+2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters.
+
+    Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
+
+3. Use the `cf.bot_management.detection_ids` field in the rule expression.
+4. Select **Save**.
 
 ## Use cases
 

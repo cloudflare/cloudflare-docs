@@ -82,7 +82,7 @@ Cloudflare has built an allowlist of good, automated bots, e.g. Google Search En
 
 This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.
 
-To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields#dynamic-fields) field in your WAF custom rule.
+To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields/#field-cf-bot_management-verified_bot) field in your WAF custom rule.
 
 ___
 
@@ -136,9 +136,9 @@ ___
 
 -   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 
--   BFM has limited control. You cannot bypass or skip BFM using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+-   BFM has limited control. You cannot bypass or skip BFM using the _Skip_ action in WAF custom rules or using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
--   SBFM can be bypassed with IP Access `Allow` action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
+-   SBFM can be bypassed with IP Access _Allow_ action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
 {{</Aside>}}
 

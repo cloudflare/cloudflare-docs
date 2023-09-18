@@ -17,7 +17,7 @@ To get more information about potential bot requests, use these JA3 Fingerprints
 
 - [Bot Analytics](/bots/bot-analytics/bm-subscription/)
 - [Security Events](/waf/security-events/) and [Security Analytics](/waf/security-analytics/)
-- [Analytics GraphQL API](/analytics/graphql-api/), specifically the **HTTP Requests** data set
+- [Analytics GraphQL API](/analytics/graphql-api/), specifically the **HTTP Requests** dataset
 - [Logs](/logs/reference/log-fields/zone/http_requests/)
 
 ## Actions
@@ -34,7 +34,7 @@ To adjust how your application responds to specific fingerprints, use them with:
 
 A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [custom rule](/waf/custom-rules/) that blocks/challenges the JA3 used for the attack.
 
-Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [WAF custom rule](/waf/custom-rules/) with the _Skip_ action allowing the JA3 seen across good requests.
+Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [custom rule](/waf/custom-rules/) with the _Skip_ action allowing the JA3 seen across good requests.
 
 JA3 may also be useful if you want to immediately remedy false positives or false negatives with Bot Management.
 
