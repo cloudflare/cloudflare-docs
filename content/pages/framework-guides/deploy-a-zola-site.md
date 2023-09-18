@@ -74,7 +74,7 @@ Upon running `zola init`, you will prompted with three questions:
 
 {{<render file="_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 

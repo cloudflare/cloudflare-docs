@@ -36,6 +36,7 @@ export const OWNERS: Record<string, string[]> = {
   "health-checks": ["RebeccaTamachiro"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
+  kv: ["Maddy-Cloudflare"],
   "load-balancing": ["RebeccaTamachiro"],
   logs: ["angelampcosta"],
   "magic-firewall": ["marciocloudflare"],
