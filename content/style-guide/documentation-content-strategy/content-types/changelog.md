@@ -142,139 +142,37 @@ entries:
 
 ## Structure (multi-page)
 
-In some cases, your changelog may have a separate page for each entry. The general structure is the same as the [single-page changelog](#structure-single-page), but with a few differences.
+In some cases, your changelog may have a separate page for each entry. The general structure is the same as the [single-page changelog](#structure-single-page), but with a few small differences.
 
 ### Markdown files
 
 #### Top-level pages
 
-For the top-level pages, you need a slightly frontmatter values. The frontmatter is exactly the same as the [single-page example](#markdown-file), but does not require any shortcodes in the body.
+For the top-level pages, you need the same frontmatter as the [single-page example](#markdown-file), but do not include any shortcodes in the body of the page.
 
 #### Individual entries
 
-For each entry page, the Markdown file needs to have an updated frontmatter value, as well as a new shortcode component to pull in the changelog information. These values are highlighted in the sample page.
-
-```
----
-header: /ddos-protection/change-log/http/2023-07-31.md
-highlight: [6, 11]
----
-
----
-title: 2023-07-31
-pcx_content_type: changelog
-weight: 27913
-layout: list
-changelog_file_name: ddos-http
----
-
-# 2023-07-31
-
-{{</*changelog-entry date="2023-07-31" title="2023-07-31" */>}}
-```
-
-{{<definitions>}}
-
-- `changelog_file_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - Name of the file within `data/changelogs/`.
-
-- `date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - Date of the entry. Used to pull a specific item.
-
-- `title` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Title of the entry. Used to pull a specific item if there are multiple entries per date.
-
-{{</definitions>}}
-
-#### Scheduled entries
-
-For scheduled entries, create a regular markdown page. These do not require a separate style of page or any adjustments.
+For each entry page, create a regular markdown page. These do not require a separate style of page or any adjustments.
 
 ### YAML file
 
-#### Individual entries
-
-Each individual entry needs an entry in the changelog `.yaml` file.
+Each individual entry needs an abbreviated entry in the changelog `.yaml` file.
 
 ```yml
 ---
 header: /data/changelogs/waf.yaml
-highlight: [5-23]
 ---
 ---
 link: "/waf/change-log/"
 productName: WAF
 entries:
-- publish_date: '2023-09-04'
-  title: '2023-09-04'
-  table: true
-  link: '/waf/change-log/2023-09-04/'
-  entries:
-  - ruleset: 'Cloudflare Specials'
-    rule_id: '...c5f041ac'
-    legacy_id: '100597'
-    description: 'Information Disclosure - Path Normalization'
-    previous_action: 'Log'
-    new_action: 'Block'
-    comments: 'N/A'
-  - ruleset: 'Cloudflare Specials'
-    rule_id: '...50cec478'
-    legacy_id: '100598'
-    description: 'Remote Code Execution - Common Bash Bypass'
-    previous_action: 'Log'
-    new_action: 'Block'
-    comments: 'N/A'
-...
-```
-
-{{<definitions>}}
-- `publish_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-    - Date of scheduled change, formatted as `YYYY-MM-DD`.
-
-- `title` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-    - If needed, this is also where you would specify `"2023-09-04 - Emergency release"` or something similar.
-
-- `table` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - Should be `true` if you have a list of rule changes. If you have normal text similar to [this DDoS entry](/ddos-protection/change-log/network/2023-04-17/), then set to `false` (and also use a `description` property instead of the `entries` below).
-
-- `link` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - Link to the individual page.
-
-- `entries` {{<type>}}object{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    - `ruleset` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    - `rule_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    - `legacy_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} (Used in the WAF, but not DDoS).
-    - `description` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    - `previous_action` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    - `new_action` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    - `comments` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-{{</definitions>}}
-
-#### Scheduled entries
-
-Though the [markdown file](#scheduled-entries) for scheduled entries stays the same, you do need to add an entry to the changelog `.yaml` file.
-
-```yml
----
-header: /data/changelogs/waf.yaml
-highlight: [5-8]
----
----
-link: "/waf/change-log/"
-productName: WAF
-entries:
-- publish_date: '2023-09-11'
-  table: true
+- publish_date: '2023-09-18'
+  individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
+- publish_date: '2023-09-18'
+  individual_page: true
+  link: '/waf/change-log/2023-09-18/'
 ...
 ```
 
@@ -283,21 +181,28 @@ entries:
 
     - Date of scheduled change, formatted as `YYYY-MM-DD`.
 
-- `table` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `individual_page` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - Should always be `true`.
-
-- `scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-   - Should always be `true`.
+    - Used to pull in the content from the page itself, as opposed to structured data in YAML.
 
 - `link` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - Link to the scheduled page.
+   - Link to the individual page.
+
+- `scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+   - Should be included for scheduled pages
 
 {{</definitions>}}
+
+{{<Aside type="warning">}}
+
+Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
+
+{{</Aside>}}
 
 ## Examples
 
 - [Stream Changelog](/stream/changelog/)
 - [Pages Changelog](/pages/platform/changelog/)
+- [WAF Changelog](/waf/change-log/)
