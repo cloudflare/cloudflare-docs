@@ -20,6 +20,8 @@ In order to use this feature, you will do the following tasks:
 
 ![Demo](/images/workers/tutorials/finetune/finetune-example.png)
 
+If you'd like to see the completed code for this application, you can find it [on GitHub](https://github.com/kristianfreeman/openai-finetune-r2-example).
+
 ## Prerequisites
 
 Before you start, make sure you have:
