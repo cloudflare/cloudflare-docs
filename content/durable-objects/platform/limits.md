@@ -23,7 +23,7 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 
 {{<Aside type="note">}}
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps. Note that not all limits can be increased directly.
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps. All limits can be increased directly.
 
 {{</Aside>}}
 
