@@ -20,6 +20,7 @@
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
     {{- range $changelogRendered -}}
+    {{- $entry := . -}}
     {{- $link := "" -}}
     {{- $title := "" -}}
     {{- $rellink := .url -}}
@@ -36,12 +37,10 @@
     {{- with .link -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
-    {{- with .table -}}
-    {{ $description = printf "For more details, refer to the dedicated page for [%s - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
-    {{- end -}}
-    {{- with .scheduled -}}
-    {{ $title = print "Scheduled - " $title -}}
-    {{ $description = printf "For more details, refer to the dedicated page for [%s scheduled changes - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
+    {{- with .individual_page -}}
+    {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
+    {{- $description = $result.content -}}
+    {{- $title = $result.title }}
     {{- end -}}
     <item>
     <title>{{- $title -}}</title>

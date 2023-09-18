@@ -1,0 +1,12 @@
+{{- $link := print (replaceRE `\/$` "" .link) ".md" -}}
+{{- $result := dict -}}
+{{- $content := "" -}}
+
+{{- with site.GetPage $link -}}
+{{- $content = replaceRE `\<h1.*?\</h1>` "" .Content }}
+{{- $content = replaceRE `\<div class="DocsMarkdown--table-wrap">\<div class="DocsMarkdown--table-wrap-inner">` "" $content -}}
+{{- $content = replaceRE `\<\/div>` "" $content -}}
+{{- $result = (dict "title" .Title "content" $content) -}}
+{{- end -}}
+
+{{- return $result -}}

@@ -42,54 +42,16 @@
     {{- with .link -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
-    {{- with .scheduled -}}
-    {{ $title = print "Scheduled - " $title -}}
-    {{ $description = printf "For more details, refer to the dedicated page for [%s scheduled changes - %s](%s)." $product $title $link | $.Page.RenderString | htmlUnescape -}}
+    {{- with .individual_page -}}
+    {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
+    {{- $description = $result.content -}}
+    {{- $title = $result.title }}
     {{- end -}}
     <item>
-    <title>{{- $title }}</title>
-    <link>{{ $link }}</link>
-    {{- with .table -}}
-    {{- with $entry.scheduled -}}
-    <description>{{ $description }}</description>
-    {{- else -}}
-    <description>
-    <table>
-    <thead>
-    <tr>
-    <th>Ruleset</th>
-    <th>Rule ID</th>
-    {{- if (eq $product "WAF") -}}
-    <th>Legacy Rule ID</th>
-    {{- end -}}
-    <th>Description</th>
-    <th>Previous Action</th>
-    <th>New Action</th>
-    <th>Comments</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{- range index $entry "entries" -}}
-    <tr>
-    <td>{{- .ruleset -}}</td>
-    <td>{{- .rule_id -}}</td>
-    {{- if (eq $product "WAF") -}}
-    <td>{{- .legacy_id -}}</td>
-    {{- end -}}
-    <td>{{- .description -}}</td>
-    <td>{{- .previous_action -}}</td>
-    <td>{{- .new_action -}}</td>
-    <td>{{- .comments -}}</td>
-    </tr>
-    {{- end -}}
-    </tbody>
-    </table>
-    </description>
-    {{- end -}}
-    {{- else -}}
-    <description>{{ $description }}</description>
-    {{- end -}}
-    <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
+    <title>{{- $title -}}</title>
+    <link>{{- $link -}}</link>
+    <description>{{- $description -}}</description>
+    <pubDate>{{- .publish_date | time.Format "Monday, Jan 2, 2006" -}}</pubDate>
     </item>
     {{- end -}}
   </channel>

@@ -74,8 +74,8 @@
         {{ $link = . }}
         {{- end -}}
         <!-- Custom logic for products with separate pages -->
-        {{- with .table -}}
-        {{ $description = printf "For more details, refer to the dedicated page for [%s - %s](%s)." $product $title $link -}}
+        {{- with .individual_page -}}
+        {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
         {{- end -}}
         {{- with .scheduled -}}
         {{ $title = print "Scheduled - " $title -}}
