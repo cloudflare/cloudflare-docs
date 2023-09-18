@@ -38,7 +38,7 @@ Further, in terms of resiliency, if the origin server temporarily goes offline, 
 
 ## How a CDN tackles web application challenges
 
-A [CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. A CDN's core goal is to decrease latency and increase performance for websites and applications by caching content as close as possible to end users or those accessing the content.
+A CDN helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. A CDN's core goal is to decrease latency and increase performance for websites and applications by caching content as close as possible to end users or those accessing the content.
 
 CDNs decrease latency and increase performance by having many data center locations across the globe that cache the content from the origin. The goal is to have content cached as close as possible to users, so content is cached at the edge of the CDN provider's network. 
 
@@ -165,10 +165,10 @@ Argo Smart Routing accelerates traffic by taking into account real-time data and
 
 Figure 6 details the traffic flow when Tiered Cache and Argo Smart Routing are not enabled. The request comes into the closest data center, and, because content is not locally cached and Tiered Cache is not enabled, the request is sent directly to the origin server for the content. Also, since Argo Smart Routing is not enabled, a reliable, but perhaps not the fastest, path is taken when communicating with the origin server.
 
-![Figure 6: Cloudflare CDN without Tiered Cache or Argo Smart Routing](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-6.jpg) 
+![Figure 6: Cloudflare CDN without Tiered Cache or Argo Smart Routing](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-6.png) 
 
 Figure 7 articulates the traffic flow with both Tiered Cache and Argo Smart Routing enabled.
-
+it 
 In Figure 7, when a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 4, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin.
 
 The fastest path is determined by the Argo network intelligence capabilities, which take into account real-time network data such as congestion, latency, and RTT.
