@@ -47,7 +47,6 @@ Next, we'll upload the fine-tune document to R2. R2 is a key-value store that al
 You can create a new R2 bucket using `wrangler`. Replace `<BUCKET_NAME>` with your desired bucket name.
 
 ```sh
-# TODO: verify this command
 $ wrangler r2 bucket create <BUCKET_NAME>
 ```
 
