@@ -201,7 +201,7 @@ $ npx wrangler deploy
 
 ### 8. Viewing the fine-tune job status, and using the model
 
-To use your application, create a new fine-tune job by making a request to the `/files` with a `file` query param matching the filename you uploded earlier:
+To use your application, create a new fine-tune job by making a request to the `/files` with a `file` query param matching the filename you uploaded earlier:
 
 ```sh
 $ curl yourworker/files?file=finetune.jsonl
