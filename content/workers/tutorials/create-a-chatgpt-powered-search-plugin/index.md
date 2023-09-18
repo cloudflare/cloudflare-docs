@@ -12,7 +12,7 @@ weight: 1
 
 In this tutorial, you will use [Langchain](https://js.langchain.com), a JavaScript package for working with large language models, and [Pinecone](http://pinecone.io/), a vector database, to index a [Notion](https://www.notion.so/) workspace. You will then be able to query your Notion workspace using a custom ChatGPT plugin built with Cloudflare Workers.
 
-![Demo](/images/workers/tutorials/chatgpt-search/demo.gif)
+![Demo](/images/workers/tutorials/finetune/finetune-example.png)
 
 ## Prerequisites
 
@@ -170,7 +170,7 @@ filename: src/pinecone.ts
   }
 ```
 
-The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain. 
+The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain.
 
 This function is the most complex part of this process, and explaining how it works in detail is out of scope for this tutorial. In short, the function takes the content in Notion and splits it into smaller documents, which are then converted into vector embeddings using OpenAI. These vector embeddings are then stored in Pinecone.
 
@@ -393,7 +393,7 @@ This part exports the router's handle method as a fetch method, which makes this
 
 ## 7. Deploy your Worker application
 
-Once you have created your Worker application and added the required functions, deploy the application. 
+Once you have created your Worker application and added the required functions, deploy the application.
 
 Before you deploy, initialize a number of [secret](/workers/configuration/secrets/) values for your application. For each of the following values, run the [`npx wrangler secret put`](/workers/wrangler/commands/#put-3) command:
 
