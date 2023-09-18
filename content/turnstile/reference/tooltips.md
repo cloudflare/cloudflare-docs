@@ -1,7 +1,7 @@
 ---
 title: Tooltips
 pcx_content_type: reference
-weight: 11
+weight: 12
 layout: single
 ---
 # Tooltips
