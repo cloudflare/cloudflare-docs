@@ -49,10 +49,6 @@ In the Cloudflare dashboard, we recommend that you also [enable DNSSEC](/dns/dns
 
 Once all the DNS TTLs expire, all your DNS queries will be answered by Cloudflare's global edge network.
 
-<<<<<<< HEAD
-Start proxying additional hostnames by enabling the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.
-=======
 Start proxying additional hostnames by enabling the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.
 
 [^1]: While Universal SSL certificates are supported, it can take [15 minutes](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup) for one to be issued. To minimize downtime, we recommend having a certificate in place beforehand.
->>>>>>> production
