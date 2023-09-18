@@ -68,6 +68,8 @@ Finally, we define an error handler to return any errors as a JSON response.
 ---
 filename: src/worker.js
 ---
+import OpenAI from 'openai'
+
 const app = new Hono()
 
 app.use('*', async (c, next) => {
@@ -97,6 +99,9 @@ In `createFile`, we read the file from R2 and convert it to a `File` object. We 
 ---
 filename: src/worker.js
 ---
+// New import added at beginning of file
+import { toFile } from 'openai/uploads'
+
 const createFile = async (c: Context, r2Object: R2ObjectBody) => {
 	const openai: OpenAI = c.get("openai")
 
