@@ -4,7 +4,7 @@ difficulty: Intermediate
 pcx_content_type: tutorial
 layout: single
 title: Create a Fine-Tuned OpenAI Model with R2
-updated: 2023-08-14
+updated: 2023-09-18
 weight: 1
 ---
 
