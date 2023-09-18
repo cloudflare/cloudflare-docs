@@ -35,7 +35,7 @@ ___
 
 ## How long does it take for Cloudflare's SSL to activate?
 
-If Cloudflare is your [authoritative DNS provider](/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.  Alternatively, if you use [Cloudflare services via CNAME records](/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) at your authoritative DNS provider.  [Advanced SSL certificates](/ssl/edge-certificates/advanced-certificate-manager) also typically issue within 15 minutes.
+If Cloudflare is your [authoritative DNS provider](/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.  Alternatively, if you use [Cloudflare services via CNAME records](/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup) at your authoritative DNS provider. [Advanced SSL certificates](/ssl/edge-certificates/advanced-certificate-manager) also typically issue within 15 minutes.
 
 If the Certificate Authority requires a manual review of brand, phishing, or TLD requirements, a Universal SSL certificate can take longer than 24 hours to issue.
 

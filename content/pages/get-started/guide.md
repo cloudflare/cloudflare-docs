@@ -146,4 +146,4 @@ In the **Settings** section, you can configure advanced settings, such as changi
 
 - Set up a [custom domain for your Pages project](/pages/platform/custom-domains/).
 - Enable [Cloudflare Web Analytics](/pages/how-to/web-analytics/).
-- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access).
+- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customize-preview-deployments-access).
