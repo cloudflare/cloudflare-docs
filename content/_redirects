@@ -948,7 +948,6 @@
 /workers/get-started/storage-options/ /workers/learning/storage-options 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
-/workers/runtime-apis/headers/ /workers/platform/headers/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
