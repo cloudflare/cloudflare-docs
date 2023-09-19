@@ -603,6 +603,54 @@ $JAVA_HOME = "\path\to\java.home"
 
 For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
 
+### RubyGems
+
+To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+
+<details>
+<summary>macOS and Linux</summary>
+<div>
+
+1. Locate your RubyGems directory.
+
+    ```sh
+    $ gem which rubygems
+    ```
+
+2. Copy the path.
+3. Copy the Cloudflare certificate to your RubyGems certificate store. This will reside in `\ssl_cert\rubygems.org`. For example:
+
+    ```sh
+    $ copy ~\Downloads\Cloudflare_CA.pem C:\<user>\lib\ruby\2.3.0\rubygems\ssl_cert\rubygems.org
+    ```
+
+4. Restart RubyGems.
+
+</div>
+</details>
+
+<details>
+<summary>Windows</summary>
+<div>
+
+1. Add your RubyGems directory as a terminal variable.
+
+```bash
+$JAVA_HOME = "\path\to\java.home"
+```
+
+2. Copy the path.
+3. Copy the Cloudflare certificate to your RubyGems certificate store. This will reside in `\ssl_cert\rubygems.org`. For example:
+
+    ```bash
+    copy ~\Downloads\Cloudflare_CA.pem C:\<user>\lib\ruby\2.3.0\rubygems\ssl_cert\rubygems.org
+    ```
+
+4. Restart RubyGems.
+
+</div>
+</details>
+
 ### Minikube
 
 Instructions on how to install the Cloudflare root certificate are available [here](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority)
