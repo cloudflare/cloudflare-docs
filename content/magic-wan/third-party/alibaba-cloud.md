@@ -19,7 +19,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 
 ### 2. Create a VPN gateway
 
-1. Still in your Alibaba Cloud account, go to **VPC** > **VPN Gateway**, and select Create **VPN Gateway**.
+1. Still in your Alibaba Cloud account, go to **VPC** > **VPN Gateway**, and select **Create VPN Gateway**.
 2. Give your VPN Gateway a descriptive name. For example, `VPN-Gateway-Magic-WAN`.
 3. In **Region**, choose the server that is best for your geographic region. For example, **US (Silicon Valley)**.
 4. For **Gateway Type**, choose **Standard**.
@@ -32,7 +32,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 11. For **SSL-VPN**, select **Disable**.
 12. When you are finished configuring your VPN gateway, return to the main VPN Gateway window.
 13. Select the VPN gateway you have just created > **Destination-based Routing**.
-14. Select **Add Route Entry**, and enter whatever subnets are needed to reach required destinations. You can, for example, just add a default route to send all traffic through your Magic WAN tunnel.
+14. Select **Add Route Entry**, and enter whatever subnets are needed to reach the required destinations. You can, for example, just add a default route to send all traffic through your Magic WAN tunnel.
 15. When you are finished, return to the main window.
 16. Select **Publish** > **OK** to publish the route.
 
