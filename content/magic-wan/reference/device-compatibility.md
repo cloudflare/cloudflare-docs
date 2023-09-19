@@ -19,6 +19,7 @@ Cisco ASA                                                           | Compatibil
 Cisco Meraki                                                        | Compatibility on roadmap    | Compatibility on roadmap
 [Cisco SD-WAN](/magic-wan/third-party/viptela/)                     | ✅                          | ✅
 [Fortinet](/magic-wan/third-party/fortinet/)                        | Specifications compatible*  | Specifications compatible*
+[Furukawa Electric FITELnet](/magic-wan/third-party/fitelnet/)      | -                           | ✅
 [PAN-OS](/magic-wan/third-party/palo-alto/)                         | ✅                          | ✅
 [pfSense](/magic-wan/third-party/pfsense/)                          | ✅                          | ✅
 Prisma SD-WAN (Palo Alto)                                           | Specifications compatible*  | Specifications compatible*
