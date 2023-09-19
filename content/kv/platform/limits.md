@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Limits
+layout: list
 ---
 
 # Limits
