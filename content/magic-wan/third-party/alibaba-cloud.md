@@ -1,8 +1,6 @@
 ---
-title: Alibaba Cloud
+title: Alibaba Cloud VPN Gateway
 pcx_content_type: integration-guide
-meta:
-    title: Alibaba Cloud VPN Gateway
 ---
 
 # Alibaba Cloud VPN Gateway
