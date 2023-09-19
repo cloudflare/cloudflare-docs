@@ -31,7 +31,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 10. In **IPsec-VPN**, select **Enable**.
 11. For **SSL-VPN**, select **Disable**.
 12. When you are finished configuring your VPN gateway, return to the main VPN Gateway window.
-13. Select the VPN gateway you have just created > **Destination-based Routing**.
+13. Select the VPN gateway you have just created, and then select **Destination-based Routing**.
 14. Select **Add Route Entry**, and enter whatever subnets are needed to reach the required destinations. You can, for example, just add a default route to send all traffic through your Magic WAN tunnel.
 15. When you are finished, return to the main window.
 16. Select **Publish** > **OK** to publish the route.
