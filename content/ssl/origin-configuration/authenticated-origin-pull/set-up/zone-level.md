@@ -22,6 +22,14 @@ To use a Cloudflare certificate (which uses a specific CA), [download the .PEM f
 
 To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
 
+{{<Aside type="warning">}}
+
+Although Cloudflare provides you a certificate to easily confirgure zone-level authenticated origin pulls, if you want more strict security, you should upload your own certificate. 
+
+Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
+
+{{</Aside>}}
+
 ## 2. Configure origin to accept client certs
 
 With the certificate installed, set up your origin web server to accept client certificates.
