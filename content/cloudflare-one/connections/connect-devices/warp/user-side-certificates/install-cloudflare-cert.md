@@ -587,13 +587,13 @@ $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias Cl
 1. Add the `java.home` value you copied as a terminal variable.
 
 ```bash
-$JAVA_HOME = "\path\to\java.home"
+set JAVA_HOME = "\path\to\java.home"
 ```
 
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
 ```bash
-"$JAVA_HOME\bin\keytool.exe" -import -file "$HOME\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "$JAVA_HOME\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
 ```
 
 3. Restart Eclipse.
