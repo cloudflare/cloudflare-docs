@@ -4,9 +4,9 @@ pcx_content_type: how-to
 weight: 5
 ---
 
-# Cloudflare Email Retro Scan
+# Email Retro Scan
 
-Cloudflare Area 1 Retro Scan allows you to scan up to seven days of old messages in your Office 365 (O365) inboxes, and check if your current email security solution missed any threats.
+Email Retro Scan allows you to scan up to seven days of old messages in your Office 365 (O365) inboxes, and check if your current email security solution missed any threats. Emaoi
 
 ## Scan for threats
 
