@@ -15,7 +15,7 @@ To set up an integration with Momento Cache:
 
 1. You need to have an existing Momento cache to connect to or create a new cache through the [Momento console](https://console.gomomento.com/).
 
-2. Create a cache called `worker`. You'll need to make sure that you choose the same region when generating a Momento API key in the next step.
+2. Create a cache called `user-profiles`. You'll need to make sure that you choose the same region when generating a Momento API key in the next step.
 
 3. Generate your [API key](https://docs.momentohq.com/develop/authentication/api-keys) to use within your application, select the cloud provider and region your application is in to get the best performance.
 
@@ -25,11 +25,11 @@ To set up an integration with Momento Cache:
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
     4. Select **Integrations** > **Momento**. 
-    5. Follow the setup flow, selecting the cache created in step 
+    5. Follow the setup flow, selecting the cache created in step 1.
 
 5. The following example code show how to set an item in your cache, get it, and return it as a JSON object. The credentials needed to connect to Momento Cache have been automatically added as secrets to your Worker through the integration.
 
-  ```ts
+    ```ts
     export default {
       async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
         const client = new MomentoFetcher(env.MOMENTO_API_KEY, env.MOMENTO_REST_ENDPOINT);
@@ -52,6 +52,6 @@ To set up an integration with Momento Cache:
         }));
       },
     };
-  ```
+    ```
 
 To learn more about Momento, refer to [Momento's official documentation](https://docs.momentohq.com/getting-started).
