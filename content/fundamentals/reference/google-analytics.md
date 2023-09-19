@@ -3,8 +3,6 @@ title: Cloudflare and Google Analytics
 pcx_content_type: reference
 meta:
   title: Using Google Analytics with Cloudflare
-aliases:
-- /fundamentals/get-started/reference/google-analytics/
 ---
 
 # Using Google Analytics with Cloudflare

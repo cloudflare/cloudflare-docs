@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: Network Layers
 weight: 4
-aliases:
-- /fundamentals/get-started/concepts/network-layers/
 ---
 
 # Network layers

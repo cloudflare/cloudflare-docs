@@ -2,8 +2,6 @@
 pcx_content_type: tutorial
 title: Allow Cloudflare IP addresses
 weight: 5
-aliases:
-- /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/
 ---
 
 # Allow Cloudflare IP addresses

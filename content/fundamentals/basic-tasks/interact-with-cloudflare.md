@@ -1,8 +1,6 @@
 ---
 pcx_content_type: concept
 title: Interacting with Cloudflare
-aliases:
-- /fundamentals/get-started/basic-tasks/interact-with-cloudflare/
 ---
 
 # How to interact with Cloudflare

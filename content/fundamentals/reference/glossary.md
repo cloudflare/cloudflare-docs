@@ -1,8 +1,6 @@
 ---
 title: Glossary
 pcx_content_type: glossary
-aliases:
-- /fundamentals/glossary/
 ---
 
 # Glossary

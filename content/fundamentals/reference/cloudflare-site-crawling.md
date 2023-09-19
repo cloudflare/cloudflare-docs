@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare crawlers
-aliases:
-- /fundamentals/get-started/reference/cloudflare-site-crawling/
 ---
 
 # Cloudflare crawlers

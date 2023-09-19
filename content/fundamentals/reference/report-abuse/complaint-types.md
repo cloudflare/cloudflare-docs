@@ -4,8 +4,6 @@ title: Complaint types
 weight: 2
 meta:
     title: Complaint types - Report abuse
-aliases:
-- /fundamentals/get-started/basic-tasks/report-abuse/complaint-types/    
 ---
 
 # Complaint types

@@ -1,8 +1,6 @@
 ---
 title: Communication preferences
 pcx_content_type: how-to
-aliases:
-- /fundamentals/account-and-billing/account-setup/customize-account/communication-preference/
 ---
 
 # Communication preferences

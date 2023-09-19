@@ -1,8 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Test speed
-aliases:
-- /fundamentals/get-started/basic-tasks/test-speed/
 ---
 
 # Test speed

@@ -3,8 +3,6 @@ title: Lists
 pcx_content_type: overview
 weight: 2
 layout: single
-aliases:
-- /fundamentals/global-configurations/lists/
 ---
 
 # Lists

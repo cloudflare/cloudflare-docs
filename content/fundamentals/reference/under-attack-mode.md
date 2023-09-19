@@ -2,8 +2,6 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200170076-Understanding-Cloudflare-Under-Attack-mode-advanced-DDOS-protection-
 title: Under Attack mode
-aliases:
-- /fundamentals/security/under-attack-mode/
 ---
 
 # Under Attack mode

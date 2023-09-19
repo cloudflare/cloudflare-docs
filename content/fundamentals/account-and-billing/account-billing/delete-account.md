@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Delete your Cloudflare account
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-maintenance/delete-account/
 ---
 
 # Delete your Cloudflare account

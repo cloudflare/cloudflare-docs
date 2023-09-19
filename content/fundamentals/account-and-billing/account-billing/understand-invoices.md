@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Understand Cloudflare invoices
 weight: 3
-aliases:
-- /fundamentals/account-and-billing/account-maintenance/understand-invoices/
 ---
 
 # Understand Cloudflare invoices

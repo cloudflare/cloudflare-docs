@@ -4,8 +4,6 @@ title: Setup
 weight: 2
 meta:
   title: Set up Cloudflare
-aliases:
-- /fundamentals/get-started/setup/
 ---
 
 # Set up Cloudflare

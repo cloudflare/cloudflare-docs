@@ -2,8 +2,6 @@
 title: Zone holds
 pcx_content_type: how-to
 weight: 6
-aliases:
-- /fundamentals/account-and-billing/account-security/zone-holds/
 ---
 
 # Zone holds
