@@ -6,7 +6,7 @@ weight: 5
 
 # Email Retro Scan
 
-Email Retro Scan allows you to scan up to seven days of old messages in your Office 365 (O365) inboxes, and check if your current email security solution missed any threats. Emaoi
+Email Retro Scan allows you to scan up to seven days of old messages in your Office 365 (O365) inboxes, and check if your current email security solution missed any threats. Contact your account manager to enable this feature.
 
 ## Scan for threats
 
