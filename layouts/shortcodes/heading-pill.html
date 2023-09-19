@@ -1,5 +1,6 @@
 {{- $heading := .Get "heading" -}}
 {{- $style := .Get "style" -}}
+<!-- Acceptable values are beta / alpha / and deprecated -->
 {{- $ID := .Inner | urlize -}}
 
 <div class="DocsMarkdown-{{$style}}">
