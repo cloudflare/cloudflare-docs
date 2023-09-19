@@ -1,8 +1,6 @@
 ---
 pcx_content_type: concept
 title: /cdn-cgi/ endpoint
-aliases:
-- /fundamentals/get-started/reference/cdn-cgi-endpoint/
 ---
 
 # /cdn-cgi/ endpoint

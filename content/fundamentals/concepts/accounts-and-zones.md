@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: Accounts, zones, and profiles
 weight: 4
-aliases:
-- /fundamentals/get-started/concepts/accounts-and-zones/
 ---
 
 # Accounts, zones, and profiles

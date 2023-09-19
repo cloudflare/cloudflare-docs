@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Change domain plan
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-maintenance/change-plan/
 ---
 
 # Change domain plan

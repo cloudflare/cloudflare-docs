@@ -2,8 +2,6 @@
 pcx_content_type: reference
 title: Move a domain between Cloudflare accounts
 weight: 2
-aliases:
-- /fundamentals/get-started/basic-tasks/manage-domains/move-domain/
 ---
 
 # Move a domain between Cloudflare accounts

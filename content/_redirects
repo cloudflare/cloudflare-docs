@@ -272,14 +272,14 @@
 
 # firewall
 /firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
-/firewall/api/cf-lists/endpoints/ /fundamentals/global-configurations/lists/lists-api/endpoints/ 301
-/firewall/api/cf-lists/json-object/ /fundamentals/global-configurations/lists/lists-api/json-object/ 301
+/firewall/api/cf-lists/endpoints/ /waf/tools/lists/lists-api/endpoints/ 301
+/firewall/api/cf-lists/json-object/ /waf/tools/lists/lists-api/json-object/ 301
 /firewall/cf-dashboard/edit-expressions/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
 /firewall/cf-dashboard/expression-preview-editor/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
-/firewall/cf-dashboard/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
-/firewall/cf-dashboard/rules-lists/manage-items/ /fundamentals/global-configurations/lists/create-dashboard/#add-items-to-a-list 301
-/firewall/cf-dashboard/rules-lists/manage-lists/ /fundamentals/global-configurations/lists/create-dashboard/ 301
-/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/ /fundamentals/global-configurations/lists/use-in-expressions/ 301
+/firewall/cf-dashboard/rules-lists/ /waf/tools/lists/ip-lists/ 301
+/firewall/cf-dashboard/rules-lists/manage-items/ /rules/url-forwarding/bulk-redirects/create-dashboard/#add-items-to-a-list 301
+/firewall/cf-dashboard/rules-lists/manage-lists/ /rules/url-forwarding/bulk-redirects/create-dashboard/ 301
+/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/ /waf/tools/lists/use-in-expressions/ 301
 /firewall/cf-firewall-language/ /ruleset-engine/rules-language/ 301
 /firewall/cf-firewall-language/fields/ /ruleset-engine/rules-language/fields/ 301
 /firewall/cf-firewall-language/functions/ /ruleset-engine/rules-language/functions/ 301
@@ -287,7 +287,7 @@
 /firewall/cf-firewall-language/values/ /ruleset-engine/rules-language/values/ 301
 /firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
 /firewall/cf-firewall-rules/fields-and-expressions/ /ruleset-engine/rules-language/expressions/ 301
-/firewall/cf-firewall-rules/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
+/firewall/cf-firewall-rules/rules-lists/ /waf/tools/lists/ip-lists/ 301
 /firewall/cf-rulesets/ /ruleset-engine/about/ 301
 /firewall/cf-rulesets/add-rule-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
 /firewall/cf-rulesets/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
@@ -325,19 +325,19 @@
 /support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
 
 # fundamentals
-/fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
-/fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/account-and-billing/members/ 301
+/fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/setup/manage-members/roles/ 301
+/fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/setup/manage-members/ 301
 /fundamentals/account-and-billing/account-security/scim-setup/ /fundamentals/account-and-billing/account-security/ 301
-/fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
-/fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
-/fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
-/fundamentals/get-started/google-analytics/ /fundamentals/get-started/reference/google-analytics/ 301
-/fundamentals/get-started/http-request-headers/ /fundamentals/get-started/reference/http-request-headers/ 301
-/fundamentals/get-started/network-ports/ /fundamentals/get-started/reference/network-ports/ 301
-/fundamentals/get-started/basic-tasks/improve-seo/ /fundamentals/get-started/task-guides/improve-seo/ 301
-/fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/ /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ 301
-/fundamentals/get-started/basic-tasks/account-setup/ /fundamentals/account-and-billing/account-setup/ 301
-/fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
+/fundamentals/get-started/cdn/ /fundamentals/concepts/how-cloudflare-works/ 301
+/fundamentals/get-started/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
+/fundamentals/get-started/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
+/fundamentals/get-started/google-analytics/ /fundamentals/reference/google-analytics/ 301
+/fundamentals/get-started/http-request-headers/ /fundamentals/reference/http-request-headers/ 301
+/fundamentals/get-started/network-ports/ /fundamentals/reference/network-ports/ 301
+/fundamentals/get-started/basic-tasks/improve-seo/ /fundamentals/basic-tasks/improve-seo/ 301
+/fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/ /fundamentals/setup/allow-cloudflare-ip-addresses/ 301
+/fundamentals/get-started/basic-tasks/account-setup/ /fundamentals/setup/account-setup/ 301
+/fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
@@ -352,20 +352,108 @@
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
-/support/account-management-billing/account-management/ /fundamentals/account-and-billing/ 301
-/support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/español-españa/cómo-añadir-varios-sitios-en-cloudflare-mediante-automatización/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/français-france/ajout-de-plusieurs-sites-à-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/日本語/自動化機能を使ってcloudflareに複数のサイトを追加する/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/other-languages/português-do-brasil/como-adicionar-vários-sites-à-cloudflare-via-automação/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
-/support/firewall/settings/ /fundamentals/security/ 301
-/support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/security/under-attack-mode/ 301
-/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /fundamentals/security/browser-integrity-check/ 301
-/support/firewall/settings/understanding-the-cloudflare-security-level/ /fundamentals/security/security-level/ 301
-/support/firewall/settings/using-privacy-pass-with-cloudflare/ /fundamentals/security/privacy-pass/ 301
+/support/account-management-billing/account-management/ /fundamentals/setup/account-setup/301
+/support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/español-españa/cómo-añadir-varios-sitios-en-cloudflare-mediante-automatización/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/français-france/ajout-de-plusieurs-sites-à-cloudflare-via-automation/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/日本語/自動化機能を使ってcloudflareに複数のサイトを追加する/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/other-languages/português-do-brasil/como-adicionar-vários-sites-à-cloudflare-via-automação/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/firewall/settings/ /waf/tools/ 301
+/support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/reference/under-attack-mode/ 301
+/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
+/support/firewall/settings/understanding-the-cloudflare-security-level/ /waf/tools/security-level/ 301
+/support/firewall/settings/using-privacy-pass-with-cloudflare/ /waf/tools/privacy-pass/ 301
+
+# fundamentals revamp
+/fundamentals/global-configurations/lists /waf/tools/lists/ 301
+/fundamentals/global-configurations/lists/link-bulk-redirect-lists/ /rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists 301
+/fundamentals/global-configurations/lists/ /waf/tools/lists/ 301
+/fundamentals/global-configurations/ /fundamentals/ 301
+/fundamentals/customizations/building-custom-dashboards/index/ /fundamentals/api/building-custom-dashboards/ 301
+/fundamentals/customizations/ /fundamentals/ 301
+/fundamentals/security/cybersafe/ /fundamentals/reference/policies-compliances/cybersafe/ 301
+/fundamentals/security/challenge-passage/ /waf/tools/challenge-passage/ 301
+/fundamentals/glossary/ /fundamentals/reference/glossary/ 301
+/fundamentals/account-and-billing/login/ /fundamentals/basic-tasks/login/ 301
+/fundamentals/account-and-billing/account-security/securing-a-compromised-account/ /fundamentals/account-and-billing/account-security/securing-a-compromised-account/ 301
+/fundamentals/account-and-billing/account-security/zone-holds/ /fundamentals/account-and-billing/account-security/zone-holds/ 301
+/fundamentals/account-and-billing/account-security/review-audit-logs/ /fundamentals/account-and-billing/account-security/review-audit-logs/ 301
+/fundamentals/account-and-billing/account-security/manage-active-sessions/ /fundamentals/account-and-billing/account-security/manage-active-sessions/ 301
+/fundamentals/account-and-billing/account-security/cloudflare-access/ /fundamentals/account-and-billing/account-security/cloudflare-access/ 301
+/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/account-and-billing/account-billing/delete-account/ 301
+/fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /fundamentals/account-and-billing/account-billing/updating-billing-info/ 301
+/fundamentals/account-and-billing/account-maintenance/understand-invoices/ /fundamentals/account-and-billing/account-billing/understand-invoices/ 301
+/fundamentals/account-and-billing/account-maintenance/cancel-subscription/ /fundamentals/account-and-billing/account-billing/cancel-subscription/ 301
+/fundamentals/account-and-billing/account-maintenance/change-plan/ /fundamentals/account-and-billing/account-billing/change-plan/ 301
+/fundamentals/account-and-billing/account-maintenance/change-super-admin/ /fundamentals/account-and-billing/account-billing/change-super-admin/ 301
+/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/account-and-billing/account-billing/change-password-or-email/ 301
+/fundamentals/account-and-billing/account-maintenance/ /fundamentals/account-and-billing/account-billing/ 301
+/fundamentals/account-and-billing/members/scope/ /fundamentals/setup/manage-members/scope/ 301
+/fundamentals/account-and-billing/members/manage/ /fundamentals/setup/manage-members/manage/ 301
+/fundamentals/account-and-billing/non-contract-products/ /fundamentals/account-and-billing/preview-services/ 301
+/fundamentals/account-and-billing/account-setup/create-account/ /fundamentals/setup/account-setup/create-account/ 301
+/fundamentals/account-and-billing/account-setup/verify-email-address/ /fundamentals/setup/account-setup/verify-email-address/ 301
+/fundamentals/account-and-billing/account-setup/create-billing-profile/ /fundamentals/setup/account-setup/create-billing-profile/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/language-preference/ /fundamentals/setup/account-setup/customize-account/language-preference/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/appearance/ /fundamentals/setup/account-setup/customize-account/appearance/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/setup/account-setup/customize-account/account-name/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/ /fundamentals/setup/account-setup/customize-account/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/setup/account-setup/customize-account/communication-preference/ 301
+/fundamentals/data-products/types-of-analytics/ /analytics/types-of-analytics/ 301
+/fundamentals/data-products/about-analytics/ /analytics/faq/about-analytics/ 301
+/fundamentals/data-products/analytics-integrations/graylog/index/ /analytics/analytics-integrations/graylog/ 301
+/fundamentals/data-products/analytics-integrations/looker/index/ /analytics/analytics-integrations/looker/ 301
+/fundamentals/data-products/analytics-integrations/elastic/index/ /analytics/analytics-integrations/elastic/ 301
+/fundamentals/data-products/analytics-integrations/splunk/index/ /analytics/analytics-integrations/splunk/ 301
+/fundamentals/data-products/analytics-integrations/datadog/index/ /analytics/analytics-integrations/datadog/ 301
+/fundamentals/data-products/analytics-integrations/google-cloud/index/ /analytics/analytics-integrations/google-cloud/ 301
+/fundamentals/data-products/analytics-integrations/new-relic/index/ /analytics/analytics-integrations/new-relic/ 301
+/fundamentals/data-products/analytics-integrations/ /analytics/analytics-integrations/ 301
+/fundamentals/data-products/ /analytics/ 301
+/fundamentals/get-started/get-started-external-link/ /learning-paths/get-started/ 301
+/fundamentals/get-started/task-guides/optimize-speed-external-link/ /learning-paths/optimize-site-speed/ 301
+/fundamentals/get-started/task-guides/prevent-ddos-attacks-external/ /learning-paths/prevent-ddos-attacks/ 301
+/fundamentals/get-started/task-guides/origin-health/free/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
+/fundamentals/get-started/task-guides/origin-health/business/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
+/fundamentals/get-started/task-guides/origin-health/pro/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
+/fundamentals/get-started/task-guides/origin-health/enterprise/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
+/fundamentals/get-started/task-guides/origin-health/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
+/fundamentals/get-started/task-guides/ /fundamentals/basic-tasks/ 301
+/fundamentals/get-started/setup/ /fundamentals/setup/ 301
+/fundamentals/get-started/setup/minimize-downtime/ /fundamentals/basic-tasks/minimize-downtime/ 301
+/fundamentals/get-started/concepts/what-is-cloudflare/ /fundamentals/concepts/what-is-cloudflare/ 301
+/fundamentals/get-started/concepts/cloudflare-challenges/ /firewall/cf-firewall-rules/cloudflare-challenges/ 301
+/fundamentals/get-started/concepts/accounts-and-zones/ /fundamentals/concepts/accounts-and-zones/ 301
+/fundamentals/get-started/concepts/cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
+/fundamentals/get-started/concepts/network-layers/ /fundamentals/concepts/network-layers/ 301
+/fundamentals/get-started/concepts/ /fundamentals/concepts/ 301
+/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/ /fundamentals/setup/find-account-and-zone-ids/ 301
+/fundamentals/get-started/basic-tasks/maintenance-mode/ /fundamentals/basic-tasks/maintenance-mode/ 301
+/fundamentals/get-started/basic-tasks/access-cloudflare-resources/ /fundamentals/ 301
+/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/ /fundamentals/setup/manage-domains/remove-domain/ 301
+/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/ /fundamentals/setup/manage-domains/pause-cloudflare/ 301
+/fundamentals/get-started/basic-tasks/manage-domains/move-domain/ /fundamentals/setup/manage-domains/move-domain/ 301
+/fundamentals/get-started/basic-tasks/manage-domains/ /fundamentals/setup/manage-domains/ 301
+/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/ /fundamentals/setup/manage-domains/redirect-domain/ 301
+/fundamentals/get-started/basic-tasks/cloudflare-without-changing-nameservers/ /fundamentals/setup/use-cloudflare-without-changing-nameservers/ 301
+/fundamentals/get-started/basic-tasks/interact-with-cloudflare/ /fundamentals/basic-tasks/interact-with-cloudflare/ 301
+/fundamentals/get-started/basic-tasks/manage-subdomains/ /fundamentals/basic-tasks/manage-subdomains/ 301
+/fundamentals/get-started/basic-tasks/report-abuse/provide-specific-urls/ /fundamentals/reference/report-abuse/provide-specific-urls/ 301
+/fundamentals/get-started/basic-tasks/report-abuse/complaint-types/ /fundamentals/reference/report-abuse/complaint-types/ 301
+/fundamentals/get-started/basic-tasks/report-abuse/ /fundamentals/reference/report-abuse/ 301
+/fundamentals/get-started/basic-tasks/access-compliance-docs/ /fundamentals/reference/policies-compliances/compliance-docs/ 301
+/fundamentals/get-started/basic-tasks/under-ddos-attack/ /fundamentals/basic-tasks/under-ddos-attack/ 301
+/fundamentals/get-started/basic-tasks/test-speed/ /fundamentals/basic-tasks/test-speed/ 301
+/fundamentals/get-started/basic-tasks/ /fundamentals/basic-tasks/ 301
+/fundamentals/get-started/reference/cloudflare-site-crawling/ /fundamentals/reference/cloudflare-site-crawling/ 301
+/fundamentals/get-started/reference/content-security-policies/ /fundamentals/reference/policies-compliances/content-security-policies/ 301
+/fundamentals/get-started/reference/cloudflare-ray-id/ /fundamentals/reference/cloudflare-ray-id/ 301
+/fundamentals/get-started/reference/ /fundamentals/reference/ 301
+/fundamentals/get-started/ /fundamentals/setup/ 301
+
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -405,7 +493,7 @@
 /support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/image-resizing/troubleshooting/ 301
 
 # learning-paths
-/learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
+/learning-paths/technology-partner-integrations/ /fundamentals/reference/partners/ 301
 /support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
 # more redirects in the /dynamic/ section
 
@@ -522,7 +610,7 @@
 /pages/tutorials/build-an-api-with-workers/ /pages/tutorials/build-an-api-with-pages-functions/ 301
 
 # partners
-/partners/ /fundamentals/partners/ 301
+/partners/ /fundamentals/reference/partners/ 301
 /partners/analytics/ /fundamentals/partners/#analytics-integrations 301
 /partners/logs/ /fundamentals/partners/#cloudflare-logs 301
 /partners/email-security/ /email-security/partners/ 301
@@ -766,7 +854,6 @@
 /waf/ddos-l34-mitigation/configure-api/ /ddos-protection/managed-rulesets/network/configure-api/ 301
 /waf/ddos-l7-mitigation/ /ddos-protection/managed-rulesets/http/ 301
 /waf/ddos-l7-mitigation/configure-dashboard/ /ddos-protection/managed-rulesets/http/configure-dashboard/ 301
-/waf/firewall-rules/ /waf/custom-rules/ 301
 /waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rules/reference/cloudflare-managed-ruleset/ 301
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rules/reference/owasp-core-ruleset/ 301
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
@@ -865,6 +952,7 @@
 /workers/reference/apis/response/ /workers/runtime-apis/response/ 301
 /workers/reference/apis/streams/ /workers/runtime-apis/streams/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
+/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
@@ -948,9 +1036,6 @@
 /workers/get-started/storage-options/ /workers/learning/storage-options 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
-/workers/wrangler/workers-kv/ /kv/ 301
-/workers/runtime-apis/kv/ /kv/api/ 301
-/workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
@@ -1004,9 +1089,6 @@
 /workers/platform/deployments/ /workers/configuration/deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
-/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
-
-
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
@@ -1194,10 +1276,10 @@
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /distributed-web/* /web3/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
-/fundamentals/internet/* /fundamentals/the-internet/ 301
+/fundamentals/internet/* /fundamentals/reference/the-internet/ 301
 /internet/* https://www.cloudflare.com/learning/ 301
 /fundamentals/get-started/basic-tasks/account-maintenance/* /fundamentals/account-and-billing/account-maintenance/:splat 301
-/fundamentals/get-started/setup/troubleshooting/* /fundamentals/get-started/setup/add-site/ 301
+/fundamentals/get-started/setup/troubleshooting/* /fundamentals/setup/account-setup/add-site/ 301
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301

@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare HTTP request headers
-aliases:
-- /fundamentals/get-started/reference/http-request-headers/
 ---
 
 # HTTP request headers

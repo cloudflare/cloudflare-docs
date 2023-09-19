@@ -3,8 +3,6 @@ pcx_content_type: how-to
 title: Looker
 weight: 102
 layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/looker/
 ---
 
 # Looker

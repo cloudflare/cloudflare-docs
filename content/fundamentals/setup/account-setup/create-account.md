@@ -4,8 +4,6 @@ title: Create account
 weight: 1
 meta:
     description: Learn how to create a new Cloudflare account.
-aliases:
-- /fundamentals/account-and-billing/account-setup/create-account/
 ---
 
 # Create a Cloudflare account
