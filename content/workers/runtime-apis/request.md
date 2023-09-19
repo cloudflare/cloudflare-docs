@@ -11,6 +11,20 @@ The `Request` interface represents an HTTP request and is part of the Fetch API.
 
 The most common way you will encounter a `Request` object is as a property of an incoming `FetchEvent`.
 
+{{<tabs labels="ES Modules | Service Worker">}}
+{{<tab label="ES Modules" default="true">}}
+
+```js
+export default {
+  fetch(request, env, ctx) { // Request object is passed as parameter
+    return new Response('Hello world');
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="Service Worker">}}
+
 ```js
 ---
 highlight: [2]
@@ -21,6 +35,9 @@ addEventListener("fetch", event => {
   // ...
 })
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
 

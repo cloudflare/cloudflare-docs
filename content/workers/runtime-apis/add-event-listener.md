@@ -46,7 +46,21 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 ## Examples
 
-### Fetch Listener
+### Fetch listener
+
+{{<tabs labels="ES Modules | Service Worker">}}
+{{<tab label="ES Modules" default="true">}}
+
+```js
+export default {
+  fetch(request, env, ctx) {
+    return new Response('Hello world');
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="Service Worker">}}
 
 ```js
 addEventListener('fetch', event => {
@@ -54,7 +68,24 @@ addEventListener('fetch', event => {
 });
 ```
 
-### Scheduled Listener
+{{</tab>}}
+{{</tabs>}}
+
+### Scheduled listener
+
+{{<tabs labels="ES Modules | Service Worker">}}
+{{<tab label="ES Modules" default="true">}}
+
+```js
+export default {
+  scheduled(event, env, ctx) {
+    ctx.waitUntil(handleScheduled(event));
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="Service Worker">}}
 
 ```js
 addEventListener('scheduled', event => {
@@ -62,15 +93,35 @@ addEventListener('scheduled', event => {
 });
 ```
 
-### Queue Listener
+{{</tab>}}
+{{</tabs>}}
+
+### Queue listener
 
 A Queue listener acts as [a consumer for one or more queues](/queues/platform/javascript-apis/#consumer).
+
+{{<tabs labels="ES Modules | Service Worker">}}
+{{<tab label="ES Modules" default="true">}}
+
+```js
+export default {
+  queue(batch, env, ctx) {
+    ctx.waitUntil(handleMessages(batch));
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="Service Worker">}}
 
 ```js
 addEventListener("queue", (event) => {
   event.waitUntil(handleMessages(event));
 });
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 
 
