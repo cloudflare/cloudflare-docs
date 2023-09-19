@@ -29,7 +29,7 @@ Once a token has been issued, it can be validated within the next 300 seconds. A
 
 To configure the challenge, refer to [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
 
-Check out the [demo](https://demo.turnstile.workers.dev/) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/implicit.html).
+See the [demo](https://demo.turnstile.workers.dev/) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/implicit.html).
 
 ### Protect forms
 
@@ -64,15 +64,21 @@ A form is not protected by having a widget rendered. The corresponding token tha
 
 You can disable implicit rendering by replacing the script from:
 
-`https://challenges.cloudflare.com/turnstile/v0/api.js`
+```txt
+https://challenges.cloudflare.com/turnstile/v0/api.js
+```
 
 To:
 
-`https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`
+```txt
+https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit
+```
 
 Or:
 
-`https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback`
+```txt
+https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback
+```
 
 When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.  To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
 
@@ -85,6 +91,9 @@ When using `render=explicit`, HTML elements with the `cf-turnstile` class will n
 <div>
 
 ```html
+---
+header: JavaScript tag
+---
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" defer></script>
 ```
 </div>
@@ -92,6 +101,9 @@ When using `render=explicit`, HTML elements with the `cf-turnstile` class will n
 <div>
 
 ```javascript
+---
+header: Code
+---
 window.onloadTurnstileCallback = function () {
     turnstile.render('#example-container', {
         sitekey: '<YOUR_SITE_KEY>',
@@ -108,6 +120,9 @@ Or:
 <div>
 
 ```html
+---
+header: JavaScript tag
+---
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
 ```
 </div>
@@ -115,6 +130,9 @@ Or:
 <div>
 
 ```javascript
+---
+header: Code
+---
 // if using synchronous loading, will be called once the DOM is ready
 turnstile.ready(function () {
     turnstile.render('#example-container', {
@@ -133,8 +151,7 @@ The `turnstile.render: function (container: string | HTMLElement, params: Render
 
 If the invocation is successful, the function returns a `widgetId (string)`. If the invocation is unsuccessful, the function returns `undefined`.
 
-Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
-
+See the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
 
 ## Access a widget's state
 
@@ -153,6 +170,42 @@ If a given widget has timed out, expired or needs to be reloaded, you can use th
 Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
 
 To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
+
+## Refreshing a widget
+
+A few seconds before a token expires, the `expired-callback` is invoked.
+
+The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired. 
+
+By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token by rerunning the challenge. After the challenge is solved again, the `callback`, if specified, is invoked with the new token.
+
+The visitor can also be instructed to manually obtain a new token by setting the `refresh-expired` parameter to `manual`.
+
+Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
+
+## Execution modes
+
+By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some scenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a challenge runs and a token is being generated.
+
+There are two options: 
+- The challenge runs automatically after calling the `render()` function. 
+- The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+This detaches the appearance and rendering of a widget from its execution.
+
+## Appearance modes
+
+If a widget is visible, its appearance can be controlled via the `appearance` parameter. 
+
+By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
+
+## Widget size
+
+The Turnstile widget can have two different sizes when using the Managed or Non-interactive modes:
+
+| Size | Width | Height |
+| --- | --- | --- |
+| Normal | 300px | 65px |
+| Compact | 130px | 120px |
 
 ## Configurations
 
@@ -179,41 +232,3 @@ To unmount Turnstile, `turnstile.render()` will return an ID which you can pass 
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
 | `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
-
-## Widget size
-
-The Turnstile widget can have two different sizes when using the Managed or Non-interactive modes:
-
-| Size | Width | Height |
-| --- | --- | --- |
-| Normal | 300px | 65px |
-| Compact | 130px | 120px |
-
-
-## Refreshing a Widget
-
-A few seconds before a token expires, the `expired-callback` is invoked.
-
-The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired. 
-
-By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token by rerunning the challenge. After the challenge is solved again, the `callback`, if specified, is invoked with the new token.
-
-The visitor can also be instructed to manually obtain a new token by setting the `refresh-expired` parameter to `manual`.
-
-Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
-
-
-## Execution Modes
-
-By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some scenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a challenge runs and a token is being generated.
-
-There are two options: 
-- The challenge runs automatically after calling the `render()` function. 
-- The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
-This detaches the appearance and rendering of a widget from its execution.
-
-## Appearance Modes
-
-If a widget is visible, its appearance can be controlled via the `appearance` parameter. 
-
-By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
