@@ -12,7 +12,7 @@ If you use the wrong set of fields, you might see unexpected behaviors. For best
 
 Also, some Load Balancing rules fields are available on the Expression Builder - as described in [Load Balancing expressions](/load-balancing/additional-options/load-balancing-rules/expressions/#working-with-expressions) - while others can only be configured manually, via API or [Expression Editor](/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor)
 
-## Expression Builder groupings
+## Expression Builder field sets
 
 Consider the following table to know how the fields available in the [Expression Builder](/load-balancing/additional-options/load-balancing-rules/expressions/#expression-builder) are grouped.
 
