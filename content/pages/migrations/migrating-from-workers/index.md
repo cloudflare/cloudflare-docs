@@ -18,7 +18,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 
 {{<Aside type="note">}}
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-es-modules).
+When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/handlers/fetch/#syntax-es-modules).
 
 {{</Aside>}}
 

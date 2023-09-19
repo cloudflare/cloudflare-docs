@@ -189,7 +189,7 @@ export default {
 
 ## Cron Triggers
 
-To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
+To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/handlers/scheduled/#syntax), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
 
 This example code:
 
@@ -211,7 +211,7 @@ export default {
 
 ## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
 
 This example code:
 
@@ -246,10 +246,10 @@ export default {
 
 A Worker written in Service Worker syntax consists of two parts:
 
-1.  An [event listener](/workers/runtime-apis/add-event-listener/) that listens for [`FetchEvents`](/workers/runtime-apis/fetch-event/), and
+1.  An [event listener](/workers/runtime-apis/add-event-listener/) that listens for [`FetchEvents`](/workers/runtime-apis/handlers/fetch/), and
 2.  An event handler that returns a [Response](/workers/runtime-apis/response/) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s global network servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/workers/runtime-apis/fetch-event/) in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
+When a request is received on one of Cloudflare’s global network servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/workers/runtime-apis/handlers/fetch/) in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
 
 ```js
 ---
@@ -270,13 +270,13 @@ Below is an example of the request response workflow:
 
 1.  An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/workers/runtime-apis/request/) object which is a representation of the HTTP request that triggered the `FetchEvent`.
 
-2.  The call to [`.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
+2.  The call to [`.respondWith()`](/workers/runtime-apis/handlers/fetch/#respondwith) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
 
-    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/fetch-event/#lifecycle-methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) to handle unexpected exceptions and operations that may complete after a response is returned.
 
-Learn more about [the `FetchEvent` lifecycle](/workers/runtime-apis/fetch-event/#lifecycle-methods).
+Learn more about [the `FetchEvent` lifecycle](/workers/runtime-apis/handlers/fetch/#lifecycle-methods).
 
 
 ### Supported `FetchEvent` properties

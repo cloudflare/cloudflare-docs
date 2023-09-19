@@ -336,7 +336,7 @@ These methods are only available on an instance of a `Request` object or through
 
 The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the `Request` context.
 
-The `Request` context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
+The `Request` context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/handlers/fetch/):
 
 ```js
 addEventListener("fetch", event => {
@@ -347,7 +347,7 @@ addEventListener("fetch", event => {
 
 ### When passing a promise to fetch event `.respondWith()`
 
-If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
+If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/handlers/fetch/#respondwith) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
 
 ```js
 addEventListener("fetch", event => {
