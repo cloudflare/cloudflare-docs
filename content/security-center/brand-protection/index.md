@@ -4,7 +4,7 @@ title: Brand Protection (beta)
 weight: 7
 ---
 
-{{<beta>}} Brand Protection {{</beta>}}
+{{<heading-pill style="beta">}} Brand Protection {{</heading-pill>}}
 
 {{<Aside type="note">}}
 
