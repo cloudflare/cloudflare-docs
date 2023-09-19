@@ -80,7 +80,7 @@ Or:
 https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback
 ```
 
-When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.  To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
+When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps. To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
 
@@ -102,7 +102,7 @@ header: JavaScript tag
 
 ```javascript
 ---
-header: Code
+header: Related code
 ---
 window.onloadTurnstileCallback = function () {
     turnstile.render('#example-container', {
@@ -131,7 +131,7 @@ header: JavaScript tag
 
 ```javascript
 ---
-header: Code
+header: Related code
 ---
 // if using synchronous loading, will be called once the DOM is ready
 turnstile.ready(function () {
