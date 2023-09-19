@@ -19,7 +19,7 @@ Broken or outdate integrations appear in **CASB** > **Integrations** or **CASB**
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Choose your integration with the Broken status.
 3. Select **Reauthorize**.
-4. You will be directed to your SaaS app for authentication.
+4. In your SaaS app, reauthorize your account.
 
 {{</tab>}}
 
@@ -28,7 +28,7 @@ Broken or outdate integrations appear in **CASB** > **Integrations** or **CASB**
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Findings**.
 2. Choose the finding highlighted in red. It will redirect you to the broken integration.
 3. Select **Reauthorize**.
-4. You will be directed to your SaaS app for authentication.
+4. In your SaaS app, reauthorize your account.
 
 {{</tab>}}
 {{</tabs>}}
@@ -38,4 +38,4 @@ Broken or outdate integrations appear in **CASB** > **Integrations** or **CASB**
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Choose your integration with the Broken status.
 3. Select **Upgrade integration**.
-4. You will be directed to your SaaS app for authentication.
+4. In your SaaS app, upgrade and reauthorize your account.
