@@ -8,7 +8,7 @@ weight: 5
 
 After enabling and configuring exposed credentials checks, you may want to test if the checks are working properly.
 
-Cloudflare provides a special set of credentials for this purpose, the credentials are case-sensitive:
+Cloudflare provides a special set of case-sensitive credentials for this purpose:
 
 - Login: `CF_EXPOSED_USERNAME` or `CF_EXPOSED_USERNAME@example.com`
 - Password: `CF_EXPOSED_PASSWORD`
