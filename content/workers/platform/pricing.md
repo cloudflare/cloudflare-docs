@@ -12,7 +12,7 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Pages Functions billing">}}
   
 All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
 
@@ -98,23 +98,22 @@ Workers Logpush is only available on the Workers Paid plan.
 
 ## Workers KV
 
-{{<table-wrap>}}
+{{<render file="_kv_pricing.md">}}
 
-|                 | Free plan<sup>1</sup> | Paid plan                         |
-| --------------- | --------------------- | --------------------------------- |
-| Read requests   | 100,000 / day         | 10 million/month, + $0.50/million |
-| Write requests  | 1,000 / day           | 1 million/month, + $5.00/million  |
-| Delete requests | 1,000 / day           | 1 million/month, + $5.00/million  |
-| List requests   | 1,000 / day           | 1 million/month, + $5.00/million  |
-| Stored data     | 1 GB                  | 1 GB, + $0.50/ GB-month           |
+{{<Aside type="note" header="KV documentation">}}
 
-{{</table-wrap>}}
+To learn more about KV, refer to the [KV documentation](/kv/).
 
-1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
-
+{{</Aside>}}
 ## Queues
 
-Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](/queues/platform/pricing/).
+{{<render file="_queues_pricing.md">}}
+
+{{<Aside type="note" header="Queues billing examples">}}
+
+To learn more about Queues pricing and review billing examples, refer to [Queues Pricing](/queues/platform/pricing/).
+
+{{</Aside>}}
 
 ## D1
 
@@ -122,89 +121,25 @@ D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers
 
 {{<render file="_d1-pricing.md">}}
 
-Refer to [the D1 documentation](/d1/platform/pricing/) to learn more about how D1 is billed.
+{{<Aside type="note" header="D1 billing">}}
+
+Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is billed.
+
+{{</Aside>}}
 
 ## Durable Objects
 
-Durable Objects are only available on the Workers Paid plan.
+{{<render file="_durable_objects_pricing.md">}}
 
-{{<table-wrap>}}
+{{<Aside type="note" header="Durable Objects billing examples">}}
 
-|          | Paid plan                                         |
-| -------- | ------------------------------------------------- |
-| Requests | 1 million, + $0.15/million                        |
-| Duration | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup> |
+For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing/#durable-objects-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
 
-{{</table-wrap>}}
-
-1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `.accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. [Prefer using `state.acceptWebSocket()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets), which will stop incurring duration charges once all event handlers finish running.
-2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
-3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
-4. Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets) will not incur additional wall-clock time, and so they will not be charged.
-
-
-### Durable Objects billing examples
-
-These examples exclude the costs for the Workers calling the Durable Objects.
-
-#### Example 1
-
-If a single Durable Object was called by a Worker 1.5 million times, and was active for 1,000,000 seconds in the month, the estimated cost in a month would be:
-
-Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
-
-- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
-- 1,000,000 seconds \* 128 MB / 1 GB = 128,000 GB-s
-- (128,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
-
-#### Example 2
-
-If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately one message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
-
-Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
-
-- 100 requests to establish the WebSockets.
-- 100 messages per minute \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests
-- (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = $64.65
-- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days / 2 = 129,600,000 seconds
-- 129,600,000 seconds \* 128 MB / 1 GB = 16,588,800 GB-s
-- (16,588,800 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $202.36
-
-#### Example 3
-
-If 100 Durable Objects each had a single WebSocket connection established to each of them, which sent one message a second for a month, and the messages overlapped so that the Objects were actually active for the entire month, the estimated cost in a month would be:
-
-Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
-
-- 100 requests to establish the WebSockets.
-- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
-- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
-- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
-- 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
-- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
+{{</Aside>}}
 
 ## Durable Objects Transactional Storage API
 
-The [Durable Objects Transactional Storage API](/durable-objects/api/transactional-storage-api/) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
-
-{{<table-wrap>}}
-
-|                                  | Paid plan                  |
-| -------------------------------- | -------------------------- |
-| Read request units<sup>1,2</sup> | 1 million, + $0.20/million |
-| Write request units<sup>1</sup>  | 1 million, + $1.00/million |
-| Delete requests<sup>3</sup>      | 1 million, + $1.00/million |
-| Stored data<sup>4</sup>          | 1 GB, + $0.20/ GB-month    |
-
-{{</table-wrap>}}
-
-1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
-2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
-3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
-4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
-5.  Each alarm write is billed as a single write request unit.
-
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/learning/in-memory-state/) or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/#methods) are billed the same as if they were a normal, individual request for each key.
+{{<render file="_transactional_storage_api_pricing.md">}}
 
 ## Service bindings
 
