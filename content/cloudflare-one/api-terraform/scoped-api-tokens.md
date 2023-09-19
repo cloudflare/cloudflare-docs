@@ -6,7 +6,7 @@ weight: 3
 
 # Scoped API tokens
 
-The administrators managing policies and groups in Cloudflare Access might be different from the users responsible for configuring firewall rules or other Cloudflare settings. Cloudflare Access supports [scoped API tokens](/fundamentals/api/get-started/create-token/) so that team members and automated systems can manage settings specific to Access without having permission to modify other configurations in Cloudflare.
+The administrators managing policies and groups in Cloudflare Access might be different from the users responsible for configuring WAF custom rules or other Cloudflare settings. Cloudflare Access supports [scoped API tokens](/fundamentals/api/get-started/create-token/) so that team members and automated systems can manage settings specific to Access without having permission to modify other configurations in Cloudflare.
 
 ## Creating a scoped API token
 

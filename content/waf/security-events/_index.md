@@ -14,7 +14,7 @@ Users on a Free plan can view summarized security events by date in the **Activi
 ## Main features
 
 *   **Events summary**: Provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, Action, Host, Country).
-*   **Events by service**: Lists the security-related activity per security feature (for example, WAF, Firewall Rules, API Shield).
+*   **Events by service**: Lists the security-related activity per security feature (for example, WAF, API Shield).
 *   **Top events by source**: Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
 *   **Activity log**: Summarizes security events by date to show the action taken and the applied Cloudflare security product.
 

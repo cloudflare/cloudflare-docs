@@ -766,6 +766,7 @@
 /waf/ddos-l34-mitigation/configure-api/ /ddos-protection/managed-rulesets/network/configure-api/ 301
 /waf/ddos-l7-mitigation/ /ddos-protection/managed-rulesets/http/ 301
 /waf/ddos-l7-mitigation/configure-dashboard/ /ddos-protection/managed-rulesets/http/configure-dashboard/ 301
+/waf/firewall-rules/ /waf/custom-rules/ 301
 /waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rules/reference/cloudflare-managed-ruleset/ 301
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rules/reference/owasp-core-ruleset/ 301
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
@@ -864,7 +865,6 @@
 /workers/reference/apis/response/ /workers/runtime-apis/response/ 301
 /workers/reference/apis/streams/ /workers/runtime-apis/streams/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
-/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
@@ -948,7 +948,6 @@
 /workers/get-started/storage-options/ /workers/learning/storage-options 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
-/workers/runtime-apis/headers/ /workers/platform/headers/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301

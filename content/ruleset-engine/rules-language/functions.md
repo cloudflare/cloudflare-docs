@@ -67,10 +67,6 @@ The Rules language supports these transformation functions:
   - *Example:*<br />
     If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
-{{<Aside type="warning">}}
-The `ends_with()` function is not available in [firewall rules](/firewall/).
-{{</Aside>}}
-
 - <code id="function-len">{{<name>}}len{{</name>}}({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
   - Returns the byte length of a String or Bytes field.
@@ -209,10 +205,6 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
     starts_with(http.request.uri.path, "/blog") == true
     ```
-
-{{<Aside type="warning">}}
-The `starts_with()` function is not available in [firewall rules](/firewall/).
-{{</Aside>}}
 
 - <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
