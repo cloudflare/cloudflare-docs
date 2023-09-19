@@ -1,0 +1,3 @@
+{{- $style := default "beta" (.Get "style") -}}
+<!-- Acceptable values are beta / alpha / and deprecated -->
+<span class="DocsMarkdown--pill DocsMarkdown--pill-{{$style}} inline-pill">{{$style | title}}</span>

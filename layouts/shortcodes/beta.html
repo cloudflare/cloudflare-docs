@@ -1,5 +1,8 @@
 {{- $heading := .Get "heading" -}}
 {{- $ID := .Inner | urlize -}}
+{{- $includeHeading := default true (.Get "includeHeading") -}}
+
+{{- if $includeHeading -}}
 
 <div class="DocsMarkdown-beta">
     <!-- If "heading=" tag is included -->
@@ -17,3 +20,10 @@
         <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
     {{- end -}}
 </div>
+
+{{- else -}}
+<div class="DocsMarkdown-beta">
+    <span>{{- .Page.RenderString .Inner -}}</span>
+    <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
+</div>
+{{- end -}}

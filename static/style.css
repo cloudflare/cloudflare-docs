@@ -3401,6 +3401,7 @@ p.DocsMarkdown--small-header {
 }
 
 .DocsMarkdown--definitions ul li>code:first-child,
+.DocsMarkdown--definitions ul li>span.inline-pill,
 .DocsMarkdown--definitions ul li>p:first-child>code:first-child {
   display: inline-block;
   vertical-align: middle;
@@ -5152,6 +5153,11 @@ pre {
   column-gap: 1em;
 
   align-items: center;
+}
+
+.inline-pill {
+  display:inline !important;
+  margin-left: 4px;
 }
 
 .DocsMarkdown--pill {
