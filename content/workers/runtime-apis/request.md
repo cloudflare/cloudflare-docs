@@ -334,7 +334,7 @@ These methods are only available on an instance of a `Request` object or through
 
 ## The `Request` context
 
-Each time a Worker is invoked by an incoming HTTP request, the [`fetch()` handler](`/workers/runtime-apis/handlers/fetch`) is called on your Worker. The `Request` context starts when the `fetch()` handler is called, and asynchronous tasks (such as making a subrequest using the [`fetch() API`](/workers/runtime-apis/fetch/)) can only be run inside the `Request` context:
+Each time a Worker is invoked by an incoming HTTP request, the [`fetch()` handler](/workers/runtime-apis/handlers/fetch) is called on your Worker. The `Request` context starts when the `fetch()` handler is called, and asynchronous tasks (such as making a subrequest using the [`fetch() API`](/workers/runtime-apis/fetch/)) can only be run inside the `Request` context:
 
 ```js
 export default {
