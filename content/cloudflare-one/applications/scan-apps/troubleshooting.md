@@ -7,11 +7,15 @@ layout: single
 
 # Troubleshooting CASB integrations
 
-Cloudflare CASB detects when integrations are broken. This may be in the form of broken permissions or updates.
+Cloudflare CASB detects when integrations are unhealthy or broken.
+
+Common integration issues include SaaS app configuration changes, access revocation, or permission scope changes. Integrations may need to be updated to support new features or permissions.
 
 Broken or outdate integrations appear in **CASB** > **Integrations** or **CASB** > **Findings** highlighted in red and with a status of Broken.
 
 ## Repair an unhealthy integration
+
+You can identify and repair unhealthy CASB integrations through your list of integrations or findings.
 
 {{<tabs labels="Integrations | Findings">}}
 {{<tab label="integrations" no-code="true">}}
