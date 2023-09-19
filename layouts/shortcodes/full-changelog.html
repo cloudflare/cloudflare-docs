@@ -1,4 +1,6 @@
 {{- $changelogData := index .Site.Data "changelogs" -}} 
+{{- $wrangler := partial "wrangler-changelog.html" -}}
+{{- $changelogData = merge $changelogData $wrangler -}}
 {{- $changelogRendered := slice -}} 
 {{- $products := slice -}} 
 {{- range $index, $product := $changelogData -}} 
