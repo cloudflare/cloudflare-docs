@@ -3,9 +3,9 @@ pcx_content_type: concept
 title: Build caching
 ---
 
-# Build caching
+# Build caching (beta)
 
-Build caching may improve build times by saving and restoring dependencies and build output between builds.
+You can improve Pages build times by turning on build caching to restore dependencies and build output between builds. The first build to occur after enabling build caching on your Pages project will to save to cache. Every subsequent build will restore from cache unless configured otherwise.
 
 ## Requirements
 
@@ -28,9 +28,7 @@ Build caching can be enabled and disabled in the Cloudflare Dashboard:
 
 ### Clear cache
 
-The build cache can be cleared for a project if needed, such as when debugging build issues.
-
-To clear the build cache:
+The build cache can be cleared for a project if needed, such as when debugging build issues. To clear the build cache:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
@@ -43,19 +41,27 @@ When enabled, the build cache will automatically detect and cache data from each
 
 ### Package managers
 
-Package manager caches are automatically saved to the build cache to speed up dependency installation. The build cache supports the following package managers:
+Package manager caches are automatically saved to the build cache to speed up dependency installation. The Pages will cache the global cache directories of the following package managers:
+* [yarn 1](https://yarnpkg.com/)
+* [npm](https://www.npmjs.com/)
+* [pnpm](https://pnpm.io/)
+* [bun](https://bun.sh/)
 
-| Package manager | Directories cached |
-| --------------- | ------------------ |
-| yarn            | yarn cache         |
-| npm             | npm cache          |
-| pnpm            | pnpm store         |
 
 ### Frameworks
 
-Caching the build output from frameworks may significantly speed up subsequent build times. The build cache supports the following frameworks:
+Caching the build output from frameworks can also speed up subsequent build times. The build cache supports the following frameworks:
 
-| Framework | Directories cached |
-| --------- | ------------------ |
-| Gatsby    | `.cache`, `public` |
-| Next.js   | `.next/cache`      |
+| Framework | Directories cached   |
+| --------- | ---------------------|
+| Gatsby    | `.cache`, `public`   |
+| Next.js   | `.next/cache`        |
+| Astro     | `node_modules/.astro`|
+
+### Have feedback? 
+If there are package managers or frameworks you want to see supported, let us know in the Pages channel of the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev). 
+
+## Limits
+During this beta period, the following limits are imposed: 
+* **Retention**: cache is purged 7 days after its last read date. Unread cache artifacts are purged 7 days after creation.
+* **Storage**: every project is allocated 10GB. If the project cache exceeds this limit, the project will automatically start deleting artifacts that were read least recently.  
