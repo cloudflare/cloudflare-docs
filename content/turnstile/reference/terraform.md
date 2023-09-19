@@ -19,12 +19,15 @@ This guide assumes that you have the [Terraform](https://developer.hashicorp.com
 Create an [API Token](/fundamentals/api/get-started/create-token/) with the **Account > Turnstile > Edit** permission. Next, you need to export this secret in our environment variables:
 
 ```sh
-$ export CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN>
+---
+header: Export your token
+---
+$ export CLOUDFLARE_API_TOKEN=<API_TOKEN>
 ```
 
 ### Create a Turnstile widget
 
-Example configuration:
+See the example configuration below when creating a Turnstile widget.
 
 ```tf
 ---
@@ -75,6 +78,9 @@ The `id` field in the `cloudflare_turnstile_widget.example` resource is your Tur
 Run the command `terraform init` to set up your Terraform working directory, enabling it to interact with Cloudflare services. This process involves downloading the required provider plugins, establishing backend storage for your state files, and creating a local `.terraform` directory to store configuration data.
 
 ```sh
+---
+header: Initialize command
+---
 $ terraform init
 
 Initializing the backend...
@@ -101,9 +107,12 @@ commands will detect it and remind you to do so if necessary.
 
 ### Review the Terraform plan
 
-You can run `terraform plan`, which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully:
+You can run `terraform plan`, which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully.
 
 ```sh
+---
+header: Review command
+---
 $ terraform plan
 
 var.account_id
@@ -141,9 +150,12 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 
 ### Apply the Terraform changes
 
-Once the changes look accurate and you are comfortable moving forward, apply them using the `terraform apply` command:
+Once the changes look accurate and you are comfortable moving forward, apply them using the `terraform apply` command.
 
 ```sh
+---
+header: Apply command
+---
 $ terraform apply --auto-approve
 
 var.account_id
@@ -187,9 +199,12 @@ turnstile_example_sitekey = "0x4AAAAAAAEe4wQdBshJxBeK"
 You have successfuly created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
 
 ### Retrieve the secret key
-Use `terraform output` to get your secret key:
+Use `terraform output` to get your secret key.
 
 ```sh
+---
+header: Secret key
+---
 $ terraform output turnstile_example_secretkey
 "0x4AAAAAAAEe4xWueFq9yX8ypjlimbk1Db4"
 ```
