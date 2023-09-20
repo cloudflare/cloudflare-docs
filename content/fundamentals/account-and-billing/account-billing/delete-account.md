@@ -20,9 +20,9 @@ If your account does not use SSO, you can delete your account on your own.
 
 Before Cloudflare can cancel your account and delete your personal information, you will need to follow the process below for each domain associated with your Cloudflare account:
 
-* [Cancel your subscriptions or add-on services](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/)
+* [Cancel your subscriptions or add-on services](/fundamentals/account-and-billing/account-billing/cancel-subscription/)
 
-* [Remove your domain from Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/)
+* [Remove your domain from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/)
 
 * [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup/)
 

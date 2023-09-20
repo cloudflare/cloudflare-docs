@@ -9,7 +9,7 @@ layout: single
 
 The [Lists API](/api/operations/lists-get-lists) provides an interface for programmatically managing the following types of lists:
 
-* [IP Lists](/fundamentals/global-configurations/lists/ip-lists/): Contain IP addresses that you can reference collectively, by name, in rule expressions.
+* [IP Lists]((/waf/tools/lists/ip-lists/)): Contain IP addresses that you can reference collectively, by name, in rule expressions.
 
 * [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists): Contain URL redirects that you enable by creating a Bulk Redirect Rule.
 
@@ -17,4 +17,4 @@ To use a list in a rule expression, refer to [Values: Lists](/ruleset-engine/rul
 
 ## Get started
 
-To get started, review the Lists [JSON object](/fundamentals/global-configurations/lists/lists-api/json-object/) and [Endpoints](/fundamentals/global-configurations/lists/lists-api/endpoints/).
+To get started, review the Lists [JSON object]((/waf/tools/lists/lists-api/)json-object/) and [Endpoints]((/waf/tools/lists/lists-api/)endpoints/).

@@ -8,6 +8,6 @@ meta:
 
 # Customize account and profile
 
-After you [create your Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/), you might want to update the following settings in your account and profile.
+After you [create your Cloudflare account]((/fundamentals/setup/account-setup/)create-account/), you might want to update the following settings in your account and profile.
 
 {{<directory-listing>}}

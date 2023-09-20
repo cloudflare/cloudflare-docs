@@ -14,4 +14,4 @@ A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[
 ```
 <br/>
 
-This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests to your application, as well as protect your origin server from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
+This behavior allows Cloudflare to [optimize, cache, and protect]((/fundamentals/concepts/how-cloudflare-works/)) all requests to your application, as well as protect your origin server from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).

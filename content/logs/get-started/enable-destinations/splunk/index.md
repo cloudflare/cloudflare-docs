@@ -60,7 +60,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   - **\<SPLUNK_ENDPOINT_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`.
     - Cloudflare expects the HEC network port to be configured to `:443` or `:8088`.
     - Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
-    - Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](/fundamentals/data-products/analytics-integrations/splunk/) for information on how to set up HEC in Splunk.
+    - Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations]((/analytics/analytics-integrations/)splunk/) for information on how to set up HEC in Splunk.
     - You may notice an API request failed with a 504 error, when adding an incorrect URL. Splunk Cloud endpoint URL usually contains `http-inputs-` or similar text before the hostname. Refer to [Send data to HTTP Event Collector on Splunk Cloud Platform](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#Send_data_to_HTTP_Event_Collector) for more details.
   - **\<SPLUNK_CHANNEL_ID>**: A unique channel ID. This is a random GUID that you can generate by:
     - Using an online tool like the [GUID generator](https://www.guidgenerator.com/).
@@ -182,6 +182,6 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may get
 The WAF should now ignore requests made to Splunk HEC by Cloudflare.
 
 {{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare Logs using the Cloudflare App for Splunk, follow the steps in the [Splunk Analytics integration page](/fundamentals/data-products/analytics-integrations/splunk/).
+To analyze and visualize Cloudflare Logs using the Cloudflare App for Splunk, follow the steps in the [Splunk Analytics integration page]((/analytics/analytics-integrations/)splunk/).
 {{</Aside>}}
 

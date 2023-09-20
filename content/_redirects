@@ -271,7 +271,7 @@
 /email-routing/known-limitations/ /email-routing/postmaster/ 301
 
 # firewall
-/firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
+/firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
 /firewall/api/cf-lists/endpoints/ /waf/tools/lists/lists-api/endpoints/ 301
 /firewall/api/cf-lists/json-object/ /waf/tools/lists/lists-api/json-object/ 301
 /firewall/cf-dashboard/edit-expressions/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
@@ -611,10 +611,10 @@
 
 # partners
 /partners/ /fundamentals/reference/partners/ 301
-/partners/analytics/ /fundamentals/partners/#analytics-integrations 301
-/partners/logs/ /fundamentals/partners/#cloudflare-logs 301
+/partners/analytics/ /fundamentals/reference/partners/#analytics-integrations 301
+/partners/logs/ /fundamentals/reference/partners/#cloudflare-logs 301
 /partners/email-security/ /email-security/partners/ 301
-/partners/network-interconnect/ /fundamentals/partners/#cloudflare-network-interconnect 301
+/partners/network-interconnect/ /fundamentals/reference/partners/#cloudflare-network-interconnect 301
 /partners/tenant/ /tenant/ 301
 
 # page-shield

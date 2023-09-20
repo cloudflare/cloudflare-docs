@@ -12,7 +12,7 @@ When you assign domain specific roles to account members, you can scope these ro
 
 ## Choose role scopes
 
-You choose the scope of a role when you [add a member](/fundamentals/account-and-billing/members/manage/) to your account.
+You choose the scope of a role when you [add a member]((/fundamentals/setup/manage-members/)manage/) to your account.
 
 ### All domains
 
@@ -58,7 +58,7 @@ If you want a member with access to a group of specific domains, you can also cr
 
 To create a domain group: 
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address]((/fundamentals/setup/account-setup/)verify-email-address/)).
 2. Go to **Manage Account** > **Configurations** > **Lists**.
 3. For **Domain Group Manager**, select **Create**.
 4. Create your domain group:

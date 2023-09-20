@@ -49,8 +49,8 @@ To add a member to your account:
 4. Fill out the following information:
 
     - **Invite members**: Enter one or more email addresses (if multiple, separate addresses with commas).
-    - **Scope**: Use a variety of fields to adjust the [scope](/fundamentals/account-and-billing/members/roles/) of your roles.
-    - **Roles**: Choose one or more [roles](/fundamentals/account-and-billing/members/roles/) to assign your members.
+    - **Scope**: Use a variety of fields to adjust the [scope]((/fundamentals/setup/manage-members/)roles/) of your roles.
+    - **Roles**: Choose one or more [roles]((/fundamentals/setup/manage-members/)roles/) to assign your members.
 
 5. Select **Continue to summary**.
 6. Review the information, then select **Invite**.

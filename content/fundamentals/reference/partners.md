@@ -13,7 +13,7 @@ meta:
 
 Learn how to configure a variety of products with Cloudflare Analytics:
 
-{{<directory-listing folderDirectory="/fundamentals/data-products/analytics-integrations/" >}}
+{{<directory-listing folderDirectory="(/analytics/analytics-integrations/)" >}}
 
 ## Cloudflare Network Interconnect
 

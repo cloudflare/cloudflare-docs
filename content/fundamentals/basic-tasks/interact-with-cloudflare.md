@@ -5,7 +5,7 @@ title: Interacting with Cloudflare
 
 # How to interact with Cloudflare
 
-Once you [set up an account](/fundamentals/account-and-billing/account-setup/), you have several ways to interact with Cloudflare.
+Once you [set up an account]((/fundamentals/setup/account-setup/)), you have several ways to interact with Cloudflare.
 
 ## Without code
 

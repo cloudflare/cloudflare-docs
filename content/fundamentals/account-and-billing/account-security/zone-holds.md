@@ -16,7 +16,7 @@ For example, you might already have an active Cloudflare zone for `example.com`.
 
 ## Enable zone holds
 
-When you enable a zone hold, no one else can [add your zone](/fundamentals/get-started/setup/add-site/) to their Cloudflare account. If they attempt to, they will receive the following message:
+When you enable a zone hold, no one else can [add your zone]((/fundamentals/setup/account-setup/add-site/)) to their Cloudflare account. If they attempt to, they will receive the following message:
 
 _The zone name provided is subject to a hold which disallows the creation of this zone. Please contact the domain owner to have this hold removed._
 

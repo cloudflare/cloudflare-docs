@@ -18,7 +18,7 @@ Cloudflare offers the following sign-in options:
 - **Single sign on (SS0)**: Enter your email address (available if your admin has [enabled SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
 - **Sign in with Apple**: 
     - *Same Cloudflare account email as Apple ID*: You can either sign in with your email and password or sign in with Apple.
-    - *Different Cloudflare account email as Apple ID*: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](/fundamentals/account-and-billing/account-maintenance/change-password-or-email/) to match the one used for your Apple ID.
+    - *Different Cloudflare account email as Apple ID*: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](/fundamentals/account-and-billing/account-billing/change-password-or-email/) to match the one used for your Apple ID.
 
 {{<Aside type="note">}}
 

@@ -56,7 +56,7 @@ The available rate limiting rule parameters are the following:
   - For more information on the `lookup_json_string`, `lookup_json_integer`, and `substring` functions, refer to [Functions](/ruleset-engine/rules-language/functions/) in the Ruleset Engine documentation.
   - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
   - Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
-  - Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/) for details.
+  - Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/) for details.
 
 - **Use custom counting expression** > **Increment counter when** {{<type>}}String{{</type>}}
 
@@ -141,9 +141,9 @@ Only Enterprise customers with a paid add-on can throttle requests using the _Bl
 
 ## Configuration restrictions
 
-* If the rule expression includes [IP Lists](/fundamentals/global-configurations/lists/ip-lists/), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression includes [IP Lists]((/waf/tools/lists/ip-lists/)), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists](/fundamentals/global-configurations/lists/ip-lists/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists]((/waf/tools/lists/ip-lists/)). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
 ## Recommendations
 

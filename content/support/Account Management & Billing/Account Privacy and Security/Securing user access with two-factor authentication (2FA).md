@@ -32,7 +32,7 @@ ___
 
 We recommend that all Cloudflare user account holders enable 2FA to keep their accounts secure. 
 
-2FA can only be enabled successfully on an account with a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/). If you do not verify your email address first, you may lock yourself out of your account.
+2FA can only be enabled successfully on an account with a [verified email address]((/fundamentals/setup/account-setup/)verify-email-address/). If you do not verify your email address first, you may lock yourself out of your account.
 
 {{<Aside type="warning">}}
 Super Administrators can turn on **2FA Enforcement** to require all
@@ -235,4 +235,4 @@ ___
 
 -   [Google Authentication documentation](https://support.google.com/accounts/answer/1066447?hl=en&ref_topic=2954345&co=GENIE.Platform%3DiOS&oco=0)
 -   [YubiKey documentation](https://www.yubico.com/works-with-yubikey/catalog/cloudflare/)
--   [Setting up multi-user accounts on Cloudflare](/fundamentals/account-and-billing/members/)
+-   [Setting up multi-user accounts on Cloudflare]((/fundamentals/setup/manage-members/))

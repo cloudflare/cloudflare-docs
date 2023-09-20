@@ -6,7 +6,7 @@ weight: 5
 
 # Allow Cloudflare IP addresses
 
-Because of [how Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/), all traffic to [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) passes through Cloudflare before reaching your origin server. This means that your origin server will stop receiving traffic from individual visitor IP addresses and instead receive traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips), which are shared by all proxied hostnames.
+Because of [how Cloudflare works]((/fundamentals/concepts/how-cloudflare-works/)), all traffic to [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) passes through Cloudflare before reaching your origin server. This means that your origin server will stop receiving traffic from individual visitor IP addresses and instead receive traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips), which are shared by all proxied hostnames.
 
 This setup can cause issues if your origin server blocks or rate limits connections from Cloudflare IP addresses. Because all visitor traffic will appear to come from Cloudflare IP addresses, blocking these IPs — even accidentally — will prevent visitor traffic from reaching your application.
 
@@ -57,7 +57,7 @@ For more specific guidance, contact your hosting provider or website administrat
 
 #### Further protection
 
-For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/get-started/task-guides/origin-health/).
+For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/basic-tasks/protect-your-origin-server/).
 
 #### Visitor IP information
 

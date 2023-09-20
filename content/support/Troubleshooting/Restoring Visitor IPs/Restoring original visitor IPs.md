@@ -401,5 +401,5 @@ ___
 
 ## Related Resources
 
--   [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/)
+-   [HTTP request headers]((/fundamentals/reference/http-request-headers/)/)
 -   [Transform Rules](/rules/transform/)

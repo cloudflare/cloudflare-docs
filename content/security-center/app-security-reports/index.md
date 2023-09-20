@@ -32,7 +32,7 @@ To download a monthly application security report:
 
 ## Required roles
 
-A Cloudflare user must have one of the following [roles](/fundamentals/account-and-billing/members/roles/) to download application security reports:
+A Cloudflare user must have one of the following [roles]((/fundamentals/setup/manage-members/)roles/) to download application security reports:
 
 * Super Administrator
 * Administrator
