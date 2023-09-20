@@ -24,6 +24,9 @@ When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to 
       end
 ```
 
+
+In the same way that, when you need to rollback this configuration it can few minutes of downtime, since you will need to remove the subdomain setup nameservers first from the DNS records management in the parent domains.
+
 ---
 
 ## Available setups
