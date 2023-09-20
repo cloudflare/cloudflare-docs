@@ -18,8 +18,8 @@ title: Limits
 | [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
-| Number of Cron Triggers<br/>per Worker                 | 3         | 3         |
-| Number of Cron Triggers<br/>per account         | 5         | 250       |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per Worker | 3         | 3         |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
 
@@ -64,7 +64,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models)                         | [Unbound Usage Model](/workers/platform/pricing/#usage-models)                         |
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models) | [Unbound Usage Model](/workers/platform/pricing/#usage-models)|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
@@ -102,9 +102,9 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 {{</table-wrap>}}
 
-- 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`
+- 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`.
 
-- 5 GBs total `put()` per request.
+- 5 GB total `put()` per request.
 
 {{<Aside type="note">}}
 
@@ -261,3 +261,11 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
 
 Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+
+## Related resources
+
+Review other developer platform resource limits.
+
+- [KV limits](/kv/platform/limits/)
+- [Durable Object limits](/durable-objects/platform/limits/)
+- [Queues limits](/queues/platform/limits/)
