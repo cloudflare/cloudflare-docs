@@ -109,7 +109,7 @@ Learn how the WARP client determines if an application is running on various sys
 To get the list of active processes, run the following command:
 
 ```sh
-$ ps -eo comm | xargs which | sort | uniq -u
+$ ps -eo comm | xargs which | sort | uniq
 ```
 
 The application path must appear in the output for the check to pass.
@@ -119,7 +119,7 @@ The application path must appear in the output for the check to pass.
 The WARP client gets the list of running binaries by following the soft links in `/proc/<pid>/exe`. To view all active processes and their soft links:
 
 ```sh
-$ ps -eo pid | awk '{print "/proc/"$1"/exe"}' | xargs readlink -f | awk '{print $1}' | sort | uniq -u
+$ ps -eo pid | awk '{print "/proc/"$1"/exe"}' | xargs readlink -f | awk '{print $1}' | sort | uniq
 ```
 
 The application path must appear in the `/proc/<pid>/exe` output for the check to pass.

@@ -74,7 +74,7 @@ addEventListener('tail', event =>
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil). Note that unlike fetch event handlers, tail handlers do not return a value, so this is the only way for trace Workers to do asynchronous work.
+  - Refer to [`waitUntil`](/workers/runtime-apis/handlers/fetch/#waituntil). Note that unlike fetch event handlers, tail handlers do not return a value, so this is the only way for trace Workers to do asynchronous work.
 
 {{</definitions>}}
 

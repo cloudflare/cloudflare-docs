@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Smart Placement (beta)
 ---
 
-{{<beta>}}Smart Placement{{</beta>}}
+{{<heading-pill style="beta">}}Smart Placement{{</heading-pill>}}
 
 By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications. 
 
@@ -38,7 +38,7 @@ There are some back-end services that are not considered by the Smart Placement 
     - Examples: Google APIs, services using Fastly or Akamai's CDN.
 
 
-- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/fetch-event/?ref=blog.cloudflare.com#waituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
+- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#waituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
     - Examples: New Relic, Datadog, Tinybird, Grafana, Amplitude, Honeycomb.
 
 ## Enable Smart Placement (beta)
