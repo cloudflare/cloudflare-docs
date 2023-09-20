@@ -5,44 +5,81 @@ weight: 5
 ---
 
 # Embedding model
-`@cloudflare/BIAA/bge-small-en`
+Model name: `cf/BIAA/bge-small-en` - this model name is used to run this model via SDK and the API.​​
 
 Embeddings are a numerical representation of text that can be used to measure the relatedness between two pieces of text. This model...
 
 ## Use cases
 
-## API
+## Examples
 
-### Input format
+{{<tabs labels="worker | node | python | curl ">}}
+{{<tab label="worker" default="true">}}
+
 ```js
-const output = await ai.run({ 
-  model: '@cloudflare/bge-small-en', 
-  input: {
-    words: ['workers', 'ai']  
-  }
-})
+// todo
 ```
 
-### Output format
+{{</tab>}}
+{{<tab label="node">}}
 
+```js
+// todo js
+```
+
+{{</tab>}}
+
+{{<tab label="python">}}
+
+```py
+# todo
+```
+
+{{</tab>}}
+{{<tab label="curl">}}
+
+```sh
+$ todo
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+## Input/Output schemas
+The following schemas are based on [JSON Schema](https://json-schema.org/)
+
+**Input**
+```json
+
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "required": ["text"]
+  }
+}
+```
+
+**Output**
 ```json
 {
-  "id": "",
-  "object": "",
-  "created": ,
-  "model": "@cloudflare/meta-llama/llama-2-7b",
-  "choices": [
-    {
-      "text": "\n\nThis is indeed a test",
-      "index": 0,
-      "logprobs": null,
-      "finish_reason": "length"
+  "schema": {
+    "type": "array",
+    "items": {
+      "type": "number"
     }
-  ],
-  "usage": {
-    "prompt_tokens": 0,
-    "completion_tokens": 0,
-    "total_tokens": 0
   }
 }
 ```

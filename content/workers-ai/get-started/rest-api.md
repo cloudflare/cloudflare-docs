@@ -1,21 +1,15 @@
 ---
 title: REST API
 pcx_content_type: get-started
-weight: 4
+weight: 5
 ---
 
 # Get started - Workers AI API
-Workers AI API enables all developers, regardless of where you build and deploy, to easily run inference tasks form you code with a simple HTTP call.
+In this guide, you will get started with Workers AI, experiment with a large laguage model (LLM), using the Workers AI REST API.
 
-This guide will instruct you through:
-
-* Creating an API key
-* Running an inference task via API
-
-## Prerequisites
+## Before you begin
 
 Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-
 
 ## 1. Get an API token
 
@@ -26,14 +20,14 @@ To create an API token:
 3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**. 
 4. You can go to **Workers AIs** template > **Use template** or go to **Create Custom Token** > **Get started**.
 
-## 2. Run an infereence task via API
+## 2. Run a model via API
 After creating your token, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
 
 In this example, we will run the `@cloudflare/meta-llama/llama-2-7b` model:
 
 ```sh
 $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cloudflare/meta-llama/llama-2-7b' \
-  -H 'Authorization: Bearer {API_token}'
+  -H 'Authorization: Bearer {API_TOKEN}'
   -d '{
         "input": { "prompt": "Where did the phrase 'Hello World' come from" },
    }'
@@ -46,23 +40,14 @@ Try it with one of your projects by replacing `{account_id}`, and `{API_token}`.
 The API response will look like the following:
 ```json
 {
-  "id": "",
-  "object": "",
-  "created": ,
-  "model": "@cloudflare/meta-llama/llama-2-7b",
-  "choices": [
-    {
-      "text": "\n\nThis is indeed a test",
-      "index": 0,
-      "logprobs": null,
-      "finish_reason": "length"
+  "result": {
+    "data": {
+      "output": "Workers AI is the best!"
     }
-  ],
-  "usage": {
-    "prompt_tokens": 0,
-    "completion_tokens": 0,
-    "total_tokens": 0
-  }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

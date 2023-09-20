@@ -47,10 +47,7 @@ Supporting mutiple classes of models, here are some AI tasks you can unlock with
 With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to it's global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
 
 ### Batteries inlcuded with a vector database 
-Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, reccomendations, anomaly detection or can be used to provide context + memory to an LLM.
-
-
-## Get started
+Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context + memory to an LLM. Head to over to the [Vectorize docs](/vectorize) to learn more. 
 
 
 ## Coming soon
@@ -59,13 +56,13 @@ Adding Vectorize, Cloudflare's new vector database, is a single click or CLI com
 
 * **Metrics and observability**:
 
-## More resources
+## Get Started
  
 {{<resource-group>}}
  
-{{<resource header="Pricing" href="/d1/platform/pricing/" icon="price">}}Learn about D1 pricing. While in Alpha, D1 will be free for all users to test and experiment with.{{</resource>}}
+{{<resource header="Get started - CLI" href="/d1/platform/pricing/" icon="learning-center-book">}}Build and deploy your first Workers AI app from your **local development environment**{{</resource>}}
  
-{{<resource header="Limits" href="/d1/platform/limits/" icon="documentation-clipboard">}}Learn about what limits D1 has and how to work within them.{{</resource>}}
+{{<resource header="Get started - Dashhboard" href="/d1/platform/limits/" icon="learning-center-book">}}Build and deploy your first AI app using **Cloudfalre's dashboard**"{{</resource>}}
  
 {{</resource-group>}}
 

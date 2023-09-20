@@ -1,26 +1,16 @@
 ---
 title: Workers - Wrangler
 pcx_content_type: get-started
-weight: 1
+weight: 2
 ---
 
-# Get started
+# Get started - Workers AI local dev
+In this guide, you will get started with Workers AI, experiment with a large laguage model (LLM),  and deploy your first AI powered app on the Workers platform.
 
-This guide will instruct you through:
+## Before you begin
+[Setup your local development environment](/workers-ai/get-started/setup-your-cli), if this is your first time developing with Wrangler.
 
-* Creating a Workers project
-* Connect your Worker to Workers AI
-* Running an inference task in your worker
-
-## Prerequisites
-
-To continue:
-
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
-
-## 1. Create a Worker
+## 1. Create a Workers project
 
 Create a new project named `workers-ai-app` by running:
 
@@ -56,12 +46,6 @@ filename: wrangler.toml
 [[ai]]
 binding = "AI" # i.e. available in your Worker on env.AI
 ```
-
-Specifically:
-
-* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `AI`.
-* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_AI"` or `binding = "myAI"` would both be valid names for the binding.
-* Your binding is available in your Worker at `env.<BINDING_NAME>`
 
 <!-- TODO update this once we know if we'll have it -->
 You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#d1-databases).
@@ -106,14 +90,6 @@ export default {
 };
 ```
 
-In the code above, you:
-
-* Import the Workers AI client library - `@cloudlfare/ai`
-* Define a binding to our Workers AI in our TypeScript code. This binding matches the `binding` value we set in `wrangler.toml` under `[[ai]]`
-* Instantiate the `ai` library and pass in the `env.AI` binding
-* Call `ai.run`, and pass in a model, and input
-* Return the inference results, in JSON format
-
 After configuring your Worker, you can test your project locally before you deploy globally.
 
 ## 5. Develop locally with Wrangler
@@ -124,27 +100,22 @@ While in your project directory, test Workers AI locally by running:
 $ wrangler dev --remote
 ```
 
+{{<Aside type="warning">}}
+Be sure  include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them.
+{{</Aside>}}
+
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
 
 ```json
 {
-  "id": "",
-  "object": "",
-  "created": ,
-  "model": "@cloudflare/meta-llama/llama-2-7b",
-  "choices": [
-    {
-      "text": "\n\nThis is indeed a test",
-      "index": 0,
-      "logprobs": null,
-      "finish_reason": "length"
+  "result": {
+    "data": {
+      "output": "Workers AI is the best!"
     }
-  ],
-  "usage": {
-    "prompt_tokens": 0,
-    "completion_tokens": 0,
-    "total_tokens": 0
-  }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
