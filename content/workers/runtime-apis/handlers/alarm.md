@@ -1,8 +1,8 @@
 ---
 pcx_content_type: navigation
-title: Runtime API
-external_link: /email-routing/email-workers/
-weight: 4
+title: Alarm Handler
+
+external_link: /durable-objects/api/alarms-in-durable-objects/
 _build:
   publishResources: false
   render: never

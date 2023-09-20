@@ -1,8 +1,8 @@
 ---
 pcx_content_type: navigation
-title: Runtime API
-external_link: /email-routing/email-workers/
-weight: 4
+title: Queue Handler
+
+external_link: /queues/platform/javascript-apis/#consumer
 _build:
   publishResources: false
   render: never
