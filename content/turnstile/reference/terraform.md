@@ -196,7 +196,7 @@ turnstile_example_secretkey = <sensitive>
 turnstile_example_sitekey = "0x4AAAAAAAEe4wQdBshJxBeK"
 ```
 
-You have successfuly created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
+You have successfully created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
 
 ### Retrieve the secret key
 Use `terraform output` to get your secret key.
