@@ -72,6 +72,10 @@ header: Response
 
   - When the mode property is set to `automatic`, the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays. By default, recording mode is set to `off`, and the input will not be recorded or available for playback.
 
+- `preferLowLatency` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}} {{<inline-pill style="beta">}}
+
+  - When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. _(Recording `mode` property must also be set to `automatic`.)_
+
 - `timeoutSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `0`{{</prop-meta>}}
 
   -  The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.

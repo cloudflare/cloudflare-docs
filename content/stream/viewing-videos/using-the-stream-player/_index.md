@@ -166,3 +166,7 @@ After a live stream ends, a recording is automatically generated and available w
 - After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.  
 
 While the recording of the live stream is generating, the video may report as `not-found` or `not-started`.
+
+{{<heading-pill heading="h2" style="beta">}}Low-Latency HLS playback{{</heading-pill>}}
+
+If a Live Inputs is enabled for the Low-Latency HLS beta, the Stream player will automatically play in low-latency mode if possible. _(Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.)_
