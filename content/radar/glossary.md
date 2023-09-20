@@ -91,7 +91,7 @@ Trending domains are domains which are currently experiencing an increase in pop
 
 Countries contributing traffic to this AS, and their relative contribution as percentage of the total AS traffic seen by Cloudflare.
 
-## Internet Outages & Anomalies
+## Internet Outages
 
 Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government directed shutdowns. Outages may be sub-national or national in geographic scope, or may impact one or more [ASNs](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). Some outages may be brief, lasting just a few minutes, while others can stretch on for months — the duration can be related, in part, to the underlying cause. Internet outages listed in the Cloudflare Radar Outage Center are notable drops in traffic that have generally been corroborated with third party-information, which may include a social media or status page post from a telecommunications provider, a news report, or industry/community mailing lists.
 
