@@ -29,7 +29,7 @@ Only one redirect can be defined per line and must follow this format:
 - `code` {{<prop-meta>}}default: `302`{{</prop-meta>}}
   - Optional parameter
 
-{{</defitions>}}
+{{</definitions>}}
 
 A complete example with multiple redirects may look like the following:
 
