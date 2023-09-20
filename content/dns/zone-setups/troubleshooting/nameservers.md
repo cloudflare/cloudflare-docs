@@ -29,3 +29,8 @@ You should have only Cloudflare nameservers listed at your registrar.
 ## Have you waited longer than 24 hours?
 
 For some registrars, you will need to wait up to 24 hours for updates to your nameservers.
+
+
+## Error: "NS records with that host already exist (Code 81056)
+
+If you see this error, it's because you are trying to add the child domain as subdomain in the parent zone. You only be successful if you want to remove the subdomain setup, and for that need to remove the child domain nameservers from the DNS records in the parent zone.
