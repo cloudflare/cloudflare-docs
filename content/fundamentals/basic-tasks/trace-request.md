@@ -5,9 +5,11 @@ pcx_content_type: how-to
 
 # Cloudflare Trace
 
-Cloudflare Trace follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. You can use this tool to understand how different Cloudflare configurations interact with an HTTP request for one of your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
+Cloudflare Trace follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
+
+---
 
 ## Use Trace
 
@@ -27,14 +29,14 @@ You can define specific request properties to simulate different conditions for 
 
 5. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
 
-    * Protocol
-    * Request headers
-    * Request cookies
-    * Geolocation
-    * Bot score
-    * Threat score
-    * Request body
-    * Skip challenge (skips a Cloudflare-issued challenge, if any, allowing the trace to continue)
+    * **Protocol** (HTTP protocol version)
+    * **Request headers**
+    * **Cookies**
+    * **Geolocation** (geographical location of the request source)
+    * [**Bot score**](/bots/concepts/bot-score/)
+    * [**Threat score**](/ruleset-engine/rules-language/fields/#field-cf-threat_score)
+    * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
+    * **Skip challenge** (skips a Cloudflare-issued [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/), if any, allowing the trace to continue)
 
 6. Select **Send trace**.
 
@@ -42,10 +44,26 @@ You can define specific request properties to simulate different conditions for 
 
 The **Trace results** page shows all evaluated and executed configurations from different Cloudflare products, in evaluation order. Any inactive rules are not evaluated.
 
-1. Analyze the different steps evaluated and executed by Cloudflare for the current trace. Trace results include matches for all active rules and configurations, whether configured at the account level or for a specific domain or subdomain.
+1. Analyze the different [steps](#steps-in-trace-results) with evaluated and executed configurations for the current trace. Trace results include matches for all active rules and configurations, whether configured at the account level or for a specific domain or subdomain.
 
     To show all configurations, including the ones that did not match the request, select _All configurations_ in the **Results shown** dropdown.
 
 2. (Optional) Update your Cloudflare configuration (at the account or at the domain/subdomain level) and create a new trace to check the impact of your changes.
 
-To run a trace with the same configuration later, copy the JSON shown in the dashboard and enter it when creating a new trace.
+## Save the trace configuration
+
+To run a trace later with the same configuration:
+
+1. Copy the JSON shown in the dashboard with the current trace configuration.
+2. When creating a new trace, paste it in the JSON box to define all the settings of the new trace.
+
+---
+
+## Steps in trace results
+
+When showing matched configurations in trace results, each step corresponds to one of the following:
+
+* Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
+* [Workers](/workers/) (execution of one or more scripts)
+* [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) (execution of one or more rules)
+
