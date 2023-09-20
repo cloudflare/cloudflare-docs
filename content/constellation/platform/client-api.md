@@ -109,7 +109,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 #### A scalar
 
 ```javascript
-   new Tensor(TensorType.Int16, 123);
+  new Tensor(TensorType.Int16, 123);
 ```
 
 #### Arrays
@@ -198,7 +198,7 @@ export type InferenceSession = {
 };
 ```
 
-###InferenceSession methods
+### InferenceSession methods
 
 #### new InferenceSession()
 
