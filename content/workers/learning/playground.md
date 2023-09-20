@@ -75,7 +75,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ## Share
 
-To share what you've created, click on the **Copy Link** button in the top right of the screen. This will copy a unique URL to your clipboard that you can share with anyone. These links do not expire, so can bookmark your creation and share it any time. Users that open the shared link will see the Playground with the shared code and preview.
+To share what you've created, click on the **Copy Link** button in the top right of the screen. This will copy a unique URL to your clipboard that you can share with anyone. These links do not expire, so you can bookmark your creation and share it at any time. Users that open a shared link will see the Playground with the shared code and preview.
 
 ## Deploy
 
