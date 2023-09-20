@@ -15,11 +15,21 @@ Only one redirect can be defined per line and must follow this format:
 [source] [destination] [code?]
 ```
 
-{{<Aside type="note">}}
+{{<definitions>}}
 
-The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
+- `source` {{<prop-meta>}}required{{</prop-meta>}}
+  - A file path.
+  - Can include [wildcards (`*`)](#splats) and [placeholders](#placeholders).
+  - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source will never be evaluated.
+    
+-  `destination` {{<prop-meta>}}required{{</prop-meta>}}
+  - A file path or external link.
+  - Can include fragments, query strings, [splats](#splats), and [placeholders](#placeholders).
+    
+- `code` {{<prop-meta>}}default: `302`{{</prop-meta>}}
+  - Optional parameter
 
-{{</Aside>}}
+{{</defitions>}}
 
 A complete example with multiple redirects may look like the following:
 
@@ -33,6 +43,7 @@ filename: _redirects
 /twitch https://twitch.tv
 /trailing /trailing/ 301
 /notrailing/ /nottrailing 301
+/page/ /page/#fragment 301
 /blog/* https://blog.my.domain/:splat
 /products/:code/:name /products?code=:code&name=:name
 ```
