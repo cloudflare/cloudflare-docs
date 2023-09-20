@@ -28,6 +28,10 @@ To download a monthly application security report:
 2. Go to **Security Center** > **Security Reports**.
 3. For a given month and year, select **Download** to download the report for that particular month.
 
+{{<Aside type="warning">}}
+Due to limitations in the current reporting solution, some customers do not have access to reports for the past few months. We are working on a new version of app security reports without the current limitations.
+{{</Aside>}}
+
 ---
 
 ## Required roles
