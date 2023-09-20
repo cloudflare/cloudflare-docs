@@ -167,7 +167,7 @@ Regional Tiered Caching is recommended for use with Smart Tiered Caching and Cus
 
 #### Traffic flow: Tiered Cache, Smart Tiered Cache with Regional Tiered Cache
 
-In Figure 5, Tiered Caching is enabled with Smart Tiered Cache Topology. The diagram depicts the topology of Smart Tiered Cache with Regional Tiered Cache enabled. Lower tier caches, when they experience a cache MISS will first send those requests to a more local, regional hub data center to see if the cache can handle the request. If not, the request will continue on to the upper tier and then origin server, if necessary.
+In Figure 5, Tiered Caching is enabled with Smart Tiered Cache Topology. The diagram depicts the topology of Smart Tiered Cache with Regional Tiered Cache enabled. Lower tier caches, when they experience a cache `MISS` will first send those requests to a more local, regional hub data center to see if the cache can handle the request. If not, the request will continue on to the upper tier and then origin server, if necessary.
 
 ![Figure 5: Diagram illustrating requests between an end user and origin server with lower, regional and upper tiered caching enabled.](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-5.png) 
 _Figure 5: Cloudflare CDN with Tiered Cache and Regional Tiered Cache_
