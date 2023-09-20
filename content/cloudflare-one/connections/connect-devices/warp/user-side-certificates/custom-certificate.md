@@ -20,39 +20,7 @@ To deploy a custom root certificate:
 
 1. Verify that the certificate is installed on your devices.
 
-2. Upload the certificate and private key to Cloudflare. The certificate must be a root CA.
-
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/mtls_certificates" \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "name": "example_ca_cert",
-     "certificates": "<ROOT_CERTIFICATE>",
-     "private_key": "<PRIVATE_KEY>",
-     "ca": true
-   }'
-   ```
-
-   The response will return a UUID for the certificate:
-
-   ```json
-   ---
-   highlight: [6]
-   ---
-   {
-   "success": true,
-   "errors": [],
-   "messages": [],
-   "result": {
-       "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60",
-       "name": "example_ca_cert",
-       "issuer": "O=Example Inc.,L=California,ST=San Francisco,C=US",
-       "signature": "SHA256WithRSA"
-       ...
-   }
-   ```
+2. {{<render file="_upload-mtls-cert.md">}}
 
 3. Enable the certificate in Gateway:
 
