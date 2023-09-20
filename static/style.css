@@ -5154,6 +5154,11 @@ pre {
   align-items: center;
 }
 
+.inline-pill {
+  display: inline !important;
+  margin-left: 4px;
+}
+
 .DocsMarkdown--pill {
   display: flex;
   flex-direction: row;

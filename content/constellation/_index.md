@@ -7,7 +7,7 @@ meta:
   title: Constellation
 ---
 
-{{<beta>}}Constellation{{</beta>}}
+{{<heading-pill style="beta">}}Constellation{{</heading-pill>}}
 
 {{<description>}}
 Run machine learning models with Cloudflare Workers.
