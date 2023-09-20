@@ -1,10 +1,5 @@
 {{- $product := .Page.Params.changelog_file_name -}}
-{{- $changelogData := slice -}}
-{{- if eq $product "wrangler" -}}
-{{- $changelogData = index (index (partial "wrangler-changelog.html") "wrangler") "entries" -}}
-{{- else -}}
-{{- $changelogData = index (index (index .Site.Data "changelogs") $product) "entries" -}}
-{{- end -}}
+{{- $changelogData := index (index (partial "full-changelog-data.html") $product) "entries" -}}
 {{- $changelogData = sort $changelogData "publish_date" "desc" -}}
 {{- $changelogDates := slice -}}
 
