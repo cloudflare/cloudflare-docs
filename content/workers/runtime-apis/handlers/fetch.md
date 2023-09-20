@@ -27,7 +27,7 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/configuration/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
+  - The [bindings](/workers/configuration/environment-variables/) assigned to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) is passed to all requests.
 
 - {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -43,11 +43,11 @@ export default {
 
 ## Lifecycle methods
 
-When responding to a HTTP request, the fetch handler may use any of the following methods to augment or control how the request is handled.
+When responding to a HTTP request, the `fetch` handler may use any of the following methods to augment or control how the request is handled.
 
 ### `context.waitUntil()`
 
-The `waitUntil()` method extends the lifetime of the `"fetch"` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
+The `waitUntil()` method extends the lifetime of the `fetch` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
 
 ```js
 export default {

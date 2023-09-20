@@ -246,10 +246,10 @@ export default {
 
 A Worker written in Service Worker syntax consists of two parts:
 
-1.  An event listener that listens for `fetch` events
+1.  An event listener that listens for `FetchEvents`
 2.  An event handler that returns a [Response](/workers/runtime-apis/response/) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s global network servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a `FetchEvent` in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
+When a request is received on one of Cloudflare’s global network servers for a URL matching a Worker, Cloudflare's server passes the request to the Workers runtime. This dispatches a `FetchEvent` in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
 
 ```js
 ---
@@ -270,7 +270,7 @@ Below is an example of the request response workflow:
 
 1.  An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/workers/runtime-apis/request/) object which is a representation of the HTTP request that triggered the `FetchEvent`.
 
-2.  The call to `.respondWith()` lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
+2.  The call to `.respondWith()` lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text `'Hello worker!'`).
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
 
@@ -309,7 +309,7 @@ Learn more about [the lifecycle methods of the `fetch()` handler](/workers/runti
 
 Intercepts the request and allows the Worker to send a custom response.
 
-If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it is possible to add multiple `"fetch"` event handlers within a Worker.
+If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it is possible to add multiple `fetch` event handlers within a Worker.
 
 If no `fetch` event handler calls `respondWith`, then the runtime forwards the request to the origin as if the Worker did not. However, if there is no origin – or the Worker itself is your origin server, which is always true for `*.workers.dev` domains – then you must call `respondWith` for a valid response.
 
@@ -362,7 +362,7 @@ async function handler(event) {
 
 ### `passThroughOnException`
 
-The `passThroughOnException` method prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), which will proxy the request to the origin server as though the Worker was never invoked.
+The `passThroughOnException` method prevents a runtime error response when the Worker throws an unhandled exception. Instead, the script will [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), which will proxy the request to the origin server as though the Worker was never invoked.
 
 To prevent JavaScript errors from causing entire requests to fail on uncaught exceptions, `passThroughOnException()` causes the Workers runtime to yield control to the origin server.
 
