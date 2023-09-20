@@ -20,7 +20,7 @@ Only one redirect can be defined per line and must follow this format:
 - `source` {{<prop-meta>}}required{{</prop-meta>}}
   - A file path.
   - Can include [wildcards (`*`)](#splats) and [placeholders](#placeholders).
-  - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source will never be evaluated.
+  - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source are not evaluated.
     
 -  `destination` {{<prop-meta>}}required{{</prop-meta>}}
   - A file path or external link.
