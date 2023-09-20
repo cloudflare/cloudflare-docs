@@ -7,7 +7,7 @@
  *   - the "issues.opened" event to assign GitHub Issues to PCX member
  *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
-export const OWNERS: Record<string, string[]> = {
+export const OWNERS: Record<string, string[99d983ae4d5eaf75068bff055f605c83]> = {
   "1.1.1.1": ["RebeccaTamachiro"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
@@ -79,7 +79,7 @@ export const OWNERS: Record<string, string[]> = {
   zaraz: ["haleycode"],
 };
 
-export const REVIEWERS: Record<string, string[]> = {
+export const REVIEWERS: Record<string, string[2deca5286524cecb82a09c5055eb51e5]> = {
   analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit", "soheiokamoto", "tlozoot"],
   d1: ["elithrar", "rozenmd"],
   "data-localization": ["soheiokamoto", "tlozoot"],
