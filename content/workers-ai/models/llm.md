@@ -126,4 +126,3 @@ The following schemas are based on [JSON Schema](https://json-schema.org/)
   }
 }
 ```
-```
