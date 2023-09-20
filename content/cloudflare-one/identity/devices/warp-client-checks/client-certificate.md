@@ -8,11 +8,11 @@ weight: 3
 
 {{<render file="posture/_available-for-warp-with-gateway.md">}}
 
-The Client Certificate device posture attribute checks if the device has a valid certificate signed by a trusted certificate authority (CA). The posture result can be used in Gateway and Access policies to ensure that the user is connecting from a managed device.
+The Client Certificate device posture attribute checks if the device has a valid certificate signed by a trusted certificate authority (CA). The posture check can be used in Gateway and Access policies to ensure that the user is connecting from a managed device.
 
 ## Prerequisites
 
-You will need a root CA that issues client certificates for your devices. To generate an example root CA for testing, you can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki).
+You will need a root CA that issues client certificates for your devices. You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) to generate a sample root CA for testing.
 
 ## Configure the client certificate check
 
@@ -37,10 +37,41 @@ Next, go to **Logs** > **Posture** and verify that the client certificate check 
 
 ## How WARP checks for a client certificate
 
-Learn how the WARP client determines if a valid client certificate exists in the system store.
+Learn how the WARP client determines if a client certificate is installed and trusted on the device.
 
-### macOS
+{{<tabs labels="macOS | Windows | Linux">}}
+{{<tab label="macos" no-code="true">}}
 
-### Linux
+1. Open Terminal.
+2. Run the following command to search for a certificate with a specific common name:
 
-### Windows
+```sh
+$ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/System.keychain
+```
+
+{{</tab>}}
+{{<tab label="windows" no-code="true">}}
+
+1. Open a Powershell window.
+2. Run the following command to search for a certificate with a specific common name:
+
+```bash
+PS C:\Users\JohnDoe> Get-ChildItem Cert:\LocalMachine\Root\ | where{$_.Subject -like "*<COMMON_NAME>*"}
+```
+
+{{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+1. Open Terminal.
+2. Run the following command to search for a certificate with a specific common name:
+
+```sh
+$ certutil -L -d sql:/etc/pki/nssdb -r -n <COMMON_NAME>
+
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+For the posture check to pass, a certificate must appear in the output that validates against the uploaded root CA.
