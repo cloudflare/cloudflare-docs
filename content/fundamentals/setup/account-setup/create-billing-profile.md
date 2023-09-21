@@ -2,14 +2,12 @@
 pcx_content_type: tutorial
 title: Create billing profile
 weight: 3
-aliases:
-- /fundamentals/account-and-billing/account-setup/create-billing-profile/
 updated: 2022-08-24
 ---
 
 # Create billing profile
 
-After you [create a new account](/fundamentals/account-and-billing/account-setup/create-account/), you might want to create your billing profile.
+After you [create a new account](/fundamentals/setup/account-setup/create-account/), you might want to create your billing profile.
 
 {{<tutorial>}}
 {{<tutorial-step title="Add primary payment method">}}

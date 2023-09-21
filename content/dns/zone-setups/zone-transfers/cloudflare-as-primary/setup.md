@@ -36,7 +36,7 @@ Make sure your account team has enabled your zone for outgoing zone transfers.
 
 Also, review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-records/) to make sure all of them have a **Proxy status** of **Unproxied**.
 
-If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
 ---
 

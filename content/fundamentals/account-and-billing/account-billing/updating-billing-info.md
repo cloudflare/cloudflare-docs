@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Update billing information
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-maintenance//updating-billing-info/
 ---
 
 # Update billing information

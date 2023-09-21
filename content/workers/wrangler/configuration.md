@@ -220,7 +220,7 @@ routes = [
 
 - `zone_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
 {{</definitions>}}
 

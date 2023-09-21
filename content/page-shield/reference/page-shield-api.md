@@ -22,7 +22,7 @@ You can obtain the complete endpoint by appending the [Page Shield API](/api/ope
 https://api.cloudflare.com/client/v4
 ```
 
-The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](/fundamentals/setup/find-account-and-zone-ids/).
 
 The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/operations/page-shield-list-page-shield-scripts) operation for every detected script.
 

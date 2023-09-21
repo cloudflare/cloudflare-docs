@@ -4,17 +4,15 @@ title: Roles
 weight: 3
 meta:
     title: Account roles
-aliases:
-- /fundamentals/account-and-billing/members/roles/
 ---
 
 # Roles
 
-Whenever you [add a new member](/fundamentals/account-and-billing/members/manage/) to your account, you can assign specific roles to these users.
+Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign specific roles to these users.
 
 ## Account-scoped Roles
 
-If you are adding members whose [role scope](/fundamentals/account-and-billing/members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
+If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
 
 | Role | Description |
 | --- | --- |
@@ -26,7 +24,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | API Gateway Read | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account. |
 | Audit Logs Viewer | Can view [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). |
 | Bot Management (Account-wide) | Can edit [Bot Management](/bots/plans/bm-subscription/) (including [Super Bot Fight Mode](/bots/get-started/pro/)) configurations for all domains in account. |
-| Billing | Can edit the account’s [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) and subscriptions |
+| Billing | Can edit the account’s [billing profile](/fundamentals/setup/account-setup/create-billing-profile/) and subscriptions |
 | Cloudflare Access | Can edit [Cloudflare Access](/cloudflare-one/policies/access/) policies. |
 | Cache Purge | Can purge the edge cache. |
 | Cloudflare DEX | Can edit [Cloudflare DEX](/cloudflare-one/insights/dex/). |
@@ -41,7 +39,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Firewall](/fundamentals/global-configurations/lists/ip-lists/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Firewall](/waf/tools/lists/ip-lists/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |
@@ -69,7 +67,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 
 ## Domain-scoped Roles
 
-If you are adding members whose [role scope](/fundamentals/account-and-billing/members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
+If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
 
 | Role | Description |
 | --- | --- |

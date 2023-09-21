@@ -61,4 +61,4 @@ _acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_HOSTNAME>.
 
 ## Moved domains
 
- If you [move your zone to another account](/fundamentals/get-started/basic-tasks/manage-domains/move-domain/), you will need to update the `CNAME` record at your authoritative DNS provider with a new hostname value.
+ If you [move your zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record at your authoritative DNS provider with a new hostname value.
