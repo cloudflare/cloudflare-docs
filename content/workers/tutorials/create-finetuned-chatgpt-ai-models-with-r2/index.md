@@ -35,7 +35,7 @@ Before you start, make sure you have:
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
 ```sh
-$ npx create-cloudflare-cli <PROJECT_NAME>
+$ npm create cloudflare@latest <PROJECT_NAME>
 ```
 
 Replace `<PROJECT_NAME>` with your desired project name. You can use the "Basic Worker script" template, which will create a single code file `src/worker.js` inside your project.
@@ -60,7 +60,7 @@ $ npx wrangler r2 put <PATH> -f <FILE_NAME>
 
 In your Worker application, set up a new application using [Hono](https://hono.dev/), a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions.
 
-The `use` code block is a middleware function to add the OpenAI API client to the context of all routes. This middleware function allows us to access the client from within any route handler. 
+The `use` code block is a middleware function to add the OpenAI API client to the context of all routes. This middleware function allows us to access the client from within any route handler.
 
 `onError()` defines an error handler to return any errors as a JSON response.
 
@@ -89,7 +89,7 @@ export app;
 
 ### 4. Read R2 files and upload them to OpenAI
 
-In this section, you will define the route and function responsible for handling file uploads. 
+In this section, you will define the route and function responsible for handling file uploads.
 
 The `GET /files` route listens for `GET` requests with a query parameter `file`, representing a filename of an uploaded fine-tune document in R2. The function uses the `createFile` function to manage the file upload process.
 
@@ -178,7 +178,7 @@ const getJobs = async (c: Context) => {
 
 ### 7. Deploy your application
 
-After you have created your Worker application and added the required functions, deploy the application. 
+After you have created your Worker application and added the required functions, deploy the application.
 
 Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`npx wrangler secret put`](/workers/wrangler/commands/#put-3) command:
 
@@ -204,13 +204,13 @@ $ npx wrangler deploy
 To use your application, create a new fine-tune job by making a request to the `/files` with a `file` query param matching the filename you uploaded earlier:
 
 ```sh
-$ curl yourworker/files?file=finetune.jsonl
+$ curl https://your-worker-url.com/files?file=finetune.jsonl
 ```
 
 When the file is uploaded, issue another request to `/models`, passing the `file_id` query parameter. This should match the `file_id` returned as JSON from the `/files` route:
 
 ```sh
-$ curl yourworker/models?file_id=file-abc123
+$ curl https://your-worker-url.com/models?file_id=file-abc123
 ```
 
 Finally, visit `/jobs` to see the status of your fine-tune jobs in OpenAI. Once the fine-tune job has completed, you can see the `fine_tuned_model` value, indicating a fine-tuned model has been created.
