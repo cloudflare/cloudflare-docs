@@ -11,7 +11,7 @@ You can define specific request properties to simulate different conditions for 
 
 ---
 
-## Use Trace
+## Use Trace in the dashboard
 
 ### 1. Configure one or more Cloudflare products
 
@@ -50,18 +50,22 @@ The **Trace results** page shows all evaluated and executed configurations from 
 
 2. (Optional) Update your Cloudflare configuration (at the account or at the domain/subdomain level) and create a new trace to check the impact of your changes.
 
-## Save the trace configuration
+### 4. (Optional) Save the trace configuration
 
 To run a trace later with the same configuration:
 
 1. Copy the JSON shown in the dashboard with the current trace configuration.
 2. When creating a new trace, paste it in the JSON box to define all the settings of the new trace.
 
+## Use Trace via API
+
+Use the [Request Trace](https://developers.cloudflare.com/api/operations/account-request-tracer-request-trace) operation to perform a trace using the Cloudflare API.
+
 ---
 
 ## Steps in trace results
 
-When showing matched configurations in trace results, each step corresponds to one of the following:
+For matched configurations in trace results, each step corresponds to one of the following:
 
 * Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
 * [Workers](/workers/) (execution of one or more scripts)
