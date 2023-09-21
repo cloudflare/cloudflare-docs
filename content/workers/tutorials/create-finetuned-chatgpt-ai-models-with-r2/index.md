@@ -3,20 +3,20 @@ content_type: 📝 Tutorial
 difficulty: Intermediate
 pcx_content_type: tutorial
 layout: single
-title: Create a Fine-Tuned OpenAI Model with R2
+title: Create a fine-tuned OpenAI model with R2
 updated: 2023-09-18
 weight: 1
 ---
 
-# Create a Fine-Tuned OpenAI Model with R2
+# Create a fine-tuned OpenAI model with R2
 
-In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a "fine-tuned model". This feature in OpenAI's API allows you to derive a custom model from OpenAI's various large language models based on a set of custom instructions and example answers. This document, known as a "fine-tune document", will be stored in R2 and dynamically provided to OpenAI's APIs when creating a new fine-tune model.
+In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning). This feature in OpenAI's API allows you to derive a custom model from OpenAI's various large language models based on a set of custom instructions and example answers. These instructions and example answers are written in a document, known as a fine-tune document. This document will be stored in R2 and dynamically provided to OpenAI's APIs when creating a new fine-tune model.
 
 In order to use this feature, you will do the following tasks:
 
-1. Upload a fine-tune document to R2
-2. Read the R2 file and upload it to OpenAI
-3. Create a new fine-tuned model based on the document
+1. Upload a fine-tune document to R2.
+2. Read the R2 file and upload it to OpenAI.
+3. Create a new fine-tuned model based on the document.
 
 ![Demo](/images/workers/tutorials/finetune/finetune-example.png)
 
@@ -28,7 +28,7 @@ Before you start, make sure you have:
 
 - A Cloudflare account. If you do not have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 - An OpenAI API key.
-- A fine-tune document, structured as [JSON Lines](https://jsonlines.org/). You can use the [example document](https://github.com/kristianfreeman/openai-finetune-r2-example/blob/16ca53ca9c8589834abe317487eeedb8a24c7643/example_data.jsonl) in the source code.
+- A fine-tune document, structured as [JSON Lines](https://jsonlines.org/). Use the [example document](https://github.com/kristianfreeman/openai-finetune-r2-example/blob/16ca53ca9c8589834abe317487eeedb8a24c7643/example_data.jsonl) in the source code.
 
 ## 1. Create a Worker application
 
@@ -42,27 +42,27 @@ Replace `<PROJECT_NAME>` with your desired project name. You can use the "Basic 
 
 ## 2. Upload a fine-tune document to R2
 
-Next, we'll upload the fine-tune document to R2. R2 is a key-value store that allows you to store and retrieve files from within your Workers application.
+Next, upload the fine-tune document to R2. R2 is a key-value store that allows you to store and retrieve files from within your Workers application.
 
-You can create a new R2 bucket using `wrangler`. Replace `<BUCKET_NAME>` with your desired bucket name.
+Create a new R2 bucket using [`wrangler r2 bucket create`](/workers/wrangler/commands/#create-2). Replace `<BUCKET_NAME>` with your desired bucket name.
 
 ```sh
 $ wrangler r2 bucket create <BUCKET_NAME>
 ```
 
-Next, you can upload a file using the `wrangler` CLI. `<PATH>` is the combined bucket and file path of the file you want to upload -- for instance, `finetune.jsonl`. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
+Next, upload a file using [`npx wrangler r2 put](). `<PATH>` is the combined bucket and file path of the file you want to upload -- for example, `finetune.jsonl`. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
 
 ```sh
 $ npx wrangler r2 put <PATH> -f <FILE_NAME>
 ```
 
-## 3. Initializing the app
+## 3. Initialize your Worker application
 
-In our Workers application, we'll set up a new application using Hono, a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions.
+In your Worker application, set up a new application using [Hono](https://hono.dev/), a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions.
 
-The `use` code block is a middleware function to add the OpenAI API client to the context of all routes. This allows us to access the client from within any route handler. 
+The `use` code block is a middleware function to add the OpenAI API client to the context of all routes. This middleware function allows us to access the client from within any route handler. 
 
-Finally, we define an error handler to return any errors as a JSON response.
+`onError()` defines an error handler to return any errors as a JSON response.
 
 ```javascript
 ---
@@ -87,13 +87,13 @@ app.onError((err, c) => {
 export app;
 ```
 
-### 4. Reading R2 files and uploading them to OpenAI
+### 4. Read R2 files and upload them to OpenAI
 
-In this section, we define the route and function responsible for handling file uploads. 
+In this section, you will define the route and function responsible for handling file uploads. 
 
-The `GET /files` route listens for GET requests with a query parameter `file`, representing a filename of an uploaded fine-tune document in R2. The function uses the `createFile` function to manage the file upload process.
+The `GET /files` route listens for `GET` requests with a query parameter `file`, representing a filename of an uploaded fine-tune document in R2. The function uses the `createFile` function to manage the file upload process.
 
-In `createFile`, we read the file from R2 and convert it to a `File` object. We then use the OpenAI API to upload the file and return the response.
+In `createFile`, your Worker reads the file from R2 and converts it to a `File` object. Your Worker then uses the OpenAI API to upload the file and return the response.
 
 ```javascript
 ---
@@ -128,7 +128,7 @@ app.get('/files', async c => {
 })
 ```
 
-### 5. Creating fine-tuned models
+### 5. Create fine-tuned models
 
 This section includes the `GET /models` route and the `createModel` function. The route handles incoming requests for creating a new fine-tuned model. The function `createModel` takes care of specifying the details and initiating the fine-tuning process with OpenAI.
 
@@ -156,7 +156,7 @@ app.get('/models', async c => {
 })
 ```
 
-### 6. Listing all fine-tune jobs
+### 6. List all fine-tune jobs
 
 This section describes the `GET /jobs` route and the corresponding `getJobs` function. The route provides an interface for retrieving a list of all fine-tuning jobs. The function interacts with OpenAI's API to fetch and return this information.
 
@@ -178,9 +178,9 @@ const getJobs = async (c: Context) => {
 
 ### 7. Deploy your application
 
-Once you have created your Worker application and added the required functions, deploy the application. 
+After you have created your Worker application and added the required functions, deploy the application. 
 
-Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. You can do this by running the [`npx wrangler secret put`](/workers/wrangler/commands/#put-3) command:
+Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`npx wrangler secret put`](/workers/wrangler/commands/#put-3) command:
 
 ```sh
 $ npx wrangler secret put OPENAI_API_KEY
@@ -199,7 +199,7 @@ $ npx wrangler deploy
 3. After your application is deployed, Wrangler will provide you with your Worker's URL.
 
 
-### 8. Viewing the fine-tune job status, and using the model
+### 8. View the fine-tune job status and use the model
 
 To use your application, create a new fine-tune job by making a request to the `/files` with a `file` query param matching the filename you uploaded earlier:
 
@@ -217,11 +217,11 @@ Finally, visit `/jobs` to see the status of your fine-tune jobs in OpenAI. Once 
 
 ![Jobs](/images/workers/tutorials/finetune/finetune-jobs.png)
 
-You can visit the [OpenAI Playground](https://platform.openai.com/playground) in order to use your fine-tune model. Select it in the "Model" section on the right sidebar of the interface.
+Visit the [OpenAI Playground](https://platform.openai.com/playground) in order to use your fine-tune model. Select your fine-tune model in the **Model** section on the right sidebar of the interface.
 
 ![Demo](/images/workers/tutorials/finetune/finetune-example.png)
 
-You can also use it in any API requests you make to OpenAI's "chat completions" endpoints. For instance, in the below code example:
+Use it in any API requests you make to OpenAI's chat completions endpoints. For instance, in the below code example:
 
 ```javascript
 openai.chat.completions.create({
