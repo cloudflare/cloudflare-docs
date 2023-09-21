@@ -38,7 +38,7 @@ First, use the `c3` CLI to create a new Cloudflare Workers project.
 $ npm create cloudflare@latest <PROJECT_NAME>
 ```
 
-Replace `<PROJECT_NAME>` with your desired project name. You can use the "Basic Worker script" template, which will create a single code file `src/worker.js` inside your project.
+Replace `<PROJECT_NAME>` with your desired project name. You can use the "Basic Worker script" template, which will create a single code file `src/index.js` inside your project.
 
 ## 2. Upload a fine-tune document to R2
 
@@ -66,7 +66,7 @@ The `use` code block is a middleware function to add the OpenAI API client to th
 
 ```javascript
 ---
-filename: src/worker.js
+filename: src/index.js
 ---
 import OpenAI from 'openai'
 
@@ -97,7 +97,7 @@ In `createFile`, your Worker reads the file from R2 and converts it to a `File` 
 
 ```javascript
 ---
-filename: src/worker.js
+filename: src/index.js
 ---
 // New import added at beginning of file
 import { toFile } from 'openai/uploads'
@@ -134,7 +134,7 @@ This section includes the `GET /models` route and the `createModel` function. Th
 
 ```javascript
 ---
-filename: src/worker.js
+filename: src/index.js
 ---
 const createModel = async (c: Context, fileId: string) => {
 	const openai: OpenAI = c.get("openai")
@@ -162,7 +162,7 @@ This section describes the `GET /jobs` route and the corresponding `getJobs` fun
 
 ```javascript
 ---
-filename: src/worker.js
+filename: src/index.js
 ---
 app.get('/jobs', async c => {
 	const jobs = await getJobs(c)
