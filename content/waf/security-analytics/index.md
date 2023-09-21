@@ -10,7 +10,9 @@ layout: single
 The Security Analytics dashboard displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
 {{<Aside type="note">}}
+
 Available to customers on Business and Enterprise plans.
+
 {{</Aside>}}
 
 In the dashboard you can visualize which traffic is being mitigated by Cloudflare, review several security-related statistics about incoming requests (such as [bot score](/bots/concepts/bot-score/), [attack scores](/waf/about/waf-attack-score/), and [uploaded content scanning](/waf/about/content-scanning/) results), and check which requests are reaching the origin server or being handled directly by Cloudflare.

@@ -19,7 +19,7 @@ www.example.com  AAAA   2001:DB8::1
 www.example.com  CNAME  domain.example
 ```
 
-We recommend only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
+Cloudflare recommends that you only use reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
 
 For more information on reserved IP addresses or top level domains, please refer to these RFCs:
 [RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)
