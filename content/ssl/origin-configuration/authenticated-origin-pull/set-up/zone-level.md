@@ -22,7 +22,15 @@ To use a Cloudflare certificate (which uses a specific CA), [download the .PEM f
 
 To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
 
-## 2. Configure origin to accept client certs
+{{<Aside type="warning">}}
+
+Although Cloudflare provides you a certificate to easily confirgure zone-level authenticated origin pulls, if you want more strict security, you should upload your own certificate. 
+
+Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
+
+{{</Aside>}}
+
+## 2. Configure origin to accept client certificates
 
 With the certificate installed, set up your origin web server to accept client certificates.
 
@@ -56,9 +64,11 @@ ssl_verify_client on;
 
 </details>
 
-## 3. Enable Authenticated Origin Pulls (globally)
+## 3. Configure Cloudflare to use client certificate
 
-Then, enable Authenticated Origin Pulls as an option for your Cloudflare zone.
+Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone.
+
+This step sets the TLS Client Auth to require Cloudflare to use a client certificate when connecting to your origin server.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -77,6 +87,6 @@ To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH
 {{</tab>}}
 {{</tabs>}}
 
-##  4. Enable Authenticated Origin Pulls for zone
+##  4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
 Finally, use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable or disable zone-level authenticated origin pulls.

@@ -3,7 +3,7 @@
 {{- $changelogDataEntries := slice -}}
 
 {{- range $files -}}
-{{- $changelogData = $changelogData | append (index (index $.Site.Data "changelogs") .) }}
+{{- $changelogData = $changelogData | append (index (partial "full-changelog-data.html") .) }}
 {{- end -}}
 
 {{- range $changelogData -}}

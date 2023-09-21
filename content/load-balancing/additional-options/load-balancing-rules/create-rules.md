@@ -12,7 +12,7 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 ## Prerequisites
 
-- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to different fields for your load balancing rules. For more details, see [Supported fields and expressions](/load-balancing/additional-options/load-balancing-rules/reference/).
+- **Understand whether Cloudflare proxies your traffic**: Depending on the [proxy status](/load-balancing/understand-basics/proxy-modes/) of your traffic, you may have access to different fields for your load balancing rules. For more details, refer to [Supported fields and expressions](/load-balancing/additional-options/load-balancing-rules/reference/).
 
 ---
 

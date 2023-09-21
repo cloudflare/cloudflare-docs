@@ -1,6 +1,6 @@
 {{- $permalink := .Permalink -}}
 {{- $atomLink := print .Permalink "index.xml" -}}
-{{- $changelogData := index .Site.Data "changelogs" -}}
+{{- $changelogData := partial "full-changelog-data.html" -}}
 {{- $changelogRendered := slice -}}
 
 {{- range $index, $product := $changelogData -}}

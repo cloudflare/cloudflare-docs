@@ -284,6 +284,14 @@ If you specify a port in the **If the URL matches** field of a Page Rule, it mus
 
 If the URL of the current request matches both a Page Rule and a [Workers custom route](/workers/configuration/routing/routes/), some Pages Rules settings will not be applied. For details on using Page Rules with Workers, refer to [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) in the developers documentation.
 
+### Page Rules are case-insensitive
+
+The pattern entered under **If the URL matches** will not consider upper and lower case differences.
+
+`example.com/path`, `example.com/Path` and `example.com/PATH` will be triggered the same way.
+
+If you need your rules to consider case sensitivity, you might want to use [Cloudflare Rules](/rules/) instead.
+
 ___
 
 ## Related resources

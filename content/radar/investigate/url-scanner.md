@@ -4,7 +4,7 @@ title: URL Scanner (beta)
 weight: 7
 ---
 
-{{<beta>}} Radar's URL Scanner {{</beta>}}
+{{<heading-pill style="beta">}} Radar's URL Scanner {{</heading-pill>}}
 
 In order to better understand Internet usage around the world, Radar provides a URL Scanner at [https://radar.cloudflare.com/scan](https://radar.cloudflare.com/scan).
 

@@ -4,7 +4,7 @@ weight: 7
 pcx_content_type: how-to
 ---
 
-{{<beta>}}AV1 playback{{</beta>}}
+{{<heading-pill style="beta">}}AV1 playback{{</heading-pill>}}
 
 Play live video or live recordings using the [AV1 codec](https://aomedia.org/av1-features/).
 

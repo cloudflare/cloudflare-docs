@@ -4,7 +4,7 @@ weight: 2
 pcx_content_type: how-to
 ---
 
-{{<beta>}}Enable DMARC Management{{</beta>}}
+{{<heading-pill style="beta">}}Enable DMARC Management{{</heading-pill>}}
 
 You need to enable DMARC Management to allow Cloudflare to process DMARC reports on your behalf. Before enabling DMARC Management, note that it does not support subdomains. You can only use it with your primary domain on [each zone](/fundamentals/get-started/concepts/accounts-and-zones/) of your Cloudflare account.
 

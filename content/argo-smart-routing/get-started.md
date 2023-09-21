@@ -36,7 +36,9 @@ You will need to already have a [billing profile](/fundamentals/account-and-bill
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
-## Usage-based notifications
+## Billing
+
+If Cloudflare mitigates attacks on your site - whether through DDoS protection, the WAF, or other mechanisms - that traffic will not be included in any charges for Argo Smart Routing.
 
 {{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}
 

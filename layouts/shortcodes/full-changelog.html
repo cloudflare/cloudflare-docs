@@ -1,4 +1,4 @@
-{{- $changelogData := index .Site.Data "changelogs" -}} 
+{{- $changelogData := partial "full-changelog-data.html" -}}
 {{- $changelogRendered := slice -}} 
 {{- $products := slice -}} 
 {{- range $index, $product := $changelogData -}} 

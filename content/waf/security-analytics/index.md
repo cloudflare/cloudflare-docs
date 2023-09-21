@@ -5,7 +5,7 @@ weight: 10
 layout: single
 ---
 
-{{<beta>}}Security Analytics{{</beta>}}
+{{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}
 
 The Security Analytics dashboard displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
