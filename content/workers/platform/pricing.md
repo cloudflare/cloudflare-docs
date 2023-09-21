@@ -28,8 +28,8 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 |             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| **Free**    |  100,000 per day                                                    | no charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
-| **Bundled** |  10 million included per month <br /> +$0.50 per additional million | no charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
+| **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
+| **Bundled** |  10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
 | **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2,3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation        |
 
 {{</table-wrap>}}
