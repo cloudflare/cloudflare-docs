@@ -61,7 +61,7 @@ A Worker that serves 100 million requests per month would have the following est
 
 ### Unbound Usage Model
 
-The Bundled Usage Model is billed based on the number of incoming requests to your Worker, and the duration (wall-clock time) of each invocation, measured in gigabyte seconds (GB-s).
+The Unbound Usage Model is billed based on the number of incoming requests to your Worker, and the duration (wall-clock time) of each invocation, measured in gigabyte seconds (GB-s).
 
 {{<table-wrap>}}
 
