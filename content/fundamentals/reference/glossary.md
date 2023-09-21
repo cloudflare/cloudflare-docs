@@ -2,8 +2,6 @@
 title: Glossary
 pcx_content_type: glossary
 layout: list
-aliases:
-- /fundamentals/glossary/
 ---
 
 # Glossary

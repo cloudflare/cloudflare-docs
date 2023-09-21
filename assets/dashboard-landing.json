@@ -109,7 +109,7 @@
           "title": "Get started with Cloudflare"
         },
         {
-          "url_path": "/fundamentals/get-started/setup/add-site/",
+          "url_path": "/fundamentals/setup/account-setup/add-site/",
           "title": "Add a site to Cloudflare"
         },
         {
@@ -174,7 +174,7 @@
           "title": "Solving 'Registry Status: Client transfer prohibited'"
         },
         {
-          "url_path": "/fundamentals/get-started/setup/add-site/",
+          "url_path": "/fundamentals/setup/account-setup/add-site/",
           "title": "Add a site to Cloudflare"
         },
         {
@@ -196,7 +196,7 @@
       "dashPath": "/:accountId/members",
       "recommendations": [
         {
-          "url_path": "/fundamentals/account-and-billing/members/manage/",
+          "url_path": "/fundamentals/setup/manage-members/manage/",
           "title": "Manage account members"
         },
         {

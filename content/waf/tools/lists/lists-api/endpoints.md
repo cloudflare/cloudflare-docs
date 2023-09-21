@@ -3,8 +3,6 @@ title: Endpoints
 pcx_content_type: reference
 weight: 2
 layout: list
-aliases:
-- /fundamentals/global-configurations/lists/lists-api/endpoints/
 ---
 
 # Endpoints
