@@ -1,30 +1,81 @@
 ---
 title: Embedding
 pcx_content_type: get-started
-weight: 5
+weight: 6
 ---
 
-# Embedding model
-Model name: `cf/BIAA/bge-small-en` - this model name is used to run this model via SDK and the API.​​
+# Embeddings
+Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset.
 
-Embeddings are a numerical representation of text that can be used to measure the relatedness between two pieces of text. This model...
-
-## Use cases
+* ID:  **@cf/baai/bge-base-en-v1.5** - used to `run` this model via SDK or API
+* Name: Feature extraction model	
+* Task: text-embeddings
 
 ## Examples
 
-{{<tabs labels="worker | node | python | curl ">}}
+{{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
 ```js
-// todo
+import { Ai } from '@cloudflare.com/ai'
+
+export interface Env {
+  // If you set another name in wrangler.toml as the value for 'binding',
+  // replace "AI" with the variable name you defined.
+  AI: any;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const ai = new Ai(env.AI);
+
+    // Can be a string or array of strings]
+    const stories = [
+      'This is a story about an orange cloud',
+      'This is a story about a llama',
+      'This is a story about a hugging emoji'
+    ]
+
+    const answer = ai.run({
+        model: '@cf/baai/bge-base-en-v1.5',
+        input: {
+            text: stories
+        }
+    });
+
+    return new Response(JSON.stringify(answer));
+  },
+};
 ```
 
 {{</tab>}}
 {{<tab label="node">}}
 
 ```js
-// todo js
+async function run(model, text) {
+  const input = { input: { text } };
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
+    {
+      headers: { Authorization: "Bearer {API_TOKEN}" },
+      method: "POST",
+      body: JSON.stringify(input),
+    }
+  );
+  const result = await response.json();
+  return result;
+}
+
+// Can be a string or array of strings]
+const stories = [
+  'This is a story about an orange cloud',
+  'This is a story about a llama',
+  'This is a story about a hugging emoji'
+];
+
+run('cf/baai/bge-base-en-v1.5', stories).then((response) => {
+    console.log(JSON.stringify(response));
+});
 ```
 
 {{</tab>}}
@@ -32,18 +83,55 @@ Embeddings are a numerical representation of text that can be used to measure th
 {{<tab label="python">}}
 
 ```py
-# todo
+import requests
+
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
+headers = {"Authorization": "Bearer {API_TOKEN}"}
+
+def run(model, prompt)
+    input = { "input": { "prompt": prompt } }
+    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
+    return response.json()
+
+stories = [
+  'This is a story about an orange cloud',
+  'This is a story about a llama',
+  'This is a story about a hugging emoji'
+]
+    
+output = run("@cf/baai/bge-base-en-v1.5", stories)
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ todo
+$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/baai/bge-base-en-v1.5 \
+    -X POST \
+    -H "Authorization: Bearer {API_TOKEN}" \
+    -d '{ "input": { "text": "['This is a story about an orange cloud','This is a story about a llama','This is a story about a hugging emoji']" } }'
 ```
 
 {{</tab>}}
 {{</tabs>}}
+
+**Example Workers AI response**
+
+```json
+{
+  "result": {
+    "items": [
+      [-0.387, 192, 0.315, 384, -0.363,...],
+      [-0.256, 193, 0.053, 385,	-0.346,...],
+      [-0.649, 196,	0.053, 388,	-1.055,...]
+    ]
+  }
+  success": true,
+  "errors":[],
+  "messages":[]
+}
+```
+
 
 ## Input/Output schemas
 The following schemas are based on [JSON Schema](https://json-schema.org/)

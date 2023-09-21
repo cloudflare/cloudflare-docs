@@ -1,17 +1,19 @@
 ---
 title: Image classification
 pcx_content_type: get-started
-weight: 4
+weight: 5
 ---
 
 # Image classification
-Model name: `@cf/resnet50` - this model name is used to run this model via SDK and the API.
+ResNet models perform image classification - they take images as input and classify the major object in the image.
 
-## Use cases
+* ID:  **@cf/microsoft/resnet-50	** - used to `run` this model via SDK or API
+* Name: Resnet50 image classification model
+* Task: image-classification
 
 ## Examples
 
-{{<tabs labels="worker | node | python | curl ">}}
+{{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
 ```js
@@ -37,7 +39,10 @@ Model name: `@cf/resnet50` - this model name is used to run this model via SDK a
 {{<tab label="curl">}}
 
 ```sh
-$ todo
+$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/microsoft/resnet-50 \
+    -X POST \
+    -H "Authorization: Bearer {API_TOKEN}" \
+    --data-binary @orange-llama.png
 ```
 
 {{</tab>}}

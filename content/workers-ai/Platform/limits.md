@@ -1,11 +1,17 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: configuration
 title: Limits
-
-weight: 1
+weight: 30
 ---
 
-# API
+# Limits
 
-{{<directory-listing>}}
+{{<Aside>}}
+Workers AI is now in open Beta
+{{</Aside>}}
 
+During the initial rollout phase (timing TBD), the following limits will be in place:
+
+- **Inference requests/minute:** 10
+- **LLM tokens/request:** 768 input / 256 output
+- **Speech recognition seconds/request:** ? seconds 

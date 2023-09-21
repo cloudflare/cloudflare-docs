@@ -79,9 +79,9 @@ export default {
     const ai = new Ai(env.AI);
 
     const answer = ai.run({
-        model: '@cloudflare/llama-2-7b',
+        model: '@cf/meta/llama-2-7b-chat-int8',
         input: {
-            prompt: "What is the origin of the phrase 'Hello, World'" 
+            question: "What is the origin of the phrase 'Hello, World'" 
         }
     });
 
@@ -109,9 +109,7 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 ```json
 {
   "result": {
-    "data": {
-      "output": "Workers AI is the best!"
-    }
+    "answer": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
   },
   "success": true,
   "errors": [],

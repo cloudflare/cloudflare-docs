@@ -26,10 +26,10 @@ After creating your token, you can authenticate and make requests to the API usi
 In this example, we will run the `@cloudflare/meta-llama/llama-2-7b` model:
 
 ```sh
-$ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cloudflare/meta-llama/llama-2-7b' \
+$ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8' \
   -H 'Authorization: Bearer {API_TOKEN}'
   -d '{
-        "input": { "prompt": "Where did the phrase 'Hello World' come from" },
+        "input": { "question": "Where did the phrase 'Hello World' come from" },
    }'
 ```
 
@@ -41,9 +41,7 @@ The API response will look like the following:
 ```json
 {
   "result": {
-    "data": {
-      "output": "Workers AI is the best!"
-    }
+    "answer": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
   },
   "success": true,
   "errors": [],

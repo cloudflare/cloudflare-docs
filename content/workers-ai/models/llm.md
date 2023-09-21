@@ -5,14 +5,13 @@ weight: 1
 ---
 
 # Large language model (LLM)
-Model name: `cf/meta-llama/llama-2-7b` - this model name is used to run this model via SDK and the API.​​
+Llama 2 is a family of generative text models and can be adapted for a variety of natural language generation tasks.
 
-
-## Use cases
-
+* ID:  **@cf/meta/llama-2-7b-chat-int8** - used to `run` this model via SDK or API
+* Name: Quantized Llama 2 chat model from Meta	
+* Task: text-generation
 
 ## Examples
-
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
@@ -30,7 +29,7 @@ export default {
     const ai = new Ai(env.AI);
 
     const answer = ai.run({
-        model: '@cloudflare/llama-2-7b',
+        model: '@cf/meta/llama-2-7b-chat-int8',
         input: {
             prompt: "What is the origin of the phrase 'Hello, World'" 
         }
@@ -59,7 +58,7 @@ async function run(model, prompt) {
   return result;
 }
 
-run('cf/meta-llama/llama_2_7b_chat_int8', 'Tell me a story').then((response) => {
+run('@cf/meta/llama-2-7b-chat-int8', 'Tell me a story').then((response) => {
     console.log(JSON.stringify(response));
 });
 ```
@@ -79,21 +78,34 @@ def run(model, prompt)
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
     
-output = run("cf/meta-llama/llama_2_7b_chat_int8", "Tell me a story ")
+output = run("@cf/meta/llama-2-7b-chat-int8", "Tell me a story ")
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/cf/meta-llama/llama_2_7b_chat_int8 \
+$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{"input": { prompt: "Tell me a story" } }'
+    -d '{ "input": { prompt: "Tell me a story" } }'
 ```
 
 {{</tab>}}
 {{</tabs>}}
+
+**Example Workers AI response**
+
+```json
+{
+  "result": {
+    "answer": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world.",
+  }
+  success": true,
+  "errors":[],
+  "messages":[]
+}
+```
 
 ## Input/Output schemas
 The following schemas are based on [JSON Schema](https://json-schema.org/)

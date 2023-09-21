@@ -1,15 +1,15 @@
 ---
-title: Speech to text
+title: Translation
 pcx_content_type: get-started
-weight: 2
+weight: 3
 ---
 
-# Speech to text
-Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data collected from the web.
+# Translation
+No Language Left Behind (NLLB) was trained on multilingual data for translation between a set of 200 languages.
 
-* ID: **@cf/openai/whisper** - used to `run` this model via SDK or API
-* Name: Automatic speech recognition (ASR) system from OpenAI
-* Task: speech-recognition
+* ID:  **@cf/meta/nllb-200-1.3b** - used to `run` this model via SDK or API
+* Name: Quantized Llama 2 chat model from Met
+* Task: text-generation
 
 ## Examples
 
