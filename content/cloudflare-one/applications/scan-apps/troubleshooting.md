@@ -32,7 +32,7 @@ You can repair unhealthy CASB integrations through your list of integrations or 
 {{<tab label="findings" no-code="true">}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Findings**.
-2. Choose the finding highlighted in red. It will redirect you to the unhealthy integration.
+2. Choose the finding highlighted in red. CASB will redirect you to the unhealthy integration.
 3. Select **Reauthorize**.
 4. In your SaaS app, reauthorize your account.
 
