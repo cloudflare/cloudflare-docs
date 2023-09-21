@@ -10,7 +10,7 @@ Use an IP List to reference a group of IP addresses collectively, by name, in ru
 
 ## Create an IP List
 
-Refer to [Create a list in the dashboard](/fundamentals/global-configurations/lists/create-dashboard/) or to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) page.
+Refer to [Create a list in the dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/) or to the [Lists API](/waf/tools/lists/lists-api/) page.
 
 ## Managed IP Lists
 

@@ -5,7 +5,7 @@ pcx_content_type: tutorial
 
 # Minimize downtime
 
-When you [add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, it may experience a brief period of downtime due to certificate issuance, misconfigured Cloudflare settings, or limitations at your origin server.
+When you [add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, it may experience a brief period of downtime due to certificate issuance, misconfigured Cloudflare settings, or limitations at your origin server.
 
 {{<tutorial>}}
 {{<tutorial-step title="Update and review DNS records">}}
@@ -51,7 +51,7 @@ For more details about timing and certificate recommendations, refer to [Certifi
 
 You may want to test your configuration using your local machine or proxying traffic from a development domain or subdomain.
 
-If you experience issues, you should make sure that you have [allowed Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin server.
+If you experience issues, you should make sure that you have [allowed Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin server.
 
 {{</tutorial-step>}}
 

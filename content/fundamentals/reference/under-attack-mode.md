@@ -41,7 +41,7 @@ To preview what **I'm Under Attack** mode looks like for your visitors:
 4. Go to **Custom Pages**.
 5. For **Managed Challenge / I'm Under Attack Mode™**, select **Custom Pages** > **View default**.
 
-The "Checking your browser before accessing..." challenge determines whether to block or allow a visitor within five seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [**Challenge Passage**](/fundamentals/security/challenge-passage/).
+The "Checking your browser before accessing..." challenge determines whether to block or allow a visitor within five seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [**Challenge Passage**](/waf/tools/challenge-passage/).
 
 ---
 

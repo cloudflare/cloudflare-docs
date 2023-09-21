@@ -12,9 +12,9 @@ Together, these IP addresses form the backbone of our [Anycast network](https://
 
 ## Allow Cloudflare IP addresses
 
-Because of [how Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/), all traffic to your origin server will appear to be coming from Cloudflare IP addresses.
+Because of [how Cloudflare works](/fundamentals/concepts/how-cloudflare-works/), all traffic to your origin server will appear to be coming from Cloudflare IP addresses.
 
-To avoid rate limiting or blocking these requests, you will want to [allow Cloudflare IPs](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin server.
+To avoid rate limiting or blocking these requests, you will want to [allow Cloudflare IPs](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin server.
 
 ## Customize Cloudflare IP addresses
 
