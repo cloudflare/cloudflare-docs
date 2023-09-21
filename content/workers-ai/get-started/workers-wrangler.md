@@ -78,7 +78,7 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const answer = ai.run({
+    const answer = await ai.run({
         model: '@cf/meta/llama-2-7b-chat-int8',
         input: {
             question: "What is the origin of the phrase 'Hello, World'" 
