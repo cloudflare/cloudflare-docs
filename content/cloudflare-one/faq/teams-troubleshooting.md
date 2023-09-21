@@ -237,3 +237,27 @@ To disable third-party storage partitioning:
 2. Set **Experimental third-party storage partitioning** to _Disabled_.
 3. Select **Relaunch** to apply the change.
 
+## I see `failed to sufficiently increase receive buffer size` in my cloudflared logs
+
+This buffer size increase is reported by the [quic-go library](https://github.com/quic-go/quic-go) leveraged by [cloudflared](https://github.com/cloudflare/cloudflared). You can learn more about the log message in the quic-go [repository](https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes). This log message is generally not impactful and can be safely ignored when troubleshooting. However, if you've deployed `cloudflared` within a unique, high-bandwidth environment then buffer size can be manually overriden for testing purposes. 
+
+Complete the following steps on Linux: 
+
+1. Create a file under /etc/sysctl.d/
+```bash
+vi 98-core-rmem-max.conf
+```
+2. In the file, define the desired rmem
+```bash
+net.core.rmem_max=2500000
+```
+3. Reboot the host machine running `cloudflared`
+
+To validate that these changes have taken effect use the grep command: 
+```bash
+sudo sysctl -a | grep net.core.rmem_max
+```
+And you should see the following: 
+```bash
+net.core.rmem_max = 2500000
+```
