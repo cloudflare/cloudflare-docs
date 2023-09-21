@@ -1,0 +1,212 @@
+---
+productName: Fundamentals
+entries:
+- term: account
+  general_definition: |-
+    Accounts group one or more members together with specific roles or permissions. Accounts can be associated with any number of domains.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: API key
+  general_definition: |-
+    An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](/api/).
+  associated_products: []
+  related_terms:
+    - API token
+  cloudflare_specific: false
+
+- term: API token
+  general_definition: |-
+    API tokens authorize access to specific Cloudflare dashboard pages, accounts, and zones. API tokens are associated to the user that created them.
+  associated_products: []
+  related_terms:
+    - API key
+  cloudflare_specific: false
+
+- term: backup codes
+  general_definition: |-
+    Backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/). A backup code becomes invalid after use.
+  associated_products: []
+  related_terms:
+    - two-factor authentication
+  cloudflare_specific: false
+
+- term: cloud
+  general_definition: |-
+    A network of remote servers used to store and maintain data.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: content delivery network (CDN)
+  general_definition: |-
+    A geographically distributed group of servers which work together to provide fast delivery of Internet content.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: credit
+  general_definition: |-
+    An amount applied to a specific Cloudflare account as credit for recurring subscriptions or plan payments. The Cloudflare billing system automatically applies credits in the next billing cycle.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: data center
+  general_definition: |-
+    A physical location where servers run and other IT operations are hosted.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: denial-of-service (DoS) attack
+  general_definition: |-
+    A DoS attack is a type of cyber attack in which an attacker aims to render a computer or other device unavailable to its intended users by interrupting the device's normal functioning.
+  associated_products: []
+  related_terms:
+    - DDoS attack
+  cloudflare_specific: false
+
+- term: distributed denial-of-service (DDoS) attack
+  general_definition: |-
+    A DDoS attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
+  associated_products: []
+  related_terms:
+    - DoS attack
+  cloudflare_specific: false
+
+- term: domain
+  general_definition: |-
+    The domain name of your application on Cloudflare.
+  associated_products: []
+  related_terms:
+    - website
+    - zone
+  cloudflare_specific: false
+
+- term: edge response status code
+  general_definition: |-
+    HTTP response code sent from Cloudflare to the client (end user). The Cloudflare dashboard **Analytics** app uses the edge response status code.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: feature
+  general_definition: |-
+    A feature is a setting in the Cloudflare dashboard that corresponds to functionality within a Cloudflare product or API.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: HTTP request
+  general_definition: |-
+    An HTTP request is the way Internet communications platforms such as web browsers ask for the information they need to load a website.
+  associated_products: []
+  related_terms:
+    - HTTP
+  cloudflare_specific: false
+
+- term: IP address
+  general_definition: |-
+    IP stands for Internet Protocol, which is the set of rules that makes it possible for devices to communicate over the Internet. With billions of people accessing the Internet every day, unique identifiers are necessary to keep track of who is doing what. The Internet Protocol solves this by assigning IP numbers to every device accessing the Internet. Every assigned number is an IP address.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: Internet
+  general_definition: |-
+    The Internet is a global system of computer networks that provides a wide range of information and communication facilities.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: member or user
+  general_definition: |-
+    A member or user is an email account in Cloudflare that you can grant access to your organization account. Members belonging to multiple accounts can select which account to manage via the Cloudflare dashboard.
+  associated_products: []
+  related_terms:
+    - account
+  cloudflare_specific: true
+
+- term: origin request
+  general_definition: |-
+    An origin request is a request served from the origin server.
+  associated_products: []
+  related_terms:
+    - request
+  cloudflare_specific: false
+
+- term: origin response status code
+  general_definition: |-
+    An origin response status code is an HTTP response code sent from the origin server to Cloudflare.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: plan
+  general_definition: |-
+    Plans distinguish the breadth of Cloudflare features accessible to a specific domain. Plan options include [Free, Pro, Business, or Enterprise](https://www.cloudflare.com/plans/).
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: true
+
+- term: protocol
+  general_definition: |-
+    A protocol is a set of rules governing the exchange or transmission of data between devices.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: roles
+  general_definition: |-
+    Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/account-and-billing/members/roles/).
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: Service Level Agreement (SLA)
+  general_definition: |-
+    An SLA is a contractual obligation for Cloudflare to maintain a specific level of service. Read the [Service Level Agreement (SLA) for the Cloudflare Business plan](https://www.cloudflare.com/business-sla/). Enterprise customers refer to the Enterprise SLA provided with their contract.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: Support and SLA
+  general_definition: |-
+    {{<render file="_support-and-sla-definition.md">}}
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: traffic
+  general_definition: |-
+    Traffic is the data sent and received by visitors to a website. Cloudflare serves and protects this data as it passes through the Cloudflare network.
+  associated_products: []
+  related_terms: []
+  cloudflare_specific: false
+
+- term: two-factor authentication (2FA)
+  general_definition: |-
+    Two-factor authentication (2FA) is a security process in which a user provides two different authentication factors to verify their identity. It adds an extra layer of security to user logins by requiring users to present two or more separate pieces of evidence (factors) that establish their identity.
+  associated_products: []
+  related_terms:
+    - backup codes
+  cloudflare_specific: false
+
+- term: website
+  general_definition: |-
+    A website is a collection of web pages and related content that is identified by a common domain name and published on at least one web server.
+  associated_products: []
+  related_terms:
+    - domain
+  cloudflare_specific: false
+
+- term: zone
+  general_definition: |-
+    A zone is a portion of DNS namespace that is managed by a specific organization or administrator.
+  associated_products: []
+  related_terms:
+    - domain
+    - DNS zone
+  cloudflare_specific: false

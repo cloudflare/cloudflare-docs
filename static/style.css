@@ -5555,3 +5555,64 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 .footnote-backref {
   visibility: hidden;
 }
+
+/* glossary styling */
+.viewMoreContainer {
+  width: 100%;
+}
+
+.viewMoreButton {
+  margin: auto;
+  width: 12em;
+  height: 2em;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.viewMoreButton:hover {
+  text-decoration: underline;
+  transition: text-decoration 0.5s ease-in-out;
+}
+
+.selectorDropdowns {
+  display: flex;
+  justify-content: flex-start;
+  border-top: 1px solid #242628;
+  border-bottom: 1px solid #242628;
+  padding: .5em 0 .5em 0;
+}
+
+@media (max-width:950px) {
+  .selectorDropdowns {
+      flex-direction: column;
+  }
+}
+
+[theme=dark] .selectorDropdowns {
+  border-top: 1px solid #f3f3f4;
+  border-bottom: 1px solid #f3f3f4;
+}
+
+.selectorDropdowns div {
+  margin-right: 2em;
+  display: flex;
+  flex-direction: column;
+  padding: .75em;
+  justify-content: center;
+}
+
+.selectorDropdowns div label {
+  padding-bottom: .3em;
+}
+
+.selectorDropdowns div select {
+  width: 15em;
+  height: 2.25em;
+}
+
+.searchInput input {
+  height: 2.25em;
+  width: 15em;
+  padding-left: .5em
+}
