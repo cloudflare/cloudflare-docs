@@ -25,6 +25,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
 ### 2. Build a trace
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+
 2. Select **Trace**.
 
 3. Enter a URL to trace. The URL must include a hostname that is [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
@@ -75,3 +76,11 @@ For matched configurations in trace results, each step corresponds to one of the
 * [Workers](/workers/) (execution of one or more scripts)
 * [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) (execution of one or more rules)
 
+---
+
+## Limitations
+
+Currently, you cannot perform traces for:
+
+* Domains or subdomains associated with [BYOIP](/byoip/) addresses
+* [Custom hostnames](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
