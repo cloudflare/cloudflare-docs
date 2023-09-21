@@ -539,7 +539,7 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 
 ### Eclipse
 
-To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to Java VM used by Eclipse.
+To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to the Java virtual machine (JVM) used by Eclipse.
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 2. Find the `java.home` value for your Eclipse installation.
@@ -558,22 +558,22 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
    4. Copy the full path after `java.home=`.
 
-3. Add the Cloudflare certificate to Eclipse's Java virtual machine.
+3. Add the Cloudflare certificate to Eclipse's JVM.
 
 <details>
 <summary>macOS and Linux</summary>
 <div>
-1. Add the `java.home` value you copied as a terminal variable.
+1. In a terminal, add the `java.home` value you copied as an environment variable.
 
-```sh
-$ export JAVA_HOME=$(echo /path/to/java.home)
-```
+   ```sh
+   $ export JAVA_HOME=$(echo /path/to/java.home)
+   ```
 
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
-```sh
-$ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
-```
+   ```sh
+   $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
+   ```
 
 3. Restart Eclipse.
 
@@ -584,16 +584,16 @@ $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias Cl
 <summary>Windows</summary>
 <div>
 
-1. Add the `java.home` value you copied as a terminal variable.
+1. In a terminal, add the `java.home` value you copied as an environment variable.
 
 ```bash
-$JAVA_HOME = "\path\to\java.home"
+set JAVA_HOME="\path\to\java.home"
 ```
 
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
 ```bash
-"$JAVA_HOME\bin\keytool.exe" -import -file "$HOME\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "$JAVA_HOME\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
 ```
 
 3. Restart Eclipse.
@@ -602,6 +602,66 @@ $JAVA_HOME = "\path\to\java.home"
 </details>
 
 For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
+
+### RubyGems
+
+To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+
+<details>
+<summary>macOS and Linux</summary>
+<div>
+
+1. Install [OpenSSL](https://www.openssl.org/).
+2. In a terminal, format the Cloudflare certificate for Ruby.
+
+   ```sh
+   $ openssl x509 -inform DER -in ~/Downloads/Cloudflare_CA.pem -out ruby-root-ca.crt
+   ```
+
+3. Add your RubyGems directory as an environment variable.
+
+   ```sh
+   $ export RUBY_DIR=$(gem which rubygems)
+   ```
+
+4. Copy the Cloudflare certificate to your RubyGems certificate store.
+
+    ```sh
+    $ cp ~/Downloads/ruby-root-ca.crt $RUBY_DIR/ssl_cert/rubygems.org
+    ```
+
+5. Restart RubyGems.
+
+</div>
+</details>
+
+<details>
+<summary>Windows</summary>
+<div>
+
+1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
+2. In a terminal, format the Cloudflare certificate for Ruby.
+
+   ```bash
+   openssl x509 -inform DER -in %UserProfile%\Downloads\Cloudflare_CA.pem -out ruby-root-ca.crt
+   ```
+
+3. Add your RubyGems directory as an environment variable.
+
+   ```bash
+   set RUBY_DIR=gem which rubygems
+   ```
+
+4. Copy the Cloudflare certificate to your RubyGems certificate store.
+
+    ```bash
+    copy %UserProfile%\Downloads\ruby-root-ca.crt %RUBY_DIR%\ssl_cert\rubygems.org
+    ```
+
+5. Restart RubyGems.
+
+</div>
+</details>
 
 ### Minikube
 

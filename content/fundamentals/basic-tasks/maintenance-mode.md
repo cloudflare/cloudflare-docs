@@ -1,8 +1,6 @@
 ---
 title: Maintenance mode
 pcx_content_type: how-to
-aliases:
-- /fundamentals/get-started/basic-tasks/maintenance-mode/
 ---
 
 # Maintenance mode

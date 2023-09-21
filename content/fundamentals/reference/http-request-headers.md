@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare HTTP request headers
-aliases:
-- /fundamentals/get-started/reference/http-request-headers/
 ---
 
 # HTTP request headers
@@ -86,7 +84,7 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 ## CF-RAY
 
-The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
+The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
 Add the [`CF-Ray` header to your origin web server logs](https://support.cloudflare.com/hc/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) to match requests proxied to Cloudflare to requests in your server logs.
 
@@ -126,7 +124,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 {{<Aside type="note">}}
 
-When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/#standard-fields) dynamic field, which contains the same value and exists for the same purpose.
+When configuring WAF custom rules, do not match on this header. These rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/#field-cf-worker-upstream_zone) dynamic field, which contains the same value and exists for the same purpose.
 
 {{</Aside>}}
 

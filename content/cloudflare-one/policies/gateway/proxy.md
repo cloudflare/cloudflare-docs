@@ -26,7 +26,7 @@ The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudf
 
 When the UDP proxy is enabled, Gateway will force all HTTP/3 traffic to HTTP/2 to allow inspection. Otherwise, HTTP/3 traffic will bypass inspection. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/gateway/http-policies/http3/).
 
-{{<beta heading="h3">}}ICMP{{</beta>}}
+{{<heading-pill style="beta" heading="h3">}}ICMP{{</heading-pill>}}
 
 The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `traceroute`.
 

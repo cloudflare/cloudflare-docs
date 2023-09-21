@@ -24,7 +24,7 @@ If you find a false positive, there are several potential resolutions:
 
 - **Add the client’s IP addresses to the [IP Access Rules](/waf/tools/ip-access-rules/) allowlist:** If the browser or client visits from the same IP addresses, allowing is recommended. 
 - **Disable the corresponding managed rule(s)**: Stops blocking or challenging false positives, but reduces overall site security. A request blocked by Rule ID `981176` refers to OWASP rules. Decrease OWASP sensitivity to resolve the issue.
-- **Bypass WAF managed rules with a firewall rule:** [Create a firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) with the _Bypass_ action to deactivate WAF managed rules for a specific combination of parameters. For example, [bypass managed rules](/firewall/cf-firewall-rules/actions/) for a specific URL and a specific IP address or user agent.
+- **Bypass WAF managed rules with a firewall rule (deprecated):** [Create a firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) with the _Bypass_ action to deactivate WAF managed rules for a specific combination of parameters. For example, [bypass managed rules](/firewall/cf-firewall-rules/actions/) for a specific URL and a specific IP address or user agent.
 - **(Not recommended) Disable WAF managed rules for traffic to a URL:** Lowers security on the particular URL endpoint. Configured via [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 Additional guidelines are as follows:
@@ -46,4 +46,4 @@ To identify false negatives, review the HTTP logs on your origin web server. To 
 - Are DNS records that serve HTTP traffic proxied through Cloudflare?
 - Is a firewall rule [bypassing](/firewall/cf-firewall-rules/actions/#supported-actions) managed rules? 
 - Does an allowed country, ASN, IP range, or IP address in [IP Access rules](/waf/tools/ip-access-rules/) or [firewall rules](/firewall/cf-firewall-rules/) match the attack traffic?
-- Is the malicious traffic reaching your origin IP addresses directly to bypass Cloudflare protection? Block all traffic except from [Cloudflare's IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin web server.
+- Is the malicious traffic reaching your origin IP addresses directly to bypass Cloudflare protection? Block all traffic except from [Cloudflare's IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin web server.

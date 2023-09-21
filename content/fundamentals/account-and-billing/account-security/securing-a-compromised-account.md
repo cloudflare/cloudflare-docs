@@ -2,8 +2,6 @@
 title: Secure compromised account
 pcx_content_type: tutorial
 weight: 5
-aliases:
-- /fundamentals/account-and-billing/account-security/securing-a-compromised-account/
 ---
 
 # Secure compromised account

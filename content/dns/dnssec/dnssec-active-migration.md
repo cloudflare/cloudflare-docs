@@ -23,7 +23,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 ## 1. Set up Cloudflare
 
-1. [Add your zone to Cloudflare](/fundamentals/get-started/setup/add-site/).
+1. [Add your zone to Cloudflare](/fundamentals/setup/account-setup/add-site/).
 
     To add your zone using the API, refer to the [Create Zone endpoint](/api/operations/zones-post).
 

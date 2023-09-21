@@ -2,6 +2,11 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-09-14'
+  description: |-
+    - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
+      API from Node.js is now available when the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/)
+      is enabled.
 - publish_date: '2023-07-14'
   description: |-
     - An implementation of the [`util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype)

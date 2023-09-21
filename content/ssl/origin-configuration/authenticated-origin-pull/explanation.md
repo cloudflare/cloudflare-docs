@@ -54,7 +54,7 @@ This is true even if you have [**Full**](/ssl/origin-configuration/ssl-modes/ful
 ```
 <br/>
 
-This lack of authentication means that - even if your origin is [protected behind Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/) - attackers with your origin's IP address will still receive a response from your origin for HTTPS requests.
+This lack of authentication means that - even if your origin is [protected behind Cloudflare](/fundamentals/concepts/how-cloudflare-works/) - attackers with your origin's IP address will still receive a response from your origin for HTTPS requests.
 
 With Authenticated Origin Pulls, Cloudflare performs standard TLS handshakes between a client device and Cloudflare, but a client-authenticated TLS handshake between Cloudflare and your origin.
 

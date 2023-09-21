@@ -33,7 +33,7 @@ Any custom domains, as well as your `user-example.pages.dev` site, will not be a
 
 You can use [Cloudflare Access](/cloudflare-one/policies/access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
 
-Once enabled, you can [set up a multi-user account](/fundamentals/account-and-billing/members/) to allow other members of your team to view preview deployments.
+Once enabled, you can [set up a multi-user account](/fundamentals/setup/manage-members/) to allow other members of your team to view preview deployments.
 
 By default, preview deployments are enabled and available publicly. In your project's settings, you can require visitors to authenticate to view preview deployment. This allows you to lock down access to these preview deployments to your teammates, organization, or anyone else you specify via [Access policies](/cloudflare-one/policies/).
 
@@ -48,13 +48,13 @@ Note that this will only protect your preview deployments (for example, `373f31e
 
 {{<Aside note="warning">}}
 
-If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enabling-access-on-your-pagesdev-domain) for instructions.
+If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enable-access-on-your-pagesdev-domain) for instructions.
 
 {{</Aside>}}
 
 ## Preview aliases
 
-When a preview deployment is published, it is given a unique, hash-based address — for example, `<hash>.<project>.pages.dev`. These are atomic and may always be visited in the future. However, Pages also creates an alias for `git` branch's name and updates it so that the alias always maps to the latest commit of that branch. 
+When a preview deployment is published, it is given a unique, hash-based address — for example, `<hash>.<project>.pages.dev`. These are atomic and may always be visited in the future. However, Pages also creates an alias for `git` branch's name and updates it so that the alias always maps to the latest commit of that branch.
 
 For example, if you push changes to a `development` branch (which is not associated with your Production environment), then Pages will deploy to `abc123.<project>.pages.dev` and alias `development.<project>.pages.dev` to it. Later, you may push new work to the `development` branch, which creates the `xyz456.<project>.pages.dev` deployment. At this point, the `development.<project>.pages.dev` alias points to the `xyz456` deployment, but `abc123.<project>.pages.dev` remains accessible directly.
 

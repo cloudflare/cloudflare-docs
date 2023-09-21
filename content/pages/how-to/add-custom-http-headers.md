@@ -86,7 +86,7 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
-If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/setup/find-account-and-zone-ids/).
 
 Once you have configured your `wrangler.toml`, run `npx wrangler deploy` in your terminal to deploy your Worker:
 

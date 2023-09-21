@@ -48,4 +48,4 @@ If desired, you could also manually fetch the DCV tokens and share them with you
 
 ## Moved domains
 
- If you [move your SaaS zone to another account](/fundamentals/get-started/basic-tasks/manage-domains/move-domain/), you will need to update the `CNAME` record with a new hostname value.
+ If you [move your SaaS zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record with a new hostname value.

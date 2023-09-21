@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 8
 ---
 
-{{<beta>}} Magic WAN Connector {{</beta>}}
+{{<heading-pill style="beta">}} Magic WAN Connector {{</heading-pill>}}
 
 The Magic WAN Connector (beta) is a lightweight software package you can install in corporate network locations to automatically connect, steer, and shape any IP traffic.
 

@@ -1,8 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Use Cloudflare without changing nameservers
-aliases:
-- /fundamentals/get-started/basic-tasks/cloudflare-without-changing-nameservers/
 ---
 
 # Use Cloudflare without changing nameservers
