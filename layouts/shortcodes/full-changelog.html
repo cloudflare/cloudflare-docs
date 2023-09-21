@@ -75,12 +75,11 @@
         {{- end -}}
         <!-- Custom logic for products with separate pages -->
         {{- with .individual_page -}}
+        {{- with $.Site.GetPage (replaceRE `\/$` "" $link) -}}
+        {{- $title = .Title -}}
+        {{- end -}}
         {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
         {{- end -}}
-        {{- with .scheduled -}}
-        {{ $title = print "Scheduled - " $title -}}
-        {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
-        {{- end -}}        
         <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print $rellink "index.xml" -}}">
           <td>{{ $product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
