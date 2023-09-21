@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Scan for sensitive data
-weight: 5
+weight: 3
 layout: single
 ---
 
