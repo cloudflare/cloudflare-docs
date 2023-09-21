@@ -29,47 +29,47 @@ To add a site:
 5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account.
 6. Choose from the list the Connector corresponding to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Set up your Magic WAN Connector](#3-set-up-your-magic-wan-connector) for more details.
-8. Select **Next** to proceed to configuring your network.
-9. Under **WAN configuration**, there should be a **Default WAN interface** automatically created. Select the three dots > **Edit** in the default interface. You should only have one WAN interface on this list.
+8. Select **Next** to proceed.
+9. Under **WAN configuration**, select the three dots in the **Default WAN interface** > **Edit** to configure your WAN (you should only have one WAN interface in this list):
     1. **Network name**: Enter a descriptive name for your WAN.
     2. **(Optional) VLAN ID**: Specify a VLAN ID and port for your WAN.
-    3. **Physical port**: This refers to the physical Magic WAN Connector port's number that you are using for your WAN.
+    3. **Physical port**: This refers to the physical Magic WAN Connector port that you are using for your WAN.
     4. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
 
-<div class="medium-img">
+    <div class="medium-img">
 
-![An example of how to configure you Magic WAN Connector WAN](/images/magic-wan/connector/wan-config.png)
+    ![An example of how to configure you Magic WAN Connector WAN](/images/magic-wan/connector/wan-config.png)
 
-</div>
+    </div>
 
-9. Select **Save** when you are finished.
+10. Select **Save** when you are finished.
 
-10. In **LAN configuration**, select **Create**, and repeat the process to define your LAN.
+11. In **LAN configuration**, select **Create**, and repeat the process to define your LAN:
     1. **Network name**: Enter a descriptive name for your LAN.
     2. **(Optional) VLAN ID**: Specify a VLAN ID and port for your LAN.
     3. **Physical port**: This refers to the physical Magic WAN Connector port's number that you are using for your LAN.
     4. **Overlay subnet**: The subnet behing Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
     5. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address.
     6. **(Optional) This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
-    - The DNS server address
-    - The DHCP pool start
-    - The DHCP pool end
+        - The DNS server address
+        - The DHCP pool start
+        - The DHCP pool end
 
-For example:
+    For example:
 
-<div class="medium-img">
+    <div class="medium-img">
 
-![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-config.png)
+    ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-config.png)
 
-</div>
+    </div>
 
-11. Select **Save** when you are finished.
+12. Select **Save** when you are finished.
 
-12. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+13. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
 ## 3. Set up your Magic WAN Connector
 
-The Magic WAN Connector is shipped to you deactivated. It will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you are ready to establish the connection, to prevent unauthorized users to access your network.
+The Magic WAN Connector is shipped to you deactivated, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you are ready to establish the connection, to prevent unauthorized users to access your network.
 
 When the Connector is first activated, one of the ports must be connected to the Internet through a route that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#2-define-a-site-configuration) step.
 
