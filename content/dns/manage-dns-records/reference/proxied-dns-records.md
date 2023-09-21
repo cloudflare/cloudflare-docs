@@ -20,6 +20,11 @@ The **Proxy status** of a DNS record affects how Cloudflare treats incoming traf
 
 Because requests to proxied hostnames go through Cloudflare before reaching your origin server, all requests will appear to be coming from Cloudflare's IP addresses (and could potentially be blocked or rate limited). If you use proxied records, you may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/setup/allow-cloudflare-ip-addresses/).
 
+Cloudflare Anycast IPs used to proxy traffic on your domain are assigned automatically. These IPs might change at any time for operational reasons.
+If you need to allowlist Cloudflare IPs on your infrastructure or hosting provider, include the full list of [Cloudflare Anycast IPs](https://www.cloudflare.com/ips/).
+
+As an Enterprise customer, you have the option to get [static IPs](/spectrum/about/static-ip/) or [bring your own IPs (BYOIP)](/byoip/).
+
 ### Limitations
 
 #### Record types

@@ -4,7 +4,7 @@ layout: single
 title: Database Integrations (beta)
 ---
 
-{{<beta>}} Database Integrations {{</beta>}}
+{{<heading-pill style="beta">}} Database Integrations {{</heading-pill>}}
 
 ## Background
 

@@ -33,7 +33,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
-| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), and [R2](/r2/). |
+| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/) and [R2](/r2/). Also provides read access to Zones, [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/) and [Page Rules](/rules/) |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |
 | Cloudflare Zero Trust PII | Can access [Cloudflare for Zero Trust](/cloudflare-one/) PII. |
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |

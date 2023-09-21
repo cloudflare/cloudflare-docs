@@ -6,7 +6,7 @@ meta:
   title: Application security reports
 ---
 
-{{<beta>}} Application security reports {{</beta>}}
+{{<heading-pill style="beta">}} Application security reports {{</heading-pill>}}
 
 {{<Aside type="note">}}
 Currently, this feature is only available to Enterprise customers.

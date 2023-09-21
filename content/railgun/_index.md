@@ -7,7 +7,7 @@ meta:
   title: Railgun (deprecated)
 ---
 
-{{<deprecated>}} Railgun {{</deprecated>}}
+{{<heading-pill style="deprecated">}} Railgun {{</heading-pill>}}
 
 {{<render file="_railgun-deprecation-notice.md">}}
 
