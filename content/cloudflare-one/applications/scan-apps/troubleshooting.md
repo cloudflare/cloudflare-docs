@@ -11,7 +11,9 @@ Cloudflare CASB detects when integrations are unhealthy or outdated.
 
 Common integration issues include changes to SaaS app configurations, user access, or permission scope. Integrations may need to be updated to support new features or permissions.
 
-To identify unhealthy CASB integrations, go to **CASB** > **Integrations** or **CASB** > **Findings**. If an integration is unhealthy, CASB will highlight it in red and set its status to Broken. If an integration is outdated, CASB will highlight it in blue and set its status to Upgrade.
+## Identify unhealthy or outdated integrations
+
+To identify unhealthy CASB integrations, go to **CASB** > **Integrations** or **CASB** > **Findings**. If an integration is unhealthy, CASB will highlight it in red and set its status to **Broken**. If an integration is outdated, CASB will highlight it in blue and set its status to **Upgrade**.
 
 ## Repair an unhealthy integration
 
@@ -44,4 +46,4 @@ Upgrading an outdated integration will allow the integration to access new featu
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Choose your outdated integration.
 3. Select **Upgrade integration**.
-4. In your SaaS app, upgrade and reauthorize your account.
+4. In your SaaS app, upgrade your app and reauthorize your account.
