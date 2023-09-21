@@ -30,7 +30,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 {{</Aside>}}
 
-## 2. Configure origin to accept client certs
+## 2. Configure origin to accept client certificates
 
 With the certificate installed, set up your origin web server to accept client certificates.
 
@@ -64,9 +64,11 @@ ssl_verify_client on;
 
 </details>
 
-## 3. Enable Authenticated Origin Pulls (globally)
+## 3. Configure Cloudflare to use client certificate
 
-Then, enable Authenticated Origin Pulls as an option for your Cloudflare zone.
+Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone.
+
+This step sets the TLS Client Auth to require Cloudflare to use a client certificate when connecting to your origin server.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -85,6 +87,6 @@ To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH
 {{</tab>}}
 {{</tabs>}}
 
-##  4. Enable Authenticated Origin Pulls for zone
+##  4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
 Finally, use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable or disable zone-level authenticated origin pulls.
