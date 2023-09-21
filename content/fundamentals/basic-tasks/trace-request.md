@@ -19,20 +19,18 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
 
 ### 1. Configure one or more Cloudflare products
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
 2. Set configuration settings at the account level, or select a domain and configure settings for one or more Cloudflare products.
 
 ### 2. Build a trace
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to Account Home > **Trace**.
 
-2. Select **Trace**.
+2. Enter a URL to trace. The URL must include a hostname that is [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-3. Enter a URL to trace. The URL must include a hostname that is [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request body**.
 
-4. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request body**.
-
-5. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
+4. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
 
     * **Protocol** (HTTP protocol version)
     * **Request headers**
@@ -43,7 +41,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
     * **Skip challenge** (skips a Cloudflare-issued [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/), if any, allowing the trace to continue)
 
-6. Select **Send trace**.
+5. Select **Send trace**.
 
 ### 3. Assess results
 
