@@ -134,6 +134,18 @@ Due to platform differences, mobile clients can only apply Split Tunnels rules w
 
 - Wildcard domain prefixes (for example, `*.example.com`) are supported only if they have valid wildcard DNS records. Other wildcard domains are not supported because the client is unable to match wildcard domains to hostnames when starting up the tunnel. Unsupported wildcard domain prefixes can still exist in your configuration, but they will be ignored on mobile platforms.
 
+Additionally, due to limitations of the Android SDK, a loopback address or domain which resolves to a loopback address cannot be included when we build the VPN interface on Android or Chromebook platforms. Therefore, WARP will fail to connect on Android and ChromeOS if a loopback address or domain resolving to loopback address is present in the Split Tunnel configuration under any of the following conditions:
+
+- WARP is deployed with the 1.1.1.1 app installed with version 6.28 or below.
+  
+- WARP is deployed with the Cloudflare One Agent app with version 1.0.
+  
+- The device uses Android 12 or below.
+  
+- The device uses Android 13+ and your Split Tunnel configuration uses 'Include IPs and Domains' (or 'Include IPs') mode.
+ 
+On Android 13+ with newer versions of the WARP client, loopback addresses will be ignored in Exclude mode Split Tunnel configurations.
+
 ## Remove a route
 
 {{<Aside type="warning">}}
