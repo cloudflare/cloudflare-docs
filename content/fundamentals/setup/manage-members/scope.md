@@ -58,7 +58,7 @@ If you want a member with access to a group of specific domains, you can also cr
 
 To create a domain group: 
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address]((/fundamentals/setup/account-setup/)verify-email-address/)).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/setup/account-setup/)verify-email-address/).
 2. Go to **Manage Account** > **Configurations** > **Lists**.
 3. For **Domain Group Manager**, select **Create**.
 4. Create your domain group:

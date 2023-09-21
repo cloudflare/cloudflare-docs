@@ -15,7 +15,7 @@ Follow the steps below to enable SSL/TLS protection for your application.
 
 {{<tutorial-prereqs>}}
 
-- [Create an account and register an application]((/fundamentals/setup/))
+- [Create an account and register an application](/fundamentals/setup/)
 
 {{</tutorial-prereqs>}}
 

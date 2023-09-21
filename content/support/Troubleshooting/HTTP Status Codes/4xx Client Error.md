@@ -44,7 +44,7 @@ If you're seeing a 403 response that contains Cloudflare branding in the respon
 -   [WAF Custom or Managed Rules](/waf/) with the challenge or block action
 -   [Security Level](/waf/tools/security-level/), that is set to Medium by default
 -   Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
--   The [Browser Integrity Check]((/waf/tools/browser-integrity-check/))
+-   The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
 
 ### **404 Not Found (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 

@@ -27,7 +27,7 @@ This is not an exhaustive list of Cloudflare products and features.
 | [API Shield](/api-shield/) | Yes | No |
 | [Argo Smart Routing](/argo-smart-routing/) | No | Yes | Customer zones can still use Smart Routing for non-O2O traffic. |
 | [Bot Management](/bots/plans/bm-subscription/) | Yes* | Yes* | Bot Management cannot be enabled on both the customer zone and the SaaS zone |
-| [Browser Integrity Check]((/waf/tools/browser-integrity-check/)) | Yes | Yes |
+| [Browser Integrity Check](/waf/tools/browser-integrity-check/) | Yes | Yes |
 | [Cache](/cache/) | Yes* | Yes | Though caching is possible on a customer zone, it is generally discouraged (especially for HTML).<br/><br/>Your SaaS provider likely performs its own caching outside of Cloudflare and caching on your zone might lead to out-of-sync or stale cache states.<br/><br/>Customer zones can still cache content that are not routed through a SaaS provider's zone.|
 | [China Network](/china-network/) | No | No |
 | [DNS](/dns/) | Yes* | Yes | As a SaaS customer, do not remove the records related to your Cloudflare for SaaS setup.<br/><br/>Otherwise, your traffic will begin routing away from your SaaS provider. |

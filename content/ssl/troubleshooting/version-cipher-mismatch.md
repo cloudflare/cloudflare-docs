@@ -9,7 +9,7 @@ meta:
 
 # ERR_SSL_VERSION_OR_CIPHER_MISMATCH
 
-After you [add a new domain]((/fundamentals/setup/account-setup/add-site/)) to Cloudflare, your visitors' browsers might display `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) errors.
+After you [add a new domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) errors.
 
 This error occurs when your domain or subdomain is not covered by an SSL/TLS certificate, which is usually caused by:
 

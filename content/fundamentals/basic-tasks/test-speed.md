@@ -13,9 +13,9 @@ Cloudflare offers several tools to test the speed of your website, as well as th
 
 ### Using Cloudflare
 
-Once your domain is [active on Cloudflare]((/fundamentals/setup/account-setup/add-site/)), you can run speed tests within the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed).
+Once your domain is [active on Cloudflare](/fundamentals/setup/account-setup/add-site/), you can run speed tests within the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed).
 
-This speed test will provide information about critical loading times, performance with and without [Cloudflare's proxy]((/fundamentals/concepts/how-cloudflare-works/)), and recommended optimizations.
+This speed test will provide information about critical loading times, performance with and without [Cloudflare's proxy](/fundamentals/concepts/how-cloudflare-works/), and recommended optimizations.
 
 If you experience any issues, make sure you are not blocking specific [user agents](/fundamentals/reference/cloudflare-site-crawling/#other-situations).
 

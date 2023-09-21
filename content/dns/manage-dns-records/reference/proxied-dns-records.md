@@ -18,7 +18,7 @@ The **Proxy status** of a DNS record affects how Cloudflare treats incoming traf
 
 {{<render file="_mix-proxied-and-unproxied.md">}}
 
-Because requests to proxied hostnames go through Cloudflare before reaching your origin server, all requests will appear to be coming from Cloudflare's IP addresses (and could potentially be blocked or rate limited). If you use proxied records, you may need to adjust your server configuration to [allow Cloudflare IPs]((/fundamentals/setup/allow-cloudflare-ip-addresses/)).
+Because requests to proxied hostnames go through Cloudflare before reaching your origin server, all requests will appear to be coming from Cloudflare's IP addresses (and could potentially be blocked or rate limited). If you use proxied records, you may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/setup/allow-cloudflare-ip-addresses/).
 
 ### Limitations
 
@@ -57,4 +57,4 @@ When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being g
 
 {{<render file="_mix-proxied-and-unproxied.md">}}
 
-In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect]((/fundamentals/concepts/how-cloudflare-works/)) requests to your application.
+In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) requests to your application.

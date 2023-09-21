@@ -141,9 +141,9 @@ Only Enterprise customers with a paid add-on can throttle requests using the _Bl
 
 ## Configuration restrictions
 
-* If the rule expression includes [IP Lists]((/waf/tools/lists/ip-lists/)), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression includes [IP Lists](/waf/tools/lists/ip-lists/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists]((/waf/tools/lists/ip-lists/)). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists](/waf/tools/lists/ip-lists/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
 ## Recommendations
 

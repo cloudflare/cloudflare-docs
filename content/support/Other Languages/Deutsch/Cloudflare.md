@@ -21,7 +21,7 @@ verwenden (dokumentiert in Cloudflares Support KB), sind
 Cache-Ressourcen und bekannte Suchmaschinen-Crawler von Ihren
 Durchsatzbegrenzungsregeln ausgenommen. Daher haben sie keinen Einfluss
 auf das
-[SEO-Ranking]((/fundamentals/basic-tasks/improve-seo/))
+[SEO-Ranking](/fundamentals/basic-tasks/improve-seo/)
 Ihrer Website. Wenn Sie jedoch die [neue Version der
 Durchsatzbegrenzungsregeln](/waf/rate-limiting-rules/)
 verwenden (dokumentiert in der Entwicklerdokumentation), sollten Sie

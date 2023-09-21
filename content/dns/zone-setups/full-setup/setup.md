@@ -37,7 +37,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{<tutorial-step title="Add site to Cloudflare">}}
 
-In the Cloudflare dashboard, [add your domain]((/fundamentals/setup/account-setup/add-site/)).
+In the Cloudflare dashboard, [add your domain](/fundamentals/setup/account-setup/add-site/).
 
 {{</tutorial-step>}}
 

@@ -48,7 +48,7 @@ The domain transfer process depends on your DNS settings. If Cloudflare is your 
 
 1. [Create a new Cloudflare account]((/fundamentals/setup/account-setup/)create-account/) or log in to an existing Cloudflare account.
 
-2. [Add the domain]((/fundamentals/setup/account-setup/add-site/)) to the account (as if you were adding it for the first time).
+2. [Add the domain](/fundamentals/setup/account-setup/add-site/) to the account (as if you were adding it for the first time).
 
 3. Log in to your domain registrar account and [update the nameservers](/dns/zone-setups/full-setup/setup/) to the provided Cloudflare nameservers.
 

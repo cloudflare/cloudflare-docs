@@ -259,7 +259,7 @@ Network Analytics currently has these limitations:
     -   Application layer rules
     -   Gatekeeper and manually applied rules
     -   [flowtrackd](https://blog.cloudflare.com/announcing-flowtrackd/) (Advanced TCP protection) (available in Network Analytics v2)
-    -   WARP traffic and [Orange-clouded traffic]((/fundamentals/concepts/how-cloudflare-works/))
+    -   WARP traffic and [Orange-clouded traffic](/fundamentals/concepts/how-cloudflare-works/)
 
 -   Data from Cloudflare services that proxy traffic, such as CDN, is not available in Network Analytics.
 

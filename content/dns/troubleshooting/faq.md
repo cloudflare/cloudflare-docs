@@ -180,7 +180,7 @@ This can happen when you had a wildcard \* record configured at your previous au
 You can also:
 1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add]((/fundamentals/setup/account-setup/add-site/)) the domain.
+3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
 
 ___
 

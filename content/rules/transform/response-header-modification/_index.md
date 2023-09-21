@@ -28,7 +28,7 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 
-* Currently you cannot reference [IP Lists]((/waf/tools/lists/ip-lists/)) in expressions of HTTP response header modification rules.
+* Currently you cannot reference [IP Lists](/waf/tools/lists/ip-lists/) in expressions of HTTP response header modification rules.
 
 * The HTTP response header removal operation will remove all response headers with the provided name.
 

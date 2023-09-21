@@ -23,7 +23,7 @@ Cloudflare stores your lists at the account level. You can use the same list in 
 
 Cloudflare supports the following types of lists:
 
-* [IP Lists]((/waf/tools/lists/ip-lists/))
+* [IP Lists](/waf/tools/lists/ip-lists/)
 * [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists)
 
 Refer to the page about each list type for details.
@@ -38,7 +38,7 @@ The name of a list must comply with the following requirements:
 
 ### Creating and editing lists
 
-You can [create lists in the Cloudflare dashboard]((/waf/tools/lists/)create-dashboard/) or using the [Lists API]((/waf/tools/lists/lists-api/)).
+You can [create lists in the Cloudflare dashboard]((/waf/tools/lists/)create-dashboard/) or using the [Lists API](/waf/tools/lists/lists-api/).
 
 After creating a list, you can add and remove items from the list, but you cannot change the list name or type.
 

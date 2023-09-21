@@ -10,7 +10,7 @@ _build:
 
 <div>
 
-Explicitly block all traffic that does not come from [Cloudflare IP addresses]((/fundamentals/setup/allow-cloudflare-ip-addresses/)) (or the IP addresses of your trusted partners, vendors, or applications).
+Explicitly block all traffic that does not come from [Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) (or the IP addresses of your trusted partners, vendors, or applications).
 
 - **Security**: Moderately secure.
 - **Availability**: All customers.

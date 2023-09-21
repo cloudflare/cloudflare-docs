@@ -10,7 +10,7 @@ inputParameters: planReqs
 
 Before you start creating custom hostnames:
 
-1. [Add]((/fundamentals/setup/account-setup/add-site/)) your zone to Cloudflare $1
+1. [Add](/fundamentals/setup/account-setup/add-site/) your zone to Cloudflare $1
 2. [Enable](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/) Cloudflare for SaaS for your zone.
 3. (optional) Review the following documentation:
 

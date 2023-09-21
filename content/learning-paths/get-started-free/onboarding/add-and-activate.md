@@ -47,12 +47,12 @@ If you already have a domain, the easiest way to get set up with Cloudflare is t
 
 If you cannot transfer your domain or want to keep your current registrar, your setup has a few more steps:
 
-1. [Add your site]((/fundamentals/setup/account-setup/add-site/)).
-2. (*Optional*) If your domain is sensitive to downtime, you may have a [few additional steps]((/fundamentals/basic-tasks/minimize-downtime/)).
+1. [Add your site](/fundamentals/setup/account-setup/add-site/).
+2. (*Optional*) If your domain is sensitive to downtime, you may have a [few additional steps](/fundamentals/basic-tasks/minimize-downtime/).
 3. At your registrar (where you bought your domain name), disable DNSSEC.
     <br/>
     {{<render file="_dnssec-providers.md" productFolder="dns">}}
-4. (*For some*) At your origin server, [allow Cloudflare IP addresses]((/fundamentals/setup/allow-cloudflare-ip-addresses/)).
+4. (*For some*) At your origin server, [allow Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/).
 5. Change your [domain nameservers](/dns/zone-setups/full-setup/setup/).
 6. Wait for your domain to become [Active](/dns/zone-setups/reference/domain-status/) on Cloudflare.
 

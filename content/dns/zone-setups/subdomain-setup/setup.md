@@ -46,7 +46,7 @@ If the parent domain is using a [full setup](/dns/zone-setups/full-setup/)[^1], 
 
 If you have not yet created a DNS record covering your child domain in the parent domain:
 
-1. [Add the child domain]((/fundamentals/setup/account-setup/add-site/)) to the parent domain's Cloudflare account or another account.
+1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
 3. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records in the parent zone for the subdomain you want to delegate.
 
@@ -65,7 +65,7 @@ If you have not yet created a DNS record covering your child domain in the paren
 
 If you have already created a DNS record covering your child domain in the parent domain:
 
-1. [Add the child domain]((/fundamentals/setup/account-setup/add-site/)) to the parent domain's Cloudflare account or another account.
+1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. In your child domain, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your child domain. This includes all DNS records deeper than the delegated subdomain, meaning that if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 
     {{<Aside type="note">}}Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
@@ -99,7 +99,7 @@ If the parent domain is using a [partial setup](/dns/zone-setups/partial-setup/)
 
 If you have not yet created a DNS record covering your child domain in the parent domain:
 
-1. [Add the child domain]((/fundamentals/setup/account-setup/add-site/)) in the same or a new account.
+1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) in the same or a new account.
 2. Convert the child zone to [a partial setup](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare).
 3. Create the various [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for your child domain.
 4. [Add the TXT verification record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) at your authoritative DNS provider.
@@ -110,7 +110,7 @@ If you have not yet created a DNS record covering your child domain in the paren
 
 If you have already created a DNS record covering your child domain in the parent domain:
 
-1. [Add the child domain]((/fundamentals/setup/account-setup/add-site/)) in the same or a new account.
+1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) in the same or a new account.
 2. Convert the child zone to [a partial setup](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare).
 3. In your child domain, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your child domain. This includes all DNS records deeper than the delegated subdomain, meaning that if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 

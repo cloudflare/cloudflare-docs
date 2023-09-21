@@ -14,7 +14,7 @@ By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you
 
 ## Prerequisites
 
-All users in your email domain must exist as a member in your Cloudflare account and IdP.  To add users to your Cloudflare account, refer to [Manage Cloudflare account access]((/fundamentals/setup/manage-members/)).
+All users in your email domain must exist as a member in your Cloudflare account and IdP.  To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/setup/manage-members/).
 
 {{<Aside>}}
 

@@ -64,7 +64,7 @@ header: API configuration example
 
 ## Browser Integrity Check
 
-Enable or disable [Browser Integrity Check]((/waf/tools/browser-integrity-check/)) [^3] for matching requests.
+Enable or disable [Browser Integrity Check](/waf/tools/browser-integrity-check/) [^3] for matching requests.
 
 <details>
 <summary>API information</summary>

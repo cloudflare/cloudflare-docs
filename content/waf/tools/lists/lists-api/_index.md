@@ -9,7 +9,7 @@ layout: single
 
 The [Lists API](/api/operations/lists-get-lists) provides an interface for programmatically managing the following types of lists:
 
-* [IP Lists]((/waf/tools/lists/ip-lists/)): Contain IP addresses that you can reference collectively, by name, in rule expressions.
+* [IP Lists](/waf/tools/lists/ip-lists/): Contain IP addresses that you can reference collectively, by name, in rule expressions.
 
 * [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists): Contain URL redirects that you enable by creating a Bulk Redirect Rule.
 
