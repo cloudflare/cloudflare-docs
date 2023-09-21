@@ -48,7 +48,7 @@ To add a site:
     1. **Network name**: Enter a descriptive name for your LAN.
     2. **(Optional) VLAN ID**: Specify a VLAN ID and port for your LAN.
     3. **Physical port**: This refers to the physical Magic WAN Connector port's number that you are using for your LAN.
-    4. **Overlay subnet**: The subnet behing Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
+    4. **Overlay subnet**: The subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
     5. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address.
     6. **(Optional) This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
         - The DNS server address
