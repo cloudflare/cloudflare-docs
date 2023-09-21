@@ -13,6 +13,7 @@ example.com.  60  IN  A   192.0.2.1
 
 {{<Aside type="note">}}
 
-For [BYOIP](/byoip/) customers, Cloudflare automatically adds your IP(s) automatically to the apex proxying IP set during onboarding.
+For [BYOIP](/byoip/) customers, Cloudflare automatically enables the Apex Proxy Access feature on your BYOIP block, which allows Custom Hostnames to be activated via [Apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/#apex-proxying) when Authoritative DNS for a customer's hostname targets any IP addresses in your BYOIP block.
+
 
 {{</Aside>}}
