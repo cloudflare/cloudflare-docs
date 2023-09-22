@@ -11,6 +11,7 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 - [General](#general)
 - [Tools](#tools)
 - [Pricing](#pricing)
+- [Consent](#consent)
 
 ---
 
@@ -177,3 +178,9 @@ If you were using Zaraz under the free beta, you have a period of two months to 
 2. Check if you are using any paid features: Refer to the plans page to see the list of paid features. If you are using any of these features, you would need to upgrade to the Workers Paid plan, starting at $5/month, via the Zaraz Plans section in the dashboard. It's important to note that these paid features will cease to work after the end of the grace period unless you upgrade.
 
 Please note that as of now, free plan users do not have access to any paid features. However, if you're already using a paid feature without a Workers Paid plan, you can continue to use it until the end of the grace period. After that, you'll need to upgrade to keep using any paid features.
+
+## Consent
+
+### I made some changes to consent settings and I want to show the consent modal again to all users
+
+In such a case, you can change the cookie name in *Consent cookie name* field in Zaraz Consent config. This will cause the consent modal to reappear for all users. Make sure to use a cookie name that has not been yet used for Zaraz Config on your site.
