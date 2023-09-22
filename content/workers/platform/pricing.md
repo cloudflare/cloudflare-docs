@@ -35,7 +35,7 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 ### Bundled Usage Model
 
-The Bundled Usage Model is billed exclusively based on the number of incoming requests to your Worker, and has a limit of 50ms of CPU time per invocation.
+The Bundled Usage Model is billed exclusively based on the number of incoming requests to your Worker, and has a limit of 50 ms of CPU time per invocation.
 
 {{<table-wrap>}}
 
@@ -53,7 +53,7 @@ A Worker that serves 100 million requests per month would have the following est
 
 |                    |  Monthly Costs      |  Formula                                                                      |
 | ------------------ | ------------------- | ----------------------------------------------------------------------------- |
-| **Subscription**   |  $5                 |                                                                               |
+| **Workers Paid Plan**   |  $5                 |                                                                               |
 | **Requests**       |  $45                | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.50     |
 | **Total**          |  $50                |                                                                                |
 
@@ -106,7 +106,6 @@ When an account is first upgraded to the Paid plan, the Unbound plan is used as 
 
 Existing Workers will not be impacted when changing the default Usage Model.
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/configuration/) in your `wranger.toml` file and in the dashboard.
 
 To change the Usage Model for individual Workers:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -182,4 +181,4 @@ For more information on how service bindings work, refer to [About Service bindi
 
 Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
 
-Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).
+Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. Refer to [Limits](/workers/platform/limits/) to review definitions and behavior after a limit is hit.
