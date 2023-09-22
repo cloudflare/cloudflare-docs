@@ -5,7 +5,7 @@ title: Playground
 
 # Playground
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). It does not require any setup or authentication. The Playground is a sandbox which gives you an instant way to preview and test a Worker script directly in the browser.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). It does not require any setup or authentication. The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser.
 
 It uses the same editor and preview service as the authenticated experience, and provides the ability to share the code you write as well as deploy it instantly to Cloudflare's global network. This way, you can quickly try new things out and deploy them when you're ready.
 
