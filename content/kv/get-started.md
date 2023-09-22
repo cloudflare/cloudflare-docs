@@ -13,7 +13,7 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-1. A [Cloudflare account](/fundamentals/account-and-billing/account-setup/), if you do not have one already. 
+1. A [Cloudflare account](/fundamentals/setup/account-setup/), if you do not have one already. 
 2. [Wrangler](/workers/wrangler/install-and-update/) installed.
 
 ## 1. Enable Workers KV in the dashboard
@@ -39,7 +39,7 @@ $ npm create cloudflare@latest
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}

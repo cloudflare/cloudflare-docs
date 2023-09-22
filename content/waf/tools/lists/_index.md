@@ -3,8 +3,6 @@ title: Lists
 pcx_content_type: overview
 weight: 2
 layout: single
-aliases:
-- /fundamentals/global-configurations/lists/
 ---
 
 # Lists
@@ -25,7 +23,7 @@ Cloudflare stores your lists at the account level. You can use the same list in 
 
 Cloudflare supports the following types of lists:
 
-* [IP Lists](/fundamentals/global-configurations/lists/ip-lists/)
+* [IP Lists](/waf/tools/lists/ip-lists/)
 * [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists)
 
 Refer to the page about each list type for details.
@@ -40,7 +38,7 @@ The name of a list must comply with the following requirements:
 
 ### Creating and editing lists
 
-You can [create lists in the Cloudflare dashboard](/fundamentals/global-configurations/lists/create-dashboard/) or using the [Lists API](/fundamentals/global-configurations/lists/lists-api/).
+You can [create lists in the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/) or using the [Lists API](/waf/tools/lists/lists-api/).
 
 After creating a list, you can add and remove items from the list, but you cannot change the list name or type.
 
@@ -48,7 +46,7 @@ After creating a list, you can add and remove items from the list, but you canno
 
 Both the Cloudflare dashboard and the Cloudflare API support lists:
 
-* To use lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/fundamentals/global-configurations/lists/use-in-expressions/).
+* To use lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
 * To reference a list in an API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language reference.
 
 {{<Aside type="warning">}}
@@ -83,6 +81,6 @@ You can only delete a list when there are no rules (enabled or disabled) that re
 
 {{<render file="_lists-import-notes.md" productFolder="fundamentals">}}
 
-To replace the entire contents of a list, format the data as an array and use the [Update all list items](/api/operations/lists-update-all-list-items) operation in the [Lists API](/fundamentals/global-configurations/lists/lists-api/endpoints/).
+To replace the entire contents of a list, format the data as an array and use the [Update all list items](/api/operations/lists-update-all-list-items) operation in the [Lists API](/waf/tools/lists/lists-api/endpoints/).
 
 You cannot download a list in CSV format from the Cloudflare dashboard. If you need to download the contents of a list, use the [Get list items](/api/operations/lists-get-list-items) operation to fetch the list items.

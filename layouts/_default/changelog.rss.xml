@@ -1,5 +1,5 @@
 {{- $product := $.Params.changelog_file_name -}}
-{{- $changelogData := index (index .Site.Data "changelogs") $product -}}
+{{- $changelogData := index (partial "full-changelog-data.html") $product -}}
 {{- $title := printf "%s · %s" .Title $changelogData.productName -}}
 {{- $atomLink := print .Permalink "index.xml" -}}
 {{- $changelogDataEntries := index $changelogData "entries" -}}

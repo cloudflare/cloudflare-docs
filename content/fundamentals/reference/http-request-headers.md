@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare HTTP request headers
-aliases:
-- /fundamentals/get-started/reference/http-request-headers/
 ---
 
 # HTTP request headers
@@ -86,7 +84,7 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 ## CF-RAY
 
-The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
+The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
 Add the [`CF-Ray` header to your origin web server logs](https://support.cloudflare.com/hc/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) to match requests proxied to Cloudflare to requests in your server logs.
 

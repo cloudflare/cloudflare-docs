@@ -8,7 +8,7 @@ weight: 1
 
 You can configure the Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
 
-Currently, this can only be applied at the account-level. If you only want the Metadata Boundary to be applied on a portion of zones beneath the same account, you will have to [move the rest of zones to a new account](/fundamentals/get-started/basic-tasks/manage-domains/move-domain/).
+Currently, this can only be applied at the account-level. If you only want the Metadata Boundary to be applied on a portion of zones beneath the same account, you will have to [move the rest of zones to a new account](/fundamentals/setup/manage-domains/move-domain/).
 
 ## Configure Customer Metadata Boundary in the dashboard
 
