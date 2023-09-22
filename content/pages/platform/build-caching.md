@@ -34,7 +34,7 @@ The build cache can be cleared for a project if needed, such as when debugging b
 
 ## How build caching works
 
-When enabled, the build cache will automatically detect and cache data from each build. Refer to [Frameworks]() to review what directories are automatically saved and restored from the build cache.
+When enabled, the build cache will automatically detect and cache data from each build. Refer to [Frameworks](/pages/platform/build-caching/#frameworks) to review what directories are automatically saved and restored from the build cache.
 
 ### Package managers
 
