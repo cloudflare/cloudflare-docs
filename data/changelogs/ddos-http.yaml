@@ -1,6 +1,7 @@
 ---
 link: "/ddos-protection/change-log/http/"
 productName: DDoS protection
+subCategoryName: HTTP
 topLevelLink: "/ddos-protection/change-log/"
 entries:
 - publish_date: '2023-09-21'

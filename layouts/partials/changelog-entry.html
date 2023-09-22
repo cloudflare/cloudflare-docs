@@ -6,7 +6,7 @@
 {{- $content = replaceRE `\<h1.*?\</h1>` "" .Content }}
 {{- $content = replaceRE `\<div class="DocsMarkdown--table-wrap">\<div class="DocsMarkdown--table-wrap-inner">` "" $content -}}
 {{- $content = replaceRE `\<\/div>` "" $content -}}
-{{- $result = (dict "title" .Title "content" $content) -}}
+{{- $result = (dict "title" (printf "%s - %s" (index .Ancestors 0).Title .Title) "content" $content ) -}}
 {{- end -}}
 
 {{- return $result -}}

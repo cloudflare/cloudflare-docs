@@ -77,6 +77,9 @@
         {{- with .individual_page -}}
         {{- with $.Site.GetPage (replaceRE `\/$` "" $link) -}}
         {{- $title = .Title -}}
+        {{- if eq $product "DDoS protection" -}}
+        {{- $title = printf "%s ruleset - %s" (delimit (findRE `^.*?\s` (index .Ancestors 0).Title) "") .Title -}}
+        {{- end -}}
         {{- end -}}
         {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
         {{- end -}}
