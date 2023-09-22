@@ -4,8 +4,12 @@
 {{- range $index, $product := $changelogData -}} 
 {{- $products = $products | append $product.productName -}}
 {{- range $index2, $item := $product.entries -}} 
+{{- $placeholderDict := (dict "product" $product.productName "url" $product.link) -}}
+{{- with $product.topLevelLink -}}
+{{- $placeholderDict = merge $placeholderDict (dict "topLevelLink" .) -}}
+{{- end -}}
 {{- $changelogRendered = $changelogRendered 
-  | append (merge $item (dict "product" $product.productName "url" $product.link )) -}} 
+  | append (merge $item $placeholderDict) -}} 
 {{- end -}} 
 {{- end -}}
 
@@ -50,21 +54,42 @@
       </thead>
       <tbody id="tableBody">
         {{- range $changelogRendered -}} 
+        {{- $entry := . -}}
+        {{- $product := .product -}}
         {{- $link := "" -}} 
         {{- $rellink := .url -}} 
         {{- $title := "" -}} 
+        {{- $description := .description -}}
+        {{- with .topLevelLink -}}
+        {{- $rellink = . -}}
+        {{- end -}}
         {{- with .title -}} 
-        {{- $title = . -}} 
+        {{- $title = . -}}
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}} 
         {{ else }} 
-        {{- $title = printf "%s · %s" .product .publish_date -}} 
+        {{- $title = printf "%s - %s" $product .publish_date -}} 
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}} 
-        {{- end -}}        
-        <tr class="data-row" data-product="{{.product | lower}}">
-          <td>{{ .product }}</td>
+        {{- end -}}
+        {{- with .link -}}
+        {{- if ne $product "Wrangler" -}}
+        {{ $link = . }}
+        {{- end -}}
+        {{- end -}}
+        <!-- Custom logic for products with separate pages -->
+        {{- with .individual_page -}}
+        {{- with $.Site.GetPage (replaceRE `\/$` "" $link) -}}
+        {{- $title = .Title -}}
+        {{- if eq $product "DDoS protection" -}}
+        {{- $title = printf "%s ruleset - %s" (delimit (findRE `^.*?\s` (index .Ancestors 0).Title) "") .Title -}}
+        {{- end -}}
+        {{- end -}}
+        {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
+        {{- end -}}
+        <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print $rellink "index.xml" -}}">
+          <td>{{ $product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
           <td class="changelogDate">{{ .publish_date }}</td>
-          <td>{{ .description | $.Page.RenderString }}</td>
+          <td>{{ $description | $.Page.RenderString }}</td>
         </tr>
         {{- end -}}
       </tbody>
@@ -111,13 +136,8 @@
         while (changelogLink === "/changelog/index.xml") {
           dataRows.forEach((row) => {
             if (row.cells[0].innerText === productName) {
-              const rawHTML = row.cells[1].innerHTML;
-              const match = rawHTML.match(regexPattern);
-              if (match && match[1]) {
-                const hrefValue = match[1];
-                changelogLink = hrefValue + "index.xml";
+              changelogLink = row.getAttribute("data-changelog");
               }
-            }
           });
         }
       }
