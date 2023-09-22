@@ -6,7 +6,11 @@
 {{- $content = replaceRE `\<h1.*?\</h1>` "" .Content }}
 {{- $content = replaceRE `\<div class="DocsMarkdown--table-wrap">\<div class="DocsMarkdown--table-wrap-inner">` "" $content -}}
 {{- $content = replaceRE `\<\/div>` "" $content -}}
-{{- $result = (dict "title" (printf "%s - %s" (index .Ancestors 0).Title .Title) "content" $content ) -}}
+{{- $titleAddition := "" -}}
+{{- if in $link "ddos-protection" -}}
+{{- $titleAddition = print (index .Ancestors 0).Title " - " }}
+{{- end -}}
+{{- $result = (dict "title" (print $titleAddition .Title) "content" $content ) -}}
 {{- end -}}
 
 {{- return $result -}}
