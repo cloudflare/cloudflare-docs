@@ -89,7 +89,7 @@ Resulting in the following estimated costs:
 
 |                    |  Monthly Costs      |  Formula                                                                  |
 | ------------------ | ------------------- | ------------------------------------------------------------------------- |
-| **Subscription**   |  $5.00              |                                                                           |
+| **Workers Paid Plan**   |  $5.00              |                                                                           |
 | **Requests**       |  $14.85             | (100,000,000 requests - 1,000,000 included requests) / 1,000,000 * $0.15  |
 | **Duration**       |  $26.25             | (2,500,000 GB-s per month - 400,000 included GB-s) / 1,000,000 * $12.50   |
 | **Total**          |  $46.10             |                                                                           |
@@ -104,7 +104,7 @@ When an account is first upgraded to the Paid plan, the Unbound plan is used as 
 2. In Account Home, select **Workers & Pages**.
 3. Find **Default Usage Model** on the right-side menu > **Change**. 
 
-Existing Workers will not be impacted when changing the default Usage Model.
+Existing Workers will not be impacted when changing the default Usage Model. You may change the Usage Model for individual Workers without affecting your account-wide default.
 
 
 To change the Usage Model for individual Workers:
