@@ -844,7 +844,7 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 
 **Who is it for?**
 
-Access customers that use client certificates for mutual TLS authentication.
+Access customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate.
 
 **Other options / filters**
 
