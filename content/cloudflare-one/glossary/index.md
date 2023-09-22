@@ -9,4 +9,4 @@ layout: list
 
 Review definitions for Cloudflare Zero Trust terms.
 
-{{<glossary product="cloudflare-one">}}
+{{<glossary product="Cloudflare One">}}

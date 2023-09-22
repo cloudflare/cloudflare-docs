@@ -2,20 +2,25 @@
 {{- $glossaryData := index $.Site.Data "glossary" -}} 
 {{- $glossaryEntries := slice -}} 
 
-{{- with $product -}}
-{{- $productGlossary := index $glossaryData . -}}
-{{- range $index, $item := $productGlossary.entries -}}
-{{- $glossaryEntries = $glossaryEntries 
-  | append (merge $item (dict "product" $productGlossary.productName "word" $item.term "definition" $item.general_definition )) -}} 
-{{- end -}}
-{{- else -}}
-
+{{- $products := slice -}}
 {{- range $index, $productGlossary := $glossaryData -}}
 {{- range $index2, $item := $productGlossary.entries -}}
-{{- $glossaryEntries = $glossaryEntries 
-  | append (merge $item (dict "product" $productGlossary.productName "word" $item.term "definition" $item.general_definition )) -}} 
-{{- end -}} 
+{{- $products = slice -}}
+{{- $products = $products | append $productGlossary.productName -}}
+{{- with $item.associated_products -}}
+{{- $products = $products | append . -}}
 {{- end -}}
+{{- $products = uniq (sort $products) -}}
+{{- with $product -}}
+{{- if in $products $product -}}
+{{- $glossaryEntries = $glossaryEntries 
+  | append (dict "products" (delimit $products ", ") "word" $item.term "definition" $item.general_definition ) -}}
+{{- end -}}
+{{- else -}}
+{{- $glossaryEntries = $glossaryEntries 
+  | append (dict "products" (delimit $products ", ") "word" $item.term "definition" $item.general_definition ) -}}
+{{- end -}}
+{{- end -}} 
 {{- end -}}
 
 <!-- Order and remove dupe values -->
@@ -54,7 +59,7 @@
           <td>{{ .definition | $.Page.RenderString }}</td>
           {{- with $product -}}
           {{- else -}}
-          <td>{{ .product | $.Page.RenderString }}</td>
+          <td>{{ .products | $.Page.RenderString }}</td>
           {{- end -}}
         </tr>
         {{- end -}}
