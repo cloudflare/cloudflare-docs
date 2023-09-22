@@ -147,6 +147,33 @@ During these maintenance windows, you may experience a slight increase in latenc
 </div>
 </details>
 
+<details>
+<summary>Incident Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers interested in knowing about Cloudflare incidents.
+
+The notification lets you know when Cloudflare incidents are created, updated, and resolved.
+
+**Other options / filters**
+
+Customers can filter incident alerts to specific impact levels (minor, major, critical). 
+
+Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+Review your [analytics](/analytics/) page to see if your domain is impacted.
+
+</div>
+</details>
+
 ## DNS
 
 <details>
