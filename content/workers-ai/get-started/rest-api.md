@@ -28,9 +28,7 @@ In this example, we will run the `@cloudflare/meta-llama/llama-2-7b` model:
 ```sh
 $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8' \
   -H 'Authorization: Bearer {API_TOKEN}'
-  -d '{
-        "input": { "question": "Where did the phrase 'Hello World' come from" },
-   }'
+  -d '{ "prompt": "Where did the phrase 'Hello World' come from" } }'
 ```
 
 Try it with one of your projects by replacing `{account_id}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.

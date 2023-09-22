@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Workers + Pages SDK
-weight: 40
+weight: 1
 ---
 
 # Workers + Pages SDK

@@ -39,7 +39,10 @@ Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours
 {{<tab label="curl">}}
 
 ```sh
-$ todo
+$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/openai/whisper \
+    -X POST \
+    -H "Authorization: Bearer {API_TOKEN}" \
+    --data-binary @talking-llama.mp3
 ```
 
 {{</tab>}}

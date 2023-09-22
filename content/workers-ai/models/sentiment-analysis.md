@@ -16,7 +16,7 @@ DistilBERT-SST-2 is a distilled BERT model that was finetuned on SST-2 for senti
 {{<tab label="worker" default="true">}}
 
 ```js
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
@@ -28,11 +28,9 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const answer = ai.run({
-        model: '@cf/huggingface/distilbert-sst-2-int8',
-        input: {
-            text: "This pizza is great!" 
-        }
+    const  = ai.run('@cf/huggingface/distilbert-sst-2-int8', {
+        text: "This pizza is great!" 
+      }
     });
 
     return new Response(JSON.stringify(answer));
@@ -44,8 +42,7 @@ export default {
 {{<tab label="node">}}
 
 ```js
-async function run(model, text) {
-  const input = { input: { text } };
+async function run(model, input) {
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
     {
@@ -58,7 +55,7 @@ async function run(model, text) {
   return result;
 }
 
-run('@cf/huggingface/distilbert-sst-2-int8', 'This pizza is great!').then((response) => {
+run('@cf/huggingface/distilbert-sst-2-int8', { text: 'This pizza is great!' }).then((response) => {
     console.log(JSON.stringify(response));
 });
 ```
@@ -73,12 +70,11 @@ import requests
 API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
-def run(model, text)
-    input = { "input": { "text": text } }
+def run(model, input)
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
     
-output = run("@cf/huggingface/distilbert-sst-2-int88", "This pizza is great!")
+output = run("@cf/huggingface/distilbert-sst-2-int88", { text: "This pizza is great!" })
 ```
 
 {{</tab>}}
@@ -88,7 +84,7 @@ output = run("@cf/huggingface/distilbert-sst-2-int88", "This pizza is great!")
 $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "input": { text: "This pizza is great!" } }'
+    -d '{ text: "This pizza is great!" }'
 ```
 
 {{</tab>}}

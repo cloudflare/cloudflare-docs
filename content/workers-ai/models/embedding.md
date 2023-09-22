@@ -17,7 +17,7 @@ Feature extraction models transform raw data into numerical features that can be
 {{<tab label="worker" default="true">}}
 
 ```js
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
@@ -36,14 +36,12 @@ export default {
       'This is a story about a hugging emoji'
     ]
 
-    const answer = ai.run({
-        model: '@cf/baai/bge-base-en-v1.5',
-        input: {
-            text: stories
-        }
+    const embeddings = ai.run('@cf/baai/bge-base-en-v1.5', {
+        text: stories
+      }
     });
 
-    return new Response(JSON.stringify(answer));
+    return new Response(JSON.stringify(embeddings));
   },
 };
 ```
@@ -52,8 +50,7 @@ export default {
 {{<tab label="node">}}
 
 ```js
-async function run(model, text) {
-  const input = { input: { text } };
+async function run(model, input) {
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
     {
@@ -73,7 +70,7 @@ const stories = [
   'This is a story about a hugging emoji'
 ];
 
-run('cf/baai/bge-base-en-v1.5', stories).then((response) => {
+run('cf/baai/bge-base-en-v1.5', { text: input }).then((response) => {
     console.log(JSON.stringify(response));
 });
 ```
@@ -88,8 +85,7 @@ import requests
 API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
-def run(model, prompt)
-    input = { "input": { "prompt": prompt } }
+def run(model, input)
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
 
@@ -99,7 +95,7 @@ stories = [
   'This is a story about a hugging emoji'
 ]
     
-output = run("@cf/baai/bge-base-en-v1.5", stories)
+output = run("@cf/baai/bge-base-en-v1.5", { input: stories })
 ```
 
 {{</tab>}}
@@ -109,7 +105,7 @@ output = run("@cf/baai/bge-base-en-v1.5", stories)
 $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/baai/bge-base-en-v1.5 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "input": { "text": "['This is a story about an orange cloud','This is a story about a llama','This is a story about a hugging emoji']" } }'
+    -d '{ "text": "['This is a story about an orange cloud','This is a story about a llama','This is a story about a hugging emoji']" }'
 ```
 
 {{</tab>}}

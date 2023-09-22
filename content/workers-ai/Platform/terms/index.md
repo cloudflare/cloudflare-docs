@@ -1,10 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Wrangler
-weight: 2
+title: Terms
+weight: 5
 ---
 
-# API
 
 {{<directory-listing>}}
 

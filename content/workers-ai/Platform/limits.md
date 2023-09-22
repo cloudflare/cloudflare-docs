@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Limits
-weight: 30
+weight: 4
 ---
 
 # Limits

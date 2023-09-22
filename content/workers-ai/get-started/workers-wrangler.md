@@ -43,7 +43,7 @@ To bind Workers AI to your Worker, add the following to the end of your `wrangle
 filename: wrangler.toml
 ---
 
-[[ai]]
+[ai]
 binding = "AI" # i.e. available in your Worker on env.AI
 ```
 
@@ -66,7 +66,7 @@ Go to your `workers-ai-app` and update the `worker.ts` with the following code:
 ---
 filename: "src/worker.ts"
 ---
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
@@ -78,12 +78,10 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const answer = await ai.run({
-        model: '@cf/meta/llama-2-7b-chat-int8',
-        input: {
-            question: "What is the origin of the phrase 'Hello, World'" 
-        }
-    });
+    const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+        prompt: "What is the origin of the phrase 'Hello, World'" 
+      }
+    );
 
     return new Response(JSON.stringify(answer));
   },
@@ -97,11 +95,11 @@ After configuring your Worker, you can test your project locally before you depl
 While in your project directory, test Workers AI locally by running:
 
 ```sh
-$ wrangler dev --remote
+$ npx wrangler@beta dev --remote
 ```
 
 {{<Aside type="warning">}}
-Be sure  include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them.
+Be sure run `wrangler@beta` and include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them.
 {{</Aside>}}
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
@@ -109,7 +107,7 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 ```json
 {
   "result": {
-    "answer": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
+    "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
   },
   "success": true,
   "errors": [],

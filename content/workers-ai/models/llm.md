@@ -16,7 +16,7 @@ Llama 2 is a family of generative text models and can be adapted for a variety o
 {{<tab label="worker" default="true">}}
 
 ```js
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
@@ -28,11 +28,9 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const answer = ai.run({
-        model: '@cf/meta/llama-2-7b-chat-int8',
-        input: {
-            prompt: "What is the origin of the phrase 'Hello, World'" 
-        }
+    const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
+        prompt: "What is the origin of the phrase 'Hello, World'" 
+      }
     });
 
     return new Response(JSON.stringify(answer));
@@ -45,20 +43,19 @@ export default {
 
 ```js
 async function run(model, prompt) {
-  const input = { input: { prompt } };
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
     {
       headers: { Authorization: "Bearer {API_TOKEN}" },
       method: "POST",
-      body: JSON.stringify(input),
+      body: JSON.stringify(prompt),
     }
   );
   const result = await response.json();
   return result;
 }
 
-run('@cf/meta/llama-2-7b-chat-int8', 'Tell me a story').then((response) => {
+run('@cf/meta/llama-2-7b-chat-int8', { prompt: 'Tell me a story' }).then((response) => {
     console.log(JSON.stringify(response));
 });
 ```
@@ -74,11 +71,10 @@ API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/ru
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
 def run(model, prompt)
-    input = { "input": { "prompt": prompt } }
-    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
+    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=prompt)
     return response.json()
     
-output = run("@cf/meta/llama-2-7b-chat-int8", "Tell me a story ")
+output = run("@cf/meta/llama-2-7b-chat-int8", { prompt: "Tell me a story" })
 ```
 
 {{</tab>}}
@@ -88,7 +84,7 @@ output = run("@cf/meta/llama-2-7b-chat-int8", "Tell me a story ")
 $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "input": { prompt: "Tell me a story" } }'
+    -d '{ prompt: "Tell me a story" }'
 ```
 
 {{</tab>}}
