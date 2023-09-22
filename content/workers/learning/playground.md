@@ -59,7 +59,7 @@ To test a raw HTTP request — not in the HTML previewer, for example, to test a
 
 ## DevTools
 
-For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel to view `console.logs`, see network requests, and view memory and cpu usage. The developer tools for the Workers Playground work similar to the developer tools in Chrome or Firefox, and are the same developer tools users have access to in the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) and the authenticated dashboard.
+For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel to view `console.logs`, see network requests, and view memory and cpu usage. The developer tools for the Workers Playground work similarly to the developer tools in Chrome or Firefox, and are the same developer tools users have access to in the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) and the authenticated dashboard.
 
 ### Network tab
 
