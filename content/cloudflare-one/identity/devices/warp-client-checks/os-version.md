@@ -58,7 +58,7 @@ Example: `ubuntu 22.04`
 
 6. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the OS version check is returning the expected results.
+Next, go to **Logs** > **Posture** and verify that the OS version check is returning the expected results.
 
 ## Determine the OS version
 
