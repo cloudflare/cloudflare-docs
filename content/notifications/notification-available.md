@@ -815,6 +815,10 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 <summary>Access mTLS Certificate Expiration Alert</summary>
 <div>
 
+**When will you receive this notification**
+
+This notification will be sent 30 and 14 days before expiration of the certificate.
+
 **Who is it for?**
 
 Access customers that use client certificates for mutual TLS authentication.
