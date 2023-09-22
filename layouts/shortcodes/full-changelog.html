@@ -71,7 +71,9 @@
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}} 
         {{- end -}}
         {{- with .link -}}
+        {{- if ne $product "Wrangler" -}}
         {{ $link = . }}
+        {{- end -}}
         {{- end -}}
         <!-- Custom logic for products with separate pages -->
         {{- with .individual_page -}}

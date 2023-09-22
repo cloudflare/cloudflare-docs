@@ -40,7 +40,9 @@
     {{- $title = .publish_date -}}
     {{- end -}}
     {{- with .link -}}
+    {{- if ne $product "Wrangler" -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- end -}}
     {{- end -}}
     {{- with .individual_page -}}
     {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
