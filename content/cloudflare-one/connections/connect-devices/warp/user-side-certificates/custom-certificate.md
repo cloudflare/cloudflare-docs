@@ -26,7 +26,7 @@ To deploy a custom root certificate:
 
 2. {{<render file="_upload-mtls-cert.md">}}
 
-3. Enable the certificate in Gateway:
+3. Enable the certificate in Gateway with its UUID.
 
    ```bash
    ---
