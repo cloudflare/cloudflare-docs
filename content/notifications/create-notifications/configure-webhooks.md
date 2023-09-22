@@ -124,14 +124,14 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
   </tbody>
 </table>
 
-{{<Aside type="note">}}
-Note regarding the configuration of Slack webhook using API or Terraform
-You need to explicitly use the `secret` parameter to define the secret, instead of leaving it at the end of the webhook URL.
-Example for Terraform:
+The configuration of a Slack webhook using API or Terraform requires you to explicitly use the `secret` parameter to define the secret, instead of leaving it at the end of the webhook URL.
+```tf
+---
+header: Terraform example
+---
 resource "cloudflare_notification_policy_webhooks" "example" {
   account_id = "<account_id>"
   name       = "Slack Webhook"
   url        = "https://hooks.slack.com/services/T00000000/B00000000"
   secret     = "<secret>"
 }
-{{</Aside>}}
