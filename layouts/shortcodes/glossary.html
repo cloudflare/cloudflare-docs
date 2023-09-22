@@ -36,10 +36,20 @@
 <div class="DocsMarkdown--table-wrap">
   <div class="DocsMarkdown--table-wrap-inner">
     <table>
+      <colgroup>
+        {{- with $product -}}
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 80%;">
+        {{- else -}}
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 60%;">
+        <col span="1" style="width: 20%;">
+        {{- end -}}
+      </colgroup>
       <thead>
         <tr>
           <td>
-            <strong>Word</strong>
+            <strong class="termColumn">Word</strong>
           </td>
           <td>
             <strong>Definition</strong>
@@ -54,8 +64,8 @@
       </thead>
       <tbody id="tableBody">
         {{- range $glossaryEntries -}} 
-        <tr class="data-row">
-          <td>{{ .word }}</td>
+        <tr>
+          <td class="termColumn">{{ .word }}</td>
           <td>{{ .definition | $.Page.RenderString }}</td>
           {{- with $product -}}
           {{- else -}}
@@ -117,7 +127,7 @@
   }
 
   function showAllEntries() {
-    MAX_VISIBLE_ROWS += 20;
+    MAX_VISIBLE_ROWS += 30;
     updateTable();
   }
 
@@ -128,3 +138,9 @@
   searchInput.addEventListener("input", updateTable);
   showAllButton.addEventListener("click", showAllEntries);
 </script>
+
+<style>
+.termColumn {
+  white-space: normal !important;
+}
+</style>
