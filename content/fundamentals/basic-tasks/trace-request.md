@@ -3,7 +3,7 @@ title: Trace a request
 pcx_content_type: how-to
 ---
 
-# Cloudflare Trace
+{{<heading-pill style="beta">}} Cloudflare Trace {{</heading-pill>}}
 
 {{<plan type="all">}}
 
@@ -82,3 +82,9 @@ Currently, you cannot perform traces for:
 
 * Domains or subdomains associated with [BYOIP](/byoip/) addresses
 * [Custom hostnames](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
+
+Also, the following products will not appear in trace results:
+
+* [Firewall rules](/firewall/)
+* [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
+* [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
