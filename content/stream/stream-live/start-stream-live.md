@@ -88,9 +88,9 @@ header: Response
 
   - Specifies a date and time when the recording, not the input, will be deleted. This property applies from the time the recording is made available and ready to stream. After the recording is deleted, it is no longer viewable and no longer counts towards storage for billing. Minimum value is `30`.
 
-  When the stream ends, a `scheduledDeletion` timestamp is calculated using the `deleteRecordingAfterDays` value if present.
+    When the stream ends, a `scheduledDeletion` timestamp is calculated using the `deleteRecordingAfterDays` value if present.
 
-  Note that if the value is added to a live input while a stream is live, the property will only apply to future streams. 
+    Note that if the value is added to a live input while a stream is live, the property will only apply to future streams.
 
 - `allowedOrigins` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
 
