@@ -131,7 +131,7 @@ The configuration of a Slack webhook using API or Terraform requires you to expl
 header: Terraform example
 ---
 resource "cloudflare_notification_policy_webhooks" "example" {
-  account_id = "<account_id>"
+  account_id = "<ACCOUNT_ID>"
   name       = "Slack Webhook"
   url        = "https://hooks.slack.com/services/T00000000/B00000000"
   secret     = "<secret>"
