@@ -40,27 +40,28 @@ When enabled, the build cache will automatically detect and cache data from each
 
 Package manager caches are automatically saved to the build cache to speed up dependency installation. Pages will cache the global cache directories of the following package managers:
 
-* [yarn 1](https://yarnpkg.com/)
-* [npm](https://www.npmjs.com/)
-* [pnpm](https://pnpm.io/)
-* [bun](https://bun.sh/)
-
+- [yarn 1](https://yarnpkg.com/)
+- [npm](https://www.npmjs.com/)
+- [pnpm](https://pnpm.io/)
+- [bun](https://bun.sh/)
 
 ### Frameworks
 
 Caching the build output from frameworks can speed up subsequent build times. The build cache supports the following frameworks:
 
-| Framework | Directories cached   |
-| --------- | ---------------------|
-| Gatsby    | `.cache`, `public`   |
-| Next.js   | `.next/cache`        |
-| Astro     | `node_modules/.astro`|
+| Framework | Directories cached    |
+| --------- | --------------------- |
+| Gatsby    | `.cache`, `public`    |
+| Next.js   | `.next/cache`         |
+| Astro     | `node_modules/.astro` |
 
 ## Limits
-During this beta period, the following limits are imposed: 
-* **Retention**: Cache is purged seven days after its last read date. Unread cache artifacts are purged seven days after creation.
-* **Storage**: Every project is allocated 10 GB. If the project cache exceeds this limit, the project will automatically start deleting artifacts that were read least recently.
+
+During this beta period, the following limits are imposed:
+
+- **Retention**: Cache is purged seven days after its last read date. Unread cache artifacts are purged seven days after creation.
+- **Storage**: Every project is allocated 10 GB. If the project cache exceeds this limit, the project will automatically start deleting artifacts that were read least recently.
 
 ## Feedback
 
-If there are package managers or frameworks you want to see supported, let us know in the Pages channel of the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev). 
+If there are package managers or frameworks you want to see supported, let us know in the Pages channel of the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev).
