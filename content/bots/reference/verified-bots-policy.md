@@ -101,7 +101,7 @@ If any of the requirements to validate are breached, a service will be removed f
 * A block of IPs not briefed on onboarding is added to the list. 
 * The disclosed purpose of the service does not reflect on the traffic. 
 
-## Online Application
+## Online application
 
 To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link). The waiting time is up to several weeks for verified bot requests to be evaluated.
 
@@ -112,3 +112,26 @@ Once Cloudflare lists a bot as a verified bot, this entry is cached and may get 
 It takes 24 hours for an inactive IP to be removed as a verified bot. 
 
 A bot can remain unlisted until Cloudflare sees traffic being sourced from the bot. When the bot is revalidated, it is listed as a verified bot again.
+
+## Verified Bot Categories
+
+You can segment your verified bot traffic by its type and purpose by adding the verified bot categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/). 
+
+### Categories
+
+- Academic research
+- Accessibility
+- Advertising or marketing
+- Feed fetcher
+- Monitoring or analytics
+- Page preview
+- Search engine crawler
+- Search engine optimization
+- Security
+- Social media marketing
+- Webhooks
+- Other
+
+### Availability
+
+Verified bot categories is available to all Bots customers.
