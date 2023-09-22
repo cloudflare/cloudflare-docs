@@ -11,7 +11,7 @@ meta:
 Configure payload logging for a ruleset in the ruleset configuration page.
 
 {{<Aside type="note">}}
-Only users with the [Super Administrator role](/fundamentals/account-and-billing/members/roles/) can configure payload logging and decrypt payloads in the Cloudflare dashboard. Other users can decrypt payloads if they have access to the logs and to the private key.
+Only users with the [Super Administrator role](/fundamentals/setup/manage-members/roles/) can configure payload logging and decrypt payloads in the Cloudflare dashboard. Other users can decrypt payloads if they have access to the logs and to the private key.
 {{</Aside>}}
 
 Do the following:

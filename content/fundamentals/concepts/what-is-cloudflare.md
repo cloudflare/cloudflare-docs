@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: What is Cloudflare?
 weight: 1
-aliases:
-- /fundamentals/get-started/concepts/what-is-cloudflare/
 ---
 
 # What is Cloudflare?
@@ -12,7 +10,7 @@ Cloudflare is a global network of [servers](https://www.cloudflare.com/learning/
 
 ![Cloudflare sits in between requests and your origin server.](/images/fundamentals/get-started/website-with-cloudflare.svg)
 
-This [position](/fundamentals/get-started/concepts/how-cloudflare-works/) allows us to do several things — speeding up content delivery and user experience ([CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)), protecting your website from malicious activity ([DDoS](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), [Web Application Firewall](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/)), routing traffic ([Load balancing](/load-balancing/), [Waiting Room](/waiting-room/)), and more.
+This [position](/fundamentals/concepts/how-cloudflare-works/) allows us to do several things — speeding up content delivery and user experience ([CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)), protecting your website from malicious activity ([DDoS](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), [Web Application Firewall](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/)), routing traffic ([Load balancing](/load-balancing/), [Waiting Room](/waiting-room/)), and more.
 
 {{<Aside type="note">}}
 

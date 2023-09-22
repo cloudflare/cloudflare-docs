@@ -27,7 +27,7 @@ $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/project
   -H 'Authorization: Bearer {API_token}'
 ```
 
-Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
+Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/setup/find-account-and-zone-ids/) for more information.
 
 ## Examples
 

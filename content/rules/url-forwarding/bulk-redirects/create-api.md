@@ -61,7 +61,7 @@ highlight: 3
 
 Take note of the list ID — you will need it in the next step.
 
-For more information on list operations, refer to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) documentation.
+For more information on list operations, refer to the [Lists API](/waf/tools/lists/lists-api/) documentation.
 
 ## 2. Add items to the list
 

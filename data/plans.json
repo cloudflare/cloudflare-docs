@@ -975,7 +975,7 @@
     },
     "true_client_ip_header": {
       "title": "True Client IP Header",
-      "link": "/fundamentals/get-started/reference/http-request-headers/",
+      "link": "/fundamentals/reference/http-request-headers/",
       "properties": {
         "availability": {
           "title": "Availability",
