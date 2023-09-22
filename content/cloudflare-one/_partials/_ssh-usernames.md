@@ -27,7 +27,7 @@ To use differing usernames with the browser-based terminal. You need to add crea
 ```sh
 $ getent passwd jdoe
 jdoe:x:1000:1000:John Doe:/home/jdoe:/usr/bin/zsh
-$ sudo useradd -u 1000 -g 1000 -d /home/jdoe -M -o john.doe
+$ sudo useradd -u 1000 -g 1000 -d /home/jdoe -M -o -s /usr/bin/zsh john.doe
 ```
 {{</Aside>}}
 
