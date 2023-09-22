@@ -53,7 +53,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 ## 3. Install the Workers AI client library
 
 ```sh
-$ npm install @cloudflare/ai
+$ npm install --save @cloudflare/ai
 ```
 
 ## 4. Run an inference task in your Worker
