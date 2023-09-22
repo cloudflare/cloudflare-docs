@@ -86,7 +86,3 @@ We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cr
 
 * [RTMPS Playback with ffplay](/stream/examples/rtmps_playback/)
 * [SRT playback with ffplay](/stream/examples/srt_playback/)
-
-## Limitations
-
-[Client-side Analytics](/stream/getting-analytics/fetching-bulk-analytics/#client-side-analytics) are not available if you use your own player.

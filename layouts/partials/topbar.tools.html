@@ -4,6 +4,7 @@
 {{- $contentPath := replaceRE `\/$` "" $.RelPermalink -}}
 {{- $folderPlaceholder := "" -}}
 {{ $rssFeed := "" }}
+{{ $rssIconDescription := "" -}}
 
 <div class="DocsToolbar--tools">
   <button data-feedback="true" class="DocsToolbar--feedback Button Button-is-docs-secondary">
@@ -14,7 +15,16 @@
     </svg>Give Feedback
   </button>
 
+  {{- with $.OutputFormats.Get "rss" -}}
+  
+  {{- $rssFeed = print $.RelPermalink "index.xml" -}}
+  {{- $rssIconDescription = "View RSS feed" -}}
+
+  {{- end -}}
+  
   {{ with .Params.rss }}
+
+  {{- $rssIconDescription = "View GitHub RSS feed" -}}
 
   {{ if eq . "folder" }}
 
@@ -35,6 +45,8 @@
   {{ $rssFeed = . }}
 
   {{ end }}
+  {{ end }}
+  {{ if ne $rssFeed "" -}}
 
   <div class="DocsToolbar--tools-spacer"></div>
 
@@ -52,7 +64,7 @@
       </div>
 
       <span class="Tooltip" role="tooltip" position="bottom-end">
-        View GitHub RSS Feed
+        {{ $rssIconDescription }}
       </span>
     </div>
   </div>

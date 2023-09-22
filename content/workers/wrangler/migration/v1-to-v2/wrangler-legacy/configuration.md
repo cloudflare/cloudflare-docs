@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Configuration
 weight: 4
+meta:
+  title: Configuration - Wrangler v1 (deprecated)
 ---
 
 # Configuration
@@ -474,7 +476,7 @@ Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets)
 
 {{<Aside type="note">}}
 
-Refer to the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event) to learn more about the differences between the Service Worker and Module worker formats.
+Refer to the [`FetchEvent` documentation](/workers/runtime-apis/handlers/fetch) to learn more about the differences between the Service Worker and Module worker formats.
 
 {{</Aside>}}
 

@@ -23,7 +23,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 ## 1. Set up Cloudflare
 
-1. [Add your zone to Cloudflare](/fundamentals/get-started/setup/add-site/).
+1. [Add your zone to Cloudflare](/fundamentals/setup/account-setup/add-site/).
 
     To add your zone using the API, refer to the [Create Zone endpoint](/api/operations/zones-post).
 
@@ -75,7 +75,7 @@ $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_r
    }'
 ```
 
-2. Get Cloudfare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
+2. Get Cloudflare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 
 API example:
 

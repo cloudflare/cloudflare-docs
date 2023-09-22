@@ -92,18 +92,18 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 ## Lists
 
-Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/fundamentals/global-configurations/lists/#list-types).
+Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#list-types).
 
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
-The following example expression filters requests from IP addresses that are in an [IP List](/fundamentals/global-configurations/lists/ip-lists/) named `office_network`:
+The following example expression filters requests from IP addresses that are in an [IP List](/waf/tools/lists/ip-lists/) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
-List names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Lists](/fundamentals/global-configurations/lists/).
+List names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Lists](/waf/tools/lists/).
 
 ### Inline lists
 

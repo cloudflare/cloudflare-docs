@@ -18,6 +18,8 @@ Policies define the resources allowed on your applications through Content Secur
 
 Create [allow policies](#policy-actions) to define a positive security model, also known as positive blocking. According to this model, you define what is allowed and reject everything else. Such an approach helps you reduce the attack surface for unwanted third-party scripts in your application.
 
+A policy can control both resources monitored by Page Shield, such as scripts and their connections, and other types of resources. Refer to [Supported CSP directives](/page-shield/policies/csp-directives/) for details.
+
 ## Policy actions
 
 A policy can perform one of the following actions:
@@ -25,7 +27,7 @@ A policy can perform one of the following actions:
 * **Log**: Page Shield will log any resources not covered by the policy, without blocking any resources. Use this action to validate a new policy before deploying it. Resources not covered by the policy will be reported as [policy violations](/page-shield/policies/violations/).
 * **Allow**: Page Shield will block any resources not explicitly allowed by the policy. Switch to the _Allow_ action after validating a new policy with the _Log_ action, so that your policy does not block essential application resources, which would affect your application's end users. Policies with the _Allow_ action will log [policy violations](/page-shield/policies/violations/) for any blocked resources.
 
-For details on the CSP directives Page Shield creates for each type of policy action, refer to [How Page Shield works](/page-shield/how-it-works/#positive-security-model-using-policies). For more information on the format of CSP headers Page Shield adds to responses, refer to [CSP HTTP header format](/page-shield/reference/csp-header/).
+For details on the CSP directives Page Shield creates for each type of policy action, refer to [How Page Shield works](/page-shield/how-it-works/#positive-security-model-using-policies). For more information on the CSP directives supported by Page Shield policies, refer to [Supported CSP directives](/page-shield/policies/csp-directives/).
 
 ## Next steps
 

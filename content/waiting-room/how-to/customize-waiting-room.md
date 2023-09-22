@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Customize a waiting room
-weight: 2
+weight: 3
 ---
 
 # Customize a waiting room

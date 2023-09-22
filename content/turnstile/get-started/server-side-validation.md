@@ -74,7 +74,7 @@ async function handlePost(request) {
 
 ```javascript
 ---
-header: Example using indempotency functionality
+header: Example using idempotency functionality
 ---
 // This is the demo secret key. In production, we recommend
 // you store your secret key(s) safely.
@@ -135,7 +135,7 @@ Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-
 
 {{<Aside type="note">}}
 
-Remote IP helps prevent abuses by ensuring that the current visitor is the one who received the token.
+The `remoteip` parameter helps to prevent abuse by ensuring the current visitor is the one who received the token. This is currently not strictly validated.
 
 {{</Aside>}}
 

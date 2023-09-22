@@ -8,6 +8,10 @@ weight: 2
 
 This guide will help you set up API Shield to identify and address API security best practices.
 
+{{<Aside type="note">}}
+Enabling API Shield features will have no impact on your traffic.
+{{</Aside>}}
+
 ## Set up session identifiers
 
 While not strictly required, it is recommended that you configure your session identifiers when getting started with API Shield. When Cloudflare inspects your API traffic for individual sessions, we can offer more tools for visibility, management, and control.

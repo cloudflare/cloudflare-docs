@@ -64,7 +64,7 @@ The following fields will be renamed in the [HTTP Requests](/logs/reference/log-
 
 {{<table-wrap>}}
 
-New field name | Type | Description | Old field name<br>(removed on Aug 1, 2023)
+New field name | Type | Description | Old field name<br>(deprecated on Aug 1, 2023)
 ---|---|---|---
 `SecurityRuleID` | String | Rule ID of the security rule that triggered a terminating action, if any. | `WAFRuleID`
 `SecurityRuleDescription`	| String | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`

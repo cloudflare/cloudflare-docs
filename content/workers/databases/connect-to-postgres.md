@@ -35,7 +35,7 @@ There are two ways to connect to a Postgres database:
 
 A connection string combines the username, password, host, port and (optional) database name as a single URL-like string.
 
-To set your connection string as a [secret](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
+To set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -71,7 +71,7 @@ DB_PORT = "5432"
 DB_NAME = "neondb"
 ```
 
-To set your password as a [secret](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_PASSWORD

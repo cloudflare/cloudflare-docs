@@ -41,7 +41,7 @@ WARP only installs the system certificate — it does not install the certificat
 
 The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
 
-The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` for easy reference by scripts or tools.
+The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
 
 ### macOS
 
@@ -52,19 +52,33 @@ The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` 
     1. Select **Trust**.
     2. Set **When using this certificate** to _Always Trust_.
   
-The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for easy reference by scripts or tools.
-
+The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
 
 ### Linux
 
-On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `Cloudflare_CA.crt`.
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `managed-warp.pem`.
 
-If you do not see the certificate, run the following command to update the system store:
+If you do not see the certificate, run the following commands to update the system store:
 
-```sh
-$ update-ca-certificates
-```
-The certificate is also placed in `/var/lib/cloudflare-warp/installed_cert.pem` for easy reference by scripts or tools.
+1. Go to the system certificate store.
+
+    ```sh
+    $ cd /usr/local/share/ca-certificates
+    ```
+
+2. Rename the certificate, changing the file extension to `.crt`.
+
+    ```sh
+    $ sudo mv managed-warp.pem managed-warp.crt
+    ```
+
+3. Update your list of custom CA certificates.
+
+    ```sh
+    $ sudo update-ca-certificates
+    ```
+
+The certificate is also placed in `/var/lib/cloudflare-warp/installed_cert.pem` for reference by scripts or tools.
 
 ## Uninstall the certificate
 

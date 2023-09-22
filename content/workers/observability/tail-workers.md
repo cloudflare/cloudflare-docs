@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Tail Workers
 ---
 
-{{<beta>}}Tail Workers{{</beta>}}
+{{<heading-pill style="beta">}}Tail Workers{{</heading-pill>}}
 
 A Tail Worker receives information about the execution of other Workers, such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
 

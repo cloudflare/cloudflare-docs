@@ -9,13 +9,19 @@ meta:
 
 # SSL for SaaS
 
-Starting on **September 6, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
+Starting on **September 7, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
 
 On **October 18, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new SSL for SaaS certificates. This will not affect existing SSL for SaaS certificates.
 
 On **October 25, 2023**, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
 
 The default CA - for API orders that do not specify `certificate_authority` - and the CA used for certificate renewals will shift to either Let's Encrypt or Google Trust Services.
+
+{{<Aside type="warning">}}
+
+{{<render file="_digicert-caa-warning.md">}}
+
+{{</Aside>}}
 
 ## Summary of changes
 
@@ -51,7 +57,7 @@ We recommend that you migrate all your current custom hostnames away from DigiCe
 
 #### Identify certificates
 
-To identify certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
+To identify certificates that are coming up for renewal, set up [notifications](/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
 
 You can also send a [GET](/api/operations/custom-hostname-for-a-zone-list-custom-hostnames) request to the API and look for certificates with a `ssl_status` of `pending_validation` and a `certificate_authority` of `digicert` within the SSL object.
 

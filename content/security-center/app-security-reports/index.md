@@ -6,7 +6,7 @@ meta:
   title: Application security reports
 ---
 
-{{<beta>}} Application security reports {{</beta>}}
+{{<heading-pill style="beta">}} Application security reports {{</heading-pill>}}
 
 {{<Aside type="note">}}
 Currently, this feature is only available to Enterprise customers.
@@ -32,7 +32,7 @@ To download a monthly application security report:
 
 ## Required roles
 
-A Cloudflare user must have one of the following [roles](/fundamentals/account-and-billing/members/roles/) to download application security reports:
+A Cloudflare user must have one of the following [roles](/fundamentals/setup/manage-members/roles/) to download application security reports:
 
 * Super Administrator
 * Administrator

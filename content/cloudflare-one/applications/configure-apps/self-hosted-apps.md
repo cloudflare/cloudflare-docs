@@ -12,7 +12,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ## Prerequisites
 
-- [Add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+- [Add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
 - [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 
 ## 1. Add your application to Access
@@ -81,3 +81,15 @@ To secure your origin, you must validate the [application token](/cloudflare-one
 One option is to configure the Cloudflare Tunnel daemon, `cloudflared`, to validate the token on your behalf. This is done by enabling [**Protect with Access**](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/#access) in your Cloudflare Tunnel settings. If you do not wish to use Cloudflare Tunnel, you can [manually configure your origin](/cloudflare-one/identity/authorization-cookie/validating-json/) to check all requests for a valid token.
 
 Users can now connect to your self-hosted application after authenticating with Cloudflare Access.
+
+## Product compatibility
+
+When using Access self-hosted applications, the majority of Cloudflare products will be compatible with your application.
+
+However, the following products are not supported:
+
+- [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/)
+- [Automatic Platform Optimization](/automatic-platform-optimization)
+- [Zaraz](/zaraz)
+
+If these products are enabled for your Access application, disable them using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.

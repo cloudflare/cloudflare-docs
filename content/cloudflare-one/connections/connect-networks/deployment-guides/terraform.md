@@ -4,6 +4,7 @@ title: Terraform
 weight: 7
 meta:
   description: Learn how to deploy a Cloudflare Tunnel using Terraform and our lightweight server-side daemon, cloudflared.
+  title: Deploy Tunnels with Terraform
 ---
 
 # Deploy Tunnels with Terraform
@@ -21,7 +22,7 @@ In this guide, you will use Terraform to deploy:
 To complete the following procedure, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
-- [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/)
+- [A zone on Cloudflare](/fundamentals/setup/account-setup/add-site/)
 
 ## 1. Install Terraform
 
