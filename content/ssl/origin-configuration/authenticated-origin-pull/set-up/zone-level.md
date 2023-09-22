@@ -24,7 +24,7 @@ To use a custom certificate, follow the API instructions to [upload a custom cer
 
 {{<Aside type="warning">}}
 
-Although Cloudflare provides you a certificate to easily confirgure zone-level authenticated origin pulls, if you want more strict security, you should upload your own certificate. 
+Although Cloudflare provides you a certificate to easily configure zone-level authenticated origin pulls, if you want more strict security, you should upload your own certificate.
 
 Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
 
@@ -33,6 +33,8 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 ## 2. Configure origin to accept client certificates
 
 With the certificate installed, set up your origin web server to accept client certificates.
+
+At this point, you may also want to enable logging on your origin so that you can verify the configuration is working.
 
 <details>
 <summary>Apache example</summary>
@@ -89,4 +91,12 @@ To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH
 
 ##  4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
-Finally, use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable or disable zone-level authenticated origin pulls.
+Use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
+
+If you had set up logging on your origin, test and confirm that Authenticated Origin Pulls is working.
+
+##  5. Enforce validation check on your origin
+
+Once you can confirm everything is working as expected for your specific origin setup, configure your origin to enforce the authentication.
+
+After completing the process, you can use `curl` to send requests directly to your origin IPs, verifying that the requests fail due to certificate validation being enforced.
