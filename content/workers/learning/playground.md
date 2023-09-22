@@ -43,7 +43,7 @@ export default {
 };
 ```
 
-This is an example of a multi-module Worker that is receiving a [request](/workers/runtime-apis/request/), logging a message to the console, and then returning a [response](/workers/runtime-apis/response/) body that is content from `welcome.html`.
+This is an example of a multi-module Worker that is receiving a [request](/workers/runtime-apis/request/), logging a message to the console, and then returning a [response](/workers/runtime-apis/response/) body containing the  content from `welcome.html`.
 
 Refer to the documentation for [`Fetch Handler`](/workers/runtime-apis/handlers/fetch/) to learn more.
 
