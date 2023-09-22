@@ -34,8 +34,6 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 With the certificate installed, set up your origin web server to accept client certificates.
 
-At this point, you may also want to enable logging on your origin so that you can verify the configuration is working.
-
 <details>
 <summary>Apache example</summary>
 <div>
@@ -65,6 +63,8 @@ ssl_verify_client on;
 </div>
 
 </details>
+
+At this point, you may also want to enable logging on your origin so that you can verify the configuration is working.
 
 ## 3. Configure Cloudflare to use client certificate
 
