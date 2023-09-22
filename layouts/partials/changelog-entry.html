@@ -1,4 +1,4 @@
-{{- $link := print (replaceRE `\/$` "" .link) ".md" -}}
+{{- $link := replaceRE `\/$` "" .link -}}
 {{- $result := dict -}}
 {{- $content := "" -}}
 
