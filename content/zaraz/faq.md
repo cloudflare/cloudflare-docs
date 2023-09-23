@@ -181,6 +181,6 @@ Please note that as of now, free plan users do not have access to any paid featu
 
 ## Consent
 
-### I made some changes to consent settings and I want to show the consent modal again to all users
+### I made some changes to consent settings and I want to show the consent modal again to all users.
 
-In such a case, you can change the cookie name in *Consent cookie name* field in Zaraz Consent config. This will cause the consent modal to reappear for all users. Make sure to use a cookie name that has not been yet used for Zaraz Config on your site.
+In such a case, you can change the cookie name in the *Consent cookie name* field in the Zaraz Consent configuration. This will cause the consent modal to reappear for all users. Make sure to use a cookie name that has not been used for Zaraz on your site.
