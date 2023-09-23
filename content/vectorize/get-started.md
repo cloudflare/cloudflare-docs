@@ -48,7 +48,7 @@ When setting up your `vectorize-tutorial` Worker, answering the questions as bel
 This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 
 * A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts` 
-* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your D1 database.
+* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your index.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
@@ -128,7 +128,7 @@ Specifically:
 
 TODO: insert vectors why / how / etc
 
-First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
+First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
 Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
 
@@ -137,8 +137,9 @@ Clear the content of `worker.ts`. Paste the following code snippet into your `wo
 filename: "src/worker.ts"
 ---
 
-
-
+interface Env {
+  VECTORIZE_INDEX: VectorizeIndex;
+}
 ```
 
 In the code above, you:
@@ -147,11 +148,9 @@ In the code above, you:
 * Specify a set of example vectors that you will query against in the next step
 * Insert those vectors into the index and confirm it was successful.
 
-
-
 ## 5. Query vectors (semantic search)
 
-While in your project directo
+While in your project directory...
 
 ## 6. Deploy your Worker
 
@@ -187,7 +186,3 @@ By finishing this tutorial, you have created a vector database, a Worker to acce
 ## Next steps
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com/).
-
-- 
-- 
-- 

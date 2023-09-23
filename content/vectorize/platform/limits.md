@@ -11,6 +11,8 @@ Many of these limits will increase during Vectorize's [public beta](/workers/pla
 {{</Aside>}}
 # Limits
 
+The following limits apply to accounts, indexes and vectors (as specified):
+
 | Feature                           | Current Limit                               |
 | --------------------------------- | ------------------------------------------- |
 | Indexes per account               | 10 index <sup>beta</sup>                    |
