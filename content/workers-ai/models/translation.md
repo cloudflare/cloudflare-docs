@@ -57,8 +57,8 @@ async function run(model, input) {
 }
 
 run('@cf/meta/nllb-200-1.3b', {
-        text: "I'll have an order of the moule frites",
-        language: "french"
+  text: "I'll have an order of the moule frites",
+  language: "french"
 }).then((response) => {
     console.log(JSON.stringify(response));
 });
