@@ -7,21 +7,18 @@ weight: 2
 # Speech to text
 Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data collected from the web.
 
+{{<Aside type="warning">}}
+This model is only available via the API, and is not currently supported in the SDK.
+{{</Aside>}}
+
 * ID: **@cf/openai/whisper** - used to `run` this model via SDK or API
 * Name: Automatic speech recognition (ASR) system from OpenAI
 * Task: speech-recognition
 
 ## Examples
 
-{{<tabs labels="worker | node | python | curl ">}}
-{{<tab label="worker" default="true">}}
-
-```js
-// todo
-```
-
-{{</tab>}}
-{{<tab label="node">}}
+{{<tabs labels="node | python | curl ">}}
+{{<tab label="node" default="true">}}
 
 ```js
 // todo js

@@ -12,25 +12,42 @@ In this guide, you will get started with Workers AI, experiment with a large lag
 
 ## 1. Create a Workers project
 
-Create a new project named `workers-ai-app` by running:
+Create a new project named `hello-ai` by running:
+
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
 $ npm create cloudflare@latest
-
 ```
 
-When setting up your `workers-ai-app` Worker, answer the setup questions as follows:
+{{</tab>}}
+{{<tab label="yarn">}}
 
-* Enter `workers-ai-app` for the directory to create in
+```sh
+$ yarn create cloudflare@latest
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+When setting up your `hello-ai` Worker, answer the setup questions as follows:
+
+* Enter `hello-ai` for the directory to create in
 * Choose `"Hello World" script` for the type of application
 * Select `yes` to using TypeScript
 * Select `yes` to using Git
 * Select `no` to deploying
 
-This will create a new `workers-ai-app` directory. Your new `workers-ai-app` directory will include:
+This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
 * A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts` 
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+
+Navigate to your app directory:
+```sh
+$ cd hello-ai
+```
 
 ## 2. Connect your Worker to Workers AI
 
@@ -52,19 +69,34 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 ## 3. Install the Workers AI client library
 
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
 ```sh
 $ npm install --save @cloudflare/ai
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn add --dev @cloudflare/ai
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+
 
 ## 4. Run an inference task in your Worker
 
 Now we are ready to run an inference task in our our worker. In this case, we will use an LLM, like lambda-2, to answer a questions.
 
-Go to your `workers-ai-app` and update the `worker.ts` with the following code: 
+Go to your `hello-ai` and update the `worker.ts` with the following code: 
 
 ```typescript
 ---
-filename: "src/worker.ts"
+filename: "src/index.ts"
 ---
 import { Ai } from '@cloudflare/ai'
 
@@ -92,7 +124,7 @@ After configuring your Worker, you can test your project locally before you depl
 
 ## 5. Develop locally with Wrangler
 
-While in your project directory, test Workers AI locally by running:
+While in your project directory, test Workers AI locally by running. Note, you will be prompted to login at this time:
 
 ```sh
 $ npx wrangler@beta dev --remote
@@ -129,8 +161,8 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ npx wrangler deploy
-# Outputs: https://workers-ai-app.<YOUR_SUBDOMAIN>.workers.dev
+$ npx wrangler@beta deploy
+# Outputs: https://hello-ai.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
 You can now visit the URL to run your AI Worker.
@@ -140,3 +172,18 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 ## Next steps
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+
+
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
+`
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+
+{{</tab>}}
+
+
+{{</tabs>}}

@@ -39,7 +39,7 @@ export default {
     const embeddings = ai.run('@cf/baai/bge-base-en-v1.5', {
         text: stories
       }
-    });
+    );
 
     return new Response(JSON.stringify(embeddings));
   },

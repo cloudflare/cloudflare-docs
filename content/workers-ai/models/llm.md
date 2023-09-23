@@ -31,7 +31,7 @@ export default {
     const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
         prompt: "What is the origin of the phrase 'Hello, World'" 
       }
-    });
+    );
 
     return new Response(JSON.stringify(answer));
   },
@@ -84,7 +84,7 @@ output = run("@cf/meta/llama-2-7b-chat-int8", { prompt: "Tell me a story" })
 $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ prompt: "Tell me a story" }'
+    -d '{ "prompt": "Tell me a story" }'
 ```
 
 {{</tab>}}

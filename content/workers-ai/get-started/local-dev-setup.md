@@ -17,15 +17,12 @@ To setup your dev environement you will need to:
 3. Login to Wrangler:
 ```sh
 $ wrangler login
-
 ```
 
 ## Next Steps
  
 {{<resource-group>}}
  
-{{<resource header="Get started - CLI" href="/d1/platform/pricing/" icon="learning-center-book">}}Build and deploy your first Workers AI app from your **local development environment**{{</resource>}}
- 
-{{<resource header="Get started - Dashhboard" href="/d1/platform/limits/" icon="learning-center-book">}}Build and deploy your first AI app using **Cloudfalre's dashboard**"{{</resource>}}
+{{<resource header="Get started - CLI" href="/workers-ai/get-started/workers-wrangler" icon="learning-center-book">}}Build and deploy your first Workers AI app from your **local development environment**{{</resource>}}
  
 {{</resource-group>}}

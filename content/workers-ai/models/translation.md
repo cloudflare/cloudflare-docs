@@ -12,19 +12,56 @@ No Language Left Behind (NLLB) was trained on multilingual data for translation 
 * Task: text-generation
 
 ## Examples
-
-{{<tabs labels="worker | node | python | curl ">}}
+{{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
 ```js
-// todo
+import { Ai } from '@cloudflare/ai'
+
+export interface Env {
+  // If you set another name in wrangler.toml as the value for 'binding',
+  // replace "AI" with the variable name you defined.
+  AI: any;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const ai = new Ai(env.AI);
+
+    const  = ai.run('@cf/meta/nllb-200-1.3b', {
+        text: "I'll have an order of the moule frites",
+        language: "french" 
+      }
+    );
+
+    return new Response(JSON.stringify(answer));
+  },
+};
 ```
 
 {{</tab>}}
 {{<tab label="node">}}
 
 ```js
-// todo js
+async function run(model, input) {
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
+    {
+      headers: { Authorization: "Bearer {API_TOKEN}" },
+      method: "POST",
+      body: JSON.stringify(input),
+    }
+  );
+  const result = await response.json();
+  return result;
+}
+
+run('@cf/meta/nllb-200-1.3b', {
+        text: "I'll have an order of the moule frites",
+        language: "french"
+}).then((response) => {
+    console.log(JSON.stringify(response));
+});
 ```
 
 {{</tab>}}
@@ -32,18 +69,45 @@ No Language Left Behind (NLLB) was trained on multilingual data for translation 
 {{<tab label="python">}}
 
 ```py
-# todo
+import requests
+
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
+headers = {"Authorization": "Bearer {API_TOKEN}"}
+
+def run(model, input)
+    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
+    return response.json()
+    
+output = run('@cf/meta/nllb-200-1.3b', {
+  text: "I'll have an order of the moule frites",
+  language: "french" 
+})
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ todo
+$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/nllb-200-1.3b \
+    -X POST \
+    -H "Authorization: Bearer {API_TOKEN}" \
+    -d '{ "text": "I'll have an order of the moule frites", "language": "french" }'
 ```
 
 {{</tab>}}
 {{</tabs>}}
+
+**Example Workers AI response**
+
+```json
+{
+  "result": {
+    "translated_text": "Je vais commander des moules frites",
+  "success": true,
+  "errors":[],
+  "messages":[]
+}
+```
 
 ## Input/Output schemas
 The following schemas are based on [JSON Schema](https://json-schema.org/)
@@ -54,12 +118,10 @@ The following schemas are based on [JSON Schema](https://json-schema.org/)
   "schema": {
     "type": "object",
     "properties": {
-      "audio": {
-        "type": "string",
-        "format": "binary"
-      }
+      "text",
+      "language"
     },
-    "required": ["audio"]
+    "required": ["text", "language"]
   }
 }
 ```
@@ -70,7 +132,7 @@ The following schemas are based on [JSON Schema](https://json-schema.org/)
   "schema": {
     "type": "object",
     "properties": {
-      "text": {
+      "translated_text": {
         "type": "string"
       }
     }

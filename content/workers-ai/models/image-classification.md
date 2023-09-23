@@ -7,21 +7,18 @@ weight: 5
 # Image classification
 ResNet models perform image classification - they take images as input and classify the major object in the image.
 
-* ID:  **@cf/microsoft/resnet-50	** - used to `run` this model via SDK or API
+{{<Aside type="warning">}}
+This model is only available via the API, and is not currently supported in the SDK.
+{{</Aside>}}
+
+* ID:  **@cf/microsoft/resnet-50** - used to `run` this model via SDK or API
 * Name: Resnet50 image classification model
 * Task: image-classification
 
 ## Examples
 
-{{<tabs labels="worker | node | python | curl">}}
-{{<tab label="worker" default="true">}}
-
-```js
-// todo
-```
-
-{{</tab>}}
-{{<tab label="node">}}
+{{<tabs labels="node | python | curl">}}
+{{<tab label="node" default="true">}}
 
 ```js
 // todo js

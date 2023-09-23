@@ -31,7 +31,7 @@ export default {
     const  = ai.run('@cf/huggingface/distilbert-sst-2-int8', {
         text: "This pizza is great!" 
       }
-    });
+    );
 
     return new Response(JSON.stringify(answer));
   },
@@ -84,7 +84,7 @@ output = run("@cf/huggingface/distilbert-sst-2-int88", { text: "This pizza is gr
 $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ text: "This pizza is great!" }'
+    -d '{ "text": "This pizza is great!" }'
 ```
 
 {{</tab>}}
@@ -106,7 +106,7 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/met
       }
     ],
   }
-  success": true,
+  "success": true,
   "errors":[],
   "messages":[]
 }
