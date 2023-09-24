@@ -26,6 +26,9 @@ curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/huggingface/bigcod
 If you are using the HuggingFace.js library, you can set your inference endpoint like this:
 
 ```javascript
+---
+filename: index.js
+---
 import { HfInferenceEndpoint } from '@huggingface/inference'
 
 const hf = new HfInferenceEndpoint(

@@ -36,7 +36,7 @@ You can define the **Time to Live** (TTL) for caching, which is how long the cac
 
 {{<Aside type="note">}}
 
-Caching currently only works for identical requests. This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options is a great use case for caching.
+Caching currently only works for identical requests. This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
 We plan on adding semantic search for caching in the future to improve cache hit rates.
 
 {{</Aside>}}
