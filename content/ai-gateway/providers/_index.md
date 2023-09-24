@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Providers
+title: Supported providers
 weight: 3
 ---
 
-# Providers
+# Supported providers
 
 {{<directory-listing>}}

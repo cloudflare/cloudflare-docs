@@ -6,7 +6,7 @@ weight: 1
 
 # Creating your first AI Gateway
 
-In this guide, you will learn how to create your first AI Gateway.
+In this guide, you will learn how to create your first AI Gateway. You can create multiple gateways to control different applications.
 
 To set up an AI Gateway you will need to:
 
@@ -20,6 +20,6 @@ To set up an AI Gateway you will need to:
 
 {{<resource-group>}}
 
-{{<resource header="Connecting your AI application " href="/ai-gateway/get-started/connecting-applications" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
+{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
 
 {{</resource-group>}}
