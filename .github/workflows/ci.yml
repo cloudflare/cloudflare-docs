@@ -34,7 +34,9 @@ jobs:
         run: pnpm run crawl
         if: success()
 
-      
+      - name: Check - Infinite redirects
+        run: npx tsm bin/find-infinite-redirects.ts
+
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest
