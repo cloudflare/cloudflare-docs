@@ -122,6 +122,13 @@ export default {
 };
 ```
 
+{{<Aside type="warning" header="Avoiding potential errors in accessing request.body">}}
+
+The body of a [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) can only be accessed once. You may encounter a TypeError on attempting to access `request.body` if you have previously used `request.formData()` on the same request.
+To avoid this error, create a clone of the Request object with `request.clone()` for each subsequent attempt to access a Request's body.
+
+{{</Aside>}}
+
 ## 5. Bucket access and privacy
 
 With the above code added to your Worker, every incoming request has the ability to interact with your bucket. This means your bucket is publicly exposed and its contents can be accessed and modified by undesired actors.
