@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: Challenges
 weight: 4
-aliases:
-- /fundamentals/get-started/concepts/cloudflare-challenges/
 ---
 
 # Cloudflare challenges

@@ -141,7 +141,7 @@ ___
 
 To learn more about SSL, go to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/ssl/what-is-ssl/).
 
-For SSL terms and definitions, go to the [Cloudflare Glossary](/fundamentals/glossary).
+For SSL terms and definitions, go to the [Cloudflare Glossary](/fundamentals/reference/glossary/).
 
 ___
 

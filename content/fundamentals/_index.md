@@ -2,10 +2,6 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-aliases:
-- /fundamentals/
-- /fundamentals/get-started/
-- /fundamentals/get-started/basic-tasks/access-cloudflare-resources/
 ---
 
 # Cloudflare Fundamentals

@@ -35,7 +35,7 @@ ___
 
 ## Known issues with SameSite and cf_clearance cookies
 
-When a visitor solves a [challenge](/fundamentals/get-started/concepts/cloudflare-challenges/) presented due to a [WAF custom rule](/waf/custom-rules/) or an [IP Access rule](/waf/tools/ip-access-rules/), a `cf_clearance` cookie is set in the client browser. The `cf_clearance` cookie has a default lifetime of 30 minutes, which you can configure via [Challenge Passage](/fundamentals/security/challenge-passage/).
+When a visitor solves a [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/) presented due to a [WAF custom rule](/waf/custom-rules/) or an [IP Access rule](/waf/tools/ip-access-rules/), a `cf_clearance` cookie is set in the client browser. The `cf_clearance` cookie has a default lifetime of 30 minutes, which you can configure via [Challenge Passage](/waf/tools/challenge-passage/).
 
 Cloudflare uses `SameSite=None` in the `cf_clearance` cookie so that visitor requests from different hostnames are not met with subsequent challenges or errors. When `SameSite=None` is used, it must be set in conjunction with the `Secure` flag.
 
@@ -49,6 +49,6 @@ ___
 ## Related resources
 
 -   [Learn more about the SameSite cookie](https://web.dev/samesite-cookies-explained/) 
--   [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/)
+-   [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/)
 -   [Cloudflare SSL FAQ](/support/ssl-tls/faq-and-reference/ssl-faq/)
 -   [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)

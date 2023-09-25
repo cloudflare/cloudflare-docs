@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Improve SEO
-aliases:
-- /fundamentals/get-started/task-guides/improve-seo/
 ---
 
 # Improve SEO

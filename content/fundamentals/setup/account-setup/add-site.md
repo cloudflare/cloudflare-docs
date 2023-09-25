@@ -2,8 +2,6 @@
 title: Add a site
 pcx_content_type: tutorial
 weight: 4
-aliases:
-- /fundamentals/get-started/setup/add-site/
 ---
 
 # Add site to Cloudflare
