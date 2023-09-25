@@ -166,7 +166,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `usage_model` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies the [Usage Model](/workers/platform/pricing/#usage-models) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#worker-limits) and [`unbound`](/workers/platform/limits/#worker-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
+  - Specifies the [Usage Model](/workers/platform/pricing/#workers) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#worker-limits) and [`unbound`](/workers/platform/limits/#worker-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
 - `build` {{<type>}}top level{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

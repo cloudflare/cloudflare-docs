@@ -35,7 +35,7 @@ To get started with KV:
 * Read how [KV works](/workers/learning/how-kv-works/).
 * Create a [KV namespace](/workers/wrangler/workers-kv/).
 * Review the [KV Runtime API](/workers/runtime-apis/kv/).
-* Learn about KV [Limits](/workers/platform/limits/#kv-limits).
+* Learn about KV [Limits](/kv/platform/limits/).
 
 ## R2
 

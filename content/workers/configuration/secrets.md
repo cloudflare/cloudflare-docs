@@ -7,7 +7,7 @@ title: Secrets
 
 ## Background
 
-Secrets are [environment variables](/workers/configuration/environment-variables/) that are encrypted and not visible after they are set. Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/#syntax-es-modules).
+Secrets are [environment variables](/workers/configuration/environment-variables/) that are encrypted and not visible after they are set. Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 ## Add secrets to your project
 
