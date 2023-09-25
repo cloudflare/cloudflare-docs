@@ -74,7 +74,7 @@ header: Response
 
 - `preferLowLatency` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}} {{<inline-pill style="beta">}}
 
-  - When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. _(Recording `mode` property must also be set to `automatic`.)_
+  - When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. (Recording `mode` property must also be set to `automatic`.)
 
 - `timeoutSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `0`{{</prop-meta>}}
 

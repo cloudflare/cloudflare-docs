@@ -37,7 +37,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 {{<heading-pill heading="h4" style="beta">}}LL-HLS playback{{</heading-pill>}}
 
-If a Live Inputs is enabled for the Low-Latency HLS beta, add **TBD FLAG** to the HLS manifest URL to test the low latency manifest in a custom player. _(Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.)_
+If a Live Inputs is enabled for the Low-Latency HLS beta, add the query string `?protocol=llhls` to the HLS manifest URL to test the low latency manifest in a custom player. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.
 
 ```text
 ---
