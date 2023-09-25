@@ -242,7 +242,7 @@ app.post('/notes', async (c) => {
   if (!values) c.throw(500, "Failed to generate vector embedding")
 
   const { id } = record
-  const inserted = await c.env.VECTOR_INDEX.insert([
+  const inserted = await c.env.VECTOR_INDEX.upsert([
     {
       id: id.toString(),
       values,
