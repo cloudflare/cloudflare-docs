@@ -62,7 +62,7 @@ To run a trace later with the same configuration:
 
 ## Use Trace via API
 
-Use the [Request Trace](https://developers.cloudflare.com/api/operations/account-request-tracer-request-trace) operation to perform a trace using the Cloudflare API.
+Use the [Request Trace](/api/operations/account-request-tracer-request-trace) operation to perform a trace using the Cloudflare API.
 
 ---
 
@@ -81,7 +81,7 @@ For matched configurations in trace results, each step corresponds to one of the
 Currently, you cannot perform traces for:
 
 * Domains or subdomains associated with [BYOIP](/byoip/) addresses
-* [Custom hostnames](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
+* [Custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
 
 Also, the following products will not appear in trace results:
 
