@@ -14,7 +14,7 @@ This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-si
 Note that this process requires that your other DNS provider(s) also support multi-signer DNSSEC.
 {{</Aside>}}
 
-Although you can complete a few steps via the user interface, currently the whole process can only be completed using the API.
+Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
 
 ## 1. Set up Cloudflare zone
 
