@@ -26,13 +26,13 @@ For `CNAME` records on the zone apex, Cloudflare will always transfer out the fl
 
 ### Proxied records
 
-If your zone has [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), you may also experience issues with outgoing zone transfers.
+For each [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) in your zone, Cloudflare will transfer out two `A` and two `AAAA` records.
 
-When Cloudflare performs outgoing transfers, we transfer out the origin IP or hostname of each DNS record. This means that - if Cloudflare (as primary) and your secondary provider are both authoritative - they will not reply with the same response for proxied DNS records. Cloudflare would respond with two [Cloudflare edge IP addresses](https://www.cloudflare.com/ips) and your secondary provider would respond with the origin IP or hostname.
+These records correspond to the [Cloudflare edge IP addresses](https://www.cloudflare.com/ips) used for proxying traffic.
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
-If you need Cloudflare to transfer out edge IP addresses instead of origin IP addresses or hostnames for proxied records, reach out to your account team for further instructions.
+Note that you could have issues if Cloudflare (as primary) and your secondary provider are both authoritative. In this case, they will not reply with the same response for proxied DNS records, as Cloudflare would respond with two Cloudflare edge IP addresses and your secondary provider would respond with the origin IP or hostname.
 
 {{</Aside>}}
 
