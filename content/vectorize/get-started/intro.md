@@ -1,6 +1,6 @@
 ---
-weight: 1
-title: Get started
+weight: 2
+title: Introduction to Vectorize
 pcx_content_type: get-started
 ---
 

@@ -21,5 +21,6 @@ The following limits apply to accounts, indexes and vectors (as specified):
 | Metadata per vector               | 10KiB <sup>beta</sup>                       |
 | Maximum returned results (`topK`) | 20   <sup>beta</sup>                        |
 | Maximum upsert batch size         | 1000 <sup>beta</sup>                        |
+| Maximum index name                | 63 bytes                                    |
 
 <sup>beta</sup> This limit is beta only and is expected to increase during the beta.

@@ -57,6 +57,13 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 * [Configure a D1 binding](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
 * Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
 
+### Vectorize database bindings
+
+[Vectorize](/vectorize/) bindings allow you to interact with and query a Vectorize index from your Worker.
+
+* [Configure a Vectorize binding](/vectorize/get-started/)
+* Learn more about how to query a Vectorize index using the [client API](/vectorize/platform/client-api/).
+
 ### Dispatch namespace bindings (Workers for Platforms)
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.

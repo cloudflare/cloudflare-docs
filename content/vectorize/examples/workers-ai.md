@@ -1,14 +1,13 @@
 ---
 type: example
-summary: Use Vectorize with Cohere's Embedding API
+summary: Use Vectorize with Workers AI's text embedding model.
 tags:
   - AI
   - Embeddings
   - Vectorize
-  - Cohere
 pcx_content_type: configuration
-title: Use Vectorize with OpenAI
-weight: 3
+title: Integrate with Workers AI
+weight: 2
 layout: example
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Insert vectors
-weight: 3
+weight: 4
 pcx_content_type: concept
 ---
 

@@ -198,7 +198,7 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-  {{</definitions>}}
+    {{</definitions>}}
 
 ### `time-travel info`
 
@@ -214,7 +214,7 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-  {{</definitions>}}
+    {{</definitions>}}
 
 ### `backup create`
 
@@ -337,6 +337,70 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--local` {{<type>}}boolean{{</type>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
     {{</definitions>}}
+
+---
+
+## vectorize
+
+Interact with a [Vectorize](/vectorize/) vector database.
+
+### `create`
+
+Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler vectorize create <index-name> --dimensions=NUM_DIMENSIONS --metric=DISTANCE_METRIC
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new index to create. Cannot be changed.
+- `--dimensions` {{<type>}}number{{</type>}}
+  - The vector dimension width to configure the index for. Cannot be changed after creation.
+- `--metric` {{<type>}}string{{</type>}}
+  - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
+
+{{</definitions>}}
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```sh
+$ wrangler vectorize get <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the index to fetch details for.
+
+{{</definitions>}}
+### `list`
+
+List all Vectorize indexes in your account, including the configured dimensions and distance metric.
+
+```sh
+$ wrangler vectorize list
+```
+
+### `delete`
+
+Delete a Vectorize index.
+
+```sh
+$ wrangler d1 delete <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Vectorize index to delete.
+- `--force` {{<type>}}boolean{{</type>}}
+  - Skip confirmation when deleting the index (note: this is not a recoverable operation)
+
+{{</definitions>}}
 
 ---
 
@@ -1298,6 +1362,7 @@ $ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 

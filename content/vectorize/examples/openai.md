@@ -7,8 +7,8 @@ tags:
   - Vectorize
   - OpenAI
 pcx_content_type: configuration
-title: Use Vectorize with OpenAI
-weight: 2
+title: Integrate with OpenAI
+weight: 3
 layout: example
 ---
 
