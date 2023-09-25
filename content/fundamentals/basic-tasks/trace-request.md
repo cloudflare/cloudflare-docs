@@ -37,7 +37,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
     * **Protocol** (HTTP protocol version)
     * **Request headers**
     * **Cookies**
-    * **Geolocation** (geographical location of the request source)
+    * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/#field-ip-src-country), [region](/ruleset-engine/rules-language/fields/#field-ip-src-region_code), and [city](/ruleset-engine/rules-language/fields/#field-ip-src-city))
     * [**Bot score**](/bots/concepts/bot-score/)
     * [**Threat score**](/ruleset-engine/rules-language/fields/#field-cf-threat_score)
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
