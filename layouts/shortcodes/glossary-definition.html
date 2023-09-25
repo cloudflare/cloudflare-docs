@@ -1,10 +1,41 @@
 {{- $id := .Get "term_id" -}}
-{{- $length := .Get "length" -}}
+{{- $length := default "long" (.Get "length") -}}
 {{- $prepend := .Get "prepend" -}}
 {{- $showFullDefinition := false -}}
 
 {{- $glossaryData := partialCached "glossary-retrieval.html" . -}}
+{{- $term_info := index $glossaryData $id -}}
 
-<script>
-console.log({{$glossaryData}})
-</script>
+{{- if not $term_info -}}
+  {{- errorf "%s is not a valid glossary term_id, refer to ./data/glossary/* for a full list" $id -}}
+{{- end -}}
+
+{{- if or (eq "long" $length) (eq "all" $length) -}}
+  {{- $showFullDefinition = true -}}
+{{- else if (eq "short" $length) -}}
+  {{- $showFullDefinition = false -}}
+{{- else -}}
+  {{- errorf "[%s] %q: invalid glossary definition length %q" site.Language.Lang .Page.Path $length -}}
+{{- end -}}
+
+{{- with $term_info.definition -}}
+{{- $rawDefinition := . }}
+{{- if $prepend -}}
+{{- $rawDefinition = printf "%s%s" $prepend . -}}
+{{- end -}}
+
+{{- $definition := $rawDefinition | $.Page.RenderString -}}
+{{- if not (in $definition "<p>")}}
+{{- $definition = (printf "<p>%s</p>" $definition) | safeHTML }}
+{{- end -}}
+
+{{- if not $showFullDefinition -}}
+{{- $firstPara := index (findRE "(?s)<p>.*?</p>" $definition 1) 0 -}}
+{{- $firstPara := $firstPara | strings.TrimSuffix "</p>" | strings.TrimPrefix "<p>" -}}
+{{- $first := slicestr $firstPara 0 1 | lower -}}
+{{- (printf "<p>%s</p>" $firstPara) | safeHTML -}}
+{{- end -}}
+
+{{- $definition -}}
+
+{{- end -}}

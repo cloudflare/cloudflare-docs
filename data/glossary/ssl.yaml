@@ -90,7 +90,7 @@ entries:
 
 - term: origin certificate
   general_definition: |-
-    {{<render file="_origin-certificate-definition.md">}}
+    A Cloudflare Origin Certificate is a free SSL/TLS certificate issued by Cloudflare that can be installed on your origin server to facilitate making sure your data is encrypted in transit from Cloudflare to your origin server using HTTPS.
   associated_products: 
     - Cloudflare One
   related_terms: []
@@ -140,13 +140,6 @@ entries:
   related_terms: []
   cloudflare_specific: false
 
-- term: Shared Universal SSL (SUS)
-  general_definition: |-
-    {{<render file="_shared-universal-ssl-definition.md">}}
-  associated_products: []
-  related_terms: []
-  cloudflare_specific: false
-
 - term: TLS (Transport Layer Security)
   general_definition: |-
     TLS is a cryptographic protocol that ensures data security over a computer network, such as the Internet. It encrypts the data that is transmitted between a user's computer and a web server.
@@ -157,7 +150,7 @@ entries:
 
 - term: Universal SSL certificate
   general_definition: |-
-    Universal SSL certificates are free and shared among multiple customers' domains. This service allows all website owners to add SSL encryption to their sites without the need to purchase individual SSL certificates for each domain.
+    By default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/account-setup/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.
   associated_products: []
   related_terms:
     - SSL certificate

@@ -172,13 +172,6 @@ entries:
   related_terms: []
   cloudflare_specific: false
 
-- term: Support and SLA
-  general_definition: |-
-    {{<render file="_support-and-sla-definition.md">}}
-  associated_products: []
-  related_terms: []
-  cloudflare_specific: false
-
 - term: traffic
   general_definition: |-
     Traffic is the data sent and received by visitors to a website. Cloudflare serves and protects this data as it passes through the Cloudflare network.
