@@ -14,7 +14,7 @@ This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-si
 Note that this process requires that your other DNS provider(s) also support multi-signer DNSSEC.
 {{</Aside>}}
 
-Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
+Although you can complete a few steps via the user interface, currently the whole process can only be completed using the API.
 
 ## 1. Set up Cloudflare zone
 
@@ -22,19 +22,7 @@ Although you can complete a few steps via the dashboard, currently the whole pro
 The following steps also apply if you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that, in such case, the records in steps 2 and 3 should be transferred from the primary, and step 4 is not necessary.
 {{</Aside>}}
 
-1. Enable Multi-signer DNSSEC, via either the dashboard or the API.
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
-
-a. Select your zone and go to **DNS** > **Settings**.
-
-b. Enable **Multi-signer DNSSEC**.
-
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
- 
-Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
+1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \ 
@@ -46,9 +34,6 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
   "dnssec_multi_signer": true
 }'
 ```
-
-{{</tab>}}
-{{</tabs>}}
 
 2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
 
