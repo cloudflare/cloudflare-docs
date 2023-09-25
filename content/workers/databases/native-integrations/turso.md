@@ -35,7 +35,7 @@ To set up an integration with Turso:
   $ turso auth login
 
   Waiting for authentication...
-  ✔  Success! Logged in as <your GitHub username>
+  ✔  Success! Logged in as <YOUR_GITHUB_USERNAME>
   ```
   After you have authenticated, you can create a database using the command `turso db create <DATABASE_NAME>`. Turso will create a database and automatically choose a location closest to you.
 
