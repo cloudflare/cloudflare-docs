@@ -8,13 +8,13 @@ inputParameters: productName
 
 # Configure Magic Tunnel health alerts
 
-$1 customers can configure Magic Tunnel health alerts to receive email, webhook, and / or PagerDuty notifications when the percentage of successful health checks for a Magic Tunnel drops below the selected [service-level objective (SLO)](https://en.wikipedia.org/wiki/Service-level_objective).
+$1 customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful health checks for a Magic Tunnel drops below the selected [service-level objective (SLO)](https://en.wikipedia.org/wiki/Service-level_objective).
 
 Magic Tunnel health alerts will monitor the health check success rate of each Magic Tunnel included in the alert that has actively transferred traffic over the past six hours. Customers can define an SLO threshold for the percentage of health checks that must be successful for each Magic Tunnel. If the number of successful health checks for the Magic Tunnel(s) included in the alert drops below the SLO threshold, then an alert will fire.
 
 ## Alert data
 
-If a Magic Tunnel health alert is fired, customers can expect the following data in the email, webhook, and / or PagerDuty notification:
+If a Magic Tunnel health alert is fired, customers can expect the following data in the email, webhook, and PagerDuty notification:
 
 - Cloudflare account name
 - Cloudflare account ID
