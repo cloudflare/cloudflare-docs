@@ -64,7 +64,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#workers) | [Unbound Usage Model](/workers/platform/pricing/#workers)|
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#unbound-usage-model)|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
