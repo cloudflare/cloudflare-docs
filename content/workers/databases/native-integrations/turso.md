@@ -139,6 +139,6 @@ To set up an integration with Turso:
   - The `Env` interface also caches the libSQL client object and router, which are created on the first request to the Worker.
   - The Worker uses `buildLibsqlClient` to query the `elements` database and returns the response as a JSON object.
 
-  With your environment configured and your code ready, you can now test your Worker locally before you deploy.
+With your environment configured and your code ready, you can now test your Worker locally before you deploy.
 
-  To learn more about Turso, refer to [Turso's official documentation](https://docs.turso.tech).
+To learn more about Turso, refer to [Turso's official documentation](https://docs.turso.tech).
