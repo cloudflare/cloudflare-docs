@@ -8,6 +8,8 @@ meta:
 
 # Universal SSL
 
+{{<glossary-definition>}}
+
 {{<render file="_universal-ssl-definition.md">}}
 <br/>
 

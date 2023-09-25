@@ -1,30 +1,16 @@
 {{- $product := .Get "product" -}}
-{{- $glossaryData := index $.Site.Data "glossary" -}} 
-{{- $glossaryEntries := slice -}} 
+{{- $glossaryData := partialCached "glossary-retrieval.html" . -}} 
+{{- $glossaryEntries := dict -}}
 
-{{- $products := slice -}}
-{{- range $index, $productGlossary := $glossaryData -}}
-{{- range $index2, $item := $productGlossary.entries -}}
-{{- $products = slice -}}
-{{- $products = $products | append $productGlossary.productName -}}
-{{- with $item.associated_products -}}
-{{- $products = $products | append . -}}
-{{- end -}}
-{{- $products = uniq (sort $products) -}}
 {{- with $product -}}
-{{- if in $products $product -}}
-{{- $glossaryEntries = $glossaryEntries 
-  | append (dict "products" (delimit $products ", ") "word" $item.term "definition" $item.general_definition ) -}}
+{{- range $k, $v := $glossaryData -}}
+{{- if in $v.products $product -}}
+{{- $glossaryEntries = merge $glossaryEntries (dict $k $v) -}}
+{{- end -}}
 {{- end -}}
 {{- else -}}
-{{- $glossaryEntries = $glossaryEntries 
-  | append (dict "products" (delimit $products ", ") "word" $item.term "definition" $item.general_definition ) -}}
+{{- $glossaryEntries = $glossaryData -}}
 {{- end -}}
-{{- end -}} 
-{{- end -}}
-
-<!-- Order and remove dupe values -->
-{{- $glossaryEntries = sort $glossaryEntries "word" "asc" -}} 
 
 <div class="selectorDropdowns">
   <div class="searchInput">
@@ -63,8 +49,8 @@
         </tr>
       </thead>
       <tbody id="tableBody">
-        {{- range $glossaryEntries -}} 
-        <tr>
+        {{- range sort $glossaryEntries "word" "asc" -}} 
+        <tr class="data-row">
           <td class="termColumn">{{ .word }}</td>
           <td>{{ .definition | $.Page.RenderString }}</td>
           {{- with $product -}}
@@ -97,7 +83,6 @@
 
   // Function to filter and show/hide rows
   function updateTable() {
-
     let visibleRowCount = 0;
 
     dataRows.forEach((row) => {

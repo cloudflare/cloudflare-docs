@@ -5,7 +5,6 @@ entries:
   general_definition: |-
     The App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
   associated_products:
-    - Cloudflare One
   related_terms: []
   cloudflare_specific: false
 
@@ -86,7 +85,6 @@ entries:
   general_definition: |-
     A unique DoH subdomain for each DNS location in Cloudflare Zero Trust used in WARP client settings.
   associated_products: 
-    - Cloudflare One
   related_terms: []
   cloudflare_specific: false
 
@@ -94,7 +92,6 @@ entries:
   general_definition: |-
     DNS locations are physical entities such as offices, homes, retail stores, or data centers in Cloudflare Zero Trust.
   associated_products: 
-    - Cloudflare One
   related_terms: []
   cloudflare_specific: false
 

@@ -1,0 +1,10 @@
+{{- $id := .Get "term_id" -}}
+{{- $length := .Get "length" -}}
+{{- $prepend := .Get "prepend" -}}
+{{- $showFullDefinition := false -}}
+
+{{- $glossaryData := partialCached "glossary-retrieval.html" . -}}
+
+<script>
+console.log({{$glossaryData}})
+</script>
