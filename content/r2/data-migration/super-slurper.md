@@ -1,18 +1,12 @@
 ---
-title: Data Migration
+title: Super Slurper
 pcx_content_type: how-to
-weight: 3
+weight: 1
 ---
 
 # Super Slurper
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
-
-{{<Aside type="note" header="Beta waitlist">}}
-
-If you are interested in joining the private beta waitlist for incremental migration, [fill out the form](https://docs.google.com/forms/d/e/1FAIpQLSeqOcV0d8fuLSdTULP2eB4AQb3jU8TG3wUGOKEkJ_OeLG5e4g/viewform).
-
-{{</Aside>}}
 
 Migration jobs:
 
