@@ -331,7 +331,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
-* Review Cloudflare's [AI documentation](/ai).
+* Review Cloudflare's [AI documentation](/workers-ai).
 * Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
 * Understand how Workers works in [Learning](/workers/learning/).
