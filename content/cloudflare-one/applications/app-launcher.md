@@ -68,6 +68,11 @@ To customize the App Launcher appearance:
     - A preferred background color for the header
     - A preferred background color for the page
     - A custom footer with links to your organization's help desk or other internal resources.
+
+{{<Aside type="note">}}
+We recommend lighter background colors because the font defaults to black.
+{{</Aside>}}
+
 4. Next, customize the landing page that users will see when they login to the App Launcher. Available properties include:
     - A custom title
     - A custom subtitle
@@ -76,10 +81,8 @@ To customize the App Launcher appearance:
     - A preferred color for the **Log in** button text
 
     All of the properties configured in Step 3 will also apply to the landing page.
-
-   Note: We recommend lighter background colors because the font defaults to black.
   
-6. Once you are satisfied with your customization, select **Save**.
+5. Once you are satisfied with your customization, select **Save**.
 
 The App Launcher screens are now updated. To view your changes, select **Preview**.
 
