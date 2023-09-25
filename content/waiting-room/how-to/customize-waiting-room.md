@@ -104,11 +104,11 @@ Customizable waiting rooms can display text in any language supported by the UTF
 
 If you would like to display different languages within your custom waiting room depending on path or subdomain, you can add JavaScript code to your custom HTML to do so. Below you can find a couple of starter templates that you can use as an example to start from:
 
-* To display a different language based on path, download this [template](/waiting-room/static/index.path.html.txt). The template displays English if the path contains `en` or as a default, Japanese if the path contains `jp`, French if the path contains `fr`, and Spanish if the path contains `es`.
+* To display a different language based on path, download this [template](/waiting-room/static/index.path.html.txt). The template displays the content in English if the path contains `en` or as a default, Japanese if the path contains `jp`, French if the path contains `fr`, and Spanish if the path contains `es`.
 
-* To display a different language based on subdomain, download this [template](/waiting-room/static/index.subdomain.html.txt). The template displays English as a default or if the subdomain contains `en`, Japanese if the subdomain contains `jp`, French if the subdomain contains `fr`, and Spanish if the subdomain contains `es`.
+* To display a different language based on subdomain, download this [template](/waiting-room/static/index.subdomain.html.txt). The template displays the content in English as a default or if the subdomain contains `en`, Japanese if the subdomain contains `jp`, French if the subdomain contains `fr`, and Spanish if the subdomain contains `es`.
 
-Download either of these templates and customize them however you would like. Update the path or subdomain as well as the  to reflect your site’s language selection structure. You may edit these templates to include other languages by adding translations to the `translations` object for each of the locales.
+Download either of these templates and customize them however you would like. Update the path or subdomain to reflect your site’s language selection structure. You may edit these templates to include other languages by adding translations to the `translations` object for each of the locales.
 
 #### Resource hosting
 
