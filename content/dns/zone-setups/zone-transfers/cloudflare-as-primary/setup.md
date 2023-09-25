@@ -8,15 +8,21 @@ meta:
 
 # Set up outgoing zone transfers (Cloudflare as Primary)
 
-With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary provider for increased availability and fault tolerance.
+With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
 
-## Limitations
+## Aspects to consider
 
-### DNS-only CNAME at zone apex
+### DNS-only CNAME records
 
-If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), we allow you to set a `CNAME` record on the zone apex because we do [`CNAME` Flattening](/dns/cname-flattening/). 
+If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), you can set a `CNAME` record on the zone apex because of [`CNAME` flattening](/dns/cname-flattening/).
 
-If you take advantage of this behavior within Cloudflare (using an unproxied `CNAME` record on your zone apex) while using outgoing zone transfers for this zone, Cloudflare will not transfer out the target hostname of the `CNAME` record but instead the flattened IP address(es) that also get served as DNS responses from Cloudflare authoritative nameservers.
+If you take advantage of this behavior within Cloudflare (using an unproxied `CNAME` records) while using outgoing zone transfers for this zone, Cloudflare will not transfer out the target hostname of the `CNAME` record but instead the flattened IP addresses that also get served as DNS responses from Cloudflare authoritative nameservers.
+
+{{<Aside type="note">}}
+
+For `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses. Whereas for `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+
+{{</Aside>}}
 
 ### Proxied records
 
