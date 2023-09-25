@@ -154,13 +154,13 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 ## Memory
 
-Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
+Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes. Note however, that nodes are occasionally evicted from memory.
 
-If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
+If a Worker processes a request that pushes the Worker over the 128 MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
-3. Find **Invocation Statuses** and examine _Exceeded Resources_.
+3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
