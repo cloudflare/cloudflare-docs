@@ -64,7 +64,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models) | [Unbound Usage Model](/workers/platform/pricing/#usage-models)|
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#workers) | [Unbound Usage Model](/workers/platform/pricing/#workers)|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
@@ -96,9 +96,9 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 | Feature                       | Free   | Bundled |
 | ----------------------------- | ------ | ------- |
-| [Max object size](#cache-api) | 512 MB | 512 MB  |
-| [Calls/request](#cache-api)   | 50     | 50      |
-| [Storage/request](#cache-api) | 5 GB   | 5 GB    |
+| [Max object size](#cache-api-limits) | 512 MB | 512 MB  |
+| [Calls/request](#cache-api-limits)   | 50     | 50      |
+| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    |
 
 {{</table-wrap>}}
 

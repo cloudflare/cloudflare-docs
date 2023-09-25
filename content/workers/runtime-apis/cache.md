@@ -13,7 +13,7 @@ The Cache API is available globally but the contents of the cache do not replica
 
 {{<Aside type="warning" header="Tiered caching">}}
 
-The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interacting-with-the-cloudflare-cache).
+The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api-limits) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interacting-with-the-cloudflare-cache).
 
 {{</Aside>}}
 
