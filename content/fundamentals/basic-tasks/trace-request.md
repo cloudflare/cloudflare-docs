@@ -1,6 +1,8 @@
 ---
 title: Trace a request
 pcx_content_type: how-to
+meta:
+  title: Trace a request with Cloudflare Trace (beta)
 ---
 
 {{<heading-pill style="beta">}} Cloudflare Trace {{</heading-pill>}}
