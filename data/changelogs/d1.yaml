@@ -7,10 +7,10 @@ entries:
   description: |-
     D1 is now in public beta, and storage limits have been increased:
 
-    * Developers with a Workers paid plan now have a 2 GB per-database limit (up from 500MB) and can create 25 databases per account (up from 10). These limits will continue to increase automatically during the public beta.
-    * Developers with a Workers free plan retain the 500 MB per-database limit and can crearte up to 10 databases per account.
+    * **Developers with a Workers paid plan now have a 2 GB per-database limit** (up from 500MB) and can create 25 databases per account (up from 10). These limits will continue to increase automatically during the public beta.
+    * Developers with a Workers free plan retain the 500 MB per-database limit and can create up to 10 databases per account.
 
-    Note: Databases must be using D1's [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) to benefit from the increased database limits. 
+    Databases must be using D1's [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) to benefit from the increased database limits. 
 
     See the [announcement blog](https://blog.cloudflare.com/d1-open-beta-is-here/) for more details about what's new in the beta and what's coming in the future for D1.
 
