@@ -15,7 +15,7 @@ To set up an integration with Momento Cache:
 
 1. You need to have an existing Momento cache to connect to or create a new cache through the [Momento console](https://console.gomomento.com/).
 
-2. Create a cache called `user-profiles`. You'll need to make sure that you choose the same region when generating a Momento API key in the next step.
+2. Create a cache called `user-profiles`. You will need to make sure that you choose the same region when generating a Momento API key in the next step.
 
 3. Generate your [API key](https://docs.momentohq.com/develop/authentication/api-keys) to use within your application, select the cloud provider and region your application is in to get the best performance.
 
