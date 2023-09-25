@@ -3,18 +3,18 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName1;;productName2
+inputParameters: productName
 ---
 
 # Configure Magic Tunnel health alerts
 
-Magic $1 and Magic $2 customers can configure Magic Tunnel health alerts to receive email, webhook, and / or PagerDuty notifications when the percentage of successful health checks for a Magic Tunnel drops below the selected [service-level objective (SLO)](https://en.wikipedia.org/wiki/Service-level_objective).
+$1 customers can configure Magic Tunnel health alerts to receive email, webhook, and / or PagerDuty notifications when the percentage of successful health checks for a Magic Tunnel drops below the selected [service-level objective (SLO)](https://en.wikipedia.org/wiki/Service-level_objective).
 
 Magic Tunnel health alerts will monitor the health check success rate of each Magic Tunnel included in the alert that has actively transferred traffic over the past six hours. Customers can define an SLO threshold for the percentage of health checks that must be successful for each Magic Tunnel. If the number of successful health checks for the Magic Tunnel(s) included in the alert drops below the SLO threshold, then an alert will fire.
 
 ## Alert data
 
-If a Magic Tunnel health alert is fired, customers can expect to see the following data in the email, webhook, and / or PagerDuty notification:
+If a Magic Tunnel health alert is fired, customers can expect the following data in the email, webhook, and / or PagerDuty notification:
 
 - Cloudflare account name
 - Cloudflare account ID
@@ -30,14 +30,13 @@ If a Magic Tunnel health alert is fired, customers can expect to see the followi
 At this time, Magic Tunnel health alerts can only be configured via API. Customers cannot currently configure the alerts via the Cloudflare dashboard. This functionality will be released in the near future. An example of the API configuration for Magic tunnel health alerts is provided below:
 
 ```js
-curl --request POST \
---url https://api.cloudflare.com/client/v4/accounts/IDENTIFIER/alerting/v3/policies \
+curl https://api.cloudflare.com/client/v4/accounts/IDENTIFIER/alerting/v3/policies \
 --header 'Authorization: Bearer undefined' \
 --header 'Content-Type: application/json' \
 --data '{
-    "name": "Name of the Magic tunnel health alert",
+    "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
     "alert_type": "magic_tunnel_health_check_event",
-    "description": "Description of the Magic tunnel health alert",
+    "description": "<DESCRIPTION_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
     "enabled": true,
     "filters": {
         "slo": [ "99.0" ],
@@ -45,8 +44,8 @@ curl --request POST \
     },
     "mechanisms": {
         "email": [ { "id": "test@example.com" } ],
-        "pagerduty": [ { "id": "e8133a15-00a4-4d69-aec1-32f70c51f6e5" } ],
-        "webhooks": [ { "id": "14cc1190-5d2b-4b98-a696-c424cb2ad05f" } ]
+        "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
+        "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
     }
 }'
 ```
