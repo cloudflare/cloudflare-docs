@@ -16,6 +16,7 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 * `authorization`: the content of the Authorization HTTP Header that should be used when contacting this provider. This usually starts with “Token” or “Bearer”.
 * `query`: the payload as the provider expects it in their official API. 
 
+
 ```bash
 ---
 header: Request
@@ -48,7 +49,7 @@ curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY  -X POST \
    		 "messages": [
    			 {
    				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? answer with the short as possible way please"
+   				 "content": "how to build a wooden spoon in 3 short steps? answer with the shortest possible way please"
    			 }
    		 ]
    	 }
