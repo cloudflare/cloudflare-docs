@@ -42,9 +42,13 @@ We plan on adding semantic search for caching in the future to improve cache hit
 {{</Aside>}}
 
 ### Rate limiting
-Rate limiting is helpful when you want to control the amount of traffic your application gets. If you are concerned about expensive bills, rate limiting can help cap your spending by limiting requests.
+Rate limiting is helpful when you want to control the traffic your application gets. If you are concerned about expensive bills or suspicious activity, rate limiting can help cap your spending or activity by limiting requests.
 
-You can define rate limits as the number of requests that get sent in a specific time frame. For example, I can limit my application to 100 requests per minute.
+You can define rate limits as the number of requests that get sent in a specific time frame. For example, I can limit my application to 100 requests per 60s.
+
+You can also select if you would like a **fixed** or **sliding** rate limiting technique. With rate limiting, we allow a certain number of requests within a window of time. If it's fixed, the window would be based on time, so there would be no more than x requests in a 10min window (for example). If it's sliding, it means that we would check that there are no more than x requests in the last 10 minutes. 
+
+To illustrate this, let's say you had a limit of 10 requests per 10 minutes, starting at 12:00 so the window is 12:00-12:10, 12:10-12:20, etc. If you sent 10 requests at 12:09  and 10 requests at 12:11, all 20 requests would be successful in a fixed window strategy, but would fail in a sliding window strategy (only the first 10 requests would be successful). 
 
 ### Editing your gateway
 You can also rename your gateway or the endpoint. Please note that by editing your gateway endpoint (not the gateway name in the dashboard), you'll need to update the endpoints in your code to reflect the updated changes.

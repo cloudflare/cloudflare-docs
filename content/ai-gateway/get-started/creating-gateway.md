@@ -10,9 +10,9 @@ In this guide, you will learn how to create your first AI Gateway. You can creat
 
 To set up an AI Gateway you will need to:
 
-1. Create a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
+1. Create a [Cloudflare account](https://dash.cloudflare.com/sign-up/)
 
-2. Navigate to [AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general) in the dashboard, under AI Lab
+2. Navigate to [AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general) in the dashboard, under the AI menu
 
 3. Create a new AI Gateway and enter your gateway name and URL slug
 
