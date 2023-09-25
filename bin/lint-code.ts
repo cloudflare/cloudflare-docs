@@ -44,7 +44,6 @@ async function main() {
 
 			// Go through the results
 			for (const result of results) {
-
 				if (result.errorCount > 0 || result.warningCount > 0) {
 					// TODO: Our own less spammy output or standard eslint output?
 					// console.log(`  Found ${result.errorCount} errors, ${result.warningCount} warnings. `

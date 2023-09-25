@@ -32,7 +32,7 @@ module.exports = {
 			},
 		],
 		'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1, maxBOF: 0 } ],
-		'max-len': ['error', { code: 120, tabWidth: 2 }],
+		'max-len': ['error', { code: 140, tabWidth: 2 }],
 
 		// Disabled due to them being code examples and being far too common
 		'no-undef': ['off'],
