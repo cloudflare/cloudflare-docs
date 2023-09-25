@@ -24,4 +24,4 @@ Changing Cache By Device Type setting will invalidate Cache.
 
 The Cloudflare for WordPress plugin automatically purges all cache variations for updated pages. 
 
-Cloudflare recommends that you use plugins that support cache by device type, which you may have to enable on the plugin. You will need to still test your plugins to make sure they behave as expected.
+Cloudflare recommends that you use plugins that support cache by device type, which you may have to enable on the plugin. You will still need to test your plugins to make sure they behave as expected.
