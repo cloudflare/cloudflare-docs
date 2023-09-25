@@ -80,5 +80,5 @@ For more information on the available configuration parameters, refer to the fol
 
 * For the (L7) DDoS protection rules for Origins, User-Agents, and Locations:<br>
   [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/)
-* For the DDoS protection rule for Protocols:<br>
+* For the (L3/4) DDoS protection rules for Protocols:<br>
   [Network-layer DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/network/override-parameters/)
