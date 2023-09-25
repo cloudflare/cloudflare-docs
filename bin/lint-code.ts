@@ -15,6 +15,7 @@ async function main() {
 	let foundErrors = false;
 
 	const lint = new ESLint({ fix });
+	const formatter = await lint.loadFormatter('stylish');
 
 	// Get all files
 	for (const file of await readDir(resolve('content'))) {
@@ -26,22 +27,40 @@ async function main() {
 		// Perf: Quick bail if there's no code block.
 		if (!content.includes('```')) continue;
 
-		console.log(`Linting ${file}...`);
+		// console.log(`Linting ${file}...`);
 
 		// Get all JS/TS code blocks
 		let match;
+		let codeBlockCount = 0;
 		while ((match = regex.exec(content)) !== null) {
+			codeBlockCount++;
+
 			// Get the codeblock and remove the header from the start (if it exists)
 			const codeBlock = match[1].replace(/^(?:---[\s\S]+?---[\s\S]+?)?/, '');
 
+			// Lint the code block with eslint
 			const results = await lint.lintText(codeBlock);
+			results.map((result) => result.filePath = `${file} (code block ${codeBlockCount})`);
 
+			// Go through the results
 			for (const result of results) {
-				console.log(`  Found ${result.errorCount} errors, ${result.warningCount} warnings. `
-					+ `${result.fixableErrorCount} errors are auto-fixable (npm run lint:fix).`,
-				);
 
-				if (result.errorCount > 0) foundErrors = true;
+				if (result.errorCount > 0 || result.warningCount > 0) {
+					// TODO: Our own less spammy output or standard eslint output?
+					// console.log(`  Found ${result.errorCount} errors, ${result.warningCount} warnings. `
+					// 	+ `${result.fixableErrorCount} errors are auto-fixable (npm run lint:fix).`,
+					// );
+					const resultText = formatter.format(results);
+					console.log(resultText);
+
+					// TODO: Implement --fix support
+					// const fixed = await ESLint.outputFixes(results);
+					// console.log(fixed);
+
+					if (result.errorCount > 0) {
+						foundErrors = true;
+					}
+				}
 			}
 		}
 	}

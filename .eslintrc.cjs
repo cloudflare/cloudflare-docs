@@ -16,6 +16,7 @@ module.exports = {
 	},
 	plugins: ['@typescript-eslint'],
 	rules: {
+		// Main rules
 		'indent': ['error', 'tab'],
 		'linebreak-style': ['error', 'unix'],
 		'quotes': ['error', 'single'],
@@ -31,7 +32,10 @@ module.exports = {
 			},
 		],
 		'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1, maxBOF: 0 } ],
-		'eol-last': ['error', 'always'],
 		'max-len': ['error', { code: 120, tabWidth: 2 }],
+
+		// Disabled due to them being code examples and being far too common
+		'no-undef': ['off'],
+		'@typescript-eslint/no-unused-vars': ['off'],
 	},
 };

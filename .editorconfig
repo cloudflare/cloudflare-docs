@@ -9,7 +9,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = false
 
-[*.{js,ts}]
+[*.{js,cjs,mjs,ts}]
 indent_size = 2
 indent_style = tab
 end_of_line = lf
