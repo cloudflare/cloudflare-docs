@@ -11,7 +11,7 @@ meta:
 [DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
 
 - **[Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/setup/)**: Both Cloudflare and your primary DNS provider know the signing keys of each other and perform their own live-signing of DNS records, in accordance with [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
-- **[On-the-fly signing](#enable-dnssec-for-hidden-primary-setup)**: If your domain is not delegated to your primary provider's nameservers and Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can choose this option to allow Cloudflare to perform live-signing of your DNS records.
+- **[Live signing](#enable-dnssec-for-hidden-primary-setup)**: If your domain is not delegated to your primary provider's nameservers and Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can choose this option to allow Cloudflare to perform live-signing of your DNS records.
 - **[Pre-signed zones](#set-up-dnssec-for-pre-signed-zones)**: Your primary DNS provider signs records and transfers out the signatures. Cloudflare then serves these records and signatures as is, without doing any signing. Cloudflare only supports [NSEC records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) (and not NSEC3 records) and this setup does not support [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) nor [Load Balancing](/load-balancing/).
 
 ---
@@ -24,7 +24,7 @@ Refer to [Set up multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/setup/) an
 
 ## Enable DNSSEC for hidden primary setup
 
-If you use Cloudflare secondary nameservers as the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can enable on-the-fly signing DNSSEC to have Cloudflare sign the records for your zone.
+If you use Cloudflare secondary nameservers as the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can enable live signing DNSSEC to have Cloudflare sign the records for your zone.
 
 In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
@@ -33,7 +33,7 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 1. Select your zone and go to **DNS** > **Settings**.
 
-2. Under **DNSSEC with Secondary DNS** select **On-the-fly signing**.
+2. Under **DNSSEC with Secondary DNS** select **Live signing**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
