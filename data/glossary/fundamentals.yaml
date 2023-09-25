@@ -160,7 +160,7 @@ entries:
 
 - term: roles
   general_definition: |-
-    Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/account-and-billing/members/roles/).
+    Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/setup/manage-members/roles/).
   associated_products: []
   related_terms: []
   cloudflare_specific: false
