@@ -29,7 +29,7 @@ To set up an integration with Turso:
   $ turso --version
   ```
 
-2. Before you create your first Turso database, you have to authenticate with your GitHub account with the command:
+2. Before you create your first Turso database, you have to authenticate with your GitHub account by running:
 
   ```sh
   $ turso auth login
