@@ -80,6 +80,12 @@ If your primary DNS provider uses NSEC3 instead of NSEC, Cloudflare will fail to
 1. Enable DNSSEC at your primary DNS provider.
 2. Enable DNSSEC for your zone at Cloudflare, using either the Dashboard or the API.
 
+{{<Aside type="warning">}}
+
+Pre-signed DNSSEC does not support [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) nor [Load Balancing](/load-balancing/).
+
+{{</Aside>}}
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
