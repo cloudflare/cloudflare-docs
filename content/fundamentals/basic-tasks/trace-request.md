@@ -1,5 +1,5 @@
 ---
-title: Trace a request
+title: Trace a request (beta)
 pcx_content_type: how-to
 meta:
   title: Trace a request with Cloudflare Trace (beta)
@@ -9,7 +9,7 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Trace follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
+Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
 
