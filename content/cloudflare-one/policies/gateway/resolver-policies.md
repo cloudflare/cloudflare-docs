@@ -1,11 +1,11 @@
 ---
-pcx_content_type: reference
-title: Global policies
+pcx_content_type: configuration
+title: Custom resolver policies
 layout: single
-weight: 7
+weight: 6
 ---
 
-# Global policies
+# Custom resolver policies
 
 Cloudflare Zero Trust applies a set of global policies to all accounts.
 
