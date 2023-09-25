@@ -34,15 +34,15 @@ The name of a list must comply with the following requirements:
 * The name uses only lowercase letters, numbers, and the underscore (`_`) character in the name. A valid name satisfies this regular expression: `^[a-z0-9_]+$`.
 * The maximum length of a list name is 50 characters.
 
-## Working with lists
+## Work with lists
 
-### Creating and editing lists
+### Create and edit lists
 
 You can [create lists in the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/) or using the [Lists API](/waf/tools/lists/lists-api/).
 
 After creating a list, you can add and remove items from the list, but you cannot change the list name or type.
 
-### Using lists in expressions
+### Use lists in expressions
 
 Both the Cloudflare dashboard and the Cloudflare API support lists:
 
@@ -52,6 +52,14 @@ Both the Cloudflare dashboard and the Cloudflare API support lists:
 {{<Aside type="warning">}}
 Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each [individual product](/products/) for details on list support.
 {{</Aside>}}
+
+### Search list items
+
+You can search for list items in the dashboard or [via API](/api/operations/lists-get-list-items).
+
+For IP Lists, Cloudflare will return IP addresses/ranges that start with your search query (search by prefix). Currently, you cannot search for an IP address contained in a CIDR range of an IP List.
+
+For Bulk Redirect Lists, Cloudflare will return the URL redirects in the list where the source URL or target URL contain your search query (search by substring).
 
 ## Availability
 
