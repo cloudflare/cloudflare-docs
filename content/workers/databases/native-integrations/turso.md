@@ -23,7 +23,7 @@ To set up an integration with Turso:
   $ curl -sSfL https://get.tur.so/install.sh | bash
   ```
 
-  Next, Run the following command to make sure the Turso CLI is installed:
+  Next, run the following command to make sure the Turso CLI is installed:
 
   ```sh
   $ turso --version
