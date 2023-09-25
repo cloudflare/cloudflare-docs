@@ -76,8 +76,10 @@ To customize the App Launcher appearance:
     - A preferred color for the **Log in** button text
 
     All of the properties configured in Step 3 will also apply to the landing page.
+
+   Note: We recommend lighter background colors because the font defaults to black.
   
-5. Once you are satisfied with your customization, select **Save**.
+6. Once you are satisfied with your customization, select **Save**.
 
 The App Launcher screens are now updated. To view your changes, select **Preview**.
 
