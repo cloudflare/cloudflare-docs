@@ -33,12 +33,14 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 1. Select your zone and go to **DNS** > **Settings**.
 
-2. Under **DNSSEC with Secondary DNS** select **Live signing**.
+2. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
+
+3. {{<render file="_dnssec-registrar-steps.md">}}
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
+1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
 
 ```bash
 curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
@@ -49,9 +51,14 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
    "status": "active"
   }'
 ```
- 
+
+2. Use the [DNSSEC Details endpoint](/api/operations/dnssec-dnssec-details) to get the necessary values to create a **DS** record at your registrar.
+
+3. {{<render file="_dnssec-registrar-steps.md">}}
+
 {{</tab>}}
 {{</tabs>}}
+
 
 ---
 
