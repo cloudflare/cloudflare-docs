@@ -5,7 +5,7 @@ title: Turso
 
 # Turso
 
-[Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. It was designed to minimize query latency for applications where queries comes from anywhere in the world.
+[Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. Turso was designed to minimize query latency for applications where queries comes from anywhere in the world.
 
 {{<render file="_database_integrations_definition.md">}}
 
