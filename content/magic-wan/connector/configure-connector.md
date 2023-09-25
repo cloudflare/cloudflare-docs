@@ -10,6 +10,8 @@ weight: 1
 
 You need [Magic WAN](/magic-wan/get-started/) to be able to use the Magic WAN Connector (beta). The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
+{{<Aside type="note">}}LAN to LAN communication in Magic WAN Connector is not yet supported. If you have a LAN set up on port one of Magic WAN Connector and need to communicate with the LAN set up behind LAN port two, packets will be routed through Cloudflare first before reaching their destination.{{</Aside>}}
+
 Refer to the following steps to configure your Magic WAN Connector.
 
 ## 1. Purchase a Magic WAN Connector device
