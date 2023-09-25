@@ -127,6 +127,14 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
   - Upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers `dev.www.example.com`.
   - Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls)
 
+{{<Aside type="note">}}
+
+The following [`openssl`](https://www.openssl.org/) command might help troubleshooting TLS handshake between the client and the Cloudflare Edge:
+
+`openssl s_client -connect example.com:443 -servername example.com version`
+
+{{</Aside>}}
+
 ___
 
 
