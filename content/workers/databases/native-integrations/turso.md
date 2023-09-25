@@ -13,7 +13,7 @@ title: Turso
 
 To set up an integration with Turso:
 
-1. You need to install Turso CLI to create and populate a database, Use one of the following two commands in your terminal to install the Turso CLI:
+1. You need to install Turso CLI to create and populate a database. Use one of the following two commands in your terminal to install the Turso CLI:
 
   ```sh
   # On macOS and linux with homebrew
