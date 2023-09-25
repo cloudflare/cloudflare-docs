@@ -7,7 +7,7 @@ entries:
   description: |-
     Low-Latency HTTP Live Streaming (LL-HLS) is now in open beta. Enable LL-HLS on your [live input](/stream/stream-live/start-stream-live/) for automatic low-latency playback using the Stream built-in player where supported.
 
-    For more, refer to [live input](/stream/stream-live/start-stream-live/) and [custom player](/stream/viewing-videos/using-own-player/) docs.
+    For more information, refer to [live input](/stream/stream-live/start-stream-live/) and [custom player](/stream/viewing-videos/using-own-player/) docs.
 - publish_date: '2023-08-08'
   title: Scheduled Deletion
   description: |-
