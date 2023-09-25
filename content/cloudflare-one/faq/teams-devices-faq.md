@@ -47,7 +47,7 @@ A third-party service or ISP may be blocking WARP, or Zero Trust settings may be
 
 ## Why is my device not connecting to the corporate Wi-Fi?
 
-An [OS firewall rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall) on the device may be blocking the EAP/Radius server that allows users to join the Wi-Fi network. If your corporate Wi-Fi uses a Radius server for network authentication, ensure that the Radius server is on your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list.
+An [OS firewall rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall) on the device may be blocking the EAP/Radius server that allows users to join the Wi-Fi network. If your corporate Wi-Fi uses a Radius server for network authentication, add the Radius server to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list.
 
 ## Why is my device not connecting to my private network?
 
