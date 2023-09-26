@@ -26,7 +26,7 @@ This guide will use Okta as the SCIM provider.
 
 {{<tutorial-prereqs>}}
 
-- In Cloudflare, [Super Administrator](/fundamentals/account-and-billing/members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
+- In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
 - In Okta, access to the `Create groups` and `Manage applications` [permissions](https://help.okta.com/en-us/Content/Topics/Security/custom-admin-role/about-role-permissions.htm).
 
 {{</tutorial-prereqs>}}
