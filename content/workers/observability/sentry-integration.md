@@ -11,7 +11,7 @@ This integration allows you to connect to a Sentry project from your Worker to a
 
 ## How it works
 
-This integration adds a [Tail Worker](/workers/observability/tail-workers) to your application Worker. The Tail Worker uses [Sentry's Javascript SDK](https://github.com/getsentry/sentry-javascript) to send errors and uncaught exceptions to the Sentry project you have configured.
+This integration adds a [Tail Worker](/workers/observability/tail-workers) to your application Worker. The Tail Worker automatically sends errors and uncaught exceptions to the Sentry project you have configured.
 
 This integration supports the following Sentry features:
 - **[Data Handling](https://develop.sentry.dev/sdk/data-handling/)**: As a best practice, do not include PII or other sensitive data in the payload sent to Sentry. HTTP headers (eg. Authorization or Cookie) can be removed before events are forwarded to Sentry.
@@ -39,3 +39,8 @@ To set up an integration with Sentry:
 
 Once installed, the integration will automatically start forwarding matching events to Sentry. To learn more about Sentry, refer to [Sentry's official documentation](https://docs.sentry.io/).
 
+{{<Aside type="warning">}}
+
+Each Cloudflare account can only be linked to one Sentry organization. Use the [Sentry SDK](https://github.com/getsentry/sentry-javascript) in order to send events to projects in more than one Sentry organization
+
+{{</Aside>}}
