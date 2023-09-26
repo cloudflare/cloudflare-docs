@@ -6,7 +6,7 @@ weight: 1
 
 # Pools
 
-{{<render file="_pool-definition.md">}}
+{{<glossary-definition term_id="origin pool">}}
 
 {{<Aside type="note">}}
 
