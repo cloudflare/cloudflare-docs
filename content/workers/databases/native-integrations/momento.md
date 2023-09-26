@@ -26,8 +26,8 @@ To set up an integration with Momento Cache:
     4. Select **Integrations** > **Momento**. 
     5. Follow the setup flow, review and grant permissions needed to add secrets to your Worker.
     6. Next, connect to Momento.
-    7. Select your region.
-    8. Select **Add integration**
+    7. Select a preferred region.
+    8. Click **Add integration**.
 
 4. The following example code show how to set an item in your cache, get it, and return it as a JSON object. The credentials needed to connect to Momento Cache have been automatically added as [secrets](/workers/configuration/secrets/) to your Worker through the integration.
 
