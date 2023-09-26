@@ -41,6 +41,6 @@ Once installed, the integration will automatically start forwarding matching eve
 
 {{<Aside type="warning">}}
 
-Each Cloudflare account can only be linked to one Sentry organization. Use the [Sentry SDK](https://github.com/getsentry/sentry-javascript) in order to send events to projects in more than one Sentry organization
+Each Cloudflare account can only be linked to one Sentry organization. Use the [Sentry SDK](https://github.com/getsentry/sentry-javascript) in order to send events to projects in more than one Sentry organization.
 
 {{</Aside>}}
