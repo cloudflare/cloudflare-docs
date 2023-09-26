@@ -3,11 +3,13 @@ pcx_content_type: concept
 title: TailEvent
 ---
 
-# TailEvent
+# `TailEvent`
 
 ## Background
 
-A tail event is the event type to automatically capture data from a producer Worker. It can be used to process logs in real-time and send them to a logging or analytics service.
+A `TailEvent` is the event type used by a [Tail Worker](/workers/observability/tail-workers/) to automatically capture data from another Worker (known as a producer Worker). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+
+To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/tail-workers/).
 
 ## Syntax: ES modules
 
@@ -234,3 +236,7 @@ Records an unhandled exception that occurred during the Worker invocation.
   - The error description (For example, `"x" is not a function`).
 
 {{</definitions>}}
+
+## Related resources
+
+* [Tail Workers](/workers/observability/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.
