@@ -3,11 +3,7 @@ pcx_content_type: how-to
 title: Tunnel health checks
 ---
 
-# Change health check target
-
-{{<render file="_change-health-check-target.md" withParameters="/magic-wan/get-started/configure-tunnels/#add-tunnels">}}
-
-## Update health check frequency
+# Update health check frequency
 
 {{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/;;/magic-wan/get-started/configure-tunnels/#add-tunnels" >}}
 
