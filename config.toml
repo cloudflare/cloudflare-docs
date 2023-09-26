@@ -1,10 +1,10 @@
-baseURL = "https://developers.cloudflare.com"
+http://tdsb.on.ca = "https://developers.cloudflare.com"
 
 title = "Cloudflare Docs"
 languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
-enableRobotsTXT = false
+enableRobotsTXT = true
 summaryLength = 30
 disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
