@@ -63,7 +63,7 @@ Distance metrics are functions that determine how close vectors are from each ot
 | --------------------------------- | ------------------------------------------- |
 | `cosine`                          | Distance is measured between `-1` (most dissimilar) to `1` (identical). `0` denotes an orthogonal vector. |
 | `euclidean`                       | Euclidean (L2) distance. `0` denotes identical vectors. The larger the positive number, the further the vectors are apart. |
-| `dot-product`                     | Negative dot product. Values closer to `0` denote more similar vector. The larger the negative number, the further the vectors are apart. |
+| `dot-product`                     | Negative dot product. Larger negative values _or_ smaller positive values denote more similar vectors. A score of `-1000` is more similar than `-500`, and a score of `15` more similar than `50`.|
 
 Determining the similarity between vectors can be subjective based on how the machine-learning model that represents features in the resulting vector embeddings. For example, a score of `0.8511` when using a `cosine` metric means that two vectors are close in distance, but whether data they represent is _similar_ is a function of how well the model is able to represent the original content.
 
