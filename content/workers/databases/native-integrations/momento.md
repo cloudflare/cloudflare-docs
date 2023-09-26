@@ -28,7 +28,7 @@ To set up an integration with Momento Cache:
     4. Select **Integrations** > **Momento**. 
     5. Follow the setup flow, selecting the cache created in step 1.
 
-5. The following example code show how to set an item in your cache, get it, and return it as a JSON object. The credentials needed to connect to Momento Cache have been automatically added as secrets to your Worker through the integration.
+5. The following example code show how to set an item in your cache, get it, and return it as a JSON object. The credentials needed to connect to Momento Cache have been automatically added as [secrets](/workers/configuration/secrets/) to your Worker through the integration.
 
     ```ts
     export default {
