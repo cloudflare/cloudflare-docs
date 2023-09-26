@@ -3,7 +3,7 @@ productName: SSL/TLS
 entries:
 - term: Authenticated Origin Pulls
   general_definition: |-
-    Authenticated Origin Pulls allow origin web servers to validate that a web request came from Cloudflare using TLS client certificate authentication.
+    authenticated Origin Pulls allow origin web servers to validate that a web request came from Cloudflare using TLS client certificate authentication.
   associated_products: 
     - Cloudflare One
   related_terms: []
@@ -25,14 +25,14 @@ entries:
 
 - term: Certificate Authority (CA)
   general_definition: |-
-    A CA is a trusted third party that provides SSL certificates for encrypting network traffic.
+    a CA is a trusted third party that provides SSL certificates for encrypting network traffic.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
 
 - term: Certification Authority Authorization (CAA) record
   general_definition: |-
-    A CAA record declares which CAs are allowed to issue an SSL certificate for a domain.
+    a CAA record declares which CAs are allowed to issue an SSL certificate for a domain.
   associated_products: []
   related_terms:
     - Certificate Authority
@@ -40,28 +40,28 @@ entries:
 
 - term: certificate packs
   general_definition: |-
-    Certificate packs allow Cloudflare to fallback to a different SSL certificate for browsers that do not support the latest standards. Certificate packs allow Custom SSL certificates to contain different signature algorithms for the same hostnames listed within the SSL certificate without taking up additional Custom SSL certificate quota for your Cloudflare account.
+    certificate packs allow Cloudflare to fallback to a different SSL certificate for browsers that do not support the latest standards. Certificate packs allow Custom SSL certificates to contain different signature algorithms for the same hostnames listed within the SSL certificate without taking up additional Custom SSL certificate quota for your Cloudflare account.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
 
 - term: certificate pinning
   general_definition: |-
-    Certificate pinning is a security mechanism used to prevent on-path attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it is trusted by the system, the application will refuse to connect.
+    certificate pinning is a security mechanism used to prevent on-path attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it is trusted by the system, the application will refuse to connect.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
 
 - term: cipher suite
   general_definition: |-
-    A set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
+    a set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
 
 - term: encryption algorithm
   general_definition: |-
-    An encryption algorithm is a set of mathematical operations performed on data to ensure the data is only understood by the intended recipient.
+    an encryption algorithm is a set of mathematical operations performed on data to ensure the data is only understood by the intended recipient.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
@@ -75,7 +75,7 @@ entries:
 
 - term: intermediate certificate
   general_definition: |-
-    For security purposes, CAs issue intermediate certificates for signing website certificates. Intermediate certificates provide a means for the CA to revoke a single intermediate certificate, thus affecting only a small subset of website certificates.
+    for security purposes, CAs issue intermediate certificates for signing website certificates. Intermediate certificates provide a means for the CA to revoke a single intermediate certificate, thus affecting only a small subset of website certificates.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
@@ -90,7 +90,7 @@ entries:
 
 - term: origin certificate
   general_definition: |-
-    A Cloudflare Origin Certificate is a free SSL/TLS certificate issued by Cloudflare that can be installed on your origin server to facilitate making sure your data is encrypted in transit from Cloudflare to your origin server using HTTPS.
+    a Cloudflare Origin Certificate is a free SSL/TLS certificate issued by Cloudflare that can be installed on your origin server to facilitate making sure your data is encrypted in transit from Cloudflare to your origin server using HTTPS.
   associated_products: 
     - Cloudflare One
   related_terms: []
@@ -120,7 +120,7 @@ entries:
 
 - term: root certificate
   general_definition: |-
-    A root certificate is generated by a CA and is used to sign certificates. Every browser includes a root store of trusted root certificates. Any certificate signed with the private key of a root certificate is automatically trusted by a browser.
+    a root certificate is generated by a CA and is used to sign certificates. Every browser includes a root store of trusted root certificates. Any certificate signed with the private key of a root certificate is automatically trusted by a browser.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
@@ -128,30 +128,15 @@ entries:
 - term: Secure Sockets Layer (SSL)
   general_definition: |-
     SSL was a widely used cryptographic protocol for providing data security for Internet communications. SSL was superseded by TLS; however, most people still refer to Internet cryptographic protocols as SSL.
-  associated_products: []
-  related_terms:
-    - TLS
-  cloudflare_specific: false
 
 - term: Server Name Indication (SNI)
   general_definition: |-
     SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. Cloudflare uses SNI for all Universal SSL certificates.
-  associated_products: []
-  related_terms: []
-  cloudflare_specific: false
 
 - term: TLS (Transport Layer Security)
   general_definition: |-
     TLS is a cryptographic protocol that ensures data security over a computer network, such as the Internet. It encrypts the data that is transmitted between a user's computer and a web server.
-  associated_products: []
-  related_terms: 
-    - SSL
-  cloudflare_specific: false
 
 - term: Universal SSL certificate
   general_definition: |-
-    By default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/account-setup/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.
-  associated_products: []
-  related_terms:
-    - SSL certificate
-  cloudflare_specific: false
+    by default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/account-setup/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.

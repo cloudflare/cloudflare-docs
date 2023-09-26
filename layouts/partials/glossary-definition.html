@@ -19,10 +19,10 @@
 
 {{- $rawDefinition := $term_info.definition }}
 {{- if $prepend -}}
-{{- $rawDefinition = printf "%s%s" $prepend . -}}
+{{- $rawDefinition = printf "%s%s" $prepend $rawDefinition -}}
 {{- end -}}
 
-{{- $definition := $rawDefinition -}}
+{{- $definition := $rawDefinition | strings.FirstUpper -}}
 
 {{- if not $showFullDefinition -}}
 {{- $definition = index (index (findRESubmatch `([^\n]+)` $definition 1) 0) 0 -}}

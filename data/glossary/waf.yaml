@@ -3,23 +3,19 @@ productName: WAF
 entries:
 - term: allowlist
   general_definition: |-
-    An allowlist list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
-  associated_products: 
-  related_terms:
-    - blocklist
-  cloudflare_specific: false
+    an allowlist list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
 
 - term: blocklist
   general_definition: |-
-    A blocklist is a list of items (usually websites, IP addresses, email addresses, etc.) that are prevented from accessing a system.
-  associated_products: 
-  related_terms:
-    - allowlist
-  cloudflare_specific: false
+    a blocklist is a list of items (usually websites, IP addresses, email addresses, etc.) that are prevented from accessing a system.
 
 - term: firewall
   general_definition: |-
-    A firewall is a security system that monitors and controls network traffic based on a set of security rules.
-  associated_products: []
-  related_terms: []
-  cloudflare_specific: false
+    a firewall is a security system that monitors and controls network traffic based on a set of security rules.
+
+
+- term: SIEM
+  general_definition: |-
+    Security Information and Event Management (SIEM) solutions provide analysis of log data from various systems.
+  associated_products: 
+    - Cloudflare One

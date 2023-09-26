@@ -52,7 +52,7 @@
         {{- range sort $glossaryEntries "word" "asc" -}} 
         <tr class="data-row">
           <td class="termColumn">{{ .word }}</td>
-          <td>{{ .definition | $.Page.RenderString }}</td>
+          <td>{{ .definition | strings.FirstUpper | $.Page.RenderString }}</td>
           {{- with $product -}}
           {{- else -}}
           <td>{{ .products | $.Page.RenderString }}</td>
