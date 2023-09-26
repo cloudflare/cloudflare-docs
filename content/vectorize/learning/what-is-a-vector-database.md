@@ -83,7 +83,7 @@ Refer to the [dimensions](/vectorize/learning/create-indexes/#dimensions) docume
 
 ### Distance metrics
 
-The distance metric an index uses for vector search define how it determines how "close" your query vector is to other vectors within the the index.
+The distance metric an index uses for vector search defines how it determines how "close" your query vector is to other vectors within the index.
 
 - Distance metrics determine how the vector search engine assesses “similarity” between vectors.
 - Cosine, Euclidean (L2), and Dot Product are the most commonly used distance metrics in vector search.

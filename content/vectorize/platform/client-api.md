@@ -22,7 +22,9 @@ let inserted = await env.YOUR_INDEX.insert(vectorsToInsert)
 
 Inserts vectors into the index. Returns the count of vectors inserted and their IDs.
 
-If vectors with the same vector ID already exist in the index, an exception will be thrown: vector IDs must be unique. If you need to update existing vectors, use the [upsert](#upsert-vectors) operation.
+If vectors with the same vector ID already exist in the index, only the vectors with new IDs will be inserted. The returned `VectorizeVectorMutation` will return a `count` and an `ids` array with IDs of the vectors inserted into the index, and omit IDs that already exist in the index.
+
+If you need to update existing vectors, use the [upsert](#upsert-vectors) operation.
 
 ### Upsert vectors
 
@@ -60,7 +62,7 @@ let matches = await env.YOUR_INDEX.query(queryVector, { topK: 5, returnVectors: 
 ### Get vectors by ID
 
 ```ts
-let ids = [11, 22, 33, 44];
+let ids = ["11", "22", "33", "44"];
 const vectors = await env.YOUR_INDEX.getByIds(ids);
 ```
 
@@ -69,7 +71,7 @@ Retrieves the specified vectors by their ID, including values and metadata.
 ### Delete vectors by ID
 
 ```ts
-let idsToDelete = [1, 2, 3, 4, 5];
+let idsToDelete = ["11", "22", "33", "44"];
 const deleted = await env.YOUR_INDEX.deleteByIds(idsToDelete);
 ```
 

@@ -48,7 +48,7 @@ As an example, the following table highlights some example embeddings models and
 | Workers AI - `@cf/baai/bge-base-en-v1.5`  | 768                  | Text                  |
 | OpenAI - `ada-002`                        | 1536                 | Text                  |
 | Cohere - `embed-multilingual-v2.0`        | 768                  | Text                  |
-| Google Cloud - `multimodalembedding`      | 1408                 | Mulitmodal (text, images) |
+| Google Cloud - `multimodalembedding`      | 1408                 | Multi-modal (text, images) |
 
 {{<Aside type="note" header="Learn more about Workers AI">}}
 
