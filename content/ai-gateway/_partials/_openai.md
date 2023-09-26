@@ -31,7 +31,7 @@ curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai/chat/comple
 ```
 
 
-If you’re using a library like openai-node, set the baseUrl to your OpenAI endpoint like this:
+If you’re using a library like openai-node, set the `baseURL` to your OpenAI endpoint like this:
 
 ```javascript
 ---
@@ -41,7 +41,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
 	apiKey: 'my api key', // defaults to process.env["OPENAI_API_KEY"]
-	baseUrl: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai"
+	baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai"
 });
 
 ```
