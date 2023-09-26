@@ -102,11 +102,10 @@ To enable access management, Cache and bot management features, you must set up 
 
 To enable access through `r2.dev` for your buckets:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
-2. In **R2**, select the bucket you want to modify.
+1. In **R2**, select the bucket you want to modify.
 3. On the bucket page, select **Settings**.
-4. In **Settings**, go to **Bucket Access**.
-5. Under **Bucket Details** > **R2.dev subdomain**, select **Allow Access**.
+4. In **Settings**, go to **Public Access**.
+5. Under **R2.dev subdomain**, select **Allow Access**.
 6. In **Allow Public Access?**, confirm your choice by typing ‘allow’ to confirm and select **Allow**.
 7. You can now access the bucket and its objects using the Public Bucket URL.
 
