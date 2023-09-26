@@ -90,7 +90,7 @@ To set up an integration with Turso:
   $ npm install @libsql/client
   ```
 
-6. The following example shows how to make a query to your Turso database in a Worker. The credentials needed to connect to Turso have been automatically added as secrets to your Worker through the integration.
+6. The following example shows how to make a query to your Turso database in a Worker. The credentials needed to connect to Turso have been automatically added as [secrets](/workers/configuration/secrets/) to your Worker through the integration.
 
   ```ts
     import { Client as LibsqlClient, createClient } from "@libsql/client/web";
