@@ -6,6 +6,8 @@ pcx_content_type: get-started
 
 # Get started
 
+{{<render file="_vectorize-beta.md">}}
+
 Vectorize is Cloudflare's vector database. Vector databases allow you to use machine learning (ML) models to perform semantic search, recommendation, classification and anomaly detection tasks, as well as provide context to LLMs (Large Language Models).
 
 This guide will instruct you through:
@@ -82,11 +84,7 @@ To create an index, you will need to use the `wrangler vectorize create` command
 
 In addition, you will need to define both the [`dimensions`](/vectorize/learning/what-are-embeddings/) of the vectors you will store in the index, as well as the distance [`metric`](/learning/distance-metrics/) used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
-{{<Aside type="note" heading="Wrangler version required">}}
-
-Ensure you are using `wrangler` version `3.11.0` or later to use the `wrangler vectorize` commands.
-
-{{</Aside>}}
+{{<render file="_vectorize-wrangler-version.md">}}
 
 Run the following `wrangler vectorize` command:
 
@@ -96,7 +94,7 @@ $ npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
 ✅ Successfully created index 'tutorial-index'
 
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+binding = "TUTORIAL_INDEX" # i.e. available in your Worker on env.TUTORIAL_INDEX
 index_name = "tutorial-index"
 ```
 
@@ -114,7 +112,7 @@ filename: wrangler.toml
 ---
 
 [[[vectorize]]
-binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+binding = "TUTORIAL_INDEX" # i.e. available in your Worker on env.TUTORIAL_INDEX
 index_name = "tutorial-index"
 ```
 
@@ -126,20 +124,56 @@ Specifically:
 
 ## 4. Insert vectors
 
-TODO: insert vectors why / how / etc
+Before we can query a vector database, we need to insert vectors for it to query against. In practice, these vectors would be generated from data (text, images, etc) we pass to a machine learning model, but we're going to define some static vectors to illustrate how vector search works on its own.
 
 First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `TUTORIAL_INDEX`:
 
 ```typescript
 ---
-filename: "src/worker.ts"
+filename: src/worker.ts
 ---
 
-interface Env {
-  VECTORIZE_INDEX: VectorizeIndex;
+export interface Env {
+	// This makes our vector index methods available on env.TUTORIAL_INDEX.*
+	// e.g. env.TUTORIAL_INDEX.insert() or .query()
+	TUTORIAL_INDEX: VectorizeIndex;
 }
+
+// Sample vectors: 3 dimensions wide.
+//
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
+	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
+	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
+	{ id: '4', values: [75.1, 67.1, 29.9], metadata: { url: '/products/sku/418313' } },
+	{ id: '5', values: [58.8, 6.7, 3.4], metadata: { url: '/products/sku/55519183' } },
+];
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		let path = new URL(request.url).pathname;
+		if (path !== '/') {
+			return new Response('', { status: 404 });
+		}
+
+		// We only need to insert vectors into our index once
+		if (path === '/insert') {
+			// Insert some sample vectors into our index
+			// In a real application, these vectors would be the output of a machine learning (ML) model,
+			// such as Workers AI, OpenAI, or Cohere.
+			let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+
+			// Return the number of IDs we successfully inserted
+			return Response.json(inserted);
+		}
+
+		return Response.json({text: "nothing to do... yet"}, { status: 404 })
+	}
+};
 ```
 
 In the code above, you:
@@ -148,10 +182,82 @@ In the code above, you:
 * Specify a set of example vectors that you will query against in the next step
 * Insert those vectors into the index and confirm it was successful.
 
+In the next step, you will expand the Worker to query the index and the vectors we insert.
+
 ## 5. Query vectors (semantic search)
 
-While in your project directory...
 
+First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with your Vectorize index.
+
+Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+
+```typescript
+---
+filename: src/worker.ts
+---
+export interface Env {
+	// This makes our vector index methods available on env.TUTORIAL_INDEX.*
+	// e.g. env.TUTORIAL_INDEX.insert() or .query()
+	TUTORIAL_INDEX: VectorizeIndex;
+}
+
+// Sample vectors: 3 dimensions wide.
+//
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
+	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
+	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
+	{ id: '4', values: [75.1, 67.1, 29.9], metadata: { url: '/products/sku/418313' } },
+	{ id: '5', values: [58.8, 6.7, 3.4], metadata: { url: '/products/sku/55519183' } },
+];
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		let path = new URL(request.url).pathname;
+		if (path !== '/') {
+			return new Response('', { status: 404 });
+		}
+
+		// We only need to insert vectors into our index once
+		if (path === '/insert') {
+			// Insert some sample vectors into our index
+			// In a real application, these vectors would be the output of a machine learning (ML) model,
+			// such as Workers AI, OpenAI, or Cohere.
+			let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+
+			// Return the number of IDs we successfully inserted
+			return Response.json(inserted);
+		}
+
+		// return Response.json({text: "nothing to do... yet"}, { status: 404 })
+
+		// In a real application, we would take a user query - e.g. "what is a
+		// vector database" - and transform it into a vector emebedding first.
+		//
+		// In this example, we're going to construct a simple vector that should
+		// match vector id #5
+		let queryVector: Array<number> = [54.8, 5.5, 3.1];
+
+		// Query our index and return the three (topK = 3) most similar vector
+		// IDs with their similarity score.
+		//
+		// By default, vector values are not returned, as in many cases the
+		// vectorId and scores are sufficient to map the vector back to the
+		// original content it represents.
+		let matches = await env.TUTORIAL_INDEX.query(queryVector, { topK: 3, returnVectors: true });
+
+		return Response.json({
+			// This will return the closest vectors: we'll see that the vector
+			// with id = 5 has the highest score (closest to 1.0) as the
+			// distance between it and our query vector is the smallest.
+			// We return the full set of matches so we can see the possible scores.
+			matches: matches,
+		});
+	},
+};
+```
 ## 6. Deploy your Worker
 
 Before deploying your Worker globally, log in with your Cloudflare account by running:
@@ -169,20 +275,85 @@ $ npx wrangler deploy
 # Outputs: https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
-You can now visit the URL for your newly created project to query your live application! Open the URL in your web browser and you should see the following output:
+## 7. Query your index
+
+You can now visit the URL for your newly created project to insert vectors and then query them. With the URL for your deployed Worker - e.g. `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` - open your browser and:
+
+1. Insert our vectors first by visting `/insert` — this should return the below:
 
 ```json
-
+// https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/insert
+{"count":5,"ids":[1,2,3,4,5]}
 ```
 
-The output includes:
+Subsequent visits will return `count:0` as you cannot `.insert()` the same vector IDs.
 
-* similar scores
-* vectors
-* metadata
+2. Query our index - we expect our query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` - by visting the root path of `/` . This will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
 
-By finishing this tutorial, you have created a vector database, a Worker to access that database and deployed your project globally.
+You will see that `vectorId: 5` has a `score` of `0.999909486`: because we're using `cosine` as our distance metric, the closer the score to `1.0`, the closer our vectors are.
+
+```json
+// https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/
+{
+  "matches": {
+    "count": 3,
+    "matches": [
+      {
+        "score": 0.999909486,
+        "vectorId": "5",
+        "vector": {
+          "id": "5",
+          "values": [
+            58.79999923706055,
+            6.699999809265137,
+            3.4000000953674316
+          ],
+          "metadata": {
+            "url": "/products/sku/55519183"
+          }
+        }
+      },
+      {
+        "score": 0.789848214,
+        "vectorId": "4",
+        "vector": {
+          "id": "4",
+          "values": [
+            75.0999984741211,
+            67.0999984741211,
+            29.899999618530273
+          ],
+          "metadata": {
+            "url": "/products/sku/418313"
+          }
+        }
+      },
+      {
+        "score": 0.611976262,
+        "vectorId": "2",
+        "vector": {
+          "id": "2",
+          "values": [
+            15.100000381469727,
+            19.200000762939453,
+            15.800000190734863
+          ],
+          "metadata": {
+            "url": "/products/sku/10148191"
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+From here, we could experiment by passing a different `queryVector` and observing the results: the matches and the `score` should change based on the change in distance between the query vector and the vectors in our index.
+
+In a real-world application, the `queryVector` would be the vector embedding representation of a query from a user or system, and our `sampleVectors` would be generated from real content. To build on this example, see the [vector search tutorial](/vectorize/get-started/workers-ai/) that combines Workers AI + Vectorize to build an end-to-end application with Workers.
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com/).
+* [Build an end-to-end vector search application](/vectorize/get-started/workers-ai/) using Workers AI and Vectorize.
+* Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/)
+* See [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers

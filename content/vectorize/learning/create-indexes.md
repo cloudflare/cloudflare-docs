@@ -20,15 +20,19 @@ The configuration of an index cannot be changed after creation.
 
 ### wrangler CLI
 
+{{<render file="_vectorize-wrangler-version.md">}}
+
 To create an index with `wrangler`:
 
 ```sh
 $ npx wrangler vectorize create your-index-name --dimensions=NUM_DIMENSIONS --metric=SELECTED_METRIC
 ```
 
-### Cloudflare dashboard
+For example, to create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/embedding/) embedding model, which outputs vectors with 768 dimensions:
 
-TODO
+```sh
+$ npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
+```
 
 ## Dimensions
 
@@ -42,21 +46,26 @@ As an example, the following table highlights some example embeddings models and
 
 | Model / Embeddings API                    | Output dimensions    | Use-case              |
 | ----------------------------------------- | -------------------- | --------------------- |
-| Workers AI - `@cloudflare/bge-small-en`   | 384                  | Text                  |
+| Workers AI - `@cf/baai/bge-base-en-v1.5`  | 768                  | Text                  |
 | OpenAI - `ada-002`                        | 1536                 | Text                  |
 | Cohere - `embed-multilingual-v2.0`        | 768                  | Text                  |
 | Google Cloud - `multimodalembedding`      | 1408                 | Mulitmodal (text, images) |
 
+{{<Aside type="note" header="Learn more about Workers AI">}}
+
+Visit the [Workers AI documentation](/workers-ai/models/embedding/) to learn about its built-in embedding models.
+
+{{</Aside>}}
 ## Distance metrics
 
-- Distance metrics are functions that determine how similar vectors are from each other
-- The distance metric cannot be changed after index creation
-- Each metric has a different scoring function
-
-Vectorize indexes support the following distance metrics:
+Distance metrics are functions that determine how close vectors are from each other. Vectorize indexes support the following distance metrics:
 
 | Metric                            | Details                                     |
 | --------------------------------- | ------------------------------------------- |
 | `cosine`                          | Distance is measured between `-1` (most dissimilar) to `1` (identical). `0` denotes an orthogonal vector. |
 | `euclidean`                       | Euclidean (L2) distance. `0` denotes identical vectors. The larger the positive number, the further the vectors are apart. |
 | `dot-product`                     | Negative dot product. Values closer to `0` denote more similar vector. The larger the negative number, the further the vectors are apart. |
+
+Determining the similarity between vectors can be subjective based on how the machine-learning model that represents features in the resulting vector embeddings. For example, a score of `0.8511` when using a `cosine` metric means that two vectors are close in distance, but whether data they represent is _similar_ is a function of how well the model is able to represent the original content.
+
+Note that distance metrics cannot be changed after index creation, and that each metric has a different scoring function.
