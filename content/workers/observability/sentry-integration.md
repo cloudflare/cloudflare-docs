@@ -27,7 +27,7 @@ If there are more configuration options that you would like to see, leave us fee
 
 To set up an integration with Sentry:
 
-1. You need to have an existing Sentry project to connect to. [Create a Sentry project](https://docs.sentry.io/product/sentry-basics/integrate-frontend/create-new-project) or use an existing project for this integration.
+1. You need to have an existing Sentry project to connect to. [Create a Sentry project](https://docs.sentry.io/product/sentry-basics/integrate-frontend/create-new-project), or use an existing project for this integration.
 
 2. Add the Sentry integration to your Worker:
 
