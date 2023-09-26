@@ -33,6 +33,26 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   <tbody>
     <tr>
       <td>
+        <strong>Managed Challenge (Recommended)</strong><br />
+        <br />
+        API value:<br />
+        <code>managed_challenge</code>
+      </td>
+      <td>
+        <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
+        <p>
+          Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from the following actions based on specific criteria:
+        </p>
+        <ul>
+          <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
+          <li>Show a custom interactive challenge (such as click a button).</li>
+        </ul>
+        <p>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</p>
+      </td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
         <strong>Interactive Challenge</strong><br />
         <br />
         API value:<br />
@@ -40,8 +60,8 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       </td>
       <td>
         <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
-        <p>The client that made the request must pass an interactive challenge.</p>
-        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
+        <p>The client that made the request must pass an interactive challenge. If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
+        <p>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</p>
       </td>
       <td>Yes</td>
     </tr>
@@ -59,28 +79,8 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         </p>
         <p>
           The client that made the request must pass a Cloudflare JavaScript Challenge before
-          proceeding.
-        </p>
-        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
-      </td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Managed Challenge (Recommended)</strong><br />
-        <br />
-        API value:<br />
-        <code>managed_challenge</code>
-      </td>
-      <td>
-        <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
-        <p>
-          Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from the following actions based on specific criteria:
-        </p>
-        <ul>
-          <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
-          <li>Show a custom interactive challenge (such as click a button).</li>
-        </ul>
+          proceeding. If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
+        <p>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</p>
       </td>
       <td>Yes</td>
     </tr>
@@ -265,6 +265,15 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
 
 {{</table-wrap>}}
 
-{{<Aside type="note">}}
-Cloudflare Firewall Rules, now deprecated, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+{{<Aside type="note" header="Note">}}
+Cloudflare Firewall Rules, now deprecated, supports [a different set of actions](/firewall/cf-firewall-rules/actions/), including _Allow_ and _Bypass_.
 {{</Aside>}}
+
+## Notes about challenge actions
+
+When you configure a rule (for example, a [WAF custom rule](/waf/custom-rules/)) with one of the challenge actions — _Managed Challenge_, _Interactive Challenge_, or _JS Challenge_ — and a request matches the rule, one of two things can happen:
+
+* The request is blocked if the visitor fails the challenge
+* The request is allowed if the visitor passes the challenge
+
+In this last case, no further rules will be processed. This means that the action of any later rules with a challenge or _Block_ action also matching the request will not be applied, and the request will be allowed.
