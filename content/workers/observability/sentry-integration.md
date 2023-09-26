@@ -14,7 +14,7 @@ This integration allows you to connect to a Sentry project from your Worker to a
 This integration adds a [Tail Worker](/workers/observability/tail-workers) to your application Worker. The Tail Worker automatically sends errors and uncaught exceptions to the Sentry project you have configured.
 
 This integration supports the following Sentry features:
-- **[Data Handling](https://develop.sentry.dev/sdk/data-handling/)**: As a best practice, do not include PII or other sensitive data in the payload sent to Sentry. HTTP headers (eg. Authorization or Cookie) can be removed before events are forwarded to Sentry.
+- **[Data Handling](https://develop.sentry.dev/sdk/data-handling/)**: As a best practice, do not include PII or other sensitive data in the payload sent to Sentry. HTTP headers (for example, `Authorization` or `Cookie`) can be removed before events are forwarded to Sentry.
 - **[Sampling](https://docs.sentry.io/platforms/javascript/configuration/sampling/#configuring-the-transaction-sample-rate)**: Sampling can be configured to manage the number and type of events sent to Sentry. Sampling rates can be configured based on the HTTP status code returned by the Worker and for uncaught exceptions. Setting the sampling rate to 100% sends all events to Sentry or setting it to 30% sends approximately 30% of events to Sentry.
 - **[Breadcrumbs](https://docs.sentry.io/product/issues/issue-details/breadcrumbs/)**: Breadcrumbs create a trail of events that happened prior to an issue. Breadcrumbs are automatically forwarded to Sentry in the case of an error or exception. These events consist of the `console.log()` from the Worker before the error or exception occured. 
 
