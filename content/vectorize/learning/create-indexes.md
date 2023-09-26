@@ -17,7 +17,6 @@ Creating an index requires three inputs:
 The configuration of an index cannot be changed after creation.
 
 ## Create an index
-
 ### wrangler CLI
 
 {{<render file="_vectorize-wrangler-version.md">}}

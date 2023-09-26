@@ -29,13 +29,48 @@ You can use the `.insert()` and `.upsert()` methods available on an index from w
 Refer to the [Workers Client API documentation](/vectorize/learning/insert-vectors/) for additional examples.
 ## wrangler CLI
 
-You can bulk upload 
+You can bulk upload vector embeddings directly 
+
+* The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
+* Vectors must be complete and include a unique string `id` per vector
+* 
+
+An example NDJSON formatted file:
+
+```json
+---
+filename: embeddings.ndjson
+---
+
+{ "id": "4444", "values": [175.1, 167.1, 129.9], "metadata": {"url": "/products/sku/918318313"}}
+{ "id": "5555", "values": [158.8, 116.7, 311.4], "metadata": {"url": "/products/sku/183183183"}}
+{ "id": "6666", "values": [113.2, 67.5, 11.2], "metadata": {"url": "/products/sku/717313811"}}
+```
+
+{{<render file="_vectorize-wrangler-version.md">}}
 
 ```sh
-# Ensure you are using wrangler 3.9.2 or greater
-$ wrangler vectorize insert your-index-name --file=embeddings.ndjson
+$ wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
 ```
 
 ## HTTP API
 
-Vectorize also supports inserting vectors via the [HTTP API](), which allows you to operate on a Vectorize index from existing machine-learning tooling and languages (including Python).
+Vectorize also supports inserting vectors via the [HTTP API](https://developers.cloudflare.com/api/operations/vectorize-update-vectorize-index), which allows you to operate on a Vectorize index from existing machine-learning tooling and languages (including Python).
+
+For example, to insert embeddings in NDJSON format directly from a Python script:
+
+```py
+import requests
+
+url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/indexes/{}".format("your-account-id", "index-name")
+
+headers = {
+    "Content-Type": "multipart/form-data",
+    "Authorization": "Bearer <your-api-token>"
+}
+
+with open('embeddings.ndjson', 'rb') as embeddings:
+    resp = requests.request("POST", url, data=payload, headers=headers, files=embeddings)
+
+print(response.text)
+```

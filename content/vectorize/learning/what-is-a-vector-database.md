@@ -6,7 +6,9 @@ weight: 2
 
 # Vector databases
 
-Vector databases are a key part of building scalable AI-powered applications. They provide a form of “long term memory” on top of an existing ML model. Without a vector database, you would need to train your own model(s) or re-run your dataset through a model before making a query, which would be both slow and expensive.
+Vector databases are a key part of building scalable AI-powered applications. They provide a form of “long term memory” on top of an existing ML model.
+
+Without a vector database, you would need to train your own model(s) or re-run your dataset through a model before making a query, which would be both slow and expensive.
 
 ## Why is a vector database useful?
 
@@ -25,17 +27,29 @@ In a traditional vector search use-case, queries are made against a vector datab
 
 The step-by-step workflow resembles the below:
 
-1. A developer turns their existing dataset (docs, images, logs stored in R2) into a set of vector embeddings (a one-way representation) by passing them through an ML model that is trained for that data type.
+1. A developer turns their existing dataset (docs, images, logs stored in R2) into a set of vector embeddings (a one-way representation) by passing them through an machine learning model that is trained for that data type.
 2. The output embeddings are inserted into a Vectorize database index.
 3. A search query, classification request or anomaly detection query is also passed through the same ML model, returning an vector embedding representation of the query
-4. Vetorize is queried with this embedding, and returns a set of the most similar vector embeddings to the provided query
+4. Vectorize is queried with this embedding, and returns a set of the most similar vector embeddings to the provided query
 5. The returned embeddings are used to retrieve the original source objects from dedicated storage (e.g. R2, KV, D1) and returned back to the user.
+
+In a workflow without a vector database, you would need to pass your entire dataset alongside your query each time, which is neither practical (models have limits on input size) and would consume significant resources and time.
 
 ### Retrieval Augmented Generation
 
-Retrieval Augmented Generation (RAG) is an approach used to improve the context provided to an LLM (Large Language Model) in generative AI use-cases, including chatbot and general question-answer applications. The vector database is used to enhance the prompt passed to the LLM: 
+Retrieval Augmented Generation (RAG) is an approach used to improve the context provided to an LLM (Large Language Model) in generative AI use-cases, including chatbot and general question-answer applications. The vector database is used to enhance the prompt passed to the LLM by adding additional context alongside the query.
 
-TODO - details
+Instead of passing the prompt directly to the LLM, in the RAG approach you:
+
+1. Generate vector embeddings from an existing dataset or corpus - e.g. the dataset you want to use to add additional context to the LLMs response. This could be product documentation, research data, technical specifications, or your product catalog and descriptions.
+2. Store the output embeddings in a Vectorize database index.
+
+When a user initiates a prompt, instead of passing it (without additional context) to the LLM, we _augment_ it with additional context:
+
+1. The user prompt is passed into the same ML model used for our dataset, returning a vector embedding representation of the query.
+2. This embedding is used as the query (semantic search) against the vector database, which returns similar vectors.
+3. These vectors are used to look up the content they relate to (if not embedded directly alongside the vectors as metadata).
+4. This content is provided as context alongside the original user prompt, providing additional context to the LLM and allowing it to return an answer that is likely to be far more contextual than the standalone prompt.
 
 Visit the [RAG tutorial using Workers AI](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) to learn how to combine Workers AI and Vectorize for generative AI use-cases.
 
@@ -47,18 +61,23 @@ Visit the [RAG tutorial using Workers AI](/workers-ai/tutorials/build-a-retrieva
 
 In Vectorize, a database and an index are the same concept: each index you create is separate from other indexes you create. Vectorize automatically manages optimizing and re-generating the index for you when you insert new data.
 
-### Vectors 
+### Vector Embeddings
 
-TODO
+Vector embeddings represent the features of a machine learning model as a numerical vector (array of numbers). They are a one-way representation that encodes how a machine learning model understands the input(s) provided to it, based on how the model was originally trained and its' internal structure.
+
+For example, a [text embedding model](/workers-ai/models/embedding/) available in Workers AI is able to take text input and represent it as a 768-dimension vector. The text `This is a story about an orange cloud`, when represented as a vector embedding, resembles the following:
+
+```json
+[-0.019273685291409492,-0.01913292706012726,<764 dimensions here>,0.0007094172760844231,0.043409910053014755]
+```
+
+When a model considers the features of an input as "similar" (based on its understanding), the distance between the vector embeddings for those two inputs will typically have a short distance between them.
 
 ### Dimensions
 
-TODO - link to other docs
+Vector dimensions describe the width of a vector embedding: the number of floating point elements that comprise a given vector.
 
-- The floating point numbers in each vector.
-- Defined by the machine learning model used to generate embeddings.
-- Dimensions map back to the features that the ML model has been trained to assess
-- More dimensions ("wider" vectors) may provide more accuracy at the cost of compute and memory resources, as well as latency (speed) of vector search.
+The number of dimensions are defined by the machine learning model used to generate the vector embeddings, and how it represents input features based on its internal model and complexity. More dimensions ("wider" vectors) may provide more accuracy at the cost of compute and memory resources, as well as latency (speed) of vector search. 
 
 Refer to the [dimensions](/vectorize/learning/create-indexes/#dimensions) documentation to learn how to configure the accepted vector dimension size when creating a Vectorize index.
 
