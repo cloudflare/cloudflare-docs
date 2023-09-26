@@ -11,7 +11,6 @@ The Playground uses the same editor as the authenticated experience, and provide
 
 <p>{{<button type="primary" href="https://workers.cloudflare.com/playground">}}Launch playground{{</button>}}</p>
 
----
 
 ## Hello Cloudflare Workers
 
