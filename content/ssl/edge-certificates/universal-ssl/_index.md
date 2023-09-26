@@ -10,6 +10,8 @@ meta:
 
 {{<glossary-definition term_id="Universal SSL certificate">}}
 
+{{<glossary-tooltip term_id="Universal SSL certificate">}}TEST{{</glossary-tooltip>}}
+
 {{<render file="_validation-level-intro.md" withParameters="Universal certificates">}}. For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
 {{<Aside type="note">}}
