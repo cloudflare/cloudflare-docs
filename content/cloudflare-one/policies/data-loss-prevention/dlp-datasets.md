@@ -1,17 +1,25 @@
 ---
 pcx_content_type: concept
-title: Exact Data Match
+title: DLP datasets
 weight: 3
 layout: single
 ---
 
-{{<heading-pill style="beta">}}Exact Data Match{{</heading-pill>}}
+# DLP datasets
 
-Exact Data Match (EDM) allows you to scan your web traffic and SaaS applications for specific data defined in a custom dataset, such as names, addresses, phone numbers, credit card numbers, and more.
+Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in a custom dataset.
 
-All data in uploaded datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset.
+{{<heading-pill style="beta" heading="h2">}}Exact Data Match{{</heading-pill>}}
 
-## Prepare a dataset
+Exact Data Match (EDM) protects sensitive information, such as names, addresses, phone numbers, credit card numbers, and more.
+
+All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset.
+
+## Custom Wordlists
+
+## Use DLP datasets
+
+### Prepare a dataset
 
 To prepare a dataset for EDM, add your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 100,000 cells.
 
@@ -19,7 +27,7 @@ Cells must be at least six characters long. Title cells may result in false posi
 
 Accepted file formats include CSV and TXT.
 
-## Upload a new dataset
+### Upload a new dataset
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select **Create new dataset**.
@@ -28,7 +36,7 @@ Accepted file formats include CSV and TXT.
 
 To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
-## Manage existing datasets
+### Manage existing datasets
 
 Uploaded EDM datasets are encrypted and read-only. To update a dataset, you must upload a new file.
 
