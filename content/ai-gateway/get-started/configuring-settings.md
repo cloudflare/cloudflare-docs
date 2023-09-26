@@ -23,6 +23,10 @@ The cost metric is an estimation based on the number of tokens sent and received
 You can use GraphQL to query your usage data outside of the AI Gateway dashboard. See the example query below. You will need to use your Cloudflare token when making the request, and change ACCOUNT_TAG to match your account tag.
 
 ```bash
+---
+header: Request
+---
+
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/graphql \
   --header 'Authorization: Bearer TOKEN \
