@@ -18,8 +18,8 @@ As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-
 
 Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only `CNAME` records with outgoing zone transfers, you can expect the following:
 
-* For `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
-* For `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+* For DNS-only `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
+* For DNS-only `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
 
 ### Proxied records
 
@@ -37,7 +37,7 @@ Note that you could have issues if Cloudflare (as primary) and your secondary pr
 
 Make sure your account team has enabled your zone for outgoing zone transfers.
 
-Also, review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-records/) to make sure all of them have a **Proxy status** of **Unproxied**.
+Review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-records/) to make sure all of them have the desired **Proxy status**.
 
 If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
@@ -68,14 +68,14 @@ To create a peer using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
-3. Click **DNS Zone Transfers**.
-4. For **Peer DNS servers**, click **Create**. 
+3. Select **DNS Zone Transfers**.
+4. For **Peer DNS servers**, select **Create**. 
 5. Enter the following information, paying particular attention to:
     - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
     - **Port**: Specifies the IP Port for the NOTIFY IP.
     - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
     - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
-6. Click **Create**.
+6. Select **Create**.
 
 ### Using the API
 
@@ -92,9 +92,9 @@ To create a secondary zone using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
 3. Go to **DNS** > **Settings**.
-4. For **DNS Zone Transfers**, click **Manage linked peers**.
+4. For **DNS Zone Transfers**, select **Manage linked peers**.
 5. Select a peer.
-6. Click **Save**.
+6. Select **Save**.
 
 ### Using the API
 
