@@ -27,12 +27,6 @@ For each [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-reco
 
 These records correspond to the [Cloudflare IP addresses](https://www.cloudflare.com/ips) used for proxying traffic.
 
-{{<Aside type="warning">}}
-
-Note that you could have issues if Cloudflare (as primary) and your secondary provider are both authoritative. In this case, they will not present the same response for proxied DNS records, as Cloudflare would respond with two Cloudflare IP addresses and your secondary provider would respond with the origin IP or hostname.
-
-{{</Aside>}}
-
 ## Before you begin
 
 Make sure your account team has enabled your zone for outgoing zone transfers.
