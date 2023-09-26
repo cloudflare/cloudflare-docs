@@ -10,3 +10,7 @@ title: Update tunnel health checks frequency
 ## Check for tunnel health in the dashboard
 
 {{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health check**" >}}
+
+## Configure bidirectional health checks
+
+{{<render file="_bidirectional-health.md"}}
