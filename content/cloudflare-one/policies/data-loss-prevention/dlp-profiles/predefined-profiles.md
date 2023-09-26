@@ -40,6 +40,14 @@ Credit card numbers begin with a six or eight-digit Issuer Identification Number
 
 {{</table-wrap>}}
 
+## Health information
+
+The following diagnosis and medication names are checked for surrounding ASCII characters to avoid false positives.
+
+- FDA active ingredients
+- FDA drug names
+- ICD-10 FY2023 short descriptions
+
 ## National identifiers
 
 Detections are validated algorithmically when possible.
