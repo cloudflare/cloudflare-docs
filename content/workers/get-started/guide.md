@@ -197,5 +197,6 @@ To do more:
 * Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
 * Understand how Workers works in [Learning](/workers/learning/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
+* Learn how to set up different Workers features in [Configuration](/workers/configuration/).
+* Learn about Workers limits, betas and pricing in [Platform](/workers/platform/).
 * Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
