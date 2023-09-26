@@ -135,7 +135,7 @@ To set up an integration with Turso:
   ```
 
   - The libSQL client library import `@libsql/client/web` must be imported exactly as shown when working with Cloudflare Workers. The non-web import will not work in the Workers environment.
-  - The `Env` interface contains the environment variable and secret defined when you added the Turso integration in step 4.
+  - The `Env` interface contains the [environment variable](/workers/configuration/environment-variables/) and [secret](/workers/configuration/secrets/) defined when you added the Turso integration in step 4.
   - The `Env` interface also caches the libSQL client object and router, which was created on the first request to the Worker.
   - The Worker uses `buildLibsqlClient` to query the `elements` database and returns the response as a JSON object.
 
