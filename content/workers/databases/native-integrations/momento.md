@@ -16,19 +16,20 @@ To set up an integration with Momento Cache:
 
 1. You need to have an existing Momento cache to connect to or create a new cache through the [Momento console](https://console.gomomento.com/).
 
-2. If you do not have an existing cache, create one and assign `user-profiles` as the cache name. You will need to make sure that you choose the same region when generating a Momento API key in the next step.
+2. If you do not have an existing cache, create one and assign `user-profiles` as the cache name.
 
-3. Generate your [API key](https://docs.momentohq.com/develop/authentication/api-keys) to use within your application, select the cloud provider and region your application is in to get the best performance.
-
-4. Add the Momento database integration to your Worker:
+3. Add the Momento database integration to your Worker:
 
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
     4. Select **Integrations** > **Momento**. 
-    5. Follow the setup flow, selecting the cache created in step 1.
+    5. Follow the setup flow, review and grant permissions needed to add secrets to your Worker.
+    6. Next, connect to Momento.
+    7. Select your region.
+    8. Select **Add integration**
 
-5. The following example code show how to set an item in your cache, get it, and return it as a JSON object. The credentials needed to connect to Momento Cache have been automatically added as [secrets](/workers/configuration/secrets/) to your Worker through the integration.
+4. The following example code show how to set an item in your cache, get it, and return it as a JSON object. The credentials needed to connect to Momento Cache have been automatically added as [secrets](/workers/configuration/secrets/) to your Worker through the integration.
 
     ```ts
     export default {
