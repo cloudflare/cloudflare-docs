@@ -122,11 +122,11 @@ export default {
 };
 ```
 
-{{<Aside type="warning" header="Avoiding potential errors in accessing request.body">}}
+{{<Aside type="warning" header="Prevent potential errors when accessing request.body">}}
 
-The body of a [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) can only be accessed once. You may encounter a TypeError on attempting to access `request.body` if you have previously used `request.formData()` on the same request.
-To avoid this error, create a clone of the Request object with `request.clone()` for each subsequent attempt to access a Request's body.
-Keep in mind that Workers have a [memory limit of 128MB per Worker](https://developers.cloudflare.com/workers/platform/limits#worker-limits), and that loading particularly large files into a Worker's memory multiple times may reach this limit. You may need to make use of [Streams](https://developers.cloudflare.com/workers/runtime-apis/streams/) to ensure memory usage does not reach this limit.
+The body of a [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) can only be accessed once. If you previously used `request.formData()` in the same request, you may encounter a TypeError when attempting to access `request.body`.<br><br>
+To avoid errors, create a clone of the Request object with `request.clone()` for each subsequent attempt to access a Request's body.
+Keep in mind that Workers have a [memory limit of 128MB per Worker](https://developers.cloudflare.com/workers/platform/limits#worker-limits) and loading particularly large files into a Worker's memory multiple times may reach this limit. To ensure memory usage does not reach this limit, consider using [Streams](https://developers.cloudflare.com/workers/runtime-apis/streams/).
 
 {{</Aside>}}
 
