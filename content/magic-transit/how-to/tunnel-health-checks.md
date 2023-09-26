@@ -6,7 +6,7 @@ weight: 5
 
 # Update health check frequency
 
-{{<render file="_update-tunnel-health-checks-frequency.md" withParameters="/magic-transit/reference/probe-construction/;;/magic-transit/how-to/configure-tunnels/#add-tunnels">}}
+{{<render file="_update-tunnel-health-checks-frequency.md" withParameters="/magic-transit/reference/tunnel-health-checks/;;/magic-transit/how-to/configure-tunnels/#add-tunnels">}}
 
 ## Check for tunnel health in the dashboard
 
