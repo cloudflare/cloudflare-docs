@@ -42,7 +42,7 @@ Credit card numbers begin with a six or eight-digit Issuer Identification Number
 
 ## Health information
 
-The following diagnosis and medication names are checked for surrounding ASCII characters to avoid false positives.
+The following diagnosis and medication names are checked for surrounding ASCII characters to prevent false positives.
 
 - FDA active ingredients
 - FDA drug names
