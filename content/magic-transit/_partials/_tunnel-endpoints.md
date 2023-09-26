@@ -50,6 +50,8 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 ## Add tunnels
 
+{{<render file="_icmp-mfirewall.md" productFolder="magic-transit">}}
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
