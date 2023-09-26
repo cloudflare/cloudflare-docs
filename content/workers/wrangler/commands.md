@@ -390,7 +390,7 @@ $ wrangler vectorize list
 Delete a Vectorize index.
 
 ```sh
-$ wrangler d1 delete <index-name>
+$ wrangler vectorize delete <index-name>
 ```
 
 {{<definitions>}}
@@ -399,6 +399,25 @@ $ wrangler d1 delete <index-name>
   - The name of the Vectorize index to delete.
 - `--force` {{<type>}}boolean{{</type>}}
   - Skip confirmation when deleting the index (note: this is not a recoverable operation)
+
+{{</definitions>}}
+
+### `insert`
+
+Insert vectors into an index.
+
+```sh
+$ wrangler vectorize insert <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Vectorize index to delete.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` {{<type>}}number{{</type>}}
+  - The number of vectors to insert at a time (default: 5000)
 
 {{</definitions>}}
 

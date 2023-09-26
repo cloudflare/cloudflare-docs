@@ -6,14 +6,18 @@ weight: 5
 
 # Query Vectors
 
-TODO
+
+
+## Example
 
 ```ts
 let queryVector = [32.4, 6.55, 11.2, 10.3, 87.9];
 let matches = await env.YOUR_INDEX.query(queryVector);
 ```
 
-## Using embeddings from Workers AI
+Refer to the [Workers Client API documentation](/vectorize/learning/client-api/) for additional examples.
+
+## Workers AI
 
 If you are generating embeddings from a [Workers AI](/workers-ai/models/embedding/) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
 

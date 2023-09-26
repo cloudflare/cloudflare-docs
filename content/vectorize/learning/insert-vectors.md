@@ -18,16 +18,29 @@ pcx_content_type: concept
 - example of metadata
 - limits link
 
-## Workers API
+## Examples
+### Workers API
 
 You can use the `.insert()` and `.upsert()` methods available on an index from within a Cloudflare Worker to insert vectors into the current index.
 
 ```ts
-// TODO - show a quick .insert example
+// Mock vectors
+//
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
+	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
+	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
+];
+
+// Insert our vectors, returning a count of the vectors inserted and their vector IDs.
+let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
 ```
 
-Refer to the [Workers Client API documentation](/vectorize/learning/insert-vectors/) for additional examples.
-## wrangler CLI
+Refer to the [Workers Client API documentation](/vectorize/learning/client-api/) for additional examples.
+
+### wrangler CLI
 
 You can bulk upload vector embeddings directly 
 
@@ -53,24 +66,29 @@ filename: embeddings.ndjson
 $ wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
 ```
 
-## HTTP API
+### HTTP API
 
 Vectorize also supports inserting vectors via the [HTTP API](https://developers.cloudflare.com/api/operations/vectorize-update-vectorize-index), which allows you to operate on a Vectorize index from existing machine-learning tooling and languages (including Python).
 
-For example, to insert embeddings in NDJSON format directly from a Python script:
+For example, to insert embeddings in [NDJSON format](#workers-api) directly from a Python script:
 
 ```py
 import requests
 
-url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/indexes/{}".format("your-account-id", "index-name")
+url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/indexes/{}/insert".format("your-account-id", "index-name")
 
 headers = {
-    "Content-Type": "multipart/form-data",
     "Authorization": "Bearer <your-api-token>"
 }
 
 with open('embeddings.ndjson', 'rb') as embeddings:
-    resp = requests.request("POST", url, data=payload, headers=headers, files=embeddings)
+    resp = requests.post(url, headers=headers, files=dict(vectors=embeddings))
+    print(resp)
+```
 
-print(response.text)
+This code would insert the vectors defined in `embeddings.ndjson` into the provided index. Python libraries, including Pandas, also support the NDJSON format via the built-in `read_json` method:
+
+```py
+import pandas as pd
+data = pd.read_json('embeddings.ndjson', lines=True)
 ```

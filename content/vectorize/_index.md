@@ -27,23 +27,24 @@ The vectors returned can reference images stored in Cloudflare R2, documents in 
 
 ## Get started
 
-{{<feature header="Vectorize" href="/d1/get-started/">}}
+{{<feature header="Vectorize" href="/vectorize/get-started/intro/">}}
 
 Learn how to create your first Vectorize database, upload vector embeddings, and query those embeddings from [Cloudflare Workers](/workers/).
 
 {{</feature>}}
 
-{{<feature header="Workers" href="/workers/">}}
+{{<feature header="Workers AI" href="/workers-ai/">}}
 
-Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+
+{{</feature>}}
+
+{{<feature header="R2 Storage" href="/r2/">}}
+
+Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 {{</feature>}}
 
-{{<feature header="Pages" href="/pages/">}}
-
-Deploy dynamic front-end applications in record time.
-
-{{</feature>}}
 
 ## More resources
 

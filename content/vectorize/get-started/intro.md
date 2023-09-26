@@ -31,7 +31,7 @@ Refer to [How Workers works](/workers/learning/how-workers-works/) to learn abou
 
 {{</Aside>}}
 
-You will create a new Worker as the container for both your Vectorize index and the Worker application that you will use to query your index.
+You will create a new project that will contain a Worker script, which will act as the client application for your Vectorize index.
 
 Create a new project named `vectorize-tutorial` by running:
 
@@ -42,14 +42,14 @@ $ npm create cloudflare@latest
 When setting up your `vectorize-tutorial` Worker, answering the questions as below:
 
 * Your directory has been titled `vectorize-tutorial`.
-* Choose `"Hello World" script` for the type of application.
+* Choose `"Hello World Worker"` for the type of application.
 * Select `yes` to using TypeScript.
 * Select `yes` to using Git.
 * Select `no` to deploying.
 
 This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 
-* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts` 
+* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts` 
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your index.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -94,7 +94,7 @@ $ npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
 ✅ Successfully created index 'tutorial-index'
 
 [[vectorize]]
-binding = "TUTORIAL_INDEX" # i.e. available in your Worker on env.TUTORIAL_INDEX
+binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
 index_name = "tutorial-index"
 ```
 
@@ -112,13 +112,13 @@ filename: wrangler.toml
 ---
 
 [[[vectorize]]
-binding = "TUTORIAL_INDEX" # i.e. available in your Worker on env.TUTORIAL_INDEX
+binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
 index_name = "tutorial-index"
 ```
 
 Specifically:
 
-* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
 * The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
 * Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/platform/client-api/) is exposed on this binding for use within your Workers application.
 
@@ -126,19 +126,19 @@ Specifically:
 
 Before we can query a vector database, we need to insert vectors for it to query against. In practice, these vectors would be generated from data (text, images, etc) we pass to a machine learning model, but we're going to define some static vectors to illustrate how vector search works on its own.
 
-First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with your Vectorize index.
+First, go to your `vectorize-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `TUTORIAL_INDEX`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
 
 ```typescript
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 
 export interface Env {
-	// This makes our vector index methods available on env.TUTORIAL_INDEX.*
-	// e.g. env.TUTORIAL_INDEX.insert() or .query()
-	TUTORIAL_INDEX: VectorizeIndex;
+	// This makes our vector index methods available on env.VECTORIZE_INDEX.*
+	// e.g. env.VECTORIZE_INDEX.insert() or .query()
+	VECTORIZE_INDEX: VectorizeIndex;
 }
 
 // Sample vectors: 3 dimensions wide.
@@ -165,7 +165,7 @@ export default {
 			// Insert some sample vectors into our index
 			// In a real application, these vectors would be the output of a machine learning (ML) model,
 			// such as Workers AI, OpenAI, or Cohere.
-			let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+			let inserted = await env.VECTORIZE_INDEX.insert(sampleVectors);
 
 			// Return the number of IDs we successfully inserted
 			return Response.json(inserted);
@@ -184,21 +184,22 @@ In the code above, you:
 
 In the next step, you will expand the Worker to query the index and the vectors we insert.
 
-## 5. Query vectors (semantic search)
+## 5. Query vectors
 
+In this step, we will take a vector representing an incoming query and use it to search our index.
 
-First, go to your `vectorize-tutorial` Worker and open the `src/worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with your Vectorize index.
+First, go to your `vectorize-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
 
 ```typescript
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 export interface Env {
-	// This makes our vector index methods available on env.TUTORIAL_INDEX.*
-	// e.g. env.TUTORIAL_INDEX.insert() or .query()
-	TUTORIAL_INDEX: VectorizeIndex;
+	// This makes our vector index methods available on env.VECTORIZE_INDEX.*
+	// e.g. env.VECTORIZE_INDEX.insert() or .query()
+	VECTORIZE_INDEX: VectorizeIndex;
 }
 
 // Sample vectors: 3 dimensions wide.
@@ -225,7 +226,7 @@ export default {
 			// Insert some sample vectors into our index
 			// In a real application, these vectors would be the output of a machine learning (ML) model,
 			// such as Workers AI, OpenAI, or Cohere.
-			let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+			let inserted = await env.VECTORIZE_INDEX.insert(sampleVectors);
 
 			// Return the number of IDs we successfully inserted
 			return Response.json(inserted);
@@ -246,7 +247,7 @@ export default {
 		// By default, vector values are not returned, as in many cases the
 		// vectorId and scores are sufficient to map the vector back to the
 		// original content it represents.
-		let matches = await env.TUTORIAL_INDEX.query(queryVector, { topK: 3, returnVectors: true });
+		let matches = await env.VECTORIZE_INDEX.query(queryVector, { topK: 3, returnVectors: true });
 
 		return Response.json({
 			// This will return the closest vectors: we'll see that the vector
