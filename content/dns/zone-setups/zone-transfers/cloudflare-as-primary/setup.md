@@ -14,15 +14,12 @@ With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-pri
 
 ### DNS-only CNAME records
 
-If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), you can set a `CNAME` record on the zone apex because of [`CNAME` flattening](/dns/cname-flattening/).
+As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-types/#cname), Cloudflare uses a process called [`CNAME` flattening](/dns/cname-flattening/) to return the final IP address instead of the `CNAME` target. `CNAME` flattening improves performance and is also what allows you to set a `CNAME` record on the zone apex.
 
-If you take advantage of this behavior within Cloudflare (using an unproxied `CNAME` records) while using outgoing zone transfers for this zone, Cloudflare will not transfer out the target hostname of the `CNAME` record but instead the flattened IP addresses that also get served as DNS responses from Cloudflare authoritative nameservers.
+Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only `CNAME` records with outgoing zone transfers, you can expect the following:
 
-{{<Aside type="note">}}
-
-For `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses. Whereas for `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
-
-{{</Aside>}}
+* For `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
+* For `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
 
 ### Proxied records
 
@@ -32,7 +29,7 @@ These records correspond to the [Cloudflare IP addresses](https://www.cloudflare
 
 {{<Aside type="warning">}}
 
-Note that you could have issues if Cloudflare (as primary) and your secondary provider are both authoritative. In this case, they will not reply with the same response for proxied DNS records, as Cloudflare would respond with two Cloudflare IP addresses and your secondary provider would respond with the origin IP or hostname.
+Note that you could have issues if Cloudflare (as primary) and your secondary provider are both authoritative. In this case, they will not present the same response for proxied DNS records, as Cloudflare would respond with two Cloudflare IP addresses and your secondary provider would respond with the origin IP or hostname.
 
 {{</Aside>}}
 
