@@ -581,6 +581,7 @@
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/third-party/strongswan/ 301
 /magic-wan/tutorials/vyos/ /magic-wan/third-party/vyos/ 301
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
+/magic-wan/how-to/run-tunnel-health-checks/ /magic-wan/how-to/tunnel-health-checks/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
