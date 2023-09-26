@@ -14,10 +14,10 @@ Vectorize is currently in public beta and is free to use on paid [Workers plans]
 
 Vectorize bills based on:
 
-* **Queried Vector Dimensions**: ...
-* **Stored Vector Dimensions**: ...
+* **Queried Vector Dimensions**: The total number of vector dimensions queried. If you have 10,000 vectors with 384-dimensions in an index, one query is 3.84 million queried dimensions.
+* **Stored Vector Dimensions**: The total number of vector dimensions stored. If you have 1,000 vectors with 1536-dimensions in an index, your stored vector dimensions sum to 1.56 million.
 
-You are not billed for CPU, memory, or "active index hours". If you are not issuing queries against your index, you are not billed for queried vector dimensions.
+You are not billed for CPU, memory, "active index hours", or the number of indexes you create. If you are not issuing queries against your indexes, you are not billed for queried vector dimensions.
 
 ## Billing metrics 
 
