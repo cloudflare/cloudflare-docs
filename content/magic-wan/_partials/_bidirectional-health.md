@@ -3,7 +3,6 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName
 ---
 
 Bidirectional health checks are available for GRE and IPsec tunnels. Right now you can configure them via the API, and the dashboard option will be available in the near future.
