@@ -51,7 +51,7 @@ Refer to the documentation for [`Fetch Handler`](/workers/runtime-apis/handlers/
 
 ## Using the Playground
 
-As you edit the default code, the Worker will auto-update allowing you to see a preview on the right side running just as it would in a browser. If your Worker uses URL paths, you can enter those in the input field on the right to navigate. The editor provides type-checking via JSDoc comments and `workers-types` and also provides pretty error pages in the event of app errors.
+As you edit the default code, the Worker will auto-update such that the preview on the right shows your worker running just as it would in a browser. If your Worker uses URL paths, you can enter those in the input field on the right to navigate to them. The editor provides type-checking via JSDoc comments and `workers-types` and also provides pretty error pages in the event of app errors.
 
 To test a raw HTTP request — not in the HTML previewer, for example, to test a `POST` request — go to the **HTTP** tab and click **Send**. You can add and edit headers via this panel, as well as edit the body of a request.
 
