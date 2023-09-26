@@ -6,7 +6,7 @@ _build:
 inputParameters: healthCheckFrequencyURL;;productName;;onboardingURL;;configureTunnelEndpointsURL;;urlChangeHealthCheckType
 ---
 
-# Probe construction
+# Tunnel health checks
 
 A tunnel health check probe contains an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) reply packet that originates from an IP address on the origin side of the tunnel and whose destination address is a public Cloudflare IP.
 

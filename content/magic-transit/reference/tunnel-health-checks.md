@@ -1,5 +1,5 @@
 ---
-title: Probe construction
+title: Tunnel health checks
 pcx_content_type: concept
 meta:
     description: Magic Transit uses probes to check for tunnel health. Review information on this page to learn more.
