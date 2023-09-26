@@ -8,6 +8,15 @@ weight: 2
 
 Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection granularity. Additionally, you can configure [advanced settings](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
 
+## Credentials and secrets
+
+The following secrets are validated with regex.
+
+- Google Cloud Platform keys
+- AWS keys
+- Azure API keys
+- SSH keys
+
 ## Financial information
 
 Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. CVVs are not validated.
@@ -50,15 +59,6 @@ Detections are validated algorithmically when possible.
 | United Kingdom National Insurance Number             | Validated with regex.                                                                                                                                                                             |
 
 {{</table-wrap>}}
-
-## Credentials and secrets
-
-The following secrets are validated with regex.
-
-- Google Cloud Platform keys
-- AWS keys
-- Azure API keys
-- SSH keys
 
 ## Source code
 
