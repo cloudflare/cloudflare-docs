@@ -10,6 +10,12 @@ A KV namespace is a key-value database replicated to Cloudflare’s global netwo
 
 Bind your KV namespaces through Wrangler or via the Cloudflare dashboard.
 
+{{<Aside type="note">}}
+
+KV namespace IDs are public and bound to your account.
+
+{{</Aside>}}
+
 ## Bind your KV namespace through Wrangler
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
