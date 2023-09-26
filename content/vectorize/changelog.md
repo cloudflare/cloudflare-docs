@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 11
+weight: 20
 rss: file
 ---
 

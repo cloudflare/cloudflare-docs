@@ -26,7 +26,7 @@ To create an index with `wrangler`:
 $ npx wrangler vectorize create your-index-name --dimensions=NUM_DIMENSIONS --metric=SELECTED_METRIC
 ```
 
-## Cloudflare dashboard
+### Cloudflare dashboard
 
 TODO
 

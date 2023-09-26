@@ -2,7 +2,7 @@
 type: overview
 pcx_content_type: navigation
 title: Tutorials
-weight: 9
+weight: 19
 
 layout: table
 column_text: Type
