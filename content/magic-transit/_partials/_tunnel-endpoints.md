@@ -54,7 +54,10 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
+{{<Aside type="note">}}
+If you need your tunnel health checks to be unidirectional or bidirectional, refer to [Configure bidirectional health checks]() for more information.
+{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
