@@ -16,10 +16,10 @@ header: Request
 ---
 
 curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/huggingface/bigcode/starcoder -X POST \
-   --header 'Authorization: Bearer TOKEN \
+  --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --data '{
-    "inputs": "Can you please let us know more details about your "
+    "inputs": "console.log"
 }'
 ```
 

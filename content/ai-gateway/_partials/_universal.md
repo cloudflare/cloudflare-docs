@@ -14,7 +14,7 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 * `provider` : the name of the provider you would like to direct this message to. Can be openai/huggingface/replicate
 * `endpoint`: the pathname of the provider API you’re trying to reach. For example, on OpenAI it can be `chat/completions`, and for HuggingFace this might be `bigstar/code`. See more in the sections that are specific to each provider.
 * `authorization`: the content of the Authorization HTTP Header that should be used when contacting this provider. This usually starts with “Token” or “Bearer”.
-* `query`: the payload as the provider expects it in their official API. 
+* `query`: the payload as the provider expects it in their official API.
 
 
 ```bash
@@ -22,25 +22,25 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY  -X POST \
+curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY -X POST \
   --header 'Content-Type: application/json' \
   --data '[
     {
    	 "provider": "huggingface",
    	 "endpoint": "bigcode/starcoder",
-   	 "headers": { 
-                  "Authorization": "Bearer TOKEN",
+   	 "headers": {
+        "Authorization": "Bearer $TOKEN",
         "Content-Type": "application/json"
        },
    	 "query": {
-   		 "input": "what'\''s the weather in SF now?"
+   		 "input": "console.log"
    	 }
     },
     {
    	 "provider": "openai",
    	 "endpoint": "chat/completions",
-       "headers": { 
-                  "Authorization": "Bearer TOKEN",
+       "headers": {
+        "Authorization": "Bearer $TOKEN",
         "Content-Type": "application/json"
        },
    	 "query": {
@@ -49,18 +49,19 @@ curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY  -X POST \
    		 "messages": [
    			 {
    				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? answer with the shortest possible way please"
+   				 "content": "What is Cloudflare?"
    			 }
    		 ]
    	 }
     },
     {
    	 "provider": "replicate",
-   	 "authorization": "Token TOKEN",
+   	 "endpoint": "predictions",
+   	 "authorization": "Token $TOKEN",
    	 "query": {
    		 "version": "2796ee9483c3fd7aa2e171d38f4ca12251a30609463dcfd4cd76703f22e96cdf",
    		 "input": {
-   			 "prompt": "what is the weather in SF?"
+   			 "prompt": "What is Cloudflare?"
    		 }
    	 }
     }

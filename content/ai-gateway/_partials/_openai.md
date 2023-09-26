@@ -7,7 +7,7 @@ _build:
 
 `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai`
 
-When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai`. 
+When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai`.
 
 
 ```bash
@@ -16,7 +16,7 @@ header: Request
 ---
 
 curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai/chat/completions -X POST \
-  --header 'Authorization: Bearer TOKEN' \
+  --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --data ' {
    		 "model": "gpt-3.5-turbo",
