@@ -14,7 +14,7 @@ The Playground uses the same editor as the authenticated experience, and provide
 
 ## Hello Cloudflare Workers
 
-When you arrive in the playground, you will see this default code:
+When you arrive in the Playground, you will see this default code:
 
 ```js
 import welcome from "welcome.html";
