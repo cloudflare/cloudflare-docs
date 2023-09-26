@@ -47,6 +47,10 @@ You can filter by the following parameters:
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
 
+{{<Aside type="warning">}}
+Currently, the Network Analytics dashboard does not fully support [leased IPs/prefixes](/magic-transit/cloudflare-ips/) for Magic Transit customers.
+{{</Aside>}}
+
 ## Packets summary or Bits summary
 
 Displays a plot of the traffic (in terms of bits or packets) in the selected time range according to the values of a given dimension. By default, Network Analytics displays data broken down by **Action**.
