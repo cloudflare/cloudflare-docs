@@ -31,7 +31,7 @@ The Firewall device posture attribute ensures that a firewall is running on a de
 1. Turn on **Enable firewall check**.
 1. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the firewall check is returning the expected results.
+Next, go to **Logs** > **Posture** and verify that the firewall check is returning the expected results.
 
 ## How WARP checks the firewall status
 

@@ -103,7 +103,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#usage-models).
+  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
 
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

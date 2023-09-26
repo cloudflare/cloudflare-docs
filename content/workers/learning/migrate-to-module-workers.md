@@ -211,7 +211,7 @@ export default {
 
 ## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
 
 This example code:
 

@@ -38,7 +38,7 @@ There are some back-end services that are not considered by the Smart Placement 
     - Examples: Google APIs, services using Fastly or Akamai's CDN.
 
 
-- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#waituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
+- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
     - Examples: New Relic, Datadog, Tinybird, Grafana, Amplitude, Honeycomb.
 
 ## Enable Smart Placement (beta)

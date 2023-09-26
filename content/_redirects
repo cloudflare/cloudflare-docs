@@ -328,6 +328,7 @@
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/setup/manage-members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/setup/manage-members/ 301
 /fundamentals/account-and-billing/account-security/scim-setup/ /fundamentals/account-and-billing/account-security/ 301
+/fundamentals/account-and-billing/members/roles/ /fundamentals/setup/manage-members/roles/ 301
 /fundamentals/get-started/cdn/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
@@ -378,11 +379,6 @@
 /fundamentals/security/challenge-passage/ /waf/tools/challenge-passage/ 301
 /fundamentals/glossary/ /fundamentals/reference/glossary/ 301
 /fundamentals/account-and-billing/login/ /fundamentals/basic-tasks/login/ 301
-/fundamentals/account-and-billing/account-security/securing-a-compromised-account/ /fundamentals/account-and-billing/account-security/securing-a-compromised-account/ 301
-/fundamentals/account-and-billing/account-security/zone-holds/ /fundamentals/account-and-billing/account-security/zone-holds/ 301
-/fundamentals/account-and-billing/account-security/review-audit-logs/ /fundamentals/account-and-billing/account-security/review-audit-logs/ 301
-/fundamentals/account-and-billing/account-security/manage-active-sessions/ /fundamentals/account-and-billing/account-security/manage-active-sessions/ 301
-/fundamentals/account-and-billing/account-security/cloudflare-access/ /fundamentals/account-and-billing/account-security/cloudflare-access/ 301
 /fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/account-and-billing/account-billing/delete-account/ 301
 /fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /fundamentals/account-and-billing/account-billing/updating-billing-info/ 301
 /fundamentals/account-and-billing/account-maintenance/understand-invoices/ /fundamentals/account-and-billing/account-billing/understand-invoices/ 301
@@ -448,6 +444,9 @@
 /fundamentals/get-started/basic-tasks/under-ddos-attack/ /fundamentals/basic-tasks/under-ddos-attack/ 301
 /fundamentals/get-started/basic-tasks/test-speed/ /fundamentals/basic-tasks/test-speed/ 301
 /fundamentals/get-started/basic-tasks/ /fundamentals/basic-tasks/ 301
+/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/ /fundamentals/account-and-billing/account-security/securing-a-compromised-account/ 301
+/fundamentals/get-started/basic-tasks/account-security/review-audit-logs/ /fundamentals/account-and-billing/account-security/review-audit-logs/ 301
+/fundamentals/get-started/basic-tasks/account-security/manage-active-sessions/ /fundamentals/account-and-billing/account-security/manage-active-sessions/ 301
 /fundamentals/get-started/reference/cloudflare-site-crawling/ /fundamentals/reference/cloudflare-site-crawling/ 301
 /fundamentals/get-started/reference/content-security-policies/ /fundamentals/reference/policies-compliances/content-security-policies/ 301
 /fundamentals/get-started/reference/cloudflare-ray-id/ /fundamentals/reference/cloudflare-ray-id/ 301
@@ -923,7 +922,7 @@
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
 /workers/learning/profiling-workers/ /workers/learning/ 301
 /workers/platform/scripts/ /api/operations/worker-script-list-workers 301
-/workers/platform/services/ /workers/ 301
+/workers/platform/services/ /workers/configuration/bindings/about-service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
 /workers/platform/web-assembly/javascript/ /workers/platform/webassembly/javascript/ 301
 /workers/platform/web-assembly/rust/ /workers/platform/webassembly/rust/ 301
@@ -952,7 +951,6 @@
 /workers/reference/apis/response/ /workers/runtime-apis/response/ 301
 /workers/reference/apis/streams/ /workers/runtime-apis/streams/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
-/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
@@ -1094,7 +1092,6 @@
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
-workers/runtime-apis/fetch-event/#passthroughonexception /workers/runtime-apis/handlers/fetch/#passthroughonexception 301
 
 # zaraz
 

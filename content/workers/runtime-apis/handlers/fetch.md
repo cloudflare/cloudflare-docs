@@ -31,11 +31,11 @@ export default {
 
 - {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](#waituntil).
+  - Refer to [`waitUntil`](#contextwaituntil).
 
 - {{<code>}}context.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`passThroughOnException`](#passthroughonexception).
+  - Refer to [`passThroughOnException`](#contextpassthroughonexception).
 
 {{</definitions>}}
 
