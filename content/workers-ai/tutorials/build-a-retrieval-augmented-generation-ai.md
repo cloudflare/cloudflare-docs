@@ -108,11 +108,15 @@ export default {
 	async fetch(request, env, ctx) {
     const ai = new Ai(env.AI)
 
-    const prompt = `What is the square root of 9?`
     const answer = await ai.run(
       '@cf/meta/llama-2-7b-chat-int8',
-      { prompt }
+      {
+        inputs: [
+          { role: 'user', content: `What is the square root of 9?` }
+        ]
+      }
     )
+
     return new Response(JSON.stringify(answer))
 	}
 }
@@ -205,11 +209,15 @@ const app = new Hono()
 app.get('/', async (c) => {
   const ai = new Ai(c.env.AI)
 
-  const prompt = `What is the square root of 9?`
   const answer = await ai.run(
     '@cf/meta/llama-2-7b-chat-int8',
-    { prompt }
+    {
+      inputs: [
+        { role: 'user', content: `What is the square root of 9?` }
+      ]
+    }
   )
+
   return c.json(answer)
 })
 
@@ -265,50 +273,72 @@ By doing this, you will create a new vector representation of the note, which ca
 
 ## 6. Querying Vectorize to retrieve notes
 
-To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors. Then, you can retrieve the notes that match the most similar vectors. Once you have found the notes, you can insert them as context into the prompt for the LLM binding. Finally, you can query the LLM binding to get a response.
+To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors. 
+
+Since we are using cosine similarity, the vectors with the highest cosine similarity will be the most similar to the query. We can introduce a `SIMILIARITY_CUTOFF` to only return vectors that are above a certain similarity threshold. In this case, we will use a cutoff of `0.75`, but you can adjust this value to suit your needs.
+
+Then, you can retrieve the notes that match the most similar vectors. Once you have found the notes, you can insert them as context into the prompt for the LLM binding. We'll update the prompt to include the context, and to ask the LLM to use the context when responding.
+
+Finally, you can query the LLM binding to get a response.
 
 ```js
 ---
 filename: src/index.js
 ---
-let PROMPT = `
-System: Answer the question below based on the context provided.
 
-Context:
-$CONTEXT
+import { Hono } from 'hono'
+const app = new Hono()
 
-Question: $QUESTION
-Answer:
-`
+// Existing post route...
+// app.post('/notes', async (c) => { ... })
 
 app.get('/', async (c) => {
-  const ai = new Ai(c.env.AI)
+  const ai = new Ai(c.env.AI);
 
-  const text = c.req.query('text') || "What is the square root of 9?"
-  const input = { text: [text] }
+  const question = c.req.query('text') || "What is the square root of 9?"
 
-  const embeddings = await ai.run('@cf/baai/bge-base-en-v1.5', input)
+  const embeddings = await ai.run('@cf/baai/bge-base-en-v1.5', { text: question })
   const vectors = embeddings.data[0]
 
-  const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 5 })
-  const vecIds = vectorQuery.matches.map(vec => vec.vectorId)
+  const SIMILARITY_CUTOFF = 0.75
+  const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 1 });
+  const vecIds = vectorQuery.matches
+    .filter(vec => vec.score > SIMILARITY_CUTOFF)
+    .map(vec => vec.vectorId)
 
-  const query = `SELECT * FROM notes WHERE id IN (${vecIds.join(", ")})`
-  const { results } = await c.env.DATABASE.prepare(query).bind().all()
+  let notes = []
+  if (vecIds.length) {
+    const query = `SELECT * FROM notes WHERE id IN (${vecIds.join(", ")})`
+    const { results } = await c.env.DATABASE.prepare(query).bind().all()
+    if (results) notes = results.map(vec => vec.text)
+  }
 
-  const vecsAsList = results.map(vec => `- ${vec.text}`).join("\n")
+  const contextMessage = notes.length
+    ? `Context:\n${notes.map(note => `- ${note}`).join("\n")}`
+    : ""
 
-  const prompt = PROMPT
-    .replace("$CONTEXT", vecsAsList)
-    .replace("$QUESTION", text)
+  const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
-  const answer = await ai.run(
+  const { response: answer } = await ai.run(
     '@cf/meta/llama-2-7b-chat-int8',
-    { prompt }
+    {
+      inputs: [
+        ...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: question }
+      ]
+    }
   )
 
-  return c.json({ prompt, answer })
+  return c.text(answer);
 })
+
+app.onError((err, c) => {
+  return c.text(err)
+})
+
+export default app
+
 ```
 
 ## 7. Deploy your project
