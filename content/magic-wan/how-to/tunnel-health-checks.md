@@ -13,4 +13,4 @@ title: Update tunnel health checks frequency
 
 ## Configure bidirectional health checks
 
-{{<render file="_bidirectional-health.md"}}
+{{<render file="_bidirectional-health.md">}}
