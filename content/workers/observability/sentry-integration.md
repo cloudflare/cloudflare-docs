@@ -3,7 +3,8 @@ pcx_content_type: concept
 title: Sentry Integration
 ---
 
-{{<beta>}}Sentry Integration{{</beta>}}
+{{<heading-pill style="beta">}}Sentry Integration{{</heading-pill>}}
+
 
 [Sentry](https://sentry.io/welcome/) is an error tracking and performance monitoring platform that allows developers to diagnose, fix, and optimize the performance of their code.
 
