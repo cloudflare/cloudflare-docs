@@ -46,8 +46,6 @@ This is an example of a multi-module Worker that is receiving a [request](/worke
 
 Refer to the documentation for [`Fetch Handler`](/workers/runtime-apis/handlers/fetch/) to learn more.
 
----
-
 ## Using the Playground
 
 As you edit the default code, the Worker will auto-update such that the preview on the right shows your worker running just as it would in a browser. If your Worker uses URL paths, you can enter those in the input field on the right to navigate to them. The editor provides type-checking via JSDoc comments and `workers-types` and also provides pretty error pages in the event of app errors.
