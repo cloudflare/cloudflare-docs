@@ -76,6 +76,6 @@ To share what you have created, select **Copy Link** in the top right of the scr
 
 ## Deploy
 
-You can deploy a Worker straight from the Playground. If you're already logged in, you'll be able to review the Worker before deploying. Otherwise, you'll be taken through the first-time user onboarding flow before you can review and deploy.
+You can deploy a Worker from the Playground. If you are already logged in, you can review the Worker before deploying. Otherwise, you will be taken through the first-time user onboarding flow before you can review and deploy.
 
 Once deployed, your Worker will get its own unique URL and be available almost instantly on Cloudflare's global network. From here, you can add custom domains, storage resources, and more.
