@@ -346,13 +346,13 @@ Some examples include products and services such as Argo, Access, Load Balancing
 
 ## team domain
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the App Launcher — and will be able to make login requests to them.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Zero Trust — displayed in the App Launcher — and will be able to make login requests to them.
 
 **Relevant links:** [App Launcher](/cloudflare-one/applications/app-launcher/)
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under the **Authentication** tab.
+The customizable portion of your [team domain](#team-domain). You can change this name at any time in Zero Trust under **Settings** > **Account**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |
