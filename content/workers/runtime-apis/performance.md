@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Performance and Timers
+title: Performance and timers
 ---
 
 # Performance

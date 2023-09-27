@@ -903,6 +903,7 @@
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
 /workers/api/resource-bindings/kv-namespaces/ /workers/learning/how-kv-works/ 301
+/workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/api/resource-bindings/webassembly-modules/ /api/operations/worker-script-list-workers 301
 /workers/api/route-matching/ /workers/platform/routing/routes/ 301
 /workers/cli-wrangler/ /workers/wrangler/ 301
@@ -1093,6 +1094,7 @@
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
+/workers/wrangler/workers-kv/ /kv/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301

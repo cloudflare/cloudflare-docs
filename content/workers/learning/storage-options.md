@@ -33,8 +33,8 @@ It is ideal for projects that require:
 To get started with KV:
 
 * Read how [KV works](/workers/learning/how-kv-works/).
-* Create a [KV namespace](/workers/wrangler/workers-kv/).
-* Review the [KV Runtime API](/workers/runtime-apis/kv/).
+* Create a [KV namespace](/kv/learning/kv-namespaces/).
+* Review the [KV Runtime API](/kv/api/).
 * Learn about KV [Limits](/kv/platform/limits/).
 
 ## R2
