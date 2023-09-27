@@ -27,9 +27,9 @@ This example adds a rate limiting rule to the `http_ratelimit` phase entry point
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My rate limiting rule",
   "expression": "(http.request.uri.path matches \"^/api/\")",
   "action": "block",
@@ -59,9 +59,9 @@ The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-da
 highlight: 9-13
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My rate limiting rule",
   "expression": "(http.request.uri.path matches \"^/api/\")",
   "action": "block",
@@ -98,9 +98,9 @@ The new rule does not consider requests for cached assets when calculating the r
 highlight: 17
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My rate limiting rule",
   "expression": "(http.request.uri.path matches \"^/api/\")",
   "action": "block",
@@ -136,9 +136,9 @@ The new rule is a complexity-based rate limiting rule that takes the `my-score` 
 highlight: 14-15
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My complexity-based rate limiting rule",
   "expression": "http.request.uri.path matches \"^/graphql/\"",
   "action": "block",

@@ -6,8 +6,8 @@ weight: 2
 
 # Monitors
 
-{{<render file="_monitor-definition.md">}}
-<br/>
+{{<glossary-definition term_id="monitor">}}
+
 {{<render file="_health-check-diagram.md">}}
 
 Health monitor requests that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
@@ -63,3 +63,9 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 | [Overwrite specific properties](/api/operations/account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
 | [Overwrite existing monitor](/api/operations/account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
 | [Preview Monitor](/api/operations/account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |
+
+## Supported protocols
+
+Cloudflare Load Balancing supports public monitoring for HTTP, HTTPS, TCP, UDP, ICMP, ICMP ping, and SMTP. 
+
+Load Balancing also supports private monitoring for HTTP, HTTPS, and TCP.

@@ -86,7 +86,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
 4. Modify `wrangler.toml` to include the following values:
 
-   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
    - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
@@ -113,10 +113,10 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedules the script to run every minute. Learn more about [supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 {{</Aside>}}
 
-5. Publish the Worker to your Workers account.
+5. Deploy the Worker to Cloudflare's global network.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 6. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.

@@ -93,11 +93,13 @@ Countries contributing traffic to this AS, and their relative contribution as pe
 
 ## Internet Outages
 
-Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government direction. Outages may be sub-national or national in geographic scope, or may impact one or more ASNs.
+Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government directed shutdowns. Outages may be sub-national or national in geographic scope, or may impact one or more [ASNs](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). Some outages may be brief, lasting just a few minutes, while others can stretch on for months — the duration can be related, in part, to the underlying cause. Internet outages listed in the Cloudflare Radar Outage Center are notable drops in traffic that have generally been corroborated with third party-information, which may include a social media or status page post from a telecommunications provider, a news report, or industry/community mailing lists.
+
+An early warning signal that an Internet outage may be underway on a given network or in a given country is an anomalous drop in traffic as compared to historical traffic patterns and trends. Internet anomalies listed in the Cloudflare Radar Outage Center represent an algorithmically-observed anomalous drop in traffic for the listed entity. If a given entry is marked as verified, it means that we have manually corroborated the observed drop in traffic across multiple Cloudflare data sources and/or third-party sources such as [IODA](https://ioda.inetintel.cc.gatech.edu/), or third-party sources of information, such as those listed above. In the case of the latter, an associated Internet outage event will be opened, with the event listed in the Internet Outages table (and API).
 
 ## Internet traffic trends
 
-Trends observed in Internet traffic originating gloablly or within a given location or autonomous system within the selected time range, based on aggregated data from our network.
+Trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network.
 
 ## IP address geolocation
 
@@ -106,6 +108,12 @@ IP address geolocation is the term used for the process of associating an IP add
 Note that a number of factors may affect the accuracy of the geolocation information, including mobile network architecture, the use of VPN services, and the use of privacy-protecting proxy services.
 
 Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
+
+## IPv6 adoption
+
+The IPv4 vs. IPv6 graph shows the distribution of traffic by IP version, and is intended to highlight IPv6 adoption trends.
+
+Note that prior to January 23, 2023, the IPv6 percentage shown in the chart was calculated as (IPv6 requests / IPv4+IPv6 requests). After that date, the IPv6 percentage is calculated as (IPv6 requests / requests for dual-stacked content).
 
 ## IQI
 
@@ -118,6 +126,25 @@ The IQI methodology requires a minimum number of measurements to generate estima
 
 Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
 
+Industry categories include business types grouped by their primary activities, such as information technology and services, retail, or telecommunications. Vertical categories are high-level groupings that incorporate related industries, such as the "Internet and Telecom" vertical, which includes industries such as "Internet" and "Telecommunications".
+
+Network-level DDoS attacks graphs are based on traffic measured in bytes.
+
+## TCP Connection Tampering
+
+A complete TCP connection consists of a 3-way handshake initiated by a client with a SYN packet to the server, then typically a data exchange moderated with ACK and PSH flags in the data packets, and finally a graceful close initiated from either side with a FIN packet. A TCP close is ungraceful or unexpected when triggered by a timeout, or by a RST packet. More details about the TCP protocol can be found in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293#section-3.6).
+
+Timeouts can be triggered, for example, by shutting down applications or devices before they can close connections. Timeouts also can be caused by third-party applications or devices seeking to prevent or break the connection. The RST packet is reserved for use by an endpoint to signal a fatal error or failure of some kind, but it can also inappropriately be transmitted by middleboxes to force endpoints to close their connections (see RFC 3360).
+
+Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in “[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)”).
+
+On Cloudflare Radar's Security & Attacks page, you can view connection tampering statistics derived from a sample of connections to Cloudflare's servers. The plot lines are defined as follows:
+* **Mid-handshake (Post-SYN)**: Connections matching signatures for tampering after the receipt of only a single SYN packet, and before the handshake completes. Tampering at this stage is likely triggered by the destination IP address, as SYN packets typically do not contain application-layer data.
+* **Immediately post-handshake (Post-ACK)**: Connections matching signatures for tampering after the receipt of a SYN packet and ACK packet, meaning the TCP connection was successfully established but the server did not receive any subsequent packets. These signatures can occur when the first packet from the client containing application-layer data gets dropped. Among these signatures, middleboxes may or may not inject RSTs to the server.
+* **After first data packet (Post-PSH)**: Connections matching signatures for tampering after the receipt of a packet with PSH flag set, following connection establishment. PSH packets typically contain data such as the Server Name Indication (SNI) in TLS or the HTTP Host that could trigger middlebox tampering.
+* **After multiple data packets (Later in Flow)**: Connections matching signatures for tampering later in the connection, after the transfer of multiple data packets. Tampering in these cases could be triggered by keywords later in a cleartext HTTP session, or by commercial devices that have visibility into encrypted traffic
+* **None** Connections that do not match any tampering signatures.
+
 ## Traffic type filter
 
 * **Human Only Traffic**: Traffic that our algorithms determine as being generated by human activity.
@@ -128,7 +155,7 @@ Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention syste
 
 ## Trends
 
-Based on the aggregated HTTP/s metadata we see, we are able to to show trends about a diverse set of metrics, including the distribution of mobile device vs. desktop traffic, the percentage of traffic detected as coming from bots, and the distribution of user agents/browsers. We also provide insights into the usage of HTTPS and IPv6.
+Based on the aggregated HTTP/s metadata we see, we are able to show trends about a diverse set of metrics, including the distribution of mobile device vs. desktop traffic, the percentage of traffic detected as coming from bots, and the distribution of user agents/browsers. We also provide insights into the usage of HTTPS and IPv6.
 
 ## Verified bots
 

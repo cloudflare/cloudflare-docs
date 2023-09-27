@@ -9,7 +9,7 @@
       "Speed",
       "Cache"
     ],
-    "category": ["Performance"],
+    "product_group": "Application performance",
     "elements": [
       {
         "type": "module",
@@ -42,7 +42,7 @@
       {
         "type": "module",
         "title": "Before you begin",
-        "description": "Before you can secure your website or application added as a Cloudflare zone, make sure you have already <a href='/learning-paths/get-started/'>added that site to Cloudflare</a>.",
+        "description": "Before you can secure your site, make sure you have already <a href='/learning-paths/get-started/'>added that site to Cloudflare</a>.",
         "estimated_time": 30
       },
       {
@@ -67,12 +67,14 @@
             "additional_description": "Apply gzip and brotli compression to some types of content."
           },
           {
+            "external_link": true,
             "url_path": "/speed/optimization/content/rocket-loader/",
             "link_title": "Rocket Loader",
             "additional_description": "Defer JavaScript loading until after page content (applied through client-side JavaScript)."
           },
           {
-            "url_path": "/support/network/understanding-cloudflare-http2-and-http3-support/",
+            "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/articles/200168076",
             "link_title": "HTTP 2/3",
             "additional_description": "Accelerate page load times by using a faster protocol for HTTP."
           },
@@ -82,6 +84,7 @@
             "additional_description": "Route requests across the fastest network path available."
           },
           {
+            "external_link": true,
             "url_path": "/speed/optimization/images/mirage/",
             "link_title": "Mirage",
             "additional_description": "Lazy load all images in a browser (applied through client-side JavaScript)."
@@ -164,7 +167,7 @@
         "title": "Next steps",
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/task-guides/improve-seo/",
+            "url_path": "/fundamentals/basic-tasks/improve-seo/",
             "link_title": "Optimize SEO"
           }
         ]

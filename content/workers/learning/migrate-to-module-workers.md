@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: Migrate to ES modules format
+title: Migrate from Service Workers to ES Modules
 ---
 
-# Migrate to ES modules format
+# Migrate from Service Workers to ES Modules
 
 This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) format to the [ES modules](https://blog.cloudflare.com/workers-javascript-modules/) format.
 
@@ -11,7 +11,7 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons to migrate your Workers to the ES modules format:
 
-1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/workers/configuration/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
+1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
 2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
 3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
 
@@ -189,7 +189,7 @@ export default {
 
 ## Cron Triggers
 
-To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax-es-modules), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
+To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/handlers/scheduled/#syntax), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
 
 This example code:
 
@@ -211,7 +211,7 @@ export default {
 
 ## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
 
 This example code:
 
@@ -246,10 +246,10 @@ export default {
 
 A Worker written in Service Worker syntax consists of two parts:
 
-1.  An [event listener](/workers/runtime-apis/add-event-listener/) that listens for [`FetchEvents`](/workers/runtime-apis/fetch-event/), and
+1.  An event listener that listens for `FetchEvents`
 2.  An event handler that returns a [Response](/workers/runtime-apis/response/) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s global network servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/workers/runtime-apis/fetch-event/) in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
+When a request is received on one of Cloudflare’s global network servers for a URL matching a Worker, Cloudflare's server passes the request to the Workers runtime. This dispatches a `FetchEvent` in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
 
 ```js
 ---
@@ -270,10 +270,114 @@ Below is an example of the request response workflow:
 
 1.  An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/workers/runtime-apis/request/) object which is a representation of the HTTP request that triggered the `FetchEvent`.
 
-2.  The call to [`.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
+2.  The call to `.respondWith()` lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text `'Hello worker!'`).
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
 
-    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/fetch-event/#lifecycle-methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) to handle unexpected exceptions and operations that may complete after a response is returned.
 
-Learn more about [the `FetchEvent` lifecycle](/workers/runtime-apis/fetch-event/#lifecycle-methods).
+Learn more about [the lifecycle methods of the `fetch()` handler](/workers/runtime-apis/handlers/fetch/#lifecycle-methods).
+
+
+### Supported `FetchEvent` properties
+
+{{<definitions>}}
+
+- `event.type` {{<type>}}string{{</type>}}
+
+  - The type of event. This will always return `"fetch"`.
+
+- `event.request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
+
+  - The incoming HTTP request.
+
+- {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Refer to [`respondWith`](#respondwith).
+
+- {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Refer to [`waitUntil`](#waituntil).
+
+- {{<code>}}event.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Refer to [`passThroughOnException`](#passthroughonexception).
+
+{{</definitions>}}
+
+### `respondWith`
+
+Intercepts the request and allows the Worker to send a custom response.
+
+If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it is possible to add multiple `fetch` event handlers within a Worker.
+
+If no `fetch` event handler calls `respondWith`, then the runtime forwards the request to the origin as if the Worker did not. However, if there is no origin – or the Worker itself is your origin server, which is always true for `*.workers.dev` domains – then you must call `respondWith` for a valid response.
+
+```js
+// Format: Service Worker
+addEventListener('fetch', event => {
+  let { pathname } = new URL(event.request.url);
+
+  // Allow "/ignore/*" URLs to hit origin
+  if (pathname.startsWith('/ignore/')) return;
+
+  // Otherwise, respond with something
+  event.respondWith(handler(event));
+});
+```
+
+### `waitUntil`
+
+The `waitUntil` command extends the lifetime of the `"fetch"` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
+
+With the Service Worker format, `waitUntil` is available within the `event` because it is a native `FetchEvent` property.
+
+With the ES modules format, `waitUntil` is moved and available on the `context` parameter object.
+
+```js
+---
+filename: service-worker.js
+---
+// Format: Service Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event));
+});
+
+async function handler(event) {
+  // Forward / Proxy original request
+  let res = await fetch(event.request);
+
+  // Add custom header(s)
+  res = new Response(res.body, res);
+  res.headers.set('x-foo', 'bar');
+
+  // Cache the response
+  // NOTE: Does NOT block / wait
+  event.waitUntil(caches.default.put(event.request, res.clone()));
+
+  // Done
+  return res;
+}
+```
+
+### `passThroughOnException`
+
+The `passThroughOnException` method prevents a runtime error response when the Worker throws an unhandled exception. Instead, the script will [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), which will proxy the request to the origin server as though the Worker was never invoked.
+
+To prevent JavaScript errors from causing entire requests to fail on uncaught exceptions, `passThroughOnException()` causes the Workers runtime to yield control to the origin server.
+
+With the Service Worker format, `passThroughOnException` is added to the `FetchEvent` interface, making it available within the `event`.
+
+With the ES modules format, `passThroughOnException` is available on the `context` parameter object.
+
+```js
+---
+filename: service-worker.js
+---
+// Format: Service Worker
+addEventListener('fetch', event => {
+  // Proxy to origin on unhandled/uncaught exceptions
+  event.passThroughOnException();
+  throw new Error('Oops');
+});
+```

@@ -17,19 +17,9 @@ Enable Logpush to Datadog via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+{{<render file="_enable-logpush-job.md">}}
 
-2. Select the Enterprise account or domain you want to use with Logpush.
-
-3. Go to **Analytics & Logs** > **Logs**.
-
-4. Select **Add Logpush job**. A modal window opens where you will need to complete several steps.
-
-5. Select the dataset you want to push to a storage service.
-
-6. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7. Select **Datadog**.
+7. In **Select a destination**, choose **Datadog**.
 
 8. Enter or select the following destination information:
 
@@ -173,5 +163,5 @@ The Datadog destination is exclusive to new jobs and might not be backward compa
 {{</Aside>}}
 
 {{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare metrics using the Cloudflare Integration tile for Datadog, follow the steps in the [Datadog Analytics integration page](/fundamentals/data-products/analytics-integrations/datadog/).
+To analyze and visualize Cloudflare metrics using the Cloudflare Integration tile for Datadog, follow the steps in the [Datadog Analytics integration page](/analytics/analytics-integrations/datadog/).
 {{</Aside>}}

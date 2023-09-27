@@ -7,7 +7,7 @@ _build:
 
 ## Allow corporate domains
 
-This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a [blocked category](/learning-paths/modules/security/dns-filtering-create-policy/recommended-policies/#block-content-categories) like `Newly seen domains` or `Login pages`.
+This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a [blocked category](/learning-paths/dns-filtering/create-policy/recommended-policies/#block-content-categories) like `Newly seen domains` or `Login pages`.
 
 | Selector | Operator | Value             | Action | Precedence |
 | -------- | -------- | ----------------- | ------ | ---------- |
@@ -70,6 +70,15 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 | Selector    | Operator | Value     | Action |
 | ----------- | -------- | --------- | ------ |
 | Resolved IP | in list  | `DShield` | Block  |
+
+## CIPA Filter
+
+The CIPA Filter is a collection of subcategories that encompass a wide range of topics that could be harmful or inappropriate for minors. It is used as a part of [Project Cybersafe Schools](/fundamentals/reference/policies-compliances/cybersafe/) to block access to unwanted or harmful online content.
+
+
+| Selector           | Operator | Value         | Action |
+| ------------------ | -------- | ------------- | ------ |
+| Content Categories | in       | `CIPA Filter` | Block  |
 
 ## Hide explicit search results
 

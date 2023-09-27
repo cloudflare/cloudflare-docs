@@ -25,9 +25,7 @@ async function handleRequest(request) {
 }
 ```
 
-This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/workers/runtime-apis/fetch-event/#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/workers/runtime-apis/response/) of `"Hello world"` which is delivered back to the client.
-
-Refer to the documentation for [`addEventListener`](/workers/runtime-apis/add-event-listener/) and [`FetchEvent`](/workers/runtime-apis/fetch-event/) to learn more.
+This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/workers/runtime-apis/handlers/fetch/#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/workers/runtime-apis/response/) of `"Hello world"` which is delivered back to the client
 
 ---
 
@@ -77,7 +75,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ## Deploy
 
-There are two ways to preview and deploy a Workers script: on [a site on Cloudflare](/fundamentals/get-started/setup/add-site/) or on a [workers.dev](https://workers.dev/) account. If you'd like to only explore Workers capabilities, you can avoid any setup through the [playground](#playground).
+There are two ways to preview and deploy a Workers script: on [a site on Cloudflare](/fundamentals/setup/account-setup/add-site/) or on a [workers.dev](https://workers.dev/) account. If you'd like to only explore Workers capabilities, you can avoid any setup through the [playground](#playground).
 
 ### Cloudflare dashboard
 

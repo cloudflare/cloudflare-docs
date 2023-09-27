@@ -17,19 +17,9 @@ Enable Logpush to Google Cloud Storage via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+{{<render file="_enable-logpush-job.md">}}
 
-2. Select the Enterprise account or domain you want to use with Logpush.
-
-3. Go to **Analytics & Logs** > **Logs**.
-
-4. Select **Add Logpush job**. A modal window opens where you will need to complete several steps.
-
-5. Select the dataset you want to push to a storage service.
-
-6. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7. Select **Google Cloud Storage**.
+7. In **Select a destination**, choose **Google Cloud Storage**.
 
 8. Enter or select the following destination information:
 
@@ -59,5 +49,5 @@ To enable Logpush to GCS:
 2. In **Storage** > **Browser** > **Bucket** > **Permissions**, add the member `logpush@cloudflare-data.iam.gserviceaccount.com` with `Storage Object Admin` permission.
 
 {{<Aside type="note" header="Note">}}
-To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/fundamentals/data-products/analytics-integrations/google-cloud/).
+To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/analytics/analytics-integrations/google-cloud/).
 {{</Aside>}}

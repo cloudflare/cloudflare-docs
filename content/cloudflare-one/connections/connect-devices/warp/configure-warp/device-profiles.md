@@ -21,9 +21,27 @@ A device profile defines WARP client settings for a specific set of devices in y
 At this time, **Split Tunnels** and **Local Domain Fallback** can only be modified after you save the profile.
 {{</Aside>}}
 
-6. Select **Save**.
+6. Select **Create profile**.
 
 Your profile will appear in the **Profile settings** list. You can rearrange the profiles in the list according to your desired [order of precedence](#order-of-precedence).
+
+## Edit profile settings
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+2. In the **Profile settings** card, find the profile you want to update and select **Configure**.
+3. Modify [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-settings) for this profile.
+{{<Aside type="note">}}
+Changing any of the settings below will cause the WARP connection to restart. The user may experience a brief period of connectivity loss while the new settings are being applied.
+
+- [Service mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#service-mode)
+- [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#local-domain-fallback)
+- [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#split-tunnels)
+
+{{</Aside>}}
+
+4. Select **Save profile**.
+
+The new settings will immediately propagate to devices that match this profile.
 
 ## Verify settings
 
@@ -44,6 +62,7 @@ $ warp-cli settings
 | Operating system         | `macOS`                                                                                                                                          | Any mode           |
 | Operating system version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode           |
 | Managed network          | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device                              | Any mode           |
+| SAML Attributes |  Attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp)| Gateway with WARP |
 
 ## Order of precedence
 

@@ -133,7 +133,7 @@ Note that:
 
 - Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 - Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
-- Logs from any [Durable Objects](/workers/configuration/durable-objects/) your Worker is using will show up in the dashboard.
+- Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
 ## Push logs to storage
@@ -232,7 +232,7 @@ function postLog(data) {
 
 ### Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`event.passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}

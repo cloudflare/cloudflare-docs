@@ -44,16 +44,21 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 13. Fill in the following information:
 
-    - **Name**: Name your identity provider
-    - **App ID**: Enter your Okta Client ID.
-    - **Client secret**: Enter your Okta Client secret.
+    - **Name**: Name your identity provider.
+    - **App ID**: Enter your Okta client ID.
+    - **Client secret**: Enter your Okta client secret.
     - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
 
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims):
+    1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
+    2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
+    3. Under **Optional configurations**, enter the claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
-16. Select **Save**.
+16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+17. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
@@ -93,7 +98,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected. Select **Done** to create the integration.
 
-7. On the **Provisioning** tab, and select **Configure API Integration**.
+7. On the **Provisioning** tab, select **Configure API Integration**.
 
 8. Select **Enable API integration**.
 
@@ -115,7 +120,8 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 13. Select **Save** to complete the configuration.
 
-14. In the **Assignments** tab, add the users and groups you want to synchronize with Cloudflare Access.
+14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group.
+15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder.
 
 Provisioning will begin immediately. To verify the integration, select **View Logs** in the Okta SCIM application.
 

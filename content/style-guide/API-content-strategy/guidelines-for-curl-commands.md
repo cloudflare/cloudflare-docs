@@ -59,7 +59,7 @@ If using API Token (the preferred authentication method), include the following 
 
 ### Request without body content (`GET`, `DELETE`)
 
-For `GET` requests, do not include the `--request` command-line argument, since it is the default where the request does not include a body and it is not recommended for `GET`/`POST` requests:
+For `GET` requests, do not include the `--request GET` command-line argument, since it is the default where the request does not include a body and it is not recommended for `GET`/`POST` requests:
 
 #### `GET` request template
 
@@ -92,7 +92,7 @@ Make sure to include a `Content-Type` header if the request includes a body. For
 
 This header should appear after the authentication headers.
 
-For `POST` requests, do not include the `--request` command-line argument, since it is the default when the request includes a body.
+For `POST` requests with a body, do not include the `--request POST` command-line argument, since it is the default when the request includes a body.
 
 #### `POST` request template
 
@@ -159,7 +159,7 @@ curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 
 #### `POST` requests without a body
 
-If you have a `POST` request without a body, add a `--request POST` argument explicitly to the cURL command.
+If you have a `POST` request without a body, you must add the `--request POST` argument explicitly to the cURL command.
 
 ```txt
 curl --request POST \
@@ -190,7 +190,7 @@ curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 
 Include the complete response (including any empty error and message arrays, if present) using `json` syntax highlighting.
 
-A response starts either with an object `({ ... })` or a list `([ ... ])`. The initial character should appear on its own line, as well as the last character.
+A response starts either with an object (`{ ... }`) or a list (`[ ... ]`). The initial character should appear on its own line, as well as the last character.
 
 ```txt
 ({|[)

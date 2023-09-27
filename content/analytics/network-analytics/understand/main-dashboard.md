@@ -39,13 +39,17 @@ You can filter by the following parameters:
 * Mitigation action taken by Cloudflare
 * Mitigation system that performed the action
 * Source IP, port, ASN, tunnel
-* Destination IP, port, IP range (using `/24` prefixes), tunnel
+* Destination IP, port, IP range (description or CIDR of provisioned prefixes), tunnel
 * Source Cloudflare data center and data center country of where the traffic was observed
 * Packet size
 * TCP flag
 * TTL
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
+
+{{<Aside type="warning">}}
+Currently, the Network Analytics dashboard does not fully support [leased IPs/prefixes](/magic-transit/cloudflare-ips/) for Magic Transit customers.
+{{</Aside>}}
 
 ## Packets summary or Bits summary
 

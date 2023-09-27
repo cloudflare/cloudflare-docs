@@ -22,7 +22,7 @@ build_configs:
     icon: /icons/framework-icons/logo-next-js.svg
   next-js-static:
     display_name: Next.js (Static HTML Export)
-    build_command: npx next build && npx next export
+    build_command: npx next build
     build_output_directory: out
     icon: /icons/framework-icons/logo-next-js.svg
   nuxt-js:
@@ -62,7 +62,7 @@ build_configs:
     icon: /icons/framework-icons/logo-astro.svg
   angular-cli:
     display_name: Angular (Angular CLI)
-    build_command: ng build --prod
+    build_command: npx ng build --prod
     build_output_directory: dist
     icon: /icons/framework-icons/logo-angular-cli.svg
   brunch:
@@ -75,6 +75,11 @@ build_configs:
     build_command: npm run build
     build_output_directory: build
     icon: /icons/framework-icons/logo-docusaurus.svg
+  elder-js:
+    display_name: Elder.js
+    build_command: npm run build
+    build_output_directory: public
+    icon: /icons/framework-icons/logo-elder-js.png
   eleventy:
     display_name: Eleventy
     build_command: npx @11ty/eleventy

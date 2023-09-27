@@ -220,3 +220,47 @@ gpupdate /force
 {{</tabs>}}
 
 - **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.
+
+## I see Storage Partitioned Error.
+
+Chrome is rolling out an [experimental feature](https://developer.chrome.com/en/docs/privacy-sandbox/storage-partitioning/) that partitions local storage in browsers. When third-party storage partitioning is enabled, Cloudflare Browser Isolation can inadvertently store data in the wrong remote browser instance, most notably when rapidly switching between tabs.
+
+To determine if your browser is impacted:
+
+1. Go to `chrome://version/?show-variations-cmd`.
+2. Search for `ThirdPartyStoragePartitioning/Enabled`.
+3. If you find a match, you likely need to disable this feature (see below).
+
+To disable third-party storage partitioning:
+
+1. Go to `chrome://flags/#third-party-storage-partitioning`.
+2. Set **Experimental third-party storage partitioning** to _Disabled_.
+3. Select **Relaunch** to apply the change.
+
+## I see `failed to sufficiently increase receive buffer size` in my cloudflared logs.
+
+This buffer size increase is reported by the [quic-go library](https://github.com/quic-go/quic-go) leveraged by [cloudflared](https://github.com/cloudflare/cloudflared). You can learn more about the log message in the [quic-go repository](https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes). This log message is generally not impactful and can be safely ignored when troubleshooting. However, if you have deployed `cloudflared` within a unique, high-bandwidth environment then buffer size can be manually overridden for testing purposes.
+
+To set the maximum receive buffer size on Linux:
+
+1. Create a new file under `/etc/sysctl.d/`:
+
+  ```sh
+  $ sudo vi 98-core-rmem-max.conf
+  ```
+
+2. In the file, define the desired buffer size:
+
+  ```txt
+  net.core.rmem_max=2500000
+  ```
+
+3. Reboot the host machine running `cloudflared`.
+
+4. To validate that these changes have taken effect, use the `grep` command:
+
+  ```sh
+  $ sudo sysctl -a | grep net.core.rmem_max
+  net.core.rmem_max = 2500000
+  ```
+

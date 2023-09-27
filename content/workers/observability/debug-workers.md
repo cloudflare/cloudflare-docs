@@ -17,7 +17,7 @@ The [`wrangler dev`](/workers/wrangler/commands/#dev) command starts a local ser
 
 `wrangler dev` will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the Miniflare simulator.
 
-In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products, such as [R2](/r2/), [KV](/workers/runtime-apis/kv/), [D1](/d1/), and [Durable Objects](/workers/configuration/durable-objects/).
+In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products, such as [R2](/r2/), [KV](/workers/runtime-apis/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
 
 ### Local testing against remote resources
 
@@ -41,6 +41,16 @@ In the output above, you can begin to see log lines for the URLs being requested
 {{<Aside type="info">}}
 
 Unlike `wrangler dev`, which provides local instances of resources to develop against, `wrangler dev --remote` will leverage remote production resources specified in your `wrangler.toml`. These resources will use production data, and will count towards account usage for billing purposes.
+
+{{</Aside>}}
+
+### DevTools
+
+Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. With `wrangler dev` running, press the <kbd>d</kbd> key in your terminal to open a DevTools session connected to your Worker.
+
+{{<Aside type="warning">}}
+
+Breakpoint debugging is only supported when running `wrangler dev` locally, without the `--remote` flag.
 
 {{</Aside>}}
 

@@ -23,7 +23,7 @@ The sitekey and secret key are generated upon the creation of a widget, allowing
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account.
 2. Go to **Turnstile**.
-3. Select **Add site** and fill out the form.
+3. Select **Add a site** and fill out the form.
 4. Copy your sitekey and secret key.
 
 ### Existing sites
@@ -57,8 +57,6 @@ To add the Turnstile widget:
 After you have installed the Turnstile widget on your site, you must configure your server to validate the Turnstile response.
 Refer to [Server-side validation](/turnstile/get-started/server-side-validation/).
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 Rendering the client-side integration & validating the server-side response are both necessary to allow Turnstile to function properly.
-
 {{</Aside>}}

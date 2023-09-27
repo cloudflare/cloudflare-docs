@@ -1,11 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: FAQ
+title: General FAQ
 weight: 1
 ---
 
-# FAQ
+# General FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -178,9 +178,9 @@ ___
 This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
-1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
+1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/get-started/setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
 
 ___
 

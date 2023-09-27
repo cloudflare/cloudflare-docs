@@ -12,7 +12,8 @@ Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and
 
 A Worker that can send messages to a Queue is a producer Worker, while a Worker that can receive messages from a Queue is a consumer Worker. It is possible for the same Worker to be a producer and consumer, if desired.
 
-In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. If you have any feedback about these APIs, please [contact us](mailto:queues@cloudflare.com) and we would be happy to hear from you.
+In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/workers/40). To give feedback, go to the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) Discord channel.
+
 
 ## Producer
 
@@ -95,7 +96,7 @@ type MessageSendRequest<Body = unknown> = {
 
   - The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
   - As of now, this option is for internal use. In the future, `contentType` will be used by alternative consumer types to explicitly mark messages as serialized so they can be consumed in the desired type.
-  - See [QueuesContentType](#QueuesContentType) for possible values.
+  - See [QueuesContentType](#queuescontenttype) for possible values.
 
 {{</definitions>}}
 

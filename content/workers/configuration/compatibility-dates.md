@@ -14,7 +14,7 @@ Cloudflare regularly updates the Workers runtime. These updates apply to all Wor
 
 Compatibility dates (and flags) are how you, as a developer, opt into these changes. By specifying a `compatibility_date` in your `wrangler.toml` file, that Worker enables all changes that were made before the given date.
 
-Compatibility dates can only be set via your `wrangler.toml` file and by running [`wrangler publish`](/workers/wrangler/commands/#publish).
+Compatibility dates can only be set via your `wrangler.toml` file and by running [`npx wrangler deploy`](/workers/wrangler/commands/#deploy).
 
 ```toml
 # (in wrangler.toml)
@@ -22,7 +22,7 @@ Compatibility dates can only be set via your `wrangler.toml` file and by running
 compatibility_date = "2022-04-05"
 ```
 
-When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the `wrangler publish` command.
+When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) command.
 
 There is no need to update your `compatibility_date` if you do not want to. The Workers runtime will support old compatibility dates forever. If, for some reason, Cloudflare finds it is necessary to make a change that will break live Workers, Cloudflare will actively contact affected developers. That said, Cloudflare aims to avoid this if at all possible.
 

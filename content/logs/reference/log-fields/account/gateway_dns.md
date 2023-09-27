@@ -27,11 +27,15 @@ The descriptions below detail the fields available for `gateway_dns`.
 | LocationID | UUID of the location the DNS request is coming from. Location is created by the customer (for example, '7bdc7a9c-81d3-4816-8e56-000000000000'). | string |
 | MatchedCategoryIDs | ID or IDs of category that the domain was matched with the policy (for example, [7,12,28,122,129,163]). | array[int] |
 | MatchedCategoryNames | Name or names of category that the domain was matched with the policy (for example, ['Photography', 'Weather']). | array[string] |
+| MatchedIndicatorFeedIDs | ID or IDs of indicator feed(s) that the domain was matched with the policy (for example, [7,12]). | array[int] |
+| MatchedIndicatorFeedNames | Name or names of indicator feed(s) that the domain was matched with the policy (for example, ['Vendor Malware Feed', 'Vendor CoC Feed']). | array[string] |
 | Policy | Name of the policy that was applied (if any) (for example, '7bdc7a9c-81d3-4816-8e56-de1acad3dec5'). | string |
 | PolicyID | ID of the policy/rule that was applied (if any). | string |
 | Protocol | The protocol used for the DNS query by the client (for example, 'udp'). | string |
 | QueryCategoryIDs | ID or IDs of category that the domain belongs to (for example, [7,12,28,122,129,163]). | array[int] |
 | QueryCategoryNames | Name or names of category that the domain belongs to (for example, ['Photography', 'Weather']). | array[string] |
+| QueryIndicatorFeedIDs | ID or IDs of indicator feed(s) that the domain belongs to (for example, [7,12,28]). | array[int] |
+| QueryIndicatorFeedNames | Name or names of indicator feed(s) that the domain belongs to (for example, ['Vendor Malware Feed', 'Vendor CoC Feed', 'Vendor Phishing Feed']). | array[string] |
 | QueryName | The query name (for example, 'example.com'). | string |
 | QueryNameReversed | Query name in reverse (for example, 'com.example'). | string |
 | QuerySize | The size of the DNS request in bytes (for example, 151). | int |

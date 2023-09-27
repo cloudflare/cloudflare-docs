@@ -14,7 +14,7 @@ Cloudflare Queues is a flexible messaging queue that allows you to queue message
 
 To use Queues, you will need:
 
-1. A [Cloudflare account](/fundamentals/account-and-billing/account-setup/), if you do not have one already.
+1. A [Cloudflare account](/fundamentals/setup/account-setup/), if you do not have one already.
 
 2. C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues. To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
@@ -43,9 +43,22 @@ You will access your queue from a Worker, the producer Worker. You must create a
 
 To create a producer Worker, run:
 
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
 ```sh
-$ npm create cloudflare@latest # or 'yarn create cloudflare@latest'
+$ npm create cloudflare@latest
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn create cloudflare
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 In your terminal, you will be asked a series of questions related to your project. 
 
@@ -138,7 +151,7 @@ In a production application, you would likely use a [`try-catch`](https://develo
 With your `wrangler.toml` file and `worker.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 You should see output that resembles the below, with a `*.workers.dev` URL by default.
@@ -219,7 +232,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 With your `wrangler.toml` file and `worker.ts` file configured, publish your consumer Worker by running:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 ## 6. Read messages from your queue

@@ -11,6 +11,15 @@ User Agent Blocking rules block specific browser or web application [`User-Age
 
 User Agent Blocking rules are applied after [Zone Lockdown rules](/waf/tools/zone-lockdown/). If you allow an IP address via Zone Lockdown, it will skip any User Agent Blocking rules.
 
+{{<Aside type="warning">}}
+Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of User Agent Blocking rules to block specific user agents.
+
+For example, a custom rule equivalent to the User Agent Blocking [example rule](#create-a-user-agent-blocking-rule) provided in this page could have the following configuration:
+
+* **Expression**: `http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)"`
+* **Action**: (a block or challenge action)
+{{</Aside>}}
+
 ## Availability
 
 Cloudflare User Agent Blocking is available on all plans. The number of available User Agent Blocking rules depends on your Cloudflare plan.
@@ -44,11 +53,11 @@ Issue a `POST` request for the [Create a User Agent Blocking rule](/api/operatio
 For example:
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/ua_rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '{
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id/firewall/ua_rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Block Bad Bot web spider",
   "mode": "block",
   "configuration": {

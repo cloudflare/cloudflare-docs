@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: AWS
 weight: 2
+meta:
+   title: Deploy cloudflared in AWS
 ---
 
 # Deploy `cloudflared` in AWS

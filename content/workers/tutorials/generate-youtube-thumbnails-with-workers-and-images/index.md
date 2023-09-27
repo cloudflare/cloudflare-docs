@@ -13,7 +13,7 @@ layout: single
 
 ## Overview
 
-In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudlfare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
+In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
 This tutorial will help you understand how to work with [Images](/images/cloudflare-images/),[Image Resizing](/images/image-resizing/) and [Cloudflare Workers](/workers/).
 
@@ -353,7 +353,7 @@ Adding a query parameter with custom text, you should receive:
 
 ![Follow the instructions above to receive an output image](/images/workers/tutorials/youtube-thumbnails/build-serverles.png)
 
-To publish your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
 ```toml
 ---
@@ -364,13 +364,13 @@ name = "worker-to-text"
 
 ```
 
-Then run the `wrangler publish` command to publish your Worker.
+Then run the `npx wrangler deploy` command to deploy your Worker.
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-A `.workers.dev` domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
+A `.workers.dev` domain will be generated for your Worker after running `wrangler deploy`. You will use this domain in the main thumbnail image.
 
 ## Create a Worker to display the original image
 
@@ -400,7 +400,7 @@ export default {
 }
 ```
 
-Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/cloudflare-images/api-request/).
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/cloudflare-images/api-request/).
 
 Run your Worker and go to the `/original-image` route to review your image.
 
@@ -528,7 +528,7 @@ name = "thumbnail-image"
 Deploy your Worker by running:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 The command deploys your Worker to custom `workers.dev` subdomain. Go to your `.workers.dev` subdomain and go to the `/thumbnail` route.

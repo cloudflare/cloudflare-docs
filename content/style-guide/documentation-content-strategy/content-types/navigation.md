@@ -1,6 +1,6 @@
 ---
 title: Navigation
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Navigation

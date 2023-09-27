@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Commands
+meta:
+  title: Commands - Wrangler
 ---
 
 # Wrangler commands
@@ -195,8 +197,8 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 - `--bookmark` {{<type>}}string{{</type>}}
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
-  {{</definitions>}}
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
+    {{</definitions>}}
 
 ### `time-travel info`
 
@@ -211,8 +213,8 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
-  {{</definitions>}}
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
+    {{</definitions>}}
 
 ### `backup create`
 
@@ -338,6 +340,89 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 ---
 
+## vectorize
+
+Interact with a [Vectorize](/vectorize/) vector database.
+
+### `create`
+
+Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler vectorize create <index-name> --dimensions=NUM_DIMENSIONS --metric=DISTANCE_METRIC
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new index to create. Cannot be changed.
+- `--dimensions` {{<type>}}number{{</type>}}
+  - The vector dimension width to configure the index for. Cannot be changed after creation.
+- `--metric` {{<type>}}string{{</type>}}
+  - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
+
+{{</definitions>}}
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```sh
+$ wrangler vectorize get <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the index to fetch details for.
+
+{{</definitions>}}
+### `list`
+
+List all Vectorize indexes in your account, including the configured dimensions and distance metric.
+
+```sh
+$ wrangler vectorize list
+```
+
+### `delete`
+
+Delete a Vectorize index.
+
+```sh
+$ wrangler vectorize delete <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Vectorize index to delete.
+- `--force` {{<type>}}boolean{{</type>}}
+  - Skip confirmation when deleting the index (note: this is not a recoverable operation)
+
+{{</definitions>}}
+
+### `insert`
+
+Insert vectors into an index.
+
+```sh
+$ wrangler vectorize insert <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Vectorize index to delete.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` {{<type>}}number{{</type>}}
+  - The number of vectors to insert at a time (default: 5000)
+
+{{</definitions>}}
+
+---
+
 ## dev
 
 Start a local server for developing your Worker.
@@ -429,7 +514,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 ~/my-worker $ wrangler dev
 ⬣ Listening at http://localhost:8787
 ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
+│ [b] open a browser, [d] open DevTools, [l] turn on local mode, [c] clear console, [x] to exit                        │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
@@ -442,7 +527,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 Deploy your Worker to Cloudflare.
 
 ```sh
-$ wrangler deploy [SCRIPT] [OPTIONS]
+$ npx wrangler deploy [SCRIPT] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -471,7 +556,7 @@ None of the options for this command are required. Also, many can be set in your
   - Use the latest version of the Workers runtime.
 - `--assets` {{<type>}}string{{</type>}}
   - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler deploy --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -498,7 +583,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--node-compat` {{<type>}}boolean{{</type>}}
   - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
+  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
@@ -517,7 +602,7 @@ $ wrangler publish [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
+This command has been deprecated as of v3 in favor of [`npx wrangler deploy`](#deploy). It will be removed in v4.
 
 {{</Aside>}}
 
@@ -723,6 +808,10 @@ Exactly one of `VALUE` or `--path` is required.
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -790,6 +879,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Interact with a preview namespace instead of production.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Only list keys that begin with the given prefix.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -828,13 +921,19 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The key value to get.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to get from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--text` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Decode the returned value as a UTF-8 string.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -872,6 +971,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -917,6 +1020,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1001,6 +1108,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1092,6 +1203,10 @@ $ wrangler r2 object get <OBJECTPATH>
 
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The source object path in the form of `{bucket}/{key}`.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1124,6 +1239,10 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
     {{</definitions>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 ### `delete`
 
@@ -1137,6 +1256,10 @@ $ wrangler r2 object delete <OBJECTPATH>
 
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The destination object path in the form of `{bucket}/{key}`.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1249,20 +1372,19 @@ $ wrangler secret list
 
 ## `secret:bulk`
 
-Manage multiple secrets for a Worker.
-
-### `json`
-
-The path to a JSON file containing secrets in key-value pairs to upload.
+Upload multiple secrets for a Worker at once.
 
 ```sh
-$ wrangler secret:bulk <JSON> [OPTIONS]
+$ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `JSON` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The JSON file of key-value pairs to upload, in form {"key": value, ...}
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
@@ -1273,20 +1395,20 @@ $ wrangler secret:bulk <JSON> [OPTIONS]
     {{</definitions>}}
 
   {{<Aside type="note">}}
-  Below is an example of uploading secrets from a JSON file.
+  Below is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
   ```json
+  ---
+  filename: secrets.json
+  ---
   {
     "secret-name-1": "secret-value-1",
     "secret-name-2": "secret-value-2"
   }
   ```
 
-  {{</Aside>}}
-  {{<Aside type="note">}}
-  When complete the output summary will show the number of secrets uploaded and number failed.
-
-  ```
+  ```sh
+  $ wrangler secret:bulk < secrets.json
   🌀 Creating the secrets for the Worker "script-name"
   ✨ Successfully created secret for key: secret-name-1
   ...

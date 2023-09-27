@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Service bindings
+meta:
+  title: Service bindings - Runtime APIs
 ---
 
 # Service bindings
@@ -42,7 +44,7 @@ export default <ExportedHandler<Environment>> {
 {{</tab>}}
 {{</tabs>}}
 
-Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Worker. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
+Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will trigger a [FetchEvent](/workers/runtime-apis/handlers/fetch/) on the target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Worker. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
 
 ### Shared resources
 
@@ -54,7 +56,7 @@ Lifecycle is tied to the top-level Worker. If a child Worker is still processing
 
 ### Context
 
-Service bindings live on the environment context. This means Service bindings can be used from within a Durable Object, as long as the environment context remains intact.
+Service bindings live on the environment context. This means Service bindings can be used from within a [Durable Object](/durable-objects/), as long as the environment context remains intact.
 
 ### Limits
 

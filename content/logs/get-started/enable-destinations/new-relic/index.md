@@ -15,19 +15,9 @@ Cloudflare Logpush supports pushing logs directly to New Relic via the Cloudflar
 
 To enable a Logpush service to New Relic via the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+{{<render file="_enable-logpush-job.md">}}
 
-2. Select the Enterprise account or domain you want to use with Logpush.
-
-3. Go to **Analytics & Logs** > **Logs**.
-
-4. Select **Add Logpush job** and a modal window will open.
-
-5. Select the dataset you want to push to a storage service.
-
-6. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7. Select **New Relic**.
+7. In **Select a destination**, choose **New Relic**.
 
 8. Enter the **New Relic Logs Endpoint**:
 
@@ -56,7 +46,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 - **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
 
    {{<Aside type="note" header="Note">}}
-   To query Cloudflare logs, New Relic requires fields to be sent as a UNIX Timestamp.
+   To query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
    {{</Aside>}}
 
 - **destination_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.
@@ -155,5 +145,5 @@ Response:
 ```
 
  {{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/fundamentals/data-products/analytics-integrations/new-relic/).
+To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/analytics/analytics-integrations/new-relic/).
 {{</Aside>}}

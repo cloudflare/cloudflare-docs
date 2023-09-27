@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Logs
 weight: 1
+meta:
+    title: Tunnel logs
 ---
 
 # Tunnel logs

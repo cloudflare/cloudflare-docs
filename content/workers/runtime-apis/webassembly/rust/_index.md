@@ -43,7 +43,7 @@ You will find the following files and folders in the `hello-world-rust` director
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
 * `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/runtime-apis/webassembly/rust/#bundling-worker-build)).
-* `src` - Rust source directory, pre-populated with simple Hello World Worker.
+* `src` - Rust source directory, pre-populated with Hello World Worker.
 
 ## 2. Develop locally
 
@@ -88,7 +88,7 @@ There is some counterintuitive behavior going on here:
 
 #### `event` macro
 
-This macro allows you to easily define entrypoints to your Worker. The `event` macro supports the following events:
+This macro allows you to define entrypoints to your Worker. The `event` macro supports the following events:
 
 * `fetch` - Invoked by an incoming HTTP request.
 * `scheduled` - Invoked by [`Cron Triggers`](/workers/configuration/cron-triggers/).
@@ -110,13 +110,13 @@ Provides access to Worker [bindings](https://developers.cloudflare.com/workers/c
 * [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
 * [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
 * [`KvStore`](https://docs.rs/worker-kv/latest/worker_kv/struct.KvStore.html) - Workers [KV](/workers/runtime-apis/kv/) namespace binding.
-* [`ObjectNamespace`](https://docs.rs/worker/latest/worker/durable/struct.ObjectNamespace.html) - [Durable Object](/workers/runtime-apis/durable-objects/#durable-objects) namespace binding.
+* [`ObjectNamespace`](https://docs.rs/worker/latest/worker/durable/struct.ObjectNamespace.html) - [Durable Object](/durable-objects/) binding.
 * [`Fetcher`](https://docs.rs/worker/latest/worker/struct.Fetcher.html) - [Service binding](/workers/runtime-apis/service-bindings/) to another Worker.
 * [`Bucket`](https://docs.rs/worker/latest/worker/struct.Bucket.html) - [R2](/r2/) Bucket binding.
 
 3. **[`Context`](https://docs.rs/worker/latest/worker/struct.Context.html)**
 
-Provides access to [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) (deferred asynchronous tasks) and [`passThroughOnException`](/workers/runtime-apis/fetch-event/#passthroughonexception) (fail open) functionality.
+Provides access to [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) (deferred asynchronous tasks) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) (fail open) functionality.
 
 #### [`Response`](https://docs.rs/worker/latest/worker/struct.Response.html)
 
@@ -126,12 +126,12 @@ The `fetch` handler expects a [`Response`](https://docs.rs/worker/latest/worker/
 
 Implements convenient [routing API](https://docs.rs/worker/latest/worker/struct.Router.html) to serve multiple paths from one Worker. Refer to the [`Router` example in the `worker-rs` GitHub repository](https://github.com/cloudflare/workers-rs#or-use-the-router).
 
-## 4. Publish your Worker project
+## 4. Deploy your Worker project
 
-With your project configured, you can now deploy your Worker, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+With your project configured, you can now deploy your Worker, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the deployment process to set one up.
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -187,7 +187,7 @@ import { myFunction } from "path/to/mylib.js";
 
 [`wasm-bindgen-futures`](https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/) (part of the `wasm-bindgen` project) provides interoperability between Rust
 Futures and JavaScript Promises. `workers-rs` invokes the entire event handler function using `spawn_local`, meaning that you can program using async Rust, which is turned
-into a single JavaScript Promise and run on the JavaScript event loop. Calls to imported JavaScript runtime APIs are automatically converted to Rust Futures that can be easily invoked from async Rust functions.
+into a single JavaScript Promise and run on the JavaScript event loop. Calls to imported JavaScript runtime APIs are automatically converted to Rust Futures that can be invoked from async Rust functions.
 
 ### Bundling (`worker-build`)
 
@@ -195,7 +195,7 @@ To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool 
 
 1. Creates a JavaScript entrypoint script that properly invokes the module using `wasm-bindgen`'s JavaScript API.  
 2. Invokes `web-pack` to minify and bundle the JavaScript code.
-3. Outputs a directory structure that Wrangler can use to bundle and publish the final Worker.
+3. Outputs a directory structure that Wrangler can use to bundle and deploy the final Worker.
 
 `worker-build` is invoked by default in the template project using a custom build command specified in `wrangler.toml`. 
 

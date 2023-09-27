@@ -11,6 +11,8 @@ layout: single
 
 To configure firewall rules in the Cloudflare dashboard, open **Firewall rules** in **Security** > **WAF**.
 
+{{<render file="_deprecation-notice.md">}}
+
 As depicted in the image below, the **Firewall rules** dashboard interface lets you:
 
 * View the list of existing rules, both enabled and disabled.

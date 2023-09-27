@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: PUT examples
 weight: 5
+meta:
+  title: PUT examples - Firewall rules
 ---
 
 # PUT examples
@@ -12,16 +14,16 @@ This example updates several firewall rules using a single API call.
 
 You can include up to 25 rules in the JSON object array (`-d` flag) to update as a batch. The batch is handled as a transaction.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '[
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '[
   {
     "id": "<RULE_ID>",
     "paused": false,
@@ -74,7 +76,7 @@ header: Response
 
 ## Update a single rule
 
-This example updates the firewall rule with ID `<RULE_ID>`.
+This example updates the firewall rule with ID `{rule_id}`.
 
 You must include the following fields in the request body:
 
@@ -84,16 +86,16 @@ You must include the following fields in the request body:
 
 All other fields are optional.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules/{rule_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "id": "<RULE_ID>",
   "paused": false,
   "description": "Do not challenge login from office IPv6",
@@ -105,7 +107,7 @@ curl -X PUT \
     "paused": false,
     "description": "Login from office"
   }
-}' 
+}'
 ```
 
 ```json

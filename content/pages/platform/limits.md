@@ -21,11 +21,13 @@ Builds will timeout after 20 minutes.
 
 ## Custom domains
 
-A Cloudflare Pages project can be attached to a certain number of domains per plan.
+Based on your Cloudflare plan type, a Pages project is limited to a specific number of custom domains. This limit is on a per-project basis.
 
 | Free | Pro | Business | Enterprise |
 | ---- | --- | -------- | ---------- |
-| 100  | 250 | 500      | 500        |
+| 100  | 250 | 500      | 500[^1]    |
+
+[^1]: If you need more custom domains, contact your account team.
 
 ## Files
 

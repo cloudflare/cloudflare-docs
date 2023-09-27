@@ -50,13 +50,13 @@ Yes, Cloudflare Workers support proxying WebSockets. However, it currently does 
 
 -   Manipulating or modifying individual messages
 
-Cloudflare Workers also supports terminating (acting as an endpoint for) WebSockets sessions using [Durable Objects](/workers/configuration/durable-objects/).
+Cloudflare Workers also supports terminating (acting as an endpoint for) WebSockets sessions using [Durable Objects](/durable-objects/).
 
 ___
 
 ## Does the Cloudflare Web Application Firewall (WAF) work with WebSockets?
 
-The initial HTTP 101 request is subject to the WAF, rate limiting, and other firewall features just like any any other WebSockets connection. However, once a connection has been established the WAF does not perform any further inspections.
+The initial HTTP 101 request is subject to WAF managed rules, custom rules, rate limiting rules, and other WAF features like any other WebSockets connection. However, once a connection has been established, the WAF does not perform any further inspections.
 
 ___
 

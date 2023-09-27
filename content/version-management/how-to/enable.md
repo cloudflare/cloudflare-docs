@@ -14,24 +14,43 @@ meta:
 
 ## Disable Version Management
 
+{{<Aside type="warning">}}
+
+When you disable Zone Versioning, all your zone settings will revert to those in your **Version Zero**.
+
+{{</Aside>}}
+
 To disable Zone Versioning:
 
-1. [Deploy](/version-management/how-to/environments/#change-environment-version) **Version Zero** to your **Production** environment. When you disable Zone Versioning, all your zone settings will revert to those in your Version Zero, so you should validate these settings are correct before proceeding.
+1. Confirm that **Version Zero** has the correct settings for your zone:
 
-2. Send a `GET` request to the `/accounts/{account_id}/rulesets/phases/http_request_select_configuration/entrypoint` endpoint.
+    1. Use the [comparison feature](/version-management/how-to/compare-versions/) to view the differences between your current **Production** version and **Version Zero**.
+
+    2. If there are differences, make changes to **Version Zero** so it matches your current **Production** version.
+
+    3. [Promote](/version-management/how-to/environments/#promote-a-version) **Version Zero** to your **Production** environment.
+
+    4. Confirm that your new **Production** environment functions as expected.
+
+2. Send a `GET` request to the `/zones/{zone_id}/environments` endpoint.
 
     ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_select_configuration/entrypoint" \
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/environments" \
     --header "X-Auth-Email: <EMAIL>" \
     --header "X-Auth-Key: <API_KEY>"
     ```
 
     In the response, save the following values:
 
-    - The top-level ruleset `id`.
-    - The rule `id` of every rule that has the zone's name as the zone field in the `expression` property.
+    - The environment `ref` of every rule
 
-3. Using the `id` of those rules, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for every rule in the ruleset.
+3. Using the `ref` of those environments, send a `DELETE` request to the `/zones/{zone_id}/environments/{ref}` endpoint for each environment.
+
+    ```bash
+    curl -X 'DELETE' "https://api.cloudflare.com/client/v4/zones/{zone_id}/environments/{ref}" \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>"
+    ```
 
 4. Then, send a `GET` request to find all HTTP applications (or versions of your zone).
 

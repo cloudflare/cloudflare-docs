@@ -19,7 +19,7 @@ Cloudflare enables email address obfuscation automatically when you sign up.
 To change the Email Address Obfuscation setting for your zone:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Select your account and zone.
+2.  Select your account and website.
 3.  Go to **Scrape Shield**.
 4.  For **Server Side Excludes**, switch the toggle to **On**.
 
@@ -40,7 +40,12 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
     -   _head_ tags: `<head></head>`
 -   Any page that does not have a MIME type of "text/html" or "application/xhtml+xml"
 
-**Please Note** that Email Obfuscation will **not take affect** if you're using the `Cache-Control: no-transform` header.
+{{<Aside type="warning" header="Warnings">}}
+Please note that Email Obfuscation will **not apply** in the following cases:
+* if you're using the `Cache-Control: no-transform` header.
+* if the HTML/JS code is specifically added by a Worker. This code will be respected as is, without change and without applying the obfuscation.
+{{</Aside>}}
+
 
 ___
 

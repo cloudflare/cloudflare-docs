@@ -8,7 +8,7 @@ meta:
 
 # ERR_TOO_MANY_REDIRECTS
 
-After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. 
+After you [add a new domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. 
 
 This error occurs when visitors get stuck in a redirect loop.
 
@@ -168,6 +168,6 @@ To solve this issue, review your various [URL forwarding rules](/rules/url-forwa
 
 {{<Aside type="note">}}
 
-To reduce the potential for redirect loops and [mixed content errors](/ssl/troubleshooting/mixed-content-errors/), Cloudflare recommends Wordpress users to install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) at their origin web server and enable the *Automatic HTTPS rewrites* option within the plugin. Alternatively, Cloudflare recommends the [SSL insecure content fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/) or [Really Simple SSL plugin](https://en-gb.wordpress.org/plugins/really-simple-ssl/).
+To reduce the potential for redirect loops and [mixed content errors](/ssl/troubleshooting/mixed-content-errors/), Cloudflare recommends WordPress users to install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) at their origin web server and enable the *Automatic HTTPS rewrites* option within the plugin. Alternatively, Cloudflare recommends the [SSL insecure content fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/) or [Really Simple SSL plugin](https://en-gb.wordpress.org/plugins/really-simple-ssl/).
 
 {{</Aside>}}

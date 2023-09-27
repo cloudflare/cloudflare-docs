@@ -15,11 +15,24 @@ Only one redirect can be defined per line and must follow this format:
 [source] [destination] [code?]
 ```
 
-{{<Aside type="note">}}
+{{<definitions>}}
 
-The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
+- `source` {{<prop-meta>}}required{{</prop-meta>}}
+  
+  - A file path.
+  - Can include [wildcards (`*`)](#splats) and [placeholders](#placeholders).
+  - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source are not evaluated.
+    
+- `destination` {{<prop-meta>}}required{{</prop-meta>}}
+  
+  - A file path or external link. 
+  - Can include fragments, query strings, [splats](#splats), and [placeholders](#placeholders).
+    
+- `code` {{<prop-meta>}}default: `302`{{</prop-meta>}}
+  
+  - Optional parameter
 
-{{</Aside>}}
+{{</definitions>}}
 
 A complete example with multiple redirects may look like the following:
 
@@ -33,9 +46,11 @@ filename: _redirects
 /twitch https://twitch.tv
 /trailing /trailing/ 301
 /notrailing/ /nottrailing 301
+/page/ /page/#fragment 301
 /blog/* https://blog.my.domain/:splat
 /products/:code/:name /products?code=:code&name=:name
 ```
+
 {{<Aside type= "note">}}
 
 In the case of some frameworks, such as Jekyll, you may need to manually copy and paste your `_redirects` file to the build output directory. To do this:
@@ -58,17 +73,17 @@ Cloudflare currently offers limited support for advanced redirects. More support
 
 {{<table-wrap>}}
 
-| Feature                             | Support | Example                                                         | Notes                                                                                             |
-| ----------------------------------- | ------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code.                                                            |
-| Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                                                                                   |
-| Splats                              | Yes     | `/blog/* /blog/:splat`                                          | Refer to [Splats](#splats).                                                                             |
-| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders).                                                                |
-| Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                                                                                   |
-| Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).                                                                   |
-| Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                                                                                   |
-| Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                                                                                   |
-| Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                                                                                   |
+| Feature                             | Support | Example                                                         | Notes                                   |
+| ----------------------------------- | ------- | --------------------------------------------------------------- | --------------------------------------- |
+| Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code. |
+| Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                         |
+| Splats                              | Yes     | `/blog/* /blog/:splat`                                          | Refer to [Splats](#splats).             |
+| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
+| Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                         |
+| Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |
+| Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                         |
+| Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                         |
+| Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                         |
 
 {{</table-wrap>}}
 
@@ -84,9 +99,14 @@ The matched value can be used in the redirect location with `:splat`.
 
 ### Placeholders
 
-A placeholder can be defined with `:placeholder_name`. A colon indicates the start of a placeholder, and the placeholder name that follows may be composed of alphanumeric characters and underscores, `:\w+`. A placeholder with any given name can only be used once in the URL. Placeholders match all characters apart from the delimiter, which: when part of the host, is a period or a forward-slash; and when part of the path, is a forward-slash.
+{{<render file="_headers_redirects_placeholders.md" withParameters="redirect">}}
 
-Similarly, the matched value can be used in the redirect location with `:placeholder_name`.
+```txt
+---
+filename: _redirects
+---
+/movies/:title /media/:title
+```
 
 ### Proxying
 
@@ -108,11 +128,12 @@ For example, if you have added `/about/faq/* /about/faqs 200` to your `_redirect
 /about/faq/*
   Link: </about/faqs>; rel="canonical"
 ```
+
 {{</Aside>}}
 
 ## Surpass `_redirects` limits
 
-A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Use [Bulk Redirects (beta)](/rules/url-forwarding/bulk-redirects/) to handle redirects that surpasses the 2,100 redirect rules limit set by Pages. 
+A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Use [Bulk Redirects (beta)](/rules/url-forwarding/bulk-redirects/) to handle redirects that surpasses the 2,100 redirect rules limit set by Pages.
 
 {{<Aside type="note">}}
 

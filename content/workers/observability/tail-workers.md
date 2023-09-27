@@ -3,9 +3,9 @@ pcx_content_type: concept
 title: Tail Workers
 ---
 
-{{<beta>}}Tail Workers{{</beta>}}
+{{<heading-pill style="beta">}}Tail Workers{{</heading-pill>}}
 
-A Tail Worker receives information about the execution of other Workers, such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
+A Tail Worker receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
 
 Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. They are priced the same as [Workers](/workers/platform/pricing/#workers).
 
@@ -93,3 +93,6 @@ tail_consumers = [{service = "<TAIL_WORKER_NAME>", environment = "<ENVIRONMENT_N
 The Worker selected must have a `TailEvent` handler defined.
 {{</Aside>}}
 
+## Related resources
+
+- [`TailEvent`](/workers/runtime-apis/tail-event/) - Learn how to set up a `TailEvent` handler in your Worker.
