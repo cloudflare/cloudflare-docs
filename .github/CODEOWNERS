@@ -26,6 +26,9 @@
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
 
+# Browser Rendering API
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
+
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
 
