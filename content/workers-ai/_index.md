@@ -11,6 +11,10 @@ meta:
 
 {{<beta>}}Workers AI{{</beta>}}
 
+{{<Aside type="warning">}}
+Workers AI is currently in Open Beta and is **not recommended for production data and traffic**, and limits + access are subject to change
+{{</Aside>}}
+
 {{<description>}}
 Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
 {{</description>}}
@@ -45,13 +49,6 @@ With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to it's glo
 
 ### Batteries inlcuded with a vector database 
 Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context + memory to an LLM. Head to over to the [Vectorize docs](/vectorize) to learn more. 
-
-
-## Coming soon
-
-* **Expanded catalog - more models**:
-
-* **Metrics and observability**:
 
 ## Get Started
  

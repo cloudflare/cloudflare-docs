@@ -10,6 +10,8 @@ DistilBERT-SST-2 is a distilled BERT model that was finetuned on SST-2 for senti
 * ID: **@cf/huggingface/distilbert-sst-2-int8** - used to `run` this model via SDK or API
 * Name: Quantized DistilBERT model finetuned for sentiment-analysis
 * Task: text-classification
+* License type: Apache 2.0
+* [Terms + Information](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english)
 
 ## Examples
 {{<tabs labels="worker | node | python | curl">}}
@@ -19,8 +21,6 @@ DistilBERT-SST-2 is a distilled BERT model that was finetuned on SST-2 for senti
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "AI" with the variable name you defined.
   AI: any;
 }
 
@@ -112,40 +112,37 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/met
 }
 ```
 
-## Input/Output schemas
-The following schemas are based on [JSON Schema](https://json-schema.org/)
+## API schema
+The following schema is based on [JSON Schema](https://json-schema.org/)
 
-**Input**
 ```json
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      "text": {
-        "type": "string"
-      }
-    },
-    "required": ["text"]
-  }
-}
-```
-
-**Output**
-```json
-{
-  "schema": {
-    "type": "array",
-    "items": {
-      "type": "object",
-      "properties": {
-        "score": {
-          "type": "number"
+    "task": "text-classification",
+    "tsClass": "AiTextClassification",
+    "jsonSchema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "type": "string"
+                }
+            },
+            "required": ["text"]
         },
-        "label": {
-          "type": "string"
+        "output": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "score": {
+                        "type": "number"
+                    },
+                    "label": {
+                        "type": "string"
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 ```

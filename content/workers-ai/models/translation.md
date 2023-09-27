@@ -5,22 +5,21 @@ weight: 3
 ---
 
 # Translation
-No Language Left Behind (NLLB) was trained on multilingual data for translation between a set of 200 languages.
+M2M100 is a multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation.
 
-* ID:  **@cf/meta/nllb-200-1.3b** - used to `run` this model via SDK or API
-* Name: Quantized Llama 2 chat model from Met
-* Task: text-generation
+* ID:  **@cf/meta/m2m100-1.2b** - used to `run` this model via SDK or API
+* Task: Translation
+* License type: MIT
+* [Terms + Information](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)
 
 ## Examples
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
-```js
+```ts
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "AI" with the variable name you defined.
   AI: any;
 }
 
@@ -28,15 +27,16 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const  = ai.run('@cf/meta/nllb-200-1.3b', {
+    const response = await ai.run('@cf/meta/m2m100-1.2b', {
         text: "I'll have an order of the moule frites",
-        language: "french" 
+        source_lang: "english", // defaults to english
+        target_lang: "french" 
       }
     );
 
-    return new Response(JSON.stringify(answer));
+    return new Response(JSON.stringify(response));
   },
-};
+}
 ```
 
 {{</tab>}}
@@ -56,9 +56,10 @@ async function run(model, input) {
   return result;
 }
 
-run('@cf/meta/nllb-200-1.3b', {
+run('@cf/meta/m2m100-1.2b', {
   text: "I'll have an order of the moule frites",
-  language: "french"
+  source_lang: "english", // defaults to english
+  target_lang: "french"
 }).then((response) => {
     console.log(JSON.stringify(response));
 });
@@ -78,9 +79,10 @@ def run(model, input)
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
     
-output = run('@cf/meta/nllb-200-1.3b', {
-  text: "I'll have an order of the moule frites",
-  language: "french" 
+output = run('@cf/meta/m2m100-1.2b', {
+  "text": "I'll have an order of the moule frites",
+  "source_lang": "english",
+  "target_lang": "french" 
 })
 ```
 
@@ -88,10 +90,10 @@ output = run('@cf/meta/nllb-200-1.3b', {
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/nllb-200-1.3b \
+$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/m2m100-1.2b \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "text": "I'll have an order of the moule frites", "language": "french" }'
+    -d '{ "text": "I'll have an order of the moule frites", "source_lang": "english", "target_lang": "french" }'
 ```
 
 {{</tab>}}
@@ -109,33 +111,38 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/met
 }
 ```
 
-## Input/Output schemas
-The following schemas are based on [JSON Schema](https://json-schema.org/)
+## API schema
+The following schema is based on [JSON Schema](https://json-schema.org/)
 
-**Input**
 ```json
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      "text",
-      "language"
-    },
-    "required": ["text", "language"]
-  }
-}
-```
-
-**Output**
-```json
-{
-  "schema": {
-    "type": "object",
-    "properties": {
-      "translated_text": {
-        "type": "string"
-      }
+    "task": "translation",
+    "tsClass": "AiTranslation",
+    "jsonSchema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "input_text": {
+                    "type": "string"
+                },
+                "source_lang": {
+                    "type": "string",
+                    "default" : "en"
+                },
+                "target_lang": {
+                    "type": "string"
+                }
+            },
+            "required": ["input_text", "target_lang"]
+        },
+        "output": {
+            "type": "object",
+            "properties": {
+                "translated_text": {
+                    "type": "string"
+                }
+            }
+        }
     }
-  }
 }
 ```

@@ -10,8 +10,10 @@ Llama 2 is a family of generative text models and can be adapted for a variety o
 * ID:  **@cf/meta/llama-2-7b-chat-int8** - used to `run` this model via SDK or API
 * Name: Quantized Llama 2 chat model from Meta	
 * Task: text-generation
+* License type: Source Available
+* [Terms + Information](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
 
-## Examples
+## Examples - chat style with system prompt (preffered)
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
@@ -19,8 +21,6 @@ Llama 2 is a family of generative text models and can be adapted for a variety o
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "AI" with the variable name you defined.
   AI: any;
 }
 
@@ -28,12 +28,13 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
-        prompt: "What is the origin of the phrase 'Hello, World'" 
-      }
-    );
+    const messages = [
+      { role: 'system', content: 'You are a friendly assistant' },
+      { role: 'user', content: 'What is the origin of the phrase Hello, World' }
+    ];
+    const response = await ai.run('@cf/meta/llama-2-7b-chat-int8', { messages });
 
-    return new Response(JSON.stringify(answer));
+    return new Response(JSON.stringify(response));
   },
 };
 ```
@@ -43,19 +44,24 @@ export default {
 
 ```js
 async function run(model, prompt) {
+  const messages = [
+    { role: 'system', content: 'You are a friendly assistant' },
+    { role: 'user', content: prompt }
+  ];
+
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
     {
       headers: { Authorization: "Bearer {API_TOKEN}" },
       method: "POST",
-      body: JSON.stringify(prompt),
+      body: JSON.stringify({ messages }),
     }
   );
   const result = await response.json();
   return result;
 }
 
-run('@cf/meta/llama-2-7b-chat-int8', { prompt: 'Tell me a story' }).then((response) => {
+run('@cf/meta/llama-2-7b-chat-int8', 'Tell me a story').then((response) => {
     console.log(JSON.stringify(response));
 });
 ```
@@ -71,10 +77,14 @@ API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/ru
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
 def run(model, prompt)
+    messages = [
+      { "role": "system", "content": "You are a friendly assistant" },
+      { "role": "user", "content": prompt }
+    ]
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=prompt)
     return response.json()
     
-output = run("@cf/meta/llama-2-7b-chat-int8", { prompt: "Tell me a story" })
+output = run("@cf/meta/llama-2-7b-chat-int8", "Tell me a story")
 ```
 
 {{</tab>}}
@@ -84,7 +94,7 @@ output = run("@cf/meta/llama-2-7b-chat-int8", { prompt: "Tell me a story" })
 $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "prompt": "Tell me a story" }'
+    -d "{ "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "prompt" } ]}'
 ```
 
 {{</tab>}}
@@ -94,43 +104,60 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/met
 
 ```json
 {
-  "result": {
-    "answer": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world.",
+  "response":
+    "The origin of the phrase \"Hello, World\" is not well-documented, but it is believed to have originated in the early days of computing. In the 1970s, when personal computers were first becoming popular, many programming languages, including C, had a simple \"Hello, World\" program that was used to demonstrate the basics of programming.\nThe idea behind the program was to print the words \"Hello, World\" on the screen, and it was often used as a first program for beginners to learn the basics of programming. Over time, the phrase \"Hello, World\" became a common greeting among programmers and computer enthusiasts, and it is now widely recognized as a symbol of the computing industry.\nIt's worth noting that the phrase \"Hello, World\" is not a specific phrase that was coined by any one person or organization, but rather a catchphrase that evolved over time as a result of its widespread use in the computing industry."
   }
-  success": true,
-  "errors":[],
-  "messages":[]
-}
 ```
 
-## Input/Output schemas
-The following schemas are based on [JSON Schema](https://json-schema.org/)
+## API schema
+The following schema is based on [JSON Schema](https://json-schema.org/)
 
-**Input**
 ```json
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      "question": {
-        "type": "string"
-      }
-    },
-    "required": ["question"]
-  }
-}
-```
-
-**Output**
-```json
-{
-  "schema": {
-    "type": "object",
-    "properties": {
-      "answer": {
-        "type": "string"
-      }
+    "task": "text-generation",
+    "tsClass": "AiTextGeneration",
+    "jsonSchema": {
+        "input": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "properties": {
+                        "prompt": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["prompt"]
+                },
+                {
+                    "properties": {
+                        "messages": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["role", "content"]
+                            }
+                        }
+                    },
+                    "required": ["messages"]
+                }
+            ]
+        },
+        "output": {
+            "type": "object",
+            "properties": {
+                "response": {
+                    "type": "string"
+                }
+            }
+        }
     }
-  }
 }
 ```

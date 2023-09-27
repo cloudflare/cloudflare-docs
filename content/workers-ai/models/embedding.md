@@ -10,6 +10,8 @@ Feature extraction models transform raw data into numerical features that can be
 * ID:  **@cf/baai/bge-base-en-v1.5** - used to `run` this model via SDK or API
 * Name: Feature extraction model	
 * Task: text-embeddings
+* License type: MIT
+* [Terms + Information](https://github.com/FlagOpen/FlagEmbedding/blob/master/LICENSE)
 
 ## Examples
 
@@ -115,56 +117,75 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/baa
 
 ```json
 {
-  "result": {
-    "items": [
-      [-0.387, 192, 0.315, 384, -0.363,...],
-      [-0.256, 193, 0.053, 385,	-0.346,...],
-      [-0.649, 196,	0.053, 388,	-1.055,...]
+  "input": {
+    "text":"Tell me a joke about Cloudflare"
+  },
+  "response": {
+    "shape":[1,768],
+    "data": [
+      [0.03190500661730766, 0.006071353796869516, 0.025971125811338425,...]
+    ]
+  },
+  "batchedInput": {
+    "text": ["Tell me a joke about Cloudflare","The weather is sunny"]
+  },
+  "batchedResponse": {
+    "shape":[2,768],
+    "data":[
+      [0.03190416097640991, 0.006062490865588188, 0.025968171656131744,...],
+      [0.002439928939566016, -0.021352028474211693, 0.06229676678776741,...],
+      [-0.02154572866857052,0.09098546206951141,0.006273532286286354,...]
     ]
   }
-  success": true,
-  "errors":[],
-  "messages":[]
 }
 ```
 
 
-## Input/Output schemas
-The following schemas are based on [JSON Schema](https://json-schema.org/)
+## API schema
+The following schema is based on [JSON Schema](https://json-schema.org/)
 
-**Input**
 ```json
-
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      "text": {
-        "oneOf": [
-          { "type": "string" },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
+    "task": "text-embeddings",
+    "tsClass": "AiTextEmbeddings",
+    "jsonSchema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "oneOf": [
+                        { "type": "string" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": ["text"]
+        },
+        "output": {
+            "type": "object",
+            "properties": {
+                "shape": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
             }
-          }
-        ]
-      }
-    },
-    "required": ["text"]
-  }
-}
-```
-
-**Output**
-```json
-{
-  "schema": {
-    "type": "array",
-    "items": {
-      "type": "number"
+        }
     }
-  }
 }
 ```
-

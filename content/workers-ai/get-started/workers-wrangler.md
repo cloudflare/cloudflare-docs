@@ -65,7 +65,7 @@ binding = "AI" # i.e. available in your Worker on env.AI
 ```
 
 <!-- TODO update this once we know if we'll have it -->
-You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#d1-databases).
+You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#ai).
 
 ## 3. Install the Workers AI client library
 
@@ -110,12 +110,12 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+    const response = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
         prompt: "What is the origin of the phrase 'Hello, World'" 
       }
     );
 
-    return new Response(JSON.stringify(answer));
+    return new Response(JSON.stringify(response));
   },
 };
 ```
@@ -127,11 +127,11 @@ After configuring your Worker, you can test your project locally before you depl
 While in your project directory, test Workers AI locally by running. Note, you will be prompted to login at this time:
 
 ```sh
-$ npx wrangler@beta dev --remote
+$ npx wrangler dev --remote
 ```
 
 {{<Aside type="warning">}}
-Be sure run `wrangler@beta` and include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them.
+Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them locally.
 {{</Aside>}}
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
@@ -161,7 +161,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ npx wrangler@beta deploy
+$ npx wrangler deploy
 # Outputs: https://hello-ai.<YOUR_SUBDOMAIN>.workers.dev
 ```
 

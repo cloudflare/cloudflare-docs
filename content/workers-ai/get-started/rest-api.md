@@ -26,12 +26,12 @@ After creating your token, you can authenticate and make requests to the API usi
 In this example, we will run the `@cloudflare/meta-llama/llama-2-7b` model:
 
 ```sh
-$ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8' \
+$ curl 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8' \
   -H 'Authorization: Bearer {API_TOKEN}'
-  -d '{ "prompt": "Where did the phrase 'Hello World' come from" } }'
+  -d '{ "prompt": "Where did the phrase 'Hello World' come from" }'
 ```
 
-Try it with one of your projects by replacing `{account_id}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
+Try it with one of your projects by replacing `{ACCOUNT_ID}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
 
 
 
@@ -39,7 +39,7 @@ The API response will look like the following:
 ```json
 {
   "result": {
-    "answer": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
+    "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
   },
   "success": true,
   "errors": [],
@@ -48,6 +48,6 @@ The API response will look like the following:
 ```
 
 ### Exploring other models
-This example uses the `@cloudflare/meta-llama/llama-2-7b`, but you can use any of the models in our [catalog](/workers-ai/models/) and just replace `{model}` the the desired model name
+This example uses the `@cf/meta/llama-2-7b-chat-int8`, but you can use any of the models in our [catalog](/workers-ai/models/) and just replace `{model}` the the desired model name
 
 `api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}`

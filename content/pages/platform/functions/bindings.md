@@ -210,6 +210,10 @@ Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API
 ## Workers AI
 [Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
 
+{{<Aside type="warning">}}
+While pages currently supports Wokers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
+{{</Aside>}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
 3. Select your Pages project > **Settings** > **Functions** > **Workers AI bindings** > **Add binding**.
@@ -234,12 +238,9 @@ import { Ai } from '@cloudflare.com/ai'
 export async function onRequest(context) {
   const ai = new Ai(context.env.AI);
 
-  const answer = await ai.run({
-      model: '@cf/meta/llama-2-7b-chat-int8',
-      input: {
-          question: "What is the origin of the phrase 'Hello, World'" 
-      }
-  });
+  const input = { prompt: "What is the origin of the phrase Hello, World" }
+
+  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input);
 
   return Response.json(answer);
 }
@@ -250,40 +251,21 @@ export async function onRequest(context) {
 import { Ai } from '@cloudflare.com/ai'
 
 interface Env {
-  NORTHWIND_DB: D1Database;
+  AI: any;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
   const ai = new Ai(context.env.AI);
 
-  const answer = await ai.run({
-      model: '@cf/meta/llama-2-7b-chat-int8',
-      input: {
-          question: "What is the origin of the phrase 'Hello, World'" 
-      }
-  });
+  const input = { prompt: "What is the origin of the phrase Hello, World" }
+
+  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input)
 
   return Response.json(answer);
 }
 ```
 {{</tab>}}
 {{</tabs>}}
-
-### Interact with your Workers AI locally
-
-While developing locally, interact with Workers AI by adding `--ai=<BINDING_NAME>` to your run command.
-
-Specifically:
-
-* If your database is bound to `AI`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --ai=AI --remote`.
-* Interact with this binding by using `context.env` - for example, `context.env.AI`
-
-{{<Aside type="warning">}}
-Be sure  include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them.
-{{</Aside>}}
-
-Refer to the [Workers AI API documentation](/workers-ai/platform/workers-pages-sdk/) for the API methods available on your Workers AI binding.
-
 
 ## Service bindings
 
