@@ -16,7 +16,7 @@ The most common way you will encounter a `Request` object is as a property of an
 highlight: [2]
 ---
 export default {
-	async fetch(request, env, ctx) { 
+	async fetch(request, env, ctx) {
 		return new Response('Hello World!');
 	},
 };
@@ -26,7 +26,7 @@ You may also want to construct a `Request` yourself when you need to modify a re
 
 ```js
 export default {
-	async fetch(request, env, ctx) { 
+	async fetch(request, env, ctx) {
         const url = "https://example.com";
         const modifiedRequest = new Request(url, request);
 		// ...
@@ -393,6 +393,55 @@ A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed
 ```
 
 Using any other type of `ReadableStream` as the body of a request will result in Chunked-Encoding being used.
+
+### Special considerations for `GET` requests with a payload body
+
+The HTTP and `fetch` specification define that `GET` requests
+[*should not*](https://httpwg.org/specs/rfc9110.html#GET) have a payload body and that any
+payload that is included has no semantic meaning or value. Nor should a `GET` request ever
+contain a `content-length` header field, even if the value of that field is zero. The `fetch`
+specification even goes so far as to make it impossible to create a new `Request` object using
+the constructor if the `method` is `GET` or `POST` and the `body` is not `null`.
+
+For instance, per the `fetch` spec, the following must result in an error being thrown:
+
+```js
+const req = new Request('https://example.com', { method: 'GET', body: new Uint8Array(0) });
+```
+
+However, the reality is that there are deployed applications on the web that do -- despite
+what the standards say -- include a body payload in `GET` requests. Workers allow for
+this by accepting such requests, and allows you to forward them to origins.
+
+When a `GET` request with a payload of any length is received by your Worker, the `request.body`
+property will be a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) rather than
+`null` as would typically be expected
+[per the `fetch` specification](https://fetch.spec.whatwg.org/#dom-request). This must be taken
+into consideration when creating a new `Request` from the original.
+
+Specifically, when using the following pattern, care must be taken to avoid errors:
+
+```js
+export default {
+  async fetch(request) {
+    // ...
+    const newRequest = new Request(request.url, {
+      method: request.method,
+      body: request.method === 'GET' || request.method === 'HEAD' ? null : request.body,
+    });
+  }
+}
+```
+
+Alternatively, calling `new Request(request)` will work to pass the `GET` request with
+the payload on through the new request. This should be done with caution, however, as existing
+HTTP infrastructure on the web can handle such payloads inconsistently. If an intermediary or
+origin server is not implemented to handle `GET` payloads correctly (e.g., by ignoring any
+`content-length` or `transfer-encoding` headers that may be included in the request and not
+reading anything beyond the request header block), bugs or security vulnerabilities (such as
+request smuggling vulnerabilities) can be introduced. We strongly recommend that `GET` and `HEAD`
+requests never include a payload body, nor include `content-length` or `transfer-encoding` headers
+of any value.
 
 ---
 
