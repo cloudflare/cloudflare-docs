@@ -618,8 +618,6 @@ Example:
 ---
 header: wrangler.toml
 ---
-
-[[vectorize]]
 vectorize = [
   { binding = "<INDEX_NAME>", bucket_name = "<your-index>"}
 ]
