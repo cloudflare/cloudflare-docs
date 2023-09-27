@@ -59,7 +59,6 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |
 | Waiting Room | ⚫️ | ✅ | ✅ |
 | Zaraz | ✅ | ✅ | ✅ |
-| Email Routing | ⚫️ | ⚫️ | ✅ |
 
 {{</tab>}}
 {{<tab label="application security" no-code="true">}}
@@ -87,6 +86,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Cloudflare Images | ⚫️ | ✘ | ✘ |
 | Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | ✘ |
 | Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
+| Email Routing | ⚫️ | ⚫️ | ✅ |
 | R2 | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
 | Stream | ⚫️ | ✘ | ✘ |
 | Workers (deployed on a Zone) | ✅ | ✅ | 🚧{{<fnref num="1">}} |
