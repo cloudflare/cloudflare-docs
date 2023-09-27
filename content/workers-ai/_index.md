@@ -49,7 +49,7 @@ Supporting mutiple classes of models, here are some AI tasks you can unlock with
 
 With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to it's global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
 
-### Batteries inlcuded with a vector database
+### Batteries included with a vector database
 
 Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context + memory to an LLM. Head to over to the [Vectorize docs](/vectorize) to learn more. 
 
