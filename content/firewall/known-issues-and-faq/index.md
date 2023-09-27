@@ -45,7 +45,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 ### Why isn't my regular expression pattern matching working?
 
-If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
+If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
 
 Also, note that the `http.request.method` field requires all-caps for method names (for example, `POST`).
 
