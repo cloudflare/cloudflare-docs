@@ -46,7 +46,7 @@ const ai = new Ai(env.AI);
 Runs a model. Takes a list of tensors as the input.
 
 ```javascript
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 const ai = new Ai(env.AI);
 

@@ -25,5 +25,5 @@ binding = "AI" # i.e. available in your Worker on env.AI
 **Pages**
 
 {{<Aside type="warning">}}
-While pages currently supports Wokers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
+While pages currently supports Workers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
 {{</Aside>}}

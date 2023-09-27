@@ -17,7 +17,7 @@ Llama 2 is a family of generative text models and can be adapted for a variety o
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
-```js
+```ts
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {

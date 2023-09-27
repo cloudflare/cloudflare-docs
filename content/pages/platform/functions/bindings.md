@@ -233,7 +233,7 @@ $ npm install @cloudflare/ai
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export async function onRequest(context) {
   const ai = new Ai(context.env.AI);
@@ -248,7 +248,7 @@ export async function onRequest(context) {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 interface Env {
   AI: any;
