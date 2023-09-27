@@ -1,8 +1,8 @@
 ---
 pcx_content_type: navigation
-title: KV
+title: Queues
 
-external_link: /kv/api/
+external_link: /queues/platform/javascript-apis/
 _build:
   publishResources: false
   render: never
