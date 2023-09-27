@@ -144,7 +144,7 @@ Embeddings allow you to add additional capabilities to the language models you c
 To begin using Vectorize, create a new embeddings index using `wrangler`. This index will store vectors with 768 dimensions, and will use cosine similarity to determine which vectors are most similar to each other:
 
 ```sh
-$ wrangler vectorize indexes create vector-index --dimensions=768 --metric=cosine
+$ wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 ```
 
 Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
