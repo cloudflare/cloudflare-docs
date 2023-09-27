@@ -5,7 +5,7 @@ product:
   title: Workers AI
   url: /workers-ai/
   group: Developer platform
-  additional_groups: [ai]
+  additional_groups: [AI]
 
 meta:
   title: Cloudflare Workers AI docs

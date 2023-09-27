@@ -32,7 +32,6 @@ async function walk(dir: string) {
   let files = await fs.readdir(dir);
   await Promise.all(
     files.map(async (name) => {
-      if (name.includes("constellation")) { return; }
       let abs = join(dir, name);
       let supportOtherLangsPath = "/support/other-languages";
       if (process.platform === "win32") {
