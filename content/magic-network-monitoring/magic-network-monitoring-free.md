@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 8
 ---
 
-{{<beta>}}Magic Network Monitoring free version{{</beta>}}
+{{<heading-pill style="beta">}}Magic Network Monitoring free version{{</heading-pill>}}
 
 The free version of Magic Network Monitoring (MNM) is currently in a closed beta. All customers with a Cloudflare account can request early access to the free version of MNM by [filling out this form](https://docs.google.com/forms/d/1umsmwHmXgMesP2t4wH94uVExHaT60tb5RTeawqR_9Cg/edit).
 
