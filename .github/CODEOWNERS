@@ -12,6 +12,11 @@
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
 
+# AI
+/content/ai-gateway/ @bjesus @cloudflare/pcx-technical-writing
+/content/workers-ai/ @irvinebroque @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
+/content/vectorize/ @irvinebroque @elithrar @pdwittig @cloudflare/pcx-technical-writing
+
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
 /content/data-localization/ @soheiokamoto @tlozoot @cloudflare/pcx-technical-writing

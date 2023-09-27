@@ -9,6 +9,7 @@
  */
 export const OWNERS: Record<string, string[]> = {
   "1.1.1.1": ["RebeccaTamachiro"],
+  "ai-gateway": ["bjesus"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
@@ -76,6 +77,8 @@ export const OWNERS: Record<string, string[]> = {
   "warp-client": ["haleycode"],
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
+  "vectorize": ["elithrar", "pdwittig"],
+  "workers-ai": ["irvinebroque", "pdwittig"],
   zaraz: ["haleycode"],
 };
 
