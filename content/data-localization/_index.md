@@ -16,91 +16,90 @@ This feature is available as a paid add-on for customers on the Enterprise plan.
 
 {{</Aside>}}
 
-The Data Localization Suite consists of the following products:
+{{<tabs labels="Application Performance | Application Security | Developer Platform | Network Services | Platform | Zero Trust">}}
+{{<tab label="application performance" no-code="true">}}
 
-- [Key Management](/data-localization/key-management/)
-- [Regional Services](/data-localization/regional-services/)
-- [Customer Metadata Boundary](/data-localization/metadata-boundary/)
-
-Support by product and region is summarized in the following table:
-
-{{<table-wrap>}}
-
-| Region | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+ Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
-| US | &#x2705; | &#x2705; | &#x2705; |
-| EU | &#x2705; | &#x2705; | &#x2705; |
-| UK | &#x2705;{{<fnref num="25">}} | &#x2705; | Can use EU metadata boundary. |
-| Canada | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
-| Australia | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
-| Japan | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
-| India | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
-| ISO 27001 Certified European Union | &#x2705;{{<fnref num="25">}} | &#x2705; | Can use EU metadata boundary. |
-| Germany | &#x2705;{{<fnref num="25">}} | &#x2705; | Can use EU metadata boundary. |
-| Singapore | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
-| South Korea | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+| Caching/CDN | ✅ | ✅ | ✅ |
+| Cache Reserve | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
+| DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Image Resizing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Stream Delivery | ✅ | ✅ | ✅ |
+| Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |
+| Waiting Room | ⚫️ | ✅ | ✅ |
+| Zaraz | ✅ | ✅ | ✅ |
+| Email Routing | ⚫️ | ⚫️ | ✅ |
 
-{{</table-wrap>}}
+{{</tab>}}
+{{<tab label="application security" no-code="true">}}
 
-Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ |
+| Advanced DDoS Protection | ✅ | ✅ | 🚧{{<fnref num="3">}} |
+| API Shield | ✅ | ✅ | ✘{{<fnref num="4">}} |
+| Bot Management | ✅ | ✅ | 🚧{{<fnref num="5">}} |
+| DNS Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Page Shield | ✅ | ✅ | ✅ |
+| Rate Limiting | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| SSL | ✅ | ✅ | ✅ |
+| Cloudflare for SaaS | ✘ | ✅ | ✅ |
+| Turnstile | ⚫️ | ✘ | ✅ |
+| WAF/L7 Firewall | ✅ | ✅ | ✅ |
+| DMARC Management | ⚫️ | ⚫️ | ✅ |
 
-✅ Product works with no caveats <br>
-🚧 Product can be used with some caveats <br>
-✘ Product cannot be used <br>
-⚫️ Not applicable
+{{</tab>}}
+{{<tab label="developer platform" no-code="true">}}
 
-{{<table-wrap>}}
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| Cloudflare Images | ⚫️ | ✘ | ✘ |
+| Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | ✘ |
+| Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
+| R2 | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
+| Stream | ⚫️ | ✘ | ✘ |
+| Workers (deployed on a Zone) | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Workers KV | ⚫️ | ✘ | ✘ |
+| Workers.dev | ✘ | ✘ | ✘ |
 
-| Suite/Category | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- | --- |
-| Application Performance | Caching/CDN | ✅ | ✅ | ✅ |
-| | Cache Reserve | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
-| | DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| | Image Resizing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| | Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| | Stream Delivery | ✅ | ✅ | ✅ |
-| | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |
-| | Waiting Room | ⚫️ | ✅ | ✅ |
-| | Zaraz | ✅ | ✅ | ✅ |
-| | Email Routing | ⚫️ | ⚫️ | ✅ |
-| Application Security | Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ |
-| | Advanced DDoS Protection | ✅ | ✅ | 🚧{{<fnref num="3">}} |
-| | API Shield | ✅ | ✅ | ✘{{<fnref num="4">}} |
-| | Bot Management | ✅ | ✅ | 🚧{{<fnref num="5">}} |
-| | DNS Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| | Page Shield | ✅ | ✅ | ✅ |
-| | Rate Limiting | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| | SSL | ✅ | ✅ | ✅ |
-| | Cloudflare for SaaS | ✘ | ✅ | ✅ |
-| | Turnstile | ⚫️ | ✘ | ✅ |
-| | WAF/L7 Firewall | ✅ | ✅ | ✅ |
-| | DMARC Management | ⚫️ | ⚫️ | ✅ |
-| Developer Platform | Cloudflare Images | ⚫️ | ✘ | ✘ |
-| | Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | ✘ |
-| | Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
-| | R2 | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
-| | Stream | ⚫️ | ✘ | ✘ |
-| | Workers (deployed on a Zone) | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| | Workers KV | ⚫️ | ✘ | ✘ |
-| | Workers.dev | ✘ | ✘ | ✘ |
-| Network Services | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
-| | BYOIP | ⚫️ | ✅ | ⚫️ |
-| | Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| | Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| Platform | Logpull | ⚫️ | ✅ | 🚧{{<fnref num="12">}} |
-| | Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
-| [Zero Trust](/data-localization/how-to/zero-trust/) | Access | 🚧{{<fnref num="14">}} | 🚧{{<fnref num="15">}} | 🚧{{<fnref num="16">}} |
-| | Area 1 | ⚫️ | ✅{{<fnref num="23">}} | 🚧{{<fnref num="24">}} |
-| | Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ |
-| | CASB | ⚫️ | ⚫️ | ✘ |
-| | Cloudflare Tunnel | ⚫️ | 🚧{{<fnref num="18">}} | ⚫️ |
-| | DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | ✘ |
-| | Gateway | 🚧{{<fnref num="20">}} | 🚧{{<fnref num="21">}} | 🚧{{<fnref num="22">}} |
-| | WARP | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+{{</tab>}}
+{{<tab label="network services" no-code="true">}}
 
-{{</table-wrap>}}
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
+| BYOIP | ⚫️ | ✅ | ⚫️ |
+| Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+
+{{</tab>}}
+{{<tab label="platform" no-code="true">}}
+
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| Logpull | ⚫️ | ✅ | 🚧{{<fnref num="12">}} |
+| Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
+
+{{</tab>}}
+{{<tab label="zero trust" no-code="true">}}
+
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| Access | 🚧{{<fnref num="14">}} | 🚧{{<fnref num="15">}} | 🚧{{<fnref num="16">}} |
+| Area 1 | ⚫️ | ✅{{<fnref num="23">}} | 🚧{{<fnref num="24">}} |
+| Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ |
+| CASB | ⚫️ | ⚫️ | ✘ |
+| Cloudflare Tunnel | ⚫️ | 🚧{{<fnref num="18">}} | ⚫️ |
+| DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | ✘ |
+| Gateway | 🚧{{<fnref num="20">}} | 🚧{{<fnref num="21">}} | 🚧{{<fnref num="22">}} |
+| WARP | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+
+{{</tab>}}
+{{</tabs>}}
 
 {{<fnsection>}}
 {{<fnentry num="1">}}Logs / Analytics not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
@@ -124,7 +123,6 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="20">}}You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.{{</fnentry>}}
 {{<fnentry num="21">}}Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.{{</fnentry>}}
 {{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
-{{<fnentry num="23">}}[US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing & Inspection Boundary**.{{</fnentry>}}
+{{<fnentry num="23">}}For [US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing &amp; Inspection Boundary**.{{</fnentry>}}
 {{<fnentry num="24">}}Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).{{</fnentry>}}
-{{<fnentry num="25">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
 {{</fnsection>}}
