@@ -39,7 +39,7 @@ import { Ai } from "@cloudflare/ai";
 const ai = new Ai(env.AI);
 ```
 
-* **env.AI** is the project [binding](/constellation/platform/wrangler/#bindings) defined in your `wrangler.toml` configuration.
+* **env.AI** is the project [binding](/workers-ai/platform/bindings/) defined in your `wrangler.toml` configuration.
 
 #### async ai.run()
 

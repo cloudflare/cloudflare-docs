@@ -38,7 +38,7 @@ export default {
       'This is a story about a hugging emoji'
     ]
 
-    const embeddings = ai.run('@cf/baai/bge-base-en-v1.5', {
+    const embeddings = await ai.run('@cf/baai/bge-base-en-v1.5', {
         text: stories
       }
     );

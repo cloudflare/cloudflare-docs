@@ -28,7 +28,7 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const  = ai.run('@cf/huggingface/distilbert-sst-2-int8', {
+    const = await ai.run('@cf/huggingface/distilbert-sst-2-int8', {
         text: "This pizza is great!" 
       }
     );
