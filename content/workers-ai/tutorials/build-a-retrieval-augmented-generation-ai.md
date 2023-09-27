@@ -180,13 +180,13 @@ database_name = "database"
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
+$ wrangler d1 execute database --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
 ```
 
 Now, we can add a new note to our database using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
+$ wrangler d1 execute database --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
 ## 5. Creating notes and adding them to Vectorize
@@ -273,11 +273,13 @@ By doing this, you will create a new vector representation of the note, which ca
 
 ## 6. Querying Vectorize to retrieve notes
 
-To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors. 
+To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors.
 
 Since we are using cosine similarity, the vectors with the highest cosine similarity will be the most similar to the query. We can introduce a `SIMILIARITY_CUTOFF` to only return vectors that are above a certain similarity threshold. In this case, we will use a cutoff of `0.75`, but you can adjust this value to suit your needs.
 
-Then, you can retrieve the notes that match the most similar vectors. Once you have found the notes, you can insert them as context into the prompt for the LLM binding. We'll update the prompt to include the context, and to ask the LLM to use the context when responding.
+We will also specify the `topK` parameter as part of the optional parameters to the `query` function. The `topK` parameter limits the number of vectors returned by the function. For instance, providing a `topK` of 1 will only return the _most similar_ vector based on the query. You may customize this for your own needs.
+
+With the list of similar vectors, you can retrieve the notes that match the record IDs stored alongside those vectors. You can insert the text of those notes as context into the prompt for the LLM binding. We'll update the prompt to include the context, and to ask the LLM to use the context when responding.
 
 Finally, you can query the LLM binding to get a response.
 
