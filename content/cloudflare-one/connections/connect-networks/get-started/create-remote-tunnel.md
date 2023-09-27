@@ -1,5 +1,5 @@
 ---
-title: Via the dashboard
+title: Create a remotely-managed tunnel (dashboard)
 pcx_content_type: how-to
 weight: 1
 layout: single
@@ -44,7 +44,7 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 2. Specify a service, for example `https://localhost:8000`.
 
-3. Under **Additional application settings**, specify any parameters you would like to add to your tunnel configuration.
+3. Under **Additional application settings**, specify any [parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/) you would like to add to your tunnel configuration.
 
 4. Select **Save `<tunnel-name>`**.
 
