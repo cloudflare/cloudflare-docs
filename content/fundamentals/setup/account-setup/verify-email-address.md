@@ -46,5 +46,6 @@ To check:
 2. Go to **My Profile**.
 3. For **Email Address**, your email address will have `(verified)` added after it.
 
-If your email is still not verified, try clicking the verification link in a different browser or an incognito window.
+If your email is still not verified, try clicking the verification link in a different browser or an incognito window. 
 
+If this still does not work, try [resending](#resend-verification-emails) the verification email to get a new verification link.
