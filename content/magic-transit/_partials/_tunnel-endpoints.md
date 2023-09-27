@@ -248,7 +248,7 @@ You will receive a response like the following:
 <summary>Configure bidirectional health checks</summary>
 <div>
 
-Bidirectional health checks are available for GRE and IPsec tunnels. Right now you can configure them via the API, and the dashboard option will be available in the near future.
+Bidirectional health checks are available for GRE and IPsec tunnels. Right now you can configure them via the API. The dashboard option will be available in the near future.
 
 For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional.
 
