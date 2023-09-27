@@ -29,10 +29,6 @@ Functionality you can deploy to your application with Constellation:
 
 ---
 
-{{<feature header="Make your first Constellation Worker" href="/constellation/get-started/first-constellation-worker/" cta="Make your first Constellation Worker">}}
-Use Constellation from a Cloudflare Worker.
-{{</feature>}}
-
 ## More resources
  
 {{<resource-group>}}
