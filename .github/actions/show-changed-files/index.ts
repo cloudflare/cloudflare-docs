@@ -151,6 +151,7 @@ async function run(): Promise<void> {
             return UnicodeSanitize(path);
           } else {
             console.log(path)
+            console.log(path.toLowerCase())
             return path;
           }
         };
