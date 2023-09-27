@@ -13,10 +13,10 @@ Now that your application is connected to the AI Gateway, you should be able to 
 ## Analytics
 On the first page of your AI Gateway dashboard you'll see metrics on requests, tokens, caching, errors, and cost. You can filter these metrics by time and provider-type.
 
+![AI Gateway analytics dashboard](images/ai-gateway/analytics.png)
+
 {{<Aside type="note">}}
-
 The cost metric is an estimation based on the number of tokens sent and received in requests. **We currently only calculate costs for OpenAI GPT.** If you stream responses, we use a tokenizer package to estimate the number of tokens used in order to calculate the cost. The cost metric is meant to be a helpful estimation to analyze and predict cost trends, but you should always **refer to your provider dashboard to see an accurate cost number.**
-
 {{</Aside>}}
 
 ### Using GraphQL
@@ -46,6 +46,8 @@ curl --request POST \
 
 ## Logging
 The second tab in the dashboard will take you to the logging page. Here you can see individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error.
+
+![AI Gateway logging ](images/ai-gateway/logs.png)
 
 ---
 

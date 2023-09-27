@@ -23,6 +23,8 @@ All of the tutorials assume you have already completed the [Get started guide](/
 
 On the AI Gateway page in the Cloudflare dashboard, create a new AI Gateway by clicking the plus button on the top right. You should be able to name the gateway as well as the endpoint. Click on the API Endpoints button to copy the endpoint. You can choose from provider-specific endpoints such as OpenAI, HuggingFace, and Replicate. Or you can use the universal endpoint that accepts a specific schema and supports model fallback and retries.
 
+![AI Gateway onboarding](images/ai-gateway/aig-onboarding.png)
+
 For this tutorial, we will be using the OpenAI provider-specific endpoint, so select OpenAI in the dropdown and copy the new endpoint.
 
 You will also need an OpenAI account and API key for this tutorial. If you do not have one, create a new OpenAI account and create an API key to continue with this tutorial. Make sure to store your API key somewhere safe so you can use it later.
@@ -36,7 +38,7 @@ Create a Worker project in the command line:
 header: Create a Worker project
 ---
 
-npm create cloudflare@latest
+$ npm create cloudflare@latest
 ```
 
 For setup, select the following options:
@@ -181,3 +183,5 @@ You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 ## 6. Review your AI Gateway
 
 When you go to AI Gateway in your Cloudflare dashboard, you should see your recent request being logged. You can also [tweak your settings](/ai-gateway/get-started/configuring-settings/) to manage your logs, caching, and rate limiting.
+
+![AI Gateway analytics](images/ai-gateway/analytics.png)
