@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - production
+      - production-with-ai-changes
 
 jobs:
   compile:
