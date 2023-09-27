@@ -149,7 +149,7 @@ index_name = "embeddings-index"
 binding = "AI" # available in your Worker on env.AI
 ```
 
-With Workers AI ready, you can create your Worker.
+With Workers AI ready, you can write code in your Worker.
 
 ## 5. Write code in your Worker
 
