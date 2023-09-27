@@ -83,7 +83,7 @@ To create an index, you will need to use the `wrangler vectorize create` command
 - Descriptive of the use-case and environment - for example, "production-doc-search" or "dev-recommendation-engine"
 - Only used for describing the index, and is not directly referenced in code.
 
-In addition, you will need to define both the [`dimensions`](/vectorize/learning/what-are-embeddings/) of the vectors you will store in the index, as well as the distance [`metric`](/learning/distance-metrics/) used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
+In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
 {{<render file="_vectorize-wrangler-version.md">}}
 
