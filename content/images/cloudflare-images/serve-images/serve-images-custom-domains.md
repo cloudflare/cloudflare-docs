@@ -33,6 +33,8 @@ In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the sam
 
 By default, Images are served from the `/cdn-cgi/imagedelivery/` path. You can use Transform Rules to rewrite URLs and serve images from custom paths.
 
+{{<Aside type="note">}}This feature requires a Business or WAF Advanced plan to enable regex in Transform Rules. Refer to [Cloudflare Transform Rules Availability](https://developers.cloudflare.com/rules/transform/#availability) for more information.{{</Aside>}}
+
 To create a rule:
 
 1. Log in to the Cloudflare dashboard and select your account and website. 
