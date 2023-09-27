@@ -1,9 +1,11 @@
 ---
 pcx_content_type: navigation
-title: Platform
+title: REST API
+
 weight: 3
 ---
 
-# Platform
+# API
 
 {{<directory-listing>}}
+

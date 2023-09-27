@@ -77,9 +77,9 @@ Email bindings allow you to send emails from your Worker. This is useful for whe
 - Learn more about [email bindings](/email-routing/email-workers/send-email-workers/).
 - Configure email bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings).
 
-### Constellation bindings
+### Workers AI bindings
 
-[Constellation](/constellation/) bindings allow for communication between a Worker and a Constellation project.
+[Workers AI](/workers-ai/) bindings allow for communication between a Worker and an AI/ML model.
 
-* Learn more about [Constellation bindings](/constellation/platform/wrangler/#bindings).
-* Configure Constellation bindings via your [`wrangler.toml` file](/constellation/platform/wrangler/#bindings).
+* Learn more about [Workers AI bindings](/workers-ai/).
+* Configure Workers AI bindings via your [`wrangler.toml` file](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai).
