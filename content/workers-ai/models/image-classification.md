@@ -60,14 +60,18 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/mic
 
 ```json
 {
-    "inputs": { "image":[] },
-    "response":[
-        {"label":"CARDIGAN","score":0.7912509441375732},
-        {"label":"FRENCH BULLDOG","score":0.0382106676697731},
-        {"label":"BOSTON BULL","score":0.0275872815400362},
-        {"label":"PEMBROKE","score":0.01957731693983078},
-        {"label":"GERMAN SHEPHERD","score":0.016647251322865486}
-    ]
+    {
+        "inputs": {
+            "image":[]
+        },
+        "response": [
+            {"label":"PERSIAN CAT","score":0.4071170687675476},
+            {"label":"PEKINESE","score":0.23444877564907074},
+            {"label":"FEATHER BOA","score":0.22562485933303833},
+            {"label":"POMERANIAN","score":0.033316344022750854},
+            {"label":"JAPANESE SPANIEL","score":0.024184171110391617}
+        ]
+    }
 }
 
 ```
