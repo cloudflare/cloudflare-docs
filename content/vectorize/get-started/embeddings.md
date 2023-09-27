@@ -126,7 +126,7 @@ Specifically:
 
 ## 4. Set up Workers AI
 
-Before you can deploy your embedding example, ensure your Worker can use your model catalog, including the [text embedding model](/workers-ai/models/embedding/) built-in.
+Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/embedding/) built-in.
 
 From within the `embeddings-tutorial` directory, install the `Workers AI` package:
 
