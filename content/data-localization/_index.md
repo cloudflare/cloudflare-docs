@@ -16,6 +16,35 @@ This feature is available as a paid add-on for customers on the Enterprise plan.
 
 {{</Aside>}}
 
+The Data Localization Suite consists of the following products:
+
+- [Key Management](/data-localization/key-management/)
+- [Regional Services](/data-localization/regional-services/)
+- [Customer Metadata Boundary](/data-localization/metadata-boundary/)
+
+Support by product and region is summarized in the following table:
+
+| Region | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| US | &#x2705; | &#x2705; | &#x2705; |
+| EU | &#x2705; | &#x2705; | &#x2705; |
+| UK | &#x2705;{{<fnref num="25">}} | &#x2705; | Can use EU metadata boundary. |
+| Canada | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+| Australia | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+| Japan | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+| India | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+| ISO 27001 Certified European Union | &#x2705;{{<fnref num="25">}} | &#x2705; | Can use EU metadata boundary. |
+| Germany | &#x2705;{{<fnref num="25">}} | &#x2705; | Can use EU metadata boundary. |
+| Singapore | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+| South Korea | &#x2705;{{<fnref num="25">}} | &#x2705; | ✘ |
+
+Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
+
+✅ Product works with no caveats <br>
+🚧 Product can be used with some caveats <br>
+✘ Product cannot be used <br>
+⚫️ Not applicable
+
 {{<tabs labels="Application Performance | Application Security | Developer Platform | Network Services | Platform | Zero Trust">}}
 {{<tab label="application performance" no-code="true">}}
 
@@ -125,4 +154,5 @@ This feature is available as a paid add-on for customers on the Enterprise plan.
 {{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
 {{<fnentry num="23">}}For [US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing &amp; Inspection Boundary**.{{</fnentry>}}
 {{<fnentry num="24">}}Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).{{</fnentry>}}
+{{<fnentry num="25">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
 {{</fnsection>}}
