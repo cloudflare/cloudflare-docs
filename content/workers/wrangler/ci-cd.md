@@ -5,7 +5,7 @@ title: Run in CI/CD
 
 # Run Wrangler in CI/CD
 
-To run Wrangler in a continuous integration/continuous deployment (CI/CD) environment, you must provide a [Cloudflare API token](/fundamentals/api/get-started/create-token/) and [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+To run Wrangler in a continuous integration/continuous deployment (CI/CD) environment, you must provide a [Cloudflare API token](/fundamentals/api/get-started/create-token/) and [account ID](/fundamentals/setup/find-account-and-zone-ids/).
 
 ## Create a Cloudflare API token
 

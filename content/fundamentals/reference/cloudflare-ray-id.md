@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Ray ID
-aliases:
-- /fundamentals/get-started/reference/cloudflare-ray-id/
 ---
 
 # Cloudflare Ray ID

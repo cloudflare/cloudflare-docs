@@ -122,6 +122,14 @@ export default {
 };
 ```
 
+{{<Aside type="warning" header="Prevent potential errors when accessing request.body">}}
+
+The body of a [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) can only be accessed once. If you previously used `request.formData()` in the same request, you may encounter a TypeError when attempting to access `request.body`.<br><br>
+To avoid errors, create a clone of the Request object with `request.clone()` for each subsequent attempt to access a Request's body.
+Keep in mind that Workers have a [memory limit of 128MB per Worker](https://developers.cloudflare.com/workers/platform/limits#worker-limits) and loading particularly large files into a Worker's memory multiple times may reach this limit. To ensure memory usage does not reach this limit, consider using [Streams](https://developers.cloudflare.com/workers/runtime-apis/streams/).
+
+{{</Aside>}}
+
 ## 5. Bucket access and privacy
 
 With the above code added to your Worker, every incoming request has the ability to interact with your bucket. This means your bucket is publicly exposed and its contents can be accessed and modified by undesired actors.

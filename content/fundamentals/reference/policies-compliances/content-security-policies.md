@@ -3,8 +3,6 @@ pcx_content_type: reference
 title: Content Security Policies (CSPs)
 meta:
   title: Content Security Policies (CSPs) and Cloudflare
-aliases:
-- /fundamentals/get-started/reference/content-security-policies/
 ---
 
 # Content Security Policies (CSPs) and Cloudflare
@@ -26,7 +24,7 @@ Cloudflare does not:
 
 * Modify CSP headers from the origin web server.
 * Require changes to acceptable sources for first or third-party content.
-* Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/get-started/reference/cdn-cgi-endpoint/)).
+* Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/reference/cdn-cgi-endpoint/)).
 * Interfere with locations specified in your CSP.
 
 ### Product requirements

@@ -18,7 +18,9 @@ In the API response, save the certificate `id` since it is required for the next
 
 ## 2. Enable Authenticated Origin Pulls (globally)
 
-Then, enable Authenticated Origin Pulls as an option for your Cloudflare zone.
+Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone.
+
+This step sets the TLS Client Auth to require Cloudflare to use a client certificate when connecting to your origin server.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

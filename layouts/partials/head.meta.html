@@ -76,10 +76,6 @@
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
 
-  {{- if (eq $.Context.Params.no_index true ) -}}
-  <meta name="robots" content="noindex">
-  {{- end -}}
-
   <meta charset="utf-8">
   <title>{{ $title }}</title>
   <meta http-equiv="cleartype" content="on" />

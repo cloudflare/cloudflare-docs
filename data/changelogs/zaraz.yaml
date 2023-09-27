@@ -2,6 +2,16 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-09-13'
+  title:
+  description: |-
+    * **Consent Management**: Add support for custom button translations.
+    * **Consent Management**: Modal stays fixed when scrolling.
+    * **Google Analytics 4 Managed Component**: `hideOriginalIP` and `ga-audiences` can be set from tool event.
+- publish_date: '2023-09-11'
+  title:
+  description: |-
+    * **Reddit Managed Component**: Support new "Account ID" formats (e.g. "ax_xxxxx").
 - publish_date: '2023-09-06'
   title:
   description: |-

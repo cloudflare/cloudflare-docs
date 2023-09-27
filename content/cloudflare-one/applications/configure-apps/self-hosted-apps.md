@@ -12,7 +12,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ## Prerequisites
 
-- [Add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+- [Add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
 - [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 
 ## 1. Add your application to Access
@@ -32,7 +32,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
    - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) that you control.
    - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
-7. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+7. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
 8. {{<render file="_access-block-page.md">}}
 

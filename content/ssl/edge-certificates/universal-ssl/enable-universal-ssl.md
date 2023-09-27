@@ -6,8 +6,7 @@ weight: 2
 
 # Enable Universal SSL certificates
 
-{{<render file="_universal-ssl-definition.md">}}
-<br />
+{{<glossary-definition term_id="Universal SSL certificate">}}
 
 The process for activating a Universal SSL certificate depends on your domain's DNS setup.
 

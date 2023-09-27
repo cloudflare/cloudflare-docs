@@ -3,6 +3,8 @@ title: Add-on products
 pcx_content_type: learning-unit
 weight: 5
 layout: learning-unit
+meta:
+    title: Add-on products - Performance
 ---
 
 Cloudflare offers a variety of add-on products to improve application performance, including:

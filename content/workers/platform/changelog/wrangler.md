@@ -5,7 +5,7 @@ meta:
     title: Wrangler Changelog
     description: Review recent changes to Cloudflare Wrangler.
 layout: changelog
-changelog_file_name: wrangler
+changelog_file_name: [wrangler]
 outputs:
     - html
     - rss
@@ -13,6 +13,6 @@ outputs:
 
 # Wrangler Changelog
 
-<!-- All changelog entries live in /data/changelogs/wrangler.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+<!-- All changelog entries are pulled directly from https://api.github.com/repos/cloudflare/workers-sdk/releases and manipulated in the /layouts/partials/wrangler-changelog.html file. This is unique compared to other changelog entries. -->
 
 {{<product-changelog>}}

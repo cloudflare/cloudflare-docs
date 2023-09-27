@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Bot Management provides access to several [new variables](/ruleset-engine/rules-language/fields/#dynamic-fields) within the Firewall expression builder.
+Bot Management provides access to several [new variables](/ruleset-engine/rules-language/fields/#dynamic-fields) within the expression builder of Ruleset Engine-based products such as [WAF custom rules](/waf/custom-rules/).
 
 - **Bot Score** (`cf.bot_management.score`): An integer between 1-99 that indicates [Cloudflare's level of certainty](/bots/concepts/bot-score/) that a request comes from a bot.
 - **Verified Bot** (`cf.bot_management.verified_bot`): A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/firewall/known-issues-and-faq/#how-does-firewall-rules-handle-traffic-from-known-bots).

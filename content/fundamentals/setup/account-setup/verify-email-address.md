@@ -2,8 +2,6 @@
 title: Verify email address
 pcx_content_type: how-to
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-setup/verify-email-address/
 ---
 
 # Verify email address
@@ -12,7 +10,7 @@ For security reasons, Cloudflare attempts to verify the email address associated
 
 ## When creating your account
 
-When you first [create an account](/fundamentals/account-and-billing/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
+When you first [create an account](/fundamentals/setup/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
 
 To verify your email:
 

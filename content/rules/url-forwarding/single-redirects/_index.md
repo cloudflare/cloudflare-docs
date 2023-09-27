@@ -7,7 +7,7 @@ meta:
   title: Single Redirects (beta)
 ---
 
-{{<beta>}} Single Redirects {{</beta>}}
+{{<heading-pill style="beta">}} Single Redirects {{</heading-pill>}}
 
 Single Redirects allow you to create static or dynamic URL redirects [^1]. Dynamic URL redirects support advanced features such as string replacement operations and regular expressions (depending on your Cloudflare plan).
 

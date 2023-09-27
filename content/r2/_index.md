@@ -27,7 +27,7 @@ You can use R2 for multiple scenarios, including but not limited to:
 
 ## Features
 
-{{<feature header="Location Hints" href="/r2/buckets/data-location/#location-hints">}}
+{{<feature header="Location Hints" href="/r2/reference/data-location/#location-hints">}}
 
 Location Hints are optional parameters you can provide during bucket creation to indicate the primary geographical location you expect data will be accessed from.
 

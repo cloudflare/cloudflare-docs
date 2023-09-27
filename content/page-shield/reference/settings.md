@@ -33,7 +33,7 @@ Only available to Enterprise customers with a paid add-on.
 Using the same hostname for CSP reporting may interfere with other Cloudflare products. Before selecting this option, ensure that your Cloudflare configuration complies with the following:
 
 - No rate limiting rules match the `cdn-cgi/*` URL path
-- No firewall rules match the `cdn-cgi/*` URL path
+- No WAF custom rules match the `cdn-cgi/*` URL path
 
 ### Configure the reporting endpoint
 

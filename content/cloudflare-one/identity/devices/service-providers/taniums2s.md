@@ -4,6 +4,8 @@ title: Tanium
 weight: 4
 layout: single
 hidden: true
+meta:
+   title: Tanium - Posture checks
 ---
 
 # Tanium

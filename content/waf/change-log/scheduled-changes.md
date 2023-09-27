@@ -4,7 +4,6 @@ pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
-rss: file
 ---
 
 # Scheduled changes
@@ -24,13 +23,13 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2023-09-18</td>
+      <td>2023-09-25</td>
+      <td>Block</td>
+      <td>100532_BETA</td>
+      <td>...6e298ed7</td>
+      <td>Vulnerability scanner activity beta</td>
+      <td>This rule will replace 100532 in legacy waf and ...34780914 in new WAF</td>
     </tr>
   </tbody>
 </table>

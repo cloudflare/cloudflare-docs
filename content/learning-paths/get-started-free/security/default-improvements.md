@@ -3,6 +3,8 @@ title: Default improvements
 pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
+meta:
+    title: Default improvements - Security
 ---
 
 When your DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare, Cloudflare provides free and unmetered DDoS protection and other protection measures through the Web Application Firewall (WAF).

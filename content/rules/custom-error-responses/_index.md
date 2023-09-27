@@ -7,7 +7,7 @@ meta:
   title: Custom error responses (beta)
 ---
 
-{{<beta>}} Custom error responses {{</beta>}}
+{{<heading-pill style="beta">}} Custom error responses {{</heading-pill>}}
 
 Custom error responses, powered by the [Ruleset Engine](/ruleset-engine/), allow you to define custom responses for errors returned by an origin server or by a Cloudflare product (including Workers). Custom error responses will apply to responses whose HTTP status code is greater than or equal to 400 that match the expression of the custom error response rule.
 

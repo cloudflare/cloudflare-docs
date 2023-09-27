@@ -46,14 +46,18 @@
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/waf/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/waf/change-log/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/data/changelogs/waf.yaml @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 /content/ddos-protection/change-log/ @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
 
 # Magic products
 /content/magic-transit/ @cloudflare/pcx-technical-writing

@@ -7,7 +7,7 @@
   {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-  {{- if eq .Page.RelPermalink "/changelog/" -}}
+  {{- if or (eq .Page.RelPermalink "/changelog/") (eq .Page.RelPermalink "/glossary/") -}}
   <link rel="stylesheet preconnect" href="/changelog.css" />
   {{- end -}}
 

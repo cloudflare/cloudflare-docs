@@ -141,7 +141,7 @@ function copyCode(e: MouseEvent) {
 }
 
 [theme="dark"] .copyCode-button:hover,
-.copyCode-button:focus {
+[theme="dark"] .copyCode-button:focus {
   cursor: pointer;
   background-color: var(--code-block-background-color);
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);

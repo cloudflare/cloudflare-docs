@@ -140,7 +140,7 @@ These occur for actions triggered from users based on the configuration for a sp
 
 ## Firewall Rules
 
-Cloudflare Firewall Rules triggers actions based on matching customer-defined rules.
+Cloudflare Firewall Rules (deprecated) triggers actions based on matching customer-defined rules.
 
 {{<table-wrap>}}
 

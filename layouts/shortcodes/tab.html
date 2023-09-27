@@ -2,4 +2,4 @@
 {{- $default := .Get "default" -}}
 {{- $noCode := .Get "no-code" -}}
 
-<div class="tab {{ if eq $default "true" }}tab-default{{ end }} {{ if eq $noCode "true" }}noCodeTab{{ end }}" id="tab-{{ $label }}-UNIQUE_ID">{{ $.Inner | .Page.RenderString }}</div>
+<div class="tab {{ if eq $default "true" }}tab-default{{ end }} {{ if eq $noCode "true" }}noCodeTab{{ end }}" id="tab-{{ $label }}-UNIQUE_ID">{{ $.Inner | $.Page.RenderString }}</div>
