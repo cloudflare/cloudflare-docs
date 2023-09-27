@@ -26,7 +26,7 @@ After creating your token, you can authenticate and make requests to the API usi
 In this example, we will run the `@cloudflare/meta-llama/llama-2-7b` model:
 
 ```sh
-  $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{ "prompt": "Where did the phrase Hello World come from" }'
 ```
