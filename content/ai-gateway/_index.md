@@ -7,7 +7,7 @@ meta:
   title: AI Gateway
 ---
 
-{{<beta>}}AI Gateway{{</beta>}}
+{{<heading-pill style="beta" heading="h1">}}AI Gateway{{</heading-pill>}}
 
 {{<description>}}
 Observe and control your AI applications.

@@ -9,7 +9,7 @@ meta:
   title: Workers AI
 ---
 
-{{<beta>}}Workers AI{{</beta>}}
+{{<heading-pill style="beta" heading="h1">}}Workers AI{{</heading-pill>}}
 
 {{<Aside type="warning">}}
 Workers AI is currently in Open Beta and is **not recommended for production data and traffic**, and limits + access are subject to change
