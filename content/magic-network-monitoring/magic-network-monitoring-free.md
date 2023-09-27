@@ -1,7 +1,7 @@
 ---
 title: Free version (beta)
 pcx_content_type: reference
-weight: 7
+weight: 8
 ---
 
 {{<beta>}} Magic Network Monitoring free version{{</beta>}}
