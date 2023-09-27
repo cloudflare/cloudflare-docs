@@ -203,6 +203,7 @@ Then, import `hono` into your `src/index.js` file. You should also update the `f
 ---
 filename: src/index.js
 ---
+import { Ai } from '@cloudflare.com/ai'
 import Hono from "hono"
 const app = new Hono()
 
@@ -230,6 +231,8 @@ This will establish a route at the root path `/` that is functionally equivalent
 ---
 filename: src/index.js
 ---
+import { Ai } from '@cloudflare.com/ai'
+
 app.post('/notes', async (c) => {
   const ai = new Ai(c.env.AI)
 
@@ -287,7 +290,7 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-
+import { Ai } from '@cloudflare.com/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
