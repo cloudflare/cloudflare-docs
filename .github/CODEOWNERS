@@ -26,6 +26,8 @@
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @cloudflare/pcx-technical-writing
+/content/vectorize/ @elithrar @mkevanz @cloudflare/pcx-technical-writing
+/content/workers-ai/ @mhart @pdwittig @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
