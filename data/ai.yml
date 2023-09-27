@@ -5,9 +5,10 @@ product:
   title: AI
   url: /ai/
   group: Developer platform
+additional_groups: [AI]
 
 meta:
-  title: Cloudflare Ai
+  title: Cloudflare AI
   description: Utilize Cloudflare's global network to build better assistive and generative AI apps.
   author: "@cloudflare"
   
@@ -15,3 +16,8 @@ meta:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+    
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: ai
