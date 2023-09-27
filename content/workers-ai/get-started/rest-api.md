@@ -31,7 +31,7 @@ $ curl 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/me
   -d '{ "prompt": "Where did the phrase 'Hello World' come from" }'
 ```
 
-Try it with one of your projects by replacing `{ACCOUNT_ID}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
+Try it with one of your projects by replacing `{ACCOUNT_ID}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/setup/find-account-and-zone-ids/) for more information.
 
 
 The API response will look like the following:

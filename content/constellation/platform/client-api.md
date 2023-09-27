@@ -246,7 +246,7 @@ const tensorInputNamed = {
 out = await session.run(tensorInputNamed);
 ```
 
-This is the same as using the [name option](/constellation/platform/client-api/#options) when you create a tensor.
+This is the same as using the name option when you create a tensor.
 
 ```javascript
 { "tensor1": new Tensor(TensorType.Int32, 1) } == [ new Tensor(TensorType.Int32, 1, { name: "tensor1" } ];
