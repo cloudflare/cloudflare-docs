@@ -18,7 +18,7 @@ To check analytics for your Images account:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Images**.
-3. Scroll down to **Usage**.
+3. Account details with analytics is in the top-right corner.
 
 ## Quota errors
 
