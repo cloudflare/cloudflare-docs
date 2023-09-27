@@ -33,4 +33,3 @@ To view analytics on a per-device level, go to **My Team** > **Devices**. The **
 - **Major Version**: WARP client version installed on the device.
 - **Device Status Over Time**: WARP client connection status over the selected time period.
 - **Connection Methods Over Time**: WARP mode used by the device over the selected time period.
-
