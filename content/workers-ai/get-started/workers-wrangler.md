@@ -44,7 +44,7 @@ When setting up your `hello-ai` Worker, answer the setup questions as follows:
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
 * A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts` 
-* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
 Navigate to your app directory:
 ```sh
@@ -92,7 +92,7 @@ $ yarn add --dev @cloudflare/ai
 
 Now we are ready to run an inference task in our our worker. In this case, we will use an LLM, like lambda-2, to answer a questions.
 
-Go to your `hello-ai` and update the `index.ts` with the following code: 
+Go to your `hello-ai` and update the `index.ts` with the following code:
 
 ```typescript
 ---
@@ -111,7 +111,7 @@ export default {
     const ai = new Ai(env.AI);
 
     const response = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
-        prompt: "What is the origin of the phrase Hello, World" 
+        prompt: "What is the origin of the phrase Hello, World"
       }
     );
 
@@ -140,10 +140,7 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 {
   "result": {
     "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+  }
 }
 ```
 
