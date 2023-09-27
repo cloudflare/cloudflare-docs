@@ -19,6 +19,9 @@ To install Wrangler within your Worker project, run:
 {{<tabs labels="npm | yarn">}}
 {{<tab label="npm" default="true">}}
 
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
 ```sh
 $ npm install wrangler --save-dev
 ```
@@ -32,6 +35,11 @@ $ yarn add --dev wrangler
 
 {{</tab>}}
 {{</tabs>}}
+<<<<<<< HEAD
+=======
+
+### Install Wrangler globally
+>>>>>>> be5354a9b (update testing and debug docs.)
 
 ## Check your Wrangler version
 
