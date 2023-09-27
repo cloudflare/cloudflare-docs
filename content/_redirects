@@ -901,6 +901,7 @@
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
 /workers/api/resource-bindings/kv-namespaces/ /workers/learning/how-kv-works/ 301
+/workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/api/resource-bindings/webassembly-modules/ /api/operations/worker-script-list-workers 301
 /workers/api/route-matching/ /workers/platform/routing/routes/ 301
 /workers/cli-wrangler/ /workers/wrangler/ 301
