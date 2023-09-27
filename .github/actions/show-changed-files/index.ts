@@ -148,9 +148,9 @@ async function run(): Promise<void> {
             .replace(/index\.md$/, "")
             .replace(/\.md$/, "/");
           if (path.includes(" ") || path.startsWith("/support/")) {
-            return UnicodeSanitize(path);
+            return UnicodeSanitize(path.toLowerCase());
           } else {
-            return path;
+            return path.toLowerCase();
           }
         };
 

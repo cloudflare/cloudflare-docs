@@ -11,7 +11,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``)}c.g
 
 | Original Link | Updated Link |
 | --- | --- |
-${t.filter(u=>u.filename.endsWith(".md")&&!u.filename.includes("_partials")&&u.filename.startsWith("content/")).map(u=>({file:u,changes:u.changes})).sort((u,_)=>_.changes-u.changes).slice(0,15).map(u=>{let _=A=>{let k=A.replace(/^content/,"").replace(/_index\.md$/,"").replace(/index\.md$/,"").replace(/\.md$/,"/");return k.includes(" ")||k.startsWith("/support/")?T0(k):k},h=`https://developers.cloudflare.com${_(u.file.filename)}`,I=n.concat(_(u.file.filename));return{originalLink:h,updatedLink:I}}).map(u=>`| [${u.originalLink}](${u.originalLink}) | [${u.updatedLink}](${u.updatedLink}) |`).join(`
+${t.filter(u=>u.filename.endsWith(".md")&&!u.filename.includes("_partials")&&u.filename.startsWith("content/")).map(u=>({file:u,changes:u.changes})).sort((u,_)=>_.changes-u.changes).slice(0,15).map(u=>{let _=A=>{let k=A.replace(/^content/,"").replace(/_index\.md$/,"").replace(/index\.md$/,"").replace(/\.md$/,"/");return k.includes(" ")||k.startsWith("/support/")?T0(k.toLowerCase()):k.toLowerCase()},h=`https://developers.cloudflare.com${_(u.file.filename)}`,I=n.concat(_(u.file.filename));return{originalLink:h,updatedLink:I}}).map(u=>`| [${u.originalLink}](${u.originalLink}) | [${u.updatedLink}](${u.updatedLink}) |`).join(`
 `)}`;o?await a.rest.issues.updateComment({owner:e.repo.owner,repo:e.repo.repo,comment_id:o.id,body:m}):await a.rest.issues.createComment({owner:e.repo.owner,repo:e.repo.repo,issue_number:r,body:m})}catch(e){P1.setFailed(e.message)}}b0();
 /*!
  * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
