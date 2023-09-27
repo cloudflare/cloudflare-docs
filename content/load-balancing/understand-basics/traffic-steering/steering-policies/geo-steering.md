@@ -100,3 +100,10 @@ Any data center not explicitly defined will fall back to using the corresponding
 
 A fallback pool will be used if there is only one pool in the same region and it is unavailable.
 If there are multiple pools in the same region, the order of the pools will be respected. For example, if the first pool is unavailable, the second pool will be used.
+
+
+### How to delete
+
+You can [delete the pool](https://developers.cloudflare.com/load-balancing/how-to/create-pool/#delete-a-pool) using the Dashboard or API, but if you have defined region pools for a load balancer, you cannot delete these pools until you remove them from the load balancer configuration.
+
+Be aware that, even if you change the *Traffic Steering*  option, for example for `Off` the configuration under the `Geo Steering` will remain there, so you need to remove that pool previously, before try to delete. Otherwise will appear an error that pool is still being used by the load balancer.
