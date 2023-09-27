@@ -73,7 +73,7 @@ The Magic WAN Connector is shipped to you deactivated, and will only establish a
 
 ### Device installation
 
-There are several deployment options for Magic WAN Connector. Connector can act like a DCHP server for your local network, or integrate with your local set up and have static IP addresses assigned to it.
+There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local set up and have static IP addresses assigned to it.
 
 If there is a firewall deployed upstream of the Magic WAN Connector, configure it to allow traffic on ports `443` and `4500`. This is needed to allow Magic WAN Connector's initiation traffic with Cloudflare.
 
