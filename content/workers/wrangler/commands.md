@@ -551,7 +551,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 Manage Workers KV namespaces.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
 ### `create`
@@ -686,7 +686,7 @@ Deleted namespace 15137f8edf6c09742227e99b08aaf273
 Manage key-value pairs within a Workers KV namespace.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
 ### `put`
@@ -910,7 +910,7 @@ Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
 ### `put`
