@@ -189,7 +189,7 @@ When the client disconnects, all tasks associated with that client’s request a
 While handling a request, each Worker is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
-- `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/workers/runtime-apis/kv/).
+- `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
 - `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
 - `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).

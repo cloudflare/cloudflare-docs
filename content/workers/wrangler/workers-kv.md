@@ -9,7 +9,7 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 To learn more about how KV works, refer to [How KV works](/workers/learning/how-kv-works).
 
-To review the API spec, refer to the [KV in Runtime API](/workers/runtime-apis/kv).
+To review the API spec, refer to the [KV in Runtime API](/kv/api/).
 
 You can interact with KV via Wrangler and the Cloudflare dashboard. This page will guide you through creating your KV namespace, writing a new value to your namespace and interacting with [environments](/workers/wrangler/environments/).
 
@@ -47,7 +47,7 @@ Note that binding names do not need to correspond to the namespace you created. 
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/api/workers/workers-api-reference/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/configuration/environment-variables/) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/kv/api/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/api/workers/workers-api-reference/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/configuration/environment-variables/) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -154,5 +154,5 @@ $ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"
 ## Related resources
 
 * [Environments](/workers/wrangler/environments/)
-* [`kv` command documentation](/workers/runtime-apis/kv/)
+* [`kv` command documentation](/kv/api/)
 * [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)

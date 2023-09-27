@@ -42,7 +42,7 @@ In this example, you will build a Pages Plugin and then include it in a project.
 The first Plugin should:
 
 - intercept HTML forms.
-- store the form submission in [KV](/workers/runtime-apis/kv/).
+- store the form submission in [KV](/kv/api/).
 - respond to submissions with a developer's custom response.
 
 ### 1. Create a new Pages Plugin

@@ -251,7 +251,7 @@ let value = await FOO.get("keyname");
 
 - `binding` {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/workers/runtime-apis/kv/).
+  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/kv/api/).
 
 - `id` {{<prop-meta>}}required{{</prop-meta>}}
 
