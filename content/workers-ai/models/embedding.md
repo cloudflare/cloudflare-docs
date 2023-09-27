@@ -5,9 +5,26 @@ weight: 6
 ---
 
 # Embeddings
-Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset.
 
-* ID:  **@cf/baai/bge-base-en-v1.5** - used to `run` this model via SDK or API
+Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. 
+
+These models are ideal as part of building [vector search](/vectorize/learning/what-is-a-vector-database/) applications or [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) workflows with Large Language Models (LLM).
+
+## Available Embedding Models
+
+Workers AI includes the following built-in text embedding models:
+
+| Model ID                        | Max Input Tokens <sup>1</sup> | Output Dimensions  |
+| ------------------------------- | ----------------------------- | ------------------ |
+| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 386                | 
+| `@cf/baai/bge-base-en-v1.5`     | 512 tokens                    | 768                | 
+| `@cf/baai/bge-large-en-v1.5`    | 512 tokens                    | 1024               |
+
+<sup>1</sup> An English word is approximately 1-3 tokens, depending on word length and representation within the model.
+
+## Model details
+
+* IDs:  **@cf/baai/bge-small-en-v1.5** | **@cf/baai/bge-base-en-v1.5** | **@cf/baai/bge-large-en-v1.5** - used to `run` this model via the SDK or API
 * Name: Feature extraction model	
 * Task: text-embeddings
 * License type: MIT
