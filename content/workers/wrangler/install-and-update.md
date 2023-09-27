@@ -6,42 +6,53 @@ weight: 1
 
 # Install/Update Wrangler
 
+{{<Aside type="note">}}
+
+This is an installation guide for the new version of Wrangler. If you previously had Wrangler v1 installed or were working on a Wrangler v1 project, refer to the [Migration guide](/workers/wrangler/migration/v1-to-v2/).
+
+{{</Aside>}}
+
 Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler
 
-To install [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
+To install [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
 
-Wrangler is installed locally into each of your projects. This allows you and your team to use the same Wrangler version, control Wrangler versions for each project, and rollback to an earlier version of Wrangler, if needed.
+{{<Aside type="warning" header="Install Wrangler locally">}}
 
-To install Wrangler within your Worker project, run:
+Cloudflare recommends installing Wrangler locally into each of your projects. This allows you and your team to use the same Wrangler version, control Wrangler versions for each project, and rollback to an earlier version of Wrangler, if needed.
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{</Aside>}}
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+### Install Wrangler locally
 
-```sh
-$ npm install wrangler --save-dev
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
+To install Wrangler locally within your Worker project, run:
 
 ```sh
-$ yarn add --dev wrangler
+$ npm install wrangler
 ```
 
-{{</tab>}}
-{{</tabs>}}
-<<<<<<< HEAD
-=======
+or install with `yarn`:
+
+```sh
+$ yarn add wrangler
+```
 
 ### Install Wrangler globally
->>>>>>> be5354a9b (update testing and debug docs.)
 
-## Check your Wrangler version
+After you have installed npm and Node.js, run:
+
+```sh
+$ npm install -g wrangler
+```
+
+or install with Yarn:
+
+```sh
+$ yarn global add wrangler
+```
+
+## Update Wrangler
 
 To check your Wrangler version, run:
 
@@ -51,17 +62,31 @@ $ wrangler --version
 $ wrangler version
 ```
 
-## Update Wrangler
+### Update Wrangler locally
 
-To update the version of Wrangler used in your project, run:
+To update Wrangler only in your current directory containing a `package.json`, run:
 
 ```sh
-$ npm install wrangler@latest
+$ npm install wrangler
 ```
 
-{{<Aside type="warning">}}
+### Update Wrangler globally
 
-Running `npx wrangler` will use the latest version of Wrangler except when there is already a Wrangler version installed in the current folder. In this case, it will use the locally installed version instead.
+To update Wrangler globally, you must be outside of a project folder (and there is no parent directory containing a `package.json`) and run:
+
+```sh
+$ npm update -g wrangler
+```
+
+If you are using Volta to control your version of Node and need to update Wrangler globally, run:
+
+```sh
+$ volta install wrangler
+```
+
+{{<Aside type="warning" header="`npx wrangler init`">}}
+
+Running `npx wrangler` will use the latest version of Wrangler except when there is already a Wrangler version installed in the current folder. In this case, it will use the locally installed version instead. Running `npx wrangler init` will install a local version of Wrangler in the newly created project directory.
 
 {{</Aside>}}
 
