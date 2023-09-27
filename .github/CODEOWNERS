@@ -13,7 +13,7 @@
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
 
 # AI
-/content/ai-gateway/ @mchenco @bjesus @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @bjesus @cloudflare/pcx-technical-writing
 /content/workers-ai/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 
 # Analytics & Logs

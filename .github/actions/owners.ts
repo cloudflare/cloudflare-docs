@@ -9,7 +9,7 @@
  */
 export const OWNERS: Record<string, string[]> = {
   "1.1.1.1": ["RebeccaTamachiro"],
-  "ai-gateway": ["mchenco", "bjesus"],
+  "ai-gateway": ["bjesus"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
