@@ -77,7 +77,8 @@ export const OWNERS: Record<string, string[]> = {
   "warp-client": ["haleycode"],
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
-  "workers-ai": ["irvinebroque"],
+  "vectorize": ["elithrar", "pdwittig"],
+  "workers-ai": ["irvinebroque", "pdwittig"],
   zaraz: ["haleycode"],
 };
 
