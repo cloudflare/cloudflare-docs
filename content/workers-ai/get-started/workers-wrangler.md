@@ -5,9 +5,10 @@ weight: 2
 ---
 
 # Get started - Workers AI local dev
-In this guide, you will get started with Workers AI, experiment with a large laguage model (LLM),  and deploy your first AI powered app on the Workers platform.
+In this guide, you will get started with Workers AI, experiment with a large laguage model (LLM), and deploy your first AI powered app on the Workers platform.
 
 ## Before you begin
+
 [Setup your local development environment](/workers-ai/get-started/local-dev-setup/), if this is your first time developing with Wrangler.
 
 ## 1. Create a Workers project
@@ -22,10 +23,11 @@ $ npm create cloudflare@latest
 ```
 
 {{</tab>}}
+
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}

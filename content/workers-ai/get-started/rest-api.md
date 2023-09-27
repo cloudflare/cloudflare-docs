@@ -34,7 +34,6 @@ $ curl 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/me
 Try it with one of your projects by replacing `{ACCOUNT_ID}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
 
 
-
 The API response will look like the following:
 ```json
 {
@@ -48,6 +47,7 @@ The API response will look like the following:
 ```
 
 ### Exploring other models
+
 This example uses the `@cf/meta/llama-2-7b-chat-int8`, but you can use any of the models in our [catalog](/workers-ai/models/) and just replace `{model}` the the desired model name
 
 `api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}`

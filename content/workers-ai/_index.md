@@ -36,6 +36,7 @@ const output = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
 ```
 
 ### Models you know and love
+
 Workers AI comes with a curated set of popular open-source models that *just work*.
 
 Supporting mutiple classes of models, here are some AI tasks you can unlock with Workers AI:
@@ -45,9 +46,11 @@ Supporting mutiple classes of models, here are some AI tasks you can unlock with
 * **Audio** - Automatic speech recognition (ASR)
 
 ### Runs on a global network of GPUs
+
 With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to it's global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
 
-### Batteries inlcuded with a vector database 
+### Batteries inlcuded with a vector database
+
 Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context + memory to an LLM. Head to over to the [Vectorize docs](/vectorize) to learn more. 
 
 ## Get Started

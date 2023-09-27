@@ -12,7 +12,7 @@ To setup your dev environement you will need to:
 
 1. Create a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
 
-2. Install [Wrangler](https://developers/workers/wrangler/install-and-update/)
+2. Install [Wrangler](/workers/wrangler/install-and-update/)
 
 3. Login to Wrangler:
 ```sh
