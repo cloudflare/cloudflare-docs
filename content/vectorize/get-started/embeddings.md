@@ -145,7 +145,7 @@ filename: wrangler.toml
 binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "embeddings-index"
 
-[[ai]]
+[ai]
 binding = "AI" # available in your Worker on env.AI
 ```
 
