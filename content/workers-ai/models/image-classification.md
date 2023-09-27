@@ -47,7 +47,7 @@ export default {
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_idACCOUNT_ID}/ai/run/@cf/microsoft/resnet-50 \
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/microsoft/resnet-50 \
     -X POST \
     -H "Authorization: Bearer {API_TOKEN}" \
     --data-binary @orange-llama.png

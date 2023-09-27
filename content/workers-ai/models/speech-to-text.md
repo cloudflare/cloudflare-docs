@@ -26,19 +26,19 @@ export interface Env {
 }
 
 export default {
-    async fetch(request: Request, env: Env) {
-        const res: any = await fetch("https://github.com/Azure-Samples/cognitive-services-speech-sdk/raw/master/samples/cpp/windows/console/samples/enrollment_audio_katie.wav");
-        const blob = await res.arrayBuffer();
+  async fetch(request: Request, env: Env) {
+    const res: any = await fetch("https://github.com/Azure-Samples/cognitive-services-speech-sdk/raw/master/samples/cpp/windows/console/samples/enrollment_audio_katie.wav");
+    const blob = await res.arrayBuffer();
 
-        const ai = new Ai(env.AI);
-        const input = {
-        audio: [...new Uint8Array(blob)],
-        };
+    const ai = new Ai(env.AI);
+    const input = {
+    audio: [...new Uint8Array(blob)],
+    };
 
-        const response = await ai.run("@cf/openai/whisper", input);
+    const response = await ai.run("@cf/openai/whisper", input);
 
-        return Response.json({ input: { audio: [] }, response });
-    }
+    return Response.json({ input: { audio: [] }, response });
+  }
 }
 ```
 
@@ -48,9 +48,9 @@ export default {
 
 ```sh
 $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/openai/whisper \
-    -X POST \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    --data-binary @talking-llama.mp3
+  -X POST \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  --data-binary @talking-llama.mp3
 ```
 
 {{</tab>}}
