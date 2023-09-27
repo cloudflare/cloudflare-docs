@@ -154,7 +154,7 @@ Then, add the configuration details for your new Vectorize index to `wrangler.to
 
 [[vectorize]]
 binding = "VECTOR_INDEX"
-index = "vector-index"
+index_name = "vector-index"
 ```
 
 A vector index allows you to store a collection of dimensions, which are floating point numbers used to represent your data. When you want to query the vector database, you can also convert your query into dimensions. **Vectorize** is designed to efficiently determine which stored vectors are most similar to your query.
