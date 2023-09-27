@@ -18,7 +18,7 @@ During the open beta, the following limits are place:
  - [@cf/meta/m2m100-1.2b](/workers-ai/models/translation/) - 4000 reqs/min
  - [@cf/huggingface/distilbert-sst-2-int8](/workers-ai/models/sentiment-analysis/) - 6000 reqs/min
  - [@cf/microsoft/resnet-50](/workers-ai/models/image-classification/) - 6000 reqs/min
- - [@cf/baai/bge-base-en-v1.5](/workers-ai/models/embedding/) -1 6000 reqs/min
+ - [@cf/baai/bge-base-en-v1.5](/workers-ai/models/embedding/) - 6000 reqs/min
 
 Note that these limits are estimates, subject to change, and will vary by location while in Open Beta.
 
