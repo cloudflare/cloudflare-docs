@@ -23,7 +23,7 @@ All of the tutorials assume you have already completed the [Get started guide](/
 
 On the AI Gateway page in the Cloudflare dashboard, create a new AI Gateway by clicking the plus button on the top right. You should be able to name the gateway as well as the endpoint. Click on the API Endpoints button to copy the endpoint. You can choose from provider-specific endpoints such as OpenAI, HuggingFace, and Replicate. Or you can use the universal endpoint that accepts a specific schema and supports model fallback and retries.
 
-![AI Gateway onboarding](images/ai-gateway/aig-onboarding.png)
+![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
 
 For this tutorial, we will be using the OpenAI provider-specific endpoint, so select OpenAI in the dropdown and copy the new endpoint.
 

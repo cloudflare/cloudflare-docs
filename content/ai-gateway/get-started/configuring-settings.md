@@ -46,7 +46,7 @@ curl --request POST \
 ## Logging
 The second tab in the dashboard will take you to the logging page. Here you can see individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error.
 
-![AI Gateway logging ](images/ai-gateway/logs.png)
+![AI Gateway logging ](images/ai-gateway/Logs.png)
 
 ---
 

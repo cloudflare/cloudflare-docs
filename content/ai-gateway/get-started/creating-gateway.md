@@ -16,7 +16,7 @@ To set up an AI Gateway you will need to:
 
 3. Create a new AI Gateway and enter your gateway name and URL slug
 
-![AI Gateway onboarding](images/ai-gateway/aig-onboarding.png)
+![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
 
 ## Next Steps
 
