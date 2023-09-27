@@ -198,6 +198,8 @@
 /cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
 /cache/best-practices/ /cache/concepts/ 301
+/cache/reference/wildcard-matching/ /support/page-rules/wildcard-matching 301
+
 /support/caching/ /cache/troubleshooting/ 301
 /support/caching/configuration/ /cache/how-to/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
