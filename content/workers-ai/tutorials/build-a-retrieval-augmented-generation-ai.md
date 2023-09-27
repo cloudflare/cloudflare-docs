@@ -92,7 +92,7 @@ Next, add the `ai` block to `wrangler.toml`. This will set up a binding to Cloud
 filename: wrangler.toml
 ---
 
-[[ai]]
+[ai]
 binding = "AI"
 ```
 
@@ -102,7 +102,7 @@ Now, find the `src/index.js` file. Inside the `fetch` handler, you can query the
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export default {
 	async fetch(request, env, ctx) {
@@ -154,7 +154,7 @@ Then, add the configuration details for your new Vectorize index to `wrangler.to
 
 [[vectorize]]
 binding = "VECTOR_INDEX"
-index = "vector-index"
+index_name = "vector-index"
 ```
 
 A vector index allows you to store a collection of dimensions, which are floating point numbers used to represent your data. When you want to query the vector database, you can also convert your query into dimensions. **Vectorize** is designed to efficiently determine which stored vectors are most similar to your query.
@@ -180,13 +180,13 @@ database_name = "database"
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
+$ wrangler d1 execute database --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
 ```
 
 Now, we can add a new note to our database using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
+$ wrangler d1 execute database --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
 ## 5. Creating notes and adding them to Vectorize
@@ -203,6 +203,7 @@ Then, import `hono` into your `src/index.js` file. You should also update the `f
 ---
 filename: src/index.js
 ---
+import { Ai } from '@cloudflare/ai'
 import Hono from "hono"
 const app = new Hono()
 
@@ -230,6 +231,8 @@ This will establish a route at the root path `/` that is functionally equivalent
 ---
 filename: src/index.js
 ---
+import { Ai } from '@cloudflare/ai'
+
 app.post('/notes', async (c) => {
   const ai = new Ai(c.env.AI)
 
@@ -273,11 +276,13 @@ By doing this, you will create a new vector representation of the note, which ca
 
 ## 6. Querying Vectorize to retrieve notes
 
-To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors. 
+To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors.
 
 Since we are using cosine similarity, the vectors with the highest cosine similarity will be the most similar to the query. We can introduce a `SIMILIARITY_CUTOFF` to only return vectors that are above a certain similarity threshold. In this case, we will use a cutoff of `0.75`, but you can adjust this value to suit your needs.
 
-Then, you can retrieve the notes that match the most similar vectors. Once you have found the notes, you can insert them as context into the prompt for the LLM binding. We'll update the prompt to include the context, and to ask the LLM to use the context when responding.
+We will also specify the `topK` parameter as part of the optional parameters to the `query` function. The `topK` parameter limits the number of vectors returned by the function. For instance, providing a `topK` of 1 will only return the _most similar_ vector based on the query. You may customize this for your own needs.
+
+With the list of similar vectors, you can retrieve the notes that match the record IDs stored alongside those vectors. You can insert the text of those notes as context into the prompt for the LLM binding. We'll update the prompt to include the context, and to ask the LLM to use the context when responding.
 
 Finally, you can query the LLM binding to get a response.
 
@@ -285,7 +290,7 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-
+import { Ai } from '@cloudflare.com/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
