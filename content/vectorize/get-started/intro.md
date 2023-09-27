@@ -69,7 +69,7 @@ Vectorize is currently in open beta. Read [the announcement blog](https://blog.c
 
 {{</Aside>}}
 
-A vector database is distinct from a traditional SQL or NoSQL database: it is designed to store the vector
+A vector database is distinct from a traditional SQL or NoSQL database: it is designed to store vector embeddings, which are representations of data, but not the original data itself.
 
 To create your first Vectorize index, change into the directory you just created for your Workers project:
 
@@ -282,7 +282,7 @@ $ npx wrangler deploy
 
 You can now visit the URL for your newly created project to insert vectors and then query them. With the URL for your deployed Worker - e.g. `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` - open your browser and:
 
-1. Insert our vectors first by visting `/insert` — this should return the below:
+1. Insert our vectors first by visiting `/insert` — this should return the below:
 
 ```json
 // https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/insert

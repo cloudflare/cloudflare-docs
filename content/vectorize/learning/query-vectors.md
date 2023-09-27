@@ -6,15 +6,37 @@ weight: 5
 
 # Query Vectors
 
-Vectorize
+Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/learning/insert-vectors/#distance-metrics).
 
-## Example
+## Example query
 
+To pass a vector as a query to an index, use the `.query()` method on the index itself.
 
+A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/learning/insert-vectors/), a query vector does not need an ID or metadata.
 
 ```ts
-let queryVector = [32.4, 6.55, 11.2, 10.3, 87.9];
+let queryVector = [54.8, 5.5, 3.1];
 let matches = await env.YOUR_INDEX.query(queryVector);
+```
+
+This would return a set of matches resembling the following, based on a `cosine` distance metric:
+
+```json
+{"matches":{"count":3,"matches":[{"score":0.999909486,"vectorId":"5"},{"score":0.789848214,"vectorId":"4"},{"score":0.720476967,"vectorId":"4444"}]}}
+```
+
+You can optionally change the number of results returned and/or whether results should include metadata and values:
+
+```ts
+let queryVector = [54.8, 5.5, 3.1];
+// topK defaults to 3; returnVectors defaults to false
+let matches = await env.YOUR_INDEX.query(queryVector, { topK: 1, returnVectors: true })
+```
+
+This would return a set of matches resembling the following, based on a `cosine` distance metric:
+
+```json
+{"matches":{"count":1,"matches":[{"score":0.999909486,"vectorId":"5","vector":{"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}}]}}
 ```
 
 Refer to the [Workers Client API documentation](/vectorize/learning/client-api/) for additional examples.
