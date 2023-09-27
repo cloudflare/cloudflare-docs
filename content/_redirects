@@ -917,6 +917,7 @@
 /workers/examples/signed-request/ /workers/examples/signing-requests/ 301
 /workers/faq/ /workers/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
+/workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/kv/reading-data/ /workers/platform/storage-options/ 301
 /workers/kv/writing-data/ /workers/platform/storage-options/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
