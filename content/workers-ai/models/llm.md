@@ -34,7 +34,7 @@ export default {
     ];
     const response = await ai.run('@cf/meta/llama-2-7b-chat-int8', { messages });
 
-    return new Response(JSON.stringify(response));
+    return Response.json(response);
   },
 };
 ```
@@ -50,7 +50,7 @@ async function run(model, prompt) {
   ];
 
   const response = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
+    `https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${model}`,
     {
       headers: { Authorization: "Bearer {API_TOKEN}" },
       method: "POST",
@@ -76,25 +76,28 @@ import requests
 API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
-def run(model, prompt)
-    messages = [
+def run(model, prompt):
+  input = {
+    "messages": [
       { "role": "system", "content": "You are a friendly assistant" },
       { "role": "user", "content": prompt }
     ]
-    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=prompt)
-    return response.json()
+  }
+  response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
+  return response.json()
     
 output = run("@cf/meta/llama-2-7b-chat-int8", "Tell me a story")
+print(output)
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
-    -X POST \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    -d "{ "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "prompt" } ]}'
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
+  -X POST \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{ "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "Why is pizza so good" }]}'
 ```
 
 {{</tab>}}

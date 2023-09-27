@@ -60,7 +60,7 @@ export default {
       }
     );
 
-    return new Response(JSON.stringify(embeddings));
+    return Response.json(embeddings);
   },
 };
 ```
@@ -70,27 +70,27 @@ export default {
 
 ```js
 async function run(model, input) {
-  const response = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
-    {
-      headers: { Authorization: "Bearer {API_TOKEN}" },
-      method: "POST",
-      body: JSON.stringify(input),
-    }
-  );
-  const result = await response.json();
-  return result;
+	const response = await fetch(
+	  `https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${model}`,
+	  {
+		headers: { Authorization: "Bearer ${API_TOKEN}" },
+		method: "POST",
+		body: JSON.stringify(input),
+	  }
+	);
+	const result = await response.json();
+	return result;
 }
-
+  
 // Can be a string or array of strings]
 const stories = [
-  'This is a story about an orange cloud',
-  'This is a story about a llama',
-  'This is a story about a hugging emoji'
+'This is a story about an orange cloud',
+'This is a story about a llama',
+'This is a story about a hugging emoji'
 ];
 
-run('cf/baai/bge-base-en-v1.5', { text: input }).then((response) => {
-    console.log(JSON.stringify(response));
+run('@cf/baai/bge-base-en-v1.5', { text: stories }).then((response) => {
+  console.log(JSON.stringify(response));
 });
 ```
 
@@ -100,11 +100,10 @@ run('cf/baai/bge-base-en-v1.5', { text: input }).then((response) => {
 
 ```py
 import requests
-
-API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}}/ai/run/"
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
-def run(model, input)
+def run(model, input):
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
 
@@ -114,17 +113,18 @@ stories = [
   'This is a story about a hugging emoji'
 ]
     
-output = run("@cf/baai/bge-base-en-v1.5", { input: stories })
+output = run("@cf/baai/bge-base-en-v1.5", { "text": stories })
+print(output)
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/baai/bge-base-en-v1.5 \
-    -X POST \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "text": "['This is a story about an orange cloud','This is a story about a llama','This is a story about a hugging emoji']" }'
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/baai/bge-base-en-v1.5 \
+  -X POST \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }
 ```
 
 {{</tab>}}
