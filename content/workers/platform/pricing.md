@@ -171,6 +171,12 @@ For more information and [examples of Durable Objects billing](/durable-objects/
 
 {{<render file="_transactional_storage_api_pricing.md">}}
 
+## Vectorize
+
+Vectorize is currently only available on the Workers paid plan.
+
+{{<render file="_vectorize-pricing.md">}}
+
 ## Service bindings
 
 Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
