@@ -92,7 +92,7 @@ Next, add the `ai` block to `wrangler.toml`. This will set up a binding to Cloud
 filename: wrangler.toml
 ---
 
-[[ai]]
+[ai]
 binding = "AI"
 ```
 
