@@ -39,7 +39,7 @@ This would return a set of matches resembling the following, based on a `cosine`
 {"matches":{"count":1,"matches":[{"score":0.999909486,"vectorId":"5","vector":{"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}}]}}
 ```
 
-Refer to the [Workers Client API documentation](/vectorize/learning/client-api/) for additional examples.
+Refer to the [Workers Client API documentation](/vectorize/platform/client-api/) for additional examples.
 
 ## Workers AI
 

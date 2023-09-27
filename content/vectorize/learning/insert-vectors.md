@@ -67,7 +67,7 @@ const sampleVectors: Array<VectorizeVector> = [
 let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
 ```
 
-Refer to the [Workers Client API documentation](/vectorize/learning/client-api/) for additional examples.
+Refer to the [Workers Client API documentation](/vectorize/platform/client-api/) for additional examples.
 
 ### wrangler CLI
 

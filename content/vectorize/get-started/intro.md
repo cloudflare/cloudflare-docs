@@ -343,10 +343,10 @@ You will see that `vectorId: 5` has a `score` of `0.999909486`: because we're us
 
 From here, we could experiment by passing a different `queryVector` and observing the results: the matches and the `score` should change based on the change in distance between the query vector and the vectors in our index.
 
-In a real-world application, the `queryVector` would be the vector embedding representation of a query from a user or system, and our `sampleVectors` would be generated from real content. To build on this example, see the [vector search tutorial](/vectorize/get-started/workers-ai/) that combines Workers AI + Vectorize to build an end-to-end application with Workers.
+In a real-world application, the `queryVector` would be the vector embedding representation of a query from a user or system, and our `sampleVectors` would be generated from real content. To build on this example, see the [vector search tutorial](/vectorize/get-started/embeddings/) that combines Workers AI + Vectorize to build an end-to-end application with Workers.
 
 ## Next steps
 
-- [Build an end-to-end vector search application](/vectorize/get-started/workers-ai/) using Workers AI and Vectorize.
+- [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
 - Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/)
 - See [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers
