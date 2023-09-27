@@ -8,20 +8,15 @@ weight: 1
 
 Ansible is a software tool that enables at scale management of infrastructure. Ansible is agentless — all it needs to function is the ability to SSH to the target and Python installed on the target.
 
-Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup process. In this guide, you will use Terraform to deploy an SSH server on Google Cloud and create a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/) that makes the server available over the Internet. Terraform will automatically run an Ansible playbook that installs and configures `cloudflared` on the server.
+Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup process. In this guide, you will use Terraform to deploy an SSH server on Google Cloud and create a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) that makes the server available over the Internet. Terraform will automatically run an Ansible playbook that installs and configures `cloudflared` on the server.
 
 ## Prerequisites
 
 To complete the steps in this guide, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
-<<<<<<< HEAD:content/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/ansible.md
-- [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
-- [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/).
-=======
 - [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
 - [A zone on Cloudflare](/fundamentals/setup/account-setup/add-site/).
->>>>>>> production:content/cloudflare-one/connections/connect-networks/deployment-guides/ansible.md
 - [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
 
 ## 1. Install Ansible
