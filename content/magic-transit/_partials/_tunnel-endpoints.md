@@ -56,7 +56,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 {{<tab label="dashboard" no-code="true">}}
 
 {{<Aside type="note">}}
-If you need to change your tunnel health checks to unidirectional or bidirectional, refer to the API tab.
+Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional. If you need to change your tunnel health checks to unidirectional or bidirectional, refer to the API tab. The dashboard option will be available in the near future. 
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
@@ -248,11 +248,9 @@ You will receive a response like the following:
 <summary>Configure bidirectional health checks</summary>
 <div>
 
-Bidirectional health checks are available for GRE and IPsec tunnels. Right now you can configure them via the API. The dashboard option will be available in the near future.
+Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional.
 
-For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional.
-
-You can enable bidirectional health checks via API with `--data '{"health_check": {"direction": "bidirectional"}}'`. For example: 
+You can enable bidirectional health checks via the API with `--data '{"health_check": {"direction": "bidirectional"}}'`. For example: 
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \

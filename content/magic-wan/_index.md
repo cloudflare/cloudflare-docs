@@ -27,7 +27,7 @@ Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels,
 Use Magic WAN Connector to automatically connect, steer, and shape any IP traffic.
 {{</feature>}}
 
-{{<feature header="Probes" href="/magic-wan/reference/tunnel-health-checks/">}}
+{{<feature header="Tunnel health checks" href="/magic-wan/reference/tunnel-health-checks/">}}
 Magic WAN sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
