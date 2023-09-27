@@ -80,18 +80,18 @@ async function run(model, input) {
 	);
 	const result = await response.json();
 	return result;
-  }
+}
   
-  // Can be a string or array of strings]
-  const stories = [
-	'This is a story about an orange cloud',
-	'This is a story about a llama',
-	'This is a story about a hugging emoji'
-  ];
-  
-  run('@cf/baai/bge-base-en-v1.5', { text: stories }).then((response) => {
-	  console.log(JSON.stringify(response));
-  });
+// Can be a string or array of strings]
+const stories = [
+'This is a story about an orange cloud',
+'This is a story about a llama',
+'This is a story about a hugging emoji'
+];
+
+run('@cf/baai/bge-base-en-v1.5', { text: stories }).then((response) => {
+  console.log(JSON.stringify(response));
+});
 ```
 
 {{</tab>}}

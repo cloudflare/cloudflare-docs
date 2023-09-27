@@ -50,7 +50,7 @@ async function run(model, prompt) {
   ];
 
   const response = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
+    `https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${model}`,
     {
       headers: { Authorization: "Bearer {API_TOKEN}" },
       method: "POST",
@@ -95,9 +95,9 @@ print(output)
 
 ```sh
 $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
-    -X POST \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "Why is pizza so good" }]}'
+  -X POST \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{ "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "Why is pizza so good" }]}'
 ```
 
 {{</tab>}}
