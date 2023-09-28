@@ -14,7 +14,7 @@ ECH limits access to information that a particular user is visiting your website
 
 ## How ECH works
 
-In a typical [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)), the client sends a ClientHello message to the server to initiate the TLS session. This message contains important information, including the list of supported cryptographic algorithms, TLS version and the requested server name (the domain name of the website the client wants to connect to). The server name is indicated through Server Name Indication (SNI).
+In a typical [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/), the client sends a ClientHello message to the server to initiate the TLS session. This message contains important information, including the list of supported cryptographic algorithms, TLS version, and the requested server name (the domain name of the website the client wants to connect to). The server name is indicated through Server Name Indication (SNI).
 
 With ECH, the ClientHello message part is split into two separate messages: an inner part and an outer part. The outer part contains the non-sensitive information such as which ciphers to use and the TLS version and an "outer ClientHello". The inner part is encrypted and contains an "inner ClientHello".
 
@@ -22,9 +22,9 @@ The outer ClientHello contains a common name (SNI) that represents that a user i
 
 The inner ClientHello contains the actual server name that the user is trying to visit. This is encrypted using a public key and can only be read by Cloudflare. Once the handshake completes, the web page is loaded as normal, just like any other website loaded over TLS.
 
-In practice, this means that any intermediary that is looking at your traffic will simply see normal TLS handshakes with one caveat: any traffic to an ECH enabled server name on Cloudflare will look the same. Every TLS handshake will appear identical in that it looks like it is trying to load a website for `cloudflare-sni.com`, as opposed to the actual website.
+In practice, this means that any intermediary that is looking at your traffic will simply see normal TLS handshakes with one caveat: any traffic to an ECH-enabled server name on Cloudflare will look the same. Every TLS handshake will appear identical in that it looks like it is trying to load a website for `cloudflare-sni.com`, as opposed to the actual website.
 
-In the example below, a user is visiting `example.com`. Without ECH any intermediate networks will be able to detect the website being accessed by the user. With ECH the visible information will be limited to `cloudflare-sni.com` instead.
+In the example below, a user is visiting `example.com`. Without ECH, any intermediate networks will be able to detect the website being accessed by the user. With ECH, the visible information will be limited to `cloudflare-sni.com` instead.
 
 <br>
 
@@ -43,11 +43,16 @@ For more details about ECH protocol technology, refer to our [introductory blog]
 
 ## Enable ECH
 
-To enable ECH, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) and enable **Encrypted ClientHello (ECH)**.
+To enable ECH, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) and enable **Encrypted ClientHello (ECH)**:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and zone.
+3. Go to **SSL** > **Edge Certificates**.
+4. For **Encrypted ClientHello (ECH)**, change the setting to **Enabled**.
 
 ## Enterprise network applicability
 
-Some enterprise or regional networks may need to audit or apply filtering policies to traffic that traverses their network. These policies are expressed in terms of domain names, not IP addresses. Consequently, they are best applied at the local DNS resolver in response to the A and AAAA queries for the individual domain names.
+Some enterprise or regional networks may need to audit or apply filtering policies to traffic that traverses their network. These policies are expressed in terms of domain names, not IP addresses. Consequently, they are best applied at the local DNS resolver in response to the `A` and `AAAA` queries for the individual domain names.
 
 However, for settings wherein DNS-based filtering is not applicable, there are two ways in which networks can disable ECH to allow existing filtering mechanisms to continue working as expected.
 
