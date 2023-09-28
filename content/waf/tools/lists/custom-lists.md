@@ -13,6 +13,10 @@ Cloudflare supports the following custom list types:
 * Lists with hostnames
 * Lists with [autonomous system numbers](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) (ASNs)
 
+{{<Aside type="note">}}
+Currently, lists with hostnames and ASNs are only available to select Enterprise customers. To get access, contact your account team.
+{{</Aside>}}
+
 Each type has its own properties and CSV file format. Refer to the following sections for details.
 
 For more information on lists managed by Cloudflare, like Managed IP Lists, refer to [Managed Lists](/waf/tools/lists/managed-lists/).
@@ -37,7 +41,7 @@ IP address     | Fields with type `IP address` listed in [Fields](/ruleset-engin
 Hostname       | `http.host`
 ASN            | `ip.src.asnum`
 
-For more information on using a custom list in the Cloudflare dashboard, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
+For more information and examples, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
 
 ---
 
@@ -70,6 +74,10 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 ### Lists with hostnames
 
+{{<Aside type="note">}}
+Currently available to select Enterprise customers. To get access, contact your account team.
+{{</Aside>}}
+
 List items in custom lists with hostnames must be Fully Qualified Domain Names (FQDNs). An item may contain a `*` prefix/subdomain wildcard, which must be followed by a `.` (period). An item cannot include a scheme (for example, `https://`) or a URL path.
 
 For example, the following entries would be valid for a custom list with hostnames:
@@ -83,6 +91,10 @@ However, `example.com/path/subfolder` would not be a valid entry.
 You can add any valid hostname (a valid FQDN) to a custom list with hostnames. The hostnames do not need to belong to the current Cloudflare account.
 
 ### Lists with ASNs
+
+{{<Aside type="note">}}
+Currently available to select Enterprise customers. To get access, contact your account team.
+{{</Aside>}}
 
 List items in custom lists with ASNs must be integer values.
 
