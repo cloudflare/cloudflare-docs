@@ -2,7 +2,7 @@
 pcx_content_type: concept
 type: overview
 title: Management and Monitoring
-weight: 3
+weight: 5
 ---
 
 # Endpoint Management
@@ -14,6 +14,10 @@ Monitor the health of your API endpoints by saving, updating, and monitoring per
 This will add the specified endpoints to your list of managed endpoints. You can view your list of saved endpoints in the **Endpoint Management** page.
 
 Cloudflare will start collecting [performance data](/api-shield/management-and-monitoring/#endpoint-performance-analysis) on your endpoint when you save an endpoint.
+
+{{<Aside type="note">}}
+When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will not be populated.
+{{</Aside>}}
 
 ## Access
 
@@ -45,10 +49,8 @@ There are two ways to add API endpoints from Discovery.
 
 API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
 
-{{<Aside type="Note">}}
-
+{{<Aside type="note">}}
 If you deselect **Save new endpoints to endpoint management**, the endpoints will not be added.
-
 {{</Aside>}}
 
 ## Add endpoints manually
@@ -57,10 +59,8 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
 3. Select **Add endpoints**.
 
-{{<Aside type="Note">}}
-
+{{<Aside type="note">}}
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
-
 {{</Aside>}}
 
 When adding a path manually, you can specify variable fields by enclosing them in braces, `/api/user/{var1}/details`. 
@@ -80,10 +80,8 @@ Cloudflare learns schema parameters via traffic inspection. For all endpoints sa
 5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
 6. Select **Export schema** and choose a location to save the file.
 
-{{<Aside type="Note">}} 
-
+{{<Aside type="note">}} 
 The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
-
 {{</Aside>}}
 
 #### Learned schemas will always include:
@@ -107,10 +105,8 @@ For each saved endpoint, customers can view:
 * **Error rate** vs. overall traffic: grouped by `4xx`, `5xx`, and their sum.
 * **Response size**: The average size of the response (in bytes) returned to the request.
 
-{{<Aside type="Note">}}
-
+{{<Aside type="note">}}
 Customers viewing analytics have the ability to toggle detailed metrics view between the last 24 hours and 7 days.
-
 {{</Aside>}}
 
 ## Using the Cloudflare API

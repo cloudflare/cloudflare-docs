@@ -54,7 +54,7 @@ ICP（互联网内容提供商）号是国家发行的注册号码，允许您�
 
 ## 拿到 ICP 号后该怎么办？
 
-拿到 ICP 号和证书后，请上传到网站首页的底部。例如，请参见以下内容： ![](/support/static/Screen_Shot_2015-09-13_at_7.12.19_PM.png)
+拿到 ICP 号和证书后，请上传到网站首页的底部。例如，请参见以下内容： ![](/images/support/Screen_Shot_2015-09-13_at_7.12.19_PM.png)
 
 -   什么是 ICP 网站备案，为什么网站必须备案才能在中国大陆运营？
     
@@ -77,7 +77,7 @@ ICP（互联网内容提供商）号是国家发行的注册号码，允许您�
     
     申请ICP备案的流程如下所示：
     
-    ![](/support/static/icp.png)
+    ![](/images/support/icp.png)
     
     所需文件材料
     
@@ -108,7 +108,7 @@ ICP（互联网内容提供商）号是国家发行的注册号码，允许您�
 
 申请ICP备案的流程如下所示：
 
-![](/support/static/icp.png)
+![](/images/support/icp.png)
 
 所需文件材料
 

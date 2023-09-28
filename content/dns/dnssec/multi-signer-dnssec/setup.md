@@ -19,7 +19,7 @@ Although you can complete a few steps via the user interface, currently the whol
 ## 1. Set up Cloudflare zone
 
 {{<Aside type="note">}}
-The following steps also apply if you use [Cloudfare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that, in such case, the records in steps 2 and 3 should be transferred from the primary, and step 4 is not necessary.
+The following steps also apply if you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that, in such case, the records in steps 2 and 3 should be transferred from the primary, and step 4 is not necessary.
 {{</Aside>}}
 
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
@@ -73,7 +73,7 @@ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnsse
 4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
 
 {{<Aside type="warning">}}
-Unless you use [Cloudfare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is required.
+Unless you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is required.
 
 Without enabling this setting, Cloudflare always responds with Cloudflare nameservers for DNS queries to the zone apex requesting the NS record type.
 {{</Aside>}}
@@ -83,7 +83,7 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <KEY>' \
 --header 'Content-Type: application/json' \
--data '{
+--data '{
   "id": "use_apex_ns",
   "value": true
 }'
@@ -91,7 +91,7 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 
 ## 2. Set up external provider
 
-1. Get Cloudfare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
+1. Get Cloudflare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 
 API example:
 

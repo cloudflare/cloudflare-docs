@@ -96,6 +96,10 @@ For all available system keys, refer to the table below:
 | `system.page.referrer` | String | The URL of the referrer page in the time the event took place.  |
 | `system.page.encoding` | String | The encoding of the page associated with the event. |
 
+{{<Aside type="note">}}
+It is currently not possible to override location related properties, such as City, Country, and Continent.
+{{</Aside>}}
+
 ## Process API responses
 
 For each Event Object in your payload, Zaraz will respond with a Result Object. The Result Objects order matches the order of your Event Objects.

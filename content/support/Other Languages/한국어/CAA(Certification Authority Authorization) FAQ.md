@@ -50,7 +50,7 @@ Cloudflare의 무료 Universal SSL 인증서를 계속 사용하면 다음 DNS �
 
  _issuewild_ 는 단독으로 사용된 경우  와일드카드 발행만 허용합니다.  따라서  **태그** 드롭다운에  _와일드카드 및 특정 호스트 이름 허용_ 옵션이 지정돼야 Cloudflare 루트 도메인을 인증서에 추가할 수 있습니다.
 
-![특정 호스트 이름만 허용하게 태그된 Cloudflare 대시보드의 comodoca.com에 대한 CCA 레코드를 보여주는 스크린샷](/support/static/dns_ui_updates_caa_records.png)
+![특정 호스트 이름만 허용하게 태그된 Cloudflare 대시보드의 comodoca.com에 대한 CCA 레코드를 보여주는 스크린샷](/images/support/dns_ui_updates_caa_records.png)
 
 ___
 

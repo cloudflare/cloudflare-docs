@@ -3,14 +3,14 @@ title: Available fields and functions
 pcx_content_type: reference
 weight: 3
 meta:
-  title: Available fields and functions in Rewrite URL Rules
+  title: Available fields and functions in rewrite URL rules
 ---
 
-# Available fields and functions in Rewrite URL Rules
+# Available fields and functions in rewrite URL rules
 
 ## Filter expressions
 
-A Rewrite URL Rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
+A rewrite URL rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
 
 {{<render file="transform/_transform-phase-fields.md">}}
 

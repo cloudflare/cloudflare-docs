@@ -81,7 +81,7 @@ ___
 -   Cache Analytics를 사용하는 경우: 대시보드에서 **Caching 탭**을 열고, 콘텐츠 유형별로 필터링하여 전송하는 트래픽 유형을 파악합니다. 
 -   Cache Analytics를 사용하지 않는 경우: 대시보드에서 **Analytics 탭**을 열고, **성능** 섹션에서, 제공하는 콘텐츠 유형을 확인합니다.
 
-![Cache Analytics - 전송되는 트래픽의 유형 확인](/support/static/traffic-types.png)
+![Cache Analytics - 전송되는 트래픽의 유형 확인](/images/support/traffic-types.png)
 
 ## 여전히 질문이 해결되지 않았습니까? 지원팀 문의
 

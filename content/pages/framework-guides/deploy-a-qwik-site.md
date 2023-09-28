@@ -11,24 +11,17 @@ In this guide, you will create a new Qwik application implemented via [Qwik City
 
 ## Creating a new project
 
-Create a new project by running the following command in your terminal:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to create a new project. C3 will create a new project directory, initiate Qwik's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Qwik project, run the following command:
 
 ```sh
-$ npm create qwik@latest
+$ npm create cloudflare@latest my-qwik-app -- --framework=qwik
 ```
 
-You will need to provide a directory for your project (this guide will assume you chose `./qwik-app`) and select a starter from a provided list. Choose any of the QwikCity available options.
+`create-cloudflare` will install additional dependencies, including the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version) and any necessary adapters, and ask you setup questions.
 
-The command will also ask you if you would like to install npm dependencies, choose yes.
-
-Next, add the [Qwik cloudflare-pages adaptor](https://qwik.builder.io/integrations/deployments/cloudflare-pages/#cloudflare-pages-adaptor) with the following commands:
-
-```sh
-$ cd qwik-app
-$ npm run qwik add cloudflare-pages
-```
-
-Note that as part of the `cloudflare-pages` adaptor installation, a `functions/[[path]].ts` file will be created. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+As part of the `cloudflare-pages` adapter installation, a `functions/[[path]].ts` file will be created. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
 
 After selecting your server option, change the directory to your project and render your project by running the following command:
 
@@ -40,24 +33,17 @@ $ npm start
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Qwik">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Framework preset     | `Qwik`          |
-| Build command        | `npm run build` |
-| Build directory      | `dist`          |
-
-</div>
+{{<pages-build-preset framework="qwik">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.
 
@@ -72,7 +58,7 @@ Every time you commit new code to your Qwik site, Cloudflare Pages will automati
 
 ## Use bindings in your Qwik application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In QwikCity, add server-side code via [routeLoaders](https://qwik.builder.io/qwikcity/route-loader/) and [actions](https://qwik.builder.io/qwikcity/action/). Then access bindings set for your application via the `platform` object provided by the framework.
 

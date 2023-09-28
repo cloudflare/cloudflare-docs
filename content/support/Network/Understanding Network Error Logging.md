@@ -16,13 +16,13 @@ Network Error Logging can be used to help triage end-user connectivity issues th
 
 Connectivity loss can also result from end users changing IP addresses. For example, an end user may connect to a site from a home Wi-Fi and then leave their house.  The change from the home Wi-Fi network to a mobile network changes the end user’s IP address, interrupts any current connections, and could be reported as TCP.abort or TCP.timed\_out failures.  By comparing the last known good client IP with the client IP that reported the failure, Cloudflare determines whether the failures were due to a roaming end user.  The diagram below shows how NEL captures connectivity losses resulting from end user IP changes:
 
-![Diagram showing how Network Error Logging captures connectivity losses resulting from end user IP changes. For more details, continue reading.](/support/static/pasted_image_0__1_.png)
+![Diagram showing how Network Error Logging captures connectivity losses resulting from end user IP changes. For more details, continue reading.](/images/support/pasted_image_0__1_.png)
 
 **NEL process**:
 
-1.  User moves from WiFi to mobile.
+1.  User moves from Wi-Fi to mobile.
 2.  Customer connects via mobile IP.
-3.  All connections made to Cloudflare over WiFi are timed out due to src-dest mismatch.
+3.  All connections made to Cloudflare over Wi-Fi are timed out due to src-dest mismatch.
 4.  Connections are re-established over mobile connections and the user reports failures over their mobile connection to the Cloudflare NEL endpoint.
 
 The Report-To header is present in all requests to Cloudflare zones that have NEL enabled:  
@@ -62,13 +62,12 @@ Cloudflare NEL uses end-user IP address to determine the following:
 
 The client IP address is only stored in volatile memory for the lifetime of the request to Cloudflare’s NEL endpoint (order of milliseconds) and is dropped immediately after the request completes. Cloudflare does not log the client IP address anywhere in the Network Error Logging pipeline. Customers can opt out of having their end users consume the NEL headers by emailing Cloudflare support.
 
-{{<Aside type="note">}}
-NEL metrics are not currently available on the Cloudflare dashboard.
-{{</Aside>}}
-
 ___
 
 ## Related resources
 
+-   [Developer documentation](/network-error-logging/)
+-   [Error references](/network-error-logging/reference/)
+-   [Logpush dataset](/logs/reference/log-fields/zone/nel_reports/)
 -   [W3C specification](https://www.w3.org/TR/network-error-logging/)[](https://developers.google.com/web/updates/2018/09/reportingapi)
 -   [Google Chrome integration](https://developers.google.com/web/updates/2018/09/reportingapi)

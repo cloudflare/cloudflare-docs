@@ -14,7 +14,7 @@ Installing the Cloudflare Grafana Plugin takes under 5 minutes and is the best 
 
 ![Old URL: https://support.cloudflare.com/hc/en-us/article_attachments/115005755247/Screen_Shot_2017-02-09_at_11.34.40_AM.png
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
-](/support/static/hc-import-screen_shot_2017_02_09_at_11_34_40_am.png)
+](/images/support/hc-import-screen_shot_2017_02_09_at_11_34_40_am.png)
 
 
 ## Requirements
@@ -40,13 +40,13 @@ ___
 
 ![Old URL: https://support.cloudflare.com/hc/en-us/article_attachments/115005811168/Screen_Shot_20017-02-09_at_11.55.21_AM.png
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
-](/support/static/hc-import-screen_shot_20017_02_09_at_11_55_21_am.png)
+](/images/support/hc-import-screen_shot_20017_02_09_at_11_55_21_am.png)
 
 4\. Click on the main Grafana icon in the top left corner and hover over the Cloudflare Plugin row and click on Plugin Config.
 
 ![Old URL: https://support.cloudflare.com/hc/en-us/article_attachments/115005755527/Screen_Shot_20917-02-09_at_11.55.21_AM.png
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
-](/support/static/hc-import-screen_shot_20917_02_09_at_11_55_21_am.png)
+](/images/support/hc-import-screen_shot_20917_02_09_at_11_55_21_am.png)
 
 5\. This will take you to the Plugin Config page. We highly recommend that you generate an [API token](/fundamentals/api/get-started/create-token/) for this app. Please make sure the token has the following permissions:
 
@@ -95,7 +95,7 @@ Tag: $zone
 
 ![Old URL: https://support.cloudflare.com/hc/en-us/article_attachments/115005811428/Screen_Shot_2017-02-08_at_1.09.26_PM.png
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
-](/support/static/hc-import-screen_shot_2017_02_08_at_1_09_26_pm.png)
+](/images/support/hc-import-screen_shot_2017_02_08_at_1_09_26_pm.png)
 
 _For Virtual DNS_
 
@@ -107,7 +107,7 @@ Tag: $cluster
 
 ![Old URL: https://support.cloudflare.com/hc/en-us/article_attachments/115005811488/Screen_Shot_20197-02-08_at_1.09.26_PM.png
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
-](/support/static/hc-import-screen_shot_20197_02_08_at_1_09_26_pm.png)
+](/images/support/hc-import-screen_shot_20197_02_08_at_1_09_26_pm.png)
 
 ___
 

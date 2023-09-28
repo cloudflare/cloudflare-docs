@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Tenant level
 weight: 5
 meta:
-  title: Tenant-level custom nameservers
+  title: Tenant custom nameservers
   description: With tenant-level custom nameservers, you can use the same custom nameservers for different zones and across different accounts, as long as the accounts are part of the [tenant](/tenant/). The domain or domains that provide the nameservers names do not have to exist as zones in Cloudflare.
 ---
 

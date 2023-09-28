@@ -2,6 +2,8 @@
 title: Best practices
 pcx_content_type: navigation
 weight: 7
+meta:
+  description: Learn about best practices for configuring Cloudflare's DDoS protection.
 ---
 
 # Best practices

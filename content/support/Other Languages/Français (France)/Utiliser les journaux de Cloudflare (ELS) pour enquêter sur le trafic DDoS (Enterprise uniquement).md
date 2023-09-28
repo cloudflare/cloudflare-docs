@@ -98,7 +98,7 @@ Triez-les par réponse HTTP 525, puis copiez-les dans un fichier appelé els-525
 
 Le modèle _:525,_ (deux points, code de statut, virgule) est propre au champ _EdgeResponseStatus_. La seule recherche du code de statut HTTP _525_ sans les deux points et la virgule de fin inclurait également les entrées de journaux qui avaient le modèle _525_ dans d'autres champs comme _EdgeStartTimeStamp_, par exemple, qui contient plusieurs nombres et peut aussi contenir la séquence de nombres _525_.
 
-![](/support/static/12.png)
+![](/images/support/12.png)
 
 Remarque : les fichiers produits (els-200.txt et els-525.txt) ne sont pas très lisibles tels quels. Afin de les visualiser dans un format plus lisible, utilisez jq dans la commande suivante :
 
@@ -117,7 +117,7 @@ Dans cet exemple, nous comptons les requêtes par version de protocole SSL, ce q
 
 **Exemple de sortie :**
 
-![](/support/static/11.png)
+![](/images/support/11.png)
 
 Les champs _ClientRequestURI, ClientIP, ClientRequestUserAgent, ClientCountry_ et _ClientRequestHost_ sont généralement les plus utiles pour trouver les modèles d'attaque dans ces journaux.
 

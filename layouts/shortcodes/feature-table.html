@@ -4,6 +4,7 @@
 {{- $properties := index $info "properties" -}}
 {{- $map := dict "ent" "Enterprise" "pro" "Pro" "biz"
 "Business" "free" "Free" -}}
+{{- $skip_availability := default "false" (.Get "skipAvailability") -}}
 
 <div class="DocsMarkdown--table-wrap">
 <div class="DocsMarkdown--table-wrap-inner">
@@ -29,6 +30,8 @@
         {{- end -}}
     </tr>
 {{- range $elem_key, $elem_val := $properties -}}
+
+{{- if (or (ne .title "Availability") ((and (eq .title "Availability") (eq $skip_availability "false") ))) -}}
 <tr>
     <td>
         <p>{{ if .link }}
@@ -56,6 +59,8 @@
         </td>
     {{- end -}}
 </tr>
+{{- end -}}
+
 {{- end -}}
 </table>
 </div>

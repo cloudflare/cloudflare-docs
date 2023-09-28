@@ -22,7 +22,7 @@ To configure:
 
     ```json
     ---
-    highlight: [3,4,5]
+    highlight: 3-5
     ---
     "action_parameters": {
       // ...
@@ -38,17 +38,17 @@ You can generate a public key [in the command line](/waf/managed-rules/payload-l
 
 ### Example
 
-The following example updates rule `<RULE_ID_1>` that executes the Cloudflare Managed Ruleset for zone `<ZONE_ID>`, configuring payload logging with the provided public key.
+The following example updates rule `{rule_id_1}` that executes the Cloudflare Managed Ruleset for zone `{zone_id}`, configuring payload logging with the provided public key.
 
-```json
+```bash
 ---
 header: Request
-highlight: [9,10,11]
+highlight: 9-11
 ---
-curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zone/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID_1>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zone/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_1}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
   "action": "execute",
   "action_parameters": {
     "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",

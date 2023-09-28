@@ -714,11 +714,11 @@ ___
 
 **Causa raiz**: Isso pode ser devido a um problema de configuração em uma regra de página. Ao criar uma regra de página que usa dois curingas, como uma regra de _redirecionamento de URL_, é possível criar uma regra que menciona o segundo curinga com o marcador de posição $2. Veja o exemplo abaixo:
 
-![configuração de regra de página de exemplo com dois curingas. O URL de encaminhamento contém um espaço reservado $2, que será substituído pelo conteúdo correspondente à segunda ](/support/static/page-rule-create.png)
+![configuração de regra de página de exemplo com dois curingas. O URL de encaminhamento contém um espaço reservado $2, que será substituído pelo conteúdo correspondente à segunda ](/images/support/page-rule-create.png)
 
 Ao atualizar a mesma regra, você pode remover um dos curingas do campo **Se o URL corresponder** e salvá-la. Veja o exemplo abaixo:
 
-![configuração de regra de página incorreta com um único curinga, mas ainda usando o espaço reservado de $2 no URL de encaminhamento. Essa configuração causa ](/support/static/page-rule-update.png)
+![configuração de regra de página incorreta com um único curinga, mas ainda usando o espaço reservado de $2 no URL de encaminhamento. Essa configuração causa ](/images/support/page-rule-update.png)
 
 Se você fizer isso, o marcador de posição $2 fará referência a um caractere curinga que não existe mais e, como tal, um "_Erro 500 (erro interno do servidor)_"é lançado quando um URL aciona a regra da página .
 
@@ -764,12 +764,12 @@ Observe que `example.com/some-path/cloudflare.com` será salvo _sem_ a barra no 
 
 No campo **Se o URL corresponder** de uma regra de página, somente as portas a seguir podem ser especificadas:
 
--   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
 -   Uma porta personalizada de um aplicativo HTTPS do [Cloudflare Spectrum](/spectrum/).
 
 ### Como usar Page Rules com o Workers
 
-Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/platform/workers-with-page-rules/) na documentação para desenvolvedores.
+Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) na documentação para desenvolvedores.
 
 ___
 

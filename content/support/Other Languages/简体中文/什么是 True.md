@@ -23,7 +23,7 @@ title: 什么是 True-Client
 如何开启 True-Client-IP 功能？  
 True-Client-IP 位于 Cloudflare 控制面板的“Network”应用中。
 
-![](/support/static/Screen_Shot_2015-06-30_at_3.55.04_PM.png)
+![](/images/support/Screen_Shot_2015-06-30_at_3.55.04_PM.png)
 
 True-Client-IP 适用于哪些客户？  
 True-Client-IP 适用于所有 Enterprise 企业版客户。 要升级到 Enterprise，[请联系 Cloudflare 团队](https://www.cloudflare.com/enterprise-service-request)。

@@ -17,13 +17,13 @@ Cloudflare zweifelt einen Anmeldeversuch an, wenn der Nutzer die korrekten Anmel
 
 ![Alte URL: https://support.cloudflare.com/hc/article_attachments/360035322751/account_access_email.png
 Artikel-IDs: 115003614752 | Multifaktor-E-Mail-Authentifizierung
-](/support/static/hc-import-account_access_email.png)
+](/images/support/hc-import-account_access_email.png)
 
 Bei einer zweifelhaften Anmeldung sendet Cloudflare einen Code an die für das Konto bei uns gespeicherte E-Mail-Adresse. Dieser Code kann nur einmal verwendet werden und verfällt nach 30 Minuten. Wenn der korrekte Code über das Dashboard eingegeben wird, wird die betreffende IP gespeichert, und weitere Anmeldeversuche von der gleichen IP-Adresse werden 90 Tage lang nicht angezweifelt.
 
 ![Alte URL: https://support.cloudflare.com/hc/article_attachments/360035323072/login_authentication.png
 Artikel-IDs: 115003614752 | Multifaktor-E-Mail-Authentifizierung
-](/support/static/hc-import-login_authentication.png)
+](/images/support/hc-import-login_authentication.png)
 
 Wenn Sie „Diesen Computer merken“ ankreuzen, werden die Anmeldungen von diesem Gerät/Browser aus im Rahmen der MFA bis zu 14 Tage lang nicht mehr angezweifelt. Nach 14 Tagen beginnt Cloudflare erneut, die IP-Adresse bei Anmeldungen von diesem Gerät/Browser aus zu überprüfen.
 

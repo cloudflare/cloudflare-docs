@@ -2,12 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/200172016-WAF-verwaltete-Regeln-Web-Application-Firewall-verstehen
-title: WAF-verwaltete Regeln (Web Application Firewall) verstehen 
+title: WAF-verwaltete Regeln (Web Application Firewall) verstehen
 ---
 
-# WAF-verwaltete Regeln (Web Application Firewall) verstehen 
-
-
+# WAF-verwaltete Regeln (Web Application Firewall) verstehen
 
 ## Überblick
 

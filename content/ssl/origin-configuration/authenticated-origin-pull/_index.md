@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Authenticated Origin Pulls (mTLS)
 weight: 4
+layout: single
 meta:
     description: Authenticated Origin Pulls helps ensure requests to your origin server come from the Cloudflare network.
 ---
@@ -12,7 +13,7 @@ Authenticated Origin Pulls helps ensure requests to your origin server come from
 
 This authentication becomes particularly important with the [Cloudflare Web Application Firewall (WAF)](/waf/). Together with the WAF, you can make sure that **all traffic** is evaluated before receiving a response from your origin server.
 
-If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant, you must upload your own certificate. This option is available for both [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls.
+Although Cloudflare provides you a certificate to easily configure zone-level authentication, if you want more strict security, you should upload your own certificate. Using a custom certificate is possible with both [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls and is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
 
 ## Availability
 
@@ -25,7 +26,7 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 ## Related topics
 
 - [SSL/TLS Encryption Modes](/ssl/origin-configuration/ssl-modes/)
-- [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## Limitations
 

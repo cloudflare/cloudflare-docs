@@ -240,11 +240,31 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       </td>
       <td>No</td>
     </tr>
+    <tr>
+      <td>
+        <strong>Compress Response</strong><br />
+        <br />
+        API value:<br />
+        <code>compress_response</code>
+      </td>
+      <td>
+        <p>
+          Defines compression settings for delivering responses to website visitors.
+        </p>
+        <p>
+          Only available for <a href="/rules/compression-rules/">Compression Rules</a>, in the <code>http_response_compression</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/compression-rules/create-dashboard/">create a compression rule</a>.
+        </p>
+      </td>
+      <td>No</td>
+    </tr>
   </tbody>
 </table>
 
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Cloudflare Firewall Rules, a security product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+Cloudflare Firewall Rules, now deprecated, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 {{</Aside>}}

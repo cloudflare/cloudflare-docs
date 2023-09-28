@@ -13,7 +13,6 @@ meta:
     products using the same basic syntax.
   author: '@cloudflare'
   
-
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets
 

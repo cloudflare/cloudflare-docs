@@ -6,8 +6,6 @@ title: Recommended Page Rules to consider
 
 # Recommended Page Rules to consider
 
-
-
 Use [Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to improve the user experience of your domain with **hardened security** and **enhanced site performance,** while **increasing reliability** and **minimizing bandwidth usage** for your origin server.
 
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
@@ -18,14 +16,9 @@ Keep in mind that not all rules will be right for everyone, but these are some o
 
 ### 301/302 Forwarding URL
 
-{{<Aside type="tip">}}
-Consider using [Dynamic
-Redirects](/rules/url-forwarding/single-redirects/)
-or [Bulk
-Redirects](/rules/url-forwarding/bulk-redirects/)
-to forward or redirect traffic to a different URL due to ease of use,
-maintenance, and cost. You should only use Page Rules when Dynamic or
-Bulk Redirects do not meet your use case.
+{{<Aside type="note">}}
+Consider using [Dynamic Redirects](/rules/url-forwarding/single-redirects/)
+or [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to forward or redirect traffic to a different URL due to ease of use, maintenance, and cost. You should only use Page Rules when Dynamic or Bulk Redirects do not meet your use case.
 {{</Aside>}}
 
 Two common examples for using forwarding URLs are:

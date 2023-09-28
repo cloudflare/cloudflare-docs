@@ -30,7 +30,7 @@ La vista de **Network Analytics** de Cloudflare proporciona visibilidad casi en 
     migración](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
-![Panel de Analytics que muestra el resumen de paquetes por tipo](/support/static/na-main-dashboard.png)
+![Panel de Analytics que muestra el resumen de paquetes por tipo](/images/support/na-main-dashboard.png)
 
 La herramienta Network Analytics acelera la elaboración de informes y la investigación del tráfico malicioso. Puedes filtrar los datos por los siguientes parámetros:
 
@@ -75,7 +75,7 @@ ___
 
 El encabezado y los paneles laterales ofrecen un resumen de la actividad durante el periodo seleccionado en la lista desplegable **periodo**.
 
-![Título y panel lateral que resume la actividad de las últimas 24 horas](/support/static/na-navigate.png)
+![Título y panel lateral que resume la actividad de las últimas 24 horas](/images/support/na-navigate.png)
 
 El encabezado proporciona el total de paquetes o bits y el número de ataques detectados y mitigados. Cuando está ocurriendo un ataque, el encabezado muestra la tasa máxima de paquetes (o bits), pero no el recuento total.
 
@@ -87,7 +87,7 @@ Utiliza la lista desplegable **Periodo** para cambiar el intervalo de tiempo en 
 
 Cuando se selecciona _Últimos 30 minutos_, la vista **Network Analytics** muestra los datos de los últimos 30 minutos, actualizándose cada 20 segundos. Aparece una notificación _Live_ junto a la lista desplegable de estadísticas para informarte de que la vista se sigue actualizando automáticamente:
 
-![Actualización automática habilitada en Network Analytics](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Actualización automática habilitada en Network Analytics](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 Si seleccionas la opción _Rango personalizado_ , puede especificar un rango de tiempo de hasta 30 días a lo largo de cualquier periodo de los últimos 365 días.
 
@@ -99,13 +99,13 @@ Elige una estadística de la lista desplegable para alternar entre los gráficos
 
 Activa la opción **Mostrar anotaciones** para mostrar u ocultar las anotaciones de los eventos de prefijos IP anunciados/retirados en la vista **Network Analytics** . Haga clic en cada anotación para obtener más detalles.
 
-![Botón de alternancia para mostrar las anotaciones en el gráfico de Network Analytics](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![Botón de alternancia para mostrar las anotaciones en el gráfico de Network Analytics](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### Resumen de los detalles de los paquetes 
 
 Haz clic y arrastra el ratón sobre una región del gráfico para ampliarlo. Con esta técnica, puedes acercarte a un rango de tiempo de tan solo 3 minutos.
 
-![Ampliación de los detalles de los paquetes ](/support/static/unnamed.gif)
+![Ampliación de los detalles de los paquetes ](/images/support/unnamed.gif)
 
 Para hacer zoom, pulsa el icono **X** del selector de **intervalo de tiempo**.
 
@@ -157,7 +157,7 @@ Haz lo siguiente:
 
 2\. Haz clic en **Crear regla de firewall mágico**. 
 
-![Creación de un enlace de regla de cortafuegos en Network Analytics](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![Creación de un enlace de regla de cortafuegos en Network Analytics](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Aparecerá el editor de reglas de firewall mágico con los filtros y valores seleccionados.
 
@@ -167,271 +167,25 @@ Haz clic en **Añadir**.
 
 ### Campos, operadores y valores compatibles 
 
+
 La siguiente tabla muestra los campos, los operadores y los valores que puedes utilizar para filtrar Network Analytics.
 
-| Campo | Operadores | Valor |
-| --- | --- | --- |
-| 
-Acción
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-\- Permitir: se permite el tráfico a través de los sistemas automatizados de protección DDoS de Cloudflare. También puede incluir el tráfico mitigado por las reglas de firewall, flowtrackd y reglas de capa 7.
-
-\- Bloquear: el tráfico es bloqueado por los sistemas automatizados de protección DDoS de Cloudflare.
-
-\- Seguimiento de conexión: se aplica exclusivamente a la capa 7, ya que Magic Transit está excluido del ámbito de aplicación y nunca se ejecuta el seguimiento de conexión para los prefijos de Magic Transit.
-
-\- Limitación de velocidad: se puede aplicar por IP de origen, subred o cualquier conexión. La decisión se toma mediante programación basándose en la tecnología heurística.
-
-\- Supervisión: ataques que han sido identificados, pero que solo se ha optado por observar y no mitigar con reglas.
-
- |
-| 
-
-Id. de ataque
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Número de ataque
-
- |
-| 
-
-Tipo de ataque
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Ataque de inundación UDP
-
-Ataque de inundación SYN
-
-Ataque de inundación ACK
-
-Ataque de inundación RST
-
-Ataque de inundación LDAP
-
-Ataque de inundación marca de TCP
-
-Ataque de inundación FIN
-
-Ataque de inundación GRE
-
-Ataque de inundación ICMP
-
- |
-| 
-
-IP de destino
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Dirección IP
-
- |
-| 
-
-Puerto de destino
-
- | 
-
-Equivale
-
-No equivale
-
-Mayor que
-
-Mayor o igual que
-
-Menor que
-
-Menor o igual que
-
- | 
-
-Número de puerto
-
-Intervalo de puertos
-
- |
-| 
-
-Rango de IP de destino
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Rango y máscara de IP
-
- |
-| 
-
-Versión de IP
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-4 o 6
-
- |
-| 
-
-Protocolo
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-TCP
-
-UDP
-
-ICMP
-
-GRE
-
- |
-| 
-
-ASN de origen
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Número de AS
-
- |
-| 
-
-País de origen
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Nombre de país
-
- |
-| 
-
-Centro de datos de origen
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Ubicación del centro de datos
-
- |
-| 
-
-IP de origen
-
- | 
-
-Equivale
-
-No equivale
-
- | 
-
-Dirección IP
-
- |
-| 
-
-Puerto de origen
-
- | 
-
-Equivale
-
-No equivale
-
-Mayor que
-
-Mayor o igual que
-
-Menor que
-
-Menor o igual que
-
- | 
-
-Número de puerto
-
-Intervalo de puertos
-
- |
-| 
-
-Marca de TCP
-
- | 
-
-Equivale
-
-No equivale
-
-Incluye
-
- | 
-
-SYN, SYN-ACK, FIN, ACK, RST
-
- |
+| Campo                     | Operadores                                                                                  | Valor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Acción                    | Equivale<br>No equivale                                                                     | \- Permitir: se permite el tráfico a través de los sistemas automatizados de protección DDoS de Cloudflare. También puede incluir el tráfico mitigado por las reglas de firewall, flowtrackd y reglas de capa 7.<br>\- Bloquear: el tráfico es bloqueado por los sistemas automatizados de protección DDoS de Cloudflare.<br>\- Seguimiento de conexión: se aplica exclusivamente a la capa 7, ya que Magic Transit está excluido del ámbito de aplicación y nunca se ejecuta el seguimiento de conexión para los prefijos de Magic Transit.<br>\- Limitación de velocidad: se puede aplicar por IP de origen, subred o cualquier conexión. La decisión se toma mediante programación basándose en la tecnología heurística.<br>\- Supervisión: ataques que han sido identificados, pero que solo se ha optado por observar y no mitigar con reglas. |
+| Id. de ataque             | Equivale<br>No equivale                                                                     | Número de ataque                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Tipo de ataque            | Equivale<br>No equivale                                                                     | Ataque de inundación UDP<br>Ataque de inundación SYN<br>Ataque de inundación ACK<br>Ataque de inundación RST<br>Ataque de inundación LDAP<br>Ataque de inundación marca de TCP<br>Ataque de inundación FIN<br>Ataque de inundación GRE<br>Ataque de inundación ICMP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| IP de destino             | Equivale<br>No equivale                                                                     | Dirección IP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Puerto de destino         | Equivale<br>No equivale<br>Mayor que<br>Mayor o igual que<br>Menor que<br>Menor o igual que | Número de puerto<br>Intervalo de puertos                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Rango de IP de destino    | Equivale<br>No equivale                                                                     | Rango y máscara de IP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Versión de IP             | Equivale<br>No equivale                                                                     | 4 o 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Protocolo                 | Equivale<br>No equivale                                                                     | TCP<br>UDP<br>ICMP<br>GRE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ASN de origen             | Equivale<br>No equivale                                                                     | Número de AS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| País de origen            | Equivale<br>No equivale                                                                     | Nombre de país                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Centro de datos de origen | Equivale<br>No equivale                                                                     | Ubicación del centro de datos                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| IP de origen              | Equivale<br>No equivale                                                                     | Dirección IP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Puerto de origen          | Equivale<br>No equivale<br>Mayor que<br>Mayor o igual que<br>Menor que<br>Menor o igual que | Número de puerto<br>Intervalo de puertos                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Marca de TCP              | Equivale<br>No equivale<br>Incluye                                                          | SYN, SYN-ACK, FIN, ACK, RST                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 ___
 
@@ -441,7 +195,7 @@ Puedes trazar los datos de Network Analytics a lo largo de una variedad de dimen
 
 Selecciona una de las pestañas de **Resumen** para ver los datos con una dimensión diferente.
 
-![Visualización de datos en distintas dimensiones](/support/static/unnamed__1_.gif)
+![Visualización de datos en distintas dimensiones](/images/support/unnamed__1_.gif)
 
 Puedes elegir entre estas opciones:
 
@@ -470,7 +224,7 @@ Cuando añades filtros y especificas un intervalo de tiempo en Network Analytics
 
 Para compartir tu vista de datos, copia la URL y envíala a otros usuarios para que puedan trabajar con la misma vista.
 
-![Selección de la URL de la página de Network Analytics](/support/static/hc-dashboard-network-analytics-6.png)
+![Selección de la URL de la página de Network Analytics](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

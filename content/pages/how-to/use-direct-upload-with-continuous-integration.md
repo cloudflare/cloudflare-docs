@@ -30,7 +30,7 @@ To generate an API token:
 6. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
 7. Select **Continue to summary** > **Create Token**.
 
-![Follow the instructions above to create an API token for Cloudflare Pages](../media/select-api-token-for-pages.png)
+![Follow the instructions above to create an API token for Cloudflare Pages](/images/pages/how-to/select-api-token-for-pages.png)
 
 Now that you have created your API token, you can use it to push your project from continuous integration platforms.
 
@@ -114,7 +114,7 @@ To add environment variables, in the CircleCI web application:
 4. Select **Environment Variables** > **Add Environment Variable**.
 5. Enter the name and value of the new environment variable, which is your Cloudflare credentials (`CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`).
 
-![Follow the instructions above to add environment variables to your CircleCI settings](../media/project-settings-env-var-v2.png)
+![Follow the instructions above to add environment variables to your CircleCI settings](/images/pages/how-to/project-settings-env-var-v2.png)
 
 ### Set up a workflow
 

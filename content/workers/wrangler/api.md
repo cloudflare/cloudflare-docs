@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: API
-weight: 12
+weight: 2
 ---
 
 # Wrangler API

@@ -28,7 +28,7 @@ When resizing fails, the response body contains an error message explaining the 
 -  9402 — The image was too large or the connection was interrupted. Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) for more information.
 -  9403 — A [request loop](/images/image-resizing/resize-with-workers/#prevent-request-loops) occurred because the image was already resized or the Worker fetched its own URL. Verify your Worker path and image path on the server do not overlap.
 -  9406 & 9419 — The image URL is a non-HTTPS URL or the URL has spaces or unescaped Unicode. Check your URL and try again.
--  9407 — A lookup error occured with the origin server's domain name. Check your DNS settings and try again.
+-  9407 — A lookup error occurred with the origin server's domain name. Check your DNS settings and try again.
 -  9404 — The image does not exist on the origin server or the URL used to resize the image is wrong. Verify the image exists and check the URL.
 -  9408 — The origin server returned an HTTP 4xx status code and may be denying access to the image. Confirm your image settings and try again.
 -  9509 — The origin server returned an HTTP 5xx status code. This is most likely a problem with the origin server-side software, not Image Resizing.

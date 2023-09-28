@@ -12,7 +12,6 @@ meta:
     personalized web pages, dramatically reducing bandwidth usage and improving
     download times.
   author: '@cloudflare'
-  
 
 externals:
   - title: Cloudflare homepage

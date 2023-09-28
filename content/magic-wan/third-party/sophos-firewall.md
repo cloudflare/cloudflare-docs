@@ -58,6 +58,7 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
     - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
     - **Gateway address**: Enter your Cloudflare Anycast IP address provided by Cloudflare.
+    - **Local ID type**: Add the [IKE ID](/magic-wan/reference/tunnels/#supported-ike-id-formats) provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](/images/magic-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
 
@@ -184,23 +185,19 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-You can check if your tunnels are healthy on the Cloudflare dashboard. 
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and choose your account. 
-2. Go to **Magic WAN** > **Tunnel health**, and select **View**.
+### Make Cloudflare health checks work
 
-This dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
-
-To make Cloudflare health checks work:
-
-1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
+1. The ICMP probe packet from Cloudflare must be the type ICMP request, with Anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
 ```bash
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/ipsec_tunnels/<tunnel_identifier> \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
-  --data '{
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
     "health_check": {
         "enabled":true,
         "target":"172.64.240.252",
@@ -209,7 +206,6 @@ curl --request PUT \
     }
 }'
 ```
-
 
 2. Go to **Configure** > **Network** > **Interfaces** > **Add alias**. Add the IP address provided by Cloudflare for the ICMP probe traffic. This is needed to prevent Sophos firewall from dropping them as spoof packets. This is not the same IP used to create VPN. This is the special IP address for probe traffic only.
 

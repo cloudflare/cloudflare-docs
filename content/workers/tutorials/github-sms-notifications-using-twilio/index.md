@@ -22,7 +22,7 @@ You will learn how to:
 - Integrate Workers with GitHub and Twilio.
 - Use Worker secrets with Wrangler.
 
-![Animated gif of receiving a text message on your phone after pushing changes to a repository](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Animated gif of receiving a text message on your phone after pushing changes to a repository](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 ---
 
@@ -75,7 +75,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](./media/github-config-screenshot.png)
+![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
 
 ---
 
@@ -255,7 +255,7 @@ Run the `npx wrangler publish` command to redeploy your Worker project:
 $ npx wrangler deploy
 ```
 
-![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Video of receiving a text after pushing to a repo](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used Git before, refer to the [GIT Push and Pull Tutorial](https://www.datacamp.com/tutorial/git-push-pull) for pushing to your repository.
 

@@ -10,7 +10,7 @@ Jobs in Logpush now have a new key **output_options** which replaces **logpull_o
 
 Edge Logstream jobs do not support this yet.
 
-## Replacing logpull_options
+## Replace logpull_options
 
 Previously, Logpush jobs could be customized by specifying the list of fields, sampling rate, and timestamp format in **logpull_options** as [URL-encoded parameters](/logs/get-started/api-configuration/#options). For example:
 
@@ -44,13 +44,13 @@ We have replaced this with **output_options** as it is used for both Logpull and
 
 ## Output types
 
-By default Logpush outputs each record as a single line of JSON (aka ndjson).
+By default Logpush outputs each record as a single line of JSON (also known as `ndjson`).
 
 With **output_options** you can switch to CSV or single JSON object, further customize prefixes, suffixes, delimiters, or provide your own record template (in a stripped-down version of Go [text/template](https://pkg.go.dev/text/template) syntax).
 
 The **output_options** object has the following settings:
 
-- **field_names**: array of strings.
+- **field_names**: array of strings. For the moment, there is no option to add all fields at once, you need to specify the fields names.
 - **output_type**: string to specify output type, such as `ndjson` or `csv` (default `ndjson`). This sets default values for the rest of the settings depending on the chosen output type. Some formatting rules (like string quoting) are different between output types.
 - **batch_prefix**: string to be prepended before each batch.
 - **batch_suffix**: string to be appended after each batch.
@@ -73,7 +73,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 ### ndjson
 
 <details>
-<summary>Default output_options for ndjson</summary>
+<summary>Default output_options for `ndjson`</summary>
 <div>
 
 ```json
@@ -114,7 +114,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 </div>
 </details>
 
-- ndjson with different field names:
+- `ndjson` with different field names:
 
 <details>
 <summary>Example output_options</summary>

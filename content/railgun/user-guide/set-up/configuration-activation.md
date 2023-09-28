@@ -80,7 +80,7 @@ $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 Once you have configured Railgun, you can test its operation on the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Speed** > **Optimization**.
+2. Go to **Speed** > **Optimization** > **Other**.
 3. Scroll down to **Railgun** and select **Test**. 
 
 This will indicate whether a request to your web server uses Railgun.

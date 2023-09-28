@@ -107,5 +107,5 @@ let { readable, writable } = new FixedLengthStream(1000);
 
 ## Related resources
 
-- [Using Streams.](/workers/learning/using-streams/)
-- [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)
+- [Streams](/workers/runtime-apis/streams/)
+- [Transform Streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#transform-stream)

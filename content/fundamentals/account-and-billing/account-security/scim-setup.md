@@ -1,28 +1,37 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: tutorial
 title: Provision with SCIM
 weight: 4
+updated: 2023-09-26
 ---
 
 # Provision Cloudflare with SCIM
 
 By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis.
 
+Currently, we only provide SCIM support for Azure Active Directory and Okta in Self-Hosted Access applications.
+
+For more information about SCIM support, refer to the [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/) blog post.
+
 This guide will use Okta as the SCIM provider.
-
-## Prerequisites
-
-- In Cloudflare, [Super Administrator](/fundamentals/account-and-billing/members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
-- In Okta, access to the `Create groups` and `Manage applications` [permissions](https://help.okta.com/en-us/Content/Topics/Security/custom-admin-role/about-role-permissions.htm).
 
 ## Limitations
 
 - You cannot automatically deprovision users under domains that do not have the SSO connector.
-- You cannot update [user attributes](/cloudflare-one/policies/filtering/identity-selectors/) from the SCIM provider.
+- You cannot update [user attributes](/cloudflare-one/policies/gateway/identity-selectors/) from the SCIM provider.
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
 - Currently, we do not support Okta Integration Network (OIN) integration. This integration is in review.
 
-## 1. Create an API token
+{{<tutorial>}}
+
+{{<tutorial-prereqs>}}
+
+- In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
+- In Okta, access to the `Create groups` and `Manage applications` [permissions](https://help.okta.com/en-us/Content/Topics/Security/custom-admin-role/about-role-permissions.htm).
+
+{{</tutorial-prereqs>}}
+
+{{<tutorial-step title="Create an API token">}}
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
@@ -41,7 +50,9 @@ This guide will use Okta as the SCIM provider.
 
 3. Copy the token value.
 
-## 2. Assign Cloudflare users to an Okta group
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Assign Cloudflare users to an Okta group">}}
 
 1. In the Okta dashboard, go to **Directory** > **Groups**.
 2. Select **Add a group** and enter a name. Select **Save**.
@@ -49,7 +60,9 @@ This guide will use Okta as the SCIM provider.
 4. Select **Assign people** and add your users.
 5. Select **Done**.
 
-## 3. Set up the Okta application
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Set up the Okta application">}}
 
 1. Create your Okta SCIM application.
 
@@ -82,7 +95,8 @@ This guide will use Okta as the SCIM provider.
    4. Assign users to your Cloudflare group.
    5. Select **Done**.
 
-## 4. Configure user permissions
+{{</tutorial-step>}}
+{{<tutorial-step title="Configure user permissions">}}
 
 1. In the tab bar, go to **Provisioning**. Select **Edit**.
 2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
@@ -100,3 +114,6 @@ This guide will use Okta as the SCIM provider.
 8. Select **Save**.
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
+
+{{</tutorial-step>}}
+{{</tutorial>}}

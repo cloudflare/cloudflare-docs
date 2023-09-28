@@ -15,7 +15,7 @@ Every time you open a new pull request on your GitHub repository, Cloudflare Pag
 
 For example, if you have a repository called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](/pages/platform/custom-domains) attached to the project.
 
-![User-example repository's deployment status and preview](/pages/platform/media/preview-deployment-mergedone.png)
+![User-example repository's deployment status and preview](/images/pages/platform/preview-deployment-mergedone.png)
 
 While developing `user-example`, you may push new changes to a `development` branch, for example.
 
@@ -23,17 +23,17 @@ In this example, after you create the new `development` branch, Pages will autom
 
 Each new branch you create will receive a new, randomly-generated hash in front of your `pages.dev` subdomain.
 
-![User-example repository's newly generated preview deployment link and status](/pages/platform/media/preview-deployment-generated.png)
+![User-example repository's newly generated preview deployment link and status](/images/pages/platform/preview-deployment-generated.png)
 
 Any additional changes to the `development` branch will continue to update this `373f31e2.user-example.pages.dev` preview address until the `development` branch is merged with the `main` production branch.
 
 Any custom domains, as well as your `user-example.pages.dev` site, will not be affected by preview deployments.
 
-## Customizing preview deployments access
+## Customize preview deployments access
 
 You can use [Cloudflare Access](/cloudflare-one/policies/access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
 
-Once enabled, you can [set up a multi-user account](/fundamentals/account-and-billing/members/) to allow other members of your team to view preview deployments.
+Once enabled, you can [set up a multi-user account](/fundamentals/setup/manage-members/) to allow other members of your team to view preview deployments.
 
 By default, preview deployments are enabled and available publicly. In your project's settings, you can require visitors to authenticate to view preview deployment. This allows you to lock down access to these preview deployments to your teammates, organization, or anyone else you specify via [Access policies](/cloudflare-one/policies/).
 
@@ -48,13 +48,13 @@ Note that this will only protect your preview deployments (for example, `373f31e
 
 {{<Aside note="warning">}}
 
-If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enabling-access-on-your-pagesdev-domain) for instructions.
+If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enable-access-on-your-pagesdev-domain) for instructions.
 
 {{</Aside>}}
 
 ## Preview aliases
 
-When a preview deployment is published, it is given a unique, hash-based address — for example, `<hash>.<project>.pages.dev`. These are atomic and may always be visited in the future. However, Pages also creates an alias for `git` branch's name and updates it so that the alias always maps to the latest commit of that branch. 
+When a preview deployment is published, it is given a unique, hash-based address — for example, `<hash>.<project>.pages.dev`. These are atomic and may always be visited in the future. However, Pages also creates an alias for `git` branch's name and updates it so that the alias always maps to the latest commit of that branch.
 
 For example, if you push changes to a `development` branch (which is not associated with your Production environment), then Pages will deploy to `abc123.<project>.pages.dev` and alias `development.<project>.pages.dev` to it. Later, you may push new work to the `development` branch, which creates the `xyz456.<project>.pages.dev` deployment. At this point, the `development.<project>.pages.dev` alias points to the `xyz456` deployment, but `abc123.<project>.pages.dev` remains accessible directly.
 

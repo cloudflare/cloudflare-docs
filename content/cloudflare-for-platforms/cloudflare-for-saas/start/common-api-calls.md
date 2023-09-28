@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Common API Calls
-weight: 2
+weight: 3
 ---
 
 # Common API Calls
@@ -22,7 +22,7 @@ As a SaaS provider, you may want to configure and manage Cloudflare for SaaS [vi
 
 ## Fallback origins
 
-Our API includes the following endpoints related to the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) of a custom hostname:
+Our API includes the following endpoints related to the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin) of a custom hostname:
 
 - [Get fallback origin](/api/operations/custom-hostname-fallback-origin-for-a-zone-get-fallback-origin-for-custom-hostnames)
 - [Update fallback origin](/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames)

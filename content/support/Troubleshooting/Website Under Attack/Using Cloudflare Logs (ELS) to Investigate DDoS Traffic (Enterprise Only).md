@@ -98,7 +98,7 @@ $ cat els.txt| grep ":525," > els-525.txt
 The pattern _:525,_ (colon, status code, comma) is unique to the _EdgeResponseStatus_ field. Simply searching the HTTP status code _525_ without a colon and trailing comma would also include log entries which had the pattern _525_ in other fields like _EdgeStartTimeStamp_, for example, which contains many numbers and may also contain the number sequence _525_.
 
 ![screenshot of output files with EdgeResponseStatus field highlighted
-](/support/static/hc-external-edge_response_status_ELS.png)
+](/images/support/hc-external-edge_response_status_ELS.png)
 
 The output files (els-200.txt and els-525.txt) are not very readable as-is. In order to view them in a more readable format, use jq in the following command:
 
@@ -121,7 +121,7 @@ $ cat ClientSSLProtocol.txt
 ### Example Output:
 
 ![screenshot of example output when sorting ELS logs
-](/support/static/hc-import-11.png)
+](/images/support/hc-import-11.png)
 
 The _ClientRequestURI, ClientIP, ClientRequestUserAgent, ClientCountry_ and _ClientRequestHost_ fields are typically the most useful in finding attack patterns in these logs.
 

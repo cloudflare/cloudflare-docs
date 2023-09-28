@@ -33,7 +33,7 @@ Only available to Enterprise customers with a paid add-on.
 Using the same hostname for CSP reporting may interfere with other Cloudflare products. Before selecting this option, ensure that your Cloudflare configuration complies with the following:
 
 - No rate limiting rules match the `cdn-cgi/*` URL path
-- No firewall rules match the `cdn-cgi/*` URL path
+- No WAF custom rules match the `cdn-cgi/*` URL path
 
 ### Configure the reporting endpoint
 
@@ -68,5 +68,5 @@ To disable Page Shield:
 3. Select **Disable Page Shield**.
 
 {{<Aside type="note">}}
-Disabling Page Shield will also disable all [policies](/page-shield/policies/). After reenabling Page Shield, reenable any required policies.
+Disabling Page Shield will also disable all [policies](/page-shield/policies/). After reenabling Page Shield, re-enable any required policies.
 {{</Aside>}}

@@ -18,7 +18,7 @@ For more guidance on changing your password, refer to [Change email address or p
 
 ## Step 3 - Enable Two-Factor Authentication (2FA)
 
-To prevent future compromises, make sure that you have [Two-Factor Authentication (2FA)](https://support.cloudflare.com/hc/en-us/articles/200167906) enabled on your account.
+To prevent future compromises, make sure that you have [Two-Factor Authentication (2FA)](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/) enabled on your account.
 
 ## Step 4 - Change API keys and tokens
 

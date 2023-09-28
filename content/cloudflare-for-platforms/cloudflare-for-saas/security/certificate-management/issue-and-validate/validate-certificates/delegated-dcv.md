@@ -1,5 +1,5 @@
 ---
-title: Delegated (recommended)
+title: Delegated
 pcx_content_type: how-to
 weight: 1
 meta:
@@ -12,13 +12,23 @@ Delegated DCV allows SaaS providers to delegate the DCV process to Cloudflare.
 
 DCV Delegation requires your customers to place a one-time record at their authoritative DNS that allows Cloudflare to auto-renew all future certificate orders, so that there is no manual intervention from you or your customers at the time of the renewal.
 
+---
+
 ## When to use
 
-Specific (non-wildcard) custom hostnames can use [HTTP based DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) for certificate renewals, as long as that hostname is pointing to the SaaS provider and the traffic is proxying through the Cloudflare network.
+### HTTP DCV
 
-Wildcard custom hostnames require TXT based validation. As the SaaS provider, you have two options for wildcard custom hostname certificate renewals: 
-- DCV Delegation (recommended) 
+{{<render file="_http-dcv-situation.md">}}
+
+### TXT DCV
+
+{{<render file="_txt-dcv-situation.md">}}
+<br/>
+
+- [DCV Delegation](#setup) (generally recommended)
 - [Manual](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
+
+---
 
 ## Setup
 
@@ -38,4 +48,4 @@ If desired, you could also manually fetch the DCV tokens and share them with you
 
 ## Moved domains
 
- If you [move your SaaS zone to another account](/fundamentals/get-started/basic-tasks/manage-domains/move-domain/), you will need to update the `CNAME` record with a new hostname value.
+ If you [move your SaaS zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record with a new hostname value.
