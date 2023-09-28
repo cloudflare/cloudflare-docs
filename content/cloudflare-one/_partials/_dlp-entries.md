@@ -25,7 +25,7 @@ _build:
 <summary>Add existing entries</summary>
 <div class="special-class" markdown="1">
 
-Existing entries include [predefined detection entries](predefined-profiles/) and [Exact Data Match datasets](/cloudflare-one/policies/data-loss-prevention/exact-data-match/).
+Existing entries include [predefined detection entries](predefined-profiles/) and [DLP datasets](/cloudflare-one/policies/data-loss-prevention/dlp-datasets/).
 
 1. Select **Add existing entries**.
 2. Choose which entries to want to add, then select **Confirm**.
