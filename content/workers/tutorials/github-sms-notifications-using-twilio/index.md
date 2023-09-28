@@ -37,7 +37,7 @@ header: Create a project
 $ npm create cloudflare
 ```
 
-For setup you'll select the following options:
+For setup, select the following options:
 * *Where do you want to create your application?* github-twilio-notifications 
 * *What type of application do you want to create?* "Hello World" script
 * *Do you want to use TypeScript?* no
