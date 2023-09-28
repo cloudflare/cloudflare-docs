@@ -13,7 +13,7 @@ Llama 2 is a family of generative text models and can be adapted for a variety o
 * License type: Source Available
 * [Terms + Information](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
 
-## Examples - chat style with system prompt (preffered)
+## Examples - chat style with system prompt (preferred)
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
