@@ -164,7 +164,7 @@ To implement the searching feature, you must set up a D1 database from Cloudflar
 Create a new D1 database using `wrangler`:
 
 ```sh
-$ wrangler d1 database create database
+$ wrangler d1 create database
 ```
 
 Then, add the configuration details for your new D1 database to `wrangler.toml`:
