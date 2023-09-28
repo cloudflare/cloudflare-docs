@@ -112,7 +112,7 @@ To bind your index to your Worker, add the following to the end of your `wrangle
 filename: wrangler.toml
 ---
 
-[[[vectorize]]
+[[vectorize]]
 binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
 index_name = "tutorial-index"
 ```
