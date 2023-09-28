@@ -16,11 +16,11 @@ To scan for threats in your Office 365 inbox:
 2. Go to **Area 1** > **Retro Scan**.
 3. Select **Generate Retro Scan report**.
 4. Cloudflare needs authorization to access your O365 messages. Select **Authenticate with Microsoft**, and give Cloudflare the required permissions.
-5. Back to Cloudflare dashboard, select **Grant mail access**. Select your account and give Cloudflare the required permissions.
-6. Finally, select **Grant directory sync access**. Select your account and give Cloudflare the required permissions.
+5. Back to Cloudflare dashboard, select **Grant mail access**. Then, select your account and give Cloudflare the required permissions.
+6. Finally, select **Grant directory sync access**. Then, select your account and give Cloudflare the required permissions.
 7. Select **Continue**.
 8. In **Configure report**, choose one or more domains to scan.
-9. Choose your email security system, from **Current email security system**.
+9. Choose your current email security system, from **Current email security system**.
 10. Select **Continue**.
 11. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
 
