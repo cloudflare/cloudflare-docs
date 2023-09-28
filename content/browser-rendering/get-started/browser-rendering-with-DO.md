@@ -210,7 +210,7 @@ export class Browser {
 
 ## 7. Test
 
-Run `npx wrangler dev --remote` to test your Worker locally before deploying to Cloudflare's global network.
+Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker locally before deploying to Cloudflare's global network.
 
 ## 8. Deploy
 
