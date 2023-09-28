@@ -252,7 +252,7 @@ async fetch(request, env, ctx) {
 Run the `npx wrangler publish` command to redeploy your Worker project:
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 ![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
