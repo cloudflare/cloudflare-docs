@@ -45,7 +45,6 @@ A tool trying to scalp inventories from different websites might be breaking ter
 The purpose of the service should be benign or helpful to both the owner of a zone and the users of the service. The service cannot perform any of the following: 
 
 * Bot tooling
-* Scrapers 
 * Scalpers
 * Credential-stuffing
 * Directory-traversal scanning
@@ -54,15 +53,15 @@ The purpose of the service should be benign or helpful to both the owner of a zo
 
 #### Example
 
-Price scraping is not a valid use case.
+Price scraping direct ecommerce competitors is not a valid use case.
 
 ### Crawling Etiquette 
 
-The crawling etiquette should check `robots.txt` if crawling the whole website. The service should have a rate limit of 1 request per second and it should not attempt to crawl sensitive paths. 
+The crawling etiquette should check `robots.txt` if crawling the whole website, and it should not attempt to crawl sensitive paths. 
 
 #### Example
 
-If a bot skips `robots.txt`, it will be rejected.
+If a search engine crawler skips `robots.txt`, it will be rejected.
 
 ### Public Documentation
 
@@ -93,13 +92,14 @@ A set of validation methods and requirements to gather set IP ranges for a verif
 
 If any of the requirements to validate are breached, a service will be removed from the global allowlist.
 
-#### Examples
+#### Example breaches of policy
 
 * Adding a set of IPs that are not solely used by verified service. 
 * The service IPs are breached by an attacker. 
 * The service has vulnerabilities that have not been patched.
 * A block of IPs not briefed on onboarding is added to the list. 
-* The disclosed purpose of the service does not reflect on the traffic. 
+* The disclosed purpose of the service does not reflect on the traffic.
+* An AI Crawler that does not respect the crawl-delay directive in robots.txt.
 
 ## Online Application
 
