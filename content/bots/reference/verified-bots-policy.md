@@ -112,26 +112,3 @@ Once Cloudflare lists a bot as a verified bot, this entry is cached and may get 
 It takes 24 hours for an inactive IP to be removed as a verified bot. 
 
 A bot can remain unlisted until Cloudflare sees traffic being sourced from the bot. When the bot is revalidated, it is listed as a verified bot again.
-
-## Verified Bot Categories
-
-You can segment your verified bot traffic by its type and purpose by adding the verified bot categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/). 
-
-### Categories
-
-- Academic research
-- Accessibility
-- Advertising or marketing
-- Feed fetcher
-- Monitoring or analytics
-- Page preview
-- Search engine crawler
-- Search engine optimization
-- Security
-- Social media marketing
-- Webhooks
-- Other
-
-### Availability
-
-Verified bot categories is available to all Bots customers.
