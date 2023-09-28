@@ -20,7 +20,7 @@ The free version includes all the features of the enterprise version, but has ne
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
-3. Complete the onboarding wizard to configure Magic Network Monitoring. Refer to [Get Started](/magic-network-monitoring/get-started/) for more information.
+3. Complete the onboarding wizard to configure Magic Network Monitoring. Refer to [Get started](/magic-network-monitoring/get-started/) for more information.
 
 ## Limitations
 
