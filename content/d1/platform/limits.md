@@ -18,7 +18,7 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 | Maximum storage per account                        | 10GB (Workers paid plans) <sup>beta</sup> / 5GB (Workers free plans) |
 | [Time Travel](/d1/learning/time-travel/) duration (point-in-time recovery) | 30 days (Workers Paid) / 7 days (Free) |
 | Maximum Time Travel restore operations             | 10 restores per 10 minute (per database)     |
-| Queries per Worker invocation (see [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make))                      | 50 (Bundled) / 1000 (Unbound)
+| Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make))                      | 50 (Bundled) / 1000 (Unbound)
 | Maximum number of columns per table                | 100                                          |
 | Maximum number of rows per table                | Unlimited (excluding per-database storage limits) |
 | Maximum string, `BLOB` or table row size           | 1,000,000 bytes (1MB)                        |
@@ -37,4 +37,4 @@ Refer to the [Storage options guide](/workers/learning/storage-options/) to revi
 
 <sup>beta</sup> This is a beta-only limitation. The maximum storage per-database, storage per-account and number of databases will automatically increase for paid plans during the course of D1's public beta.
 
-Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Note that not all limits can be increased.
+Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Not all limits can be increased.
