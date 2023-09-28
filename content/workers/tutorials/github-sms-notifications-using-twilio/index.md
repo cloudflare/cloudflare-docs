@@ -34,12 +34,12 @@ Start by using `npm create cloudflare@latest` to create a Worker project in the 
 ---
 header: Create a project
 ---
-$ npm create cloudflare
+$ npm create cloudflare@latest
 ```
 
 For setup, select the following options:
 * `Where do you want to create your application?`: Input `github-twilio-notifications`. 
-* `What type of application do you want to create?`: Select `"Hello World" script`.
+* `What type of application do you want to create?`: Select `"Hello World" Worker`.
 * `Do you want to use TypeScript?`: Select `No`.
 * `Do you want to deploy your application?`: Select `Yes`.
 
@@ -49,7 +49,7 @@ Make note of the URL that your application was deployed to. You will be using it
 $ cd github-twilio-notifications
 ```
 
-Inside of your new `github-sms-notifications` directory, `src/worker.js` represents the entry point to your Cloudflare Workers application. You will configure this file for most of the tutorial.
+Inside of your new `github-sms-notifications` directory, `src/index.js` represents the entry point to your Cloudflare Workers application. You will configure this file for most of the tutorial.
 
 You will also need a GitHub account and a repository for this tutorial. If you do not have either setup, [create a new GitHub account](https://github.com/join) and [create a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) to continue with this tutorial.
 
@@ -86,7 +86,7 @@ With your local environment set up, parse the repository update with your Worker
 Initially, your generated `worker.js` should look like this:
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export default {
   async fetch(request, env, ctx) {
@@ -99,7 +99,7 @@ Use the `request.method` property of [`Request`](/workers/runtime-apis/request/)
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export default {
   async fetch(request, env, ctx) {
@@ -114,7 +114,7 @@ Next, validate that the request is sent with the right secret key. GitHub attach
 
 ```js
 ---
-filename: worker.js - fetch()
+filename: index.js - fetch()
 ---
 async fetch(request, env, ctx) {
   if(request.method !== 'POST') {
@@ -136,7 +136,7 @@ async fetch(request, env, ctx) {
 },
 ```
 
-The `checkSignature` function will use the crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the sha1 format. You'll place this function at the top of your file, before your export.
+The `checkSignature` function will use the crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the SHA1 format. You will place this function at the top of your `index.js` file, before your export.
 
 ```js
 ---
