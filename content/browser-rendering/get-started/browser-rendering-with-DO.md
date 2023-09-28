@@ -214,7 +214,7 @@ Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your 
 
 ## 8. Deploy
 
-Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network.
+Run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy your Worker to the Cloudflare global network.
 
 ## Related resources
 
