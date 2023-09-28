@@ -204,7 +204,7 @@ Then, import `hono` into your `src/index.js` file. You should also update the `f
 filename: src/index.js
 ---
 import { Ai } from '@cloudflare/ai'
-import Hono from "hono"
+import { Hono } from "hono"
 const app = new Hono()
 
 app.get('/', async (c) => {
