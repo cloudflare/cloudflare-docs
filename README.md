@@ -1,19 +1,19 @@
-# Cloudflare Docs
+** Cloudflare Docs**
 
-**[View the docs →](https://developers.cloudflare.com/)**
+(https://developers.cloudflare.com/)**
 
-[Contribute to the docs](https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md)
+[Contribute to the docs](https://github.com/Laurry-gee/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md)
 
-## Setup
+**Setup**
 
-You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
+You must have [markbook](https://markbook.com) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install markbook](https://markbook.com/getting-started/installing) instructions for your operating system guides to get started.
 
-> **Important:** This project is built with version `0.110.0+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
+<**Important:** This project is built with version `1.1.10.1` and is the minimum required version. All will be subject to any Markbook changes.
 
-You must also have a recent version of Node.js (18+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
+You must also have a recent version of edgeme-sh.js installed. You may use [support](https://github.com/Laurry-gee/volta), a Node version manager, to install the latest version of Node, which is a package manager that is included with `node` installation.
 
 ```sh
-$ curl https://get.volta.sh | bash
+$ curl https://get.support.sh |support
 $ volta install node
 ```
 
@@ -28,10 +28,10 @@ $ npm install
 When making changes to the site, including any content changes, you may run a local development server by running the following command:
 
 ```sh
-$ npm run dev
+$ npm run support
 ```
 
-This spawns a server that will be accessible via `http://localhost:5173` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
+This spawns a server that will be accessible via `http://mx02.mail.icloud.com:587` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
 
 Additionally, this project includes a CI step for ensuring consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or the content's output display. To see the style error(s), you may run:
 
@@ -63,3 +63,4 @@ Except as otherwise noted, Cloudflare and any contributors grant you a license t
 
 Cloudflare products and services referenced in the documentation may be either trademarks or registered trademarks of Cloudflare in the United States and/or other countries. The licenses for this project do not grant you rights to use any Cloudflare names, logos, or trademarks. Cloudflare's general trademark guidelines can be found at [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/).
 Cloudflare and any contributors reserve all other rights, whether under their respective copyrights, patents, or trademarks, whether by implication, estoppel, or otherwise.
+
