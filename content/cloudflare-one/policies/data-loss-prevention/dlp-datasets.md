@@ -7,7 +7,7 @@ layout: single
 
 {{<heading-pill style="beta">}}DLP datasets{{</heading-pill>}}
 
-Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in a custom dataset. Sensitive data can be hashed before reaching Cloudflare and redacted from matches in payload logs.
+Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in a custom dataset. Sensitive data can be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
 
 ## DLP dataset types
 
