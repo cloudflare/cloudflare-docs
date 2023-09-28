@@ -26,6 +26,6 @@ The free version includes all the features of the enterprise version, but has ne
 
 Limitation Type                      | Value
 ---                                  | ---
-Number of registered routers         | 10 routers
-Number of rules                      | 25 rules
-Network flows per second per account | 250 flows per second per account
+Number of registered routers         | 10
+Number of rules                      | 25
+Network flows per second per account | 250
