@@ -408,6 +408,7 @@
 /fundamentals/data-products/analytics-integrations/new-relic/index/ /analytics/analytics-integrations/new-relic/ 301
 /fundamentals/data-products/analytics-integrations/ /analytics/analytics-integrations/ 301
 /fundamentals/data-products/ /analytics/ 301
+/fundamentals/get-started/setup/add-site/ /fundamentals/setup/account-setup/add-site/ 301
 /fundamentals/get-started/get-started-external-link/ /learning-paths/get-started/ 301
 /fundamentals/get-started/task-guides/optimize-speed-external-link/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/get-started/task-guides/prevent-ddos-attacks-external/ /learning-paths/prevent-ddos-attacks/ 301
@@ -1096,10 +1097,13 @@
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
+/workers/runtime-apis/fetch-event/#passthroughonexception /workers/runtime-apis/handlers/fetch/#passthroughonexception 301
+/workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
 /constellation/platform/ /constellation/ 301
+
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
