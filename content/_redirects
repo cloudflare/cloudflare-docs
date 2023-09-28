@@ -1095,6 +1095,7 @@
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
+/workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
