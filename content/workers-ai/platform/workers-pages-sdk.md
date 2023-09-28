@@ -6,7 +6,7 @@ weight: 1
 
 # Workers + Pages SDK
 
-This SDK provides a simmple interface between a Worker or Pages function and Workers AI 
+This SDK provides a simple interface between a Worker or Pages function and Workers AI 
 
 ```javascript
 import { run } from "@cloudflare/ai";
