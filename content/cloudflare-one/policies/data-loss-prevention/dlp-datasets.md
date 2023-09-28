@@ -21,7 +21,7 @@ All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To de
 
 Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers.
 
-Cloudflare stores data from CWL datsets within DLP. Plaintext matches appear in payload logs.
+Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in payload logs.
 
 ## Use DLP datasets
 
