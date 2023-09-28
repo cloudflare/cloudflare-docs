@@ -257,7 +257,7 @@ $ npx wrangler publish
 
 ![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
-Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/tutorial/git-push-pull) for pushing to your repository.
+Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used Git before, refer to the [GIT Push and Pull Tutorial](https://www.datacamp.com/tutorial/git-push-pull) for pushing to your repository.
 
 Reference the finished code [on GitHub](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/github-sms-notifications-using-twilio).
 
