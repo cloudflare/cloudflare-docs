@@ -38,10 +38,10 @@ $ npm create cloudflare
 ```
 
 For setup, select the following options:
-* *Where do you want to create your application?* github-twilio-notifications 
-* *What type of application do you want to create?* "Hello World" script
-* *Do you want to use TypeScript?* no
-* *Do you want to deploy your application?* yes
+* `Where do you want to create your application?`: Input `github-twilio-notifications`. 
+* `What type of application do you want to create?`: Select `"Hello World" script`.
+* `Do you want to use TypeScript?`: Select `No`.
+* `Do you want to deploy your application?`: Select `Yes`.
 
 Make note of the url that your application was deployed to. We'll be using that shortly when we configure our GitHub webhook.
 
