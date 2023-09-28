@@ -21,7 +21,7 @@ Before getting started:
 
     3. Select **Create API token**.
 
-    4. Under **Permission**, select **Edit** permissions for your token.
+    4. Under **Permission**, select **Admin Read & Write** permissions for your token.
 
     5. Copy the Secret Access Key and Access Key ID. You will need these when setting up your Logpush job.
 
