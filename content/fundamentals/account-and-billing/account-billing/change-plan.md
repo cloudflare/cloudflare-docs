@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Change domain plan
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-maintenance/change-plan/
 ---
 
 # Change domain plan
@@ -12,11 +10,13 @@ Occasionally, you may want to upgrade or downgrade the plan associated with a sp
 
 ## Limitations
 
+Only Super Administrators can manage changes to domain plans.
+
 If you decide to downgrade or remove a domain, Cloudflare does not issue refunds. Refer to our [billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/) for more information.
 
 Upgrades are processed immediately, but downgrades are not processed until the end of the billing period. When downgrading, you are allowed to continue using the higher plans' products until the new billing period begins.
 
-If you downgrade your plan, your plan may have access to [fewer Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/) if you do not want to be charged.
+If you downgrade your plan, your plan may have access to [fewer Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/) if you do not want to be charged.
 
 The Enterprise App Sec Advanced and Enterprise App Sec Core plans cannot be downgraded without [contacting Cloudflare](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 

@@ -2,13 +2,11 @@
 pcx_content_type: tutorial
 title: Allow Cloudflare IP addresses
 weight: 5
-aliases:
-- /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/
 ---
 
 # Allow Cloudflare IP addresses
 
-Because of [how Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/), all traffic to [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) passes through Cloudflare before reaching your origin server. This means that your origin server will stop receiving traffic from individual visitor IP addresses and instead receive traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips), which are shared by all proxied hostnames.
+Because of [how Cloudflare works](/fundamentals/concepts/how-cloudflare-works/), all traffic to [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) passes through Cloudflare before reaching your origin server. This means that your origin server will stop receiving traffic from individual visitor IP addresses and instead receive traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips), which are shared by all proxied hostnames.
 
 This setup can cause issues if your origin server blocks or rate limits connections from Cloudflare IP addresses. Because all visitor traffic will appear to come from Cloudflare IP addresses, blocking these IPs — even accidentally — will prevent visitor traffic from reaching your application.
 
@@ -59,7 +57,7 @@ For more specific guidance, contact your hosting provider or website administrat
 
 #### Further protection
 
-For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/get-started/task-guides/origin-health/).
+For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/basic-tasks/protect-your-origin-server/).
 
 #### Visitor IP information
 
@@ -68,3 +66,7 @@ Because your origin server will receive Cloudflare IP addresses instead of visit
 If you want sampled logs of visitor IP addresses and are on an Enterprise plan, we recommend that you use [Cloudflare Logs](/logs/about/).
 
 Alternatively, if you want non-sampled logs directly from your server or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786). 
+
+### IP range updates
+
+Cloudflare's IP ranges do not change frequently. When they do change, they are added to our [list of IP ranges](https://www.cloudflare.com/en-in/ips/) before being put into production. An email notification will be sent out in advance to give you enough time to make configuration changes. You can also use the Cloudflare API to programmatically keep your configuration updated.

@@ -8,19 +8,9 @@ weight: 17
 
 Local Traffic Management enables you to load balance traffic within a data center between your servers, eliminating the need for hardware appliances and allowing you to move infrastructure to the cloud to benefit from elastic scalability and reliability. Local Traffic Management has the ability to support virtual IPs, private IPs, and public IPs as origin values in a customer data center.
 
-{{<Aside type="note">}}
+## Set up
 
-Virtual IP support is currently API only.
-
-{{</Aside>}}
-
-## Via the API
-
-You can [set up your Tunnels and Tunnel routes](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) to create a `virtual_network_id` value to use in the Load Balancing API call. To enable Cloudflare Load Balancers to connect to private IP origins, a Cloudflare Tunnel is required with an associated Virtual Network. VNets are associated with Load Balancing origins. You can find out more about Tunnel Virtual Networks in the [Cloudflare Tunnels documentation](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). 
-
-To get a list of your current Virtual Networks, use the [`/teamnet/virtual_networks`](/api/operations/tunnel-virtual-network-list-virtual-networks) API endpoint.
-
-Enable Virtual IP support by adding the `virtual_network_id` field to your API requests. Refer to the [Cloudflare Load Balancer API documentation](/api/operations/account-load-balancer-pools-create-pool) for more information on creating a pool using the API.
+To be able to connect to private IP origins, Cloudflare Load Balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). These virtual networks should then be assigned to the private IP origins.
 
 {{<Aside type="note">}}
 
@@ -28,7 +18,33 @@ Cloudflare does not currently support entering the same IP addresses, even when 
 
 {{</Aside>}}
 
-Example updating an existing Load Balancer pool with a Virtual IP origin using cURL: 
+You can configure the origin pool via the API or on the dashboard.
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+Once you have Cloudflare tunnels with associated virtual networks configured, you can select them on the respective **Virtual Network** field displayed for each origin when you [create or edit a pool](/load-balancing/how-to/create-pool/#create-a-pool).
+
+{{<Aside type="warning">}}
+
+All origins with private IPs must have `virtual_network_id` specified.
+
+{{</Aside>}}
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To get a list of your current virtual networks, use the [List virtual networks](/api/operations/tunnel-virtual-network-list-virtual-networks) API operation.
+
+Enable Virtual IP support by adding the `virtual_network_id` field to the origins in you API request. Refer to the [Cloudflare Load Balancer API documentation](/api/operations/account-load-balancer-pools-create-pool) for more information on creating a pool using the API.
+
+Consider the following example for updating an existing Load Balancer pool with a Virtual IP origin using cURL. 
+
+{{<Aside type="warning">}}
+
+All origins with private IPs must have `virtual_network_id` specified.
+
+{{</Aside>}}
 
 ```bash
 $ curl --request PATCH \
@@ -48,6 +64,9 @@ $ curl --request PATCH \
 	]
 }'
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Health monitor support
 

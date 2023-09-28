@@ -20,7 +20,7 @@ You can apply multiple filters and exclusions to narrow the scope of Security Ev
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
-## Create firewall rule from current filters
+## Create custom rule from current filters
 
 {{<render file="_analytics-create-firewall-rule.md">}}
 
@@ -34,19 +34,19 @@ You can adjust the displayed data according to one of the values by selecting **
 
 ## Events by service
 
-The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules**, **Firewall rules**, **API Shield**).
+The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules** or **API Shield**).
 
 You can adjust the scope of Security Events to one of the displayed services by selecting **Filter** or **Exclude** when hovering the legend or by selecting the corresponding graph bar.
 
 ## Top events by source
 
-In **Top events by source** you can find details of the traffic flagged or actioned by a security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall rules**.
+In **Top events by source** you can find details of the traffic flagged or actioned by a security feature — for example, **IP Addresses**, **User Agents**, **Paths**, and **Countries**.
 
 You can adjust the scope of Security Events to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
 
 {{<Aside type="note">}}
 
-A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
+A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
 
 {{</Aside>}}
 

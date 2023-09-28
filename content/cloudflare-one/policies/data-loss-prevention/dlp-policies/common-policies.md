@@ -3,6 +3,8 @@ pcx_content_type: reference
 title: Common policies
 weight: 1
 layout: single
+meta:
+    title: Common DLP policies
 ---
 
 # Common DLP policies

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Salesforce
+meta:
+    title: Salesforce - Access for SaaS
 ---
 
 # Configure Salesforce with Access for SaaS

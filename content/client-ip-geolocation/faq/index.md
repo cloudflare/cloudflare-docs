@@ -25,7 +25,7 @@ You can now restrict content delivery to Cloudflare VPN users using the same cli
 
 There is significant cross pollination between Cloudflare forward- and reverse-proxy services. When a user connects through Cloudflare proxies to origin infrastructure protected by Cloudflare security tools, our origin-facing tools automatically consume information from our user-facing systems about client geography, IP reputation, and other client metadata. This process happens in a privacy-preserving manner that reduces unnecessary collection of personally identifiable information while ensuring customers can maintain their desired security posture.
 
-Cloudflare firewall rules specifying country- or region-level match criteria will match correctly on users passing through our VPN and forward-proxy systems with no action needed from you.
+WAF custom rules specifying country- or region-level match criteria will match correctly on users passing through our VPN and forward-proxy systems with no action needed from you.
 
 ### In the example, what happens when Cloudflare’s Minneapolis data center is removed from service for maintenance?
 

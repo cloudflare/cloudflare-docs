@@ -22,7 +22,7 @@ This guide assumes that you are:
 
 ## Setup
 
-To start, install the [Simply Static](https://wordpress.org/plugins/simply-static/) plugin to export your WordPress site. In your WordPress dashboard, go to **Plugins** > **Add New**. 
+To start, install the [Simply Static](https://wordpress.org/plugins/simply-static/) plugin to export your WordPress site. In your WordPress dashboard, go to **Plugins** > **Add New**.
 
 Search for `Simply Static` and confirm that the resulting plugin that you will be installing matches the plugin below.
 
@@ -46,7 +46,7 @@ With your ZIP file downloaded, deploy your site to Pages:
 4. Drag and drop your ZIP file or select it from your computer.
 5. After your files have been uploaded, select **Deploy site**.
 
-Your WordPress site will now be live on Pages. 
+Your WordPress site will now be live on Pages.
 
 Every time you make a change to your WordPress site, you will need to download a new ZIP file from the WordPress dashboard and redeploy to Cloudflare Pages. Automatic updates are not available with the free version of Simply Static.
 
@@ -65,7 +65,7 @@ By following this guide, you have successfully deployed a static version of your
 With a static version of your site being served, you can:
 
 - Move your WordPress site to a custom domain or subdomain. Refer to [Custom domains](/pages/platform/custom-domains/) to learn more.
-- Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](/pages/platform/preview-deployments/#customizing-preview-deployments-access) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
+- Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](/pages/platform/preview-deployments/#customize-preview-deployments-access) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
 - Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting.
 
 Connect with the [Cloudflare Developer community on Discord](https://discord.gg/cloudflaredev) to ask questions and discuss the platform with other developers.

@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Common policies
 weight: 1
+meta:
+    title: Common DNS policies
 ---
 
 # Common DNS policies

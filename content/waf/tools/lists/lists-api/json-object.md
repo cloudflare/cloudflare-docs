@@ -5,8 +5,6 @@ weight: 1
 meta:
   title: List JSON object
   description: Reference information on the JSON object used in Lists API calls.
-aliases:
-- /fundamentals/global-configurations/lists/lists-api/json-object/
 ---
 
 # List JSON object

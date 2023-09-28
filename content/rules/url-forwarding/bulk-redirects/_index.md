@@ -7,7 +7,7 @@ meta:
   title: Bulk Redirects (beta)
 ---
 
-{{<beta>}} Bulk Redirects {{</beta>}}
+{{<heading-pill style="beta">}} Bulk Redirects {{</heading-pill>}}
 
 Bulk Redirects allow you to define a large number of URL redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
 

@@ -60,23 +60,13 @@ Bypass does not enforce any Access security controls and requests are not logged
 
 {{</Aside>}}
 
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
-
-A Bypass policy based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field:
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. Bypass is typically used to enable applications that require specific endpoints to be public. For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the following Bypass policy:
 
 | Action | Rule type  | Selector  | Value             |
 |--------| ------- | --------- | ----------------- |
-| Bypass  | Include | IP ranges | `192.xxx.xxx.xxx` |
+| Bypass  | Include | Everyone | `Everyone` |
 
-This means Access won’t be enforced on the set of IP addresses you have specified. To complete the setup, you need an additional rule to ensure that anyone asking to access your application from a different IP address will only be granted access if they only meet certain criteria, like email addresses ending with a given domain.
-
-To do so, set up an additional Allow policy like the following:
-
-| Action | Rule    | Selector       | Value                              |
-| ------- | ------- | ---------------- | ---------------------------------- |
-| Allow | Include | Emails ending in | `@contractors.com`, `@company.com` |
-
-This ensures that everyone connecting from outside your specified IP range will be prompted to authenticate.
+As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/) and have users connect through WARP.
 
 {{<Aside type="note">}}
 

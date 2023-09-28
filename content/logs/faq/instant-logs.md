@@ -3,6 +3,7 @@ pcx_content_type: faq
 title: Instant Logs
 weight: 5
 meta:
+    title: Instant Logs FAQ
     description: Review frequently asked questions about Instant Logs.
 ---
 

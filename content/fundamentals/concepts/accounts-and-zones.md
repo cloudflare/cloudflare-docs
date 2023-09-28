@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: Accounts, zones, and profiles
 weight: 4
-aliases:
-- /fundamentals/get-started/concepts/accounts-and-zones/
 ---
 
 # Accounts, zones, and profiles
@@ -36,7 +34,7 @@ end
 
 ## User profiles
 
-Each user has a profile that contains several settings, such as [Communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/) and [Language preferences](/fundamentals/account-and-billing/account-setup/customize-account/language-preference/).
+Each user has a profile that contains several settings, such as [Communication preferences](/fundamentals/setup/account-setup/customize-account/communication-preference/) and [Language preferences](/fundamentals/setup/account-setup/customize-account/language-preference/).
 
 ### Navigation
 
@@ -54,7 +52,7 @@ There are also several account-level products - such as [Workers](/workers/), [P
 
 After you [log in](https://dash.cloudflare.com) and select an account - but before you select a zone - the sidebar will list account-level products.
 
-Accounts also have their own settings, including [account billing profiles](/fundamentals/account-and-billing/account-setup/create-billing-profile/), [account members](/fundamentals/account-and-billing/members/), [lists](/waf/tools/lists/), and more.
+Accounts also have their own settings, including [account billing profiles](/fundamentals/setup/account-setup/create-billing-profile/), [account members](/fundamentals/setup/manage-members/), [lists](/waf/tools/lists/), and more.
 
 ### Navigation
 

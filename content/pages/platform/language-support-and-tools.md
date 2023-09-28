@@ -14,9 +14,9 @@ Cloudflare Pages' build environment has broad support for a variety of languages
 
 If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
-{{<Aside type="warning" header="V2 Build System">}}
+## V2 build system
 
-We have recently announced a [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) which brings several improvements to project builds. To migrate to this new version, configure your Pages project settings in the dashboard:
+The [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) announced in May 2023 brings several improvements to project builds. To migrate to this new version, configure your Pages project settings in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > in **Overview**, select your Pages project.
@@ -34,7 +34,7 @@ We are aware of some outstanding issues with the v2 build system that we intend 
 - Detecting Node.js and package managers from `package.json` -> `"engines"`.
 - `pipenv` and `Pipfile` support.
 
-{{</Aside>}}
+## Supported languages and tools
 
 In the following table, review the preinstalled versions for tools included in the Cloudflare Pages build environment, and how to override them as relevant:
 

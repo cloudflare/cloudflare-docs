@@ -9,6 +9,7 @@
  */
 export const OWNERS: Record<string, string[]> = {
   "1.1.1.1": ["RebeccaTamachiro"],
+  "ai-gateway": ["bjesus"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
@@ -36,6 +37,7 @@ export const OWNERS: Record<string, string[]> = {
   "health-checks": ["RebeccaTamachiro"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
+  kv: ["Maddy-Cloudflare"],
   "load-balancing": ["RebeccaTamachiro"],
   logs: ["angelampcosta"],
   "magic-firewall": ["marciocloudflare"],
@@ -44,6 +46,7 @@ export const OWNERS: Record<string, string[]> = {
   "magic-wan": ["marciocloudflare"],
   "network-error-logging": ["dcpena"],
   "network-interconnect": ["dcpena"],
+  notifications: ["patriciasantaana"],
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
   "privacy-gateway": ["kodster28"],
@@ -74,6 +77,8 @@ export const OWNERS: Record<string, string[]> = {
   "warp-client": ["haleycode"],
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
+  "vectorize": ["elithrar", "pdwittig"],
+  "workers-ai": ["irvinebroque", "pdwittig"],
   zaraz: ["haleycode"],
 };
 

@@ -49,10 +49,20 @@ inputParameters: editWord
 | Bulk URL Redirects $1                                      | Grants write access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                      |
 | China Network Steering Read                                  | Grants read access to [China Network Steering](/china-network/).                                                                                         |
 | China Network Steering $1                                  | Grants write access to [China Network Steering](/china-network/).                                                                                        |
+| Cloudchamer Read | Grants read access to Cloudchamber deployments. |
+| Cloudchamer $1 | Grants write access to Cloudchamber deployments. |
 | Cloudflare DEX Read                                          | Grants read access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                    |
 | Cloudflare DEX $1                                          | Grants write access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                   |
 | Cloudflare Images Read                                       | Grants read access to [Cloudflare Images](/images/cloudflare-images/).                                                                                   |
 | Cloudflare Images $1                                       | Grants write access to [Cloudflare Images](/images/cloudflare-images/).                                                                                  |
+| Cloudflare One Connector: cloudflared Read | Grants read access to `cloudflared` Connectors |
+| Cloudflare One Connector: cloudflared $1 | Grants write access to `cloudflared` Connectors |
+| Cloudflare One Connector: WARP Read | Grants read access to Warp Connectors |
+| Cloudflare One Connector: WARP $1 | Grants write access to Warp Connectors |
+| Cloudflare One Connectors Read | Grants read access to Cloudflare One Connectors |
+| Cloudflare One Connectors $1 | Grants write access to Cloudflare One Connectors |
+| Cloudflare One Networks Read | Grants read access to Cloudflare One Networks |
+| Cloudflare One Networks $1 | Grants write access to Cloudflare One Networks |
 | Cloudflare Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
 | Cloudflare Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
 | Cloudflare Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
@@ -105,8 +115,8 @@ inputParameters: editWord
 | Turnstile $1                                               | Grants read access to [Turnstile](/turnstile/).                                                                                                          |
 | URL Scanner Read                                             | Grants read access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
 | URL Scanner $1                                             | Grants read access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
-| Workers KV Storage Read                                      | Grants read access to [Cloudflare Workers KV Storage](/workers/runtime-apis/kv/).                                                                        |
-| Workers KV Storage $1                                      | Grants write access to [Cloudflare Workers KV Storage](/workers/runtime-apis/kv/).                                                                       |
+| Workers KV Storage Read                                      | Grants read access to [Cloudflare Workers KV Storage](/kv/api/).                                                                        |
+| Workers KV Storage $1                                      | Grants write access to [Cloudflare Workers KV Storage](/kv/api/).                                                                       |
 | Workers R2 Storage Read                                      | Grants read access to [Cloudflare R2 Storage](/r2/).                                                                                                     |
 | Workers R2 Storage $1                                      | Grants write access to [Cloudflare R2 Storage](/r2/).                                                                                                    |
 | Workers Scripts Read                                         | Grants read access to [Cloudflare Workers scripts](/workers/).                                                                                           |

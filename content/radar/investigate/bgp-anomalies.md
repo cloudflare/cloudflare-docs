@@ -4,7 +4,7 @@ title: BGP anomalies (beta)
 weight: 3
 ---
 
-{{<beta>}}BGP anomalies{{</beta>}}
+{{<heading-pill style="beta">}}BGP anomalies{{</heading-pill>}}
 
 To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `User:User Details` permission. All the following examples should work with a free-tier Cloudflare account.
 

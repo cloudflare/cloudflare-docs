@@ -9,6 +9,8 @@ layout: single
 
 **Cloudflare Filters** is an API-only component of firewall rules for designing complex criteria that rely on boolean operators and other logic to examine incoming HTTP traffic and look for a match.
 
+{{<render file="_deprecation-notice.md">}}
+
 For example, a filter matching:
 
 *   An HTTP user agent, and

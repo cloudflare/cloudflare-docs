@@ -3,8 +3,6 @@ title: Endpoints
 pcx_content_type: reference
 weight: 2
 layout: list
-aliases:
-- /fundamentals/global-configurations/lists/lists-api/endpoints/
 ---
 
 # Endpoints
@@ -136,13 +134,14 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/{account_id}/rules/lists/{list_id}/items
+          GET accounts/{account_id}/rules/lists/{list_id}/items[?search={query}]
         </code>
       </td>
       <td>
-        <p>Fetches all items in a list.</p>
+        <p>Fetches items in a list (all items, by default).</p>
         <p>Items are sorted in ascending order.</p>
         <p>In the case of IP lists, CIDRs are sorted by IP address, then by the subnet mask.</p>
+        <p>{{<markdown>}}To filter returned items, use the optional `search` query string parameter. For more information, refer to the [Get list items](/api/operations/lists-get-list-items) API operation.{{</markdown>}}
       </td>
     </tr>
     <tr>

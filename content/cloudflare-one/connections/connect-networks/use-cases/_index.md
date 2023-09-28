@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Tunnel use cases
+title: Use cases
 weight: 4
 hidden: false
 ---
