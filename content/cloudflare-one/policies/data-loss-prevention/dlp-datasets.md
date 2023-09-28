@@ -27,18 +27,16 @@ Cloudflare stores data from CWL datsets within DLP. Plaintext matches appear in 
 
 ### Prepare a dataset
 
-To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Custom wordlists can have up to 200 keywords in a single column each. EDM spreadsheets can contain a maximum of 100,000 cells.
+To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Cells must be at least six characters long. Title cells may result in false positives and should not be included. Accepted file formats include `.csv` and `.txt`.
 
-Cells must be at least six characters long. Title cells may result in false positives and should not be included.
-
-Accepted file formats include `.csv` and `.txt`.
+Custom wordlists can have up to 200 keywords in a single column each. Accounts can have a maximum of 1,000 CWL keywords total. EDM spreadsheets can contain a maximum of 100,000 cells. For more information, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention).
 
 ### Upload a new dataset
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select **Create new dataset**.
 3. Upload your dataset.
-4. Choose whether your dataset will be an **Exact Data Match dataset** (hashed) or a **Custom Wordlist dataset** (plaintext).
+4. Choose whether your dataset will be an **Exact Data Match dataset** (hashed) or a **Custom Wordlist dataset** (cleartext).
 5. Select **Save**.
 
 To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
