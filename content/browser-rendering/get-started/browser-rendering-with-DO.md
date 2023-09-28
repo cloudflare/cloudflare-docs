@@ -107,8 +107,6 @@ new_classes = ["Browser"] # Array of new classes
 
 ## 6. Code
 
-Update `src/worker.js` with your Worker code,
-
 The code below uses Durable Object to instantiate a browser using Puppeteer. It then opens a series of web pages with different resolutions, takes a screenshot of each, and uploads it to R2.
 
 The Durable Object keeps a browser session open for 60 seconds after last use. If a browser session is open, any requests will re-use the existing session rather than creating a new one. Update your Worker code by copy and pasting the following:
