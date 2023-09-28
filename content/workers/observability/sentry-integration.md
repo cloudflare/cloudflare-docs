@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Sentry integration
+title: Sentry integration (beta)
 ---
 
 # Sentry Integration
