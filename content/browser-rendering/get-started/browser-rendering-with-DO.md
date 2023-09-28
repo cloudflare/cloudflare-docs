@@ -113,6 +113,9 @@ The Durable Object keeps a browser session open for 60 seconds after last use. I
 
 
 ```js
+---
+filename: index.js
+---
 import puppeteer from '@cloudflare/puppeteer';
 
 export default {
