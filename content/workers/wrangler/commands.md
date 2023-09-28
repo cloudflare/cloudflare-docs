@@ -63,7 +63,7 @@ Flags:
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-$ wrangler docs [COMMAND]
+wrangler docs [COMMAND]
 ```
 
 {{<definitions>}}
@@ -78,7 +78,7 @@ $ wrangler docs [COMMAND]
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-$ wrangler init [NAME] [-y / --yes] [--from-dash]
+wrangler init [NAME] [-y / --yes] [--from-dash]
 ```
 
 {{<definitions>}}
