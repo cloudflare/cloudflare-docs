@@ -136,7 +136,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -257,7 +257,7 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 ## Next steps
 
 * Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/)
-* How to [configure query caching](/hyperdrive/learning/caching-queries/)
+* How to [configure query caching](/hyperdrive/learning/query-caching/)
 * [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
