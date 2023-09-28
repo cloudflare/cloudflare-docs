@@ -8,7 +8,7 @@ weight: 30
 
 {{<Aside type="warning" header="Join the waitlist">}}
 
-The Workers Browser Rendering API is currently in private beta. [Add yourself to the waitlist](https://www.cloudflare.com/lp/workers-browser-rendering-api/) to reserve your spot, and as we expand availability, we will reach out to you and grant access.
+The Workers Browser Rendering API is currently in beta. [Add yourself to the waitlist](https://www.cloudflare.com/lp/workers-browser-rendering-api/) to reserve your spot, and as we expand availability, we will reach out to you and grant access.
 
 {{</Aside>}}
 
