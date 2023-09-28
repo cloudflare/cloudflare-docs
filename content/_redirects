@@ -374,7 +374,6 @@
 /support/firewall/settings/using-privacy-pass-with-cloudflare/ /waf/tools/privacy-pass/ 301
 
 # fundamentals revamp
-/fundamentals/global-configurations/lists /waf/tools/lists/ 301
 /fundamentals/global-configurations/lists/link-bulk-redirect-lists/ /rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists 301
 /fundamentals/global-configurations/lists/ /waf/tools/lists/ 301
 /fundamentals/global-configurations/ /fundamentals/ 301
