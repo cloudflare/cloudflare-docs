@@ -249,7 +249,7 @@ async fetch(request, env, ctx) {
 },
 ```
 
-Run the `npx wrangler publish` command to deploy your Workers script:
+Run the `npx wrangler publish` command to redeploy your Worker project:
 
 ```sh
 $ npx wrangler publish
