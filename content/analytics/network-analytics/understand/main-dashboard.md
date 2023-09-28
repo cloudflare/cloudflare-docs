@@ -12,15 +12,29 @@ The following sections are a guide on the different sections of the main Network
 
 ## Available tabs
 
-The **All traffic** tab displays global information about layer 3/4 traffic and DDoS attacks.
+The **All traffic** tab displays global information about layer 3/4 traffic and DDoS attacks. The dashboard has additional tabs with specific information (and specific filters) for different layer 3/4 mitigation systems.
 
-The dashboard has additional tabs with specific information (and specific filters) for different layer 3/4 mitigation systems:
+The following table contains a summary of what is shown in each tab:
 
-* **DDoS managed rules**: Shows only traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/).
-* **Advanced TCP Protection**: Shows traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS managed rules.
-* **Magic Firewall**: Shows traffic dropped by [Magic Firewall](/magic-firewall/) and the traffic passed to the origin server. Does not include traffic dropped by DDoS managed rules or the Advanced TCP Protection system.
+{{<table-wrap>}}
+
+Tab name | For Magic Transit users | For Spectrum users
+---------|---------------------|---------------
+**Overview** | Traffic dropped by DDoS managed rules, Advanced TCP Protection, and Magic Firewall, and traffic passed to the origin server. | Traffic dropped and passed by DDoS managed rules.
+**DDoS Managed <br>Rules** | Traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/). | Traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/).
+**Advanced TCP <br>Protection** | Traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS managed rules. | N/A
+**Magic Firewall** | Traffic dropped by [Magic Firewall](/magic-firewall/) and traffic passed to the origin server. Does not include traffic dropped by DDoS managed rules or Advanced TCP Protection. | N/A
+
+{{</table-wrap>}}
 
 Use these tabs to better understand the decisions made by each mitigation system, and which rules are being applied to mitigate attacks.
+
+{{<Aside type="note">}}
+Network Analytics will not show other traffic, such as:
+* Traffic dropped by Spectrum
+* Traffic dropped by the WAF/CDN service
+* Traffic served from cache or from Workers
+{{</Aside>}}
 
 ## High-level metrics
 
