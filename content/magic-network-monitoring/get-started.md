@@ -10,7 +10,7 @@ To begin using Magic Network Monitoring, complete the list of tasks below. If yo
 
 If you are an Enterprise customer and would like to use Magic Network Monitoring and Magic Transit On Demand together, begin by [configuring Magic Transit](/magic-transit/get-started/).
 
-Refer to the Free version of Magic Network Monitoring to learn about the functionalities and limits of this version.
+There is also a [free version](/magic-network-monitoring/magic-network-monitoring-free/) of Magic Network Monitoring in a closed beta right now. Refer to it to learn about the functionalities and limits of this version.
 
 ## 1. Verify NetFlow or sFlow capabilities
 
