@@ -462,9 +462,6 @@
 /fundamentals/get-started/reference/network-ports/ /fundamentals/reference/network-ports/ 301
 /fundamentals/get-started/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ /fundamentals/setup/allow-cloudflare-ip-addresses/ 301
-/fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/ip-lists/ 301
-
-
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
