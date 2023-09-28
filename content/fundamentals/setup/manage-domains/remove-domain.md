@@ -16,7 +16,7 @@ However, Cloudflare will still retain your configuration history for 18 months, 
 
 If you experience website issues, we recommend [temporarily pausing Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) to evaluate your website's performance.
 
-If you have an Enterprise plan, you need first to [downgrade the zone](https://developers.cloudflare.com/fundamentals/account-and-billing/account-billing/change-plan/#change-plan-type) to free, so the option to Remove the Site appears in the Overview section.
+If you have an Enterprise plan, you need to [change the zone plan](/fundamentals/account-and-billing/account-billing/change-plan/#change-plan-type) to **Free**.
 
 If you need to re-add the domain in a different account, make sure the current settings have been saved. For example, you may [Import and export DNS records](/dns/manage-dns-records/how-to/import-and-export/).
 
