@@ -41,7 +41,7 @@ Upgrading to the Workers Paid plan will remove these limits, typically within mi
 
 {{<Aside type="note">}}
 
-Free limits are not currently enforced during the public beta.
+These free limits are not currently enforced during the public beta.
 
 {{</Aside>}}
 
