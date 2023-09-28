@@ -8,7 +8,7 @@ weight: 2
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/). 
 
-Using Durable Objects to persist browser sessions improves performance by eliminating the time that it takes to spin up a new browser session. Since it re-uses sessions, it reduces the number of concurrent sessions needed.
+Using Durable Objects to persist browser sessions improves performance by eliminating the time that it takes to spin up a new browser session. Since Durable Objects re-uses sessions, it reduces the number of concurrent sessions needed.
 
 {{<render file="_prereqs.md" productFolder="workers" >}}
 
