@@ -216,7 +216,6 @@ Run `npx wrangler dev --remote` to test your Worker locally before deploying to 
 
 Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network.
 
-
 ## Related resources
 
 * Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
