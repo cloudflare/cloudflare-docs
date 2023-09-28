@@ -26,7 +26,7 @@ You will learn how to:
 
 ---
 
-## Create a project
+## Create a Worker project
 
 Start by using `npx create cloudflare` to create a Worker project in the command line:
 
