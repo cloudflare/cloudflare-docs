@@ -237,7 +237,7 @@ app.post('/notes', async (c) => {
   const ai = new Ai(c.env.AI)
 
   const { text } = await c.req.json()
-  if (!text){
+  if (!text) {
 			return c.text("Missing text", 400);
   } 
 
