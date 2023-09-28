@@ -37,9 +37,9 @@ View a stream of live logs from your Worker by using [`wrangler tail`](/workers/
 
 ## Report issues
 
-{{<Aside type="note" header="Reporting bugs during the open alpha">}}
+{{<Aside type="note" header="Reporting bugs during the public beta">}}
 
-D1 is in open alpha and we welcome any bug reports or issues.
+D1 is in public beta and we welcome any bug reports or issues.
 
 {{</Aside>}}
 
