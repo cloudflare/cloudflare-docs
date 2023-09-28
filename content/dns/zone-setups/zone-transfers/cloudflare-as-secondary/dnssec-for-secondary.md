@@ -31,11 +31,11 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Select your zone and go to **DNS** > **Settings**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and zone.
+2.  Go to **DNS** > **Settings**.
+3. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
 
-2. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
-
-3. {{<render file="_dnssec-registrar-steps.md">}}
+4. {{<render file="_dnssec-registrar-steps.md">}}
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

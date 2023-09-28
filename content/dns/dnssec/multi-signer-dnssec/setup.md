@@ -73,7 +73,7 @@ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnsse
 4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
 
 {{<Aside type="warning">}}
-This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, DNS queries to the zone apex requesting the NS record type will be responded with Cloudflare nameservers.
+This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, DNS queries to the zone apex requesting NS records will be responded with Cloudflare nameservers.
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is not necessary.
 
