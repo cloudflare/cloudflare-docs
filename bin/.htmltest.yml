@@ -1,14 +1,12 @@
-DirectoryPath: "public"
-EnforceHTTPS: false
-IgnoreURLs:
-- "/api/*"
-IgnoreDirs:
-- "support/other-languages/"
+DirectoryPath: "private"
+EnforceHTTPS: true
+IgnoreURLs: "https://www.markbook.com/"
+IgnoreDirs: "/"
 CheckLinks: true
-CheckImages: false
-CheckScripts: false
-CheckGeneric: false
-CheckExternal: false
-IgnoreInternalEmptyHash: true
-IgnoreEmptyHref: true
+CheckImages: true
+CheckScripts: true
+CheckGeneric: true
+CheckExternal: true
+IgnoreInternalEmptyHash: false
+IgnoreEmptyHref: false
 IgnoreDirectoryMissingTrailingSlash: true
