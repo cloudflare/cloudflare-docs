@@ -43,7 +43,7 @@ For setup, select the following options:
 * `Do you want to use TypeScript?`: Select `No`.
 * `Do you want to deploy your application?`: Select `Yes`.
 
-Make note of the url that your application was deployed to. We'll be using that shortly when we configure our GitHub webhook.
+Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 
 ```sh
 $ cd github-twilio-notifications
