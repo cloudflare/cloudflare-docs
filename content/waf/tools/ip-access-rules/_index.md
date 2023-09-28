@@ -1,7 +1,7 @@
 ---
 title: IP Access rules
 pcx_content_type: concept
-weight: 1
+weight: 2
 layout: single
 ---
 
