@@ -276,4 +276,4 @@ When you configure a rule (for example, a [WAF custom rule](/waf/custom-rules/))
 * The request is blocked if the visitor fails the challenge
 * The request is allowed if the visitor passes the challenge
 
-Once the visitor solves the challenge, Cloudflare will not execute any other rules in the same [ruleset](/ruleset-engine/about/rulesets/), since challenge actions are terminating actions which stop rule evaluation. However, rules in other rulesets will remain unaffected.
+Once the visitor solves the challenge, Cloudflare will not execute any remaining rules in the same [ruleset](/ruleset-engine/about/rulesets/), since challenge actions are terminating actions which stop rule evaluation. However, rules in other rulesets will remain unaffected.
