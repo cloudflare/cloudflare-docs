@@ -28,7 +28,7 @@ You will learn how to:
 
 ## Create a Worker project
 
-Start by using `npx create cloudflare` to create a Worker project in the command line:
+Start by using `npm create cloudflare@latest` to create a Worker project in the command line:
 
 ```sh
 ---
