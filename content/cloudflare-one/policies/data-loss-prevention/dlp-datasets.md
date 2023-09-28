@@ -7,7 +7,7 @@ layout: single
 
 {{<heading-pill style="beta">}}DLP datasets{{</heading-pill>}}
 
-Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in a custom dataset.
+Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in a custom dataset. Sensitive data can be hashed before reaching Cloudflare and redacted from matches in payload logs.
 
 ## DLP dataset types
 
@@ -15,13 +15,13 @@ Cloudflare DLP can scan your web traffic and SaaS applications for specific data
 
 Exact Data Match (EDM) protects sensitive information, such as names, addresses, phone numbers, and credit card numbers.
 
-All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Data will not appear in payload logs.
+All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Matched data will not appear in payload logs.
 
 ### Custom Wordlist
 
 Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers.
 
-Cloudflare stores data in CWL datsets and reveals matches in plaintext in payload logs.
+Cloudflare stores data from CWL datsets within DLP. Plaintext matches appear in payload logs.
 
 ## Use DLP datasets
 
@@ -31,7 +31,7 @@ To prepare a dataset for DLP, add your desired data to a single-column spreadshe
 
 Cells must be at least six characters long. Title cells may result in false positives and should not be included.
 
-Accepted file formats include CSV and TXT.
+Accepted file formats include `.csv` and `.txt`.
 
 ### Upload a new dataset
 
@@ -45,7 +45,7 @@ To use this dataset, add it as an existing entry to a [custom DLP profile](/clou
 
 ### Manage existing datasets
 
-Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file.
+Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select the dataset you want to update.
