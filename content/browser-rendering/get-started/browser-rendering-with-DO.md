@@ -35,7 +35,6 @@ $ yarn create cloudflare@latest
 {{</tab>}}
 {{</tabs>}}
 
-You can choose to use either JavaScript or TypeScript for this guide.
 
 ## 2. Enable Durable Objects in the dashboard
 
