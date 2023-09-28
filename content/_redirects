@@ -325,6 +325,7 @@
 /support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
 
 # fundamentals
+/fundamentals/account-and-billing/account-setup/ /fundamentals/setup/account-setup/ 301
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/setup/manage-members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/setup/manage-members/ 301
 /fundamentals/account-and-billing/members/roles/ /fundamentals/setup/manage-members/roles/ 301
@@ -338,8 +339,11 @@
 /fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/ /fundamentals/setup/allow-cloudflare-ip-addresses/ 301
 /fundamentals/get-started/basic-tasks/account-setup/ /fundamentals/setup/account-setup/ 301
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/reference/cdn-cgi-endpoint/ 301
+/fundamentals/get-started/concepts/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
+/fundamentals/get-started/reference/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
+/fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ 301
@@ -397,6 +401,7 @@
 /fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/setup/account-setup/customize-account/account-name/ 301
 /fundamentals/account-and-billing/account-setup/customize-account/ /fundamentals/setup/account-setup/customize-account/ 301
 /fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/setup/account-setup/customize-account/communication-preference/ 301
+/fundamentals/account-and-billing/members/ /fundamentals/setup/manage-members/ 301
 /fundamentals/data-products/types-of-analytics/ /analytics/types-of-analytics/ 301
 /fundamentals/data-products/about-analytics/ /analytics/faq/about-analytics/ 301
 /fundamentals/data-products/analytics-integrations/graylog/index/ /analytics/analytics-integrations/graylog/ 301
@@ -451,7 +456,12 @@
 /fundamentals/get-started/reference/content-security-policies/ /fundamentals/reference/policies-compliances/content-security-policies/ 301
 /fundamentals/get-started/reference/cloudflare-ray-id/ /fundamentals/reference/cloudflare-ray-id/ 301
 /fundamentals/get-started/reference/ /fundamentals/reference/ 301
+/fundamentals/get-started/reference/http-request-headers/ /fundamentals/reference/http-request-headers/ 301
+/fundamentals/get-started/reference/network-ports/ /fundamentals/reference/network-ports/ 301
 /fundamentals/get-started/ /fundamentals/setup/ 301
+/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ /fundamentals/setup/allow-cloudflare-ip-addresses/ 301
+/fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/ip-lists/ 301
+
 
 
 # gateway
@@ -1061,6 +1071,7 @@
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
+/workers/learning/using-services/ /workers/ 301
 /workers/platform/triggers/ /workers/platform/ 301
 /workers/platform/triggers/routes/ /workers/configuration/routing/routes/ 301
 /workers/platform/triggers/custom-domains/ /workers/configuration/routing/custom-domains/ 301
@@ -1175,6 +1186,7 @@
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
+/cloudflare-one/connections/connect-networks/use_cases/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/identity/devices/access-integrations/azure-ad/ 301
