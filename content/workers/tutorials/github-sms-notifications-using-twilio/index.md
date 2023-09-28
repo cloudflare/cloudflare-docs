@@ -81,7 +81,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 ## Parsing the response
 
-With your local environment set up, we need to parse the repository update with your Worker.
+With your local environment set up, parse the repository update with your Worker.
 
 Initially, your generated `worker.js` should look like this:
 ```js
