@@ -17,6 +17,8 @@ Available storage and persistency products include:
 * [Durable Objects](#durable-objects) for transactional, coordinated use cases
 * [D1](#d1) for relational, SQL-based database use cases.
 * [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
+* [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
+* [Vectorize](/vectorize/) for vector search.
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
