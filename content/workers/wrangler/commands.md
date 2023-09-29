@@ -120,7 +120,7 @@ $ wrangler generate [name] [template]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+D1 is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
