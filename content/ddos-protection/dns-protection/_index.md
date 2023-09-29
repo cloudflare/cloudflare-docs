@@ -29,22 +29,16 @@ Protection for simpler DNS-based DDoS attacks is also included as part of the [N
 
 Currently, you must configure the Advanced DNS Protection via API. For more information, refer to [Configure via API](/ddos-protection/dns-protection/configure-api/).
 
+For more information on the configuration settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
+
 ---
-
-Advanced DNS Protection offers protection for the following types of DNS queries:
-* **Profiled Queries**: DNS queries that Cloudflare already received before.
-* **Unprofiled Queries**: DNS queries that Cloudflare never received.
-
-Create a policy for each type of DNS query. A policy determines the behavior and sensitivity of the Advanced DNS Protection system when handling incoming DNS traffic.
-
-Each policy has a mode and a sensitivity level. For more information on these settings, refer to [Policy settings](/ddos-protection/dns-protection/settings/).
 
 ## Data collection
 
 Cloudflare collects DNS-related data such as query type (for example, `A` record) and the queried domains. For details, refer to [Data collection](/analytics/network-analytics/reference/data-collection/).
 
 {{<Aside type="warning">}}
-Currently, to disable this data collection you must remove your prefixes from the protection system using the [Delete prefix](/ddos-protection/tcp-protection/api/#prefix-operations) API operation, but this operation will remove the prefixes from both Advanced DNS Protection and [Advanced TCP Protection](/ddos-protection/tcp-protection/).
+Currently, to disable this data collection you must remove your prefixes from the protection system using the [Delete a prefix](/ddos-protection/tcp-protection/api/#prefix-operations) API operation, but this operation will remove the prefixes from both Advanced DNS Protection and [Advanced TCP Protection](/ddos-protection/tcp-protection/).
 {{</Aside>}}
 
 ---
