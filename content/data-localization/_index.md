@@ -90,9 +90,9 @@ Overview by product-behavior is summarized in the following table. Below you can
 | D1 | ⚫️ | ⚫️ | ✅ | 
 | Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
 | Email Routing | ⚫️ | ⚫️ | ✅ |
-| R2 | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
+| R2 | ⚫️ | 🚧{{<fnref num="32">}} | ✅{{<fnref num="33">}} |
 | Stream | ⚫️ | ✘ | ✘ |
-| Workers (deployed on a Zone) | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Workers (deployed on a Zone) | ✅ | ✅{{<fnref num="36">}}  | 🚧{{<fnref num="1">}} |
 | Workers KV | ⚫️ | ✘ | ✘ |
 | Workers.dev | ✘ | ✘ | ✘ |
 
@@ -105,11 +105,11 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
 | BYOIP | ⚫️ | ✅ | ⚫️ |
 | Network Error Logging (NEL) / Edge Reachability / Last Mile Insights | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Magic Firewall | ⚫️ | ⚫️{{<fnref num="35">}} | 🚧{{<fnref num="1">}} |
 | Magic Network Monitoring | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Magic Transit | ⚫️ | ⚫️{{<fnref num="35">}} | 🚧{{<fnref num="1">}} |
 | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Spectrum | ✅ | ✅{{<fnref num="34">}}  | 🚧{{<fnref num="1">}} |
 
 {{</tab>}}
 {{<tab label="platform" no-code="true">}}
@@ -119,7 +119,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Audit Logs | ⚫️ | ✅ | ⚫️{{<fnref num="29">}} |
 | GraphQL Analytics API | ⚫️ | ⚫️ | 🚧{{<fnref num="30">}} |
 | Instant Logs | ⚫️ | ✅ | ✅{{<fnref num="31">}} |
-| Logpull | ⚫️ | ✅ | 🚧{{<fnref num="12">}} |
+| Logpull | ⚫️ | ⚫️ | 🚧{{<fnref num="12">}} |
 | Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
 
 {{</tab>}}
@@ -149,7 +149,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="9">}}Argo cannot be used with Regional Services.{{</fnentry>}}
 {{<fnentry num="8">}}You can not yet specify region location for object storage; this is expected in 2023.{{</fnentry>}}
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}
-{{<fnentry num="11">}}Only when using Custom Domain set to a region.{{</fnentry>}}
+{{<fnentry num="11">}}Only when using [Custom Domain](/pages/platform/custom-domains/) set to a region.{{</fnentry>}}
 {{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.{{</fnentry>}}
 {{<fnentry num="13">}}Logpush available with Customer Metadata Boundary for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.{{</fnentry>}}
 {{<fnentry num="14">}}Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.{{</fnentry>}}
@@ -170,4 +170,9 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="29">}}Does not contain Customer Logs, but only logs related to the User accessing their Cloudflare Account as a customer of Cloudflare.{{</fnentry>}}
 {{<fnentry num="30">}}Most datasets are supported.{{</fnentry>}}
 {{<fnentry num="31">}}Live stream of [HTTP requests](/logs/reference/log-fields/zone/http_requests/) directly from the Cloudflare network.{{</fnentry>}}
+{{<fnentry num="32">}}Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).{{</fnentry>}}
+{{<fnentry num="33">}}[Jurisdiction restrictions](/r2/reference/data-location/#jurisdictional-restrictions).{{</fnentry>}}
+{{<fnentry num="34">}}HTTPS Spectrum Applications only.{{</fnentry>}}
+{{<fnentry num="35">}}No decryption on L3.{{</fnentry>}}
+{{<fnentry num="36">}}Regional Services will not work with Edgeworker Subrequests.{{</fnentry>}}
 {{</fnsection>}}
