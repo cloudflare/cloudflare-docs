@@ -228,7 +228,7 @@ In the code above, you have:
 
 1. Created a new database `Client` configured to connect to your database via Hyperdrive.
 2. Connected to the database via `await client.connect()`.
-3. Initiated a simple query via `await client.query()` that outputs all tables (user and system created) in the database.
+3. Initiated a query via `await client.query()` that outputs all tables (user and system created) in the database.
 4. Returned the response as JSON to the client.
 
 ## 5. Deploy your database
