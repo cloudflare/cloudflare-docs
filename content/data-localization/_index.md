@@ -53,11 +53,13 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Caching/CDN | ✅ | ✅ | ✅ |
 | Cache Reserve | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
 | DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Secondary DNS | ⚫ | ⚫{{<fnref num="26">}} | 🚧{{<fnref num="1">}} |
 | Image Resizing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 | Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 | Stream Delivery | ✅ | ✅ | ✅ |
 | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |
 | Waiting Room | ⚫️ | ✅ | ✅ |
+| Web Analytics / Real User Monitoring (RUM) | ⚫️ | ⚫️ | ✘{{<fnref num="27">}} |
 | Zaraz | ✅ | ✅ | ✅ |
 
 {{</tab>}}
@@ -85,6 +87,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | --- | --- | --- | --- |
 | Cloudflare Images | ⚫️ | ✘ | ✘ |
 | Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | ✘ |
+| D1 | ⚫️ | ⚫️ | ✅ | 
 | Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
 | Email Routing | ⚫️ | ⚫️ | ✅ |
 | R2 | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
@@ -98,9 +101,12 @@ Overview by product-behavior is summarized in the following table. Below you can
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
+| Aegis (Egress IP) | ⚫️ | ⚫️{{<fnref num="28">}} | ⚫️ | 
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
 | BYOIP | ⚫️ | ✅ | ⚫️ |
+| Network Error Logging (NEL) / Edge Reachability / Last Mile Insights | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Magic Network Monitoring | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
@@ -110,6 +116,9 @@ Overview by product-behavior is summarized in the following table. Below you can
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
+| Audit Logs | ⚫️ | ✅ | ⚫️{{<fnref num="29">}} |
+| GraphQL Analytics API | ⚫️ | ⚫️ | 🚧{{<fnref num="30">}} |
+| Instant Logs | ⚫️ | ✅ | ✅{{<fnref num="31">}} |
 | Logpull | ⚫️ | ✅ | 🚧{{<fnref num="12">}} |
 | Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
 
@@ -155,4 +164,10 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="23">}}[US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing &amp; Inspection Boundary**.{{</fnentry>}}
 {{<fnentry num="24">}}Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).{{</fnentry>}}
 {{<fnentry num="25">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
+{{<fnentry num="26">}}By default, DNS is unencrypted.{{</fnentry>}}
+{{<fnentry num="27">}}Web Analytics collects the minimum amount of information. For more information refer to [Data collection and reporting](/analytics/web-analytics/understanding-web-analytics/data-origin-and-collection/#data-collection-and-reporting).{{</fnentry>}}
+{{<fnentry num="28">}}Assigned IPv6 is worldwide. <br> Assigned IPv4 is a single data center location decided by customer.{{</fnentry>}}
+{{<fnentry num="29">}}Does not contain Customer Logs, but only logs related to the User accessing their Cloudflare Account as a customer of Cloudflare.{{</fnentry>}}
+{{<fnentry num="30">}}Most datasets are supported.{{</fnentry>}}
+{{<fnentry num="31">}}Live stream of [HTTP requests](/logs/reference/log-fields/zone/http_requests/) directly from the Cloudflare network.{{</fnentry>}}
 {{</fnsection>}}
