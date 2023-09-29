@@ -193,7 +193,7 @@ $ hugo -b $CF_PAGES_URL
 
 {{</Aside>}}
 
-After completing the configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
+After completing deployment configuration, select the **Save and Deploy**. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
 
 {{<Aside type="note">}}
 
