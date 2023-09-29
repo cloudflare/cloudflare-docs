@@ -11,7 +11,7 @@ Refer to the [Astro Docs](https://docs.astro.build/) to learn more about Astro o
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
 
-## Setting up a new project
+## Set up a new project
 
 To use `create-cloudflare` to create a new Astro project, run the following command:
 
