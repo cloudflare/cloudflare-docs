@@ -66,12 +66,6 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-{{<Aside type="warning" header="Important">}}
-
-Astro requires Node.js version `16.12.0` or later to build successfully. When creating your Pages project, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16.12.0` or greater.
-
-{{</Aside>}}
-
 After completing configuration, select **Save and Deploy**.
 
 You will see your first deployment in progress. Pages installs all dependencies and builds the project as specified.

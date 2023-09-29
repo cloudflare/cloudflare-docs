@@ -3753,11 +3753,11 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     padding-left: .5em
 }
 
-.viewMoreChangesContainer {
+.viewMoreContainer {
     width: 100%;
 }
 
-.viewMoreChangesButton {
+.viewMoreButton {
     margin: auto;
     width: 12em;
     height: 2em;
@@ -3766,7 +3766,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     cursor: pointer;
 }
 
-.viewMoreChangesButton:hover {
+.viewMoreButton:hover {
     text-decoration: underline;
     transition: text-decoration 0.5s ease-in-out;
 }

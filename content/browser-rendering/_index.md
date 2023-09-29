@@ -13,8 +13,6 @@ meta:
 Browser automation for [Cloudflare Workers](/workers/).
 {{</description>}}
 
-{{<plan type="all">}}
-
 The Workers Browser Rendering API allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products. Once you configure the service, Workers Browser Rendering gives you access to a WebSocket endpoint that speaks the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/). DevTools is what allows Cloudflare to instrument a Chromium instance running in the Cloudflare global network.
 
 Use Browser Rendering to:
@@ -26,6 +24,12 @@ Use Browser Rendering to:
 * Crawl web pages for information retrieval.
 
 Deploy Browser Rendering using [Wrangler](/browser-rendering/platform/wrangler/) and our version of [Puppeteer](/browser-rendering/platform/puppeteer/). Refer to [Get started](/browser-rendering/get-started/) to deploy your first Browser Rendering project using Wrangler and Puppeteer.
+
+{{<Aside type="warning" header="Join the waitlist">}}
+
+The Workers Browser Rendering API is currently in beta. [Add yourself to the waitlist](https://www.cloudflare.com/lp/workers-browser-rendering-api/) to reserve your spot, and as we expand availability, we will reach out to you and grant access.
+
+{{</Aside>}}
 
 ## More resources
 

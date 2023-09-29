@@ -1100,7 +1100,7 @@ All Cloudflare Zero Trust plans.
 
 **What should you do if you receive one?**
 
-Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/).
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/).
 
 </div>
 </details>

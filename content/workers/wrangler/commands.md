@@ -13,6 +13,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
+- [`vectorize`](#vectorize) - Interact with Vectorize indexes.
+- [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
@@ -118,7 +120,7 @@ $ wrangler generate [name] [template]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+D1 is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -198,7 +200,7 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-  {{</definitions>}}
+    {{</definitions>}}
 
 ### `time-travel info`
 
@@ -214,7 +216,7 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-  {{</definitions>}}
+    {{</definitions>}}
 
 ### `backup create`
 
@@ -337,6 +339,175 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--local` {{<type>}}boolean{{</type>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
     {{</definitions>}}
+
+---
+
+## `hyperdrive`
+
+Manage [Hyperdrive](/hyperdrive/) database configurations.
+
+### `create`
+
+Create a new Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive create <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the Hyperdrive configuration to create.
+- `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The database connection string in the form `postgres://user:password@hostname:port/database`.
+
+{{</definitions>}}
+
+### `update`
+
+Update an existing Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive update <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the Hyperdrive configuration to update.
+- `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new database hostname or IP address Hyperdrive should connect to.
+- `--origin-port` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new database port to connect to.
+- `--database` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new database (name) to connect to. For example, postgres or defaultdb.
+- `--origin-user` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new username used to authenticate to the database.
+- `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new password used to authenticate to the database.
+
+{{</definitions>}}
+
+### `list`
+
+List all Hyperdrive configurations.
+
+```sh
+$ wrangler hyperdrive list [OPTIONS]
+```
+
+### `delete`
+
+Delete an existing Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive delete <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Hyperdrive configuration to delete.
+
+{{</definitions>}}
+
+### `get`
+
+Get an existing Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive get <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Hyperdrive configuration to get.
+
+{{</definitions>}}
+
+---
+
+## vectorize
+
+Interact with a [Vectorize](/vectorize/) vector database.
+
+### `create`
+
+Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler vectorize create <index-name> --dimensions=NUM_DIMENSIONS --metric=DISTANCE_METRIC
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new index to create. Cannot be changed.
+- `--dimensions` {{<type>}}number{{</type>}}
+  - The vector dimension width to configure the index for. Cannot be changed after creation.
+- `--metric` {{<type>}}string{{</type>}}
+  - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
+
+{{</definitions>}}
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```sh
+$ wrangler vectorize get <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the index to fetch details for.
+
+{{</definitions>}}
+### `list`
+
+List all Vectorize indexes in your account, including the configured dimensions and distance metric.
+
+```sh
+$ wrangler vectorize list
+```
+
+### `delete`
+
+Delete a Vectorize index.
+
+```sh
+$ wrangler vectorize delete <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Vectorize index to delete.
+- `--force` {{<type>}}boolean{{</type>}}
+  - Skip confirmation when deleting the index (note: this is not a recoverable operation)
+
+{{</definitions>}}
+
+### `insert`
+
+Insert vectors into an index.
+
+```sh
+$ wrangler vectorize insert <index-name>
+```
+
+{{<definitions>}}
+
+- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Vectorize index to delete.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` {{<type>}}number{{</type>}}
+  - The number of vectors to insert at a time (default: 5000)
+
+{{</definitions>}}
 
 ---
 
@@ -551,7 +722,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 Manage Workers KV namespaces.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
 ### `create`
@@ -686,7 +857,7 @@ Deleted namespace 15137f8edf6c09742227e99b08aaf273
 Manage key-value pairs within a Workers KV namespace.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
 ### `put`
@@ -910,7 +1081,7 @@ Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
 ### `put`
@@ -1298,6 +1469,7 @@ $ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 

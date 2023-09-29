@@ -10,7 +10,7 @@ As discussed before, a monitor issues health checks periodically to evaluate the
 {{<render file=_health-check-diagram.md productFolder="load-balancing">}}
 <br/>
 
-{{<render file=_health-check-definition.md productFolder="load-balancing">}}
+{{<glossary-definition term_id="health check" prepend="These health checks are ">}}
 
 ---
 

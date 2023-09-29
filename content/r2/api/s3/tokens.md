@@ -14,7 +14,7 @@ To create an API token:
 
 1. In **Account Home**, select **R2**.
 2. Under **Account details**, select **Manage R2 API tokens**.
-3. Select **Create API token**.
+3. Select [**Create API token**](https://dash.cloudflare.com/?to=/:account/r2/api-tokens).
 4. Select the **R2 Token** text to edit your API token name.
 5. Under **Permissions**, choose a permission types for your token. Refer to [Permissions](#permissions) for information about each option.
 6. (Optional) If you select the **Object Read and Write** or **Object Read** permissions, you can scope your token to a set of buckets.
