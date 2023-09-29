@@ -23,7 +23,7 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive configuration with the [Wrangler CLI](/workers/wrangler/install-and-update/), open your terminal and run the following command, pasting the connection string provided from your database host, or replacing `user`, `password`, `HOSTNAME_OR_IP_ADDRESS`, `port`, and `database_name` placeholders with those specific to your database:
 
 ```sh
-$ wrangler hyperdrive create <database-name-here> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+$ wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 {{<Aside type="note">}}
@@ -44,7 +44,7 @@ compatibility_date = "2023-09-11"
 
 node_compat = true # required for database drivers to function
 
-# Pasted from the output of `wrangler hyperdrive database create $NAME --connection-string=[...]` above.
+# Pasted from the output of `wrangler hyperdrive create $NAME --connection-string=[...]` above.
 [[hyperdrive]]
 name = "HYPERDRIVE"
 id = ""
