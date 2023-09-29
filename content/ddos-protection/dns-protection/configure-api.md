@@ -57,6 +57,8 @@ header: Example response
 }
 ```
 
+For more information about the available configuration settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
+
 ### Update Advanced DNS Protection configuration
 
 The following example updates the configuration of Advanced DNS Protection.
