@@ -14,6 +14,8 @@ _build:
 3. Under **Enable secure DNS using**, choose _Custom_.
 4. In the field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
+Firefox is now configured to use your DoH endpoint. For more information on configuring DoH settings in Firefox, refer to [Mozilla's documentation](https://support.mozilla.org/kb/dns-over-https).
+
 {{<Aside type="note">}}
 If you want to disable DoH for your organization to enforce Gateway, create a policy to block [the Firefox canary domain](https://support.mozilla.org/kb/canary-domain-use-application-dnsnet).
 {{</Aside>}}
