@@ -23,6 +23,22 @@ You are not billed for CPU, memory, "active index hours", or the number of index
 
 {{<render file="_vectorize-pricing.md" productFolder="workers">}}
 
+### Usage examples
+
+The following table defines a number of example use-cases and the estimated monthly cost for querying a Vectorize index. These estimates do not include the Vectorize usage that is part of the Workers Free and Paid plans.
+
+| Workload               | Dimensions per vector  | Stored dimensions    | Queries per month    | Calculation         | Estimated total      |
+| ---------------------- | ---------------------- | -------------------- | -------------------- | ------------------- | -------------------- |
+| Experiment             | 384                    | 5,000 vectors        | 10,000               | `(5000+10000)*384*(0.040/1000000)` | $0.24 / mo <sup>included</sup> |
+| Scaling                | 768                    | 25,000 vectors       | 50,000               | `(25000+50000)*768*(0.040/1000000)` | $2.31 / mo <sup>partial</sup> |
+| Production             | 768                    | 50,000 vectors       | 200,000               | `(50000+200000)*768*(0.040/1000000)` | $7.68 / mo |
+| Large                  | 768                    | 250,000 vectors       | 500,000               | `(250000+500000)*768*(0.040/1000000)` | $23.04 / mo |
+| XL                     | 1536                   | 500,000 vectors      | 1,000,000             | `(500000+1000000)*1536*(0.040/1000000)` | $92.16 / mo |
+
+<sup>included</sup> All of this usage would fall into the Vectorize usage included in the Workers Free or Paid plan.
+
+<sup>most</sup> Most of this usage would fall into the Vectorize usage included within the Workers Paid plan.
+
 ## Frequently Asked Questions
 
 Frequently asked questions related to Vectorize pricing:

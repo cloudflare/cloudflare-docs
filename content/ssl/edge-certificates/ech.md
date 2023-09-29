@@ -18,13 +18,13 @@ In a typical [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happen
 
 With ECH, the ClientHello message part is split into two separate messages: an inner part and an outer part. The outer part contains the non-sensitive information such as which ciphers to use and the TLS version and an "outer ClientHello". The inner part is encrypted and contains an "inner ClientHello".
 
-The outer ClientHello contains a common name (SNI) that represents that a user is trying to visit an encrypted website on Cloudflare. We chose `cloudflare-sni.com` as the SNI that all websites will share on Cloudflare. Because Cloudflare controls that domain, we have the appropriate certificates to be able to negotiate a TLS handshake for that server name.
+The outer ClientHello contains a common name (SNI) that represents that a user is trying to visit an encrypted website on Cloudflare. We chose `cloudflare-ech.com` as the SNI that all websites will share on Cloudflare. Because Cloudflare controls that domain, we have the appropriate certificates to be able to negotiate a TLS handshake for that server name.
 
 The inner ClientHello contains the actual server name that the user is trying to visit. This is encrypted using a public key and can only be read by Cloudflare. Once the handshake completes, the web page is loaded as normal, just like any other website loaded over TLS.
 
-In practice, this means that any intermediary that is looking at your traffic will simply see normal TLS handshakes with one caveat: any traffic to an ECH-enabled server name on Cloudflare will look the same. Every TLS handshake will appear identical in that it looks like it is trying to load a website for `cloudflare-sni.com`, as opposed to the actual website.
+In practice, this means that any intermediary that is looking at your traffic will simply see normal TLS handshakes with one caveat: any traffic to an ECH-enabled server name on Cloudflare will look the same. Every TLS handshake will appear identical in that it looks like it is trying to load a website for `cloudflare-ech.com`, as opposed to the actual website.
 
-In the example below, a user is visiting `example.com`. Without ECH, any intermediate networks will be able to detect the website being accessed by the user. With ECH, the visible information will be limited to `cloudflare-sni.com` instead.
+In the example below, a user is visiting `example.com`. Without ECH, any intermediate networks will be able to detect the website being accessed by the user. With ECH, the visible information will be limited to `cloudflare-ech.com` instead.
 
 <br>
 
@@ -33,7 +33,7 @@ flowchart LR
 accTitle: What intermediaries see with and without ECH
 accDescr: This diagram describes what intermediaries see with and without ECH.
 A(User visits <code>example.com</code>)
-    A -- With ECH --> C(intermediaries see <code>cloudflare-sni.com</code>)-->B(Cloudflare)
+    A -- With ECH --> C(intermediaries see <code>cloudflare-ech.com</code>)-->B(Cloudflare)
     A -- Without ECH  --> D(intermediaries see <code>example.com</code>)-->B(Cloudflare)
 ```
 
