@@ -2,37 +2,42 @@
 title: Settings
 pcx_content_type: reference
 weight: 5
+meta:
+  title: Advanced DNS Protection settings
 ---
 
-# Policy settings
+# Available settings
 
-Each Advanced DNS Protection policy has the following settings: mode, rate, burst, and sensitivity level.
+Advanced DNS Protection has the following configuration settings: mode, rate, burst, and sensitivity level.
 
 You may need to adjust these settings in case of false positives or due to specific DNS traffic patterns.
 
 ## Mode
 
-Advanced DNS Protection policies can have one of the following execution modes: _Monitoring_, _Enabled_, and _Disabled_.
+Can be one of the following: _Disabled_, _Monitoring_, and _Enabled_.
 
 {{<definitions>}}
 
+* **Disabled**
+
+    * API value: `disabled`.
+    * Cloudflare will collect data about DNS queries, but the protection provided by Advanced DNS Protection systems will be disabled.
+
 * **Monitoring**
 
-    * Protection systems will not apply any mitigation to DNS attacks identified by the Advanced DNS Protection. API value: `monitoring`.
+    * API value: `monitoring`.
+    * Protection systems will not apply any mitigation to DNS attacks identified by the Advanced DNS Protection.
 
 * **Enabled**
 
-    * Advanced DNS Protection systems will protect you against DNS attacks by applying mitigation actions to incoming packets identified as belonging to an attack. API value: `enabled`.
-
-* **Disabled**
-
-    * Cloudflare will collect data about DNS queries, but the protection provided by Advanced DNS Protection systems will be disabled. API value: `disabled`.
+    * API value: `enabled`.
+    * Advanced DNS Protection systems will protect you against DNS attacks by applying mitigation actions to incoming packets identified as belonging to an attack.
 
 {{</definitions>}}
 
 ## Rate and burst
 
-The rate and burst parameters of a token bucket algorithm that the protection system applies to non-legitimate DNS queries. Queries considered non-legitimate cost 1 token, and when the token bucket is empty, non-legitimate queries are dropped until the token bucket refills. This is the same token bucket algorithm used in the [Advanced TCP Protection](/ddos-protection/tcp-protection/).
+The rate and burst parameters of a token bucket algorithm that the protection system applies to non-legitimate DNS queries. Queries considered non-legitimate cost one token, and when the token bucket is empty, non-legitimate queries are dropped until the token bucket refills. This is the same token bucket algorithm used in the [Advanced TCP Protection](/ddos-protection/tcp-protection/).
 
 ## Sensitivity level
 
