@@ -118,7 +118,7 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | **Subscription**   |  $5.00              |                                                                                                          |
 | **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
-| **CPU time**       |  $13.40             | 200 ms CPU time per request * (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.02  |
+| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
 | **Total**          |  $45.40             |                                                                                                          |
 
 {{</table-wrap>}}
