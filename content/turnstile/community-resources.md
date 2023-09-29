@@ -29,6 +29,11 @@ Libraries that only support the client-side rendering of Turnstile:
 - React
   - [react-turnstile](https://www.npmjs.com/package/react-turnstile)
   - [@marsidev/react-turnstile](https://www.npmjs.com/package/@marsidev/react-turnstile)
+
+{{<Aside type="note">}}
+Cloudflare recommends [@marsidev/react-turnstile](https://www.npmjs.com/package/@marsidev/react-turnstile) when rendering Turnstile. We have deployed an implementation of the library and can confirm that it is safe to use and works as expected.
+{{</Aside>}}
+
 - Vue
   - [cfturnstile-vue3](https://www.npmjs.com/package/cfturnstile-vue3)
   - [vue-turnstile](https://www.npmjs.com/package/vue-turnstile)
