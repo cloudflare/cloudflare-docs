@@ -17,13 +17,13 @@ The Verified Bot categories field is not compatible with legacy Firewall rules.
 - Academic research
 - Accessibility
 - Advertising or marketing
+- Aggregators
 - Feed fetcher
 - Monitoring or analytics
 - Page preview
 - Search engine crawler
 - Search engine optimization
 - Security
-- Social media marketing
 - Webhooks
 - Other
 
