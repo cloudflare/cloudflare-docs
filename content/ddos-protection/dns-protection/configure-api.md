@@ -18,7 +18,7 @@ To obtain the complete endpoint, append the Advanced DNS Protection API endpoint
 https://api.cloudflare.com/client/v4
 ```
 
-The `{account_id}` argument is the [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) (a hexadecimal string). You can find this value in the Cloudflare dashboard.
+The `{account_id}` argument is the [account ID](/fundamentals/setup/find-account-and-zone-ids/) (a hexadecimal string). You can find this value in the Cloudflare dashboard.
 
 The following table summarizes the available operations.
 
