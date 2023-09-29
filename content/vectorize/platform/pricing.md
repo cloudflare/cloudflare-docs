@@ -35,9 +35,9 @@ The following table defines a number of example use-cases and the estimated mont
 | Large                  | 768                    | 250,000 vectors       | 500,000               | `(250000+500000)*768*(0.040/1000000)` | $23.04 / mo |
 | XL                     | 1536                   | 500,000 vectors      | 1,000,000             | `(500000+1000000)*1536*(0.040/1000000)` | $92.16 / mo |
 
-<sup>included</sup> All of this usage would fall into the Vectorize usage included within the Workers free or paid plan.
+<sup>included</sup> All of this usage would fall into the Vectorize usage included in the Workers Free or Paid plan.
 
-<sup>most</sup> Most of this usage would fall into the Vectorize usage included within the Workers paid plan.
+<sup>most</sup> Most of this usage would fall into the Vectorize usage included within the Workers Paid plan.
 
 ## Frequently Asked Questions
 
