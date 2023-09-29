@@ -172,9 +172,10 @@ Then, add the configuration details for your new D1 database to `wrangler.toml`:
 ```toml
 # ... existing wrangler configuration
 
-[[d1]]
+[[d1_databases]]
 binding = "DATABASE"
 database_name = "database"
+database_id = "<YOUR_DATABASE_ID>"
 ```
 
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
