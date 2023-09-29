@@ -5,15 +5,11 @@ _build:
   list: never
 ---
 
-{{<Aside type="note">}}
-The alpha [currently limits](/d1/platform/limits/) maximum database size to 500 MB and allows a total of 10 databases across all [Workers plans](/workers/platform/pricing/#workers). Pricing below is not yet final.
-{{</Aside>}}
-
 |                                 | [Workers Free](/workers/platform/pricing/#workers) | [Workers Paid](/workers/platform/pricing/#workers)                 |
 | ------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------ |
 | Rows read                       | 5 million / day                                    | First 25 billion / month included  + $0.001 / million rows |
 | Rows written                    | 100,000 / day                                      | First 50 million / month included + $1.00 / million rows |
-| Storage (per GB stored)         | 1GB (total)                                        | First 5GB included + $0.75 / GB-mo |
+| Storage (per GB stored)         | 5GB (total)                                        | First 5GB included + $0.75 / GB-mo |
 
 
 
