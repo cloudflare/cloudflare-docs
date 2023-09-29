@@ -29,7 +29,7 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Cells must be at least six characters long. Title cells may result in false positives and should not be included. Accepted file formats include `.csv` and `.txt`.
 
-Custom wordlists can have up to 200 keywords in a single column each. Accounts can have a maximum of 1,000 CWL keywords total. EDM spreadsheets can contain a maximum of 100,000 cells. For more information, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention).
+For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention).
 
 ### Upload a new dataset
 
