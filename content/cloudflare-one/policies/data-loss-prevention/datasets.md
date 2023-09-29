@@ -15,7 +15,7 @@ Cloudflare DLP can scan your web traffic and SaaS applications for specific data
 
 Exact Data Match (EDM) protects sensitive information, such as names, addresses, phone numbers, and credit card numbers.
 
-All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Matched data will not appear in payload logs.
+All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Matched data will be redacted in payload logs.
 
 ### Custom Wordlist
 
