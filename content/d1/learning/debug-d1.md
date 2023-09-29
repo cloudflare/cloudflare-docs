@@ -12,7 +12,7 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 The D1 [client API](/d1/platform/client-api/) returns detailed error messages on the [`cause` property](/d1/platform/client-api/#errors) within an `Error` object. 
 
-To ensure you are capturing the full error message, make sure to log or return `e.cause.message`, as follows:
+To ensure you are capturing the full error message, log or return `e.cause.message` as follows:
 
 ```ts
 try {
@@ -39,19 +39,19 @@ View a stream of live logs from your Worker by using [`wrangler tail`](/workers/
 
 {{<Aside type="note" header="Reporting bugs during the public beta">}}
 
-D1 is in public beta and we welcome any bug reports or issues.
+D1 is in public beta and Cloudflare welcomes any bug reports or issues.
 
 {{</Aside>}}
 
 * To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85).
 * To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev).
-* If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose)."
+* If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 You should include as much of the following in any bug report:
 
-* The ID of your database: use `wrangler d1 list` to match a database name to its ID.
-* The query, or queries, that you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
-* The Worker code that makes the query, including any calls to `.bind()` using the [client API](/d1/platform/client-api/).
+* The ID of your database. Use `wrangler d1 list` to match a database name to its ID.
+* The query (or queries) you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
+* The Worker code that makes the query, including any calls to `bind()` using the [client API](/d1/platform/client-api/).
 * The full error text, including the content of [`error.cause.message`](#handle-errors).
 
 ## Related resources
