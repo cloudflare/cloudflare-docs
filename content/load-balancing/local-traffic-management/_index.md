@@ -7,17 +7,15 @@ layout: single
 
 # Local traffic management (LTM)
 
-Local Traffic Management enables you to load balance traffic within a data center between your servers, eliminating the need for hardware appliances and allowing you to move infrastructure to the cloud to benefit from elastic scalability and reliability.
+Local Traffic Management enables you to load balance traffic between your servers within a data center. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud to benefit from elastic scalability and reliability.
 
-Local Traffic Management has the ability to support virtual IPs, private IPs, and public IPs as origin values in a customer data center.
+LTM supports not only public IPs but also virtual IPs and private IPs as origin values.
 
 ## Health monitor support
 
-Traffic steering decisions or failover relies on the health information of IPs and pools. Local Traffic Management supports health monitors on your virtual and private IPs.
+Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you are able to better leverage existing health monitoring.
 
-Before, you could only enter tunnel addresses in your load balancer and configure health monitor requests to your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and set up health monitors for them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs.
-
-Health monitors automatically work once the origin and VNet Tunnel association is configured. Cloudflare determines the health of the Tunnel and the private targets.
+Before, you could only enter tunnel addresses in your load balancer and configure health monitor requests to the tunnels themselves. Now, once the origin and VNet tunnel association is configured, Cloudflare determines not only the tunnel health but also the health of corresponding virtual/private IPs targets.
 
 ## Off-ramps
 
@@ -25,16 +23,10 @@ Off-ramps create a direct and secure way to connect into your networks that are 
 
 ### Use cases
 
-**Any requests originating from the public Internet and directed to a private/internal service address that is not publicly available or accessible**
+* **Requests originating from the public Internet and directed to a private/internal service**: You can route requests from the Internet to your internal services on internal IPs - such as accounting or production automation systems - using Cloudflare Tunnels.
 
-You can route requests from the Internet to your internal services on internal IPs, such as accounting or production automation systems, using Cloudflare Tunnels.
-
-**Intelligently route traffic**
-
-Benefit from failover for your private traffic and have the ability to monitor the health of these targets directly, rather than load balancing to a tunnel and monitoring the health of the tunnel itself.
-
-You can input your private targets in the same manner as you do today with public IPs, only needing to specify a VNet which is already configured with your tunnels. Then, you can utilize all of the applicable Cloudflare steering methods.
+* **Intelligently route traffic**: Benefit from failover for your private traffic and have the ability to monitor the health of these targets directly, rather than load balancing to a tunnel and monitoring the health of the tunnel itself.
 
 ### Support
 
-Today, Local Traffic Management supports Tunnels off-ramps. In the future, we plan to support GRE Tunnels and IPSec Tunnels.
+Local Traffic Management curerently supports Tunnels off-ramps. GRE and IPsec tunnels support is coming soon.
