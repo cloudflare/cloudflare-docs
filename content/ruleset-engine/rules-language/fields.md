@@ -495,7 +495,7 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr id="field-cf-bot_management-verified_bot_categories">
-        <td><p><code> cf.verified_bot_category</code><br />{{<type>}}String{{</type>}}</p>
+        <td><p><code>cf.verified_bot_category</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
           <p>Provides the type and purpose of a verified bot.</p>
