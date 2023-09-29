@@ -18,7 +18,7 @@ _build:
 Firefox is now configured to use your DoH endpoint. For more information on configuring DoH settings in Firefox, refer to [Mozilla's documentation](https://support.mozilla.org/kb/dns-over-https).
 
 {{<Aside type="note">}}
-If you want to disable DoH for your organization to enforce Gateway, create a policy to block [the Firefox canary domain](https://support.mozilla.org/kb/canary-domain-use-application-dnsnet).
+If you want to enforce DNS policies through WARP instead of over DoH, you can disable DoH for your organization by blocking the [Firefox DoH canary domain](https://support.mozilla.org/kb/canary-domain-use-application-dnsnet).
 {{</Aside>}}
 
 </div>
