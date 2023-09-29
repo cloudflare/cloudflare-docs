@@ -25,7 +25,7 @@ You are not billed for CPU, memory, "active index hours", or the number of index
 
 ### Usage examples
 
-The following table defines a number of example use-cases and the estimated monthly cost for querying a Vectorize index. These estimates do not include the Vectorize usage that's part of the 
+The following table defines a number of example use-cases and the estimated monthly cost for querying a Vectorize index. These estimates do not include the Vectorize usage that's part of the Workers free and paid plans.
 
 | Workload               | Dimensions per vector  | Stored dimensions    | Queries per month    | Calculation         | Estimated total      |
 | ---------------------- | ---------------------- | -------------------- | -------------------- | ------------------- | -------------------- |
