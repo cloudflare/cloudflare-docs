@@ -1,5 +1,5 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 title: Verified Bot categories
 weight: 0
 ---
