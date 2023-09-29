@@ -1,15 +1,15 @@
 ---
 pcx_content_type: reference
-title: Verified Bot categories
+title: Verified Bot Categories
 weight: 0
 ---
 
-# Verified Bot categories
+# Verified Bot Categories
 
-You can segment your verified bot traffic by its type and purpose by adding the Verified Bot categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
+You can segment your verified bot traffic by its type and purpose by adding the Verified Bot Categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
 
 {{<Aside type="note">}}
-The Verified Bot categories field is not compatible with legacy Firewall rules.
+The Verified Bot Categories field is not compatible with legacy Firewall rules.
 {{</Aside>}}
 
 ## Categories
@@ -29,4 +29,4 @@ The Verified Bot categories field is not compatible with legacy Firewall rules.
 
 ## Availability
 
-Verified Bot categories is available to all Bots customers.
+Verified Bot Categories is available to all Bots customers.

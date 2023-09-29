@@ -499,7 +499,7 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
         <td>
           <p>Provides the type and purpose of a verified bot.</p>
-          <p>For more details, refer to <a href="/bots/reference/verified-bot-categories/">Verified Bot categories</a>.
+          <p>For more details, refer to <a href="/bots/reference/verified-bot-categories/">Verified Bot Categories</a>.
           </p>
         </td>
     </tr>

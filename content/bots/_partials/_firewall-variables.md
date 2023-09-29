@@ -12,4 +12,4 @@ Bot Management provides access to several [new variables](/ruleset-engine/rules-
 - **Serves Static Resource** (`cf.bot_management.static_resource`): An identifier that matches [file extensions](/bots/reference/static-resources/) for many types of static resources. Use this variable if you send emails that retrieve static images.
 - **ja3Hash** (`cf.bot_management.ja3_hash`): A [**JA3 Fingerprint**](/bots/concepts/ja3-fingerprint/) helps you profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
 - **Bot Detection IDs** (`cf.bot_management.detection_ids`): List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request).
-- **Verified Bot categories** (`cf.verified_bot_category`): A string that allows you to segment your verified bot traffic by its [type and purpose](/bots/reference/verified-bot-categories/).
+- **Verified Bot Categories** (`cf.verified_bot_category`): A string that allows you to segment your verified bot traffic by its [type and purpose](/bots/reference/verified-bot-categories/).
