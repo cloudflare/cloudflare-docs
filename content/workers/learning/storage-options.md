@@ -82,7 +82,7 @@ To get started with Durable Objects:
 
 {{<Aside type="note">}}
 
-D1 is currently in [public (open) alpha](/workers/platform/betas/).
+D1 is currently in [public (open) beta](/workers/platform/betas/).
 
 {{</Aside>}}
 
