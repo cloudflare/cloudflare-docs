@@ -11,8 +11,9 @@ _build:
 
 1. In Firefox, go to **Settings**.
 2. In **Privacy & Security**, go to **DNS over HTTPS**.
-3. Under **Enable secure DNS using**, choose _Custom_.
-4. In the field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+3. Under **Enable secure DNS using**, select _Max Protection_.
+4. In **Choose provider**, choose _Custom_.
+5. In the field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
 Firefox is now configured to use your DoH endpoint. For more information on configuring DoH settings in Firefox, refer to [Mozilla's documentation](https://support.mozilla.org/kb/dns-over-https).
 
