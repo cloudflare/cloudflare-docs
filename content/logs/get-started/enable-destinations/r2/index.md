@@ -33,7 +33,7 @@ Before getting started:
 
     - Zone scope, logs edit permissions.
 
-    - Account scope, R2 write permissions.
+    - Account scope, R2 edit permissions.
 
 ## Manage via the Cloudflare dashboard
 
