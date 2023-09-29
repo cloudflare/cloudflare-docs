@@ -7,7 +7,7 @@ layout: single
 
 # Downloads
 
-Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/), you can simply copy-paste the installation command shown in the dashboard.
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), you can simply copy-paste the installation command shown in the dashboard.
 
 To download and install `cloudflared` manually, use one of the following links.
 

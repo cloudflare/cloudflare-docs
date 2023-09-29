@@ -165,6 +165,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
 
+- `vectorize` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of Vectorize indexes that your Worker should be bound to.. Refer to [Vectorize indexes](#vectorize-indexes).
+
 - `services` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
@@ -440,7 +444,7 @@ deleted_classes = ["DeprecatedClass"]
 
 ### KV namespaces
 
-[Workers KV](/workers/runtime-apis/kv/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
+[Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
@@ -587,6 +591,37 @@ header: wrangler.toml
 ---
 r2_buckets  = [
   { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
+]
+```
+
+### Vectorize indexes
+
+A [Vectorize index](/vectorize/) allows you to insert and query vector embeddings for semantic search, classification and other vector search use-cases.
+
+To bind Vectorize indexes to your Worker, assign an array of the below object to the `vectorize` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the bound index from your Worker code.
+
+- `index_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the index to bind.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+
+[[vectorize]]
+vectorize = [
+  { binding = "<INDEX_NAME>", bucket_name = "<your-index>"}
 ]
 ```
 

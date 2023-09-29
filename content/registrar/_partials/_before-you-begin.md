@@ -17,3 +17,7 @@ _build:
 * Do not make any changes to the Registrant contact information. Updating the Registrant contact may result in your current registrar locking the domain for 60 days.
 * Make sure your account has a valid credit card on file.
 * If you are transferring a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/) before proceeding.
+
+### Disable DNSSEC
+
+{{<render file="_disable_dnssec.md" productFolder="dns" >}}

@@ -13,13 +13,16 @@ Email Retro Scan allows you to scan up to seven days of old messages in your Off
 To scan for threats in your Office 365 inbox:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Area 1**, and select **Generate Retro Scan report**.
-3. Cloudflare needs authorization to access your O365 messages. Select **Authorize Mail Access** and **Authorize Directory Synchronization**. This is needed so Cloudflare can read your emails and your Microsoft Active Directory. This last authorization allows us to understand which users are in the organization, as well as which groups they belong to.
-4. Select **Next** to continue.
-5. In **Scan parameters**, choose one or more domains to scan.
-6. Choose your email security system, from **Current email security system**.
-7. Select **Initiate Retro Scan**.
-8. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
+2. Go to **Area 1** > **Retro Scan**.
+3. Select **Generate Retro Scan report**.
+4. Cloudflare needs authorization to access your O365 messages. Select **Authenticate with Microsoft**, and give Cloudflare the required permissions.
+5. Back to Cloudflare dashboard, select **Grant mail access**. Then, select your account and give Cloudflare the required permissions.
+6. Finally, select **Grant directory sync access**. Then, select your account and give Cloudflare the required permissions.
+7. Select **Continue**.
+8. In **Configure report**, choose one or more domains to scan.
+9. Choose your current email security system, from **Current email security system**.
+10. Select **Continue**.
+11. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
 
 ## Analyze results
 

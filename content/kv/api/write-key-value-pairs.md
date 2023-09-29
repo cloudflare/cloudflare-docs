@@ -83,7 +83,7 @@ To use `expiration` or `expirationTTL`, run one of the two commands below to set
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write with an expiration on the command line via Wrangler](/kv/learning/kv-namespaces/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 ## Metadata
 
