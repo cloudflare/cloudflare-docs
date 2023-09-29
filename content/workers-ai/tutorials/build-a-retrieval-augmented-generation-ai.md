@@ -173,7 +173,7 @@ Then, add the configuration details for your new D1 database to `wrangler.toml`:
 # ... existing wrangler configuration
 
 [[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
+binding = "DB" # available in your Worker on env.DB
 database_name = "database"
 database_id = "abc-def-geh"
 ```
