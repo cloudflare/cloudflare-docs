@@ -15,7 +15,7 @@ _build:
 4. In the field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
 {{<Aside type="note">}}
-If you want to disable DoH for your organization so that Gateway can be enforced, create a policy to block [this canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet).
+If you want to disable DoH for your organization to enforce Gateway, create a policy to block [the Firefox canary domain](https://support.mozilla.org/kb/canary-domain-use-application-dnsnet).
 {{</Aside>}}
 
 </div>
