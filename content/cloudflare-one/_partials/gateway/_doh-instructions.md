@@ -10,17 +10,12 @@ _build:
 <div>
 
 1. In Firefox, go to **Settings**.
-2. In the General menu, scroll down to **Network Settings**.
-3. Select **Settings**.
-4. Select **Enable DNS over HTTPS**.
-5. In the **Use Provider** drop-down menu, select _Custom_.
-6. In the **Custom** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
-7. Select **OK**.
+2. In **Privacy & Security**, go to **DNS over HTTPS**.
+3. Under **Enable secure DNS using**, choose _Custom_.
+4. In the field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
 {{<Aside type="note">}}
-
 If you want to disable DoH for your organization so that Gateway can be enforced, create a policy to block [this canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet).
-
 {{</Aside>}}
 
 </div>
