@@ -12,7 +12,7 @@ Wrangler can be run in a continuous integration/continuous deployment (CI/CD) en
 
 When running Wrangler locally, authentication to the Cloudflare API happens via the `wrangler login` command, which initiates an interactive authentication flow. Since CI/CD environments are non-interactive, Wrangler requires a [Cloudflare API token](/fundamentals/api/get-started/create-token/) and [account ID](/fundamentals/setup/find-account-and-zone-ids/) to authenticate with the Cloudflare API.
 
-You can easily generate an API token that will allow Wrangler to deploy Workers on your account by visiting the following link. You will need to choose the Account and Zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For instance, if you have access to 3 different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
+You can generate an API token that will allow Wrangler to deploy Workers on your account by visiting the following link. You will need to choose the Account and Zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For instance, if you have access to 3 different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
 
 
 <p>{{<button type="primary" href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[{%22key%22:%22workers_kv_storage%22,%22type%22:%22edit%22},{%22key%22:%22workers_scripts%22,%22type%22:%22edit%22},{%22key%22:%22workers_routes%22,%22type%22:%22edit%22},{%22key%22:%22account_settings%22,%22type%22:%22read%22},{%22key%22:%22user_details%22,%22type%22:%22read%22},{%22key%22:%22workers_tail%22,%22type%22:%22read%22},{%22key%22:%22workers_r2%22,%22type%22:%22edit%22},{%22key%22:%22page%22,%22type%22:%22edit%22},{%22key%22:%22memberships%22,%22type%22:%22read%22}]&name=Wrangler">}}Generate API Token{{</button>}}</p>
@@ -22,7 +22,7 @@ You can easily generate an API token that will allow Wrangler to deploy Workers 
 
 ## Deploying your Worker
 
-The method for running Wrangler in your CI/CD environment will depend on the specific setup for your project (whether you use GitHub Actions/Jenkins/Gitlab or something else entirely).
+The method for running Wrangler in your CI/CD environment will depend on the specific setup for your project (whether you use GitHub Actions/Jenkins/GitLab or something else entirely).
 
 The basic setup involves running `wrangler deploy` with two environment variables made available:
 
