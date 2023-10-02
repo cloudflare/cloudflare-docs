@@ -130,7 +130,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | --- | --- | --- | --- | --- | --- |
 | Access | 🚧{{<fnref num="14">}} | 🚧{{<fnref num="15">}} | 🚧{{<fnref num="16">}} | US and EU [`accessLoginRequestsAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-access-login-events/) | US only and Respects CMB (for edge non-identity events) <br> [Access requests](/logs/reference/log-fields/account/access_requests/) |
 | Area 1 | ⚫️ | ✅{{<fnref num="23">}} | 🚧{{<fnref num="24">}} | ✘{{<fnref num="38">}}  | ✘{{<fnref num="38">}} |
-| Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ | US and EU <br> Only the field `isIsolated` part of `GatewayL7RequestsAdaptiveGroups` datset | US and EU <br> Only the field `IsIsolated` in [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/) |
+| Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ | US and EU <br> Only the field `isIsolated` part of `GatewayL7RequestsAdaptiveGroups` dataset | US and EU <br> Only the field `IsIsolated` in [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/) |
 | CASB | ⚫️ | ⚫️ | ✘ | ✘ | US only <br> [CASB Findings](/logs/reference/log-fields/account/casb_findings/) | 
 | Cloudflare Tunnel | ⚫️ | 🚧{{<fnref num="18">}} | ⚫️ | ✘ | US only and Respects CMB <br> Only the field `DestinationTunnelID` in [Zero Trust Network Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) |
 | DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | ✘ | Part of Gateway HTTP / Gateway L7 | ✘ | 
