@@ -26,7 +26,7 @@ PCI scanners are tools used to identify security weaknesses. When a business und
 
 ### Open ports versus blocked traffic
 
-There is a difference between open ports and blocked traffic. Due to the nature of how Cloudflare’s Anycast network works, ports other than 80 and 443 are always open so that Cloudflare can serve traffic for other customers on these ports. However, customers can easily block all unwanted traffic to these ports by using Cloudflare [WAF Managed Rules](/fundamentals/get-started/reference/network-ports/#how-to-block-traffic-on-additional-ports) or [custom rules](/waf/custom-rules/). The PCI scan will show the ports being open, but the traffic would not reach your origin server. This is an often misunderstood concern.
+There is a difference between open ports and blocked traffic. Due to the nature of how Cloudflare’s Anycast network works, ports other than 80 and 443 are always open so that Cloudflare can serve traffic for other customers on these ports. However, customers can easily block all unwanted traffic to these ports by using Cloudflare [WAF Managed Rules](/fundamentals/reference/network-ports/#how-to-block-traffic-on-additional-ports) or [custom rules](/waf/custom-rules/). The PCI scan will show the ports being open, but the traffic would not reach your origin server. This is an often misunderstood concern.
 
 ## Additional resources
 
