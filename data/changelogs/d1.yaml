@@ -2,6 +2,17 @@
 link: "/d1/changelog/"
 productName: D1
 entries:
+- publish_date: '2023-10-05'
+  title: Database limits substantially increased
+  description: |-
+    Developers using D1 on a Workers paid plan can now create up to 50,000 databases as part of ongoing increases to D1's limits.
+
+    * This further enables database-per-user use-cases and allows you to isolate data between customers.
+    * Total storage per account is now 50 GB.
+    * D1's [analytics and metrics](/d1/platform/metrics-analytics/) provide per-database usage data.
+
+    If you need to create more than 50,000 databases or need more per-account storage, [reach out](/d1/platform/limits] to the D1 team to discuss.
+
 - publish_date: '2023-09-28'
   title: The D1 public beta is here
   description: |-
