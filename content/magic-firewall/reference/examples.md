@@ -70,7 +70,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 }'
 ```
 
-## Use an IP List
+## Use an IP list
 
 Magic Firewall supports [using lists in expressions](/waf/tools/lists/use-in-expressions/) for the `ip.src` and `ip.dst` fields. The supported lists are:
 
