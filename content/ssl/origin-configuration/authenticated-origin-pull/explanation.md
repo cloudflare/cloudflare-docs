@@ -18,7 +18,7 @@ This block also applies for requests to [unproxied DNS records](/dns/manage-dns-
 
 {{<Aside type="warning">}}
 
-Note that the certificate Cloudflare provides for you to [set up Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/) is not exclusive to your account, only guaranteeing that a request is coming from the Cloudflare network.
+Note that the certificate Cloudflare provides for you to [set up Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) is not exclusive to your account, only guaranteeing that a request is coming from the Cloudflare network.
 
 For more strict security, you should set up Authenticated Origin Pulls with your own certificate and consider [other security measures for your origin](/fundamentals/basic-tasks/protect-your-origin-server/).
 
