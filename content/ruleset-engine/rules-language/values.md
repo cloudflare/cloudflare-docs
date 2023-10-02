@@ -57,7 +57,6 @@ In a raw string there are no special characters, so all characters up to the end
 
 Unlike the quoted string syntax, the raw string syntax is always the same, regardless of the context where it is being used (for example, as a regular expression with a regex operator or as a parameter of a function call).
 
-
 ```txt
 ---
 header: Examples
