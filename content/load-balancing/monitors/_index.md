@@ -28,13 +28,13 @@ For an up-to-date list of monitor properties, refer to [Monitor properties](/api
 
 ## Create monitors
 
-For step-by-step guidance, refer to [Create monitors](/load-balancing/how-to/create-monitor/).
+For step-by-step guidance, refer to [Create monitors](/load-balancing/monitors/create-monitor/).
 
 ---
 
 ## Health monitor regions
 
-When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can select multiple regions to increase reporting accuracy.
+When you [attach a monitor to a pool](/load-balancing/monitors/create-monitor/#create-a-monitor), you can select multiple regions to increase reporting accuracy.
 
 {{<render file="_health-check-regions.md">}}
 

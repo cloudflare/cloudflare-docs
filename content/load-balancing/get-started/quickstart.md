@@ -17,7 +17,7 @@ Get up and running quickly with Load Balancing. For more in-depth explanations, 
 Make sure you:
 
 - Have access to multiple servers, either physical or cloud-based.
-- Have access to Load Balancing, available as an [add-on](/load-balancing/how-to/enable-load-balancing/) for any type of account.
+- Have access to Load Balancing, available as an [add-on](/load-balancing/get-started/enable-load-balancing/) for any type of account.
 - Have test and production hostnames that are covered by [SSL/TLS certificates](/load-balancing/reference/dns-records/#ssltls-coverage).
 
 {{</tutorial-prereqs>}}

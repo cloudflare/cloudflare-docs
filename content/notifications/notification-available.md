@@ -433,7 +433,7 @@ Multiple filters available:
 
 **Included with**
 
-All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/get-started/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
@@ -467,7 +467,7 @@ Multiple filters available:
 
 **Included with**
 
-All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/get-started/enable-load-balancing/).
 
 **What should you do if you receive one?**
 

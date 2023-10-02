@@ -40,7 +40,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ## Create load balancers
 
-For step-by-step guidance, refer to [Create a load balancer](/load-balancing/how-to/create-load-balancer/).
+For step-by-step guidance, refer to [Create a load balancer](/load-balancing/load-balancers/create-load-balancer/).
 
 ---
 

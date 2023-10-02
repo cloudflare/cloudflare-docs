@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Origin steering customizes how each [pool](/load-balancing/understand-basics/pools/) distributes requests to its associated origins.
+Origin steering customizes how each [pool](/load-balancing/pools/) distributes requests to its associated origins.
 
 These distributions are a combination of two properties:
 

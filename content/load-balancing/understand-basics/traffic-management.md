@@ -23,7 +23,7 @@ You can configure the origin pool via the API or on the dashboard.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Once you have Cloudflare tunnels with associated virtual networks configured, you can select them on the respective **Virtual Network** field displayed for each origin when you [create or edit a pool](/load-balancing/how-to/create-pool/#create-a-pool).
+Once you have Cloudflare tunnels with associated virtual networks configured, you can select them on the respective **Virtual Network** field displayed for each origin when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool).
 
 {{<Aside type="warning">}}
 
