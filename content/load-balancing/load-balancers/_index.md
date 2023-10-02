@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Load balancers
-weight: 3
+weight: 5
 ---
 
 # Load balancers

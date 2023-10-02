@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pools
-weight: 1
+weight: 3
 ---
 
 # Pools

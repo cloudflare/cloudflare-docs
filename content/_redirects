@@ -522,6 +522,9 @@
 /load-balancing/create-load-balancer-ui/ /load-balancing/how-to/create-load-balancer/ 301
 /load-balancing/load-balancing-analytics/ /load-balancing/reference/load-balancing-analytics/ 301
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
+/load-balancing/understand-basics/pools/ /load-balancing/pools/ 301
+/load-balancing/understand-basics/monitors/ /load-balancing/monitors/ 301
+/load-balancing/understand-basics/load-balancers/ /load-balancing/load-balancers/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
