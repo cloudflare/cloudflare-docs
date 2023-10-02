@@ -63,6 +63,7 @@ After you have created your first Worker, run the [`wrangler dev`](/workers/wran
 
 ```sh
 $ npx wrangler dev --remote
+```
 
 {{<Aside type="note">}}
 
