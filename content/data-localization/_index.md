@@ -42,99 +42,100 @@ Overview by product-behavior is summarized in the following table. Below you can
 
 ✅ Product works with no caveats <br>
 🚧 Product can be used with some caveats <br>
-✘ Product cannot be used <br>
-⚫️ Not applicable
+✘ Product cannot be used/ not available <br>
+⚫️ Not applicable <br>
+**Respects CMB**: indicates whether enabling Customer Metadata Boundary impacts the dataset. If present, messages do not leave the target region (for the accounts that are configured); logs are essentially dropped based on CMB config. <br>
+**US and EU**: means that the dataset respects Customer Metadata Boundary and is available in both the US and the EU.
 
 {{<tabs labels="Application Performance | Application Security | Developer Platform | Network Services | Platform | Zero Trust">}}
 {{<tab label="application performance" no-code="true">}}
 
- Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- |
-| Caching/CDN | ✅ | ✅ | ✅ |
-| Cache Reserve | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
-| DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Secondary DNS | ⚫ | ⚫{{<fnref num="26">}} | 🚧{{<fnref num="1">}} |
-| Image Resizing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| Stream Delivery | ✅ | ✅ | ✅ |
-| Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |
-| Waiting Room | ⚫️ | ✅ | ✅ |
-| Web Analytics / Real User Monitoring (RUM) | ⚫️ | ⚫️ | ✘{{<fnref num="27">}} |
-| Zaraz | ✅ | ✅ | ✅ |
+ Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
+| --- | --- | --- | --- | --- | --- |
+| Caching/CDN | ✅ | ✅ | ✅ | US and EU `httpRequestsAdaptive` `httpRequestsAdaptiveGroups` | US and EU [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| Cache Reserve | ⚫️ | 🚧{{<fnref num="8">}} | ✅ | US and EU `cacheReserveOperationsAdaptiveGroups` `cacheReserveRequestsAdaptiveGroups` `cacheReserveStorageAdaptiveGroups` | US and EU <br> Only the field `CacheReserveUsed` in HTTP requests. |
+| DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} | US only `dnsAnalyticsAdaptive` `dnsAnalyticsAdaptiveGroups` | US only and Respects CMB [DNS Logs](/logs/reference/log-fields/zone/dns_logs/) |
+| Secondary DNS | ⚫ | ⚫{{<fnref num="26">}} | 🚧{{<fnref num="1">}} | Same as DNS. | Same as DNS. |
+| Image Resizing | ✅ | ✅ | 🚧{{<fnref num="1">}} | US only `imageResizingRequests1mGroups` | ✘
+| Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} | US only [`loadBalancingRequestsAdaptive`](/load-balancing/reference/load-balancing-analytics/#graphql-analytics) [`loadBalancingRequestsAdaptiveGroups`](/load-balancing/reference/load-balancing-analytics/#graphql-analytics) | ✘
+| Stream Delivery | ✅ | ✅ | ✅ | Same as CDN. | US and EU Part of HTTP requests |
+| Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} | US and EU <br> Only the field `upperTierColoName` part of `httpRequestsAdaptive` and `httpRequestsAdaptiveGroups` | US and EU [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| Waiting Room | ⚫️ | ✅ | ✅ | US and EU [`waitingRoomAnalyticsAdaptive`](/waiting-room/waiting-room-analytics/#graphql-analytics) [`waitingRoomAnalyticsAdaptiveGroups`](/waiting-room/waiting-room-analytics/#graphql-analytics)| ✘
+| Web Analytics / Real User Monitoring (RUM) | ⚫️ | ⚫️ | ✘{{<fnref num="27">}} | US only `rumWebVitalsEventsAdaptive` `rumWebVitalsEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumPageloadEventsAdaptiveGroups` | ✘
+| Zaraz | ✅ | ✅ | ✅ | US and EU `zarazActionsAdaptiveGroups` `zarazTrackAdaptiveGroups` `zarazTriggersAdaptiveGroups` | ✘
 
 {{</tab>}}
 {{<tab label="application security" no-code="true">}}
 
-| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- |
-| Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ |
-| Advanced DDoS Protection | ✅ | ✅ | 🚧{{<fnref num="3">}} |
-| API Shield | ✅ | ✅ | ✘{{<fnref num="4">}} |
-| Bot Management | ✅ | ✅ | 🚧{{<fnref num="5">}} |
-| DNS Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Page Shield | ✅ | ✅ | ✅ |
-| Rate Limiting | ✅ | ✅ | 🚧{{<fnref num="1">}} |
-| SSL | ✅ | ✅ | ✅ |
-| Cloudflare for SaaS | ✘ | ✅ | ✅ |
-| Turnstile | ⚫️ | ✘ | ✅ |
-| WAF/L7 Firewall | ✅ | ✅ | ✅ |
-| DMARC Management | ⚫️ | ⚫️ | ✅ |
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
+| --- | --- | --- | --- | --- | --- |
+| Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ | ✘ | ✘
+| Advanced DDoS Protection | ✅ | ✅ | 🚧{{<fnref num="3">}} | US only `dosdAttackAnalyticsGroups` `dosdNetworkAnalyticsAdaptiveGroups` `flowtrackdNetworkAnalyticsAdaptiveGroups` |  US only and Respects CMB [Network Analytics Logs](/logs/reference/log-fields/account/network_analytics_logs/) |
+| API Shield | ✅ | ✅ | ✘{{<fnref num="4">}} | US and EU [`apiGatewayGraphqlQueryAnalyticsGroups`](/api-shield/security/graphql-protection/configure/#gather-graphql-statistics) `apiGatewayMatchedSessionIDsAdaptiveGroups` <br> US only `apiRequestSequencesGroups` | US and EU Partially in [HTTP requests](/logs/reference/log-fields/zone/http_requests/) and [Firewall events](/logs/reference/log-fields/zone/firewall_events/) |
+| Bot Management | ✅ | ✅ | 🚧{{<fnref num="5">}} | US and EU `httpRequestsAdaptive` [`httpRequestsAdaptiveGroups`](/analytics/graphql-api/migration-guides/graphql-api-analytics/) [`firewallEventsAdaptive`](/analytics/graphql-api/tutorials/querying-firewall-events/) [`firewallEventsAdaptiveGroups`](https://blog.cloudflare.com/how-we-used-our-new-graphql-api-to-build-firewall-analytics/) | US and EU [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| DNS Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} | Same as DNS | US only and Respects CMB [DNS Firewall Logs](/logs/reference/log-fields/account/dns_firewall_logs/) |
+| Page Shield | ✅ | ✅ | ✅ | US and EU [`pageShieldReportsAdaptiveGroups`](/page-shield/policies/violations/#get-policy-violations-via-graphql-api) | US only and Respects CMB |
+| Rate Limiting | ✅ | ✅ | 🚧{{<fnref num="1">}} | ✘ | US and EU Partially in Firewall events. |
+| SSL | ✅ | ✅ | ✅ | US and EU <br> Only the fields `clientSSLProtocol` and `ja3Hash` part of `httpRequestsAdaptive` and `httpRequestsAdaptiveGroups` | US and EU [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| Cloudflare for SaaS | ✘ | ✅ | ✅ | US and EU [`clientRequestHTTPHost`](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/#explore-customer-usage) ([GraphQL Tutorial](/analytics/graphql-api/tutorials/end-customer-analytics/)) | US and EU [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| Turnstile | ⚫️ | ✘ | ✅ | US and EU [`turnstileAdaptiveGroups`](/turnstile/reference/turnstile-analytics/#graphql) | ✘ |
+| WAF/L7 Firewall | ✅ | ✅ | ✅ | US and EU [`firewallEventsAdaptive`](/analytics/graphql-api/tutorials/querying-firewall-events/) [`firewallEventsAdaptiveGroups`](https://blog.cloudflare.com/how-we-used-our-new-graphql-api-to-build-firewall-analytics/) [`firewallEventsAdaptiveByTimeGroups`](/logs/reference/change-notices/2023-02-01-security-fields-updates/) | US and EU [Firewall events](/logs/reference/log-fields/zone/firewall_events/) |
+| DMARC Management | ⚫️ | ⚫️ | ✅ | US and EU `dmarcReportsAdaptive` `dmarcReportsSourcesAdaptiveGroups` | ✘ |
 
 {{</tab>}}
 {{<tab label="developer platform" no-code="true">}}
 
-| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- |
-| Cloudflare Images | ⚫️ | ✘ | ✘ |
-| Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | ✘ |
-| D1 | ⚫️ | ⚫️ | ✅ | 
-| Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
-| Email Routing | ⚫️ | ⚫️ | ✅ |
-| R2 | ⚫️ | 🚧{{<fnref num="32">}} | ✅{{<fnref num="33">}} |
-| Stream | ⚫️ | ✘ | ✘ |
-| Workers (deployed on a Zone) | ✅ | ✅{{<fnref num="36">}}  | 🚧{{<fnref num="1">}} |
-| Workers KV | ⚫️ | ✘ | ✘ |
-| Workers.dev | ✘ | ✘ | ✘ |
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
+| --- | --- | --- | --- | --- | --- |
+| Cloudflare Images | ⚫️ | ✘ | ✘ | US only `imagesRequestsAdaptiveGroups` | ✘ |
+| Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | 🚧{{<fnref num="1">}} |  US only `pagesFunctionsInvocationsAdaptiveGroups` (Page Functions) | ✘ |
+| D1 | ⚫️ | ⚫️ | ✅ | US and EU [`d1AnalyticsAdaptiveGroups`](/d1/platform/metrics-analytics/#query-via-the-graphql-api) | ✘ |
+| Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} | US only [`durableObjectsInvocationsAdaptiveGroups`](/durable-objects/platform/graphql-analytics/) [`durableObjectsPeriodicGroups`](/durable-objects/platform/graphql-analytics/) [`durableObjectsStorageGroups`](/durable-objects/platform/graphql-analytics/) [`durableObjectsSubrequestsAdaptiveGroups`](/durable-objects/platform/graphql-analytics/) | ✘ | 
+| Email Routing | ⚫️ | ⚫️ | ✅ | US and EU `emailRoutingAdaptive` `emailRoutingAdaptiveGroups` | ✘
+| R2 | ⚫️ | 🚧{{<fnref num="32">}} | ✅{{<fnref num="33">}} | US and EU `r2OperationsAdaptiveGroups` `r2StorageAdaptiveGroups` | ✘ |
+| Stream | ⚫️ | ✘ | ✘ | US only [`streamMinutesViewedAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) [`videoPlaybackEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) [`videoBufferEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) [`videoQualityEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) | ✘ |
+| Workers | ✅{{<fnref num="39">}} | ✅{{<fnref num="36">}}  | 🚧{{<fnref num="1">}} | US and EU [`workersAnalyticsEngineAdaptiveGroups`](/analytics/analytics-engine/get-started/#4-query-data-using-graphql-and-sql-api) `workerPlacementAdaptiveGroups` <br> US only [`workersInvocationsAdaptive`](/analytics/graphql-api/tutorials/querying-workers-metrics/) `workersInvocationsScheduled` `workersSubrequestsAdaptiveGroups` | US only and Respects CMB [Workers Trace Events](/logs/reference/log-fields/account/workers_trace_events/) |
+| Workers KV | ⚫️ | ✘ | ✘ | ✘ | ✘ |
 
 {{</tab>}}
 {{<tab label="network services" no-code="true">}}
 
-| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- |
-| Aegis (Egress IP) | ⚫️ | ⚫️{{<fnref num="28">}} | ⚫️ | 
-| Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
-| BYOIP | ⚫️ | ✅ | ⚫️ |
-| Network Error Logging (NEL) / Edge Reachability / Last Mile Insights | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Magic Firewall | ⚫️ | ⚫️{{<fnref num="35">}} | 🚧{{<fnref num="1">}} |
-| Magic Network Monitoring | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Magic Transit | ⚫️ | ⚫️{{<fnref num="35">}} | 🚧{{<fnref num="1">}} |
-| Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Spectrum | ✅ | ✅{{<fnref num="34">}}  | 🚧{{<fnref num="1">}} |
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
+| --- | --- | --- | --- | --- | --- |
+| Aegis (Egress IP) | ⚫️ | ⚫️{{<fnref num="28">}} | ⚫️ | ✘ | US and EU <br> Only the field `EdgeServerIP` part of [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} | ✘ | US and EU Partially in [HTTP requests](/logs/reference/log-fields/zone/http_requests/) |
+| BYOIP | ⚫️ | ✅ | ⚫️ | ✘ | ✘ |
+| Network Error Logging (NEL) / Edge Reachability / Last Mile Insights | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} | US only `nelReportsAdaptiveGroups` | US only <br> [NEL reports](/logs/reference/log-fields/zone/nel_reports/) |
+| Magic Firewall | ⚫️ | ⚫️{{<fnref num="35">}} | 🚧{{<fnref num="1">}} | US only [`magicFirewallSamplesAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/) [`magicFirewallNetworkAnalyticsAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/#example-queries-for-magic-firewall) | US only and Respects CMB [Magic IDS Detections](/logs/reference/log-fields/account/magic_ids_detections/) and [Network Analytics Logs](/logs/reference/log-fields/account/network_analytics_logs/) |
+| Magic Network Monitoring | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} | US and EU [`mnmFlowDataAdaptiveGroups`](/magic-network-monitoring/tutorials/graphql-analytics/) | ✘
+| Magic Transit | ⚫️ | ⚫️{{<fnref num="35">}} | 🚧{{<fnref num="1">}} | US only [`magicTransitNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) [`flowtrackdNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) [`magicTransitTunnelHealthChecksAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/) [`magicTransitTunnelTrafficAdaptiveGroups`](/magic-transit/analytics/query-bandwidth/) | US only and Respects CMB [Network Analytics Logs](/logs/reference/log-fields/account/network_analytics_logs/) | 
+| Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} | US and EU `MagicWANConnectorMetricsAdaptiveGroups` | US only and Respects CMB [Network Analytics Logs](/logs/reference/log-fields/account/network_analytics_logs/) | 
+| Spectrum | ✅ | ✅{{<fnref num="34">}}  | 🚧{{<fnref num="1">}} | US only [`spectrumNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) | US only and Respects CMB [Spectrum events](/logs/reference/log-fields/zone/spectrum_events/) |
 
 {{</tab>}}
 {{<tab label="platform" no-code="true">}}
 
-| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- |
-| Audit Logs | ⚫️ | ✅ | ⚫️{{<fnref num="29">}} |
-| GraphQL Analytics API | ⚫️ | ⚫️ | 🚧{{<fnref num="30">}} |
-| Instant Logs | ⚫️ | ✅ | ✅{{<fnref num="31">}} |
-| Logpull | ⚫️ | ⚫️ | 🚧{{<fnref num="12">}} |
-| Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
+| --- | --- | --- | --- | --- | --- |
+| Audit Logs | ⚫️ | ✅ | ⚫️{{<fnref num="29">}} | ✘ |  US only <br> [Audit logs](/logs/reference/log-fields/account/audit_logs/) | 
+| GraphQL Analytics API | ⚫️ | ⚫️ | 🚧{{<fnref num="30">}} | [All GraphQL Analytics API datasets](m/analytics/graphql-api/features/discovery/introspection/) | ⚫️ |
+| Instant Logs | ⚫️ | ✅ | ✅{{<fnref num="31">}} | ⚫️ | ⚫️ | 
+| Logpull | ⚫️ | ⚫️ | 🚧{{<fnref num="12">}} | ⚫️ | ⚫️{{<fnref num="37">}} |
+| Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} | US only [`logpushHealthAdaptiveGroups`](/logs/get-started/alerts-and-analytics/#enable-logpush-health-analytics) | [All Logpush datasets](/logs/reference/log-fields/) |
 
 {{</tab>}}
 {{<tab label="zero trust" no-code="true">}}
 
-| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| --- | --- | --- | --- |
-| Access | 🚧{{<fnref num="14">}} | 🚧{{<fnref num="15">}} | 🚧{{<fnref num="16">}} |
-| Area 1 | ⚫️ | ✅{{<fnref num="23">}} | 🚧{{<fnref num="24">}} |
-| Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ |
-| CASB | ⚫️ | ⚫️ | ✘ |
-| Cloudflare Tunnel | ⚫️ | 🚧{{<fnref num="18">}} | ⚫️ |
-| DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | ✘ |
-| Gateway | 🚧{{<fnref num="20">}} | 🚧{{<fnref num="21">}} | 🚧{{<fnref num="22">}} |
-| WARP | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
+| --- | --- | --- | --- | --- | --- |
+| Access | 🚧{{<fnref num="14">}} | 🚧{{<fnref num="15">}} | 🚧{{<fnref num="16">}} | US and EU [`accessLoginRequestsAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-access-login-events/) | US only and Respects CMB (for edge non-identity events) <br> [Access requests](/logs/reference/log-fields/account/access_requests/) |
+| Area 1 | ⚫️ | ✅{{<fnref num="23">}} | 🚧{{<fnref num="24">}} | ✘{{<fnref num="38">}}  | ✘{{<fnref num="38">}} |
+| Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ | US and EU <br> Only the field `isIsolated` part of `GatewayL7RequestsAdaptiveGroups` datset | US and EU <br> Only the field `IsIsolated` in [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/) |
+| CASB | ⚫️ | ⚫️ | ✘ | ✘ | US only <br> [CASB Findings](/logs/reference/log-fields/account/casb_findings/) | 
+| Cloudflare Tunnel | ⚫️ | 🚧{{<fnref num="18">}} | ⚫️ | ✘ | US only and Respects CMB <br> Only the field `DestinationTunnelID` in [Zero Trust Network Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) |
+| DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | ✘ | Part of Gateway HTTP / Gateway L7 | ✘ | 
+| Gateway | 🚧{{<fnref num="20">}} | 🚧{{<fnref num="21">}} | 🚧{{<fnref num="22">}} | US and EU `gatewayL7RequestsAdaptiveGroups` `gatewayL4SessionsAdaptiveGroups` <br> US only `gatewayL4DownstreamSessionsAdaptiveGroups` `gatewayL4UpstreamSessionsAdaptiveGroups` | US and EU [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/), [Gateway Network](/logs/reference/log-fields/account/gateway_network/), and [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/) <br> US only and Respects CMB [Zero Trust Network Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | 
+| WARP | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} | US and EU `warpDeviceAdaptiveGroups` | US only <br> [Device posture results](/logs/reference/log-fields/account/device_posture_results/) |
 
 {{</tab>}}
 {{</tabs>}}
@@ -147,7 +148,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="5">}}Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.{{</fnentry>}}
 {{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/platform/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
 {{<fnentry num="9">}}Argo cannot be used with Regional Services.{{</fnentry>}}
-{{<fnentry num="8">}}You can not yet specify region location for object storage; this is expected in 2023.{{</fnentry>}}
+{{<fnentry num="8">}}You can not yet specify region location for object storage.{{</fnentry>}}
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}
 {{<fnentry num="11">}}Only when using [Custom Domain](/pages/platform/custom-domains/) set to a region.{{</fnentry>}}
 {{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.{{</fnentry>}}
@@ -174,5 +175,8 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="33">}}[Jurisdiction restrictions](/r2/reference/data-location/#jurisdictional-restrictions).{{</fnentry>}}
 {{<fnentry num="34">}}HTTPS Spectrum Applications only.{{</fnentry>}}
 {{<fnentry num="35">}}No decryption on L3.{{</fnentry>}}
-{{<fnentry num="36">}}Regional Services will not work with Edgeworker Subrequests.{{</fnentry>}}
+{{<fnentry num="36">}}Only when using [Custom Domain or Route](/workers/configuration/routing/) set to a region. Regional Services will not work with Edgeworker Subrequests.{{</fnentry>}}
+{{<fnentry num="37">}}Logpull is considered a legacy feature and we recommend using [Logpush](/logs/about/) or [Logs Engine](/logs/r2-log-retrieval/) instead for better performance and functionality.{{</fnentry>}}
+{{<fnentry num="38">}}Review [Reporting](/email-security/reporting/) section.{{</fnentry>}}
+{{<fnentry num="39">}}Only when using Custom Domain with a [Custom Certificate](/ssl/edge-certificates/custom-certificates/).{{</fnentry>}}
 {{</fnsection>}}
