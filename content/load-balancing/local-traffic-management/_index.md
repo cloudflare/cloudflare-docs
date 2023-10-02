@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Local traffic management
+title: Local traffic management (LTM)
 weight: 6
 layout: single
 ---
