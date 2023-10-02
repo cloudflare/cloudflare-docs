@@ -122,6 +122,10 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 {{<render file="gateway/_order-of-precedence.md" withParameters="DNS, network, or HTTP">}}
 
+{{<Aside type="warning" header="Terraform precedence limitation">}}
+To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This may cause errors when reordering policies. To reorder policies created or modified via Terraform, manually set the precedence of your policies via the [Cloudflare API](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule).
+{{</Aside>}}
+
 ## Example
 
 Suppose you have a list of policies arranged in the following order of precedence:
