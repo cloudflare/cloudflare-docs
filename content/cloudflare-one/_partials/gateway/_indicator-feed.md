@@ -6,7 +6,7 @@ _build:
 inputParameters: API_param
 ---
 
-Use this selector to match against custom indicator feeds. To use indicator feeds, a designated third-party vendor must assign them to your account.
+Use this selector to match against custom indicator feeds. To enable this selector, a designated third-party vendor must assign a custom indicator feed to your account.
 
 | UI name        | API example         | Evaluation phase      |
 | -------------- | ------------------- | --------------------- |
