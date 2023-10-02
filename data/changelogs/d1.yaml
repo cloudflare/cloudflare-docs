@@ -2,8 +2,8 @@
 link: "/d1/changelog/"
 productName: D1
 entries:
-- publish_date: '2023-10-05'
-  title: Database limits substantially increased
+- publish_date: '2023-10-03'
+  title: Create up to 50,000 D1 databases 
   description: |-
     Developers using D1 on a Workers paid plan can now create up to 50,000 databases as part of ongoing increases to D1's limits.
 
