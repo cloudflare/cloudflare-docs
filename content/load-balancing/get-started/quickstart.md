@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Quickstart
-weight: 1
+weight: 2
 ---
 
 # Quickstart
