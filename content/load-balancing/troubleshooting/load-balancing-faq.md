@@ -38,7 +38,7 @@ ___
 
 To learn more about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details).
 
-If you know that your origin server is healthy but load balancing is reporting it as unhealthy, check the following settings on the [origin's monitor](/load-balancing/understand-basics/monitors):
+If you know that your origin server is healthy but load balancing is reporting it as unhealthy, check the following settings on the [origin's monitor](/load-balancing/monitors):
 
 -   Perform a `curl` request against the configured endpoint. Make sure the response you are seeing matches your settings for the monitor.
 -   Ensure your firewall or web server does not block or rate limit [our health monitors](/fundamentals/reference/cloudflare-site-crawling/#specific-products) and accepts requests from [Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/).
@@ -89,5 +89,5 @@ ___
 ## Related resources
 
 -   [Origin and pool health](/load-balancing/understand-basics/health-details)
--   [Monitors](/load-balancing/understand-basics/monitors)
+-   [Monitors](/load-balancing/monitors)
 -   [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/)

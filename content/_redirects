@@ -519,7 +519,7 @@
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
-/load-balancing/create-load-balancer-ui/ /load-balancing/how-to/create-load-balancer/ 301
+/load-balancing/create-load-balancer-ui/ /load-balancing/load-balancers/create-load-balancer/ 301
 /load-balancing/how-to/create-pool/ /load-balancing/pools/create-pool/ 301
 /load-balancing/how-to/create-monitor/ /load-balancing/monitors/create-monitor/ 301
 /load-balancing/how-to/create-load-balancer/ /load-balancing/load-balancers/create-load-balancer/ 301
