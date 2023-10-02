@@ -1,24 +1,60 @@
 ---
 pcx_content_type: how-to
-title: Tunnel Virtual Networks
+title: Virtual networks
 weight: 5
 ---
 
-# Tunnel Virtual Networks
+# Virtual networks
 
-[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Tunnel Virtual Networks allow you to manage different private networks which have overlapping IP ranges.
+[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Virtual networks allow you to manage different private networks which have overlapping IP ranges.
 
 For example, an organization may want to expose two distinct virtual private cloud (VPC) networks which they consider to be “production” and “staging”. However, if the two private networks happened to receive the same RFC 1918 IP assignment, there may be two different resources with the same IP address. By creating two separate virtual networks, you can deterministically route traffic to duplicative private addresses like `10.128.0.1/32` staging and `10.128.0.1/32` production. End users would then select which network to connect to by accessing their WARP client settings.
 
+## Use cases
+
+Here are a few scenarios where virtual networks may prove useful:
+
+- Manage production and staging environments that use the same address space.
+- Manage acquisitions or mergers between organizations that use the same address space.
+- Allow IT professional services to access their customer's network for various administration and management purposes.
+- Allow developers or homelab users to deterministically route traffic through their home network to enforce additional security controls.
+- Guarantee additional segmentation (beyond just policy enforcement) between networks and resources for security reasons, while keeping all configuration within a single Cloudflare account.
+
 ## Prerequisites
 
-- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#1-download-and-install-cloudflared) on each private network.
+- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#1-download-and-install-cloudflared) on each private network.
+- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on user devices.
 
-{{<render file="_warp-to-tunnel-client.md">}}
+## Create a virtual network
 
-## Route IPs over virtual networks
+The following example demonstrates how to add two overlapping IP routes to Cloudflare (`10.128.0.1/32` staging and `10.128.0.1/32` production).
+{{<tabs labels="Dashboard | CLI">}}
+{{<tab label="dashboard" no-code="true">}}
 
-The following example demonstrates how to add two overlapping IP routes to Cloudflare.
+To route overlapping IPs over virtual networks:
+
+1. First, create two unique virtual networks:
+    1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+    2. Find the **Virtual networks** setting and select **Manage**.
+    3. Select **Create virtual network**.
+    4. Name your virtual network `staging-vnet` and select **Save**.
+    5. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
+2. Next, create a Cloudflare Tunnel for each private network:
+    1. Go to **Access** > **Tunnels**.
+    2. Select **Create a tunnel**.
+    3. Name your tunnel `Staging tunnel` and select **Save tunnel**.
+    4. Install the connector within your staging environment.
+    5. In the **Private Network** tab, add `10.128.0.1/32`.
+    6. Select **Additional settings**. Under **Virtual networks**, select _staging-vnet_.
+    7. Save the tunnel.
+    8. Repeat Steps 2a-2g to create another tunnel called `Production tunnel`. Be sure to install the connector within your production environment and assign the route to _production-vnet_.
+
+We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+
+{{</tab>}}
+{{<tab label="cli" no-code="true">}}
+
+To route overlapping IPs over virtual networks:
 
 1. Create a tunnel for each private network:
 
@@ -87,10 +123,8 @@ If no `--vnet` option is specified, the tunnel will be assigned to the default v
     ```
 
 We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
- 
-## Enable virtual networks
 
-1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
+6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
    
     ```txt
     tunnel: <Tunnel-UUID>
@@ -99,27 +133,40 @@ We now have two overlapping IP addresses routed over `staging-vnet` and `product
         enabled: true
     ```
 
-2. Run your tunnel.
+7. Run your tunnel.
 
     ```sh
     $ cloudflared tunnel run staging-tunnel
     ```
 
-3. Within your production environment, repeat Steps 1 and 2 for `production-tunnel`.
+8. Within your production environment, repeat Steps 6 and 7 for `production-tunnel`.
 
 You can use now the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
 
-## Connect to a virtual network
-
-1. Open the WARP client on your device.
-
-2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
-
-3. Choose the virtual network you want to connect to, for example `staging-vnet`.
-
-Now when you visit `10.128.0.3/32`, WARP routes your request to the staging environment.
+{{</tab>}}
+{{</tabs>}}
 
 ## Delete a virtual network
+
+{{<tabs labels="Dashboard | CLI">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To delete a virtual network:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
+
+2. Next, go to **Settings** > **WARP Client**.
+
+3. Find the **Virtual networks** setting and select **Manage**.
+
+4. Select the three-dot menu for your virtual network and select **Delete**.
+
+You can optionally delete the tunnel associated with your virtual network.
+
+{{</tab>}}
+{{<tab label="cli" no-code="true">}}
+
+To delete a virtual network:
 
 1. Delete all IP routes in the virtual network. For example,
 
@@ -138,5 +185,18 @@ Now when you visit `10.128.0.3/32`, WARP routes your request to the staging envi
     ```sh
     $ cloudflared tunnel vnet delete staging-vnet
     ```
-    
+
 You can verify that the virtual network was successfully deleted by typing `cloudflared tunnel vnet list`.
+
+{{</tab>}}
+{{</tabs>}}
+
+## Connect to a virtual network
+
+1. Open the WARP client on your device.
+
+2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
+
+3. Choose the virtual network you want to connect to, for example `staging-vnet`.
+
+When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.

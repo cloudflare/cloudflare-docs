@@ -28,12 +28,12 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const = await ai.run('@cf/huggingface/distilbert-sst-2-int8', {
+    const response = await ai.run('@cf/huggingface/distilbert-sst-2-int8', {
         text: "This pizza is great!" 
       }
     );
 
-    return new Response(JSON.stringify(answer));
+    return Response.json(response)
   },
 };
 ```
@@ -44,7 +44,7 @@ export default {
 ```js
 async function run(model, input) {
   const response = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
+    `https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${model}`,
     {
       headers: { Authorization: "Bearer {API_TOKEN}" },
       method: "POST",
@@ -65,26 +65,25 @@ run('@cf/huggingface/distilbert-sst-2-int8', { text: 'This pizza is great!' }).t
 {{<tab label="python">}}
 
 ```py
-import requests
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/"
+headers = {"Authorization": "Bearer {API_KEY}"}
 
-API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
-headers = {"Authorization": "Bearer {API_TOKEN}"}
-
-def run(model, input)
+def run(model, input):
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
     
-output = run("@cf/huggingface/distilbert-sst-2-int88", { text: "This pizza is great!" })
+output = run("@cf/huggingface/distilbert-sst-2-int8", { "text": "This pizza is great!" })
+print(output)
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
-    -X POST \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "text": "This pizza is great!" }'
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/huggingface/distilbert-sst-2-int8 \
+  -X POST \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{ "text": "This pizza is great!" }'
 ```
 
 {{</tab>}}

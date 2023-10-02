@@ -157,3 +157,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 ```
 
 {{<render file="_api-create-ruleset-with-rule.md">}}
+
+---
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks for working with rate limiting rules at the zone level:
+
+{{<render file="_rules-next-steps-table.md" withParameters="rate limiting rules;;http_ratelimit">}}

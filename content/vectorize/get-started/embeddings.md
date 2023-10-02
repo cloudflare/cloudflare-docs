@@ -12,16 +12,16 @@ Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
-If this is your first time using Vectorize or a vector database, we recommend starting with the [introductory guide](/vectorize/get-started/intro/) first.
+If this is your first time using Vectorize or a vector database, Cloudflare recommends starting with the [Get started](/vectorize/get-started/intro/) guide.
 
 {{</Aside>}}
 
-This advanced guide will instruct you through:
+This guide will instruct you through:
 
-- Creating a Vectorize index
+- Creating a Vectorize index.
 - Connecting a [Cloudflare Worker](/workers/) to your index.
-- Using [Workers AI](/workers-ai/) to generate vector embeddings
-- Using Vectorize to query those vector embeddings
+- Using [Workers AI](/workers-ai/) to generate vector embeddings.
+- Using Vectorize to query those vector embeddings.
 
 ## Prerequisites
 
@@ -35,7 +35,7 @@ To continue:
 
 You will create a new project that will contain a Worker script, which will act as the client application for your Vectorize index.
 
-Create a new project named `embeddings-tutorial` by running:
+Open your terminal and create a new project named `embeddings-tutorial` by running the following command:
 
 ```sh
 $ npm create cloudflare@latest
@@ -70,7 +70,7 @@ Vectorize is currently in open beta. Read [the announcement blog](https://blog.c
 
 {{</Aside>}}
 
-A vector database is distinct from a traditional SQL or NoSQL database: it is designed to store vector embeddings, which are representations of data, but not the original data itself.
+A vector database is distinct from a traditional SQL or NoSQL database. A vector database is designed to store vector embeddings, which are representations of data, but not the original data itself.
 
 To create your first Vectorize index, change into the directory you just created for your Workers project:
 
@@ -78,17 +78,17 @@ To create your first Vectorize index, change into the directory you just created
 $ cd embeddings-tutorial
 ```
 
-To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
+To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
 - A combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment - for example, "production-doc-search" or "dev-recommendation-engine"
 - Only used for describing the index, and is not directly referenced in code.
 
-In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
+In addition, define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
 {{<render file="_vectorize-wrangler-version.md">}}
 
-Run the following `wrangler vectorize` command, ensuring that the `dimensions` are set to `768`: this is important, as the Workers AI model we will use in this tutorial outputs vectors with 768 dimensions.
+Run the following `wrangler vectorize` command, ensuring that the `dimensions` are set to `768`: this is important, as the Workers AI model used in this tutorial outputs vectors with 768 dimensions.
 
 ```sh
 $ npx wrangler vectorize create embeddings-index --dimensions=768 --metric=cosine
@@ -113,8 +113,8 @@ To bind your index to your Worker, add the following to the end of your `wrangle
 filename: wrangler.toml
 ---
 
-[[[vectorize]]
-binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+[[vectorize]]
+binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "embeddings-index"
 ```
 
@@ -126,34 +126,34 @@ Specifically:
 
 ## 4. Set up Workers AI
 
-Before we can deploy our embedding example, we need to make sure our Worker can use our model catalog, including the [text embedding model](/workers-ai/models/embedding/) built-in.
+Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/embedding/) built-in.
 
 From within the `embeddings-tutorial` directory, install the `Workers AI` package:
 
 ```sh
-npm i @cloudflare/ai
+$ npm i @cloudflare/ai
 ```
 
-Open your `wrangler.toml` file in your editor again and add the new `[[ai]]` binding to make Workers AI's models available in your Worker.
+Open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 
-[[[vectorize]]
-binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+[[vectorize]]
+binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "embeddings-index"
 
-[[ai]]
-binding = "AI" # i.e. available in your Worker on env.AI
+[ai]
+binding = "AI" # available in your Worker on env.AI
 ```
 
-With Workers AI ready, we can write our Worker.
+With Workers AI ready, you can write code in your Worker.
 
-## 5. Write our Worker
+## 5. Write code in your Worker
 
-First, go to your `embeddings-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
+To write code in your Worker, go to your `embeddings-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
 Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
 
@@ -179,19 +179,19 @@ export default {
 			return new Response('', { status: 404 });
 		}
 
-		// We only need to generate vector embeddings just the once (or as our
+		// You only need to generate vector embeddings once (or as
 		// data changes), not on every request
 		if (path === '/insert') {
-			// In a real-world application, we could read in content from R2 or
+			// In a real-world application, you could read content from R2 or
 			// a SQL database (like D1) and pass it to Workers AI
 			const stories = ['This is a story about an orange cloud', 'This is a story about a llama', 'This is a story about a hugging emoji'];
 			const modelResp: EmbeddingResponse = await ai.run('@cf/baai/bge-base-en-v1.5', {
 				text: stories,
 			});
 
-			// We need to convert the vector embeddings into a format Vectorize can accept.
-			// Each vector needs an id, a value (the vector) and optional metadata.
-			// In a real app, our ID would typicaly be bound to the ID of the source
+			// Convert the vector embeddings into a format Vectorize can accept.
+			// Each vector needs an ID, a value (the vector) and optional metadata.
+			// In a real application, your ID would be bound to the ID of the source
 			// document.
 			let vectors: VectorizeVector[] = [];
 			let id = 1;
@@ -204,7 +204,7 @@ export default {
 			return Response.json(inserted);
 		}
 
-		// Our query: we expect this to match vector id: 1 in this simple example
+		// Your query: expect this to match vector ID. 1 in this example
 		let userQuery = 'orange cloud';
 		const queryVector: EmbeddingResponse = await ai.run('@cf/baai/bge-base-en-v1.5', {
 			text: [userQuery],
@@ -212,9 +212,9 @@ export default {
 
 		let matches = await env.TEXT_EMBEDDINGS.query(queryVector.data[0], { topK: 1 });
 		return Response.json({
-			// We expect vector id: 1 to be our top match with a score of
+			// Expect a vector ID. 1 to be your top match with a score of
 			// ~0.896888444
-			// We are using a cosine distance metric, where the closer to one,
+			// This tutorial uses a cosine distance metric, where the closer to one,
 			// the more similar.
 			matches: matches,
 		});
@@ -232,7 +232,7 @@ $ wrangler login
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
-From here, you can deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
+From here, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
 $ npx wrangler deploy
@@ -241,25 +241,27 @@ $ npx wrangler deploy
 
 ## 7. Query your index
 
-You can now visit the URL for your newly created project to insert vectors and then query them. With the URL for your deployed Worker - e.g. `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` - open your browser and:
+You can now visit the URL for your newly created project to insert vectors and then query them. 
 
-1. Insert our vectors first by visiting `/insert`
-2. Query our index by visiting the index route - `/`
+With the URL for your deployed Worker (for example,`https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev/`), open your browser and:
 
-This should return the following:
+1. Insert your vectors first by visiting `/insert`.
+2. Query your index by visiting the index route - `/`.
+
+This should return the following JSON:
 
 ```json
 {"matches":{"count":1,"matches":[{"score":0.896888444,"vectorId":"1"}]}}
 ```
 
-We can extend this example by:
+Extend this example by:
 
-- Adding more inputs and generating a larger set of vectors
-- Accepting a custom query parameter passed in the URL - e.g. via `URL.searchParams`
-- Creating a new index with a different [distance metric](/vectorize/learning/create-indexes/#distance-metrics) and observing how our scores change in response to our inputs.
+- Adding more inputs and generating a larger set of vectors.
+- Accepting a custom query parameter passed in the URL, for example via `URL.searchParams`.
+- Creating a new index with a different [distance metric](/vectorize/learning/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
 
 ## Next steps
 
-- Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize
-- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/)
-- See [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers
+- Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
+- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
+- Read [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers.

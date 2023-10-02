@@ -16,7 +16,7 @@ Local development uses local storage. It cannot access data stored on Cloudflare
 
 ## KV namespaces
 
-[Workers KV](/workers/wrangler/workers-kv/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
+[Workers KV](/kv/learning/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.

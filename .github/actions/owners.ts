@@ -35,6 +35,7 @@ export const OWNERS: Record<string, string[]> = {
   firewall: ["pedrosousa"],
   fundamentals: ["jason-cf"],
   "health-checks": ["RebeccaTamachiro"],
+  "hyperdrive": ["elithrar", "a-robinson", "Maddy-Cloudflare"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
   kv: ["Maddy-Cloudflare"],
@@ -77,7 +78,7 @@ export const OWNERS: Record<string, string[]> = {
   "warp-client": ["haleycode"],
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
-  "vectorize": ["elithrar", "pdwittig"],
+  "vectorize": ["elithrar", "pdwittig", "Maddy-Cloudflare"],
   "workers-ai": ["irvinebroque", "pdwittig"],
   zaraz: ["haleycode"],
 };
