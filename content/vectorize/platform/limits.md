@@ -15,7 +15,7 @@ The following limits apply to accounts, indexes and vectors (as specified):
 
 | Feature                           | Current Limit                               |
 | --------------------------------- | ------------------------------------------- |
-| Indexes per account               | 10 indexes <sup>beta</sup>                  |
+| Indexes per account               | 100 indexes <sup>beta</sup>                 |
 | Maximum dimensions per vector     | 1536 dimensions <sup>beta</sup>             |
 | Maximum vector ID length          | 64 bytes                                    |
 | Metadata per vector               | 10KiB <sup>beta</sup>                       |
