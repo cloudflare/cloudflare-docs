@@ -185,7 +185,7 @@ The JSON object properties for a list item are defined as follows:
             <td><code>ip</code><br />{{<type>}}String{{</type>}}</td>
             <td>An IP address or CIDR range.</td>
             <td>
-              <p>Applies only to custom lists with IP adresses (IP lists).</p>
+              <p>Applies only to custom lists with IP addresses (IP lists).</p>
               <p>Any of these formats can exist in the same custom list with IP addresses:
                 <ul>
                     <li>IPv4 address</li>
