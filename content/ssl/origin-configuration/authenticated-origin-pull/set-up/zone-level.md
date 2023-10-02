@@ -24,7 +24,7 @@ To use a custom certificate, follow the API instructions to [upload a custom cer
 
 {{<Aside type="warning">}}
 
-Although Cloudflare provides you a certificate to easily confirgure zone-level authenticated origin pulls, if you want more strict security, you should upload your own certificate. 
+Although Cloudflare provides you a certificate to easily configure zone-level authenticated origin pulls, this certificate is not exclusive to your account and only guarantees that a request is coming from the Cloudflare network. If you want more strict security, you should upload your own certificate. 
 
 Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
 
