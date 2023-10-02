@@ -76,7 +76,7 @@ regex_replace(http.host, r"\\", "a")
 http.request.uri.path matches r"/api/login\.aspx$"
 ```
 
-## Case sensitivity and regular expressions in values
+### Case sensitivity and regular expressions in values
 
 Since the evaluation of string literal values in expressions is case-sensitive, consider writing more than one simple expression to capture variants.
 
