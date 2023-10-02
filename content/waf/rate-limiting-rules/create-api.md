@@ -156,26 +156,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }'
 ```
 
-
-# How to list the rules
-
-
-If you are interested to list all the rules created under the Rate Limiting ruleset, you need to list them using the specific Ruleset ID.
-
-For example:
-
-```bash
----
-highlight: 14-15
----
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>"
-```
-
-
-Please, check more details and the endpoints available, [here](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view/#view-a-specific-ruleset)
-
-
-
 {{<render file="_api-create-ruleset-with-rule.md">}}
 
+---
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks for working with rate limiting rules at the zone level:
+
+{{<render file="_rules-next-steps-table.md" withParameters="rate limiting rules;;http_ratelimit">}}
