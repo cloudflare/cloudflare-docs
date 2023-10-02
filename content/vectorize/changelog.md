@@ -11,7 +11,7 @@ rss: file
 
 ### Increased indexes per account limits
 
-You can now create up to 100 Vectorize indexes per account. See the [limits documentation](/vectorize/platform/limits/) for details on other limits, many of which will increase during the beta period.
+You can now create up to 100 Vectorize indexes per account. Read the [limits documentation](/vectorize/platform/limits/) for details on other limits, many of which will increase during the beta period.
 
 ## 2023-09-27
 
