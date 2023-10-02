@@ -34,7 +34,6 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 To route overlapping IPs over virtual networks:
 
 1. First, create two unique virtual networks:
-
     1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
     2. Find the **Virtual networks** setting and select **Manage**.
     3. Select **Create virtual network**.
