@@ -23,5 +23,5 @@ During the open beta, the following limits are place:
 Note that these limits are estimates, subject to change, and will vary by location while in Open Beta.
 
  **Other Limits**
-- @cf/meta/llama-2-7b-chat-int8 (max tokens) - 768 input / 256 output
-- @cf/meta/m2m100-1.2b (max tokens) - 256 output
+- [@cf/meta/llama-2-7b-chat-int8](/workers-ai/models/llm/) (max tokens) - 768 input / 256 output
+- [@cf/meta/m2m100-1.2b](/workers-ai/models/translation/) (max tokens) - 256 output

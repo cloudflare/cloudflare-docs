@@ -61,7 +61,7 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
-```js
+```sh
 $ npx wrangler dev --remote
 ```
 
