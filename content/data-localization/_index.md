@@ -118,7 +118,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary | GraphQL Analytics API Field(s) | Logpush |
 | --- | --- | --- | --- | --- | --- |
 | Audit Logs | ⚫️ | ✅ | ⚫️{{<fnref num="29">}} | ✘ |  US only <br> [Audit logs](/logs/reference/log-fields/account/audit_logs/) | 
-| GraphQL Analytics API | ⚫️ | ⚫️ | 🚧{{<fnref num="30">}} | [All GraphQL Analytics API datasets](m/analytics/graphql-api/features/discovery/introspection/) | ⚫️ |
+| GraphQL Analytics API | ⚫️ | ⚫️ | 🚧{{<fnref num="30">}} | [All GraphQL Analytics API datasets](/analytics/graphql-api/features/discovery/introspection/) | ⚫️ |
 | Instant Logs | ⚫️ | ✅ | ✅{{<fnref num="31">}} | ⚫️ | ⚫️ | 
 | Logpull | ⚫️ | ⚫️ | 🚧{{<fnref num="12">}} | ⚫️ | ⚫️{{<fnref num="37">}} |
 | Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} | US only [`logpushHealthAdaptiveGroups`](/logs/get-started/alerts-and-analytics/#enable-logpush-health-analytics) | [All Logpush datasets](/logs/reference/log-fields/) |
