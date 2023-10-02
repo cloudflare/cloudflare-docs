@@ -1,4 +1,4 @@
----
+1---
 pcx_content_type: concept
 title: Limits
 ---
@@ -11,11 +11,13 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 
 {{</Aside>}}
 
+
+
 | Feature                                            | Limit                                        |
 | -------------------------------------------------- | -------------------------------------------- | 
-| Databases                                          | 25 (Workers Paid) <sup>beta</sup> / 10 (Free) |
+| Databases                                          | 50,000 (Workers Paid) <sup>beta</sup> / 10 (Free) |
 | Maximum database size                              | 2 GB (Workers Paid) <sup>beta</sup> / 500 MB (Free) |
-| Maximum storage per account                        | 10 GB (Workers Paid) <sup>beta</sup> / 5 GB (Free) |
+| Maximum storage per account                        | 50 GB (Workers Paid) <sup>beta</sup> / 5 GB (Free) |
 | [Time Travel](/d1/learning/time-travel/) duration (point-in-time recovery) | 30 days (Workers Paid) / 7 days (Free) |
 | Maximum Time Travel restore operations             | 10 restores per 10 minute (per database)     |
 | Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make))                      | 50 (Bundled) / 1000 (Unbound)
