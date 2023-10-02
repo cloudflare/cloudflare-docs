@@ -28,7 +28,7 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 | Maximum bound parameters per query                 | 100                                          |
 | Maximum arguments per SQL function                 | 32                                           |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes                               |
-| Maximum bindings per Workers script                 | Approximately 5,000 <sup>bindings</sup>     |
+| Maximum bindings per Workers script                 | Approximately 5,000 <sup>1</sup>     |
 
 {{<Aside type="note">}}
 
@@ -40,6 +40,6 @@ Refer to the [Storage options guide](/workers/learning/storage-options/) to revi
 
 <sup>beta</sup> This is a beta-only limitation. The maximum storage per-database, storage per-account and number of databases will automatically increase for paid plans during the course of D1's public beta.
 
-<sup>bindings</sup> A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, environmental variable or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to ~5,000 D1 databases to a single Worker script.
+<sup>1</sup> A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, environmental variable or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to ~5,000 D1 databases to a single Worker script.
 
 Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Not all limits can be increased.
