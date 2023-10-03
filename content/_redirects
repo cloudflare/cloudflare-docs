@@ -1119,6 +1119,7 @@
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
+/workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
