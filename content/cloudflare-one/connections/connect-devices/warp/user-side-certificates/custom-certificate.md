@@ -6,19 +6,15 @@ meta:
   description: Configure WARP to use a custom root certificate instead of the Cloudflare certificate.
 ---
 
+{{<Aside type="warning">}}
+This feature is only available on Zero Trust Enterprise plans. Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server still uses the Cloudflare certificate.
+{{</Aside>}}
+
+Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) have the option to upload their own root certificate to Cloudflare. Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. 
+
 # Deploy a custom certificate
 
-{{<Aside type="note">}}
-Only available on Enterprise plans.
-{{</Aside>}}
-
-Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) have the option to upload their own root certificate to Cloudflare. Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time.
-
-{{<Aside type="warning">}}
-Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use the Cloudflare certificate.
-{{</Aside>}}
-
-When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name.
+You can upload multiple certificates to your account, but only one can be active at any given time. When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name.
 
 To deploy a custom root certificate:
 
@@ -79,7 +75,30 @@ To deploy a custom root certificate:
    }
    ```
 
-Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key. If you disable the custom certificate, Gateway will revert to the default Cloudflare certificate.
+Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key.
+
+# Withdraw a custom certificate
+
+To revert back to the default Cloudflare certificate, disable the certificate in Gateway with its UUID:
+
+   ```bash
+   ---
+   highlight: [10]
+   ---
+   curl --request PATCH \
+   "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration" \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>" \
+   --header "Content-Type: application/json" \
+   --data '{
+     "settings": {
+       "custom_certificate": {
+         "enabled": false,
+         "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60"
+       }
+     }
+   }'
+   ```
 
 {{<Aside type="note" header="Troubleshooting">}}
 
