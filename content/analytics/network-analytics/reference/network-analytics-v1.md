@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics-v1
-title: Cloudflare Network Analytics v1
+title: Network Analytics v1 (deprecated)
 meta:
+  title: Cloudflare Network Analytics v1 (deprecated)
   description: Network Analytics v1 (deprecated) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
 weight: 3
 ---
 
 {{<heading-pill style="deprecated">}} Cloudflare Network Analytics v1 {{</heading-pill>}}
-
 
 {{<Aside type="warning">}}
 - {{<render file="_network-analytics-v1-deprecation.md">}}
