@@ -15,13 +15,11 @@ Cloudflare Advanced DNS Protection, powered by [`flowtrackd`](https://blog.cloud
 
 Cloudflare's Advanced DNS Protection works by first learning your traffic patterns and forming a baseline of the type of DNS queries you normally receive. Later, the system will be able to distinguish between legitimate and malicious queries, protecting your DNS infrastructure without impacting legitimate traffic.
 
-Advanced DNS Protection provides protection for both DNS-over-UDP and DNS-over-TCP traffic. DNS-over-TCP traffic will first go through the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system and then through the Advanced DNS Protection system.
-
 The [Network Analytics v2 dashboard](/analytics/network-analytics/) will display high-level data about Advanced DNS Protection in the **All Traffic** tab.
 
 ## Availability
 
-Advanced DNS Protection is available to all [Magic Transit](/magic-transit/) customers, and is enabled by default.
+Advanced DNS Protection is available to all [Magic Transit](/magic-transit/) customers, and is enabled in monitoring mode by default.
 
 Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 

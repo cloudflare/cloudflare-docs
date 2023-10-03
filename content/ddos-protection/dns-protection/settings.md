@@ -39,6 +39,8 @@ Can be one of the following: _Disabled_, _Monitoring_, and _Enabled_.
 
 The rate and burst parameters of a token bucket algorithm that the protection system applies to non-legitimate DNS queries. Queries considered non-legitimate cost one token, and when the token bucket is empty, non-legitimate queries are dropped until the token bucket refills. This is the same token bucket algorithm used in the [Advanced TCP Protection](/ddos-protection/tcp-protection/).
 
+The API values are the following: `low`, `medium`, and `high`.
+
 ## Sensitivity level
 
 The sensitivity level of the Advanced DNS Protection system for the DNS queries considered non-legitimate.

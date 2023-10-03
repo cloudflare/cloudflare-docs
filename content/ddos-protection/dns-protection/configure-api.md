@@ -24,17 +24,21 @@ The following table summarizes the available operations.
 
 Operation | Verb + Endpoint
 ----------|----------------
-Get Advanced DNS Protection configuration | `GET` `/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection`
-Update Advanced DNS Protection configuration | `PATCH` `/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection`
+List DNS protection rules | <p>`GET accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules`</p>Fetches all DNS protection rules in the account.
+Add a DNS protection rule | <p>`POST accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules`</p>Adds a DNS protection rule to the account.
+Get a DNS protection rule | <p>`GET accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules/{rule_id}`</p>Fetches the details of an existing DNS protection rule in the account.
+Update a DNS protection rule | <p>`PATCH accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules/{rule_id}`</p>Updates an existing DNS protection rule in the account.
+Delete a DNS protection rule | <p>`DELETE accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules/{rule_id}`</p>Deletes an existing DNS protection rule from the account.
+Delete all DNS protection rules | <p>`DELETE accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules`</p>Deletes all existing DNS protection rules from the account.
 
 ## Examples
 
-### Get Advanced DNS Protection configuration
+### Get all DNS protection rules
 
-The following example retrieves the current configuration of Advanced DNS Protection.
+The following example retrieves the currently configured rules for Advanced DNS Protection.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -43,14 +47,19 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_
 header: Example response
 ---
 {
-  "result": {
-    "mode": "<MODE>",
-    "sensitivity": "<SENSITIVITY>",
-    "rate": <RATE>,
-    "burst": <BURST>,
-    "created_on": "2023-08-01T13:10:38.762503+01:00",
-    "modified_on": "2023-08-01T13:10:38.762503+01:00",
-  },
+  "result": [
+    {
+      "id": "<RULE_ID>",
+      "scope": "<SCOPE>",
+      "name": "<NAME>",
+      "mode": "<MODE>",
+      "profile_sensitivity": "<SENSITIVITY>",
+      "rate_sensitivity": "<RATE>",
+      "burst_sensitivity": "<BURST>",
+      "created_on": "2023-08-01T13:10:38.762503+01:00",
+      "modified_on": "2023-08-01T13:10:38.762503+01:00",
+      }
+    ],
   "success": true,
   "errors": [],
   "messages": []
@@ -59,21 +68,20 @@ header: Example response
 
 For more information about the available configuration settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
 
-### Update Advanced DNS Protection configuration
+### Create DNS protection rule
 
-The following example updates the configuration of Advanced DNS Protection.
-
-The request body can contain only the fields you want to update (from `mode`, `sensitivity`, `rate`, and `burst`).
+The following example creates an Advanced DNS Protection rule with a global scope.
 
 ```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
-  "mode": "<NEW_MODE>",
-  "sensitivity": "<NEW_SENSITIVITY>",
-  "rate": <NEW_RATE>,
-  "burst": <NEW_BURST>
+  "scope": "global",
+  "name": "global",
+  "mode": "<MODE>",
+  "profile_sensitivity": "<SENSITIVITY>",
+  "rate_sensitivity": "<RATE>",
+  "burst_sensitivity": "<BURST>"
 }'
 ```
 
@@ -83,10 +91,54 @@ header: Example response
 ---
 {
   "result": {
+    "id": "<RULE_ID>",
+    "scope": "global",
+    "name": "global",
+    "mode": "<MODE>",
+    "profile_sensitivity": "<SENSITIVITY>",
+    "rate_sensitivity": "<RATE>",
+    "burst_sensitivity": "<BURST>",
+    "created_on": "2023-08-01T13:10:38.762503+01:00",
+    "modified_on": "2023-08-01T13:10:38.762503+01:00",
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+
+### Update DNS protection rule
+
+The following example updates an existing DNS protection rule with ID `{rule_id}`.
+
+The request body can contain only the fields you want to update (from `mode`, `profile_sensitivity`, `rate_sensitivity`, and `burst_sensitivity`).
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules/{rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "mode": "<NEW_MODE>",
+  "profile_sensitivity": "<NEW_SENSITIVITY>",
+  "rate_sensitivity": "<NEW_RATE>",
+  "burst_sensitivity": "<NEW_BURST>"
+}'
+```
+
+```json
+---
+header: Example response
+---
+{
+  "result": {
+    "id": "<RULE_ID>",
+    "scope": "<SCOPE>",
+    "name": "<NAME>",
     "mode": "<NEW_MODE>",
-    "sensitivity": "<NEW_SENSITIVITY>",
-    "rate": <NEW_RATE>,
-    "burst": <NEW_BURST>,
+    "profile_sensitivity": "<NEW_SENSITIVITY>",
+    "rate_sensitivity": "<NEW_RATE>",
+    "burst_sensitivity": "<NEW_BURST>",
     "created_on": "2023-08-01T13:10:38.762503+01:00",
     "modified_on": "2023-08-01T13:10:38.762503+01:00",
   },
