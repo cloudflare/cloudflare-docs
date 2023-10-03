@@ -27,7 +27,7 @@ addEventListener("email", (event) => {
 
 - `event.message` {{<type>}}EmailMessage{{</type>}}
 
-  - An [`EmailMessage` object](/workers/runtime-apis/email-event/#emailmessage-definition).
+  - An [`EmailMessage` object](#emailmessage-definition).
 
 {{</definitions>}}
 
@@ -51,7 +51,7 @@ export default {
 
 - `message` {{<type>}}EmailMessage{{</type>}}
 
-  - An [`EmailMessage` object](/workers/runtime-apis/email-event/#emailmessage-definition).
+  - An [`EmailMessage` object](#emailmessage-definition).
 
 - `env` {{<type>}}object{{</type>}}
 
