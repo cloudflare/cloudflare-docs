@@ -7,7 +7,7 @@ pcx_content_type: how-to
 
 Microsoft 365 allows users to report missed phish and spam messages directly to Area 1 from Outlook. This is achieved with the Report Message add-in functionality.
 
-### Deploy Report Message
+### Deploy Report Message add-in
 
 To deploy the Report Message add on to all users in your O365 organization:
 
@@ -39,7 +39,7 @@ Now that you have installed the Report Message add-in, you need to create transp
         1. **Specify words or phrases**: `abuse@messaging.microsoft.com`, `junk@office365.microsoft.com` > **Save**.
     3. **Do the following**: _Add recipients_ > _to the Bcc box_
         1. **Select members**: `<ACCOUNT_NAME>+user+spam@submission.area1reports.com` > **Save** > **Next**.
-        {{<Aside type="note">}}You can find this submission address in your Area 1 dashboard, in **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses).
+        {{<Aside type="note">}}You can find this submission address in your Area 1 dashboard, in **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses).{{</Aside>}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
 5. To to handle **false positives** reported to Microsoft create a rule with the following settings:
@@ -48,7 +48,7 @@ Now that you have installed the Report Message add-in, you need to create transp
         1. **Specify words or phrases**: `false_positive@messaging.microsoft.com` > **Save**.
     3. **Do the following**: _Add recipients_ > _to the Bcc box_
         1. **Select members**: `<ACCOUNT_NAME>+user+benign@submission.area1reports.com` > **Save** > **Next**.
-        {{<Aside type="note">}}You can find this submission address in your Area 1 dashboard, in **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses).
+        {{<Aside type="note">}}You can find this submission address in your Area 1 dashboard, in **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses).{{</Aside>}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
 6. To to handle **malicious messages** reported to Microsoft create a rule with the following settings:
@@ -57,7 +57,7 @@ Now that you have installed the Report Message add-in, you need to create transp
         1. **Specify words or phrases**: `phish@office365.microsoft.com` > **Save**.
     3. **Do the following**: _Add recipients_ > _to the Bcc box_
         1. **Select members**: `<ACCOUNT_NAME>+user+malicious@submission.area1reports.com` > **Save** > **Next**.
-        {{<Aside type="note">}}You can find this submission address in your Area 1 dashboard, in **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses).
+        {{<Aside type="note">}}You can find this submission address in your Area 1 dashboard, in **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses).{{</Aside>}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
 
