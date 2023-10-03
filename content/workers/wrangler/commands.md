@@ -548,7 +548,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}}
-  - IP address to listen on, defaults to `::`.
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}}
   - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}}
