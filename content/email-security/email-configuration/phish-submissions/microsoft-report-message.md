@@ -60,7 +60,3 @@ Now that you have installed the Report Message add-in, you need to create transp
         {{<render file="_service-addresses.md">}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
-
-
-
-
