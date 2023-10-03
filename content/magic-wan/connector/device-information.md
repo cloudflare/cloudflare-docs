@@ -19,7 +19,7 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 Magic WAN Connector communicates periodically with Cloudflare. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
 
-### Access a Connector's heartbeat
+### Access Magic WAN Connector's heartbeat
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
