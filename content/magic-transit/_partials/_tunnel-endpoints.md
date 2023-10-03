@@ -56,7 +56,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 {{<tab label="dashboard" no-code="true">}}
 
 {{<Aside type="note">}}
-Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional.
+Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
@@ -76,7 +76,7 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For Magic W
 10. Leave the default values for **TTL** and **MTU**.
 11. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($8) for more information.
-13. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details
+13. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 14. **Health check target** is the customer end of the tunnel.
 15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
 16. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
@@ -96,7 +96,7 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For Magic W
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team (typically begins with `172.x.x.x`).
 10. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($8) for more information.
-12. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details
+12. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 13. **Health check target** is the customer end of the tunnel.
 
 {{<Aside type="note">}}IPsec tunnels will not function without a pre-shared key (PSK).{{</Aside>}}
