@@ -17,7 +17,7 @@ The [`wrangler dev`](/workers/wrangler/commands/#dev) command starts a local ser
 
 `wrangler dev` will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the Miniflare simulator.
 
-In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products, such as [R2](/r2/), [KV](/workers/runtime-apis/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
+In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products, such as [R2](/r2/), [KV](/kv/api/), [D1](/d1/), and [Durable Objects](/durable-objects/).
 
 ### Local testing against remote resources
 

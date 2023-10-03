@@ -57,6 +57,6 @@ If you are counting on Universal SSL certificates to cover your website or appli
 
 Cloudflare recommends that you also [enable DNSSEC](/dns/dnssec/) from **DNS** > **Settings** and add the DS record to your registrar.
 
-Once all the DNS TTLs expire, all your DNS queries will be answered by Cloudflare's global network.
+Once all the DNS TTLs expire, all your DNS queries will be answered by the Cloudflare global network.
 
 Start proxying additional hostnames by enabling the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.

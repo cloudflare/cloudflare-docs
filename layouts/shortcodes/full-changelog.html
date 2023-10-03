@@ -47,7 +47,7 @@
           <td>
             <strong>Date</strong>
           </td>
-          <td>
+          <td class="changelogColumn">
             <strong>Description</strong>
           </td>
         </tr>
@@ -89,18 +89,18 @@
           <td>{{ $product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
           <td class="changelogDate">{{ .publish_date }}</td>
-          <td>{{ $description | $.Page.RenderString }}</td>
+          <td class="changelogColumn">{{ $description | $.Page.RenderString }}</td>
         </tr>
         {{- end -}}
       </tbody>
     </table>
   </div>
 </div>
-<div class="viewMoreChangesContainer">
+<div class="viewMoreContainer">
   <button
     id="showAllButton"
     style="display: none"
-    class="viewMoreChangesButton"
+    class="viewMoreButton"
   >
     View more changes
   </button>
@@ -206,3 +206,10 @@
   searchInput.addEventListener("input", updateTable);
   showAllButton.addEventListener("click", showAllEntries);
 </script>
+
+
+<style>
+  .changelogColumn {
+    word-break:break-all !important; /* Adjust this value to the maximum width you want */
+  }
+  </style>

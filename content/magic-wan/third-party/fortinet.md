@@ -7,7 +7,7 @@ title: Fortinet
 
 This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
 
-The FortiGate configuration settings presented here support [bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
+The FortiGate configuration settings presented here support [bidirectional health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
 
 ## Testing Environment
 

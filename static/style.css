@@ -5555,3 +5555,102 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 .footnote-backref {
   visibility: hidden;
 }
+
+/* glossary styling */
+.viewMoreContainer {
+  width: 100%;
+}
+
+.viewMoreButton {
+  margin: auto;
+  width: 12em;
+  height: 2em;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.viewMoreButton:hover {
+  text-decoration: underline;
+  transition: text-decoration 0.5s ease-in-out;
+}
+
+.selectorDropdowns {
+  display: flex;
+  justify-content: flex-start;
+  border-top: 1px solid #242628;
+  border-bottom: 1px solid #242628;
+  padding: .5em 0 .5em 0;
+}
+
+@media (max-width:950px) {
+  .selectorDropdowns {
+      flex-direction: column;
+  }
+}
+
+[theme=dark] .selectorDropdowns {
+  border-top: 1px solid #f3f3f4;
+  border-bottom: 1px solid #f3f3f4;
+}
+
+.selectorDropdowns div {
+  margin-right: 2em;
+  display: flex;
+  flex-direction: column;
+  padding: .75em;
+  justify-content: center;
+}
+
+.selectorDropdowns div label {
+  padding-bottom: .3em;
+}
+
+.selectorDropdowns div select {
+  width: 15em;
+  height: 2.25em;
+}
+
+.searchInput input {
+  height: 2.25em;
+  width: 15em;
+  padding-left: .5em
+}
+
+.glossary-tooltip {
+  border-bottom: 1px dotted rgba(var(--orange-rgb)); /* If you want dots under the hoverable text */
+  color: inherit;
+}
+
+[data-title] {
+  position: relative;
+}
+
+[data-title]:after {
+  content: attr(data-title);
+  color: inherit;
+  background-color: #f5f5f5;
+  padding: 1em;
+  z-index: 99999;
+  visibility: hidden;
+  position: absolute;
+  left: 0%;
+  bottom: 120%;
+  width: 15em;
+  border: .75px solid gray;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+          box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+[theme="dark"] [data-title]:after {
+  background-color: #242628;
+}
+
+[data-title]:hover:after, [data-title]:focus:after {
+  opacity: 1;
+  -webkit-transition: all 0.1s ease 0.1s;
+  transition: all 0.1s ease 0.1s;
+  visibility: visible;
+}
