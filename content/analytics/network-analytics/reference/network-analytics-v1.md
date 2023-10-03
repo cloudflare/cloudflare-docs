@@ -7,7 +7,7 @@ meta:
 weight: 3
 ---
 
-{{<deprecated>}} Cloudflare Network Analytics v1 {{</deprecated>}}
+{{<heading-pill style="deprecated">}} Cloudflare Network Analytics v1 {{</heading-pill>}}
 
 
 {{<Aside type="warning">}}
