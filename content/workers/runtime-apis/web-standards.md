@@ -73,11 +73,11 @@ Timers are only available inside of [the Request Context](/workers/runtime-apis/
 
 - {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin">}}performance.timeOrigin{{</type-link>}}
 
-  - Returns the high resolution time origin. For Workers, we use the Unix Epoch as the time origin meaning that `performance.timeOrigin` will always return `0`.
+  - Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
 
-` {{<type-link href="">}}performance.now(){{</type-link>}}
+- {{<type-link href="">}}performance.now(){{</type-link>}}
 
-  - Returns a DOMHighResTimeStamp representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
+  - Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
 
 ### `EventTarget` and `Event`
 
