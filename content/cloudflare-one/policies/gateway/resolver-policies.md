@@ -40,3 +40,9 @@ You may use custom resolver policies if you require access to non-publicly route
 Your custom DNS resolver will resolve requests to the specified hostname. The custom DNS resolver will save to your account for future use.
 
 For more information on creating a DNS policy, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
+
+## Limitations
+
+Custom resolver policies only support UDP connections. Only IPv4 and IPv6 destinations are supported.
+
+Policies default to port `53`.
