@@ -9,7 +9,7 @@ Microsoft 365 allows users to report missed phish and spam messages directly to 
 
 ### Deploy Report Message add-in
 
-To deploy the Report Message add on to all users in your O365 organization:
+To deploy the Report Message add-in to all users in your O365 organization:
 
 1. Log in to your [Microsoft 365 admin center](https://admin.microsoft.com/).
 2. Go to **Settings** > **Integrated apps** > **Add-ins**.
@@ -33,7 +33,7 @@ Now that you have installed the Report Message add-in, you need to create transp
 1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
-4. To to handle **spam messages** reported to Microsoft create a rule with the following settings:
+4. To handle **spam messages** reported to Microsoft, create a rule with the following settings:
     1. **Name**: `Spam Messages`
     2. **Apply this rule if**: _The sender_ > _address includes any of these words_
         1. **Specify words or phrases**: `abuse@messaging.microsoft.com`, `junk@office365.microsoft.com` > **Save**.
@@ -42,7 +42,7 @@ Now that you have installed the Report Message add-in, you need to create transp
         {{<render file="_service-addresses.md">}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
-5. To to handle **false positives** reported to Microsoft create a rule with the following settings:
+5. To handle **false positives** reported to Microsoft, create a rule with the following settings:
     1. **Name**: `False positives`
     2. **Apply this rule if**: _The sender_ > _address includes any of these words_
         1. **Specify words or phrases**: `false_positive@messaging.microsoft.com` > **Save**.
@@ -51,7 +51,7 @@ Now that you have installed the Report Message add-in, you need to create transp
         {{<render file="_service-addresses.md">}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
-6. To to handle **malicious messages** reported to Microsoft create a rule with the following settings:
+6. To handle **malicious messages** reported to Microsoft, create a rule with the following settings:
     1. **Name**: `Malicious messages`
     2. **Apply this rule if**: _The sender_ > _address includes any of these words_
         1. **Specify words or phrases**: `phish@office365.microsoft.com` > **Save**.

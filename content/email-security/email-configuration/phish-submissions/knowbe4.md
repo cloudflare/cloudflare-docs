@@ -16,9 +16,9 @@ If you have KnowBe4 Phish Alert Button (PAB) for Microsoft Outlook, Microsoft Ex
 5. (Optional) If you do not want to differentiate between spam and malicious emails, enter `<ACCOUNT_NAME>+user+spam@submission.area1reports.com` in **Send Non-Simulated Emails to** to receive spam reports.
 {{<render file="_service-addresses.md">}}
 6. If you do want to differentiate between spam and malicious emails, go to **Comments and Disposition Settings**.
-7. Select **Allow users to leave comments and disposition** and
+7. Select **Allow users to leave comments and disposition**.
 8. Select **Disable Unknown Email Disposition**.
 9. In **Send Dispositioned Emails to**, you need to enter the email addresses to forward spam and malicious emails. You can find these addresses in your **Area 1 dashboard** > **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses):
     1. **Phishing/Suspicious**: Enter your malicious email address. For example, `<ACCOUNT_NAME>+user+malicious@submission.area1reports.com`.
-    2. **Spam/Junk**: Enter your spam email address. For example `<ACCOUNT_NAME>+user+spam@submission.area1reports.com`.
+    2. **Spam/Junk**: Enter your spam email address. For example, `<ACCOUNT_NAME>+user+spam@submission.area1reports.com`.
 10. Select **Save changes**.
