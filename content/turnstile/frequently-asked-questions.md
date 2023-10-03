@@ -229,3 +229,12 @@ Refer to the [list of supported languages](/turnstile/reference/supported-langua
 
 {{</faq-answer>}}
 {{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Turnstile conforms to WCAG 2.1 Level AA accessibility standard." >}}
+{{<faq-answer>}}
+
+
+
+{{</faq-answer>}}
+{{</faq-item>}}
