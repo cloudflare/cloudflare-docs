@@ -14,3 +14,13 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 - Connectivity to the Cloudflare global network is secure and all traffic is encrypted through IPsec tunneling.
 - The Magic WAN Connector does not support fail open.
 - Customers have the ability to layer on additional security features/policies that are enforced at the Cloudflare network.
+
+## Heartbeat
+
+Magic WAN Connector communicates periodically with Cloudflare. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
+
+### Access a Connector's heartbeat
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Configuration** > **Connectors**.
+3. Find your Connector. Move your mouse over to the `i` icon right after the **Status** column. This will show a timestamp with the last time that specific Connector successfuly contacted Cloudflare.
