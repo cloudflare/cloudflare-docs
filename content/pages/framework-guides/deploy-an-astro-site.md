@@ -172,6 +172,6 @@ const value = await myKV.get("key");
 <div>{value}</div>
 ```
 
-To learn more about the Astro Cloudflare runtime, refer to the Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
+To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
 {{<render file="_learn-more.md" withParameters="Astro">}}
