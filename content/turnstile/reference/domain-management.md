@@ -26,5 +26,5 @@ but not on the following domains:
 When the widget is embedded on a domain not listed, it will show an error message.
 
 {{<Aside type="note">}}
-Enterprise Bot Management customers are able to remove the domain validation requirement for a widget. For more information on this feature, contact your account team.
+Enterprise Bot Management customers can remove the domain validation requirement for a widget. For more information on this feature, contact your account team.
 {{</Aside>}}
