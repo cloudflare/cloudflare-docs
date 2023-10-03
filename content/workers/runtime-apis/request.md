@@ -401,11 +401,12 @@ The HTTP and `fetch` specification define that `GET` requests
 payload that is included has no semantic meaning or value. Nor should a `GET` request ever
 contain a `content-length` header field, even if the value of that field is zero. The `fetch`
 specification even goes so far as to make it impossible to create a new `Request` object using
-the constructor if the `method` is `GET` or `POST` and the `body` is not `null`.
+the constructor if the `method` is `GET` or `HEAD` and the `body` is not `null`.
 
 For instance, per the `fetch` spec, the following must result in an error being thrown:
 
 ```js
+// DOESN'T WORK: GET requests cannot have a body.
 const req = new Request('https://example.com', { method: 'GET', body: new Uint8Array(0) });
 ```
 
