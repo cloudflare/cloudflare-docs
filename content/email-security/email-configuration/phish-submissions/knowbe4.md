@@ -13,7 +13,8 @@ If you have KnowBe4 Phish Alert Button (PAB) for Microsoft Outlook, Microsoft Ex
 2. Select the **cog symbol** to go to your **Account Settings** screen.
 3. Go to **Account Integrations** > **Phish Alert**.
 4. In **Setting Name**, give your PAB a descriptive name.
-5. If you do not want to differentiate between spam and malicious emails, enter `<ACCOUNT_NAME>+user+spam@submission.area1reports.com` in **Send Non-Simulated Emails to** to receive spam reports. You can find your Area 1 reporting email addresses in your **Area 1 dashboard** > **Support** > [**Service Addresses**](https://horizon.area1security.com/support/service-addresses). Otherwise, go to **step 6**. 
+5. (Optional) If you do not want to differentiate between spam and malicious emails, enter `<ACCOUNT_NAME>+user+spam@submission.area1reports.com` in **Send Non-Simulated Emails to** to receive spam reports.
+{{<render file="_service-addresses.md">}}
 6. If you do want to differentiate between spam and malicious emails, go to **Comments and Disposition Settings**.
 7. Select **Allow users to leave comments and disposition** and
 8. Select **Disable Unknown Email Disposition**.
