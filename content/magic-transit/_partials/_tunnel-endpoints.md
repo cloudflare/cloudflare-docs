@@ -78,7 +78,7 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For Magic W
 12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($8) for more information.
 13. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 14. **Health check target** is the customer end of the tunnel.
-15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
+15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**
 16. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
 17. After adding your tunnel information, select **Add tunnels** to save your changes.
  
