@@ -212,3 +212,63 @@ $ terraform output turnstile_example_secretkey
 {{<Aside type="note">}}
 For advanced usage, refer to our [Terraform resource documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/turnstile_widget).
 {{</Aside>}}
+
+## Import a Turnstile widget
+
+### Prerequisites
+
+Before you can import the Turnstile widget in Terraform, you must:
+
+- [Install the `cf-terraforming` tool](/terraform/advanced-topics/import-cloudflare-resources/#cf-terraforming).
+- [Create a Cloudflare API token](/fundamentals/api/get-started/create-token/).
+- [Initialize Terraform and the Cloudflare provider](/turnstile/reference/terraform/#initialize-terraform-and-the-cloudflare-provider).
+
+### Import Turnstile widgets in Terraform
+
+Run the `cf-terraforming generate` command and add the output below to your `.tf` file.
+
+```sh
+---
+header: Generate command
+---
+$ cf-terraforming generate --resource-type cloudflare_turnstile_widget --account 6be2041a37d48aaaa9c686434f1709f0
+
+output: 
+
+resource "cloudflare_turnstile_widget" "terraform_managed_resource_0x4AAAAAAAEk5sP3rwf91fe8" {
+  account_id = "6be2041a37d48aaaa9c686434f1709f0"
+  domains    = ["example.net"]
+  mode       = "managed"
+  name       = "test site"
+  region     = "world"
+}
+
+resource "cloudflare_turnstile_widget" "terraform_managed_resource_0x4AAAAAAAE0wwg0H1StXlOx" {
+  account_id = "6be2041a37d48aaaa9c686434f1709f0"
+  domains    = ["example.com"]
+  mode       = "managed"
+  name       = "My Terraform-managed widget"
+}
+
+resource "cloudflare_turnstile_widget" "terraform_managed_resource_0x4AAAAAAAF1z4LbxEka5UBh" {
+  account_id = "6be2041a37d48aaaa9c686434f1709f0"
+  domains    = ["example.org"]
+  mode       = "managed"
+  name       = "My website"
+}
+```
+
+Run the `cf-terraforming import` command and the resulting commands below.
+
+```sh
+---
+header: Import command
+---
+$ cf-terraforming import --resource-type cloudflare_turnstile_widget --account 6be2041a37d48aaaa9c686434f1709f0
+
+output: 
+
+terraform import cloudflare_turnstile_widget.terraform_managed_resource_0x4AAAAAAAEg5sP3rwf91fe8 6be2041a37d48aaaa9c686434f1709f0/0x4AAAAAAAEk5sP3rwf91fe8
+terraform import cloudflare_turnstile_widget.terraform_managed_resource_0x4AAAAAAAE0gwg0H1StXlOx 6be2041a37d48aaaa9c686434f1709f0/0x4AAAAAAAE0wwg0H1StXlOx
+terraform import cloudflare_turnstile_widget.terraform_managed_resource_0x4AAAAAAAE2z4LbxEka5UBh 6be2041a37d48aaaa9c686434f1709f0/0x4AAAAAAAF1z4LbxEka5UBh 
+```
