@@ -132,7 +132,7 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
 
 ### Configuration of secrets
 
-When creating a Google Chat, Slack, Discord or Feishu webhook, the secret is part of the URL. You can choose to remove the secret from the URL and explicitly set the value of `secret` rather than letting Cloudflare automatically extract it.
+When creating a Google Chat, Slack, Discord, or Feishu webhook, the secret is part of the URL. You can choose to remove the secret from the URL and explicitly set the value of `secret` rather than letting Cloudflare automatically extract it.
 
 This can be useful when defining your webhook infrastructure as code using Terraform since the URL will not be modified by Cloudflare.
 
