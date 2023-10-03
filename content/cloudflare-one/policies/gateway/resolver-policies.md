@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: Custom resolver policies
 layout: single
 weight: 6
+meta:
+  title: Gateway custom resolver policies
 ---
 
 # Custom resolver policies
@@ -15,23 +17,23 @@ By default, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's pub
 
 You may use custom resolver policies if you require access to non-publicly routed domains, need to use a protected DNS service, or want to simplify DNS management for multiple locations.
 
-## Create a DNS policy with a custom DNS resolver
+## Create a policy with a custom DNS resolver
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **DNS**.
 2. Select **Add a policy**.
-3. Create an Allow expression that resolves a hostname. For example:
+3. Create an Allow expression that resolves your desired hostname. For example:
 
     | Selector | Operator | Value                  | Action |
     | -------- | -------- | ---------------------- | ------ |
     | Host     | in       | `internal.example.com` | Allow  |
 
 4. In **Select a DNS resolver**, choose _Custom DNS resolver_.
-5. Enter the IP addresses of your custom DNS resolver. For example:
+5. Enter the primary IP addresses of your custom DNS resolver. Optionally, you can include secondary IP addresses. For example:
 
-    | IPv4 addresses | IPv6 addresses       |
-    | -------------- | -------------------- |
-    | 1.1.1.1        | 2606:4700:4700::1111 |
-    | 1.0.0.1        | 2606:4700:4700::1001 |
+    | IPv4 addresses | IPv6 addresses         |
+    | -------------- | ---------------------- |
+    | `1.1.1.1`      | `2606:4700:4700::1111` |
+    | `1.0.0.1`      | `2606:4700:4700::1001` |
 
 6. Select **Create policy**.
 
