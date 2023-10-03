@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-Though most customers choose to implement bot management through [Firewall rules](#firewall), Cloudflare actually makes various [bot signals](/learning-paths/bot-management/planning/bot-signals/) available in several different products.
+Though most customers choose to implement bot management through [WAF custom rules](#waf-custom-rules), Cloudflare actually makes various [bot signals](/learning-paths/bot-management/planning/bot-signals/) available in several different products.
 
 ```mermaid
     flowchart LR
@@ -18,25 +18,24 @@ Though most customers choose to implement bot management through [Firewall rules
       subgraph Cloudflare
         B((Bot detection engines))
         C[Workers]
-        D[Firewall]
+        D[WAF]
         E[Logs]
       end
 ```
 
-## Firewall
+## WAF custom rules
 
 {{<render file="_firewall-variables.md" productFolder="bots" >}}
 
 ### Common use cases
 
-You can use Firewall variables in a variety of actions, including:
+You can use Bot related fields in a variety of actions, including:
 
 - Log
-- Bypass
-- Allow
+- Skip
 - Challenge
 
-For a full list of options, refer to [Firewall actions](/firewall/cf-firewall-rules/actions/).
+For a full list of options, refer to [Actions reference](/ruleset-engine/rules-language/actions/).
 
 ---
 

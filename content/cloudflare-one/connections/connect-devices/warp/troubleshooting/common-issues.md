@@ -6,9 +6,9 @@ weight: 1
 
 # Common issues
 
-This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or contact Cloudflare support.
+This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
-## Unable to turn on WARP
+## Unable to connect WARP
 
 If WARP is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, this indicates that the client cannot establish a connection to Cloudflare's global network.
 
@@ -18,7 +18,7 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 
 </div>
 
-In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs), `daemon.log` will typically show one or more of the following errors:
+In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/), `daemon.log` will typically show one or more of the following errors:
 
 - Happy Eyeball checks failing:
   ```txt

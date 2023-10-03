@@ -10,7 +10,7 @@ To allow a Worker to receive inbound HTTP requests, you must connect it to an ex
 
 There are three types of routes:
 
-* [Custom Domains](/workers/configuration/routing/custom-domains): Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
+* [Custom Domains](/workers/configuration/routing/custom-domains): Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
 
 * [Routes](/workers/configuration/routing/routes/): Routes that are set within a Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
 

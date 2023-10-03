@@ -11,7 +11,7 @@ After reviewing the data from your *Log* rule, update your rule to more aggressi
 | --- | --- |
 | `(cf.bot_management.score eq 1) and not (cf.bot_management.verified_bot)` | *Managed Challenge* |
 
-Though you can explicitly block automated traffic, Cloudflare recommends using our [*Managed Challenge* action](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended) instead. Managed Challenges not only reduce CAPTCHAs, but also provide you with the data to evaluate your rule's effectiveness.
+Though you can explicitly block automated traffic, Cloudflare recommends using our [*Managed Challenge* action](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) instead. Managed Challenges not only reduce CAPTCHAs, but also provide you with the data to evaluate your rule's effectiveness.
 
 ## Challenge Solve Rate (CSR)
 

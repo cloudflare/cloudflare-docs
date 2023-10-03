@@ -1,18 +1,18 @@
 ---
 pcx_content_type: how-to
-title: Tunnel Virtual Networks
+title: Virtual networks
 weight: 5
 ---
 
-# Tunnel Virtual Networks
+# Virtual networks
 
-[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Tunnel Virtual Networks allow you to manage different private networks which have overlapping IP ranges.
+[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Virtual networks allow you to manage different private networks which have overlapping IP ranges.
 
 For example, an organization may want to expose two distinct virtual private cloud (VPC) networks which they consider to be “production” and “staging”. However, if the two private networks happened to receive the same RFC 1918 IP assignment, there may be two different resources with the same IP address. By creating two separate virtual networks, you can deterministically route traffic to duplicative private addresses like `10.128.0.1/32` staging and `10.128.0.1/32` production. End users would then select which network to connect to by accessing their WARP client settings.
 
 ## Prerequisites
 
-- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#1-download-and-install-cloudflared) on each private network.
+- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#1-download-and-install-cloudflared) on each private network.
 
 {{<render file="_warp-to-tunnel-client.md">}}
 
@@ -90,7 +90,7 @@ We now have two overlapping IP addresses routed over `staging-vnet` and `product
  
 ## Enable virtual networks
 
-1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
+1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
    
     ```txt
     tunnel: <Tunnel-UUID>

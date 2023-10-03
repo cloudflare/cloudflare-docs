@@ -17,6 +17,8 @@ Available storage and persistency products include:
 * [Durable Objects](#durable-objects) for transactional, coordinated use cases
 * [D1](#d1) for relational, SQL-based database use cases.
 * [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
+* [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
+* [Vectorize](/vectorize/) for vector search.
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
@@ -33,9 +35,9 @@ It is ideal for projects that require:
 To get started with KV:
 
 * Read how [KV works](/workers/learning/how-kv-works/).
-* Create a [KV namespace](/workers/wrangler/workers-kv/).
-* Review the [KV Runtime API](/workers/runtime-apis/kv/).
-* Learn about KV [Limits](/workers/platform/limits/#kv-limits).
+* Create a [KV namespace](/kv/learning/kv-namespaces/).
+* Review the [KV Runtime API](/kv/api/).
+* Learn about KV [Limits](/kv/platform/limits/).
 
 ## R2
 
@@ -77,12 +79,6 @@ To get started with Durable Objects:
 * Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
-
-{{<Aside type="note">}}
-
-D1 is currently in [public (open) alpha](/workers/platform/betas/).
-
-{{</Aside>}}
 
 [D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 

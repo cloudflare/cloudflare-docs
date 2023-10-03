@@ -9,11 +9,17 @@ layout: single
 
 # Firewall Rules FAQ
 
+{{<render file="_deprecation-notice.md">}}
+
 ## General
 
-### How many rules can I have on my site?
+### What should I use instead of firewall rules (now deprecated)?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Availability](/firewall/#availability) for details on what is allowed per customer plan.
+You should use [WAF custom rules](/waf/custom-rules/) instead. Refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information on this change.
+
+### How many firewall rules can I have on my site?
+
+You can create a large number of firewall rules. However, the number of active rules at any given time is limited. Refer to [Availability](/firewall/#availability) for details on what is allowed per customer plan.
 
 ### Can I purchase additional active rules?
 
@@ -39,7 +45,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 ### Why isn't my regular expression pattern matching working?
 
-If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust) or [Rustexp](https://rustexp.lpil.uk).
+If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
 
 Also, note that the `http.request.method` field requires all-caps for method names (for example, `POST`).
 

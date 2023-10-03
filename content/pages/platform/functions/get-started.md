@@ -2,6 +2,8 @@
 pcx_content_type: get-started
 title: Get started
 weight: 1
+meta:
+  title: Functions - Get started
 ---
 
 # Get started

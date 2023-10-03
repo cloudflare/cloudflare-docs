@@ -7,7 +7,7 @@ title: Cloudflare 1XXX エラーのトラブルシューティング
 
 # Cloudflare 1XXX エラーのトラブルシューティング
 
-_Clouodflareのプロキシされたサイトの1XXXエラーを診断し、解決します。_
+_Cloudflareのプロキシされたサイトの1XXXエラーを診断し、解決します。_
 
 ### 本記事の内容
 
@@ -225,7 +225,7 @@ ___
 
 ### 考えられる原因
 
-[Server Name Indication](/fundamentals/glossary#server-name-indication-sni)（SNI）を介して、クライアントまたはブラウザが送信したホスト名が、リクエストホストヘッダーと一致しない。
+[Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni)（SNI）を介して、クライアントまたはブラウザが送信したホスト名が、リクエストホストヘッダーと一致しない。
 
 ### 解決方法
 

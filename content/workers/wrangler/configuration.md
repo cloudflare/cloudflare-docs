@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Configuration
+meta:
+  title: Configuration - Wrangler
 ---
 
 # Configure `wrangler.toml`
@@ -101,7 +103,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#usage-models).
+  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
 
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -163,6 +165,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
 
+- `vectorize` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of Vectorize indexes that your Worker should be bound to.. Refer to [Vectorize indexes](#vectorize-indexes).
+
 - `services` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
@@ -171,15 +177,44 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 ## Types of routes
 
-There are four types of routes.
+There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and `workers.dev`.
 
-### Simple route
+### Custom Domains
 
-This is a simple route that only requires a pattern.
+[Custom Domains](/workers/configuration/routing/custom-domains/) allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management.
 
-Example: `"example.com/*"`
+{{<definitions>}}
 
-### Zone ID route
+- `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The pattern that your Worker should be run on, for example, `"example.com"`.
+
+- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+route = { pattern = "example.com", custom_domain = true }
+
+# or
+
+routes = [
+	{ pattern = "shop.example.com", custom_domain = true }
+]
+```
+
+### Routes
+
+[Routes](/workers/configuration/routing/routes/) allow users to map a URL pattern to a Worker. A route can be configured as a zone ID route, a zone name route, or a simple route.
+
+#### Zone ID route
 
 {{<definitions>}}
 
@@ -189,17 +224,22 @@ Example: `"example.com/*"`
 
 - `zone_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_id = "foo" }`
+Example:
 
-### Zone name route
+```toml
+---
+header: wrangler.toml
+---
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
+]
+```
+
+#### Zone name route
 
 {{<definitions>}}
 
@@ -211,29 +251,22 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
   - The name of the zone that your `pattern` is associated with. If you are using API tokens, this will require the `Account` scope.
 
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
-
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
+Example: 
 
-### Custom Domain route
+```toml
+---
+header: wrangler.toml
+---
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
+]
+```
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+#### Simple route
 
-{{<definitions>}}
-
-- `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The pattern that your Worker should be run on, for example, `"example.com"`.
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
-
-{{</definitions>}}
+This is a simple route that only requires a pattern.
 
 Example:
 
@@ -241,7 +274,7 @@ Example:
 ---
 header: wrangler.toml
 ---
-route = { pattern = "example.com", custom_domain = true }
+route = "example.com/*"
 ```
 
 ## Triggers
@@ -411,7 +444,7 @@ deleted_classes = ["DeprecatedClass"]
 
 ### KV namespaces
 
-[Workers KV](/workers/runtime-apis/kv/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
+[Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
@@ -494,7 +527,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The name of another queue to send a message if it fails processing at least `max_retries` times.
-  - If a dead_letter_queue is not defined, messages that repeatedly fail processing will be discarded.
+  - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will be discarded.
   - If there is no queue with the specified name, it will be created automatically.
 
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -535,9 +568,18 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
   - The name of this R2 bucket.
 
+- `jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
 - `preview_bucket_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The preview name of this R2 bucket used during `wrangler dev`.
+  - The preview name of this R2 bucket used during `wrangler dev --remote`.
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket.
+
+{{</Aside>}}
 
 {{</definitions>}}
 
@@ -549,6 +591,37 @@ header: wrangler.toml
 ---
 r2_buckets  = [
   { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
+]
+```
+
+### Vectorize indexes
+
+A [Vectorize index](/vectorize/) allows you to insert and query vector embeddings for semantic search, classification and other vector search use-cases.
+
+To bind Vectorize indexes to your Worker, assign an array of the below object to the `vectorize` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the bound index from your Worker code.
+
+- `index_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the index to bind.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+
+[[vectorize]]
+vectorize = [
+  { binding = "<INDEX_NAME>", bucket_name = "<your-index>"}
 ]
 ```
 

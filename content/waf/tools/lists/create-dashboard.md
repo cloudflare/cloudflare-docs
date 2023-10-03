@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Create in the dashboard
 weight: 5
-aliases:
-- /fundamentals/global-configurations/lists/create-dashboard/
 ---
 
 # Create a list in the dashboard
@@ -16,11 +14,11 @@ To create a list, follow these steps:
 
 3. Select **Create new list**.
 
-4. Enter a name for your list, observing the [list name guidelines](/fundamentals/global-configurations/lists/#list-names).
+4. Enter a name for your list, observing the [list name guidelines](/waf/tools/lists/#list-names).
 
 5. (Optional) Enter a description for the list, with a maximum length of 500 characters.
 
-6. For **Content type**, select the [type of list](/fundamentals/global-configurations/lists/#list-types) you are creating.
+6. For **Content type**, select the [type of list](/waf/tools/lists/custom-lists/) you are creating.
 
 7.  Select **Create**.
 
@@ -59,7 +57,7 @@ To add items to a list by uploading a CSV file:
 
 2. Browse to the location of the CSV file, select the file, and then select **Open**. The displayed items in the page will include the items loaded from the CSV file.
 
-    The exact CSV file format depends on the list type. Refer to the [documentation of the specific list type](/fundamentals/global-configurations/lists/#list-types) for details.
+    The exact CSV file format depends on the list type. Refer to [CSV file format for bulk import operations](/waf/tools/lists/custom-lists/#csv-file-format-for-bulk-import-operations) for details.
 
 3. You can continue to edit the items in the list before adding them:
 

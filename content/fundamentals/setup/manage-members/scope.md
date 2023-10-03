@@ -2,8 +2,6 @@
 pcx_content_type: reference
 title: Role scopes
 weight: 4
-aliases:
-- /fundamentals/account-and-billing/members/scope/
 ---
 
 # Role scopes
@@ -14,7 +12,7 @@ When you assign domain specific roles to account members, you can scope these ro
 
 ## Choose role scopes
 
-You choose the scope of a role when you [add a member](/fundamentals/account-and-billing/members/manage/) to your account.
+You choose the scope of a role when you [add a member](/fundamentals/setup/manage-members/manage/) to your account.
 
 ### All domains
 
@@ -27,7 +25,7 @@ If you want the member to have a role that applies to all domains within your ac
 
 {{<Aside type="note">}}
 
-You can only assign [account-scoped roles](/fundamentals/account-and-billing/members/roles/#account-scoped-roles) to members who have access to all domains.
+You can only assign [account-scoped roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) to members who have access to all domains.
 
 {{</Aside>}}
 
@@ -48,7 +46,7 @@ If you want the member to have roles associated with most domains, but not one o
 
 {{<Aside type="note">}}
 
-If you limit permissions to any domain, you can only assign [domain-scoped roles](/fundamentals/account-and-billing/members/roles/#domain-scoped-roles) to these members.
+If you limit permissions to any domain, you can only assign [domain-scoped roles](/fundamentals/setup/manage-members/roles/#domain-scoped-roles) to these members.
 
 {{</Aside>}}
 
@@ -60,7 +58,7 @@ If you want a member with access to a group of specific domains, you can also cr
 
 To create a domain group: 
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/setup/account-setup/verify-email-address/)).
 2. Go to **Manage Account** > **Configurations** > **Lists**.
 3. For **Domain Group Manager**, select **Create**.
 4. Create your domain group:
@@ -83,6 +81,6 @@ To assign a member permissions to a domain group, use the following combination 
 
 {{<Aside type="note">}}
 
-With Domain Groups, you can only assign [domain-scoped roles](/fundamentals/account-and-billing/members/roles/#domain-scoped-roles) to these members.
+With Domain Groups, you can only assign [domain-scoped roles](/fundamentals/setup/manage-members/roles/#domain-scoped-roles) to these members.
 
 {{</Aside>}}

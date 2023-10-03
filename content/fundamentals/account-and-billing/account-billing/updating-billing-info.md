@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Update billing information
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-maintenance//updating-billing-info/
 ---
 
 # Update billing information
@@ -72,7 +70,7 @@ If paying by PayPal, refer to PayPal's [billing address documentation](https://w
 
 ## Update billing email address
 
-Your billing email address is particularly important if you have [opted into email invoices](/fundamentals/account-and-billing/account-setup/create-billing-profile/#enable-email-invoices).
+Your billing email address is particularly important if you have [opted into email invoices](/fundamentals/setup/account-setup/create-billing-profile/#enable-email-invoices).
 
 To update your billing email address:
 

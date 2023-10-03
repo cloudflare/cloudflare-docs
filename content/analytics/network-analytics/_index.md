@@ -17,7 +17,7 @@ For a technical deep-dive into Network Analytics v2, refer to our [blog post](ht
 
 ## Remarks
 
-The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/get-started/concepts/accounts-and-zones/#zones) in your Cloudflare account.
+The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/concepts/accounts-and-zones/#zones) in your Cloudflare account.
 
 ## Related resources
 

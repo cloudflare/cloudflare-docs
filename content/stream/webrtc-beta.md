@@ -4,7 +4,7 @@ weight: 8
 title: WebRTC (beta)
 ---
 
-{{<beta>}}WebRTC{{</beta>}}
+{{<heading-pill style="beta">}}WebRTC{{</heading-pill>}}
 
 Sub-second latency live streaming (using WHIP) and playback (using WHEP) to unlimited concurrent viewers.
 

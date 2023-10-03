@@ -64,7 +64,7 @@ header: API configuration example
 
 ## Browser Integrity Check
 
-Enable or disable [Browser Integrity Check](/fundamentals/security/browser-integrity-check/) [^3] for matching requests.
+Enable or disable [Browser Integrity Check](/waf/tools/browser-integrity-check/) [^3] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -310,7 +310,7 @@ header: API configuration example
 
 ## Security Level
 
-Select the [Security Level](/fundamentals/security/security-level/) [^13] for matching requests.
+Select the [Security Level](/waf/tools/security-level/) [^13] for matching requests.
 
 <details>
 <summary>API information</summary>

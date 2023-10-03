@@ -26,7 +26,7 @@ Currently, you can only customize cipher suites when using the API:
 - [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
 - [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
 
-When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
+When you customize cipher suites for a [zone](/fundamentals/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 

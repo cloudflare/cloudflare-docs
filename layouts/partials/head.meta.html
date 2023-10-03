@@ -76,10 +76,6 @@
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
 
-  {{- if (eq $.Context.Params.no_index true ) -}}
-  <meta name="robots" content="noindex">
-  {{- end -}}
-
   <meta charset="utf-8">
   <title>{{ $title }}</title>
   <meta http-equiv="cleartype" content="on" />
@@ -107,8 +103,9 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Add metadata for reporting -->
+  {{- $product := "" -}}
   {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
-  {{- $product := replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
+  {{- $product = replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
   <meta name="pcx_product" content="{{- $product -}}">
   {{- end -}}
 
@@ -140,7 +137,22 @@
   <meta name="pcx_content_group" content="{{$productGroup}}" />
   {{- end -}}
 
-    <!--Add rss feed links if specified-->
+  <!--Add rss feed if specified via output -->
+  {{ with $.Context.OutputFormats.Get "rss" }}
+  
+  {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
+
+  {{- if ne $product "" -}}
+  {{ printf `
+    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - %s - RSS Feed" />` $rssFeedURL $pt ($product | title) | safeHTML }}
+
+  {{- else -}}
+  {{ printf `
+    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeedURL $pt | safeHTML }}
+  {{- end -}}
+  {{- end -}}
+
+  <!--Add rss feed links if specified via Param -->
   {{ with $.Context.Params.rss -}}
   {{ if eq . "folder" }}
 
@@ -162,7 +174,6 @@
 
   {{ printf `
   <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
-
   {{ end }}
 
 

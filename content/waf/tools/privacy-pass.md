@@ -2,8 +2,6 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/115001992652-Using-Privacy-Pass-with-Cloudflare
 title: Privacy Pass
-aliases:
-- /fundamentals/security/privacy-pass/
 ---
 
 # Privacy Pass
@@ -38,7 +36,7 @@ Report general Privacy Pass issues to [privacy-pass-support@cloudflare.com](mai
 
 ## Privacy Pass with Under Attack mode
 
-Privacy Pass allows a user to bypass CAPTCHAs. To help mitigate malicious usage of this feature, we automatically disable Privacy Pass anytime a domain is placed into [I'm Under Attack!](/fundamentals/security/under-attack-mode/) mode. A few key points you need to keep in mind when enabling the **I'm Under Attack!** mode:
+Privacy Pass allows a user to bypass CAPTCHAs. To help mitigate malicious usage of this feature, we automatically disable Privacy Pass anytime a domain is placed into [I'm Under Attack!](/fundamentals/reference/under-attack-mode/) mode. A few key points you need to keep in mind when enabling the **I'm Under Attack!** mode:
 
 1.  When **I'm Under Attack!** mode is enabled on a domain, then Privacy Pass is disabled.
 2.  When **I'm Under Attack!**  mode is disabled on a domain, then Privacy Pass is re-enabled if it was enabled before **I'm Under Attack!**  mode was turned on. 
