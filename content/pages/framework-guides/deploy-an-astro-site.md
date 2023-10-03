@@ -112,11 +112,11 @@ export default defineConfig({
 
 A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In Astro you can use bindings in Astro components and API routes by using the `context.local` from [Astro Middleware](https://docs.astro.build/en/guides/middleware/) to access the Cloudflare runtime which amongst other fields contains the Cloudflare's environment and consecutively any bindings set for your application.
+Use bindings in Astro components and API routes by using `context.local` from [Astro Middleware](https://docs.astro.build/en/guides/middleware/) to access the Cloudflare runtime which amongst other fields contains the Cloudflare's environment and consecutively any bindings set for your application.
 
-Let's see an example of how to access a KV namespace with TypeScript.
+Refer to the following example of how to access a KV namespace with TypeScript.
 
-First, we need to define Cloudflare runtime and KV type by updating the `env.d.ts`:
+First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`:
 
 ```typescript
 ---
@@ -158,7 +158,7 @@ export async function get({locals}: APIContext) => {
 };
 ```
 
-Besides endpoints, You can also use bindings directly from your Astro components:
+Besides endpoints, you can also use bindings directly from your Astro components:
 
 ```typescript
 ---
@@ -172,6 +172,6 @@ const value = await myKV.get("key");
 <div>{value}</div>
 ```
 
-To learn more about the Astro Cloudflare runtime see [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime).
+To learn more about the Astro Cloudflare runtime, refer to the Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
 {{<render file="_learn-more.md" withParameters="Astro">}}
