@@ -57,7 +57,7 @@ On Windows in Command Prompt:
 curl.exe -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d "{""flag"":true}"
 ```
 
-For further help with API calls on Windows, see [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).
+For further help with API calls on Windows, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).
 
 #### Parameters
 
