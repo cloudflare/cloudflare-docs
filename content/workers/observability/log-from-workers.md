@@ -5,13 +5,13 @@ title: Log from Workers
 
 # Log from Workers
 
-You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
+Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production.
 
-The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or in the dashboard:
+{{<youtube id="8iPmy7ePYDE">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Logs**.
+You can access logs and exceptions for your Workers by logging into [the dashboard]((#view-logs-from-the-dashboard)) or using [`wrangler tail`](#view-logs-using-wrangler-tail).
+
+The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 
 {{<Aside type="warning" header="Warning">}}
 This feature is not available for zones on the [Cloudflare China Network](/china-network/).
@@ -80,7 +80,7 @@ $ wrangler tail --format=pretty
  | [Info] Request came from city: Pacifica in country: US
 ```
 
-## View logs using `wrangler tail`
+## Using `wrangler tail`
 
 With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
