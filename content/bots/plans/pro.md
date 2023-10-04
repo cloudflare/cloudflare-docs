@@ -18,22 +18,6 @@ meta:
 
 {{<render file="_about-plan-pro.md">}}
 
-## Bot detection engines
-
-### Heuristics
-
-{{<render file="_bots-heuristics.md">}}
-
-### JavaScript detections
-
-{{<render file="_bots-jsd.md">}}
-
-JSD is completely optional. To adjust your settings, configure Super Bot Fight Mode from **Security** > **Bots**.
-
-### Notes on detection
-
-{{<render file="_bots-cookie.md">}}
-
 ## Considerations
 
 {{<render file="_about-plan-considerations.md">}}

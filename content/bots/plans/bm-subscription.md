@@ -18,10 +18,6 @@ meta:
 
 {{<render file="_about-plan-bm-subscription.md">}}
 
-## Bot detection engines
-
-{{<render file="_bm-bot-detection-engines.md">}}
-
 ## How do I get started?
 
 {{<render file="_plan-get-started.md">}}
