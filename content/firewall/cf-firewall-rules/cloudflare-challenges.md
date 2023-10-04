@@ -116,9 +116,28 @@ fetch('/my-api-endpoint')
 
 For additional help, refer to [our FAQ for Challenges](/firewall/known-issues-and-faq#challenges).
 
+---
+
 ## Multi-language support
 
 Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser user interface. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
+
+---
+
+## Favicon customization
+
+Cloudflare challenges take the favicon of your website using `GET /favicon.ico` and displays it on the challenge page.
+
+You can customize your favicon by using the snippet below.
+
+```html
+---
+header: HTML element
+---
+<link rel="shortcut icon" href=“<FAVICON_LINK>”/>
+```
+
+---
 
 ## Common issues
 
