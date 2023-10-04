@@ -14,7 +14,7 @@ This change will not impact existing certificates issued from DigiCert that Clou
 
 {{<Aside type="warning">}}
 
-The offboarding for new advanced certificate orders has been postponed from October 4 to October 5.
+The offboarding for new advanced certificate orders has been postponed from October 4, 2023 to October 5, 2023.
 
 {{</Aside>}}
 

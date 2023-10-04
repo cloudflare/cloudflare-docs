@@ -15,7 +15,7 @@ On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 {{<Aside type="warning">}}
 
-The offboarding for new advanced certificate orders has been postponed from October 4 to October 5.
+The offboarding for new advanced certificate orders has been postponed from October 4, 2023 to October 5, 2023.
 
 {{</Aside>}}
 
