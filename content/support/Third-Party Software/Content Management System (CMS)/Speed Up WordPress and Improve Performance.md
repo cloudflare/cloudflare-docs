@@ -6,8 +6,6 @@ title: Speed Up WordPress and Improve Performance
 
 # Speed Up WordPress and Improve Performance
 
-
-
 Cloudflare's CDN services can help cache your content across our giant global network, but performance isn't just about moving static files closer to your visitor. Cloudflare does more than offer a CDN, Cloudflare's optimisation features allow you to enhance the performance of your WordPress site beyond what a traditional CDN can do.
 
 ### Caching Anonymous Page Views

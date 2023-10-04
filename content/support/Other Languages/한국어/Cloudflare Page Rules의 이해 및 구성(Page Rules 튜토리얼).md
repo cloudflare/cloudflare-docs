@@ -762,12 +762,12 @@ Page Rule을 저장할 때, Cloudflare는 **URL이 일치하는 경우** 필드�
 
 **If the URL matches** 필드 또는 Page Rule에서 포트를 지정하면 해당 포트는 다음 중 한 가지여야 합니다.
 
--   [Cloudflare 프록시와 호환되는](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 포트 중 하나.
+-   [Cloudflare 프록시와 호환되는](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 포트 중 하나.
 -   [Cloudflare Spectrum](/spectrum/) HTTPS 응용 프로그램의 사용자 지정 포트.
 
 ### Workers와 함께 Page Rules 사용하기
 
-현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/platform/workers-with-page-rules/)를 참조하시기 바랍니다.
+현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/configuration/workers-with-page-rules/)를 참조하시기 바랍니다.
 
 ___
 

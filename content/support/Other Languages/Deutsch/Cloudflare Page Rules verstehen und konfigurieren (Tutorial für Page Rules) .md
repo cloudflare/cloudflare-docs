@@ -785,12 +785,12 @@ Beachten Sie, dass `example.com/some-path/cloudflare.com` _ohne_ einen abschlie�
 
 Wenn Sie einen Port im Page-Rule-Feld **Wenn die URL 체bereinstimmt** angeben, muss es sich um einen der folgenden Ports handeln:
 
--   Einer der HTTP/HTTPS-Ports, die [mit dem Proxy von Cloudflare kompatibel](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) sind.
+-   Einer der HTTP/HTTPS-Ports, die [mit dem Proxy von Cloudflare kompatibel](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) sind.
 -   Ein benutzerdefinierter Port einer [Cloudflare Spectrum](/spectrum/) HTTPS-Anwendung.
 
 ### Page Rules mit Workers verwenden
 
-Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) 체bereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation f체r Entwickler](/workers/platform/workers-with-page-rules/).
+Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) 체bereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation f체r Entwickler](/workers/configuration/workers-with-page-rules/).
 
 ___
 

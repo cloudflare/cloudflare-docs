@@ -2,6 +2,8 @@
 pcx_content_type: get-started
 title: Get started
 weight: 1
+meta:
+  title: Functions - Get started
 ---
 
 # Get started
@@ -18,7 +20,7 @@ To get started with generating a Pages Function, create a `/functions` directory
 
 {{<Aside type="note" header="Advanced mode">}}
 
-For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/platform/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_workers.js` file rather than the `/functions` directory.
+For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/platform/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
 
 {{</Aside>}}
 
@@ -43,7 +45,7 @@ Refer to [Routing](/pages/platform/functions/routing/) for more information on r
 
 ### Runtime features
 
-Workers runtime features, including compatibility with a subset of Node.js APIs and setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/) are configurable on Pages Functions.
+Workers runtime features, including compatibility with a subset of Node.js APIs and setting a [compatibility date or compatibility flag](/workers/configuration/compatibility-dates/) are configurable on Pages Functions.
 
 Set these configurations by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. To set Pages compatibility flags in the Cloudflare dashboard:
 

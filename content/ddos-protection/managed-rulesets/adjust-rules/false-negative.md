@@ -12,7 +12,7 @@ A false negative is a lack of identification. In the case of DDoS protection, th
 
 To address a false negative:
 
-- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating rate limiting rules and firewall rules as needed.
+- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating rate limiting rules and WAF custom rules as needed.
 
 - If you are a Magic Transit customer, [use Magic Firewall rules](/magic-firewall/how-to/add-rules/) to help mitigate the attack.
 

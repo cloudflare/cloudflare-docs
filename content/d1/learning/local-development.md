@@ -20,7 +20,7 @@ Users new to D1 and/or Cloudflare Workers should visit the [D1 tutorial](/d1/get
 
 Local development sessions create a standalone, local-only environment that mirrors the production environment D1 runs in so that you can test your Worker and D1 _before_ you deploy to production.
 
-An existing [D1 binding](/workers/wrangler/configuration/#d1-database) of `DB` would be available to your Worker when running locally.
+An existing [D1 binding](/workers/wrangler/configuration/#d1-databases) of `DB` would be available to your Worker when running locally.
 
 To start a local development session:
 
@@ -60,6 +60,33 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
+
+## Develop locally with Pages
+
+You can develop against a _local_ (only) D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
+
+Your `wrangler.toml` should resemble the following:
+
+```toml
+---
+filename: wrangler.toml
+---
+# If you are only using Pages + D1, you only need the below in your wrangler.toml to interact with D1 locally.
+[[d1_databases]]
+binding = "DB" # Should match preview_database_id
+database_name = "YOUR_DATABASE_NAME"
+database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
+preview_database_id = "DB" # Required for Pages local development
+```
+
+You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to wrangler:
+
+```sh
+$ wrangler d1 execute YOUR_DATABASE_NAME \
+  --local --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);"
+```
+
+The preceding command would execute queries the **local only** version of your D1 database. Without the `--local` flag, the commands are executed against the remote version of your D1 database running on Cloudflare's network.   
 
 ## Persist data
 

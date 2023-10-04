@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Reference
 weight: 2
+meta:
+    title: Reference - Speed optimizations
 ---
 
 # Reference
@@ -12,4 +14,4 @@ After the feature is enabled, it takes Google AMP Cache about a week to detect a
 
 ## Search Console errors
 
-Even when the Search Console (AMP Pages) is returning a `The dates for the signed exchange are invalid` error message, Google can still parse the signed exchange and treat it like normal HTML. In the case of an AMP page, Google should fall back to treat it like it would treat a regular AMP page. This should not be a problem.
+Even when the Search Console (AMP Pages) is returning a `The dates for the signed exchange are invalid` error message, Google can still parse the signed exchange and treat it like regular HTML. In the case of an AMP page, Google should fall back to treat it like it would treat a regular AMP page. This should not be a problem.

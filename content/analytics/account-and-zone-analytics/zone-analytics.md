@@ -10,7 +10,7 @@ weight: 1
 The Cloudflare zone analytics is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
 {{<Aside type="note">}}
-Read [Cloudflare Analytics](/fundamentals/data-products/about-analytics/)
+Read [Cloudflare Analytics](/analytics/faq/about-analytics/)
 for general information about all of Cloudflare's analytics offerings.
 You can also understand the characteristics of the data that Cloudflare
 captures and processes.
@@ -22,9 +22,9 @@ ___
 
 To view metrics for your website:
 
-1.  Log in to the Cloudflare dashboard.
-2.  Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
-3.  Next, click the **Analytics** app icon.
+1. Log in to the Cloudflare dashboard.
+2. Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
+3. Next, select the **Analytics** app icon.
 
 Once it loads, the Analytics app displays a set of tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
 
@@ -74,7 +74,7 @@ To receive more detailed metrics, **Add filter**. You can also filter each metri
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 
 {{<Aside type="note">}}
-To opt out of the new Web Traffic Analytics, click **Switch back to the
+To opt out of the new Web Traffic Analytics, select **Switch back to the
 old experience** on the left side of the page.
 {{</Aside>}}
 
@@ -96,12 +96,12 @@ The metrics aggregated under this tab span multiple Cloudflare services.  The p
 
 ### DNS
 
-The DNS tab presents several statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
+The DNS tab presents statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
 
-The metrics panels available under the DNS tab include:
+The metrics panels available under the DNS tab may include:
 
--   **DNS Queries** - Displays several area charts and data tables for DNS record metrics including queries by _Response Code_, _Record Type_ as well as records that return an _NXDOMAIN_ response (dns record doesn’t exist). You can filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
--   **DNS Queries by Data Center** - Lets you view DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _Traffic_, _NXDOMAIN_, and _NOERROR_.
+-   **DNS Queries** - Displays area charts and data tables for DNS record metrics. For free plans, this section includes _Queries by Response Code_ and, for Pro and above, this section also includes _Queries by Record Type_. Records that return an _NXDOMAIN_ response (dns record doesn’t exist) are also considered. For zones in Enterprise plan, you can also filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
+-   **DNS Queries by Data Center** - Displays DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _DNS Traffic_, _NXDOMAIN_, and _NOERROR_. This section is available to zones in Pro plan or above.
 
 ### Workers
 

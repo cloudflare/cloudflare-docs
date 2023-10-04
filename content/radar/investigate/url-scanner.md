@@ -4,7 +4,7 @@ title: URL Scanner (beta)
 weight: 7
 ---
 
-{{<beta>}} Radar's URL Scanner {{</beta>}}
+{{<heading-pill style="beta">}} Radar's URL Scanner {{</heading-pill>}}
 
 In order to better understand Internet usage around the world, Radar provides a URL Scanner at [https://radar.cloudflare.com/scan](https://radar.cloudflare.com/scan).
 
@@ -104,13 +104,13 @@ Some examples of more specific properties include:
 - `page.country` - GeoIP country name of the main IP address contacted.
 - `page.cookies` - Cookies set by the page.
 - `page.console` - JavaScript console messages
-- `page.js.variables` - Non-standard Javascript global variables.
+- `page.js.variables` - Non-standard JavaScript global variables.
 - `page.securityViolations` - [CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
 - `verdicts.overall.malicious` - Whether the website was considered malicious _at the time of the scan_. Please check the remaining properties for each subsystem(s) for specific threats detected.
 
 The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentation contains the full response schema.
 
-In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot), [DOM](/api/operations/urlscanner-get-scan-dom) and full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
+In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot) or full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
 
 
 ## Search scans

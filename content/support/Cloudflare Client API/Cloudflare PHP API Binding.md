@@ -17,7 +17,7 @@ This PHP API binding has been deprecated. You should refer to the [REST API docu
 Cloudflare offers a PHP API binding for those using PHP 7.0 or greater; this binding supports the latest version 4 of the Cloudflare API. You can use this SDK for a variety of purposes, including:
 
 -   Manage and automate changes to your DNS records within Cloudflare
--   Programatically add zones to your account
+-   Programmatically add zones to your account
 -   Version and change control for Page Rules
 -   Automatically blocking IPs and User Agents using Zone Lockdown and UserAgent Rules
 -   Fetch Cloudflare's IP ranges for automating your firewall allowlist
@@ -106,7 +106,7 @@ ___
 
 ## Creating Page Rules
 
-The SDK can also be used for programatically adding Page Rules to a Cloudflare Zone, here's a simple example of adding a Cache Bypass rule:
+The SDK can also be used for Programmatically adding Page Rules to a Cloudflare Zone, here's a simple example of adding a Cache Bypass rule:
 
 ```php
 getZoneID("junade.com");
@@ -128,7 +128,7 @@ ___
 
 ## DNS
 
-The SDK can also be used for programatically adding records, here's an example of adding an example DNS record:
+The SDK can also be used for Programmatically adding records, here's an example of adding an example DNS record:
 
 ```php
 getZoneID("junade.com");

@@ -260,6 +260,13 @@ format=auto
 
 ```js
 ---
+header: URL format alias
+---
+f=auto
+```
+
+```js
+---
 header: Workers
 ---
 cf: {image: {format: "avif"}}
@@ -317,6 +324,13 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   ```js
   ---
+  header: URL format alias
+  ---
+  g=auto
+  ```
+
+  ```js
+  ---
   header: Workers
   ---
   cf: {image: {gravity: "auto"}}
@@ -325,7 +339,13 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
   - `side`  
   A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
 
-    For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image. Example:
+    For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+
+  {{<Aside type="note">}}
+    
+  Note that you must subtract the height of the image before you calculate the focal point.
+    
+  {{</Aside>}}
 
   ```js
   ---
@@ -358,6 +378,13 @@ Specifies maximum height of the image in pixels. Exact behavior depends on the `
 header: URL format
 ---
 height=250
+```
+
+```js
+---
+header: URL format alias
+---
+h=250
 ```
 
 ```js
@@ -457,6 +484,13 @@ quality=50
 
 ```js
 ---
+header: URL format alias
+---
+q=50
+```
+
+```js
+---
 header: Workers
 ---
 cf: {image: {quality: 50}}
@@ -530,6 +564,14 @@ header: URL format
 ---
 width=250
 ```
+
+```js
+---
+header: URL format alias
+---
+w=250
+```
+
 
 ```js
 ---

@@ -3,11 +3,13 @@ pcx_content_type: concept
 title: TailEvent
 ---
 
-# TailEvent
+# `TailEvent`
 
 ## Background
 
-A tail event is the event type to automatically capture data from a producer Worker. It can be used to process logs in real-time and send them to a logging or analytics service.
+A `TailEvent` is the event type used by a [Tail Worker](/workers/observability/tail-workers/) to automatically capture data from another Worker (known as a producer Worker). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+
+To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/tail-workers/).
 
 ## Syntax: ES modules
 
@@ -74,7 +76,7 @@ addEventListener('tail', event =>
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](#waituntil). Note that unlike fetch event handlers, tail handlers do not return a value, so this is the only way for trace Workers to do asynchronous work.
+  - Refer to [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil). Note that unlike fetch event handlers, tail handlers do not return a value, so this is the only way for trace Workers to do asynchronous work.
 
 {{</definitions>}}
 
@@ -99,11 +101,11 @@ addEventListener('tail', event =>
 
 - `logs` {{<type>}}array{{</type>}}
 
-  - An array of [TailLogs](/workers/runtime-apis/tail-event/#taillogs).
+  - An array of [TailLogs](/workers/runtime-apis/tail-event/#taillog).
 
 - `exceptions` {{<type>}}array{{</type>}}
 
-  - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexceptions). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
+  - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexception). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
 
 - `outcome` {{<type>}}string{{</type>}}
 
@@ -234,3 +236,7 @@ Records an unhandled exception that occurred during the Worker invocation.
   - The error description (For example, `"x" is not a function`).
 
 {{</definitions>}}
+
+## Related resources
+
+* [Tail Workers](/workers/observability/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.

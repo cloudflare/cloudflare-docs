@@ -70,7 +70,7 @@ To set up SAML with Okta as your identity provider:
 
 16. (Recommended) Enable **Sign SAML authentication request**.
 
-17. (Recommended) Under **SAML attributes**, add the `email` and `groups` attributes. The `groups` attribute is required if you want to create policies based on [Okta groups](/cloudflare-one/policies/filtering/identity-selectors/#okta-saml).
+17. (Recommended) Under **SAML attributes**, add the `email` and `groups` attributes. The `groups` attribute is required if you want to create policies based on [Okta groups](/cloudflare-one/policies/gateway/identity-selectors/#okta-saml).
 
 ![Adding optional SAML attributes in Zero Trust](/images/cloudflare-one/identity/okta-saml/okta-saml-6.png)
 
@@ -94,9 +94,11 @@ SAML attributes are only refreshed during authentications with the Okta identity
         "attributes": [
             "email",
             "group",
-            "email_attribute_name": "",
-            "sign_request": false,
-            "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+        ],
+        "email_attribute_name": "",
+        "sign_request": false,
+        "idp_public_certs": [
+            "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
         ]
     },
     "type": "saml",

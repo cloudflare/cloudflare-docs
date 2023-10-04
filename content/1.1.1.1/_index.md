@@ -19,6 +19,8 @@ Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers. 1.1.1
 
 1.1.1.1 is completely free. Setting it up takes minutes and requires no special software.
 
+---
+
 ## Features
 
 {{<feature header="1.1.1.1 for Families" href="/1.1.1.1/setup/#1111-for-families">}}

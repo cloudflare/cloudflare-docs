@@ -3,7 +3,7 @@ title: Cache Rules (beta)
 pcx_content_type: concept
 ---
 
-{{<beta>}} Cache Rules {{</beta>}}
+{{<heading-pill style="beta">}} Cache Rules {{</heading-pill>}}
 
 Use Cache Rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare global network.
 
@@ -19,7 +19,7 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 1. Cache Rules are stackable. This means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied. If several matching rules set a value for the same setting, the value in the last matching rule wins. For an example of a similar scenario where multiple rules match, refer to the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
 
-2. For conflicting settings (for example, bypass cache vs. eligible for cache), the last matching rule wins. For example, if Cache Rule #1 is set to cache everything on `example.com/images` and Cache Rule #2 is set to bypass cache on `example.com`, then cache will be bypassed for all URLs that match `example.com`, since rule #2 is the last matching rule.
+2. For conflicting settings (for example, bypass cache versus eligible for cache), the last matching rule wins. For example, if Cache Rule #1 is set to cache everything on `example.com/images` and Cache Rule #2 is set to bypass cache on `example.com`, then cache will be bypassed for all URLs that match `example.com`, since rule #2 is the last matching rule.
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, Cloudflare plans on releasing a one-click migration tool for Page Rules.
 

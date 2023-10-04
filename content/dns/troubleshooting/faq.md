@@ -1,11 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: FAQ
+title: General FAQ
 weight: 1
 ---
 
-# FAQ
+# General FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -147,7 +147,7 @@ ___
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
+By default, only A and CNAME records that handle web traffic (HTTP and HTTPS) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -178,9 +178,9 @@ ___
 This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
-1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
+1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/get-started/setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 {{<Aside type="note">}}
 Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the root domain.
+server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
 {{</Aside>}}
 
 ___

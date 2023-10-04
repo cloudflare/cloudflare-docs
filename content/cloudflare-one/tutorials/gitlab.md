@@ -136,7 +136,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the **Applications** page in Zero Trust. Select **Add an application**.
+Once enabled, go to the **Applications** page in Zero Trust. Select **Add an application**.
 
 Choose self-hosted from the options presented.
 
@@ -173,7 +173,7 @@ The command will print a URL that you must visit to login with your Cloudflare a
 
 Choose a website that you have added into your account.
 
-Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
+Once you select one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](/images/cloudflare-one/secure-origin-connections/share-new-site/cert-download.png)
 
@@ -239,13 +239,13 @@ This command should be run as a `systemd` service for long-term use; if it termi
 
 You can now create DNS records for GitLab in the Cloudflare dashboard. Remember, you will still need two records - one for the web application and one for SSH traffic.
 
-In the **DNS** tab, choose the website where you built your [Access policies](/cloudflare-one/policies/access/). Click **Add record** and select `CNAME` from type. In the **Name** field, input `gitlab`. In the **Target** field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
+In the **DNS** tab, choose the website where you built your [Access policies](/cloudflare-one/policies/access/). Select **Add record** and select `CNAME` from type. In the **Name** field, input `gitlab`. In the **Target** field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
 
 ```txt
 6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
 ```
 
-Click **Save**. Repeat the process again by creating a second `CNAME` record, with the same **Target**, but input `gitlab-ssh` for the **Name**. Both records should then appear, pointing to the same Tunnel. The ingress rules defined in the configuration file above will direct traffic to the appropriate port.
+Select **Save**. Repeat the process again by creating a second `CNAME` record, with the same **Target**, but input `gitlab-ssh` for the **Name**. Both records should then appear, pointing to the same Tunnel. The ingress rules defined in the configuration file above will direct traffic to the appropriate port.
 
 ![View DNS](/images/cloudflare-one/zero-trust-security/gitlab/view-dns.png)
 

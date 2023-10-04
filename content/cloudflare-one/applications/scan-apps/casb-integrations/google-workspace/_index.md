@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Google Workspace
 rss: file
+meta:
+    title: Google Workspace - CASB
 ---
 
 # Google Workspace

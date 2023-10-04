@@ -16,9 +16,9 @@ The `skip` action supports different [skip options](/waf/custom-rules/skip/optio
 
 This page contains examples of different skip rule scenarios for custom rules. Take the following into account:
 
-* The `{zone_id}` value is the [ID of the zone](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) where you want to add the rule.
+* The `{zone_id}` value is the [ID of the zone](/fundamentals/setup/find-account-and-zone-ids/) where you want to add the rule.
 
-* The `{ruleset_id}` value is the ID of the [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). The API examples in this page add a skip rule to an existing ruleset using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
+* The `{ruleset_id}` value is the ID of the [entry point ruleset](/ruleset-engine/about/rulesets/#phase-entry-point-ruleset) of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). The API examples in this page add a skip rule to an existing ruleset using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
     However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) operation to create the entry point ruleset with a skip rule. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
 
@@ -30,9 +30,9 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "ruleset": "current"
@@ -48,9 +48,9 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "phases": [
@@ -74,9 +74,9 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "phases": [
@@ -99,9 +99,9 @@ This example uses the [Create a zone ruleset rule](/api/operations/createZoneRul
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "products": [

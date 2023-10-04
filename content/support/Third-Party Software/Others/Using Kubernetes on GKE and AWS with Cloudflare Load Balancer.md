@@ -311,9 +311,9 @@ Delete the Ingress: 
 
 ```sh
 $ kubectl delete ingress basic-ingress
-``` 
+```
 
-___
+---
 
 ## Creating Cloudflare Load Balancer
 
@@ -370,7 +370,7 @@ ___
 
 ## Argo Tunnel Ingress Controller
 
-In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
+In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
 
 ### **Cloudflare TunnelIngress**
 

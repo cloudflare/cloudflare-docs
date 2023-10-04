@@ -29,12 +29,14 @@ body:
         - DDoS Protection
         - DMARC Management
         - DNS
+        - Durable Objects
         - Email Routing
         - Email Security
         - Firewall
         - Fundamentals
         - Health Checks
         - Image Optimization
+        - KV
         - Load Balancing
         - Logs
         - Magic Firewall
@@ -43,6 +45,7 @@ body:
         - Magic WAN
         - Network Error Logging
         - Network Interconnect
+        - Notifications
         - Page Shield
         - Pages
         - Privacy Gateway
@@ -58,8 +61,10 @@ body:
         - Ruleset Engine
         - Security Center
         - Spectrum
+        - Speed
         - SSL
         - Stream
+        - Style Guide
         - Support
         - Tenant
         - Terraform

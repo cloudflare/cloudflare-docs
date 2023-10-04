@@ -1,0 +1,36 @@
+---
+link: "/ddos-protection/change-log/http/"
+productName: DDoS protection
+subCategoryName: HTTP
+topLevelLink: "/ddos-protection/change-log/"
+entries:
+- publish_date: '2023-09-24'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-09-24-emergency/'
+- publish_date: '2023-09-21'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-09-21-emergency/'
+- publish_date: '2023-09-05'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-09-05-emergency/'
+- publish_date: '2023-08-30'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-08-30-emergency/'
+- publish_date: '2023-08-29'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-08-29-emergency/'
+- publish_date: '2023-08-25'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-08-25-emergency/'
+- publish_date: '2023-08-16'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-08-16-emergency/'
+- publish_date: '2023-08-14'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-08-14/'
+- publish_date: '2023-08-11'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-08-11-emergency/'
+- publish_date: '2023-07-31'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-07-31/'

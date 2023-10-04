@@ -37,7 +37,7 @@ ___
 
 ### Symptom
 
-[Cloudflare Universal SSL certificates](/ssl/edge-certificates/universal-ssl) only cover the root-level domain (`example.com`) and one level of subdomains (`blog.example.com`). If visitors to your domain observe errors accessing a second level of subdomains in their browser (such as `dev.www.example.com`) but not the first level of subdomains, resolve the issue using one of the following methods below.
+[Cloudflare Universal SSL certificates](/ssl/edge-certificates/universal-ssl) only cover the apex domain (`example.com`) and one level of subdomains (`blog.example.com`). If visitors to your domain observe errors accessing a second level of subdomains in their browser (such as `dev.www.example.com`) but not the first level of subdomains, resolve the issue using one of the following methods below.
 
 ### Resolution
 
@@ -61,7 +61,7 @@ Our SSL vendors verify each SSL certificate request before Cloudflare can issue 
 
 If your Cloudflare SSL certificate is not issued within 24 hours of Cloudflare domain activation:
 
--   If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/), and
+-   If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/), and
 -   [Contact Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) and provide a screenshot of the errors.
 
 Temporarily pausing Cloudflare will allow the HTTPS traffic to be served properly from your origin web server while the support team investigates the issue.
@@ -110,7 +110,7 @@ You may have configured [HTTP Response Header Modification Rules](/rules/transfo
 
 ___
 
-## Kapersky Antivirus
+## Kaspersky Antivirus
 
 To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
 Antivirus, allow `dash.cloudflare.com` in Kaspersky.

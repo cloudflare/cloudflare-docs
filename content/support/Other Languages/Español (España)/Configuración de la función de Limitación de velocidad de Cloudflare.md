@@ -194,7 +194,7 @@ Las acciones de limitación de velocidad se basan en el plan del dominio, tal y 
 
 -   **Bloquear:** Cloudflare emite un código de error HTTP 429 cuando se supera el límite.
 -   **CAPTCHA heredado** **\-** El visitante debe superar un desafío de CAPTCHA. Si lo consigue, Cloudflare permite la solicitud.
--   **Desafío JS**: el visitante debe pasar un desafió Javascript de Cloudflare. Si lo consigue, Cloudflare permite la solicitud.
+-   **Desafío JS**: el visitante debe pasar un desafió JavaScript de Cloudflare. Si lo consigue, Cloudflare permite la solicitud.
 -   **Registrar-** Las solicitudes se registran en [Registros de Cloudflare](https://support.cloudflare.com/hc/articles/216672448). De este modo, se ayuda a probar las reglas antes de aplicarlas.
 
 #### **Duración de la prohibición**

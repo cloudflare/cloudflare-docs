@@ -1,20 +1,5 @@
 {
-    "modules": [ 
-        {
-            "folder": "security",
-            "uid": "bot-management-concepts"
-        },
-        {
-            "folder": "security",
-            "uid": "bot-management-planning"
-        },
-        {
-            "folder": "security",
-            "uid": "bot-management-setup"
-        }
-    ],
     "title": "Bot management",
-    "uid": "bot-management",
     "path": "/learning-paths/bot-management/",
     "priority": 3,
     "description": "Stop bad bots with threat intelligence at scale.",
@@ -22,5 +7,5 @@
       "Bots",
       "WAF"
     ],
-    "category": ["Security"]
+    "product_group": "Application security"
 }

@@ -69,7 +69,7 @@ Once you have deployed your Sanity studio:
 3.  Select **API**.
 4.  Add `http://localhost:3000` as an allowed CORS origin for your project.
 
-This means that requests that come to your Sanity dataset from your Nuxt application will be whitelisted.
+This means that requests that come to your Sanity dataset from your Nuxt application will be allowlisted.
 
 ![Your Sanity project's CORS settings](/images/pages/tutorials/cors.png)
 
@@ -419,7 +419,7 @@ There are many other things inside of your blog schema that you can add to your 
 
 ## Publishing with Cloudflare Pages
 
-Publishing your project with Cloudflare Pages is an easy, two-step process: first, push your project to GitHub, and then in the Cloudflare Pages dashboard, set up a new project based on that GitHub repository. Pages will deploy a new version of your site each time you publish, and will even set up preview deployments whenever you open a new pull request.
+Publishing your project with Cloudflare Pages is a two-step process: first, push your project to GitHub, and then in the Cloudflare Pages dashboard, set up a new project based on that GitHub repository. Pages will deploy a new version of your site each time you publish, and will even set up preview deployments whenever you open a new pull request.
 
 To push your project to GitHub, [create a new repository](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
@@ -444,4 +444,4 @@ By completing this guide, you have successfully deployed your own blog, powered 
 - Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
 - Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
 
-If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more](/pages/tutorials/build-an-api-with-pages-functions/).
+If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. Refer to the [Build an API for your front end using Pages Functions tutorial](/pages/tutorials/build-an-api-with-pages-functions/) to learn more.

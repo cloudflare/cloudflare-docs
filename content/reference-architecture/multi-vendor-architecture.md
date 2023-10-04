@@ -69,7 +69,7 @@ Cloudflare is configured as the primary DNS provider and A records are configure
 
 **2. Secondary DNS setup with Secondary DNS override**
 
-Cloudflare is configured as a secondary provider and all DNS records are transferred from the primary provider. Cloudflare provides a feature called [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/#:~:text=With%20Secondary%20DNS%20override%2C%20you,CNAME%20records%20can%20be%20proxied.) that allows customers to override the response served from Cloudflare secondary nameservers. This allows for customers to take advantage of leveraging zone transfers to automatically sync between DNS providers. It also provides the flexibility to update select records in Cloudflare DNS to redirect certain traffic to another service provider like Cloudflare. In this case, the response will be Cloudflare Anycast IP addresses allowing for Cloudflare to be the proxy.
+Cloudflare is configured as a secondary provider and all DNS records are transferred from the primary provider. Cloudflare provides a feature called [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) that allows customers to override the response served from Cloudflare secondary nameservers. This allows for customers to take advantage of leveraging zone transfers to automatically sync between DNS providers. It also provides the flexibility to update select records in Cloudflare DNS to redirect certain traffic to another service provider like Cloudflare. In this case, the response will be Cloudflare Anycast IP addresses allowing for Cloudflare to be the proxy.
 
 **3. Partial / CNAME setup**
 
@@ -77,7 +77,7 @@ In this setup, Cloudflare is not the authoritative DNS provider and the customer
 
 Converting to CNAME setup ensures the hostname eventually resolves to Cloudflare IPs. This is useful when customers don’t want to change their current DNS setup but still want to use other Cloudflare services.
 
-If a customer's current DNS provider doesn’t support CNAME on the zone apex (sometimes called the "root domain" or "naked domain") like Cloudflare does with [CNAME Flattening](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/#:~:text=With%20Secondary%20DNS%20override%2C%20you,CNAME%20records%20can%20be%20proxied.), you must purchase Static IPs from Cloudflare and create an A record to those Static IPs in the provider DNS. In Cloudflare, you can then create an A record to point the zone apex to the origin.
+If a customer's current DNS provider doesn’t support CNAME on the zone apex (sometimes called the "root domain" or "naked domain") like Cloudflare does with [CNAME Flattening](/dns/cname-flattening/), you must purchase Static IPs from Cloudflare and create an A record to those Static IPs in the provider DNS. In Cloudflare, you can then create an A record to point the zone apex to the origin.
 
 Many customers using Cloudflare services take advantage of the cross-product integration and innovations along with simplicity of a single UI for management and operational simplicity and use multiple Cloudflare services together like CDN and WAF. Although not recommended, it’s also possible to use security services like WAF with other CDN providers by setting up DNS to forward traffic through Cloudflare via CNAME and disabling Cloudflare caching via Cache Rules.
 
@@ -144,7 +144,7 @@ If the customer wants more security or additional performance benefits, they may
 
 Cloudflare offers all of these connectivity options along with Smart Routing to ensure the fastest paths to origin are used. These connectivity options are discussed in more detail in the ‘Cloudflare connectivity options’ section of this document.
 
-### Operations and Troubleshooting
+**Operations and Troubleshooting**
 
 Some important considerations when designing a multi-vendor solution are operations and troubleshooting. Having a multi-vendor solution can raise operational costs and also impact troubleshooting as you now have two different environments to manage and troubleshoot.
 
@@ -188,7 +188,7 @@ It’s important to note here that the third party services are looking at end-t
 
 Both providers’ configurations are kept in sync by the administrators, pushing out changes via Terraform which makes calls to each provider's API. Keep in mind that while Cloudflare does have full API support for every feature, this may not be the case for every provider.
 
-If only one external DNS provider is used, it does create a single point of failure if that DNS provider has an outage. A way to mitigate this risk is to implement a multi-vendor DNS solution; this is discussed in more detail in the [Multi-vendor DNS options](#multi-vendor-dns-options) section in this document.
+If only one external DNS provider is used, it does create a single point of failure if that DNS provider has an outage. A way to mitigate this risk is to implement a multi-vendor DNS solution; this is discussed in more detail in the [Multi-vendor DNS options](#multi-vendor-dns-setup-options) section in this document.
 
 Another challenge of a parallel approach is keeping configurations in sync across providers to deliver a consistent end user experience. This means the administrators need to be familiar with the configuration management of both vendors and understand how feature parity can be achieved.
 
@@ -222,7 +222,7 @@ Some DNS providers like [Cloudflare](/dns/zone-setups/zone-transfers/cloudflare-
 
 Another variation is to have specific applications/hostnames hosted through specific providers. That could mean, in the above example, both the primary and secondary DNS servers have `www.example.com` mapped to a Cloudflare address, regardless of which provider resolves the initial DNS query.
 
-### Multi-vendor DNS setup options
+## Multi-vendor DNS setup options
 
 The important routing decision is dictated by DNS. As discussed, there are multiple configurations possible for a multi-DNS setup. The below assumes you are using two DNS providers which are also the providers for the security solution.
 
@@ -283,47 +283,7 @@ Cons:
 * If the record management and zone transfer pipeline is down, DNS records cannot be updated.
 * Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control.
 
-
-### Multi-vendor DNS options
-
-#### Two authoritative - one primary and one secondary
-
-Recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization.
-
-Pros:
-* Uses standard (AXFR, IXFR) to keep DNS synced and done automatically via Zone Transfers.
-* Simplicity as the DNS provider is responsible for DNS synchronization.
-
-Cons:
-* If the record management and zone transfer pipeline is down, DNS records cannot be updated.
-* Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control and flexibility.
-
-#### Two authoritative - both primary
-
-Recommended for customers who desire the most flexible and resilient option that supports updating DNS records even when the record management and zone transfer pipeline is down and/or customers who want more control over DNS synchronization.
-
-
-Pros:
-* If control plane is down on one provider, DNS records can still be updated at the other.
-* More control and no reliance on DNS provider for DNS synchronization.
-
-Cons:
-* More complexity in keeping DNS between providers synced.
-* Customer is responsible for DNS synchronization which can be done via automation tools, automated via vendor APIs, or manually.
-
-#### Multiple authoritative - hidden primary and multiple secondary
-
-Recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization. This solution also provides for flexibility in taking the primary offline as needed with less impact. 
-
-Pros:
-* Allows customers to maintain DNS record management on their infrastructure and use standard to keep DNS synced automatically via Zone Transfers.
-* Primary is used only for source of truth and maintaining DNS records and can be taken offline for maintenance /administration.
-
-Cons:
-* If the record management and zone transfer pipeline is down, DNS records cannot be updated.
-* Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control.
-
-### Configuration and management best practices
+## Configuration and management best practices
 
 ![Figure 11: Configuration via Terraform for multi-vendor setup with Cloudflare and other vendor](/images/reference-architecture/multi-vendor-architecture-images/Figure_11.png)
 _Figure 11_
@@ -332,11 +292,11 @@ Figure 11 depicts a typical pattern seen when managing configurations across bot
 
 With the wide variety of customization options Cloudflare provides (Ruleset Engine, native features, Worker customizations), Cloudflare can likely meet feature parity with most other major vendors out in the market, however it's not guaranteed that these features will be configurable in the same manner. This is where working closely with your Cloudflare account team becomes critical in understanding the key differences in operation and best practices to align your workflow with Cloudflare.
 
-### Connectivity options
+## Connectivity options
 
 For a multi-vendor offering it's important to consider the methods that each provider offers for connectivity to the origin(s) and the trade offs in security, performance, and resiliency. Cloudflare offers several options that fit most use cases and can be deployed in parallel with per application (hostname/DNS record) granularity to fit a hybrid customer environment.
 
-#### Internet (default)
+### Internet (default)
 
 In the most basic scenario, the proxy will simply route the traffic over the Internet to the origin; this is the default setup for all vendors. In this setup the client and origin are both endpoints directly connected to the Internet via their respective ISPs. The request is routed over the Internet from the client to the vendor proxy (via DNS configuration) before the proxy routes the request over the Internet to the customer's origin.
 
@@ -349,11 +309,11 @@ Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blo
 
 Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is configured, the Cloudflare global network will announce a customer’s own IP prefixes and the prefixes can be used with the respective Cloudflare Layer 7 services.
 
-#### Private connection - tunnel or VPN
+### Private connection - tunnel or VPN
 
 Another option is to have a private tunnel/connection over the Internet for additional security. Some vendors offer private connectivity via tunnels or VPNs which can be encrypted or unencrypted; these vary in complexity/management and require additional security/firewall updates to allow for connectivity. A traditional VPN setup is also limited via a centralized vendor location back to the origin.
 
-Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) which is tunneling software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages Anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s).
+Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) which is tunneling software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages Anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s).
 
 When you run a tunnel, a lightweight daemon in your infrastructure, cloudflared, establishes four outbound-only connections between the origin server and the Cloudflare network. These four connections are made to four different servers spread across at least two distinct data centers providing robust resiliency. It is possible to install many cloudflared instances to increase resilience between your origin servers and the Cloudflare network.
 
@@ -366,7 +326,7 @@ _Figure 13_
 
 The above diagram describes the connectivity model through Cloudflare Tunnel. Note, this option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.
 
-#### Direct connection 
+### Direct connection 
 
 Most vendors also provide an option of directly connecting to their network. Direct connections provide security, reliability, and performance benefits over using the public Internet. These direct connections are done at peering facilities, Internet Exchanges (IXs) where Internet Service Providers (ISPs) and Internet networks can interconnect with each other, or through vendor partners.
 
@@ -377,13 +337,13 @@ The above diagram describes origin connectivity through [Cloudflare Network Inte
 
 Cloudflare’s global network allows for ease of connecting to the network regardless of where your infrastructure and employees are.
 
-### Additional routing and security options
+## Additional routing and security options
 
 Most vendors also provide additional capabilities for enhanced/optimized routing and additional security capabilities when communicating with the origin. You should check with respective vendor documentation to confirm support if parity is expected in terms of performance and security capabilities.
 
 Cloudflare offers [Argo Smart Routing](/argo-smart-routing/) for finding and using optimized routes across the Cloudflare network to deliver responses to users more quickly and Authenticated Origin Pulls (mTLS) to ensure requests to your origin server come from the Cloudflare network
 
-#### Argo Smart Routing
+### Argo Smart Routing
 
 Argo Smart Routing is a service that finds optimized routes across the Cloudflare network to deliver responses to users more quickly.
 
@@ -392,7 +352,7 @@ Argo Smart Routing accelerates traffic by taking into account real-time data and
 In addition, Cloudflare CDN leverages Argo Smart Routing to determine the best upper tier data centers for Argo Tiered Cache. Argo Smart Routing can be enabled to ensure the fastest paths over the Cloudflare network are taken between upper tier data centers and origin servers at all times. Without Argo Smart Routing, communication between upper tier data centers to origin servers are still intelligently routed around problems on the Internet to ensure origin reachability. For more information on Argo Smart Routing as it relates to CDN, see the [Cloudflare CDN Reference Architecture](/reference-architecture/cdn-reference-architecture/).
 
 
-#### Authenticated Origin Pulls (mTLS)
+### Authenticated Origin Pulls (mTLS)
 
 Authenticated Origin Pulls helps ensure requests to your origin server come from the Cloudflare network, which provides an additional layer of security on top of [Full](/ssl/origin-configuration/ssl-modes/full/) or [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) SSL/TLS encryption modes Cloudflare offers.
 
@@ -403,3 +363,5 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 ## Summary
 
 To summarize, a successful multi-vendor strategy for application security and performance requires careful consideration of your business objectives, infrastructure requirements, and vendor capabilities. There are several options to choose from when deploying a multi-vendor strategy with various advantages and limitations to each. Cloudflare can support these configurations by delivering services through the Cloudflare Global Network that are highly resilient, performant, and cost effective to fit your organizations multi-vendor strategy.
+
+{{<button type="primary" href="/reference-architecture/static/multi-vendor-application-security-performance.pdf">}}Download this page as a PDF{{</button>}}

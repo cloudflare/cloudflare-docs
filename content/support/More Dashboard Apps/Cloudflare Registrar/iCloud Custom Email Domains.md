@@ -81,7 +81,7 @@ That’s because there’s more to setting up a website than purchasing a domain
 If you want your domain to be a fully functioning website, you will need to:
 
 1.  **Build your website**: Either using [Cloudflare Pages](/pages/), a website builder, or files hosted on a server.
-2.  **Update your Cloudflare DNS**: To direct visitors looking for your domain name to the actual content on your website ([detailed guide](/dns/manage-dns-records/how-to/create-root-domain/)).
+2.  **Update your Cloudflare DNS**: To direct visitors looking for your domain name to the actual content on your website ([detailed guide](/dns/manage-dns-records/how-to/create-zone-apex/)).
 
 ___
 

@@ -58,7 +58,7 @@ Example: `ubuntu 22.04`
 
 6. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the OS version check is returning the expected results.
+Next, go to **Logs** > **Posture** and verify that the OS version check is returning the expected results.
 
 ## Determine the OS version
 
@@ -75,7 +75,7 @@ Operating systems display version numbers in different ways. This section covers
 
 ### On Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
 
    ```bash

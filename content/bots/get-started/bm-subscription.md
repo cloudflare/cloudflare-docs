@@ -15,7 +15,7 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 This Enterprise product provides the most flexibility to customers by:
 
 - Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to take action on this score with [custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
+- Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 - Allowing customers to view this score in Bot Analytics or Logs.
 
 ---
@@ -73,7 +73,7 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 ### Step 3 — Create a custom rule for automated traffic
 
-Based on your analysis of **automated** traffic, create a [custom rule](/waf/custom-rules/) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
+Based on your analysis of **automated** traffic, create a [WAF custom rule](/waf/custom-rules/) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
 {{<example>}}
 

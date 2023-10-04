@@ -8,7 +8,7 @@ weight: 5
 
 You can perform the following operations in the **Transform Rules** page:
 
-- Create new Rewrite URL Rules, HTTP Request Header Modification Rules, and HTTP Response Header Modification Rules.
+- Create new rewrite URL rules, HTTP request header modification rules, and HTTP response header modification rules.
 - Configure Managed Transforms.
 - View a list of existing rules (both active and paused).
 - Activate or pause rules (turn on or off).
@@ -22,9 +22,9 @@ You can perform the following operations in the **Transform Rules** page:
 
 In **Transform Rules** you can create the following rules:
 
-- [Rewrite URL Rules](/rules/transform/url-rewrite/create-dashboard/)
-- [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/create-dashboard/)
-- [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-dashboard/)
+- [Rewrite URL rules](/rules/transform/url-rewrite/create-dashboard/)
+- [HTTP request header modification rules](/rules/transform/request-header-modification/create-dashboard/)
+- [HTTP response header modification rules](/rules/transform/response-header-modification/create-dashboard/)
 
 Refer to each linked section for details on creating each rule type.
 

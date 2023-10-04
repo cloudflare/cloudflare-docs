@@ -21,10 +21,11 @@ import { Buffer } from 'node:buffer';
 // Do not do this:
 import { Buffer } from 'buffer';
 ```
+Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
 
 ## Enable Node.js with Workers
 
-Add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
 ```toml
 ---

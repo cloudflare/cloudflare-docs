@@ -37,7 +37,7 @@ ___
 
 ## SameSite 및 cf\_clearance 쿠키의 알려진 문제
 
-[**방화벽 규칙**](https://support.cloudflare.com/hc/articles/360016473712)이나 [**IP 액세스 규칙**](https://support.cloudflare.com/hc/articles/217074967) 등에서 [Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136) 또는 Javascript 추가 질문이 풀리면, 클라이언트 브라우저에 **cf\_clearance** 쿠키가 설정됩니다. _cf\_clearance_ 쿠키는 기본 수명이 30분이며 Cloudflare **Firewall** 앱의 **설정** 탭 내 [**추가 질문 통과**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e)를 통해 설정됩니다. 
+[**방화벽 규칙**](https://support.cloudflare.com/hc/articles/360016473712)이나 [**IP 액세스 규칙**](https://support.cloudflare.com/hc/articles/217074967) 등에서 [Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136) 또는 JavaScript 추가 질문이 풀리면, 클라이언트 브라우저에 **cf\_clearance** 쿠키가 설정됩니다. _cf\_clearance_ 쿠키는 기본 수명이 30분이며 Cloudflare **Firewall** 앱의 **설정** 탭 내 [**추가 질문 통과**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e)를 통해 설정됩니다. 
 
 Cloudflare는 **cf\_clearance** 쿠키에 **SameSite**\=_None_을 사용합니다. 다른 호스트 이름의 방문자 요청이 후속 챌린지를 받거나 오류가 생기지 않게 하기 위해서입니다. **SameSite**\=_None_을 사용하지 않으면 _Secure_ 플래그와 함께 설정해야 합니다.
 

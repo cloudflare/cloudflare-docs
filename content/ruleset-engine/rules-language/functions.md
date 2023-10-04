@@ -25,7 +25,7 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/ruleset-engine/rules-language/values/#arrays) for more information.
+Transformation functions that do not take arrays as an argument type require the `[*]` index notation. Refer to [Arrays](/ruleset-engine/rules-language/values/#arrays) for more information.
 
 The Rules language supports these transformation functions:
 
@@ -67,10 +67,6 @@ The Rules language supports these transformation functions:
   - *Example:*<br />
     If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
-{{<Aside type="warning">}}
-The `ends_with()` function is not available in [firewall rules](/firewall/).
-{{</Aside>}}
-
 - <code id="function-len">{{<name>}}len{{</name>}}({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
   - Returns the byte length of a String or Bytes field.
@@ -80,11 +76,45 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     `len(http.host)`
 
-- <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-lookup_json_integer">{{<name>}}lookup_json_integer{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}Integer{{</type>}}
+
+  - Returns the integer value associated with the supplied `key` in `field`.<br/>
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific integer value.<br>
+  Note: This function only works for plain integers. For example, it will not work for floating numbers with a zero decimal part such as `42.0`.
+
+  - _Examples:_
+
+    A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
+    `{ "record_id": "aed53a", "version": 2 }`<br/>
+    The following function call will return `2`:<br/>
+    `lookup_json_integer(http.request.body.raw, "version") == 2`
+
+    B) Given the following nested object:<br/>
+    `{ "product": { "id": 356 } }`<br/>
+    The following function call will return `356`:<br/>
+    `lookup_json_integer(http.request.body.raw, "product", "id") == 356`
+
+    C) Given the following JSON array at the root level:<br/>
+    `["first_item", -234]`<br/>
+    The following function call will return `-234`:<br/>
+    `lookup_json_integer(http.request.body.raw, 1) == -234`
+
+    D) Given the following array in a JSON object attribute:<br/>
+    `{ "network_ids": [123, 456] }`<br/>
+    The following function call will return `123`:<br/>
+    `lookup_json_integer(http.request.body.raw, "network_ids", 0) == 123`
+
+    E) Given the following root-level array of JSON objects:<br/>
+    `[{ "product_id": 123 }, { "product_id": 456 }]`<br/>
+    The following function call will return `456`:<br/>
+    `lookup_json_integer(http.request.body.raw, 1, "product_id") == 456`
+
+- <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}String{{</type>}}
 
   - Returns the string value associated with the supplied `key` in `field`.<br/>
-  The `field` must be a string representation of a valid JSON object.<br/>
-  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific value.
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific value.
 
   - _Examples:_
 
@@ -157,20 +187,40 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
   - Returns a new byte array with all the occurrences of the given bytes removed.
 
   - <em>Example:</em>
-    <br />
 
-    `remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"`
+    ```txt
+    // With http.host = "www.cloudflare.com":
+
+    remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"
+    ```
 
 - <code id="function-starts_with">{{<name>}}starts_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-  - *Example:*<br />
-    If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
+  - *Example:*
 
-{{<Aside type="warning">}}
-The `starts_with()` function is not available in [firewall rules](/firewall/).
-{{</Aside>}}
+    ```txt
+    // With http.request.uri.path = "/blog/first-post":
+
+    starts_with(http.request.uri.path, "/blog") == true
+    ```
+
+- <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
+
+  - Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
+
+  - The `end` index must be greater than the `start` index. The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
+
+  - *Examples:*
+
+    ```txt
+    // With http.request.body.raw = "asdfghjk":
+
+    substring(http.request.body.raw, 2, 5) == "dfg"
+    substring(http.request.body.raw, 2) == "dfghjk"
+    substring(http.request.body.raw, -2) == "jk"
+    ```
 
 - <code id="function-to_string">{{<name>}}to_string{{</name>}}({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -179,8 +229,8 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
   - *Examples:*
 
     ```txt
-    to_string(cf.bot_management.score) == '5'
-    to_string(ssl) == 'true'
+    to_string(cf.bot_management.score) == "5"
+    to_string(ssl) == "true"
     ```
 
 {{<Aside type="warning">}}
@@ -196,18 +246,29 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
     <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}[, options{{<param-type>}}String{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
-  - Decodes a URL formatted string, as in the following:
+  - Decodes a URL-formatted string defined in `source`, as in the following:
 
-    - <code>%20</code> and <code>+</code> decode to space characters <code> </code>
+    - `%20` and `+` decode to a space character (` `).
 
-    - <code>%E4%BD</code> decodes to <code>ä½ </code>
+    - `%E4%BD` decodes to `ä½`.
 
-  - <em>Example:</em>
+  - The `options` parameter is optional. You must provide any options as a single string wrapped in quotes, such as `"r"` or `"ur"`. The available options are the following:
+
+      - `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
+      - `u`: Enables Unicode percent decoding. For example, `%E2%98%81%EF%B8%8F` will be decoded to a cloud emoji (`☁️`).
+
+  - <em>Examples:</em>
     <br />
 
     ```txt
+    url_decode("John%20Doe") == "John Doe"
+    url_decode("John+Doe") == "John Doe"
+    url_decode("%2520") == "%20"
+    url_decode("%2520", "r") == " "
+
+    // With the any() function:
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
 
@@ -270,11 +331,11 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - <code>{{<name>}}currentTimeStamp{{</name>}}</code> {{<type>}}Integer{{</type>}}
 
-  - Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
+  - Represents the UNIX timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
 - <code>{{<name>}}lengthOfSeparator{{</name>}}</code> {{<type>}}Integer literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of 0.
+  - Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of `0`.
 
 - <code>{{<name>}}flags{{</name>}}</code> {{<type>}}String literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -328,7 +389,7 @@ and is composed of these parentheses-delimited expressions:
     </tr>
     <tr>
       <td valign="top"><code>(\d{10})</code></td>
-      <td>The 10-digit Unix <code>timestamp</code> when the MAC was issued, expressed in seconds.</td>
+      <td>The 10-digit UNIX <code>timestamp</code> when the MAC was issued, expressed in seconds.</td>
       <td valign="top"><code>1484063137</code></td>
     </tr>
     <tr>
@@ -352,7 +413,7 @@ For more information, refer to [HMAC Validation: Overview](#overview).
 
 {{</Aside>}}
 
-### Simple case
+### MessageMAC in a single field
 
 Consider the case where the MessageMAC is contained entirely within a single field, as in this example URI path:
 
@@ -369,7 +430,7 @@ Element     | Value
 `timestamp` | `1484063787`
 `mac`       | `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
-When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the `MessageMAC` argument:
+When the MessageMAC is contained entirely within a single field such as `http.request.uri`, pass the field name to the `MessageMAC` argument of the HMAC validation function:
 
 ```java
 is_timed_hmac_valid_v0(

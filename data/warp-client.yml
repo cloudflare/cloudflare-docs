@@ -5,6 +5,7 @@ product:
   title: WARP Client
   url: /warp-client/
   group: Consumer services
+  additional_groups: [Network security]
 
 meta:
   title: Cloudflare WARP client docs

@@ -21,14 +21,14 @@ verwenden (dokumentiert in Cloudflares Support KB), sind
 Cache-Ressourcen und bekannte Suchmaschinen-Crawler von Ihren
 Durchsatzbegrenzungsregeln ausgenommen. Daher haben sie keinen Einfluss
 auf das
-[SEO-Ranking](/fundamentals/get-started/task-guides/improve-seo/)
+[SEO-Ranking](/fundamentals/basic-tasks/improve-seo/)
 Ihrer Website. Wenn Sie jedoch die [neue Version der
 Durchsatzbegrenzungsregeln](/waf/rate-limiting-rules/)
 verwenden (dokumentiert in der Entwicklerdokumentation), sollten Sie
 darauf achten, dass Ihre Durchsatzbegrenzungsregeln keine bekannten
 guten Bots betreffen. Dies könnte sonst das SEO-Ranking Ihrer Website
 beeinträchtigen. Weitere Informationen finden Sie unter [SEO
-verbessern](/fundamentals/get-started/task-guides/improve-seo/).
+verbessern](/fundamentals/basic-tasks/improve-seo/).
 {{</Aside>}}
 
 {{<Aside type="note">}}
@@ -193,7 +193,7 @@ Aktionen der Durchsatzbegrenzung basieren auf dem Tarif der Domain, wie oben unt
 
 -   **Blockieren****:** Cloudflare gibt einen HTTP-429-Fehler aus, wenn der Schwellenwert überschritten wird.
 -   **Legacy-CAPTCHA** **–** Der Besucher muss eine Captcha-Herausforderung bestehen.  Wenn er besteht, lässt Cloudflare die Anfrage durch.
--   **JS Challenge** **–** Der Besucher muss eine Cloudflare Javascript Challenge bestehen. Wenn er besteht, lässt Cloudflare die Anfrage durch.
+-   **JS Challenge** **–** Der Besucher muss eine Cloudflare JavaScript Challenge bestehen. Wenn er besteht, lässt Cloudflare die Anfrage durch.
 -   **Protokollieren -** Anfragen werden in [Cloudflare-Protokollen](https://support.cloudflare.com/hc/articles/216672448) aufgezeichnet. Damit kann die Regel getestet werden, bevor sie produktiv eingesetzt wird.
 
 #### **Dauer der Sperre**

@@ -95,7 +95,7 @@ We use Aruba Orchestrator’s Business Intent Overlays to create intuitive polic
 </summary>
  <div class="special-class" markdown="1">
 
-Cloudflare’s [tunnel health checks](/magic-transit/reference/probe-construction/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare’s [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -119,7 +119,7 @@ The service name used to send traffic through the tunnel created in the next ste
 </summary>
  <div class="special-class" markdown="1">
 
-Cloudflare’s [tunnel health checks](/magic-transit/reference/probe-construction/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare’s [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -168,7 +168,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram-ipsec.png)
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)
@@ -413,4 +413,4 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's global network, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays. 
 
-To begin filtering traffic and gathering analytics, refer to the [Magic Firewall documentation](/magic-firewall/) to learn how to create filters for east-west inter-branch traffic and the [Secure Web Gateway documentation](/cloudflare-one/policies/filtering/) to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.
+To begin filtering traffic and gathering analytics, refer to the [Magic Firewall documentation](/magic-firewall/) to learn how to create filters for east-west inter-branch traffic and the [Secure Web Gateway documentation](/cloudflare-one/policies/gateway/) to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.

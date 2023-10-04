@@ -225,7 +225,7 @@ ___
 
 ### Causa comum
 
-O hostname enviado pelo cliente ou pelo navegador por meio da [Indicação de Nome do Servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) não corresponde ao cabeçalho do host da solicitação.
+O hostname enviado pelo cliente ou pelo navegador por meio da [Indicação de Nome do Servidor](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) não corresponde ao cabeçalho do host da solicitação.
 
 ### Solução
 
@@ -376,7 +376,7 @@ Você solicitou uma página em um site (`tunel.exemplo.com`) que está na rede d
 ### Solução
 
 -   **Se você for um visitante desse site**: tente novamente daqui a alguns minutos.
--   **Se você for o proprietário desse site**: certifique-se de que o _cloudflared_ está sendo executado e pode alcançar a rede. Você pode querer ativar o [balanceamento de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para o seu túnel.
+-   **Se você for o proprietário desse site**: certifique-se de que o _cloudflared_ está sendo executado e pode alcançar a rede. Você pode querer ativar o [balanceamento de carga](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) para o seu túnel.
 
 ___
 

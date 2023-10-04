@@ -22,7 +22,7 @@ A user who authenticates will hold their seat until you [remove the user](#remov
 
 ## Revoke vs remove a user
 
-When you revoke a user, this action will terminate active sessions, but will not remove the user’s consumption of an active seat. On the other hand, when you remove a user, this action will revoke their session and remove that user registry, freeing up one seat from your account. 
+When you revoke a user, this action will terminate active sessions, but will not remove the user’s consumption of an active seat. On the other hand, removing a user will end their active session and free up one seat from your account.
 
 ## Check number of Active Users
 
@@ -43,7 +43,7 @@ Cloudflare Zero Trust can automatically remove any user who does not log in to a
 To enable user seat expiration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Account**.
-2. Scroll down to **User Seat Expiration** and click **Edit**.
+2. Scroll down to **User Seat Expiration** and select **Edit**.
 3. Select an inactivity time from the dropdown menu.
 4. Select **Save**.
 

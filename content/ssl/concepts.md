@@ -29,7 +29,7 @@ flowchart LR
 
 ### Origin certificate
 
-[Origin certificates](/ssl/origin-configuration/) guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application. Origin cetificates are managed on your origin server.
+[Origin certificates](/ssl/origin-configuration/) guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application. Origin certificates are managed on your origin server.
 
 [SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control whether and how Cloudflare will use both these ceritifcates, and you can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
 

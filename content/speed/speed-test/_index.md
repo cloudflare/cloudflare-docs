@@ -1,10 +1,10 @@
 ---
 pcx_content_type: overview
-title: Observatory
+title: Observatory (beta)
 weight: 1
 ---
 
-# Observatory
+{{<heading-pill style="beta">}}Observatory{{</heading-pill>}}
 
 Observatory uses synthetic tests and real user data from browsers to assess the performance of your website. These data sources produce metrics that provide different types of insights into your website’s performance. Cloudflare then uses the analysis run by Observatory to recommend optimizations with the tools that best suit your performance issues.
 

@@ -1,1 +1,1 @@
-[{"kind": "PLANNED", "rule_id": "...6831bff1", "rule_ref": "UR0035", "description": "HTTP requests with unusual HTTP headers or URI path (signature #35).", "comments": "Improve the filter to catch more attacks.", "previous_action": "block", "new_action": "ddos_dynamic", "announcement_date": "2023-07-10", "release_date": "2023-07-17"}]
+[]

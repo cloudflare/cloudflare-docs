@@ -10,7 +10,7 @@ weight: 42
 
 The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/<account_identifier>` and Zone-scoped use `/zone/<zone_identifier>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `<zone_identifier>` argument is the zone id (hexadecimal string). The `<account_identifier>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+The `<zone_identifier>` argument is the zone id (hexadecimal string). The `<account_identifier>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
 The `<job_identifier>` argument is the numeric job id. The `<dataset>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
 {{<table-wrap>}}
@@ -75,7 +75,7 @@ You will need to provide the token contained in the file when creating a job.
 
 {{<Aside type="note" header="Note">}}
 
-When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
+When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it is uploaded.
 
 {{</Aside>}}
 
@@ -172,10 +172,13 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull_options** are valid:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin 
--d '{ "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true”,
-"dataset": "http_requests", 
-}' | jq .
+curl https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+  "dataset": "http_requests"
+}'
 ```
 
 Response

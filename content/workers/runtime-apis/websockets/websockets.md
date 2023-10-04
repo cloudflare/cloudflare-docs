@@ -9,7 +9,7 @@ title: WebSockets
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
 
-When using WebSockets with Durable Objects, we recommend using the [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) which adds additional extensions to the standard `WebSocket` object.
+When using WebSockets with Durable Objects, we recommend using the [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/) which adds additional extensions to the standard `WebSocket` object.
 
 ## Constructor
 
@@ -34,7 +34,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - {{<code>}}accept(){{</code>}}
 
-  - Accepts the Websocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+  - Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
 
 {{</definitions>}}
 
@@ -54,7 +54,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - `event` {{<type-link href="#events">}}WebSocketEvent{{</type-link>}}
 
-  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
+  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/websockets/#events)) to listen to.
 
 - {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}){{</code>}} {{<type>}}Function{{</type>}}
 

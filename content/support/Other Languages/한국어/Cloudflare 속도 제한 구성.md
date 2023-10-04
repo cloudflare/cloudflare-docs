@@ -175,7 +175,7 @@ _POST_ 또는 _GET_. 아무 것도 지정하지 않으면 둘 다 일치되고 �
 
 -   **차단** **\-** 임계값을 초과하면, Cloudflare는 HTTP 429 오류를 냅니다.
 -   **레거시 캡차** **\-** 방문자는 CAPTCHA 인증 질문을 통과해야 합니다. 통과한 경우, Cloudflare는 요청을 허락합니다.
--   **JS 인증 질문** **\-** 방문자가 Cloudflare Javascript 인증 질문을 통과해야 합니다. 통과한 경우, Cloudflare는 요청을 허락합니다.
+-   **JS 인증 질문** **\-** 방문자가 Cloudflare JavaScript 인증 질문을 통과해야 합니다. 통과한 경우, Cloudflare는 요청을 허락합니다.
 -   **로그 -** 요청이 [Cloudflare Logs](https://support.cloudflare.com/hc/articles/216672448)에 로깅됩니다.. 이를 통해 실제에 적용하기 전에 규칙을 테스트할 수 있습니다.
 
 #### **금지 기간**

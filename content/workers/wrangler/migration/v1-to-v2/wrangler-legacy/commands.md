@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Commands
 weight: 3
+meta:
+  title: Commands - Wrangler v1 (deprecated)
 ---
 
 # Commands
@@ -37,7 +39,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `--site` {{<prop-meta>}}optional{{</prop-meta>}}
-  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/platform/sites/) project.
+  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/configuration/sites/start-from-scratch) project.
 
 {{</definitions>}}
 
@@ -64,7 +66,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `--site` {{<prop-meta>}}optional{{</prop-meta>}}
-  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/platform/sites/) project.
+  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/configuration/sites/start-from-scratch) project.
 
 {{</definitions>}}
 
@@ -148,7 +150,7 @@ You can also use environment variables to authenticate, or `wrangler login` to a
 
 ## publish
 
-Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/platform/triggers/custom-domains/) for more information.
+Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/configuration/routing/custom-domains/) for more information.
 
 ```sh
 $ wrangler publish [--env $ENVIRONMENT_NAME]

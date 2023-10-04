@@ -36,8 +36,8 @@ $ git commit -m "Initial commit"                                           vite-
 [main (root-commit) dad4177] Initial commit
  14 files changed, 1452 insertions(+)
 $ gh repo create
-✓ Created repository codewithkristian/vite-vue3-on-pages on GitHub
-✓ Added remote git@github.com:codewithkristian/vite-vue3-on-pages.git
+✓ Created repository kristianfreeman/vite-vue3-on-pages on GitHub
+✓ Added remote git@github.com:kristianfreeman/vite-vue3-on-pages.git
 $ git push
 ```
 
@@ -47,7 +47,6 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select your new GitHub repository.
 4. In the **Set up builds and deployments**, set `npm run build` as the **Build command**, and `dist` as the **Build output directory**.
-5. Select **Environment variables (advanced)** > **+ Add variable** > configure a `NODE_VERSION` variable with a value of any version of Node greater than `14.18` -- this example uses `16`:
 
 After completing configuration, select **Save and Deploy**.
 

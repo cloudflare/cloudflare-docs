@@ -735,12 +735,12 @@ Page Ruleを保存する際、Cloudflareは**URLが一致する場合**フィー
 
 Page Ruleの**URLが一致する場合**フィールドでポートを特定する場合、ポートは次のどれかである必要があります。
 
--   [Cloudflareのプロキシと互換性がある](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy)HTTP/HTTPSポートの1つ。
+-   [Cloudflareのプロキシと互換性がある](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy)HTTP/HTTPSポートの1つ。
 -   [Cloudflare Spectrum](/spectrum/) HTTPSアプリケーションのカスタムポート。
 
 ### WorkersでPage Rulesを使う
 
-現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/platform/workers-with-page-rules/)を参照してください。
+現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/configuration/workers-with-page-rules/)を参照してください。
 
 ___
 

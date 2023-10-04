@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: spanish
 source: https://support.cloudflare.com/hc/es-es/articles/360029779472-C%C3%B3mo-solucionar-errores-1XXX-de-Clouflare
-title: Cómo solucionar errores 1XXX de Clouflare
+title: Cómo solucionar errores 1XXX de Cloudflare
 ---
 
-# Cómo solucionar errores 1XXX de Clouflare
+# Cómo solucionar errores 1XXX de Cloudflare
 
 
 
@@ -230,7 +230,7 @@ ___
 
 ### Causas habituales
 
-El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
+El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
 
 ### Solución
 
@@ -419,7 +419,7 @@ Has solicitado una página en un sitio web (`tunnel.ejemplo.com`) que está en l
 ### Solución
 
 -   **Si eres un visitante del sitio web**: por favor, inténtalo de nuevo en unos minutos.
--   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para tu túnel.
+-   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) para tu túnel.
 
 ___
 

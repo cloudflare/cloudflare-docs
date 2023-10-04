@@ -1,5 +1,9 @@
 name: Crawl API docs links
 
+# **What it does**: Regularly audits API links in our documentation.
+# **Why we have it**: It's too burdensome to check on every commit like we do for internal links.
+# **Who does it impact**: PCX team
+
 on:
   schedule:
     - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday

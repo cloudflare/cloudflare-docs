@@ -34,7 +34,7 @@ Directives can be broken down into four groups: cacheability, expiration, revali
 Cacheability refers to whether or not a resource should enter a cache, and the directives below indicate a resource’s cacheability.
 
 - `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
-- `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
+- `private` — Indicates the response message is intended for a single user (for example, a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
 - `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
 
 ### Expiration
@@ -63,8 +63,8 @@ Revalidation determines how the cache should behave when a resource expires, and
 
 - `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
 - `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
-- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/how-to/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits/#cache-api).
-- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits/#cache-api).
+- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/how-to/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits/#cache-api-limits).
+- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. To avoid this behavior, include `stale-if-error=0` directive with the object returned from the origin. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits/#cache-api-limits).
 
 The `stale-if-error` directive is ignored if [Always Online](/cache/how-to/always-online/) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
 
@@ -74,7 +74,7 @@ Additional directives that influence cache behavior are listed below.
 
 - `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload.
 - `vary` — Cloudflare does not consider vary values in caching decisions. Nevertheless, vary values are respected when [Vary for images](/cache/advanced-configuration/vary-for-images/) is configured and when the vary header is [`vary: accept-encoding`](/speed/optimization/content/brotli/).
-- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
+- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (for example, `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
 ## Origin Cache-Control behavior
 
@@ -361,7 +361,7 @@ This configuration indicates the asset is fresh for 600 seconds. The asset can b
 
 ### Edge Cache TTL
 
-[Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
+[Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare, Cloudflare overrides the origin cache control.
 
 ### Browser Cache TTL
 

@@ -225,7 +225,7 @@ ___
 
 ### 常见原因
 
-客户端或浏览器通过[服务器名称指示](/fundamentals/glossary#server-name-indication-sni)（SNI）发送的主机名与请求主机标头不匹配。
+客户端或浏览器通过[服务器名称指示](/fundamentals/reference/glossary/#server-name-indication-sni)（SNI）发送的主机名与请求主机标头不匹配。
 
 ### 解决方案
 
@@ -376,7 +376,7 @@ ___
 ### 解决方案
 
 -   **如果您是该网站的访问者**：请在几分钟后重试。
--   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)。
+-   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)。
 
 ___
 
