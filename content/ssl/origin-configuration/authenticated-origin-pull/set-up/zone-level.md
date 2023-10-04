@@ -81,10 +81,22 @@ To enable **Authenticated Origin Pulls** in the dashboard:
 2.  Go to **SSL/TLS** > **Origin Server**.
 3.  For **Authenticated Origin Pulls**, switch the toggle to **On**.
 
+{{<Aside type="warning">}}
+
+Note that this step means Authenticated Origin Pulls will be available, but you still have to go through the following steps to complete the configuration.
+
+{{</Aside>}}
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH`](/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+
+{{<Aside type="warning">}}
+
+Note that this step means Authenticated Origin Pulls will be available, but you still have to go through the following steps to complete the configuration.
+
+{{</Aside>}}
 
 {{</tab>}}
 {{</tabs>}}
@@ -93,7 +105,7 @@ To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH
 
 Use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
 
-If you had set up logging on your origin, test and confirm that Authenticated Origin Pulls is working.
+If you had set up logging on your origin during [step 2](#2-configure-origin-to-accept-client-certificates), test and confirm that Authenticated Origin Pulls is working.
 
 ##  5. Enforce validation check on your origin
 
