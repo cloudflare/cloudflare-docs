@@ -68,4 +68,4 @@ The following subset of the WebGPU API is not yet supported:
 
 ## Examples
 
-- [workers-wonnx](https://github.com/cloudflare/workers-wonnx/) — image classification, running on a GPU via the WebGPU API, using the [wonnx](https://github.com/webonnx/wonnx) model inference runtime.
+- [workers-wonnx](https://github.com/cloudflare/workers-wonnx/) — Image classification, running on a GPU via the WebGPU API, using the [wonnx](https://github.com/webonnx/wonnx) model inference runtime.
