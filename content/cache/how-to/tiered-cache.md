@@ -42,7 +42,7 @@ Custom Tiered cache allows you to work with Cloudflare’s support team to set a
 
 {{<Aside type="note">}}
 
-Tiered Cache currently is not compatible with responses from [R2](https://developers.cloudflare.com/r2). These responses will act as if Tiered Cache is not configured. 
+Tiered Cache currently is not compatible with responses from [R2](/r2). These responses will act as if Tiered Cache is not configured. 
 
 {{</Aside>}}
 

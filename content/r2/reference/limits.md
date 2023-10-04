@@ -43,4 +43,4 @@ To increase these limits, contact your Cloudflare account team.
 
 ## Caching
 
-Currently Cloudflare's [Tiered Cache](https://developers.cloudflare.com/cache/how-to/tiered-cache/) feature is not compatible with responses from R2. These responses will act as if Tiered Cache is not configured. 
+Currently Cloudflare's [Tiered Cache](/cache/how-to/tiered-cache/) feature is not compatible with responses from R2. These responses will act as if Tiered Cache is not configured. 
