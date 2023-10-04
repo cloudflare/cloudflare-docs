@@ -20,7 +20,7 @@ The rules in a managed ruleset have a default action and status. However, you ca
 
 There are several Cloudflare products that provide you with managed rulesets. Check each product’s documentation for details on the available managed rulesets.
 
-For more information on deploying managed rulesets and defining overrides, check [Work with managed rulesets](/ruleset-engine/managed-rulesets/).
+For more information on deploying managed rulesets and defining overrides, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/).
 
 ## Custom rulesets
 
@@ -32,7 +32,7 @@ Currently, custom rulesets are only supported by the Cloudflare WAF.
 
 Use custom rulesets to define your own sets of rules. After creating a custom ruleset, deploy it to a phase by creating a rule that executes the ruleset.
 
-For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
+For more information on creating and deploying custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
 
 ## Entry point ruleset
 
