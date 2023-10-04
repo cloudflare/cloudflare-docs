@@ -16,7 +16,7 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 
 | Feature                                            | Limit                                   |
 | -------------------------------------------------- | --------------------------------------- |
-| Queues                                             | 100 per account <sup>1</sup>            |
+| Queues                                             | 10,000 per account <sup>beta</sup>         |
 | Maximum message size                               | 128 KB <sup>2</sup>                     |
 | Maximum message retries                            | 100                                     |
 | Maximum batch size                                 | 100 messages                            |
@@ -28,6 +28,8 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 | Maximum consumer invocation duration               | 15 minutes <sup>7</sup>                 | 
 
 {{</table-wrap>}}
+
+<sup>beta</sup> This limit is beta only and is expected to increase over time.
 
 <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
