@@ -18,7 +18,7 @@ Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configurat
 
 First, upload a certificate to your origin.
 
-To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin.
+To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin. This certificate is **not** the same as the Cloudflare Origin CA certificate and will not appear on your Dashboard.
 
 To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
 
