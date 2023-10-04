@@ -36,7 +36,7 @@ For more information on creating and deploying custom rulesets, refer to [Work w
 
 ## Entry point ruleset
 
-An entry point ruleset contains a list of ordered rules that run in a [phase](/ruleset-engine/about/phases/) at the account or zone level. You can define rules in an entry point ruleset that execute a different ruleset.
+An entry point ruleset contains a list of ordered rules that run in a [phase](/ruleset-engine/about/phases/) at the account or zone level. This ruleset is an entry point for all rules executed in a phase. Some of these rules may run other rulesets.
 
 Each phase has at most one entry point ruleset at the account level and at the zone level.
 
