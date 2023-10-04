@@ -269,7 +269,7 @@ Ten en cuenta que `ejemplo.com/alguna-ruta/cloudflare.com` se guardará _sin_ un
 
 Si especificas un puerto en el campo **si la URL coincide** de una regla de página, debe ser uno de los siguientes:
 
--   Uno de los puertos HTTP/HTTPS [compatible con el proxy de Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Uno de los puertos HTTP/HTTPS [compatible con el proxy de Cloudflare](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
 -   Un puerto personalizado de una aplicación HTTPS de [Cloudflare Spectrum](/spectrum/).
 
 ### Uso de Page Rules con Workers

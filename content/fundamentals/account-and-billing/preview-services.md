@@ -3,8 +3,6 @@ pcx_content_type: reference
 title: Preview services
 weight: 4
 layout: list
-aliases:
-- /fundamentals/account-and-billing/non-contract-products/
 ---
 
 # Preview services

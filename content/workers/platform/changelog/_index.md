@@ -3,8 +3,9 @@ pcx_content_type: changelog
 title: Changelog
 meta:
     description: Review recent changes to Cloudflare Workers.
+sidebar_toc: true
 layout: changelog
-changelog_file_name: workers
+changelog_file_name: [workers]
 outputs:
     - html
     - rss

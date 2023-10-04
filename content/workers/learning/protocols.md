@@ -9,7 +9,7 @@ Cloudflare Workers support the following protocols and interfaces:
 
 | Protocol       | Inbound | Outbound |
 |---|---|---|
-| **HTTP / HTTPS**  | Handle incoming HTTP requests using the [`fetch()` handler](/workers/runtime-apis/fetch-event/#syntax-es-modules)  | Make HTTP subrequests using the [`fetch()` API](/workers/runtime-apis/fetch/)  |
+| **HTTP / HTTPS**  | Handle incoming HTTP requests using the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/)  | Make HTTP subrequests using the [`fetch()` API](/workers/runtime-apis/fetch/)  |
 | **Direct TCP sockets**  | Support for handling inbound TCP connections is [coming soon](https://blog.cloudflare.com/introducing-socket-workers/)  | Create outbound TCP connections using the [`connect()` API](/workers/runtime-apis/tcp-sockets/) |
 | **WebSockets**  | Accept incoming WebSocket connections using the [`WebSocket` API](/workers/runtime-apis/websockets/), or with [MQTT over WebSockets (Pub/Sub)](/pub-sub/learning/websockets-browsers/)  | [MQTT over WebSockets (Pub/Sub)](/pub-sub/learning/websockets-browsers/) |
 | **MQTT** | Handle incoming messages to an MQTT broker with [Pub Sub](/pub-sub/learning/integrate-workers/) | Support for publishing MQTT messages to an MQTT topic is [coming soon](/pub-sub/learning/integrate-workers/) |

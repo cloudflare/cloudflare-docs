@@ -32,20 +32,25 @@ To disable Zone Versioning:
 
     4. Confirm that your new **Production** environment functions as expected.
 
-2. Send a `GET` request to the `/accounts/{account_id}/rulesets/phases/http_request_select_configuration/entrypoint` endpoint.
+2. Send a `GET` request to the `/zones/{zone_id}/environments` endpoint.
 
     ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_select_configuration/entrypoint" \
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/environments" \
     --header "X-Auth-Email: <EMAIL>" \
     --header "X-Auth-Key: <API_KEY>"
     ```
 
     In the response, save the following values:
 
-    - The top-level ruleset `id`.
-    - The rule `id` of every rule that has the zone's name as the zone field in the `expression` property.
+    - The environment `ref` of every rule
 
-3. Using the `id` of those rules, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for every rule in the ruleset.
+3. Using the `ref` of those environments, send a `DELETE` request to the `/zones/{zone_id}/environments/{ref}` endpoint for each environment.
+
+    ```bash
+    curl -X 'DELETE' "https://api.cloudflare.com/client/v4/zones/{zone_id}/environments/{ref}" \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>"
+    ```
 
 4. Then, send a `GET` request to find all HTTP applications (or versions of your zone).
 

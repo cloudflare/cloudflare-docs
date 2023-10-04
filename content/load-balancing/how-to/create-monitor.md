@@ -8,8 +8,7 @@ meta:
 
 # Manage monitors
 
-{{<render file="_monitor-definition.md">}}
-<br/>
+{{<glossary-definition term_id="monitor">}}
 
 For more details about monitors, refer to [Monitors](/load-balancing/understand-basics/monitors/).
 

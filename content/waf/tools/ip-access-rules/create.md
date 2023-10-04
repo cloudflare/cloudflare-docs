@@ -8,9 +8,8 @@ meta:
 
 # Create an IP Access rule
 
-You can create IP Access rules in the Cloudflare dashboard or via API.
-
-## Using the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **WAF** > **Tools**.
@@ -23,7 +22,11 @@ You can create IP Access rules in the Cloudflare dashboard or via API.
 
 4. Select **Add**.
 
-## Using the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [Get IP Access rules](/api/operations/ip-access-rules-for-a-user-list-ip-access-rules).
+
+{{</tab>}}
+{{</tabs>}}
 

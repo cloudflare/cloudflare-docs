@@ -12,7 +12,7 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 {{<Aside type="note" header="Try the Playground">}}
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser.
 
 {{</Aside>}}
 
@@ -43,7 +43,7 @@ $ npm create cloudflare@latest
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}
@@ -55,7 +55,13 @@ For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
 2. Select `"Hello World" script` as the type of application you want to create.
-3. Answer `no` to using TypeScript.
+3. Answer `yes` or `no` to using TypeScript.
+
+{{<Aside type="note">}}
+
+The rest of this guide assumes that the user is creating a JS project. If you are creating a TypeScript project, the files will be `.ts`, a `.tsconfig` file will be created, and proper dependencies will be added.
+
+{{</Aside>}}
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
@@ -65,7 +71,7 @@ You will be asked if you would like to deploy the project to Cloudflare.
 In your project directory, C3 has generated the following:
 
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
+2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
@@ -94,7 +100,7 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 With your new project generated and running, you can begin to write and edit your code.
 
-Find the `src/worker.js` file. `worker.js` will be populated with the code below:
+Find the `src/index.js` file. `index.js` will be populated with the code below:
 
 ```js
 export default {
@@ -112,11 +118,11 @@ This code block consists of four parts:
 
 2. The event handler: `async fetch(request)`
 
-This event handler will be called when your Worker receives a [`fetch` event](/workers/runtime-apis/fetch-event/). You can define additional event handlers in the exported object to respond to different types of events. For example, add an `async scheduled(event) {}` function definition to respond to [`scheduled` events](/workers/runtime-apis/scheduled-event/).
+This event handler will be called when your Worker receives a [`fetch` event](/workers/runtime-apis/handlers/fetch/). You can define additional event handlers in the exported object to respond to different types of events. For example, add an `async scheduled(event) {}` function definition to respond to [`scheduled` events](/workers/runtime-apis/handlers/scheduled/).
 
 3. Parameters: `request`, `env`, `context`
 
-The `fetch` event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-es-modules).
+The `fetch` event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/handlers/fetch/).
 
 1. The `Response` object: `return new Response("Hello World!");`
 
@@ -191,5 +197,6 @@ To do more:
 * Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
 * Understand how Workers works in [Learning](/workers/learning/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
+* Learn how to set up different Workers features in [Configuration](/workers/configuration/).
+* Learn about Workers limits, betas and pricing in [Platform](/workers/platform/).
 * Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

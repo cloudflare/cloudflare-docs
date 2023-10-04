@@ -4,17 +4,15 @@ title: Roles
 weight: 3
 meta:
     title: Account roles
-aliases:
-- /fundamentals/account-and-billing/members/roles/
 ---
 
 # Roles
 
-Whenever you [add a new member](/fundamentals/account-and-billing/members/manage/) to your account, you can assign specific roles to these users.
+Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign specific roles to these users.
 
 ## Account-scoped Roles
 
-If you are adding members whose [role scope](/fundamentals/account-and-billing/members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
+If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
 
 | Role | Description |
 | --- | --- |
@@ -26,7 +24,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | API Gateway Read | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account. |
 | Audit Logs Viewer | Can view [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). |
 | Bot Management (Account-wide) | Can edit [Bot Management](/bots/plans/bm-subscription/) (including [Super Bot Fight Mode](/bots/get-started/pro/)) configurations for all domains in account. |
-| Billing | Can edit the account’s [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) and subscriptions |
+| Billing | Can edit the account’s [billing profile](/fundamentals/setup/account-setup/create-billing-profile/) and subscriptions |
 | Cloudflare Access | Can edit [Cloudflare Access](/cloudflare-one/policies/access/) policies. |
 | Cache Purge | Can purge the edge cache. |
 | Cloudflare DEX | Can edit [Cloudflare DEX](/cloudflare-one/insights/dex/). |
@@ -35,13 +33,13 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
-| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), and [R2](/r2/). |
+| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/) and [R2](/r2/). Also provides read access to Zones, [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/) and [Page Rules](/rules/) |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |
 | Cloudflare Zero Trust PII | Can access [Cloudflare for Zero Trust](/cloudflare-one/) PII. |
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Firewall](/fundamentals/global-configurations/lists/ip-lists/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Access rules](/waf/tools/ip-access-rules/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |
@@ -53,12 +51,14 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Minimal Account Access | Can view account, and nothing else. |
 | Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
 | Page Shield Read | Grants write access to [Page Shield](/page-shield/) across the whole account. |
-| Hyperdrive Read | Grants read access to Hyperdrive database configuration. |
-| Hyperdrive Write | Grants write access to Hyperdrive database configuration. |
+| Hyperdrive Read | Grants read access to [Hyperdrive](/hyperdrive/) database configuration. |
+| Hyperdrive Admin | Grants write access to [Hyperdrive](/hyperdrive/) database configuration. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for [DNS](/dns/) and [Firewall](/waf/). |
 | Trust & Safety | Can access trust and safety related services. |
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |
 | Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
+| Vectorize Admin | Can edit [Vectorize](/vectorize/) configurations. |
+| Vectorize Read only | Can edit [Vectorize](/vectorize/) configurations. |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
 | Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.
@@ -69,7 +69,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 
 ## Domain-scoped Roles
 
-If you are adding members whose [role scope](/fundamentals/account-and-billing/members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
+If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
 
 | Role | Description |
 | --- | --- |

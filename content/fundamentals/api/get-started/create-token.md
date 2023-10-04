@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="note" header="Prerequisite">}}
  
-Before you begin, [find your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+Before you begin, [find your zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
  
 {{</Aside>}}
 

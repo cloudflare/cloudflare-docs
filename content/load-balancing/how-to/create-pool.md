@@ -9,8 +9,7 @@ meta:
 
 # Manage origin server pools
 
-{{<render file="_pool-definition.md">}}
-<br/>
+{{<glossary-definition term_id="origin pool">}}
 
 For more background information on pools, refer to [Origin pools](/load-balancing/understand-basics/pools/).
 

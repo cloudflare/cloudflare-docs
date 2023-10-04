@@ -5,7 +5,7 @@ layout: single
 weight: 4
 ---
 
-{{<beta>}}Email Workers{{</beta>}}
+{{<heading-pill style="beta">}}Email Workers{{</heading-pill>}}
 
 With Email Workers you can leverage the power of Cloudflare Workers to implement any logic you need to process your emails and create complex rules. These rules determine what happens when you receive an email.
 

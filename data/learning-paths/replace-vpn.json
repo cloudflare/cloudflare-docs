@@ -17,7 +17,7 @@
         "description": "Concepts explain the basic ideas behind how Cloudflare Zero Trust works. <br />",
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/",
+            "url_path": "/fundamentals/concepts/what-is-cloudflare/",
             "link_title": "What is Cloudflare?"
           },
           {
@@ -50,7 +50,7 @@
       {
         "type": "module",
         "title": "Review prerequisites",
-        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-networks/downloads/system-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
+        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-networks/downloads/system-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
       },
       {
         "type": "module",
@@ -58,7 +58,7 @@
         "estimated_time": 20,
         "pages": [
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/create-account/",
+            "url_path": "/fundamentals/setup/account-setup/create-account/",
             "link_title": "Create a Cloudflare account",
             "additional_description": "If you have a Cloudflare contact (Enterprise only), ask them to set up your account as a multi-user organization after you finish this step."
           },
@@ -68,7 +68,7 @@
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/members/manage/",
+            "url_path": "/fundamentals/setup/manage-members/manage/",
             "link_title": "(Optional) Add public domains and subdomains to Cloudflare",
             "additional_description": "You will use these domains to test agentless access to web services. Alternatively, you could purchase a new testing domain through <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a>."
           }
@@ -98,7 +98,7 @@
         "estimated_time": 45,
         "pages": [
           {
-            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/",
+            "url_path": "/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/",
             "link_title": "Create a Cloudflare Tunnel",
             "additional_description": "Cloudflare Tunnel will run on a host locally in your network and make a persistent, outbound QUIC connection to Cloudflare."
           },
@@ -126,7 +126,7 @@
             
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/#2-connect-an-application",
+            "url_path": "/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2-connect-an-application",
             "link_title": "Create public hostname routes in Cloudflare Tunnel"
           }
         ]

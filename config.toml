@@ -6,7 +6,7 @@ DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
 enableRobotsTXT = false
 summaryLength = 30
-disableAliases = false
+disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 enableEmoji = true
@@ -51,3 +51,7 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 
 [build]
   noJSConfigInAssets = true
+
+[caches]
+  [caches.getjson]
+    maxAge = "24h"

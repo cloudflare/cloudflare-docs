@@ -36,6 +36,7 @@ body:
         - Fundamentals
         - Health Checks
         - Image Optimization
+        - KV
         - Load Balancing
         - Logs
         - Magic Firewall

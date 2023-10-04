@@ -96,6 +96,8 @@ workers_dev = false
 
 When you redeploy your Worker with this change, the `workers.dev` route will be disabled.
 
+If you do not specify `workers_dev = false` but add a `routes` component to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
+
 {{<Aside type="warning">}}
 If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
 {{</Aside>}}

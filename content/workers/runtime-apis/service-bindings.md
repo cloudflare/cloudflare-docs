@@ -9,11 +9,9 @@ meta:
 
 ## About Service bindings
 
-Service bindings are an API that facilitate Worker-to-Worker communication via explicit bindings defined in your configuration. A Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code.
+[Service bindings](/workers/configuration/bindings/about-service-bindings/) are an API that facilitate Worker-to-Worker communication via explicit bindings defined in your configuration. A Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code.
 
-Learn more [about Service bindings](/workers/configuration/bindings/about-service-bindings/).
-
-To use Service bindings in your code, you must first create a Service binding from one Worker to another.
+To use Service bindings in your code, you must first [create a Service binding from one Worker to another](/workers/configuration/bindings/about-service-bindings/).
 
 ---
 
@@ -44,7 +42,7 @@ export default <ExportedHandler<Environment>> {
 {{</tab>}}
 {{</tabs>}}
 
-Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Worker. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
+Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will trigger a [FetchEvent](/workers/runtime-apis/handlers/fetch/) on the target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Worker. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
 
 ### Shared resources
 

@@ -6,13 +6,9 @@ title: Configuring Token Authentication
 
 # Configuring Token Authentication
 
-
-
-## Overview
-
 Cloudflare Token Authentication allows you to restrict access to documents, files, and media to selected users without requiring them to register. This helps protect paid/restricted content from leeching and unauthorized sharing. 
 
-There are two options to configure Token Authentication, via Cloudflare Workers or Cloudflare Firewall Rules.
+There are two options to configure Token Authentication, via Cloudflare Workers or WAF custom rules.
 
 ___
 
@@ -31,44 +27,42 @@ to saving your code.
 {{</Aside>}}
 ___
 
-## Option 2: Configure using firewall rules
+## Option 2: Configure using WAF custom rules
 
-A Pro, Business or Enterprise account is required to configure Token Authentication via firewall rules. To configure Token Authentication using firewall rules:
+To configure Token Authentication:
 
-1.  Log in to the Cloudflare dashboard.
-2.  Click the appropriate Cloudflare account for the domain where you want to enable Token Authentication.
-3.  Navigate to **Security** > **WAF**.
-4.  Click the **Firewall rules** tab.
-5.  Click **Create a firewall rule**.
-6.  Click the **Edit expression** link above the **Expression Preview** to switch to the Expression Preview editor.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **WAF** > **Custom rules**.
+5. Select **Create rule**.
+6. Select **Edit expression** above **Expression Preview** to switch to the Expression Preview editor.
 
 The following example illustrates a rule that blocks any visitor that does not pass your HMAC key validation on a specific hostname and URL path. Details required for Token Authentication include:
 
--   the path you wish to authenticate (e.g. test.domain.com/download/cat.jpg),
--   the parameter name you wish the token to have (e.g. verify), and
--   the desired token expiration times if any (e.g. 5 and 20 minutes).
+- The path you wish to authenticate (for example, `test.domain.com/download/cat.jpg`)
+- The parameter name you wish the token to have (for example, `verify`)
+- The desired token expiration times, if any (for example, five and 20 minutes)
 
-For the following example URL,
+For the following example URL:
 
-```
+```txt
 test.domain.com/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
 ```
 
-The example firewall rule looks like:
+The expression for the custom rule would be similar to the following:
 
+```txt
+(http.host eq "test.domain.com" and not is_timed_hmac_valid_v0("mysecrettoken", http.request.uri, 10800, http.request.timestamp.sec, 8))
 ```
-(http.host eq "test.domain.com" and not is\_timed\_hmac\_valid\_v0("mysecrettoken", http.request.uri,10800, http.request.timestamp.sec,8))
-```
 
-The components of this example firewall rule (using the example URL above) include:
+The components of this example custom rule (using the previous example URL) include:
 
--   Token key = _mysecrettoken_
--   Token expiration time = _10800_ seconds
--   Http.request.uri = _/download/cat.jpg_
--   Http.request.timestamp.sec = _1484063787_
--   Separator: len(?verify=) = _8_
+- Token key = `mysecrettoken`
+- Token expiration time = `10800` seconds
+- `http.request.uri` = `/download/cat.jpg`
+- `http.request.timestamp.sec` = `1484063787`
+- Separator: `len("?verify=")` = `8`
 
-To generate tokens for the paths using this Firewall Rule:
+To generate tokens for the paths using this custom rule:
 
 ### Python 3.8
 
@@ -152,16 +146,18 @@ param  = urllib.urlencode({'verify': '%s-%s' % (time, base64.b64encode(digest.di
 
 This will generate a URL parameter such as:
 
-
-```
+```txt
 verify=1484063137-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D
 ```
 
 Which you will then need to append to any URL under the domain.com/download/\* path. For example:
 
-
-```
+```txt
 /download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
 ```
 
-Please note that the token parameter needs to be the last parameter in the query string. You can test if URLs are being generated correctly on the server by enabling WAF managed rules on _Simulate_ and monitoring the activity log in **Security** > **Events**.
+The token parameter must be the last parameter in the query string.
+
+If you are on an Enterprise plan, you can test if URLs are being generated correctly on the server by:
+1. Setting the WAF custom rule action to _Log_.
+2. Monitoring the activity log in **Security** > **Events**.
