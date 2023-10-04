@@ -30,11 +30,12 @@ To add a site:
 6. Choose from the list the Connector corresponding to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Device activation](#device-activation) for more details.
 8. Select **Next** to proceed.
-9. Under **WAN configuration**, select the three dots in the **Default WAN interface** > **Edit** to configure your WAN (you should only have one WAN interface in this list):
+9. Under **WAN configuration**, you will be configuring your [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Select **Create** and define the following settings:
     1. **Network name**: Enter a descriptive name for your WAN.
     2. **(Optional) VLAN ID**: Specify a VLAN ID and port for your WAN.
     3. **Physical port**: This refers to the physical Magic WAN Connector port that you are using for your WAN.
-    4. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
+    4. **Priority**: The priority for your WAN. Lower numbers have higer priority. Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn more about how Cloudlfare calculates priorities.
+    5. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
 
     <div class="medium-img">
 
