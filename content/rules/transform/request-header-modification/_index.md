@@ -23,7 +23,7 @@ To modify HTTP headers in the **response**, refer to [HTTP response header modif
 
 *   You cannot modify or remove HTTP request headers whose name starts with `x-cf-` or `cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
 
-*   You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`. Additionally, you cannot remove the `x-forwarded-for` header.
+*   You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`.
 
 *   You cannot set or modify the value of `cookie` HTTP request headers, but you can remove these headers. Configuring a rule that removes the `cookie` HTTP request header will remove all `cookie` headers in matching requests.
 
