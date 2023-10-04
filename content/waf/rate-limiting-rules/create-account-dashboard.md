@@ -52,7 +52,7 @@ To create a new custom rate limiting ruleset:
 
 14. Select the mitigation timeout in the **Duration** dropdown. This is the time period during which Cloudflare applies the select action once the rate is reached.
 
-    Enterprise customers with a paid add-on can [throttle requests](/waf/rate-limiting-rules/parameters/#with-the-following-behavior) instead of applying the configured action during a selected duration. To throttle requests, under **With the following behavior** select _Throttle requests over the maximum configured rate_.
+    Enterprise customers with a paid add-on can [throttle requests](/waf/rate-limiting-rules/parameters/#with-the-following-behavior) instead of applying the configured action for a selected duration. To throttle requests, under **With the following behavior** select _Throttle requests over the maximum configured rate_.
 
 15. Select **Add rule**.
 
