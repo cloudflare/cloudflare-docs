@@ -11,7 +11,7 @@ Deployments are currently in Public Beta. Report deployments bugs to the [Wrangl
 
 {{</Aside>}}
 
-Deployments are a log of static historical versions of your Worker. Deployments track changes to the [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#usage-models) associated with a Worker over time.
+Deployments are a log of static historical versions of your Worker. Deployments track changes to the [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#workers) associated with a Worker over time.
 
 Deployments also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
 
@@ -19,7 +19,7 @@ The latest deployment for a Worker is considered the active deployment. You can 
 
 {{<Aside type="note">}}
 
-Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/durable-objects/) are not tracked with deployments.
+Associated resources for a Worker such as [KV](/kv/), [R2](/r2/), and [Durable Objects](/durable-objects/) are not tracked with deployments.
 
 {{</Aside>}}
 

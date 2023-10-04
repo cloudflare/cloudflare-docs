@@ -39,7 +39,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Firewall](/waf/tools/lists/ip-lists/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Access rules](/waf/tools/ip-access-rules/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |
@@ -51,12 +51,14 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Minimal Account Access | Can view account, and nothing else. |
 | Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
 | Page Shield Read | Grants write access to [Page Shield](/page-shield/) across the whole account. |
-| Hyperdrive Read | Grants read access to Hyperdrive database configuration. |
-| Hyperdrive Write | Grants write access to Hyperdrive database configuration. |
+| Hyperdrive Read | Grants read access to [Hyperdrive](/hyperdrive/) database configuration. |
+| Hyperdrive Admin | Grants write access to [Hyperdrive](/hyperdrive/) database configuration. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for [DNS](/dns/) and [Firewall](/waf/). |
 | Trust & Safety | Can access trust and safety related services. |
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |
 | Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
+| Vectorize Admin | Can edit [Vectorize](/vectorize/) configurations. |
+| Vectorize Read only | Can edit [Vectorize](/vectorize/) configurations. |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
 | Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.

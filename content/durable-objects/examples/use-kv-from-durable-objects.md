@@ -12,8 +12,8 @@ The following Worker script shows you how to configure a [Durable Object](/durab
 
 Prerequisites:
 
-* A [KV namespace](/workers/runtime-apis/kv/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
-* A [configured binding](/workers/runtime-apis/kv/#kv-bindings) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
+* A [KV namespace](/kv/api/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
+* A [configured binding](/kv/learning/kv-bindings/) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
 * A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your `wrangler.toml` file as follows:

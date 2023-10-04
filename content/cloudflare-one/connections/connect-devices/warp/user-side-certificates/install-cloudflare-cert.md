@@ -149,7 +149,7 @@ $ sudo apt-get install ca-certificates
 3. Copy the certificate to the system, changing the file extension to `.crt`.
 
 ```sh
-$ sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
+$ sudo cp Cloudflare_CA.pem /usr/share/ca-certificates/Cloudflare_CA.crt
 ```
 
 4. Import the certificate.

@@ -35,7 +35,7 @@ $ cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
 This command creates an LB DNS record that points the specified hostname to the subdomain of your tunnel (`UUID.cfargotunnel.com`). Traffic will not be proxied unless the tunnel is running.
 
 {{<Aside type="note">}}
-In order to create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#certpem) file must be installed on your system.
+In order to create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system.
 {{</Aside>}}
 
 {{</tab>}}
@@ -52,11 +52,11 @@ The application will default to the Cloudflare settings for the load balancer ho
 
 If you have a tunnel to a port or SSH port, do not run a TCP health check.
 
-Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/) that returns a fixed HTTP status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames) that returns a fixed HTTP status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
 
 ### Session affinity and replicas
 
-The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single origin server. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
+The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single origin server. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
 
 ### Local connection preference
 
@@ -64,4 +64,4 @@ If you notice traffic imbalances across origin servers in different locations, y
 
 `cloudflared` connections give preference to tunnels that terminate in the same Cloudflare data center. This behavior can impact how connections are weighted and traffic is distributed.
 
-The solution depends on the type of tunnel being used. If running [legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/), put your origins in different pools. If running [Cloudflare tunnel replicas](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Cloudflare tunnels as distinct origins.
+The solution depends on the type of tunnel being used. If running [legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/), put your origins in different pools. If running [Cloudflare tunnel replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Cloudflare tunnels as distinct origins.

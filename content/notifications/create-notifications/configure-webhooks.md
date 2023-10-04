@@ -109,7 +109,13 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
          <p>3. SSL must be enabled on the server.</p>         
       </td>
    </tr>
-      <!-- Teams    -->
+   <!-- Feishu -->
+   <tr>
+      <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot">Feishu</a></td>
+      <td>The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user.</td>
+      <td>The URL varies depending on the Custom Robot.</td>
+   </tr>
+   <!-- Teams    -->
    <tr>
       <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">Teams</a></td>
       <td>The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user.</td>
@@ -123,3 +129,21 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
    </tr>
   </tbody>
 </table>
+
+### Configuration of secrets
+
+When creating a Google Chat, Slack, Discord, or Feishu webhook, the secret is part of the URL. You can choose to remove the secret from the URL and explicitly set the value of `secret` rather than letting Cloudflare automatically extract it.
+
+This can be useful when defining your webhook infrastructure as code using Terraform since the URL will not be modified by Cloudflare.
+
+```tf
+---
+header: Terraform example
+---
+resource "cloudflare_notification_policy_webhooks" "example" {
+  account_id = "<ACCOUNT_ID>"
+  name       = "Slack Webhook"
+  url        = "https://hooks.slack.com/services/T00000000/B00000000"
+  secret     = "<secret>"
+}
+```

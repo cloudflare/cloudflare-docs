@@ -1,7 +1,6 @@
 ---
 title: PhishNet for Google Workspace
 pcx_content_type: how-to
-weight: 2
 ---
 
 # PhishNet for Google Workspace

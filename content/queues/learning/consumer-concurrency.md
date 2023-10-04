@@ -103,8 +103,8 @@ When multiple consumer Workers are invoked, each Worker invocation incurs [durat
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
 
-Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#usage-models) meaning a developer is billed for the request and the duration of the request. 
+Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#unbound-usage-model) meaning a developer is billed for the request and the duration of the request. 
 
 ### Example
 
-A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/workers/platform/pricing/#workers-unbound-billing-examples)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).
+A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/workers/platform/pricing/#example-pricing-1)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

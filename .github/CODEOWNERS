@@ -12,6 +12,11 @@
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
 
+# AI
+/content/ai-gateway/ @bjesus @cloudflare/pcx-technical-writing
+/content/workers-ai/ @irvinebroque @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
+/content/vectorize/ @irvinebroque @elithrar @pdwittig @cloudflare/pcx-technical-writing
+
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
 /content/data-localization/ @soheiokamoto @tlozoot @cloudflare/pcx-technical-writing
@@ -21,11 +26,16 @@
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
 
+# Browser Rendering API
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
+
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @cloudflare/pcx-technical-writing
+/content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/content/hyperdrive/ @elithrar @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
@@ -42,6 +52,7 @@
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
@@ -52,9 +63,12 @@
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/waf/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/waf/change-log/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/data/changelogs/waf.yaml @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 /content/ddos-protection/change-log/ @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
 
 # Magic products
 /content/magic-transit/ @cloudflare/pcx-technical-writing

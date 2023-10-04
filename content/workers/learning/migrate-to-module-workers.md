@@ -72,7 +72,7 @@ In the following sections, you will use your binding in Service Worker and ES mo
 
 {{<Aside type="note" header="Reference KV from Durable Objects and Workers">}}
 
-To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/workers/runtime-apis/kv/#kv-bindings).
+To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/kv/learning/kv-bindings/).
 
 {{</Aside>}}
 
@@ -211,7 +211,7 @@ export default {
 
 ## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
 
 This example code:
 
