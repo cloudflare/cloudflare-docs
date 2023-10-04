@@ -40,3 +40,7 @@ constrained by [Workers request limits](/workers/platform/limits#request-limits)
 Review the [Examples](/r2/examples/) on how to use the SDKs.<br>
 
 To increase these limits, contact your Cloudflare account team.
+
+## Caching
+
+Currently Cloudflare's [Tiered Cache](/cache/how-to/tiered-cache/) feature is not compatible with responses from R2. These responses will act as if Tiered Cache is not configured. 
