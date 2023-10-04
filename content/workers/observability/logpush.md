@@ -30,7 +30,7 @@ To create a Logpush job in the the Cloudflare dashboard:
 3. Select **Add Logpush job**.
 4. Select **Workers trace events** as the data set > **Next**.
 5. If needed, customize your data fields. Otherwise, select **Next**.
-6. Follow  the instructions on the dashboard to complete job creation.
+6. Follow the instructions on the dashboard to verify ownership of your data's destination and complete job creation.
 
 ### Via cURL
 
