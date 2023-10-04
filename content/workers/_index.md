@@ -24,7 +24,7 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
  
 ---
 
-## Features
+## Start developing
  
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
@@ -32,15 +32,9 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/workers/configuration/bindings/">}}
-
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
-
-{{</feature>}}
-
 {{<feature header="Playground" href="/workers/learning/playground/">}}
 
-The Playground is a sandbox which gives you an instant way to preview and test a Workers script directly in the browser against any site. No setup required.
+The Workers Playground is a sandbox which gives you an instant way to preview and test a Workers script directly in the browser. No setup required.
 
 {{</feature>}}
 
