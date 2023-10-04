@@ -2,6 +2,7 @@
 title: Magic WAN Connector
 pcx_content_type: reference
 weight: 8
+layout: single
 ---
 
 # Magic WAN Connector
