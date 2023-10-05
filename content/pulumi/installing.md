@@ -53,9 +53,9 @@ To verify your installation, run the following in the terminal:
 $ pulumi version
 ```
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Note">}}
 
-Note: For upgrades and installation alternatives refer to [Install Pulumi](https://www.pulumi.com/docs/install/).
+For upgrades and installation alternatives, refer to [Install Pulumi](https://www.pulumi.com/docs/install/).
 
 {{</Aside>}}
 
