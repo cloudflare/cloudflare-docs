@@ -7,11 +7,11 @@ meta:
     description: Use Turnstile analytics to view the number of challenges issued, the challenge solve rate, and the metrics of issued challenges.
 ---
 
-# Turnstile Analytics
+# Turnstile analytics
 
 Using Turnstile analytics, you can:
 * Assess the number of challenges issued.
-* Evaluate the challenge solve rate.
+* Evaluate the Challenge Solve Rate (CSR).
 * View the metrics of issued challenges.
  
 ## View metrics of your widgets
@@ -23,13 +23,13 @@ These metrics show changes in the solve rate, widget traffic, and top actions fo
 
 ## Change in Solve Rate
 
-View the history of your website’s widget solve rate with Turnstile Analytics. 
+View the history of your website’s widget Solve Rate with Turnstile Analytics. 
 
 {{<Aside type="note">}}
 You can filter the data by `Action=(free input)` or by time.
 {{</Aside>}}
 
-## Widget Traffic
+## Widget traffic
 
 Widget traffic metrics provide you with data on the number of widgets displayed, interactive widgets solved, and non-interactive widgets solved on your website over time.
 
