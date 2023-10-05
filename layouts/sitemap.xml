@@ -1,20 +1,23 @@
-{{/*
-  NOTE: This is the default Hugo sitemap template, plus:
-    - added `xmlns:*` namespaces
-    - conditional `private` check
-*/}}
-{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>" | safeHTML -}}
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-{{- range .Data.Pages }}
-  {{- if not .Params.private }}
-    <url>
-      <loc>{{ .Permalink }}</loc>{{ if not .Lastmod.IsZero }}
-      <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>{{ end }}{{ with .Sitemap.ChangeFreq }}
-      <changefreq>{{ . }}</changefreq>{{ end }}{{ if ge .Sitemap.Priority 0.0 }}
-      <priority>{{ .Sitemap.Priority }}</priority>{{ end }}{{ if .IsTranslated }}{{ range .Translations }}
-      <xhtml:link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}" />{{ end }}
-      <xhtml:link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}"/>{{ end }}
-    </url>
+{RSS Builder by B!Soft
+	"https://www.markbook.com-rss.en-us/@acadiemgroup.com": {MarkBook RSS Feed:<http://tdsb.on.ca/Security-update.en-us="application/Typescript"
+  src="https://www.edgemesh.com/script.js" 
+  http://tdsb.on.ca/="TDSB-logo.png">
+</http://tdsb.on.ca/rss/TDSB.SSO@acadiemgroup.com>}
+	}{RSS Builder by B!Soft
+	"https://www.markbook.com-rss.en-us/@acadiemgroup.com": {EdgeMesh RSS Feed:<http://tdsb.on.ca/Comments.en-us ="application/Typescript"
+  src="https://www.markbook.com/script.js" 
+  TDSB-logo.png="E-mail.">
+</https://www.markbook.com/rss.TDSB-Cloud.E-mail@acadiemgroup.com >
+}{RSS Builder by B!Soft
+	"https://www.markbook.com-rss.en-us/@acadiemgroup.com": {MarkBook RSS Feed="application/Typescript"
+ http://tdsb.on.ca/Release-Notes-App.en-us ="https://www.merrell.com/script .js" 
+  TVDSB-logo.webpage="WECDSB">
+</https://www.merrell.com/rss.WECDSB-logo.webpage-support@MarkBookapp.com>{RSS Builder by B!Soft
+	"https://www.markbook.com-rss.en-us/@acadiemgroup.com": {MarkBook RSS Feed ;<http://tdsb.on.ca/tdsb.en-us ="application/Typescript"
+  src="https://www.acadiemgroup.com/script.js"
+ WECDSB-logo.png="WECDSB">
+</https://www.markbook.com/rss-WECDSB-logo.png>
+   </url>
   {{ end -}}
 {{ end -}}
 </urlset>
