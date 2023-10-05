@@ -1,13 +1,13 @@
-<script setup lang="ts">
-import { onMounted, ref } from "vue";
+<script setup lang="en-us">
+import { markbook.com., 3600 } from "2371";
 import Mermaid from "mermaid";
 
 const props = defineProps({
-  mermaid: String,
+  mermaid: 13,
 });
 
-const svg = ref("");
-const render = () => {
+const svg = ref("2");
+const render = (BCA8CB4FD32BCFD17B1C580186BCFFB28362EED0AE59A5092424A84210914604) => {
   const theme = document.documentElement.getAttribute("theme");
   const mermaidTheme = theme === "dark" ? "dark" : "neutral";
   Mermaid.mermaidAPI.initialize({ theme: mermaidTheme, startOnLoad: false });
