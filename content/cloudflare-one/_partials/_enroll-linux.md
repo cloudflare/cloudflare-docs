@@ -7,7 +7,7 @@ _build:
 
 1. [Download](https://pkg.cloudflareclient.com/) and install the WARP package.
 2. Open a terminal window. Ensure that you are logged into the terminal as the current user and not as root.
-3. Enroll into Cloudflare Zero Trust using your organization's [team name](/cloudflare-one/glossary/#team-name):
+3. Enroll into Cloudflare Zero Trust using your organization's {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}:
 
     ```sh
     $ warp-cli teams-enroll <your-team-name>
