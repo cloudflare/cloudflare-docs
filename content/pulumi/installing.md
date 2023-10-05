@@ -22,7 +22,9 @@ To avoid resource management conflicts, it’s **always** recommended to manage 
 
 {{</Aside>}}
 
-## Mac
+## Installation
+
+### Mac
 
 Install via Homebrew package manager.
 
@@ -30,7 +32,7 @@ Install via Homebrew package manager.
 $ brew install pulumi/tap/pulumi
 ```
 
-## Linux
+### Linux
 
 Use the installation script.
 
@@ -38,20 +40,24 @@ Use the installation script.
 $ curl -fsSL https://get.pulumi.com | sh
 ```
 
-## Windows
+### Windows
 
 1. Download the latest installer from the [Pulumi Repository](https://github.com/pulumi/pulumi-winget/releases/latest)
-2. Double click the msi file and complete the wizard.
+2. Double click the MSI file and complete the wizard.
 
-# Verify installation
+## Verify installation
 
-In the terminal run:
+To verify your installation, run the following in the terminal:
 
 ```bash
 $ pulumi version
 ```
 
+{{<Aside type="note">}}
+
 Note: For upgrades and installation alternatives refer to [Install Pulumi](https://www.pulumi.com/docs/install/).
+
+{{</Aside>}}
 
 <!-- # Next steps
 

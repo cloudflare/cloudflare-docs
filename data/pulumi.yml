@@ -1,0 +1,22 @@
+name: Pulumi
+logo: ""
+
+product:
+  title: Pulumi
+  url: /pulumi/
+  group: Cloudflare essentials
+  additional_groups: [Developer platform]
+
+meta:
+  title: Pulumi
+  description: Create, deploy, and manage Cloudflare resources in various programming languages.
+  author: '@cloudflare'
+
+externals:
+  - title: Pulumi docs
+    url: https://www.pulumi.com/docs/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: pulumi
