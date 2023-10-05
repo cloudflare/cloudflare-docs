@@ -12,9 +12,3 @@ entries:
 - term: consumer
   general_definition: |-
     a consumer is the term for a client that is subscribing to or consuming messages from a queue.
-
-
-
-
-
-
