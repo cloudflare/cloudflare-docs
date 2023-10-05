@@ -8,4 +8,4 @@ layout: list
 
 Review the definitions for terms used across Cloudflare's Queues documentation.
 
-{{<glossary product="queues">}}
+{{<glossary product="Queues">}}
