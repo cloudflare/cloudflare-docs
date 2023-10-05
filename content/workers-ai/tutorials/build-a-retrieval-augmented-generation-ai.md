@@ -242,7 +242,7 @@ app.post('/notes', async (c) => {
 			return c.text("Missing text", 400);
   } 
 
-  const { results } = await c.env.DATABASE.prepare("INSERT INTO notes (text) VALUES (?) RETURNING *")
+  const { results } = await c.env.DB.prepare("INSERT INTO notes (text) VALUES (?) RETURNING *")
     .bind(text)
     .run()
 
@@ -321,7 +321,7 @@ app.get('/', async (c) => {
   let notes = []
   if (vecIds.length) {
     const query = `SELECT * FROM notes WHERE id IN (${vecIds.join(", ")})`
-    const { results } = await c.env.DATABASE.prepare(query).bind().all()
+    const { results } = await c.env.DB.prepare(query).bind().all()
     if (results) notes = results.map(vec => vec.text)
   }
 
