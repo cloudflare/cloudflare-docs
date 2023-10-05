@@ -14,15 +14,17 @@ Create, deploy, and manage Cloudflare resources in various programming languages
 
 {{</description>}}
 
-Configure Cloudflare using the open source Infrastructure as Code (IaC) tool, Pulumi. With the [Cloudflare package](https://www.pulumi.com/registry/packages/cloudflare/), you can build, deploy, and manage Cloudflare resources in many programming languages to choose from. Automate all your infrastructure needs with Pulumi. You can define and store configuration in source code repositories like GitHub, as well as integrate with CI/CD pipelines.
+Provision and manage Cloudflare using infrastructure as code through [Pulumi](https://www.pulumi.com/). With the [Pulumi Cloudflare package](https://www.pulumi.com/registry/packages/cloudflare/), you can build, deploy, and manage Cloudflare resources using standard programming languages (TypeScript, JavaScript, Python, .NET, Java, Go, and YAML). You can define the desired state for your infrastructure in code and leverage language features like loops, functions, classes, and package management.
 
-<!-- --- -->
-<!-- ## Features
 
-{{<feature header="Name of feature" href="/link/to/feature/">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+---
+
+## Features
+
+{{<feature header="Open Source" href="https://www.pulumi.com/blog/pulumi-hearts-opensource/">}}
+[Pulumi](https://github.com/pulumi/pulumi) is open source and uses the Apache 2.0 license.
 {{</feature>}}
-  -->
+
 ---
 
 ## Related products
