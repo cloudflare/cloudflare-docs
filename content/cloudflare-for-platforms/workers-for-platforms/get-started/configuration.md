@@ -16,29 +16,40 @@ Workers for Platforms is available for Enterprise customers only. To enable Work
 
 ---
 
-## 1. Install Wrangler
+## 1. Create a new project with C3
 
-Installing `wrangler`, the Workers command-line interface (CLI), allows you to create and manage Worker projects.
+C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
-{{<Aside type="note">}}
+Open a terminal window and run C3 to create your Worker project:
 
-Workers for Platforms requires a Wrangler version of `2.0.28` or higher.
-
-{{</Aside>}}
-
-To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
-$ npm install -g wrangler
+$ npm create cloudflare@latest <project name> -- --type=hello-world
 ```
 
-or install with `yarn`:
+{{</tab>}}
+{{<tab label="yarn">}}
 
 ```sh
-$ yarn global add wrangler
+$ yarn create cloudflare@latest <project name> --type=hello-world
 ```
 
-Refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/) for more information.
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm create cloudflare@latest <project name> --type=hello-world
+```
+{{</tab>}}
+{{</tabs>}}
+
+For this guide, set up a basic Worker:
+
+1. Name your new Worker directory by specifying where you want to create your application.
+2. Select `"Hello World" script` as the type of application you want to create.
+3. Answer `yes` to using TypeScript.
 
 ## 2. Create dispatch namespace 
 
@@ -52,15 +63,7 @@ $ wrangler dispatch-namespace create <NAMESPACE_NAME>
 
 ## 3. Create a dynamic dispatch Worker
 
-Create a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dynamic-dispatch-worker). The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them.
-
-To create a dynamic dispatch Worker, you must create a Worker and bind it to the dispatch namespace you created in the previous step.
-
-To create a Worker, run `wrangler init` followed by your Worker project name:
-
-```sh
-$ wrangler init <YOUR_WORKER>
-```
+A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dynamic-dispatch-worker) calls user Workers from the dispatch namespace and executes them.
 
 To create a dynamic dispatch Worker, create a [binding](/workers/configuration/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
 
@@ -78,6 +81,9 @@ Next, give your dynamic dispatch Worker the logic it needs to manage user Worker
 * `dispatcher` is the binding you created earlier in this step.
 * `customer-worker-1` is a script you will upload to the dispatch namespace in the next step.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
 ```js
 ---
 filename: index.js
@@ -89,6 +95,27 @@ export default {
   }
 }
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+export interface Env {
+    // Example binding to dispatch namespace.
+    dispatcher: DispatchNamespace
+}
+
+export default {
+    async fetch(
+        request: Request,
+        env: Env
+    ): Promise<Response> {
+    const worker: Fetcher = env.dispatcher.get("customer-worker-1");
+    return await worker.fetch(req);
+    },
+};
+```
+{{</tab>}}
+{{</tabs>}}
 
 Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/) for more configuration information.
 
@@ -97,6 +124,8 @@ Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-fo
 [User Workers](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#user-workers) are written by end developers. End developers can deploy user Workers to script automated actions, create integrations or modify response payload to return custom content.
 
 You will now upload `customer-worker-1` into your dispatch namespace that you created in step 2. This user Worker has a simple `fetch()` handler that sends a `Hello world` response.
+
+
 
 ```js
 ---
