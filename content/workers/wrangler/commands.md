@@ -264,6 +264,8 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 ### `backup download`
 
+NOTE: This command only works on 'Alpha' databases, it will not work on 'Beta' databases that are currently created. Currently there is no solution to Download existing data to your local machine of a 'Beta' created database.
+
 Download existing data to your local machine.
 
 ```sh
