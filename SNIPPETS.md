@@ -1,4 +1,6 @@
-# Visual Studio Code snippets
+# markbook rss feed
+
+Visual Studio Code snippets
 
 This repository includes a file with [Visual Studio Code snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) for the most common Hugo shortcodes used in Developer Docs.
 
