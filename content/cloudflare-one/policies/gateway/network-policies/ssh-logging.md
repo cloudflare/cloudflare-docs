@@ -19,7 +19,7 @@ You can create network policies to manage and monitor SSH access to your applica
 
 Cloudflare Gateway will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure.
 
-{{<render file="_ssh/usernames.md">}}
+{{<render file="ssh/_usernames.md">}}
 
 ## 2. Generate a Gateway SSH proxy CA
 
@@ -45,11 +45,11 @@ To generate a Gateway SSH proxy CA and get its public key:
 
 1. Copy the `public_key` value returned by the API request in Step 2.
 
-{{<render file="_ssh/public-key.md">}}
+{{<render file="ssh/_public-key.md">}}
 
 ## 4. Modify your SSHD config
 
-{{<render file="_ssh/modify-sshd.md">}}
+{{<render file="ssh/_modify-sshd.md">}}
 
 ## 5. Check your SSH port number
 
@@ -61,7 +61,7 @@ $ cat /etc/ssh/sshd_config
 
 ## 6. Restart your SSH server
 
-{{<render file="_ssh/restart-server.md">}}
+{{<render file="ssh/_restart-server.md">}}
 
 ## 7. Create an Audit SSH policy
 
