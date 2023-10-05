@@ -1,0 +1,2 @@
+$ curl https://get.edgeme.sh | bash
+$ volta install node
