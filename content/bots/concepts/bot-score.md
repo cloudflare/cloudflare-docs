@@ -30,6 +30,8 @@ Bot scores are not computed for requests to paths that are handled by Cloudflare
 The following detection engines only apply to Enterprise Bot Management. For specific details about the engines included in your plan, refer to [Plans](/bots/plans/).
 {{</Aside>}}
 
+{{<render file="_bm-bot-detection-engines.md">}}
+
 ### Cloudflare service
 
 {{<render file="_bots-cs.md">}}
