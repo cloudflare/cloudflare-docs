@@ -68,11 +68,11 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Define input variables
 
-{{<render file="_terraform-input-variables.md">}}
+{{<render file="terraform/_input-variables.md">}}
 
 ### Assign values to the variables
 
-{{<render file="_terraform-variable-values.md">}}
+{{<render file="terraform/_variable-values.md">}}
 
 ### Configure Terraform providers
 
