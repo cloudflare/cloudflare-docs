@@ -116,9 +116,9 @@ If Cloudflare cannot load your site or you have blocked the United
 States (US) via [IP Access
 Rules](https://support.cloudflare.com/hc/articles/217074967 "Configuring IP Access Rules")
 or firewall rules, publishing and previewing the error page will not
-work. A common error might look like this `Error fetching page: Fetch failed, 
-https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error 
-page with an HTTP 200 status code, and no WAF rule that's blocking or challenging your custom error page.
+work. 
+
+A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
 {{</Aside>}}
 
 ### Account-level custom error page
