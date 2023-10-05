@@ -1239,6 +1239,7 @@
 /cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/gateway/global-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/gateway/dns-policies/ 301
 /cloudflare-one/policies/browser-isolation/configuration/ /cloudflare-one/policies/browser-isolation/setup/ 301
+/cloudflare-one/cloudflare-teams-roles-permissions/ /cloudflare-one/roles-permissions/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301

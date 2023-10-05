@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Roles and permissions
-weight: 21
+weight: 12
 ---
 
 # Roles and permissions
@@ -21,13 +21,13 @@ Only Super Administrators of Enterprise accounts will be able to assign or remov
 {{<table-wrap>}}
 
 |                                 | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
-| ------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ | --- |
-| Super Administrator             | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | ✓            |
-| Cloudflare Zero Trust           | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | -            |
-| Cloudflare Access               | ✓           | ✓           | ✓            | -            | ✓              | ✓            | -            | -   |
-| Cloudflare Gateway              | ✓           | -           | ✓            | ✓            | ✓              | ✓            | -            | -   |
-| Cloudflare Zero Trust Read Only | ✓           | -           | ✓            | -            | ✓              | ✓            | -            | -   |
-| Cloudflare Zero Trust Reporting | -           | -           | -            | -            | ✓              | ✓            | -            | -   |
+| ------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ |
+| Super Administrator             | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ✅           |
+| Cloudflare Zero Trust           | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ❌           |
+| Cloudflare Access               | ✅          | ✅          | ✅           | ❌           | ✅             | ✅           | ❌           |
+| Cloudflare Gateway              | ✅          | ❌          | ✅           | ✅           | ✅             | ✅           | ❌           |
+| Cloudflare Zero Trust Read Only | ✅          | ❌          | ✅           | ❌           | ✅             | ✅           | ❌           |
+| Cloudflare Zero Trust Reporting | ❌          | ❌          | ❌           | ❌           | ✅             | ✅           | ❌           |
 
 {{</table-wrap>}}
 
