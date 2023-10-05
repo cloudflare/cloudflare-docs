@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Roles and permissions
-weight: 21
+weight: 12
 ---
 
 # Roles and permissions
