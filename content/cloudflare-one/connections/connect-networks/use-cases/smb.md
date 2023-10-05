@@ -19,7 +19,7 @@ While SMB was developed for Microsoft Windows, Samba provides SMB connectivity f
 
 ## Connect to SMB server with WARP to Tunnel
 
-{{<render file="_warp-to-tunnel-intro.md">}}
+{{<render file="tunnel/_warp-to-tunnel-intro.md">}}
 
 ### 1. Connect the server to Cloudflare
 
@@ -33,11 +33,11 @@ While SMB was developed for Microsoft Windows, Samba provides SMB connectivity f
 
 In order for devices to connect to your Zero Trust organization, you will need to:
 
-{{<render file="_warp-to-tunnel-client.md">}}
+{{<render file="tunnel/_warp-to-tunnel-client.md">}}
 
 ### 3. Route private network IPs through WARP
 
-{{<render file="_warp-to-tunnel-route-ips.md">}}
+{{<render file="tunnel/_warp-to-tunnel-route-ips.md">}}
 
 ### 4. Connect as a user
 

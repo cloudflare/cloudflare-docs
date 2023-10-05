@@ -34,7 +34,7 @@ This example walks through how to set up an RDP server on a Google Cloud Platfor
 
 ## Install Microsoft Remote Desktop
 
-You can use any RDP client to access and configure the RDP server. 
+You can use any RDP client to access and configure the RDP server.
 
 To access the server through Microsoft Remote Desktop:
 
@@ -54,21 +54,21 @@ By default, Internet Explorer will be installed and configured in [Enhanced Secu
 
 ## Connect to RDP server with WARP to Tunnel
 
-{{<render file="_warp-to-tunnel-intro.md">}}
+{{<render file="tunnel/_warp-to-tunnel-intro.md">}}
 
 ### 1. Connect the server to Cloudflare
 
-{{<render file="_warp-to-tunnel-server.md">}}
+{{<render file="tunnel/_warp-to-tunnel-server.md">}}
 
 ### 2. Set up the client
 
 In order for devices to connect to your Zero Trust organization, you will need to:
 
-{{<render file="_warp-to-tunnel-client.md">}}
+{{<render file="tunnel/_warp-to-tunnel-client.md">}}
 
 ### 3. Route private network IPs through WARP
 
-{{<render file="_warp-to-tunnel-route-ips.md">}}
+{{<render file="tunnel/_warp-to-tunnel-route-ips.md">}}
 
 ### 4. Connect as a user
 
