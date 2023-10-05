@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
 title: Limits
-weight: 13
+weight: 2
 ---
 
 # Rate Limits
 
-The global rate limit for the Cloudflare API is 1200 requests per five minutes. If you exceed this, all API calls for the next five minutes will be blocked, receiving a HTTP 429 response.
+The global rate limit for the Cloudflare API is 1200 requests per five minutes per user, and applies cumulatively regardless of whether the request is made via the dashboard, API key, or API token. If you exceed this, all API calls for the next five minutes will be blocked, receiving a HTTP 429 response.
 
 Some specific API calls have their own limits and are documented separately, such as the following:
 

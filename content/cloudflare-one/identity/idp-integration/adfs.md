@@ -197,7 +197,7 @@ Some IdPs allow administrators to upload metadata files from their SP (service p
 
 To get your Cloudflare metadata file:
 
-1.  Download your unique SAML metadata file at the following URL (replace `<your-team-name>` in this example with your own [team name](/cloudflare-one/glossary/#team-name)):
+1.  Download your unique SAML metadata file at the following URL (replace `<your-team-name>` in this example with your own {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}):
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Google Workspace
+meta:
+    title: Google Workspace - Access
 ---
 
 # Connect to Google Workspace through Access
@@ -48,13 +50,17 @@ When you put your Google Workspace behind Access, users will not be able to log 
 4. Enable **Set up SSO with third-party identity provider**.
 5. Fill in the following information:
    - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from Zero Trust.
-   - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+   - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
    - **Verification certificate**: Upload the certificate file containing your public key.
 6. (Optional) Enable **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Workspace domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).
 
 ## 4. Test the integration
 
-To test the integration, open an incognito browser window and go to `https://mail.google.com/`. An Access login screen should appear.
+1. In your [Google Admin console](https://admin.google.com/), go to **Apps** > **Google Workspace** > **Gmail** > **Setup**,
+2. Copy your Gmail **Web address**.
+3. Open an incognito browser window and go to your Gmail web address (for example, `https://mail.google.com/a/<your_domain.com>`).
+
+An Access login screen should appear.
 
 ## Troubleshooting
 

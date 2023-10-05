@@ -33,19 +33,18 @@ Not yet implemented by RFC standards but reserved for future use.
 
 If you're seeing a 403 error without Cloudflare branding, this is always returned directly from the origin web server, not Cloudflare, and is generally related to permission rules on your server. The top reasons for this error are:
 
-1. Permission rules you have set or an error in the .htaccess rules you have set
-2. Mod\_security rules.
-3. IP Deny rules Since Cloudflare can not access your server directly, please contact your hosting provider for assistance with resolving 403 errors and fixing rules. You should make sure that [Cloudflare's IPs](https://www.cloudflare.com/ips) aren't being blocked. 
+1. Permission rules you have set on the origin web server (in the Apache .htaccess for example)
+2. Mod\_security rules
+3. IP deny rules. You need to make sure that [Cloudflare's IP ranges](https://www.cloudflare.com/ips) aren't being blocked
 
-Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/). Cloudflare will also serve a 403 Forbidden response for SSL connections to sub/domains that aren't covered by any Cloudflare or uploaded SSL certificate.
+Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/).
 
 If you're seeing a 403 response that contains Cloudflare branding in the response body, this is the HTTP response code returned along with many of our security features:
 
--   WAF Managed Rules/firewall rules challenge and block pages
--   Basic Protection level challenges
--   Most 1xxx Cloudflare error codes
--   The Browser Integrity Check
--   If you're attempting to access a second level of subdomains (eg-`*.*.example.com`) through Cloudflare using the Cloudflare-issued certificate, a HTTP 403 error will be seen in the browser as these hostnames are not present on the certificate.
+-   [WAF Custom or Managed Rules](/waf/) with the challenge or block action
+-   [Security Level](/waf/tools/security-level/), that is set to Medium by default
+-   Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
+-   The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
 
 ### **404 Not Found (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 

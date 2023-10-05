@@ -22,8 +22,12 @@ To continue, you will need:
 2. A subscription to Workers Paid, required for using Queues.
 3. Access to the [Browser Rendering](https://www.cloudflare.com/lp/workers-browser-rendering-api/) API, currently in open beta.
 
+{{<Aside type="note">}}
+Queues today works with local development mode in wrangler. `wrangler dev --remote` is not supported.
+{{</Aside>}}
+
 ## 1. Build the crawler Worker
-You will first need to create KV namespaces and Queue required for the crawler before creating a new Worker, setting up bindings, and writing the crawler script.
+You will first need to create KV namespaces and queue required for the crawler before creating a new Worker, setting up bindings, and writing the crawler script.
 
 ### Set up KV namespaces
 
@@ -39,9 +43,9 @@ To set up a Queue:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Go to **Workers & Pages** > **Queues**. 
 3. Select **Create queue**.
-4. Enter a Queue name and select **Create queue**.
+4. Enter a queue name and select **Create queue**.
 
-![Creating a Queue named queues-web-crawler](/queues/examples/web-crawler-with-browser-rendering/create-queue.png)
+![Creating a queue named queues-web-crawler](/queues/examples/web-crawler-with-browser-rendering/create-queue.png)
 
 ## 2. Create a Worker 
 
@@ -65,7 +69,7 @@ This will create the crawler Worker.
 
 ## 3. Configure your Worker
 
-In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and Queue you created previously, which will allow you to access KV and the Queue from the Worker. 
+In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and queue you created previously, which will allow you to access KV and the queue from the Worker. 
 
 ```toml
 ---
@@ -98,7 +102,7 @@ To find the KV namespace IDs in the [Cloudflare dashboard](https://dash.cloudfla
 
 ![List namespace IDs](/queues/examples/web-crawler-with-browser-rendering/list-namespace-id.png)
 
-Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting Queue messages into a batch. The Worker will then remain under this browser invocation limit.
+Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
 
@@ -106,7 +110,7 @@ Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more 
 
 ## 4. Add bindings to environment
 
-Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the Queue as `Queue<any>`. The following step will show you how to change this type.
+Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
 
 ```ts
 ---
@@ -243,7 +247,7 @@ This helper function opens a new page in Puppeteer and navigates to the provided
 
 Then, the function sets the browser viewport size and takes a screenshot of the full page. The screenshot is returned as a `Buffer` so it can be converted to an `ArrayBuffer` and written to KV.
 
-To enable recursively crawling links, add a snippet after checking the number of Cloudflare links to send messages recursively from the Queue consumer to the Queue itself. Recursing too deep, as is possible with crawling, will cause a Durable Object `Subrequest depth limit exceeded.` error. If one occurs, it is caught, but the links are not retried.
+To enable recursively crawling links, add a snippet after checking the number of Cloudflare links to send messages recursively from the queue consumer to the queue itself. Recursing too deep, as is possible with crawling, will cause a Durable Object `Subrequest depth limit exceeded.` error. If one occurs, it is caught, but the links are not retried.
 
 ```ts
 ---
@@ -302,7 +306,7 @@ try {
 // ...
 ```
 
-This snippet saves the results from `crawlPage` into the appropriate KV namespaces. If an unexpected error occurred, the URL will be retried and resent to the Queue again.
+This snippet saves the results from `crawlPage` into the appropriate KV namespaces. If an unexpected error occurred, the URL will be retried and resent to the queue again.
 
 Saving the timestamp of the crawl in KV helps you avoid crawling too frequently. 
 
@@ -343,11 +347,11 @@ for (const message of batch.messages) {
 
 ## 7. Deploy your Worker 
 
-To deploy your Worker, run `wrangler deploy`. 
+To deploy your Worker, run `npx wrangler deploy`. 
 
-You have successfully created a Worker which can submit URLs to a Queue for crawling and save results to KV.
+You have successfully created a Worker which can submit URLs to a queue for crawling and save results to KV.
 
-Refer to the [GitHub Repository](https://github.com/cloudflare/queues-web-crawler) for the complete tutorial, including a frontend deployed with Pages to submit URLs and view crawler results.
+Refer to the [GitHub repository for the complete tutorial](https://github.com/cloudflare/queues-web-crawler), including a front end deployed with Pages to submit URLs and view crawler results.
 
 ## Related resources
 

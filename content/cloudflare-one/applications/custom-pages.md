@@ -37,7 +37,7 @@ To customize the page that users see when they are blocked by a Gateway firewall
 To create a custom block page for Access:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
-2. Find the **Custom Pages** setting and select **Manage**.
+2. Find the **Access Custom Pages** setting and select **Manage**.
 3. Select **Add a page template**.
 4. Enter a unique name for the block page.
 5. Select **Failed identity provider check**.

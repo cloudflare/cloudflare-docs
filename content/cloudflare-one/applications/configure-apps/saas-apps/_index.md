@@ -38,7 +38,7 @@ Obtain the following URLs from your SaaS application account:
 If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 {{</Aside>}}
 
-9. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+9. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
 10. {{<render file="_access-block-page.md">}}
 
@@ -64,7 +64,7 @@ Finally, you will need to configure your SaaS application to require users to lo
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata`
+   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO Endpoint>/saml-metadata`. The SSO Endpoint can be copied out of the dashboard.
 
 2. Select **Done**.
 

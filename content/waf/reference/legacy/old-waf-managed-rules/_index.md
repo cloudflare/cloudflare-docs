@@ -113,12 +113,12 @@ Activity log do not appear in the OWASP list of rules because disabling those ru
 
     1. Turn on rule with ID `100048`. This rule protects against padding type attacks, but it is not deployed by default because there is a high probability of causing false positives in customer environments. It is, however, important that customers tune their managed rules configuration.
 
-    2.  Create a firewall rule using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payloads (> 128 KB). Use the following fields for this purpose:
+    2.  Create a WAF custom rule using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payloads (> 128 KB). Use the following fields for this purpose:
 
         - `http.request.body.truncated`
         - `http.request.headers.truncated`
 
-        You should test your firewall rule in _Log_ mode first (if available), since the rule might generate false positives.
+        You should test your rule in _Log_ mode first (if available), since the rule might generate false positives.
 
 -   There are a handful of managed rules that Cloudflare does not disable even if you turn off **Managed rules** in the Cloudflare dashboard, such as rules with IDs `WP0025B`, `100043A`, and `100030`.
 
@@ -128,6 +128,6 @@ ___
 
 - [Troubleshoot WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/troubleshooting/)
 - [Security Events](/waf/security-events/)
-- [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
 - [Cloudflare WAF](/waf/)
 - [Cloudflare’s WAF changelog](/waf/change-log/)
+- [WAF custom rules](/waf/custom-rules/)

@@ -31,13 +31,13 @@ When trying to configure a DNS location over IPv4, you may run into a **Your sou
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
-If you think someone else is wrongfully using this IPv4 address, [let us know](https://forms.gle/o9dLMjmCg6QtaDJ88).
+If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/#getting-help-with-an-issue).
 
 {{</Aside>}}
 
 5. (Optional) Toggle the following settings:
 
-   - **Set as Default DNS Location** sets this location as the default in your DNS policy builder.
+   - **Set as Default DNS Location** sets this location as the default DoH endpoint for DNS queries.
    - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS nameservers.
 
      [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.

@@ -12,7 +12,7 @@ Before you use the Constellation client API, you need to:
 
 * Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
 * Enable Constellation by logging into the Cloudflare dashboard > **Workers & Pages** > **Constellation**.
-* Create a Constellation project and [configure the binding](/constellation/platform/wrangler/#bindings).
+* Create a Constellation project and configure the binding.
 * Import the `@cloudflare/constellation` library in your code:
 
 ```javascript
@@ -109,7 +109,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 #### A scalar
 
 ```javascript
-   new Tensor(TensorType.Int16, 123);
+  new Tensor(TensorType.Int16, 123);
 ```
 
 #### Arrays
@@ -182,7 +182,7 @@ const tensor = Tensor.fromJSON(
 
 ## InferenceSession class
 
-Constellation requires an inference session before you can run a task. A session is locked to a specific project, defined in your [binding](/constellation/platform/wrangler/#bindings), and the project model.
+Constellation requires an inference session before you can run a task. A session is locked to a specific project, defined in your binding, and the project model.
 
 You can, and should, if possible, run multiple tasks under the same inference session. Reusing the same session, means that we instantiate the runtime and load the model to memory once.
 
@@ -198,7 +198,7 @@ export type InferenceSession = {
 };
 ```
 
-###InferenceSession methods
+### InferenceSession methods
 
 #### new InferenceSession()
 
@@ -213,7 +213,7 @@ const session = new InferenceSession(
 );
 ```
 
-* **env.PROJECT** is the project [binding](/constellation/platform/wrangler/#bindings) defined in your `wrangler.toml` configuration.
+* **env.PROJECT** is the project binding defined in your `wrangler.toml` configuration.
 * **0ae7bd14...** is the model ID inside the project. Use Wrangler to list the models and their IDs in a project.
 
 #### async session.run()
@@ -246,7 +246,7 @@ const tensorInputNamed = {
 out = await session.run(tensorInputNamed);
 ```
 
-This is the same as using the [name option](/constellation/platform/client-api/#options) when you create a tensor.
+This is the same as using the name option when you create a tensor.
 
 ```javascript
 { "tensor1": new Tensor(TensorType.Int32, 1) } == [ new Tensor(TensorType.Int32, 1, { name: "tensor1" } ];

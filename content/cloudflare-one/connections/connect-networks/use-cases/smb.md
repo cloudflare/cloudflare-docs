@@ -23,7 +23,7 @@ While SMB was developed for Microsoft Windows, Samba provides SMB connectivity f
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/). You can skip the connect an application step and go straight to connecting a network.
+1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
 
 2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
 
@@ -64,7 +64,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `smb.example.com`).
 
@@ -85,7 +85,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
    This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
-3. [Open your SMB client](/cloudflare-one/connections/connect-networks/use-cases/smb/#3-connect-as-a-user) and configure the client to point to `smb://localhost:8445/sambashare`. Do not input the hostname.
+3. [Open your SMB client](/cloudflare-one/connections/connect-networks/use-cases/smb/#4-connect-as-a-user) and configure the client to point to `smb://localhost:8445/sambashare`. Do not input the hostname.
 
 4. Sign in with the username and password created while setting up the server.
 

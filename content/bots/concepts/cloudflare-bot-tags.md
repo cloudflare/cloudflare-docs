@@ -13,10 +13,8 @@ layout: list
 
 Use these tags to learn more about your bot traffic and better inform security settings.
 
-{{<Aside type="note" header="Note">}}
-
+{{<Aside type="note">}}
 Bot tags are only available to Enterprise customers who have purchased Bot Management.
-
 {{</Aside>}}
 
 ## Potential values

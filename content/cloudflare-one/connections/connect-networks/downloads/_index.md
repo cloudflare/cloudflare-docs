@@ -7,7 +7,7 @@ layout: single
 
 # Downloads
 
-Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/), you can simply copy-paste the installation command shown in the dashboard.
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), you can simply copy-paste the installation command shown in the dashboard.
 
 To download and install `cloudflared` manually, use one of the following links.
 
@@ -48,6 +48,14 @@ $ brew install cloudflare/cloudflare/cloudflared
 Alternatively, download the [latest Darwin amd64 release](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz) directly.
 
 ### Windows
+
+Download and install `cloudflared` via [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
+
+```bash
+winget install --id Cloudflare.cloudflared
+```
+
+Alternatively, download the latest release directly:
 
 | Type       | 32-bit                                                                                                     | 64-bit                                                                                                       |
 | ---------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |

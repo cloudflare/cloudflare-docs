@@ -7,10 +7,8 @@ title: JA3 Fingerprint
 
 {{<render file="_ja3-fingerprint.md">}}
 
-{{<Aside type="note" header="Note">}}
-
+{{<Aside type="note">}}
 JA3 Fingerprints are only available to Enterprise customers who have purchased Bot Management.
-
 {{</Aside>}}
 
 ## Analytics
@@ -19,14 +17,14 @@ To get more information about potential bot requests, use these JA3 Fingerprints
 
 - [Bot Analytics](/bots/bot-analytics/bm-subscription/)
 - [Security Events](/waf/security-events/) and [Security Analytics](/waf/security-analytics/)
-- [Analytics GraphQL API](/analytics/graphql-api/), specifically the **HTTP Requests** data set
+- [Analytics GraphQL API](/analytics/graphql-api/), specifically the **HTTP Requests** dataset
 - [Logs](/logs/reference/log-fields/zone/http_requests/)
 
 ## Actions
 
 To adjust how your application responds to specific fingerprints, use them with:
 
-- [Firewall rules](/firewall/cf-dashboard/)
+- [WAF custom rules](/waf/custom-rules/)
 - [Transform Rules](/rules/transform/)
 - [Cloudflare Workers](/workers/runtime-apis/request/#incomingrequestcfproperties)
 
@@ -34,9 +32,9 @@ To adjust how your application responds to specific fingerprints, use them with:
 
 ### Block or allow certain traffic
 
-A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [firewall rule](/firewall/cf-dashboard/) that blocks/challenges the JA3 used for the attack.
+A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [custom rule](/waf/custom-rules/) that blocks/challenges the JA3 used for the attack.
 
-Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [firewall rule](/firewall/cf-dashboard/) that allows the JA3 seen across good requests.
+Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [custom rule](/waf/custom-rules/) with the _Skip_ action allowing the JA3 seen across good requests.
 
 JA3 may also be useful if you want to immediately remedy false positives or false negatives with Bot Management.
 

@@ -19,6 +19,12 @@ Currently, mTLS for Workers is not supported for domains [proxied](/dns/manage-d
 
 First, upload a certificate and its private key to your account using the [`wrangler mtls-certificate`](/workers/wrangler/commands/#mtls-certificate) command:
 
+{{<Aside type="warning">}}
+
+
+The `wrangler mtls-certificate upload` command requires the [SSL and Certificates Edit API token scope](/fundamentals/api/reference/permissions/). If you are using the OAuth flow triggered by  `wrangler login`, the correct scope is set automatically. If you are using API tokens, refer to [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) to set the right scope for your API token.
+{{</Aside>}}
+
 ```sh
 $ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
 ```

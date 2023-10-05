@@ -52,7 +52,7 @@ application/x-perl
 application/x-httpd-cgi
 text/xml
 application/xml
-application/xml+rss
+application/rss+xml
 application/vnd.api+json
 application/x-protobuf
 application/json

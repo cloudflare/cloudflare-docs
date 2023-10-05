@@ -35,4 +35,4 @@ All values are encrypted at rest with 256-bit AES-GCM, and only decrypted by the
 
 Workers KV is free to try, with additional usage available as part of the Workers Bundled plan.
 
-Learn more at the [Workers KV API reference](/workers/runtime-apis/kv/).
+Learn more at the [Workers KV API reference](/kv/api/).

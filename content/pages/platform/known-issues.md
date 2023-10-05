@@ -49,13 +49,13 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Pages Functions
 
-- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
+- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
 - `passThroughOnException()` is not currently as resilient as it is in Workers. We currently wrap Pages Functions code in a `try`/`catch` block and fallback to calling `env.ASSETS.fetch()`. This means that any critical failures (such as exceeding CPU time or exceeding memory) may still throw an error.
 
-## Enabling Access on your `*.pages.dev` domain
+## Enable Access on your `*.pages.dev` domain
 
 If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams-access/)] for your preview deployments and your `*.pages.dev` domain, you must:
 
@@ -113,4 +113,4 @@ $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_N
 
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
 
-To find your Account ID, refer to [Find your zone and account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).

@@ -24,7 +24,7 @@ Make sure you:
 
 {{<tutorial-step title="Create a monitor">}}
 
-{{<render file="_monitor-definition.md">}}
+{{<glossary-definition term_id="monitor">}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -56,7 +56,7 @@ Make sure you:
 
 {{<tutorial-step title="Create pools">}}
 
-{{<render file="_pool-definition.md">}}
+{{<glossary-definition term_id="origin pool">}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

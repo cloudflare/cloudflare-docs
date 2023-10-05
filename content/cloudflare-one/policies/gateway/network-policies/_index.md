@@ -44,13 +44,15 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 
 API value: `audit_ssh`
 
-Policies with Audit SSH actions allow administrators to log SSH commands matching SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
+Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
 | Destination IP | In       | `203.0.113.83` | Audit SSH |
 
 For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
+
+{{<Aside type="note">}}Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.{{</Aside>}}
 
 ### Block
 
@@ -66,7 +68,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 API value: `l4_override`
 
-Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
+Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user’s identity:
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |

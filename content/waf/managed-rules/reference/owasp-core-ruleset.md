@@ -18,7 +18,7 @@ Each rule in the managed ruleset is associated with a certain paranoia level (PL
 
 You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
 
-*   **Set the paranoia level.** The available levels are *PL1*, *PL2*, *PL3*, and *PL4* (default).
+*   **Set the paranoia level.** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
 *   **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
 *   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
 *   **Disable specific rules or rules with specific tags.**

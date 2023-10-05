@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Customize a waiting room
-weight: 2
+weight: 3
 ---
 
 # Customize a waiting room
@@ -102,6 +102,14 @@ When you create a waiting room with custom HTML, you can have access to several 
 
 Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTimeMinutes` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
 
+If you would like to display different languages within your custom waiting room depending on path or subdomain, you can add JavaScript code to your custom HTML to do so. Below you can find a couple of starter templates that you can use as an example to start from:
+
+* To display a different language based on path, download this [template](/waiting-room/static/index.path.html.txt). The template displays the content in English if the path contains `en` or as a default, Japanese if the path contains `jp`, French if the path contains `fr`, and Spanish if the path contains `es`.
+
+* To display a different language based on subdomain, download this [template](/waiting-room/static/index.subdomain.html.txt). The template displays the content in English as a default or if the subdomain contains `en`, Japanese if the subdomain contains `jp`, French if the subdomain contains `fr`, and Spanish if the subdomain contains `es`.
+
+Download either of these templates and customize them however you would like. Update the path or subdomain to reflect your site’s language selection structure. You may edit these templates to include other languages by adding translations to the `translations` object for each of the locales.
+
 #### Resource hosting
 
 If you are using images or other resources for your customized waiting room, **do not** host those assets on the hostname covered by your waiting room. Otherwise, any requests for these assets will not be able to pass through the waiting room.
@@ -111,7 +119,7 @@ If you are using images or other resources for your customized waiting room, **d
 To preview the appearance of a waiting room:
 
 1.  In your application, go to **Traffic** > **Waiting Room**.
-2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
+2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
 4.  Select **Preview waiting room**:
 

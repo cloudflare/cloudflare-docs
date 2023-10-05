@@ -1,7 +1,7 @@
 ---
 title: Create API token
 pcx_content_type: how-to
-weight: 11
+weight: 3
 meta:
   description: Learn how to create a token to perform actions using the Cloudflare API.
 ---
@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="note" header="Prerequisite">}}
  
-Before you begin, [find your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+Before you begin, [find your zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
  
 {{</Aside>}}
 

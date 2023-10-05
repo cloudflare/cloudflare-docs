@@ -17,7 +17,7 @@ R2 organizes the data you store, called objects, into containers, called buckets
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/kv/api/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -120,6 +120,9 @@ export default {
 
 - {{<code>}}etag{{<param-type>}}string{{</param-type>}}{{</code>}}
 
+{{<Aside type="note">}}
+We recommend using the `httpEtag` field when returning an etag in a response header. This ensures the etag is quoted and conforms to [rfc 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3).
+{{</Aside>}}
   - The etag associated with the object upload.
 
 - {{<code>}}httpEtag{{<param-type>}}string{{</param-type>}}{{</code>}}
