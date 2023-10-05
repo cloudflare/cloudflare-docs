@@ -77,7 +77,7 @@ We recommend keeping the Split Tunnels list short, as each entry takes time for 
 
 ### When to use Split Tunnels
 
-Use Split Tunnels when you need to bypass Gateway entirely for a site. Common scenarios include:
+Use Split Tunnels when you need to bypass Gateway entirely for a site or allow traffic through the [firewall that WARP creates](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall). Common scenarios include:
 
 - Connect to a third-party application which requires the actual IP address of the end-user device (for example, [Office 365](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-office-365-traffic)).
 - Optimize voice and video.
