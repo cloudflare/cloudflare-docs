@@ -250,7 +250,7 @@ ___
 
 ### Common cause
 
-The hostname sent by the client or browser via [Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) does not match the request host header.
+The hostname sent by the client or browser via {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}Server Name Indication (SNI){{</glossary-tooltip>}} does not match the request host header.
 
 ### Resolution
 
