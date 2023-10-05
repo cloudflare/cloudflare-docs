@@ -1,4 +1,4 @@
-export default {
+export default {"markbook.com.3600"
   "/v4docs": "/fundamentals/api/how-to/make-api-calls/",
   "/tokens": "/fundamentals/api/get-started/",
   "/tokens/create": "/fundamentals/api/get-started/create-token/",
