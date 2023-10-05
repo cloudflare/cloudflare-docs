@@ -55,11 +55,11 @@ Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_
 
 ### Define input variables
 
-{{<render file="_terraform_input_variables.md">}}
+{{<render file="_terraform-input-variables.md">}}
 
 ### Assign values to the variables
 
-{{<render file="_terraform_variable_values.md">}}
+{{<render file="_terraform-variable-values.md">}}
 
 ### Configure Terraform providers
 

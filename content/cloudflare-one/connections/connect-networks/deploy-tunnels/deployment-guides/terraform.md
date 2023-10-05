@@ -59,6 +59,7 @@ Terraform functions through a working directory that contains the configuration 
    ```
 
 2. Change into the directory:
+
    ```sh
    $ cd gcp-tunnel
    ```
@@ -67,11 +68,11 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Define input variables
 
-{{<render file="_terraform_input_variables.md">}}
+{{<render file="_terraform-input-variables.md">}}
 
 ### Assign values to the variables
 
-{{<render file="_terraform_variable_values.md">}}
+{{<render file="_terraform-variable-values.md">}}
 
 ### Configure Terraform providers
 
