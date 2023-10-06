@@ -4,7 +4,7 @@ title: Peer-to-peer connectivity
 weight: 5
 ---
 
-# Enable peer-to-peer connectivity with WARP
+# Enable peer-to-peer connectivity
 
 With Cloudflare Zero Trust, you can create a private network between any two or more devices running Cloudflare WARP. This means that you can have a private network between your phone and laptop without ever needing to be connected to the same physical network. If you already have an existing Zero Trust deployment, you can also enable this feature to add device-to-device connectivity to your private network with the press of a button. This will allow you to connect to any service that relies on TCP, UDP, or ICMP-based protocols through Cloudflare’s network.
 
@@ -23,7 +23,7 @@ This guide covers how to:
 - [Define device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/).
 - [Enroll your devices](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) in your Zero Trust organization.​​
 
-## Enable the WARP-to-WARP configuration
+## Enable WARP-to-WARP
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy**.
