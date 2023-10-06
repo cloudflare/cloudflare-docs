@@ -88,4 +88,4 @@ Now that we have EC2 up and running in AWS, you can log in to your instance.
    $ cloudflared tunnel route ip add 172.31.0.0/16 AWS-01
    ```
 
-{{<render file="_cloudflared-cloud-deployment.md">}}
+{{<render file="tunnel/_cloudflared-cloud-deployment.md">}}
