@@ -105,7 +105,9 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 ## Maintenance
 
-After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/connector/device-information/#heartbeat). 
+After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/connector/device-information/#heartbeat).
+
+{{<Aside type="note">}}[ICMP traffic](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) is routed through the Internet and bypasses [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This enables you to ping your Magic WAN Connector directly.{{</Aside>}}
 
 ### Deactivate Magic WAN Connector
 
