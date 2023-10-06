@@ -6,7 +6,7 @@ weight: 7
 
 # Delete key-value pairs
 
-To delete a key-value pair, call the `delete()` method on any KV namespace you have bound to your Worker code:
+To delete a key-value pair, call the `delete()` method on any {{<glossary-tooltip term_id="KV namespace">}}KV namespace{{</glossary-tooltip>}} you have bound to your Worker code:
 
 ```js
 await NAMESPACE.delete(key);
