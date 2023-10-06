@@ -2,6 +2,10 @@
 link: "/notifications/changelog/"
 productName: Notifications
 entries:
+- publish_date: '2023-10-06'
+  title: 
+  description: |-
+    * Added Traffic Anomalies alerts to notify customers when traffic to their domain has an unexpected spike or drop.
 - publish_date: '2023-09-28'
   title:
   description: |-
