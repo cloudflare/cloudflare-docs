@@ -20,21 +20,18 @@ Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detec
 
 ### View a user’s risk score
 
-Users that have had their risk score cleared will not appear in this table unless they trigger another risk behavior.
+To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**.
-2. In the table, locate the user you want to view the risk score for.
-3. Select the three-dot menu > **View user risk details**.
+Users that have had their risk score cleared will not appear in the table unless they trigger another risk behavior.
 
 ### Clear a user’s risk score
 
 If required, you can reset risk levels for specific users. Once reset, users will not appear in the associated risk table until they trigger another risk behavior.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**.
-2. In the table, locate the user you want to clear the risk score for.
-3. Select the three-dot menu > **View user risk details**.
-4. Select **Reset user risk**.
-5. Select **Confirm** to reset the user's risk score.
+2. Select the user you want to clear the risk score for.
+3. Under **User risk overview**, select **Reset user risk**.
+4. Select **Confirm**.
 
 ## Predefined risk behaviors
 
@@ -65,5 +62,5 @@ You can change the risk level for a behavior at any time.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **Risk behaviors**.
 2. Select the risk behavior you want to modify.
-3. In the risk level drop-down menu, choose your desired level.
+3. In the drop-down menu, choose your desired risk level.
 4. Select **Save**.
