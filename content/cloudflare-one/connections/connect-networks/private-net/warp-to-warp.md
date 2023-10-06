@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Create private networks
+title: Peer-to-peer connectivity
 weight: 5
 ---
 
@@ -12,10 +12,10 @@ Users in your organization can reach these services by enrolling into your organ
 
 This guide covers how to:
 
-- Enable WARP-to-WARP connectivity to establish a virtual network between your devices
-- Manage Split Tunnel preferences for the WARP client to determine what traffic should be routed to the Cloudflare global network
-- Create Zero Trust security policies to restrict access
-- Connect to virtual IP spaces from WARP devices without any client-side configuration changes
+- Enable WARP-to-WARP connectivity to establish a private network between your devices.
+- Manage Split Tunnel preferences for the WARP client to determine what traffic should be routed to the Cloudflare global network.
+- Create Zero Trust security policies to restrict access.
+- Connect to virtual IP spaces from WARP devices without any client-side configuration changes.
 
 ## Prerequisites
 
@@ -37,6 +37,4 @@ This will instruct WARP to begin proxying any traffic destined for a `100.64/10`
 
 ## Connect via WARP
 
-Once enrolled, your users and services will be able to connect to the virtual IPs configured for TCP, UDP, or ICMP-based traffic.
-
-Optionally, you can create [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) by blocking the `100.64/10` IP space and creating [identity-based rules](/cloudflare-one/policies/gateway/identity-selectors/) around the virtual IPs you wish to allow users to access.
+Once enrolled, your users and services will be able to connect to the virtual IPs configured for TCP, UDP, or ICMP-based traffic. You can optionally create [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) to define the users and devices that can access the `100.64/10` IP space.
