@@ -21,57 +21,29 @@ A globally distributed coordination API with strongly consistent storage.
 
 Durable Objects provide a powerful API for coordinating multiple clients or users, each with private, transactional and strongly consistent storage attached.
 
-Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own. 
+Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own. Create your first Durable Objects by [following the Get started guide](/durable-objects/get-started/).
 
 ---
 
-## Features
+## Get started
+ 
+{{<feature header="Create your first Durable Objects" href="/durable-objects/get-started/">}}
 
-{{<feature header="In-memory state" href="/durable-objects/learning/in-memory-state/">}}
-
-Learn how Durable Objects coordinate connections among multiple clients or events.
-
-{{</feature>}}
-
-{{<feature header="Transactional Storage API" href="/durable-objects/api/transactional-storage-api/">}}
-
-Learn how Durable Objects provide strongly consistent, serializable key-value storage.
+Learn how to create your first Durable Objects and use strongly consistent storage within an application [built with Workers](/workers/).
 
 {{</feature>}}
 
-{{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/hibernatable-websockets-api/">}}
+{{<feature header="Workers" href="/workers/">}}
 
-Learn how the Hibernatable WebSockets API allows you to manage the connections of multiple clients at scale.
-
-{{</feature>}}
-
-{{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms-in-durable-objects/">}}
-
-Learn how to use alarms to trigger a Durable Object and perform compute in the future at customizable intervals.
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
 
 {{</feature>}}
 
----
+{{<feature header="Pages" href="/pages/">}}
 
-## Related products
+Deploy dynamic front-end applications in record time.
 
-{{<related header="Workers" href="/workers/" product="workers">}}
-
-Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
-
-{{</related>}}
-
-{{<related header="D1" href="/d1/" product="d1">}}
-
-D1 is Cloudflare’s SQL-based native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
-
-{{</related>}}
-
-{{<related header="R2" href="/r2/" product="r2">}}
-
-Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
-
-{{</related>}}
+{{</feature>}}
 
 ---
 
@@ -79,11 +51,11 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{<resource-group>}}
 
-{{<resource header="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="reference-architecture">}}Browse what other developers are building with Durable Objects.{{</resource>}}
+{{<resource header="Pricing" href="/durable-objects/platform/pricing/" icon="reference-architecture">}}Learn about Durable Objects pricing.{{</resource>}}
  
 {{<resource header="Limits" href="/durable-objects/platform/limits/" icon="documentation-clipboard">}}Learn about Durable Objects limits.{{</resource>}}
 
-{{<resource header="Pricing" href="/durable-objects/platform/pricing/" icon="reference-architecture">}}Learn about Durable Objects pricing.{{</resource>}}
+{{<resource header="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="reference-architecture">}}Browse what other developers are building with Durable Objects.{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about storage and database options you can build with Workers.{{</resource>}}
 
