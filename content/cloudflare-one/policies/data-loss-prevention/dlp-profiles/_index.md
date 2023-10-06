@@ -30,7 +30,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
    <div class="special-class" markdown="1">
 
    1. Select **Add custom entry** and give it a name.
-   2. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by 2 digits.
+   2. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by two digits.
 
       - Regexes are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
       - Detected text patterns are limited to 1024 bytes in length.
@@ -48,7 +48,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
    Existing entries include [predefined detection entries](predefined-profiles/) and [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/).
 
    1. Select **Add existing entries**.
-   2. Choose which entries to want to add, then select **Confirm**.
+   2. Choose which entries you want to add, then select **Confirm**.
    3. To save the detection entry, select **Done**.
 
    </div>
