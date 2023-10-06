@@ -64,17 +64,11 @@ Now that we have EC2 up and running in AWS, you can log in to your instance.
 
 1. Run `sudo su` to gain full admin rights to the Virtual Machine.
 
-1. Run `apt install wget` to install any relevant dependencies for your new instance.
+1. Run `apt install curl` to install any relevant dependencies for your new instance.
 
-1. Install `cloudflared` on your instance. In this example, we are running a Debian-based instance, so download the Debian build of `cloudflared`:
+1. Install `cloudflared` on your instance. In this example, we are running a Debian-based instance, so use the Debian package of `cloudflared`:
 
-   ```sh
-   $ wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-   ```
-
-   ```sh
-   $ dpkg -i cloudflared-linux-amd64.deb
-   ```
+   {{<render file="_cloudflared-debian-install.md">}}
 
 1. Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
 

@@ -148,7 +148,7 @@ During these maintenance windows, you may experience a slight increase in latenc
 </details>
 
 <details>
-<summary>Incident Alert</summary>
+<summary>Incident Alerts</summary>
 <div>
 
 **Who is it for?**
