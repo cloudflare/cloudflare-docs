@@ -30,9 +30,9 @@ Magic WAN Connector communicates periodically with Cloudflare. This is also know
 Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. The Magic WAN Connector device metrics measured by Cloudflare include:
 
 - Average CPU load
-- Average Temperature
-- Average Disk utilization
-- Average Memory utilization
+- Average temperature
+- Average disk utilization
+- Average memory utilization
 
 To check for Connector metrics:
 
@@ -76,7 +76,7 @@ query GetResults($accountTag: string, $datetimeStart: string, $datetimeEnd: stri
 
 ### Average CPU load explained
 
-The metric “average CPU load” is unique and distinctly different from “CPU utilization” which is another common CPU metric. The Magic WAN connector uses a [Unix-style CPU load calculation](https://en.wikipedia.org/wiki/Load_(computing)).
+The metric `average CPU load` is unique and distinctly different from `CPU utilization` which is another common CPU metric. The Magic WAN connector uses a [Unix-style CPU load calculation](https://en.wikipedia.org/wiki/Load_(computing)).
 
 CPU load is a measure of the number of processes that are currently running and that are waiting to be run on the CPU. Cloudflare collects the one minute load average from the device and converts that into a percentage based on the total number of cores in the CPU. If the Magic WAN Connector CPU has eight cores, and a one minute load average of two, then the average CPU load is 25%. If the average CPU load is above 100%, then there are processes in the queue that are waiting to be executed on the CPU.
 
