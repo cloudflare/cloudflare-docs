@@ -10,8 +10,8 @@ Cloudflare WARP connector is a piece of software that establishes a secure Layer
 
 - Connect two or more private networks to each other.
 - Connect IoT devices (such as IP phones and printers) that cannot run external software.
-- Proxy server-initiated traffic (such as VoIP, SIP, and BACNet) which rely on preserving the user's source IP.
-- Filter and log traffic based on user identity and source IP.
+- Filter and log server-initiated traffic (such as VoIP, SIP, and BACNet).
+- Apply Zero Trust security policies based on the source IP within a private network.
 
 ```mermaid
     flowchart LR
