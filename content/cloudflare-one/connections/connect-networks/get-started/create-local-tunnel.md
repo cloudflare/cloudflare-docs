@@ -45,45 +45,26 @@ Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-on
 {{</tab>}}
 {{<tab label="linux" no-code="true">}}
 
-Additional package details can be found on the [downloads](/cloudflare-one/connections/connect-networks/downloads/) page.
-
-**Debian and Ubuntu APT install**
+**Debian and Ubuntu APT**
 
 Use the apt package manager to install `cloudflared` on compatible machines.
 
-1. Add Cloudflare's package signing key:
+{{<render file="_cloudflared-debian-install.md">}}
 
-```sh
-sudo mkdir -p --mode=0755 /usr/share/keyrings
-curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
-```
-
-2. Add Cloudflare's apt repo to your apt repositories:
-
-```sh
-echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
-```
-
-3. Update repositories and install cloudflared:
-
-```sh
-sudo apt-get update && sudo apt-get install cloudflared
-```
-
-**RHEL RPM install**
+**RHEL RPM**
 
 Use the rpm package manager to install `cloudflared` on compatible machines.
 
 1. Add Cloudflare's repository:
 
 ```sh
-curl -fsSL https://pkg.cloudflare.com/cloudflared-ascii.repo | sudo tee /etc/yum.repos.d/cloudflared.repo
+$ curl -fsSL https://pkg.cloudflare.com/cloudflared-ascii.repo | sudo tee /etc/yum.repos.d/cloudflared.repo
 ```
 
 2. Update repositories and install cloudflared:
 
 ```sh
-sudo yum update && sudo yum install cloudflared
+$ sudo yum update && sudo yum install cloudflared
 ```
 
 **Arch Linux**

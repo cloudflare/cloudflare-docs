@@ -99,7 +99,7 @@ This creates a new container from the latest `cloudflared` image. You can now de
 {{</tab>}}
 {{<tab label="other" no-code="true">}}
 
-If you installed `cloudflared` from GitHub-provided binaries or from source, you can run the following command:
+If you installed `cloudflared` from GitHub-provided binaries or from source, run the following command:
 
 ```sh
 $ cloudflared update
