@@ -60,7 +60,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 ## Connect to SMB server with `cloudflared access`
 
-{{<render file="_tunnel-cloudflared-access.md">}}
+{{<render file="tunnel/_cloudflared-access.md">}}
 
 ### 1. Connect the server to Cloudflare
 

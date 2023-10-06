@@ -69,4 +69,4 @@ Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addr
    $ cloudflared tunnel create Azure-01
    ```
 
-{{<render file="_cloudflared-cloud-deployment.md">}}
+{{<render file="tunnel/_cloudflared-cloud-deployment.md">}}

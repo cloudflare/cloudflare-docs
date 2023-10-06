@@ -86,7 +86,7 @@ You now have secure, remote access to the RDP server.
 
 ## Connect to RDP server with `cloudflared access`
 
-{{<render file="_tunnel-cloudflared-access.md">}}
+{{<render file="tunnel/_cloudflared-access.md">}}
 
 ### 1. Connect the server to Cloudflare
 

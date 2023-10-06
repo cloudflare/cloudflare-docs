@@ -86,7 +86,7 @@ $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 
 ## Connect to SSH server with `cloudflared access`
 
-{{<render file="_tunnel-cloudflared-access.md">}}
+{{<render file="tunnel/_cloudflared-access.md">}}
 
 ### 1. Connect the server to Cloudflare
 
