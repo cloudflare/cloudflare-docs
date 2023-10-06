@@ -17,7 +17,7 @@ _build:
 
     Once authenticated, you will see a Success page and a dialog prompting you to open a link.
 
-5. Select **Open Link**. 
+5. Select **Open Link**.
 
 6. Verify the registration in the terminal:
 
@@ -35,9 +35,11 @@ The registration process may take a few minutes to complete. If the registration
 2. Find the HTML metadata tag that contains the token. For example, `<meta http-equiv="refresh" content"=0;url=com.cloudflare.warp://acmecorp.cloudflareaccess.com/auth?token=yeooilknmasdlfnlnsadfojDSFJndf_kjnasdf..." />`
 3. Copy the URL field: `com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>`
 4. In the terminal, run the following command using the URL obtained in the previous step.
+
     ```sh
     $ warp-cli teams-enroll-token com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>
     ```
+
 If you get an API error, then the token has expired. Generate a new one by refreshing the web page and quickly grab the new token from the page source.
 
 </div>
