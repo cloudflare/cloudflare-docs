@@ -10,11 +10,13 @@ Once you have modified your SSHD configuration, restart the SSH service on the r
 ### Debian/Ubuntu
 
 For older Debian/Ubuntu versions:
+
   ```sh
   $ sudo service ssh restart
   ```
 
 For newer Debian/Ubuntu versions:
+
   ```sh
   $ sudo systemctl restart ssh
   ```
@@ -22,11 +24,13 @@ For newer Debian/Ubuntu versions:
 ### CentOS/RHEL
 
 For CentOS/RHEL 6 and older:
+
   ```sh
   $ sudo service sshd restart
   ```
 
 For CentOS/RHEL 7 and newer:
+
   ```sh
   $ sudo systemctl restart sshd
   ```

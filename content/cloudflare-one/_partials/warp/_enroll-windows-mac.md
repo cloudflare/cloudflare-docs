@@ -11,7 +11,7 @@ _build:
 4. Select the gear icon.
 5. Go to **Preferences** > **Account**.
 6. Select **Login with Cloudflare Zero Trust**.
-7. Enter your [team name](/cloudflare-one/glossary/#team-name).
+7. Enter your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 8. Complete the authentication steps required by your organization.
 
     Once authenticated, you will see a Success page and a dialog prompting you to open WARP.

@@ -22,5 +22,6 @@ The following limits apply to accounts, indexes and vectors (as specified):
 | Maximum returned results (`topK`) | 20   <sup>beta</sup>                        |
 | Maximum upsert batch size (per batch) | 1000 <sup>beta</sup> (Workers) / 5000 <sup>beta</sup> (HTTP API) |
 | Maximum index name length         | 63 bytes                                    |
+| Maximum vectors per index         | 200,000 <sup>beta</sup>                     |
 
 <sup>beta</sup> This limit is beta only and is expected to increase over time.

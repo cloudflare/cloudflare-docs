@@ -7,7 +7,7 @@ _build:
 
 ## Complete tunnel configuration
 
-1.  Make a directory for your configuration file.
+1. Make a directory for your configuration file.
 
     ```sh
     $ mkdir /etc/cloudflared
@@ -17,13 +17,13 @@ _build:
     $ cd /etc/cloudflared
     ```
 
-1.  Build a configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
+2. Build a configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
 
     ```sh
     $ vim config.yml
     ```
 
-1.  Type `i` to begin editing the file and copy-paste the following settings in it.
+3. Type `i` to begin editing the file and copy-paste the following settings in it.
 
     ```text
     tunnel: <Tunnel ID/name>
@@ -38,9 +38,9 @@ _build:
     transport-loglevel: info
     ```
 
-1.  Press `esc` and then type `:x` to save and exit.
+4. Press `esc` and then enter `:x` to save and exit.
 
-1.  Run `cloudflared` as a service.
+5. Run `cloudflared` as a service.
 
 ```sh
 $ cloudflared service install

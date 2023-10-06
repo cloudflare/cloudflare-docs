@@ -36,6 +36,7 @@ Match user johndoe
 ```
 
 This tells the SSH server that, when someone tries to authenticate as the user `johndoe`, check their certificate for the principal `jdoe`. This would allow the user `jdoe@example.com` to sign into the server with a command such as:
+
 ```sh
 $ ssh johndoe@server
 ```

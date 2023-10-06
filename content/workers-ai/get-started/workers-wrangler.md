@@ -67,7 +67,7 @@ binding = "AI" # i.e. available in your Worker on env.AI
 ```
 
 <!-- TODO update this once we know if we'll have it -->
-You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#ai).
+You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#workers-ai).
 
 ## 3. Install the Workers AI client library
 

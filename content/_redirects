@@ -138,8 +138,6 @@
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
-/bots/bot-management-enterprise/ /learning-paths/bot-management/ 301
-/bots/get-started/bm-subscription/ /learning-paths/bot-management/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /support/other-languages/español-españa/productos-de-detección-de-bots-de-cloudflare-preguntas-frecuentes/ /bots/troubleshooting/ 301
@@ -1243,6 +1241,7 @@
 /cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/gateway/global-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/gateway/dns-policies/ 301
 /cloudflare-one/policies/browser-isolation/configuration/ /cloudflare-one/policies/browser-isolation/setup/ 301
+/cloudflare-one/cloudflare-teams-roles-permissions/ /cloudflare-one/roles-permissions/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
@@ -1347,9 +1346,10 @@
 /learning-paths/modules/performance/load-balancing-concepts/* /learning-paths/load-balancing/concepts/:splat 301
 /learning-paths/modules/performance/load-balancing-planning/* /learning-paths/load-balancing/planning/:splat 301
 /learning-paths/modules/performance/load-balancing-setup/* /learning-paths/load-balancing/setup/:splat 301
-/learning-paths/modules/security/bot-management-concepts/* /learning-paths/bot-management/concepts/:splat 301
-/learning-paths/modules/security/bot-management-planning/* /learning-paths/bot-management/planning/:splat 301
-/learning-paths/modules/security/bot-management-setup/* /learning-paths/bot-management/setup/:splat 301
+/learning-paths/modules/security/bot-management-concepts/* /bots/get-started/bm-subscription/ 301
+/learning-paths/modules/security/bot-management-planning/* /bots/get-started/bm-subscription/ 301
+/learning-paths/modules/security/bot-management-setup/* /bots/get-started/bm-subscription/ 301
+/learning-paths/bot-management/* /bots/get-started/bm-subscription/ 301
 /learning-paths/modules/security/ddos-advanced/* /learning-paths/prevent-ddos-attacks/advanced/:splat 301
 /learning-paths/modules/security/ddos-baseline/* /learning-paths/prevent-ddos-attacks/baseline/:splat 301
 /learning-paths/modules/security/ddos-concepts/* /learning-paths/prevent-ddos-attacks/concepts/:splat 301

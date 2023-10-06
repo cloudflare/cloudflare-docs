@@ -87,7 +87,7 @@ You can also [write with an expiration on the command line via Wrangler](/kv/lea
 
 ## Metadata
 
-To associate some metadata with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
+To associate some {{<glossary-tooltip term_id="metadata">}}metadata{{</glossary-tooltip>}} with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
 
 To do this in your Worker script:
 
