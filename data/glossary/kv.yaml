@@ -12,6 +12,3 @@ entries:
 - term: metadata
   general_definition: |-
     a metadata is a serializable value you append to each KV entry.
-
-    
-    
