@@ -1,6 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare Pulumi
