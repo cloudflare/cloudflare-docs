@@ -11,7 +11,7 @@ If your application needs to coordinate among multiple WebSocket connections, su
 
 While there are other use cases for using Workers exclusively with WebSockets, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated messages to be sent using the existing socket connection. Multiple clients can establish a WebSocket connection with a specific Durable Object addressed by its [unique ID](/durable-objects/how-to/access-durable-object-from-a-worker/#1-create-durable-object-ids). The Durable Object can then send messages to each client over the WebSocket connection.
 
-Durable Objects can use the web standard APIs described in the [WebSockets](/workers/runtime-apis/websockets/use-websockets/) API reference. Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example using Durable Objects with WebSockets.
+Durable Objects can use the web standard APIs described in the [WebSockets](/durable-objects/api/websockets/) API reference. Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example using Durable Objects with WebSockets.
 
 {{<Aside type="warning" header="WebSockets disconnection">}}
 
@@ -35,7 +35,7 @@ The Hibernatable WebSockets API includes:
 
 The Hibernatable WebSocket API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/kv/api/).
 
-For WebSocket proxy use-cases, refer to the [standard WebSocket API documentation](/workers/runtime-apis/websockets/use-websockets/#write-a-websocket-client).
+For WebSocket proxy use-cases, refer to the [standard WebSocket API documentation](/workers/examples/websockets/#write-a-websocket-client).
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 

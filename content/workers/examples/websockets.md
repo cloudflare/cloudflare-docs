@@ -1,6 +1,12 @@
 ---
-pcx_content_type: concept
-title: Use WebSockets
+type: example
+summary: Use the WebSockets API to communicate in real time with your Cloudflare Workers.
+tags:
+  - WebSockets
+pcx_content_type: configuration
+title: Using the WebSockets API
+weight: 10000
+layout: example
 ---
 
 # Use WebSockets
@@ -12,6 +18,12 @@ WebSockets are open connections sustained between the client and the origin serv
 {{<Aside type="note">}}
 
 WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/api/websockets/).
 
 {{</Aside>}}
 
@@ -86,7 +98,7 @@ async function handleRequest(request) {
 }
 ```
 
-WebSockets emit a number of [Events](/workers/runtime-apis/websockets/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
+WebSockets emit a number of [Events](/workers/runtime-apis/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
 
 ```js
 async function handleRequest(request) {
@@ -122,13 +134,13 @@ websocket.addEventListener('message', event => {
 });
 ```
 
-WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/websockets/#send) function:
+WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/#send) function:
 
 ```js
 websocket.send('MESSAGE');
 ```
 
-When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/websockets/#close):
+When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/#close):
 
 ```js
 websocket.close();
@@ -177,7 +189,3 @@ async function websocket(url) {
 Cloudflare Workers provides experimental support for WebSocket compression via the `web_socket_compression` compatibility flag. Refer to [Experimental Changes](/workers/configuration/compatibility-dates/#experimental-changes) for more information.
 
 Without this compatibility flag, the Workers runtime will strip or ignore the `Sec-WebSocket-Extensions: permessage-deflate` header on all inbound and outbound WebSocket requests.
-
-## Durable Objects and WebSocket state
-
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects [WebSockets Hibernation API](/durable-objects/api/websockets/) rather than the `.accept` method described above.

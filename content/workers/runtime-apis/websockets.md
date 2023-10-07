@@ -7,9 +7,13 @@ title: WebSockets
 
 ## Background
 
-WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. For a complete example, refer to [Using the WebSockets API](/workers/examples/websockets/).
 
-When using WebSockets with Durable Objects, we recommend using the [Hibernatable WebSockets API](/durable-objects/api/websockets/) which adds additional extensions to the standard `WebSocket` object.
+{{<Aside type="note">}}
+
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/api/websockets/).
+
+{{</Aside>}}
 
 ## Constructor
 
@@ -54,7 +58,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - `event` {{<type-link href="#events">}}WebSocketEvent{{</type-link>}}
 
-  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/websockets/#events)) to listen to.
+  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
 - {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}){{</code>}} {{<type>}}Function{{</type>}}
 

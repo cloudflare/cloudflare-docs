@@ -41,7 +41,7 @@ For more information beyond the API reference, refer to [Using WebSockets in Dur
 
 - `event` {{<type-link href="#events">}}WebSocketEvent{{</type-link>}}
 
-  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/websockets/#events)) to listen to.
+  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
 - {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}){{</code>}} {{<type>}}Function{{</type>}}
 
