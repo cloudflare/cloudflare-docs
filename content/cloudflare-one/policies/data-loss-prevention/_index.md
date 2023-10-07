@@ -7,6 +7,10 @@ weight: 5
 
 # Data Loss Prevention
 
+{{<Aside type="note">}}
+Available as an add-on to Zero Trust Enterprise plans.
+{{</Aside>}}
+
 Cloudflare Data Loss Prevention (DLP) allows you to scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers and credit card numbers.
 
 ## Data-in-transit
@@ -33,7 +37,3 @@ To get started, refer to our [CASB documentation](/cloudflare-one/applications/s
 ### Size
 
 The maximum file size is 100 MB. Size limitation is assessed against the file after unzipping. ZIP files can be recursively compressed a maximum of 10 times.
-
-## Feature availability
-
-Data Loss Prevention is available as an add-on to Zero Trust Enterprise plans.

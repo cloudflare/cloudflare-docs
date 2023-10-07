@@ -111,7 +111,9 @@ After customizing your custom error page, there are two options for adding the p
 -   Domain level: the custom error page will apply to only one domain associated with your account.
 
 {{<Aside type="note">}}
-If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work.
+If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work. 
+
+A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
 {{</Aside>}}
 
 ### Account-level custom error page

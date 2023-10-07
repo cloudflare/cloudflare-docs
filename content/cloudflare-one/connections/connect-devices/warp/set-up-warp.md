@@ -18,7 +18,7 @@ This mode enables our complete suite of [device security features](/cloudflare-o
 
 The [Cloudflare Zero Trust home](https://one.dash.cloudflare.com/) will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
 
-As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), you will be asked to create a [team name](/cloudflare-one/glossary/#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
+As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), you will be asked to create a {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}} for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
 ### 2. Set up a login method.
 
@@ -50,7 +50,7 @@ This mode is best suited for organizations that only want to apply DNS filtering
 
 Zero Trust will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
 
-As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), you will be asked to create a [team name](/cloudflare-one/glossary/#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
+As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), you will be asked to create a {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}} for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
 ### 2. Set up a login method.
 

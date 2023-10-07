@@ -49,7 +49,7 @@ You can set up External Evaluation rules using any API service, but to get start
 
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<KV_NAMESPACE_ID>`: the `id` of your KV namespace.
-   - `<TEAM_NAME>`: your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+   - `<TEAM_NAME>`: your Cloudflare Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 
    ```txt
    ---
