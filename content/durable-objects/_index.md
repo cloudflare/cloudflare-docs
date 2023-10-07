@@ -39,7 +39,7 @@ Learn how Durable Objects provide strongly consistent, serializable key-value st
 
 {{</feature>}}
 
-{{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/hibernatable-websockets-api/">}}
+{{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/websockets/">}}
 
 Learn how the Hibernatable WebSockets API allows you to manage the connections of multiple clients at scale.
 

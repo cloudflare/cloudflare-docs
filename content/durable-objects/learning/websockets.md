@@ -14,6 +14,6 @@ WebSockets are most useful when combined with Durable Objects. When a client con
 
 With Durable Objects, you can forward the WebSocket to a Durable Object. Messages can then be addressed to that Durable Object by its [unique ID](/durable-objects/how-to/access-durable-object-from-a-worker/#1-create-durable-object-ids), and the Durable Object can then forward those messages down the WebSocket to the client.
 
-Durable Objects can use the web standard APIs described in [WebSockets](/workers/runtime-apis/websockets/use-websockets/). When using a Durable Object to terminate a WebSocket (as opposed to using it as a WebSocket client) the [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/) has significant advantages and should be preferred over the web standard APIs. 
+Durable Objects can use the web standard APIs described in [WebSockets](/workers/runtime-apis/websockets/use-websockets/). When using a Durable Object to terminate a WebSocket (as opposed to using it as a WebSocket client) the [Hibernatable WebSockets API](/durable-objects/api/websockets/) has significant advantages and should be preferred over the web standard APIs. 
 
 Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example of WebSockets in action within Durable Objects.
