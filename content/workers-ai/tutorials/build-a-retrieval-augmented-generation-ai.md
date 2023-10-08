@@ -297,7 +297,7 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
