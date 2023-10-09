@@ -136,7 +136,7 @@ Customers can filter maintenance notifications for specific points of presence a
 
 **Included with**
 
-All plans.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 
@@ -165,7 +165,7 @@ Additionally, incident alerts can be filtered to incidents affecting specific co
 
 **Included with**
 
-All plans.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 
@@ -379,7 +379,7 @@ Multiple filters available:
 
 **Included with**
 
-Pro plans or higher.
+Professional plans or higher.
 
 **What should you do if you receive one?**
 
@@ -545,7 +545,7 @@ None.
 
 **Included with**
 
-Purchase of [Magic Transit](/magic-transit/).
+Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
@@ -1258,7 +1258,7 @@ None.
 
 **Included with**
 
-All plans.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 
