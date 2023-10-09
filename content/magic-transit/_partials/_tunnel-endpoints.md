@@ -3,12 +3,14 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;healthCheck;;productPathProbe;;antiReplayPagePath
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;healthCheck;;productPathProbe;;antiReplayPagePath;tenthVariable
 ---
 
 #  Configure tunnel endpoints
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Cloudflare will assign two Cloudflare endpoint addresses shortly after your onboarding kickoff call that you can use as the tunnel destinations on your network location's routers/endpoints.
+
+This is $10 variable.
 
 To configure the tunnels between Cloudflare and your locations, you must provide the following data for each tunnel:
 
@@ -278,3 +280,5 @@ Refer to [Tunnel Health Checks]($8) to learn more.
 Now that you have set up your tunnel endpoints, you need to configure [static routes]($5) to route your traffic through Cloudflare.
 
 Refer to [Tunnels]($6) for more information on how $2 tunnels work.
+
+This is $10 variable.
