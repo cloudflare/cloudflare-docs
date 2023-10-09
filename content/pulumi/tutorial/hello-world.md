@@ -582,7 +582,7 @@ Duration: 4s
 
 <!-- ## Step 5: Test the app -->
 
-At this point you have incrementally added all the Cloudflare resources needed to run and access your Hello World application. This was done by defining the resources in Typescript and letting Pulumi handle the rest.
+At this point you have incrementally added all the Cloudflare resources needed to run and access your Hello World application. This was done by defining the resources in TypeScript and letting Pulumi handle the rest.
 
 You can test your application via the terminal or browser.
 
