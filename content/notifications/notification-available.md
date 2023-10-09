@@ -82,7 +82,7 @@ Customers who want a summary of activity related to [Brand Protection](/security
 
 **Other options / filters**
 
-Can be set up on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
+Customers can set up Brand Protection Alerts on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
 
 **Included with**
 
@@ -105,7 +105,7 @@ Customers who want a summary of activity related to [Brand Protection](/security
 
 **Other options / filters**
 
-Can be set up on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
+Customers can set up Brand Protection Digest on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
 
 **Included with**
 
@@ -311,11 +311,10 @@ WAF/CDN customers with the Advanced DDoS Protection subscription who want to rec
 
 **Other options / filters**
 
-- Customers can choose when to trigger a notification. Available filters are:
-
-  - The zones in the account for which they wish to receive notifications.
-  - The specific hostnames for which they wish to receive notifications.
-  - The minimum requests-per-second rate that will trigger the alert.
+Customers can choose when to trigger a notification. Available filters are:
+- The zones in the account for which they wish to receive notifications.
+- The specific hostnames for which they wish to receive notifications.
+- The minimum requests-per-second rate that will trigger the alert.
 
 **Included with**
 
@@ -338,13 +337,12 @@ BYOIP and Magic Transit customers with Network Analytics who want to receive a n
 
 **Other options / filters**
 
-- Customers can choose when to trigger a notification. Available filters are:
-
-  - The IP prefixes for which they wish to receive notifications.
-  - The specific IP addresses for which they wish to receive notifications.
-  - The minimum packets-per-second rate that will trigger the alert.
-  - The minimum megabits-per-second rate that will trigger the alert.
-  - The protocols for which they wish to receive notifications.
+Customers can choose when to trigger a notification. Available filters are:
+- The IP prefixes for which they wish to receive notifications.
+- The specific IP addresses for which they wish to receive notifications.
+- The minimum packets-per-second rate that will trigger the alert.
+- The minimum megabits-per-second rate that will trigger the alert. 
+- The protocols for which they wish to receive notifications.
 
 **Included with**
 
@@ -461,7 +459,7 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 **Who is it for?**
 
-This is for any customer who uses Logpush and wants to monitor their job health.
+Enterprise customers who use Logpush and want to monitor their job health.
 
 **Other options / filters**
 
@@ -1023,7 +1021,7 @@ Enterprise plans.
 
 **Who is it for?**
 
-Any customer who wants to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a `521` error.
+Customers who want to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a `521` error.
 
 **Other options / filters**
 
@@ -1076,7 +1074,7 @@ Enterprise plans.
 
 **Who is it for?**
 
-Any customer who wants to be notified when Cloudflare Trust & Safety rejects a request for block removal.
+Customers who want to be notified when Cloudflare Trust & Safety rejects a request for block removal.
 
 **Other options / filters**
 
@@ -1099,7 +1097,7 @@ Take care of any abuse on your website. Then, go to the [Cloudflare dashboard](h
 
 **Who is it for?**
 
-Any customer who wants to be notified when Cloudflare Trust & Safety places a block in one of their websites.
+Customers who want to be notified when Cloudflare Trust & Safety places a block on their website.
 
 **Other options / filters**
 
@@ -1122,7 +1120,7 @@ Take care of any abuse on your website. Then, go to the [Cloudflare dashboard](h
 
 **Who is it for?**
 
-Any customer who wants to be notified when Cloudflare Trust & Safety removes a block from your website.
+Customers who want to be notified when Cloudflare Trust & Safety removes a block from their website.
 
 **Other options / filters**
 
