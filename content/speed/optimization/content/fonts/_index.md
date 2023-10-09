@@ -12,7 +12,7 @@ Cloudflare Fonts is a feature designed for websites that use Google Fonts. It re
 
 Cloudflare Fonts works by rewriting your webpage’s HTML. It removes Google Fonts links and replaces them with inline CSS. This CSS includes links to fonts from your own Cloudflare zone rather than from Google servers. This ensures that font files are served from your domain through Cloudflare's infrastructure, optimizing performance and enhancing user privacy.
 
-## Get Started
+## Get started
 
 To enable Cloudflare Fonts for your entire domain:
 
@@ -26,8 +26,8 @@ While Cloudflare Fonts offers powerful font optimization capabilities, it is imp
 
 - **Font transformation:** Currently, Cloudflare Fonts Beta exclusively supports Google Fonts transformation.
 - **APO compatibility:** Cloudflare Fonts Beta does not operate when [Automatic Platform Optimization](/automatic-platform-optimization/) (APO) is enabled. Cloudflare APO automatically optimizes Google Fonts.
-- **CSS import:** Cloudflare Fonts Beta is compatible only with the `<link>` setup for Google fonts and does not support the CSS `@import` method.
-- **Browser support:** Cloudflare Fonts Beta is compatible with browsers that support unicode-range subsetting and WOFF or WOFF2 formats, including:
+- **CSS import:** Cloudflare Fonts Beta is compatible only with the `<link>` setup for Google Fonts and does not support the CSS `@import` method.
+- **Browser support:** Cloudflare Fonts Beta is compatible with browsers that support Unicode-range subsetting and WOFF or WOFF2 formats, including:
 
 ```
 Chrome 36+ 
