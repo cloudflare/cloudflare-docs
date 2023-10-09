@@ -1,0 +1,10 @@
+---
+productName: D1
+entries:
+- term: bookmark
+  general_definition: |-
+    represents the state of a database at a specific point in time.
+
+- term: Time Travel
+  general_definition: |-
+    D1 approach to backups and point-in-time recovery. Time Travel allows you to restore a database to any minute whithin the last 30 days.
