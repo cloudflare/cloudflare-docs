@@ -45,7 +45,7 @@ Learn how the Hibernatable WebSockets API allows you to manage the connections o
 
 {{</feature>}}
 
-{{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms-in-durable-objects/">}}
+{{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms/">}}
 
 Learn how to use alarms to trigger a Durable Object and perform compute in the future at customizable intervals.
 
