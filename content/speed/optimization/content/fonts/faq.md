@@ -1,7 +1,6 @@
 ---
 pcx_content_type: faq
 title: FAQ
-weight: 5
 ---
 
 # FAQ
@@ -39,9 +38,3 @@ Font requests will be made to your origin with the `/cf-fonts/` path prefix.
 ### What other transformations are made?
 
 Preconnect headers for Google Fonts domains will be stripped from the HTML response body. This will improve performance by removing unnecessary connections.
-
-## Troubleshooting
-
-### What should I do if I encounter issues with Cloudflare Fonts?
-
-If you experience any issues or have questions while using Cloudflare Fonts, refer to the [Cloudflare Community](https://community.cloudflare.com/) pages or contact [Cloudflare support](https://developers.cloudflare.com/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for assistance. We are here to help you resolve any challenges you may encounter.
