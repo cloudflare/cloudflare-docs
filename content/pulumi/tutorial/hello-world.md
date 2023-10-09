@@ -10,7 +10,7 @@ meta:
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi so that you can become familiar with the resource management lifecycle. In particular, you will create a worker, add a route, and add a DNS record to access the application before cleaning up all the resources.
 
-![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn2.png "Running Cloudflare Workers application deployed with Pulumi")
+![alt_text](/images/pulumi/hello-world-tutorial/sn2.png "Running Cloudflare Workers application deployed with Pulumi")
 
 {{<Aside type="note">}}
 
