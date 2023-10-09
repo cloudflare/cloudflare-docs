@@ -1,7 +1,7 @@
 ---
 title: IP Access rules
 pcx_content_type: concept
-weight: 1
+weight: 2
 layout: single
 ---
 
@@ -14,7 +14,7 @@ IP Access rules are commonly used to block or challenge suspected malicious traf
 {{<Aside type="warning">}}
 Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking):
 
-- For IP-based blocking, use an [IP List](/waf/tools/lists/ip-lists/) in the custom rule expression.
+- For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/) in the custom rule expression.
 - For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression.
 {{</Aside>}}
 

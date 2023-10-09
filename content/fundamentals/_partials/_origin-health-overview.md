@@ -9,11 +9,4 @@ Your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-ser
 
 Receiving too many requests can be bad for your origin. These requests might increase latency for visitors, incur higher costs — particularly for cloud-based machines — and could knock your application offline.
 
-Select a plan to see how Cloudflare can help you protect your origin:
-
-{{<button-group>}}
-  {{<button type="primary" href="/fundamentals/basic-tasks/protect-your-origin-server/">}}Free{{</button>}}
-  {{<button type="primary" href="/fundamentals/basic-tasks/protect-your-origin-server/">}}Pro{{</button>}}
-  {{<button type="primary" href="/fundamentals/basic-tasks/protect-your-origin-server/">}}Business{{</button>}}
-  {{<button type="primary" href="/fundamentals/basic-tasks/protect-your-origin-server/">}}Enterprise{{</button>}}
-{{</button-group>}}
+Consider the sections below to learn how Cloudflare can help you protect your origin.

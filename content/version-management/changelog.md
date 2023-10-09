@@ -3,7 +3,7 @@ pcx_content_type: changelog
 title: Changelog
 weight: 11
 layout: changelog
-changelog_file_name: version-management
+changelog_file_name: [version-management]
 outputs:
     - html
     - rss

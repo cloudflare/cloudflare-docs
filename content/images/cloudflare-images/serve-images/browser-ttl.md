@@ -27,11 +27,9 @@ header: Example
 curl --request PATCH 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_TAG>/images/v1/config' \
 --header 'Authorization: Bearer <BEARER_TOKEN>' \
 --header 'Content-Type: application/json' \
--d @config.json
-config.json:
-{
+--data '{
     "browser_ttl": 31536000
-}
+}'
 ```
 
 When the Browser TTL is set to one year for all images, the response for the `cache-control` header is essentially `public`, `max-age=31536000`, `stale-while-revalidate=7200`.

@@ -1,14 +1,14 @@
 ---
-title: Use IP Lists
+title: Use IP lists
 weight: 3
 pcx_content_type: how-to
 meta:
-  title: Define an IP List
+  title: Define an IP list
 ---
 
-# Define an IP List
+# Define an IP list
 
-[IP Lists](/waf/tools/lists/ip-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
+[IP lists](/waf/tools/lists/custom-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
 
 To use this feature first [create a new IP list](/api/operations/lists-create-a-list).
 
@@ -63,7 +63,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 
 {{<Aside type="note">}}Available for customers with a Magic Firewall Advanced plan.{{</Aside>}}
 
-You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/waf/tools/lists/ip-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
+You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/waf/tools/lists/managed-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
 
 You can access these managed lists when you create rules with either _IP destination address_ or _IP source address_ in the **Field** dropdown, and _is in list_ or _is not in list_ in the **Operator** dropdown.
 

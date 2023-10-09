@@ -14,7 +14,7 @@ This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-si
 Note that this process requires that your other DNS provider(s) also support multi-signer DNSSEC.
 {{</Aside>}}
 
-Although you can complete a few steps via the user interface, currently the whole process can only be completed using the API.
+Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
 
 ## 1. Set up Cloudflare zone
 
@@ -73,9 +73,10 @@ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnsse
 4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
 
 {{<Aside type="warning">}}
-Unless you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is required.
+This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, DNS queries to the zone apex requesting NS records will be responded with Cloudflare nameservers.
 
-Without enabling this setting, Cloudflare always responds with Cloudflare nameservers for DNS queries to the zone apex requesting the NS record type.
+If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is not necessary.
+
 {{</Aside>}}
 
 ```bash

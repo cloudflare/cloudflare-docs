@@ -3,7 +3,7 @@ pcx_content_type: changelog
 title: Changelog
 layout: changelog
 weight: 6
-changelog_file_name: notifications
+changelog_file_name: [notifications]
 outputs:
     - html
     - rss

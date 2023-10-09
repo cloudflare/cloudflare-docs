@@ -3,7 +3,7 @@ type: overview
 pcx_content_type: navigation
 hideChildren: true
 title: FAQ
-weight: 101
+weight: 14
 layout: list
 ---
 
