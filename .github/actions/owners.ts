@@ -73,7 +73,7 @@ export const OWNERS: Record<string, string[]> = {
   terraform: ["ranbel"],
   "time-services": ["kodster28"],
   turnstile: ["patriciasantaana"],
-  "version-management": ["kodster28"],
+  "version-management": ["patriciasantaana"],
   waf: ["pedrosousa"],
   "waiting-room": ["angelampcosta"],
   "warp-client": ["haleycode"],
