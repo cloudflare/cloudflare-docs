@@ -19,7 +19,7 @@ Magic Transit is a network security and performance solution that offers DDoS pr
 
 ## Features
 
-{{<feature header="Probes" href="/magic-transit/reference/tunnel-health-checks/">}}
+{{<feature header="Tunnel health checks" href="/magic-transit/reference/tunnel-health-checks/">}}
 Magic Transit sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
