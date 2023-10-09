@@ -11,6 +11,6 @@ outputs:
 
 # Changelog
 
-<!-- Actual content lives in /data/changelogs/gateway.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+<!-- Actual content lives in /data/changelogs/ai-gateway.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
 {{<product-changelog>}}
