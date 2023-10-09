@@ -21,6 +21,14 @@ entries:
   associated_products:
     - Access
 
+- term: Cloudflare Browser Isolation
+  general_definition: |-
+    Cloudflare Browser Isolation seamlessly executes active webpage content in a secure isolated browser to protect users from zero-day attacks, malware, and phishing.
+  associated_products:
+    - RBI
+    - Gateway
+    - ZTNA
+
 - term: Cloudflare CASB
   general_definition: |-
     Cloudflare CASB provides comprehensive visibility and control over SaaS apps to prevent data leaks and compliance violations. It helps detect insider threats, Shadow IT, risky data sharing, and bad actors.
