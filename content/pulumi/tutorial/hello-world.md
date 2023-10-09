@@ -762,4 +762,5 @@ Stack 'dev' has been removed!
 ```
 
 <!-- Next steps will be added when the next tutorial is available -->
-{{<tutorial>}}
+{{</tutorial-step>}}
+{{</tutorial>}}
