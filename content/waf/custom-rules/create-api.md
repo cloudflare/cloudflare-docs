@@ -9,7 +9,7 @@ weight: 3
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule via API.
 
-You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/rulesets/#phase-entry-point-ruleset).
+You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
 ## Create a custom rule
 
