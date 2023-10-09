@@ -7,4 +7,4 @@ entries:
 
 - term: Time Travel
   general_definition: |-
-    D1 approach to backups and point-in-time recovery. Time Travel allows you to restore a database to any minute whithin the last 30 days.
+    D1 approach to backups and point-in-time recovery. Time Travel allows you to restore a database to any minute whithin the last 30 days on the Workers Paid plan, and 7 days on the Workers Free plan.
