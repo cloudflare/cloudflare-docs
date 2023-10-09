@@ -77,7 +77,11 @@ entries:
 
 - term: DNS location
   general_definition: |-
-    DNS locations are physical entities such as offices, homes, retail stores, or data centers in Cloudflare Zero Trust.
+    DNS locations are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes, or data centers.
+  associated_products:
+    - Access
+    - Gateway
+    - DNS
 
 - term: identity provider
   general_definition: |-
