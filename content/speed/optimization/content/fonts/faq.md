@@ -5,7 +5,7 @@ title: FAQ
 
 # FAQ
 
-In the following sections, you can find frequently asked questions about Performance, Privacy and Security, Implementation and Integration, and Troubleshooting issues.
+In the following sections, you can find frequently asked questions about Performance, Privacy and security, and Implementation and integration.
 
 ## Performance
 
@@ -13,13 +13,13 @@ In the following sections, you can find frequently asked questions about Perform
 
 By serving fonts from your own domain through Cloudflare's optimized infrastructure, Cloudflare Fonts reduces DNS lookups, TLS connection setups and latency. This leads to faster page load times, enhancing the overall performance of your website.
 
-## Privacy and Security
+## Privacy and security
 
 ### Does Cloudflare Fonts collect or log user data?
 
 No, Cloudflare Fonts does not collect or log user data during the font delivery process. Cloudflare is committed to a [privacy-first](https://www.cloudflare.com/privacypolicy/) approach, ensuring that your users' data remains confidential.
 
-## Implementation and Integration
+## Implementation and integration
 
 ### Do I need to host my font files separately when using Cloudflare Fonts?
 
@@ -27,7 +27,7 @@ No, Cloudflare Fonts simplifies the font delivery process. You do not need to ho
 
 ### Are there any code changes required to use Cloudflare Fonts?
 
-Cloudflare Fonts is designed for a hassle-free integration. Enable Cloudflare Fonts and let Cloudflare take care of the rest.
+No, you do not need any code changes to use Cloudflare Fonts.
 
 ### Can I see analytics of font files served via Cloudflare Fonts?
 
