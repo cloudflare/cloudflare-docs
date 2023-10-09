@@ -63,7 +63,7 @@ $ pulumi login
 
 ### c. Create a project
 
-Complete the prompts with defaults where possible and provide all the Cloudflare details. You will need your [account and zone id](https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/), a [domain](https://developers.cloudflare.com/fundamentals/setup/account-setup/add-site/), and your API [token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/).
+Complete the prompts with defaults where possible and provide all the Cloudflare details. You will need your [account and zone id](/fundamentals/setup/find-account-and-zone-ids/), a [domain](/fundamentals/setup/account-setup/add-site/), and your API [token](/fundamentals/api/get-started/create-token/).
 
 ```sh
 $ pulumi new  https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-begin
