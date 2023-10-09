@@ -16,7 +16,7 @@ Zero Trust risk scoring detects user activity and behaviors that could introduce
 
 ## User risk scoring
 
-Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users’ activities, posture, and settings. A user’s score is equal to the highest-level risk behavior they trigger.
+Cloudflare Zero Trust assigns a risk score of Low, Medium, or High based on detections of users’ activities, posture, and settings. A user’s score is equal to the highest-level risk behavior they trigger.
 
 To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any. Users that have had their risk score [cleared](#clear-a-users-risk-score) will not appear in the table unless they trigger another risk behavior.
 
