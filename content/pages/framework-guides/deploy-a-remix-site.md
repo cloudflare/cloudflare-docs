@@ -11,26 +11,27 @@ In this guide, you will create a new Remix application and deploy to Cloudflare 
 
 ## Setting up a new project
 
-Start by installing the latest version of Remix. Create a new project directory and then initialize a Remix project by running:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Remix's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Remix project, run the following command:
 
 ```sh
-$ npx create-remix@latest
-
+$ npm create cloudflare@latest my-remix-app -- --framework=remix
 ```
 
-After running `npx create-remix@latest`, you will be prompted to answer configuration questions and select your deploy method. This guide uses Cloudflare Pages.
-
-After selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your Remix Project will generate a `functions/[[path]].js` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
 
 {{<Aside type="warning" header="Before you deploy">}}
-The `functions/[[path]].js` file will not be generated until you interact with Remix the first time, via `remix dev` or `remix build`. The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
+Your Remix Project will generate a `functions/[[path]].js` file the first time you run `remix dev` or `remix build`. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+
+The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
 {{</Aside>}}
 
-After selecting your deployment option, change the directory to your project and render your project by running the following command:
+After setting up your project, change the directory and render your project by running the following command:
 
 ```sh
 # choose Cloudflare Pages
-$ cd <YOUR_PROJECT>
+$ cd my-remix-app
 $ npm run dev
 ```
 
@@ -38,21 +39,17 @@ $ npm run dev
 
 {{<render file="_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Remix">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 {{<pages-build-preset framework="remix">}}
-
-{{<Aside type="warning">}}
-
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version greater than `14.0.0` to build on Cloudflare Pages. To set the Node version, go to your Pages project > **Settings** > **Environment Variables** > **Production** and add `NODE_VERSION` environment variable with a value of `14` or greater in your Production option.
-
-{{</Aside>}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.
 

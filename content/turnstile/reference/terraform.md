@@ -1,15 +1,13 @@
 ---
 pcx_content_type: how-to
 title: Terraform
-weight: 10
+weight: 11
 ---
 
 # Manage Turnstile with Terraform
 
 {{<Aside type="note"header="Requirements">}}
-
 This guide assumes that you have the [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) command installed on your machine.
-
 {{</Aside>}}
 
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). Listed below are examples to help you get started with Turnstile using Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
@@ -21,12 +19,15 @@ This guide assumes that you have the [Terraform](https://developer.hashicorp.com
 Create an [API Token](/fundamentals/api/get-started/create-token/) with the **Account > Turnstile > Edit** permission. Next, you need to export this secret in our environment variables:
 
 ```sh
-$ export CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN>
+---
+header: Export your token
+---
+$ export CLOUDFLARE_API_TOKEN=<API_TOKEN>
 ```
 
 ### Create a Turnstile widget
 
-Example configuration:
+See the example configuration below when creating a Turnstile widget.
 
 ```tf
 ---
@@ -69,9 +70,7 @@ output "turnstile_example_secretkey" {
 ```
 
 {{<Aside type="note">}}
-
 The `id` field in the `cloudflare_turnstile_widget.example` resource is your Turnstile widget's sitekey.
-
 {{</Aside>}}
 
 ### Initialize Terraform and the Cloudflare provider
@@ -79,6 +78,9 @@ The `id` field in the `cloudflare_turnstile_widget.example` resource is your Tur
 Run the command `terraform init` to set up your Terraform working directory, enabling it to interact with Cloudflare services. This process involves downloading the required provider plugins, establishing backend storage for your state files, and creating a local `.terraform` directory to store configuration data.
 
 ```sh
+---
+header: Initialize command
+---
 $ terraform init
 
 Initializing the backend...
@@ -105,9 +107,12 @@ commands will detect it and remind you to do so if necessary.
 
 ### Review the Terraform plan
 
-You can run `terraform plan`, which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully:
+You can run `terraform plan`, which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully.
 
 ```sh
+---
+header: Review command
+---
 $ terraform plan
 
 var.account_id
@@ -145,9 +150,12 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 
 ### Apply the Terraform changes
 
-Once the changes look accurate and you are comfortable moving forward, apply them using the `terraform apply` command:
+Once the changes look accurate and you are comfortable moving forward, apply them using the `terraform apply` command.
 
 ```sh
+---
+header: Apply command
+---
 $ terraform apply --auto-approve
 
 var.account_id
@@ -188,18 +196,79 @@ turnstile_example_secretkey = <sensitive>
 turnstile_example_sitekey = "0x4AAAAAAAEe4wQdBshJxBeK"
 ```
 
-You have successfuly created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
+You have successfully created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
 
 ### Retrieve the secret key
-Use `terraform output` to get your secret key:
+Use `terraform output` to get your secret key.
 
 ```sh
+---
+header: Secret key
+---
 $ terraform output turnstile_example_secretkey
 "0x4AAAAAAAEe4xWueFq9yX8ypjlimbk1Db4"
 ```
 
 {{<Aside type="note">}}
-
 For advanced usage, refer to our [Terraform resource documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/turnstile_widget).
-
 {{</Aside>}}
+
+## Import a Turnstile widget
+
+### Prerequisites
+
+Before you can import the Turnstile widget in Terraform, you must:
+
+- [Install the `cf-terraforming` tool](/terraform/advanced-topics/import-cloudflare-resources/#cf-terraforming).
+- [Create a Cloudflare API token](/fundamentals/api/get-started/create-token/).
+- [Initialize Terraform and the Cloudflare provider](/turnstile/reference/terraform/#initialize-terraform-and-the-cloudflare-provider).
+
+### Import Turnstile widgets in Terraform
+
+Run the `cf-terraforming generate` command and add the output below to your `.tf` file.
+
+```sh
+---
+header: Generate command
+---
+$ cf-terraforming generate --resource-type cloudflare_turnstile_widget --account 6be2041a37d48aaaa9c686434f1709f0
+
+output: 
+
+resource "cloudflare_turnstile_widget" "terraform_managed_resource_0x4AAAAAAAEk5sP3rwf91fe8" {
+  account_id = "6be2041a37d48aaaa9c686434f1709f0"
+  domains    = ["example.net"]
+  mode       = "managed"
+  name       = "test site"
+  region     = "world"
+}
+
+resource "cloudflare_turnstile_widget" "terraform_managed_resource_0x4AAAAAAAE0wwg0H1StXlOx" {
+  account_id = "6be2041a37d48aaaa9c686434f1709f0"
+  domains    = ["example.com"]
+  mode       = "managed"
+  name       = "My Terraform-managed widget"
+}
+
+resource "cloudflare_turnstile_widget" "terraform_managed_resource_0x4AAAAAAAF1z4LbxEka5UBh" {
+  account_id = "6be2041a37d48aaaa9c686434f1709f0"
+  domains    = ["example.org"]
+  mode       = "managed"
+  name       = "My website"
+}
+```
+
+Run the `cf-terraforming import` command and the resulting commands below.
+
+```sh
+---
+header: Import command
+---
+$ cf-terraforming import --resource-type cloudflare_turnstile_widget --account 6be2041a37d48aaaa9c686434f1709f0
+
+output: 
+
+terraform import cloudflare_turnstile_widget.terraform_managed_resource_0x4AAAAAAAEg5sP3rwf91fe8 6be2041a37d48aaaa9c686434f1709f0/0x4AAAAAAAEk5sP3rwf91fe8
+terraform import cloudflare_turnstile_widget.terraform_managed_resource_0x4AAAAAAAE0gwg0H1StXlOx 6be2041a37d48aaaa9c686434f1709f0/0x4AAAAAAAE0wwg0H1StXlOx
+terraform import cloudflare_turnstile_widget.terraform_managed_resource_0x4AAAAAAAE2z4LbxEka5UBh 6be2041a37d48aaaa9c686434f1709f0/0x4AAAAAAAF1z4LbxEka5UBh 
+```

@@ -26,7 +26,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{</Aside>}}
 
-- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+- Have previously created a [Cloudflare account](/fundamentals/setup/account-setup/create-account/).
 - Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
   
 {{<render file="_dnssec-providers.md">}}
@@ -37,7 +37,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{<tutorial-step title="Add site to Cloudflare">}}
 
-In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/add-site/).
+In the Cloudflare dashboard, [add your domain](/fundamentals/setup/account-setup/add-site/).
 
 {{</tutorial-step>}}
 

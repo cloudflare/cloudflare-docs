@@ -5,7 +5,7 @@ weight: 10
 layout: single
 ---
 
-{{<beta>}}Security Analytics{{</beta>}}
+{{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}
 
 The Security Analytics dashboard displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
@@ -19,6 +19,7 @@ Use the Security Analytics dashboard to:
 * Understand which traffic is being mitigated by Cloudflare security products, and where non-mitigated traffic is being served from (Cloudflare global network or origin server).
 * Analyze suspicious traffic and create tailored WAF custom rules based on applied filters.
 * Learn more about Cloudflare’s security scores ([attack score](/waf/about/waf-attack-score/), [bot score](/bots/concepts/bot-score/), [uploaded content scanning](/waf/about/content-scanning/) results) with real data.
+* [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
 
 If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.
 
@@ -62,7 +63,7 @@ Select the time frame you wish to analyze from the _Previous 24 hours_ drop-down
 
 ## Create custom rule from current filters
 
-To create a [WAF custom rule](/waf/custom-rules/) with an expression based on the filters you applied in Security Analytics, select **Create custom rule** above the main chart.
+To create a [custom rule](/waf/custom-rules/) with an expression based on the filters you applied in Security Analytics, select **Create custom rule** above the main chart.
 
 ---
 
@@ -108,6 +109,7 @@ The main chart displays the following data for the selected time frame, accordin
 
 * **Attack analysis**: [WAF attack score](/waf/about/waf-attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
 * **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, or _Likely human_.
+* **Rate limit analysis**: displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
 
 ### Sampled logs
 

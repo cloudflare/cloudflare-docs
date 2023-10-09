@@ -52,7 +52,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 ## 3. Add a VPN configuration in SonicWall
 
-1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
+1. Go to **Network** > **IPsec VPN** > **Rules and Settings**.
 2. Select **Add**.
 3. In **General** > **Security Policy** group, add the following settings:
     - **Authentication Method**: _IKE Using Preshared Secret_.
@@ -177,7 +177,7 @@ An additional access rule is required for Magic WAN health checks to work proper
 
 ## 8. Setup health checks
 
-You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-health-checks/) correctly. Here is an example of how to set up health checks: 
+You have to [configure Magic WAN health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) correctly. Here is an example of how to set up health checks: 
 
 ```bash
 curl --request PUT \

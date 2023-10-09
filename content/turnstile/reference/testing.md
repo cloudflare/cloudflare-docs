@@ -1,7 +1,7 @@
 ---
 title: Testing
 pcx_content_type: reference
-weight: 12
+weight: 13
 layout: single
 ---
 
@@ -28,5 +28,4 @@ The following sitekeys and secret keys are available for testing. It is recommen
 
 ## Testing locally
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your
-[domain whitelist](/turnstile/reference/domain-management/).
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain whitelist](/turnstile/reference/domain-management/).

@@ -3,6 +3,8 @@ pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
+meta:
+    title: Scheduled changes — HTTP DDoS
 ---
 
 # Scheduled changes
@@ -22,23 +24,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-08-07</td>
-      <td>2023-08-14</td>
-      <td>...22807318</td>
-      <td>HTTP requests from known botnets.</td>
-      <td>managed_challenge</td>
-      <td>managed_challenge</td>
-      <td>Expand the filter to catch more attacks.</td>
-    </tr>
-<tr>
-      <td>2023-08-07</td>
-      <td>2023-08-14</td>
-      <td>...d2f294d7</td>
-      <td>HTTP requests trying to impersonate browsers.</td>
-      <td>ddos_dynamic</td>
-      <td>ddos_dynamic</td>
-      <td>Expand the filter to catch more attacks.
-</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

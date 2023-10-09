@@ -1,24 +1,5 @@
 {
-  "modules": [ 
-      {
-          "folder": "cybersafe",
-          "uid": "cybersafe-concepts"
-      },
-      {
-          "folder": "cybersafe",
-          "uid": "cybersafe-account-creation"
-      },
-      {
-        "folder": "cybersafe",
-        "uid": "cybersafe-gateway-onboarding"
-      },      
-      {
-          "folder": "cybersafe",
-          "uid": "cybersafe-area1-onboarding"
-      }   
-  ],
   "title": "Project Cybersafe Schools",
-  "uid": "cybersafe",
   "path": "/learning-paths/cybersafe/",
   "priority": 5,
   "description": "Prevent children from accessing obscene or harmful content over the Internet. Go to <a href='https://www.cloudflare.com/lp/cybersafe-schools/'>Project Cybersafe Schools</a> to apply.",
@@ -27,5 +8,6 @@
     "WARP",
     "DNS"
     ],
-  "category": ["Security","Zero Trust"]
+  "product_group": "Cloudflare One",
+  "additional_groups": ["Application security"]
 }

@@ -25,9 +25,7 @@ You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/a
 Using Sequence Mitigation, you can enforce that request pattern with two new Sequence Mitigation rules.
 
 {{<Aside type="note">}}
-
 You can create Sequence Mitigation rules for a sequence even if the sequence is not listed in [Sequence Analytics](/api-shield/security/sequence-analytics/).
-
 {{</Aside>}}
 
 You can also set up a negative security model with Sequence Mitigation. See [Configuration](/api-shield/security/sequence-mitigation/configure/#configure) to understand how to distinguish between rule types using the `kind` field.

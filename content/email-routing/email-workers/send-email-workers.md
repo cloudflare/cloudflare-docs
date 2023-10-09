@@ -4,7 +4,7 @@ pcx_content_type: how-to
 weight: 3
 ---
 
-{{<beta>}}Send emails from Workers{{</beta>}}
+{{<heading-pill style="beta">}}Send emails from Workers{{</heading-pill>}}
 
 {{<render file="_send-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings):">}}
 

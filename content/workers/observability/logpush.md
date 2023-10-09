@@ -21,6 +21,19 @@ Alternatively, create a new [API token](/fundamentals/api/get-started/create-tok
  
 ## Create a Logpush job
 
+### Via the Cloudflare dashboard
+
+To create a Logpush job in the the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
+2. Select **Analytics & Logs** > **Logs**.
+3. Select **Add Logpush job**.
+4. Select **Workers trace events** as the data set > **Next**.
+5. If needed, customize your data fields. Otherwise, select **Next**.
+6. Follow the instructions on the dashboard to verify ownership of your data's destination and complete job creation.
+
+### Via cURL
+
 The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/get-started/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
  
 ```json
@@ -75,6 +88,6 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 The `logs` and `exceptions` fields have the following limits in place.
 
-* Message size: Maximum of 300 characters per log line
+* Message size: Maximum of 2056 characters per log line
 * Array limit: 20 elements
 * Log message array: A nested array with a limit of three elements

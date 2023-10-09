@@ -6,9 +6,7 @@ layout: single
 
 # Workers Sites
 
-{{<Aside type="note" header="Cloudflare Pages">}}
-Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
-{{</Aside>}}
+{{<render file="_workers_sites.md">}}
 
 Workers Sites enables developers to deploy static applications directly to Workers. It can be used for deploying applications built with static site generators like [Hugo](https://gohugo.io) and [Gatsby](https://www.gatsbyjs.org), or front-end frameworks like [Vue](https://vuejs.org) and [React](https://reactjs.org).
 
@@ -18,7 +16,7 @@ To deploy with Workers Sites, select from one of these three approaches dependin
 
 ## 1. Start from scratch
 
-If you are ready to start a brand new project, this quick start guide will help you set up the infrastructure to deploy a simple HTML website to Workers.
+If you are ready to start a brand new project, this quick start guide will help you set up the infrastructure to deploy a HTML website to Workers.
 
 <p>{{<button type="primary" href="/workers/configuration/sites/start-from-scratch/">}}Start from scratch{{</button>}}</p>
 

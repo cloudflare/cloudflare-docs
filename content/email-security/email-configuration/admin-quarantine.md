@@ -10,10 +10,6 @@ Admin Quarantine allows you to automatically prevent incoming messages from reac
 
 The messages sent to Admin Quarantine are determined by your [domain settings](/email-security/email-configuration/domains-and-routing/domains/).
 
-Enabling quarantine by disposition is hierarchical and you cannot enable only one disposition if there are other dispositions above it. For example, if you try to enable just `SPAM`, Area 1 will also enable `MALICIOUS`, the disposition that sits above `SPAM`. Similarly, if you enable `SPOOF` everything above this disposition will be enabled. `MALICIOUS` is the only disposition that can be enabled without additional dispositions.
-    
-![Choosing a disposition is hierarchical](/images/email-security/admin-quarantine/quarantine-by-disposition.png)
-
 ## Quarantine emails by disposition
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).

@@ -84,7 +84,7 @@ How to receive these SAML attributes in Cloudflare:
 
 #### SAML headers
 
-If an application specifically requires SAML attributes upon sign-in, then the attributes can be passed as headers. The **Attribute name** should be the values coming from the IdP. The **Header name** is what will appear in the initial authorization request from Access.
+If an application specifically requires SAML attributes upon sign-in, then the attributes can be passed as headers. The **Attribute name** should be the value coming from your IdP (for example, `department`). You can assign any **Header name** to the attribute. The header name will appear in the response headers when Access makes the initial authorization request to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
 
 #### Multi-record SAML attributes
 

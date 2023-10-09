@@ -35,7 +35,7 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.getElementById(hash);
+  let item = hash && document.getElementById(hash.toLowerCase());
   let timer =
     item &&
     setInterval(() => {
@@ -235,7 +235,7 @@ export function dropdowns() {
 
 export function toggleSidebar() {
   const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if (toggleButton) {
+  if (toggleButton.length > 0) {
     let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
@@ -267,6 +267,14 @@ export function toggleSidebar() {
         let isHidden = item.hasAttribute(attr);
         item.toggleAttribute(attr, !isHidden);
       });
+
+      let moduleCounters = document.getElementsByClassName("moduleCounter")
+      if (moduleCounters) {
+        for (const counter of moduleCounters) {
+          let isHidden2 = counter.hasAttribute(attr);
+          counter.toggleAttribute(attr, !isHidden2)
+        }
+      }
     });
   }
 }

@@ -81,6 +81,34 @@ You can customize a variety of options for your waiting rooms.
       </td>
     </tr>
     <tr>
+      <td>Additional Hostnames and Paths</td>
+      <td>
+        <code>additional_routes</code>
+      </td>
+      <td>No</td>
+      <td>
+        Add additional hostnames and/or paths to your waiting room coverage.
+      </td>
+      <td>
+        Additional hostnames must be within the same zone. Hostname and path combinations must be unique per waiting room.
+      </td>
+      <td></td>
+    </tr>
+        <tr>
+      <td>Custom Cookie Suffix</td>
+      <td>
+        <code>cookie_suffix</code>
+      </td>
+      <td>Required when using <code>additional_routes</code>.</td>
+      <td>
+        Customize the suffix of your waiting room cookie. Suffix will be added to <code>_cfwaitingroom</code>.
+      </td>
+      <td>
+       Ensure your cookie name is compliant. Do not change this often.
+      </td>
+      <td></td>
+    </tr>
+    <tr>
       <td>Total active users</td>
       <td>
         <code>total_active_users</code>
@@ -137,31 +165,30 @@ You can customize a variety of options for your waiting rooms.
       </td>
       <td></td>
     </tr>
-        <tr>
-      <td>Additional Hostnames and Paths</td>
+    <tr>
+      <td>JSON response</td>
       <td>
-        <code>additional_routes</code>
+        <code>json_response_enabled</code>
       </td>
-      <td>No</td>
+      <td>No, defaults to false.</td>
       <td>
-        Add additional hostnames and/or paths to your waiting room coverage.
+        Send JSON body when receiving an <code>Accept: application/json</code> header, commonly used with native mobile applications.
       </td>
       <td>
-        API only. Additional hostnames must be within the same zone. Hostname and path combinations must be unique per waiting room.
+        Set to <code>true</code> when using a waiting room for non-browser traffic. Follow <a href="/waiting-room/how-to/json-response/">this documentation</a> for additional steps.
       </td>
       <td></td>
     </tr>
-        <tr>
-      <td>Custom Cookie Suffix</td>
+    <tr>
+      <td>Queueing status code</td>
       <td>
-        <code>cookie_suffix</code>
+        <code>queueing_status_code</code>
       </td>
-      <td>Required when using additional_routes.</td>
+      <td>No, defaults <code>200</code> (OK).</td>
       <td>
-        Customize the suffix of your waiting room cookie. Suffix will be added to <code>_cfwaitingroom</code>.
+        HTTP status code to be returned while a user is queuing.
       </td>
       <td>
-        API only. Ensure your cookie name is compliant. Do not change this often.
       </td>
       <td></td>
     </tr>

@@ -9,7 +9,7 @@ pcx_content_type: get-started
 This guide will instruct you through:
 
 - Writing a class that defines a Durable Object.
-- Instantiating and communicationg with a Durable Object from another Worker via the `Fetch` API.
+- Instantiating and communicating with a Durable Object from another Worker via the `Fetch` API.
 - Deploying a Durable Object.
 
 {{<render file="_prereqs.md" productFolder="workers">}}
@@ -39,13 +39,13 @@ $ npm create cloudflare@latest
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}
 {{</tabs>}}
 
-Running `create cloudlfare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
+Running `create cloudflare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
 In your terminal, you will be asked a series of questions related to your project: 
 

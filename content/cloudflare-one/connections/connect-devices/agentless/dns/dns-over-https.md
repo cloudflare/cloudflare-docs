@@ -47,7 +47,7 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
    2. Obtain your `AAAA` record values.
 
    ```bash
-   nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+   nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
    ```
 
    3. Copy the resulting IP addresses.

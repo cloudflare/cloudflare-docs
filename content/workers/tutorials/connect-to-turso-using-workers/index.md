@@ -155,7 +155,7 @@ $ turso db tokens create my-db -e none
 To keep this token secret:
 
 1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
-* You will also [create a Secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
+* You will also create a [secret](/workers/configuration/secrets/) to keep your authentication token confidential.
 
 First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
 

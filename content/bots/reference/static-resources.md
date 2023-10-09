@@ -25,7 +25,7 @@ To enable this feature as a Pro or Business customer or an Enterprise customer w
 {{<render file="_static-resources-bm.md">}}
 <br/>
 
-To exclude static resources, you would need to include `not (cf.bot_management.static_resource)` as part of your firewall rule.
+To exclude static resources, you would need to include `not (cf.bot_management.static_resource)` as part of your custom rule.
 
 ## Which files are protected?
 
