@@ -39,7 +39,7 @@ Before you start, make sure you have:
 
 {{</tutorial-prereqs>}}
 
-{{<tutorial-step title="Step 1: Initialize Pulumi">}}
+{{<tutorial-step title="Initialize Pulumi">}}
 
 <!-- ## Step 1: Initialize Pulumi -->
 
@@ -171,11 +171,11 @@ View in Browser (Ctrl+O):
 https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
 ```
 
-![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn3.png "Pulumi Cloud stack")
+![alt_text](/images/pulumi/hello-world-tutorial/sn3.png "Pulumi Cloud stack")
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Step 2: Deploy a 'Hello World' script">}}
+{{<tutorial-step title="Deploy a 'Hello World' script">}}
 
 <!-- ## Step 2: Deploy a "Hello World" script -->
 You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
@@ -184,7 +184,7 @@ You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
 
 ```typescript
 ---
-filename: index.js
+filename: index.ts
 ---
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
@@ -287,15 +287,15 @@ Duration: 5s
 
 You can view your Cloudflare resource directly in the Cloudflare Dashboard to validate its existence.
 
-Once in the Cloudflare Dashboard:
-
-1. Navigate to "Workers & Pages"
-2. Open the "hello-world" application. Example:
-![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn4.png )
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Select your account.
+3. Go to **Workers & Pages**.
+4. Open the "hello-world" application. Example:
+![alt_text](/images/pulumi/hello-world-tutorial/sn4.png )
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Step 3: Add a Worker route">}}
+{{<tutorial-step title="Add a Worker route">}}
 <!-- ## Step 3:  Add a Worker route -->
 
 You will now add a Worker Route to the Pulumi stack, `dev` so the script can have an endpoint.
@@ -303,7 +303,7 @@ You will now add a Worker Route to the Pulumi stack, `dev` so the script can hav
 ### a. Replace the contents of `index.ts `with
 ```typescript
 ---
-filename: index.js
+filename: index.ts
 ---
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
@@ -327,7 +327,6 @@ export const route = new cloudflare.WorkerRoute("hello-world-route", {
   zoneId: zoneId,
   pattern: "hello-world." + domain,
   scriptName: script.name,
-
 });
 ```
 
@@ -401,12 +400,16 @@ Duration: 4s
 
 In the Cloudflare Dashboard, you'll notice the Worker application now contains the previously defined Worker Route.
 
-1. Click "View" to verify the Worker Route details match your definition.
-![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn4.png "Cloudflare Dashboard - Worker Route")
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Select your account.
+3. Go to **Workers & Pages**.
+4. Select your application.
+5. For **Routes**, select **View** to verify the Worker Route details match your definition.
+![alt_text](/images/pulumi/hello-world-tutorial/sn4.png "Cloudflare Dashboard - Worker Route")
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Step 4: Add a DNS record">}}
+{{<tutorial-step title="Add a DNS record">}}
 
 <!-- ## Step 4  - Add a DNS record -->
 
@@ -415,7 +418,7 @@ You will now add a DNS record to your domain so the previously configured route 
 ### a. Replace the contents of `index.ts `with
 ```typescript
 ---
-filename: index.js
+filename: index.ts
 ---
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
@@ -439,7 +442,6 @@ export const route = new cloudflare.WorkerRoute("hello-world-route", {
   zoneId: zoneId,
   pattern: "hello-world." + domain,
   scriptName: script.name,
-
 });
 
 // A DNS record to access the route from the domain
@@ -574,11 +576,11 @@ Duration: 4s
 2. Navigate to your stack, `serverless-cloudflare/dev`.
 3. Confirm all the defined resources are created and healthy. Example:
 
-![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn6.png "Pulumi Cloud stack")
+![alt_text](/images/pulumi/hello-world-tutorial/sn6.png "Pulumi Cloud stack")
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Step 5: Test the app">}}
+{{<tutorial-step title="Test the app">}}
 
 <!-- ## Step 5: Test the app -->
 
@@ -614,11 +616,11 @@ You may need to use "http" instead, depending on your domain settings.
 
 Example:
 
-![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn2.png "Hello World app browser screenshot")
+![alt_text](/images/pulumi/hello-world-tutorial/sn2.png "Hello World app browser screenshot")
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Step 6: Clean up">}}
+{{<tutorial-step title="Clean up">}}
 
 <!-- ## Step 6: Clean up -->
 
