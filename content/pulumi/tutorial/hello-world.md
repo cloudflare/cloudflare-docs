@@ -10,7 +10,7 @@ meta:
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi so that you can become familiar with the resource management lifecycle. In particular, you will create a worker, add a route, and add a DNS record to access the application before cleaning up all the resources.
 
-![alt_text](hello-world-images/goal.png "Running Cloudflare Workers application deployed with Pulumi")
+![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn2.png "Running Cloudflare Workers application deployed with Pulumi")
 
 {{<Aside type="note">}}
 
@@ -43,7 +43,7 @@ Before you start, make sure you have:
 
 <!-- ## Step 1: Initialize Pulumi -->
 
-### Create a directory
+### a. Create a directory
 
 You'll use a new and empty directory for this tutorial.
 
@@ -52,7 +52,7 @@ $ mkdir serverless-cloudflare
 $ cd serverless-cloudflare
 ```
 
-### Login
+### b. Login
 
 At the prompt, press Enter to log into your Pulumi Cloud account via the browser. Alternatively, you may provide a [Pulumi Cloud access token](https://www.pulumi.com/docs/pulumi-cloud/access-management/access-tokens/).
 
@@ -61,7 +61,7 @@ At the prompt, press Enter to log into your Pulumi Cloud account via the browser
 $ pulumi login
 ```
 
-### Create a project
+### c. Create a project
 
 Complete the prompts with defaults where possible and provide all the Cloudflare details. You will need your [account and zone id](https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/), a [domain](https://developers.cloudflare.com/fundamentals/setup/account-setup/add-site/), and your API [token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/).
 
@@ -104,7 +104,7 @@ To perform an initial deployment, run `pulumi up`
 
 ```
 
-### Create a stack
+### d. Create a stack
 
 At the prompt, Select `yes` with the arrow keys and press the Enter key
 
@@ -153,9 +153,10 @@ Duration: 2s
 
 After the above command completes, review the value of `myFirstOutput` for correctness.
 
-### (Optional) Review the stack
+### e. (Optional) Review the stack
 
 From the output above, follow **your** _View in Browser_ link to get familiar with the Pulumi stack.
+
 
 {{<Aside type="note">}}
 
@@ -170,7 +171,7 @@ View in Browser (Ctrl+O):
 https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
 ```
 
-![alt_text](hello-world-images/pulumi-cloud.png "Pulumi Cloud stack")
+![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn3.png "Pulumi Cloud stack")
 
 {{</tutorial-step>}}
 
@@ -179,7 +180,7 @@ https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
 <!-- ## Step 2: Deploy a "Hello World" script -->
 You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
 
-Replace the contents of `index.ts` with
+### a. Replace the contents of `index.ts` with
 
 ```typescript
 ---
@@ -201,13 +202,13 @@ export const script = new cloudflare.WorkerScript("hello-world-script", {
 });
 ```
 
-### Install the Pulumi Cloudflare provider
+### b. Install the Pulumi Cloudflare provider
 
 ```sh
 $ npm install @pulumi/cloudflare
 ```
 
-### Apply the changes
+### c. Apply the changes
 
 At the prompt, Select `yes` with the arrow keys and press the Enter key
 
@@ -282,7 +283,7 @@ Resources:
 Duration: 5s
 ```
 
-### (Optional) View the Cloudflare Worker in the dashboard
+### d. (Optional) View the Cloudflare Worker in the dashboard
 
 You can view your Cloudflare resource directly in the Cloudflare Dashboard to validate its existence.
 
@@ -290,7 +291,7 @@ Once in the Cloudflare Dashboard:
 
 1. Navigate to "Workers & Pages"
 2. Open the "hello-world" application. Example:
-![alt_text](hello-world-images/cloudflare-dashboard.png "Cloudflare Dashboard - Workers and Pages")
+![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn4.png )
 
 {{</tutorial-step>}}
 
@@ -299,7 +300,7 @@ Once in the Cloudflare Dashboard:
 
 You will now add a Worker Route to the Pulumi stack, `dev` so the script can have an endpoint.
 
-Replace the contents of `index.ts `with
+### a. Replace the contents of `index.ts `with
 ```typescript
 ---
 filename: index.js
@@ -329,7 +330,8 @@ export const route = new cloudflare.WorkerRoute("hello-world-route", {
 
 });
 ```
-### Apply the changes
+
+### b. Apply the changes
 
 At the prompt, Select `yes` with the arrow keys and press the Enter key
 ```sh
@@ -395,12 +397,12 @@ Resources:
 Duration: 4s
 ```
 
-### (Optional) View the Cloudflare Worker route in the dashboard
+### c. (Optional) View the Cloudflare Worker route in the dashboard
 
 In the Cloudflare Dashboard, you'll notice the Worker application now contains the previously defined Worker Route.
 
 1. Click "View" to verify the Worker Route details match your definition.
-![alt_text](hello-world-images/cloudflare-dashboard-wr.png "Cloudflare Dashboard - Worker Route")
+![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn4.png "Cloudflare Dashboard - Worker Route")
 
 {{</tutorial-step>}}
 
@@ -410,7 +412,7 @@ In the Cloudflare Dashboard, you'll notice the Worker application now contains t
 
 You will now add a DNS record to your domain so the previously configured route can be accessed via a URL.
 
-Replace the contents of `index.ts `with
+### a. Replace the contents of `index.ts `with
 ```typescript
 ---
 filename: index.js
@@ -458,7 +460,7 @@ The last line in the code will create an output with the endpoint for the Hello 
 
 {{</Aside>}}
 
-### Apply the changes
+### b. Apply the changes
 
 At the prompt, Select `yes` with the arrow keys and press the Enter key
 
@@ -566,13 +568,13 @@ Duration: 4s
 
 ```
 
-### (Optional) View all the resources in Pulumi Cloud
+### c. (Optional) View all the resources in Pulumi Cloud
 
 1. In your browser, open your [Pulumi Cloud](https://app.pulumi.com/)
 2. Navigate to your stack, `serverless-cloudflare/dev`.
 3. Confirm all the defined resources are created and healthy. Example:
 
-![alt_text](hello-world-images/pulumi-stack-complete.png "Pulumi Cloud stack")
+![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn6.png "Pulumi Cloud stack")
 
 {{</tutorial-step>}}
 
@@ -612,7 +614,7 @@ You may need to use "http" instead, depending on your domain settings.
 
 Example:
 
-![alt_text](hello-world-images/browser.png "Hello World app browser screenshot")
+![alt_text](../../../assets/images/pulumi/hello-world-tutorial/sn2.png "Hello World app browser screenshot")
 
 {{</tutorial-step>}}
 
@@ -621,6 +623,8 @@ Example:
 <!-- ## Step 6: Clean up -->
 
 In this last step, you will run a couple of commands to clean up the resources and stack you used throughout the tutorial.
+
+### a. Delete the Cloudflare resources
 
 ```sh
 $ pulumi destroy
@@ -746,12 +750,16 @@ Duration: 4s
 
 The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
 If you want to remove the stack completely, run `pulumi stack rm dev`.
+```
 
+### b. Remove the Pulumi stack
+
+```sh
 $ pulumi pulumi stack rm dev
 This will permanently remove the 'dev' stack!
 Please confirm that this is what you'd like to do by typing `dev`: dev
 Stack 'dev' has been removed!
-
 ```
 
+<!-- Next steps will be added when the next tutorial is available -->
 {{<tutorial>}}
