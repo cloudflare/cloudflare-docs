@@ -104,6 +104,10 @@ entries:
   general_definition: |-
     a simple identity layer on top of OAuth 2.0 for verifying user identity and obtaining basic profile information.
 
+- term: PAC file
+  general_definition: |-
+    a file containing a JavaScript function which can instruct a browser to forward traffic to a proxy server instead of directly to the destination server.
+
 - term: policy
   general_definition: |-
     a set of rules that regulate network activity, such as login access and website reachability.
