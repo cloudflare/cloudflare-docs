@@ -128,11 +128,11 @@ Investigate and potentially block any suspicious domains that may be trying to i
 
 Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
 
-Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
+Specifically, the notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
 
 **Other options / filters**
 
-None.
+Customers can filter maintenance notifications for specific points of presence and updates (scheduled, changed, canceled). 
 
 **Included with**
 
@@ -293,29 +293,6 @@ None.
 **Included with**
 
 All Cloudflare plans.
-
-**What should you do if you receive one?**
-
-{{<render file="_ddos.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Layer 3/4 DDoS Attack Alert</summary>
-<div>
-
-**Who is it for?**
-
-BYOIP customers and Spectrum customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Purchase of Magic Transit and/or BYOIP.
 
 **What should you do if you receive one?**
 
@@ -509,7 +486,7 @@ In the email for the notification, you can find the destination name for the fai
 ## Magic Transit
 
 <details>
-<summary>Flow-based Monitoring: Auto Advertisement</summary>
+<summary>Magic Network Monitoring: Auto Advertisement</summary>
 <div>
 
 **Who is it for?**
@@ -532,7 +509,30 @@ No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?
 </details>
 
 <details>
-<summary>Flow-based Monitoring: Volumetric Attack</summary>
+<summary>Magic Network Monitoring: DDoS Attack</summary>
+<div>
+
+**Who is it for?**
+
+BYOIP customers and Spectrum customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Purchase of Magic Transit and/or BYOIP.
+
+**What should you do if you receive one?**
+
+{{<render file="_ddos.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Magic Network Monitoring: Volumetric Attack</summary>
 <div>
 
 **Who is it for?**
@@ -550,62 +550,6 @@ Purchase of Magic Transit.
 **What should you do if you receive one?**
 
 If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/concepts/dynamic-advertisement/).
-
-</div>
-</details>
-
-## Origin Monitoring
-
-<details>
-<summary>Origin Error Rate Alert</summary>
-<div>
-
-**Who is it for?**
-
-Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server.
-
-**Other options / filters**
-
-Multiple filters available:
-
-- Customers can search and add domains from their list of domains.
-- Customers can also choose the trigger that fires the notification. Available triggers are:
-  - Low sensitivity
-  - Medium sensitivity
-  - High sensitivity
-  - Very High sensitivity
-
-**Included with**
-
-Enterprise plans.
-
-**What should you do if you receive one?**
-
-1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-2. {{<render file="_errors.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Passive Origin Monitoring</summary>
-<div>
-
-**Who is it for?**
-
-Any customer who wants to receive a notification when Cloudflare is unable to access their origin, customers will only receive this notification when their origin is returning a `521` error.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-All Cloudflare plans.
-
-**What should you do if you receive one?**
-
-{{<render file="_errors.md">}}
 
 </div>
 </details>
@@ -1005,21 +949,29 @@ Stream notifications are entirely customizable by the customer. Action will depe
 </div>
 </details>
 
-## WAF
+## Traffic Monitoring
 
 <details>
-<summary>Advanced Security Events Alert</summary>
+<summary>Advanced Error Rate Alert</summary>
 <div>
 
 **Who is it for?**
 
-Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in security events.
-
-For more information, refer to [WAF alerts](/waf/reference/alerts/).
+Enterprise customers who want to receive a notification when Cloudflare detects edge and/or origin errors.
 
 **Other options / filters**
 
-Customers can search for and add domains from their list of enterprise zones. Customers also have to choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
+Multiple filters available:
+- Customers can search and add domains from their list of domains.
+- Customers can filter alerts by
+  - Edge status code
+  - Origin status code
+  - IP Address
+- Customers can also choose the trigger that fires the notification. Available triggers are:
+  - Low sensitivity
+  - Medium sensitivity
+  - High sensitivity
+  - Very High sensitivity
 
 **Included with**
 
@@ -1027,32 +979,162 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+1. Use the link in the Notification you received to see which error codes Cloudflare is seeing.
+2. Depending on the statuses you're alerting on, check https://developers.cloudflare.com/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/
+3. {{<render file="_errors.md">}}
 
 </div>
 </details>
 
 <details>
-<summary>Security Events Alert</summary>
+<summary>Origin Error Rate Alert</summary>
 <div>
 
 **Who is it for?**
 
-Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in security events.
-
-For more information, refer to [WAF alerts](/waf/reference/alerts/).
+Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server.
 
 **Other options / filters**
 
-Customers can search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
+Multiple filters available:
+
+- Customers can search and add domains from their list of domains.
+- Customers can also choose the trigger that fires the notification. Available triggers are:
+  - Low sensitivity
+  - Medium sensitivity
+  - High sensitivity
+  - Very High sensitivity
 
 **Included with**
 
-Business and Enterprise plans.
+Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
+2. {{<render file="_errors.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Passive Origin Monitoring</summary>
+<div>
+
+**Who is it for?**
+
+Any customer who wants to receive a notification when Cloudflare is unable to access their origin, customers will only receive this notification when their origin is returning a `521` error.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare plans.
+
+**What should you do if you receive one?**
+
+{{<render file="_errors.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Traffic Anomalies Alert</summary>
+<div>
+
+**Who is it for?**
+
+Enterprise customers who want to receive a notification  when one of your zones is experiencing an unexpected spike or drop in traffic.
+
+**Other options / filters**
+
+Multiple filters available:
+- Customers can search and add domains from their list of domains.
+- Customers can include or exclude traffic mitigated by the Web Application Firewall.
+- Customers can choose whether to be notified of either spikes or drops in traffic.
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions
+2. {{<render file="_errors.md">}}
+
+</div>
+</details>
+
+
+## Trust and Safety Blocks
+
+<details>
+<summary>Block Review Rejection</summary>
+<div>
+
+**Who is it for?**
+
+Any customer who wants to be notified when Cloudflare Trust & Safety rejects a request for block removal.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare plans.
+
+**What should you do if you receive one?**
+
+Take care of any abuse on your website. Then, in Cloudflare go to the dashboard and request review.
+
+</div>
+</details>
+
+<details>
+<summary>New Blocks</summary>
+<div>
+
+**Who is it for?**
+
+Any customer who wants to be notified when Cloudflare Trust & Safety places a block in one of your websites.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare plans.
+
+**What should you do if you receive one?**
+
+Take care of any abuse on your website. Then, in Cloudflare go to the dashboard and request review.
+
+</div>
+</details>
+
+<details>
+<summary>Removed Blocks</summary>
+<div>
+
+**Who is it for?**
+
+Any customer who wants to be notified when Cloudflare Trust & Safety removes a block from your website.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare plans.
+
+**What should you do if you receive one?**
+
+This is informational followup.
 
 </div>
 </details>
@@ -1101,6 +1183,61 @@ All Cloudflare Zero Trust plans.
 **What should you do if you receive one?**
 
 Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/).
+
+</div>
+</details>
+
+## WAF
+
+<details>
+<summary>Advanced Security Events Alert</summary>
+<div>
+
+**Who is it for?**
+
+Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in security events.
+
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
+
+**Other options / filters**
+
+- Customers can search for and add domains from their list of enterprise zones.
+- Customers can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
+- Customers can filter events by a targetted action
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+
+</div>
+</details>
+
+<details>
+<summary>Security Events Alert</summary>
+<div>
+
+**Who is it for?**
+
+Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in security events.
+
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
+
+**Other options / filters**
+
+- Customers can search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
+- Customers can filter events by a targetted action
+
+**Included with**
+
+Business and Enterprise plans.
+
+**What should you do if you receive one?**
+
+Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>
