@@ -154,19 +154,33 @@ When a Worker running in production has an error that prevents it from returning
 
 | Error code | Meaning                                                                                                           |
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
-| 1101       | Worker threw a JavaScript exception.                                                                              |
-| 1102       | Worker exceeded [CPU time limit](/workers/platform/limits/).                                                      |
-| 1015       | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
-| 1019       | Worker hit [loop limit](/workers/platform/limits/#loop-limit).                                                    |
-| 1021       | Worker has requested a host it cannot access.                                                                     |
-| 1022       | Cloudflare has failed to route the request to the Worker.                                                         |
-| 1024       | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
-| 1027       | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
-| 1042       | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
+| `1101`     | Worker threw a JavaScript exception.                                                                              |
+| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/).                                                      |
+| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
+| `1019`     | Worker hit [loop limit](/workers/platform/limits/#loop-limit).                                                    |
+| `1021`     | Worker has requested a host it cannot access.                                                                     |
+| `1022`     | Cloudflare has failed to route the request to the Worker.                                                         |
+| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
+| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
+| `1042`     | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
 
 {{</table-wrap>}}
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
+
+### Runtime errors
+
+Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
+
+{{<table-wrap>}}
+
+| Error message                              | Meaning                                                                                                         |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `Network connection lost`                  | Connection failure. Catch a `fetch` or binding invocation and retry it.                                         |
+| `Memory limit would be exceeded before EOF`| Trying to read a stream or buffer that would take you over the [memory limit](/workers/platform/limits/#memory).|
+| `daemonDown`                               | A temporary problem invoking the Worker.                                                                        |
+
+{{</table-wrap>}}
 
 ### Identifying errors: Workers Metrics
 
