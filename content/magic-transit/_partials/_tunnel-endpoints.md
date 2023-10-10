@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;healthCheck;;productPathProbe;;antiReplayPagePath
+inputParameters: 1ipRange;;2productName;;3productPathDash;;4ipSecProductPath;;5staticRoutesPath;;6tunnelsPath;;7healthCheck;;8productPathProbe;;9antiReplayPagePath;;10BiVsUniHealthCheck
 ---
 
 #  Configure tunnel endpoints
@@ -46,7 +46,7 @@ Refer to [Anti-replay protection]($9) for more information on this topic, or [Ad
 {{<tab label="dashboard" no-code="true">}}
 
 {{<Aside type="note">}}
-Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional. Continue reading to learn how to set up bidirectional health checks, or refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+Bidirectional health checks are available for GRE and IPsec tunnels. For $2 this option defaults to $10. Continue reading to learn how to set up bidirectional health checks, or refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
