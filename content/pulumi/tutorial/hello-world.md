@@ -757,7 +757,7 @@ If you want to remove the stack completely, run `pulumi stack rm dev`.
 ### b. Remove the Pulumi stack
 
 ```sh
-$ pulumi pulumi stack rm dev
+$ pulumi stack rm dev
 This will permanently remove the 'dev' stack!
 Please confirm that this is what you'd like to do by typing `dev`: dev
 Stack 'dev' has been removed!
