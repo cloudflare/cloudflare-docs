@@ -67,7 +67,7 @@ binding = "AI" # i.e. available in your Worker on env.AI
 ```
 
 <!-- TODO update this once we know if we'll have it -->
-You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#ai).
+You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#workers-ai).
 
 ## 3. Install the Workers AI client library
 
@@ -134,7 +134,7 @@ $ npx wrangler dev --remote
 Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them locally.
 {{</Aside>}}
 
-When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
+When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
 
 ```json
 {
@@ -150,7 +150,7 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.

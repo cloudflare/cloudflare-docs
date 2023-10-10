@@ -44,7 +44,7 @@ Cloudflare recommends [@marsidev/react-turnstile](https://www.npmjs.com/package/
 
 Libraries that only support the server-side validation of Turnstile:
 
-- N/A
+- [fastify-cloudflare-turnstile](https://www.npmjs.com/package/fastify-cloudflare-turnstile)
 
 ## Fullstack libraries
 

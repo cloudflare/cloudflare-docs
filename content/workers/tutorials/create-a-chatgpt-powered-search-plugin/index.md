@@ -170,7 +170,7 @@ filename: src/pinecone.ts
   }
 ```
 
-The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain. 
+The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain.
 
 This function is the most complex part of this process, and explaining how it works in detail is out of scope for this tutorial. In short, the function takes the content in Notion and splits it into smaller documents, which are then converted into vector embeddings using OpenAI. These vector embeddings are then stored in Pinecone.
 
@@ -393,7 +393,7 @@ This part exports the router's handle method as a fetch method, which makes this
 
 ## 7. Deploy your Worker application
 
-Once you have created your Worker application and added the required functions, deploy the application. 
+Once you have created your Worker application and added the required functions, deploy the application.
 
 Before you deploy, initialize a number of [secret](/workers/configuration/secrets/) values for your application. For each of the following values, run the [`npx wrangler secret put`](/workers/wrangler/commands/#put-3) command:
 

@@ -61,7 +61,7 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
-```js
+```sh
 $ npx wrangler dev --remote
 ```
 
@@ -111,7 +111,7 @@ export default {
     const answer = await ai.run(
       '@cf/meta/llama-2-7b-chat-int8',
       {
-        inputs: [
+        messages: [
           { role: 'user', content: `What is the square root of 9?` }
         ]
       }
@@ -172,9 +172,10 @@ Then, add the configuration details for your new D1 database to `wrangler.toml`:
 ```toml
 # ... existing wrangler configuration
 
-[[d1]]
-binding = "DATABASE"
+[[d1_databases]]
+binding = "DB" # available in your Worker on env.DB
 database_name = "database"
+database_id = "abc-def-geh"
 ```
 
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
@@ -213,7 +214,7 @@ app.get('/', async (c) => {
   const answer = await ai.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
-      inputs: [
+      messages: [
         { role: 'user', content: `What is the square root of 9?` }
       ]
     }
@@ -241,7 +242,7 @@ app.post('/notes', async (c) => {
 			return c.text("Missing text", 400);
   } 
 
-  const { results } = await c.env.DATABASE.prepare("INSERT INTO notes (text) VALUES (?) RETURNING *")
+  const { results } = await c.env.DB.prepare("INSERT INTO notes (text) VALUES (?) RETURNING *")
     .bind(text)
     .run()
 
@@ -296,7 +297,7 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
@@ -320,7 +321,7 @@ app.get('/', async (c) => {
   let notes = []
   if (vecIds.length) {
     const query = `SELECT * FROM notes WHERE id IN (${vecIds.join(", ")})`
-    const { results } = await c.env.DATABASE.prepare(query).bind().all()
+    const { results } = await c.env.DB.prepare(query).bind().all()
     if (results) notes = results.map(vec => vec.text)
   }
 
@@ -333,7 +334,7 @@ app.get('/', async (c) => {
   const { response: answer } = await ai.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
-      inputs: [
+      messages: [
         ...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
         { role: 'system', content: systemPrompt },
         { role: 'user', content: question }

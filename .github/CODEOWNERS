@@ -14,8 +14,8 @@
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @irvinebroque @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
-/content/vectorize/ @irvinebroque @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
+/content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
@@ -26,6 +26,9 @@
 # API & Zones
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
+
+# Browser Rendering API
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
 
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
