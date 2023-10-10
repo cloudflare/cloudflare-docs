@@ -2,6 +2,8 @@
 title: Concepts
 pcx_content_type: concept
 weight: 4
+meta:
+  title: Create an Advanced TCP Protection filter
 ---
 
 # Concepts
@@ -33,14 +35,17 @@ Each advanced TCP protection type (SYN flood protection and out-of-state TCP pro
 
 ## Filter
 
-A filter allows you to modify Advanced TCP Protection's [execution mode](/ddos-protection/tcp-protection/rule-settings/#mode) — monitoring, mitigation (enabled), or disabled — for all incoming packets matching an expression. The expression can reference source and destination IP addresses and ports.
+A filter allows you to modify Advanced TCP Protection's [execution mode](/ddos-protection/tcp-protection/rule-settings/#mode) — monitoring, mitigation (enabled), or disabled — for all incoming packets matching an expression. A filter expression can reference source and destination IP addresses and ports.
 
-Each type of advanced TCP protection (SYN flood protection and out-of-state TCP protection) has its own list of filters.
+Each system component (SYN flood protection and out-of-state TCP protection) has its own filters. You can configure a filter for each execution mode:
 
-{{<Aside type="warning" header="Important notes">}}
-* Currently, you can only manage filters [via API](/ddos-protection/tcp-protection/api/).
-* For each type of TCP protection (SYN flood protection or out-of-state TCP protection), you can only create one filter for each mode.
-{{</Aside>}}
+* **Mitigation Filter**: The system will drop matching packets.
+* **Monitoring Filter**: The system will log matching packets.
+* **Off Filter**: The system will ignore matching packets.
+
+When there is a match, a filter will alter the execution mode for all configured rules in a given system component (SYN flood protection or out-of-state TCP protection), including disabled rules.
+
+For instructions on creating filters in the Cloudflare dashboard, refer to [Create a filter](/ddos-protection/tcp-protection/how-to/create-filter/). For API examples, refer to [Common API calls](/ddos-protection/tcp-protection/api/examples/).
 
 ---
 
@@ -49,8 +54,8 @@ Each type of advanced TCP protection (SYN flood protection and out-of-state TCP 
 When you have both rules and filters configured, the execution mode is determined according to the following:
 
 1. If there is a match for one of the configured filters, use the filter's execution mode. The filter evaluation order  is based on their mode, in the following order:
-    1. Filter with `enabled` mode
-    2. Filter with `monitoring` mode
-    3. Filter with `disabled` mode
+    1. Mitigation filter (filter with `enabled` mode)
+    2. Monitoring filter (filter with `monitoring` mode)
+    3. Off filter (filter with `disabled` mode)
 2. If no filter matched, use the execution mode determined by existing rules.
 3. If no rules match, disable Advanced TCP Protection.
