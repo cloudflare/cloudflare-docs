@@ -103,6 +103,17 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 {{</Aside>}}
 
+## IP sec tunnels and static routes
+
+Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) and [static routes](/magic-wan/get-started/configure-static-routes/) for you. You do not need to configure these manually.
+
+To check IPsec tunnels and static routes created by your Magic Wan Connector:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Sites**.
+3. Select the site's name for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
+4. You can check the IPsec tunnels under **Tunnels**, and static routes under **Routes**.
+
 ## Maintenance
 
 After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/connector/device-information/#heartbeat).
