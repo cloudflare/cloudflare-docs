@@ -10,7 +10,7 @@ meta:
 Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE, IPsec](/magic-wan/get-started/configure-tunnels/#tunnels), or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
 
 Depending on your use case, you will see the following IP addresses when connecting a WARP device to Magic WAN:
-- `100.96.0.0/12`: When connecting a WARP device to an origin behind a GRE/IPsec tunnel.
+- `100.96.0.0/12`: When connecting a WARP device to an origin behind a GRE or IPsec tunnel.
 - [Cloudflare IP addresses](/magic-wan/zero-trust/cloudflare-gateway/): When you are connecting a WARP device, and using Zero Trust policies - for example, you have Gateway set up.
 
 ## Prerequisites
@@ -30,7 +30,7 @@ $ ip route add 100.96.0.0/12 dev gre1
 ```
 
 {{<Aside type="note" header="Note">}}
-After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver
+After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver.
 {{</Aside>}}
 
 ## 2. Configure Split Tunnels
@@ -65,4 +65,4 @@ $ nslookup <SERVER_BEHIND_MAGIC_WAN>
 
 This DNS lookup should return a valid IP address associated with the server or service you are testing for.
 
-Next, test with a browser that you can connect to a service on the WAN by opening a web page that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.
+Next, test with a browser that you can connect to a service on the WAN by opening a webpage that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.
