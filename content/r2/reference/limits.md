@@ -5,13 +5,7 @@ pcx_content_type: concept
 
 # Limits
 
-{{<Aside type="note">}}
-
-We want to encourage you to build any application you can dream up, but we realize that does not always fit within our limits. 
-
-To increase any of our limits, fill out the [Limit Increase Request form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
-{{</Aside>}}
+{{<render file="_limits_increase.md" productFolder="workers">}}
 
 ## Rate limiting on managed public buckets through `r2.dev`
 
