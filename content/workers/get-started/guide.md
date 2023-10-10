@@ -12,7 +12,7 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 {{<Aside type="note" header="Try the Playground">}}
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser.
 
 {{</Aside>}}
 

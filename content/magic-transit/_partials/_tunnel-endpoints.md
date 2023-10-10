@@ -56,7 +56,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 {{<tab label="dashboard" no-code="true">}}
 
 {{<Aside type="note">}}
-Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional. If you need to change your tunnel health checks to unidirectional or bidirectional, refer to the API tab. The dashboard option will be available in the near future. 
+Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional. Continue reading to learn how to set up bidirectional health checks, or refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
@@ -76,10 +76,11 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For Magic W
 10. Leave the default values for **TTL** and **MTU**.
 11. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($8) for more information.
-13. **Health check target** is the customer end of the tunnel.
-14. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
-15. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
-16. After adding your tunnel information, select **Add tunnels** to save your changes.
+13. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+14. **Health check target** is the customer end of the tunnel.
+15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+16. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
+17. After adding your tunnel information, select **Add tunnels** to save your changes.
  
 </div>
 </details>
@@ -95,23 +96,24 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For Magic W
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team (typically begins with `172.x.x.x`).
 10. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($8) for more information.
-12. **Health check target** is the customer end of the tunnel.
+12. The **Health check direction** defaults to **bidirectional** for Magic WAN, and **unidirectional** for Magic Transit. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+13. **Health check target** is the customer end of the tunnel.
 
 {{<Aside type="note">}}IPsec tunnels will not function without a pre-shared key (PSK).{{</Aside>}}
 
-13. If you do not have a pre-shared key yet: 
+14. If you do not have a pre-shared key yet: 
     1. Select **Add pre-shared key later**.
-    2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
+    2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels**.
     3. Select **Add tunnels**.
     4. The Cloudflare dashboard will load the list of tunnels you have configured. The IPsec tunnel you have just created will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
     5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
-14. If you already have a pre-shared key:
+15. If you already have a pre-shared key:
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
-    3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
+    3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
     4. Select **Add tunnels**.
 
-15. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
+16. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
 
 </div>
 </details>
@@ -262,6 +264,14 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunn
  
 {{</tab>}}
 {{</tabs>}}
+
+## Bidirectional vs unidirectional health checks
+
+To check for tunnel health, Cloudflare sends a health check probe consisting of ICMP (Internet Control Message Protocol) reply packets to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
+
+Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirectional health checks for Magic Transit (direct server return). However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+
+Refer to [Tunnel Health Checks]($8) to learn more.
 
 ## Next steps
 

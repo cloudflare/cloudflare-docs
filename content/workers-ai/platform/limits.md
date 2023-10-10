@@ -10,7 +10,7 @@ weight: 4
 Workers AI is currently in Open Beta and is **not recommended for production data and traffic**, and limits + access are subject to change
 {{</Aside>}}
 
-During the open beta, the following limits are place:
+During the open beta, the following limits are in place:
 
 **Inference requests per minute (per model)**
  - [@cf/meta/llama-2-7b-chat-int8](/workers-ai/models/llm/) - 50 reqs/min
@@ -23,5 +23,5 @@ During the open beta, the following limits are place:
 Note that these limits are estimates, subject to change, and will vary by location while in Open Beta.
 
  **Other Limits**
-- @cf/meta/llama-2-7b-chat-int8 (max tokens) - 768 input / 256 output
-- @cf/meta/m2m100-1.2b (max tokens) - 256 output
+- [@cf/meta/llama-2-7b-chat-int8](/workers-ai/models/llm/) (max tokens) - 768 input / 256 output
+- [@cf/meta/m2m100-1.2b](/workers-ai/models/translation/) (max tokens) - 256 output

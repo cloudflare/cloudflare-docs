@@ -17,7 +17,7 @@ Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals
 
 ## Enable Optimize for WordPress
 
-1. Log in to the [Cloudflare Dashboard](http://dash.cloudflare.com) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](http://dash.cloudflare.com) and select your account and domain.
 2. Go to **Security** > **Bots**.
 3. Select **Configure Bot Management**.
 4. Enable **Optimize for WordPress**.

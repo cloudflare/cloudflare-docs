@@ -44,7 +44,7 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 <summary>Windows and macOS</summary>
 <div>
 
-{{<render file="_enroll-windows-mac.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_enroll-windows-mac.md" productFolder="cloudflare-one">}}
 </div>
 </details>
 
@@ -52,7 +52,7 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 <summary>Linux</summary>
 <div>
 
-{{<render file="_enroll-linux.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_enroll-linux.md" productFolder="cloudflare-one">}}
 </div>
 </details>
 
@@ -60,7 +60,7 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 <summary>iOS, Android, and ChromeOS</summary>
 <div>
 
-{{<render file="_enroll-ios-android.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_enroll-ios-android.md" productFolder="cloudflare-one">}}
 
 </div>
 </details>

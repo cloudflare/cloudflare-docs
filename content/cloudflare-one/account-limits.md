@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Account limits
-weight: 21
+weight: 11
 ---
 
 # Account limits
@@ -26,25 +26,27 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Gateway
 
-| Feature                                             | Limit |
-| --------------------------------------------------- | ----- |
-| DNS Logpush jobs                                    | 5     |
-| HTTP Logpush jobs                                   | 5     |
-| Lists                                               | 100   |
-| DNS policies                                        | 500   |
-| DNS locations                                       | 250   |
-| Number of concurrent streams for HTTP/2 connections | 256   |
-| Number of DNS policies per account                  | 500   |
-| Number of HTTP policies per account                 | 500   |
-| Number of Network policies per account              | 500   |
-| Number of source IP addresses per proxy endpoint    | 2,000 |
+| Feature                                   | Limit |
+| ----------------------------------------- | ----- |
+| DNS Logpush jobs                          | 5     |
+| HTTP Logpush jobs                         | 5     |
+| Lists                                     | 100   |
+| DNS policies                              | 500   |
+| DNS locations                             | 250   |
+| Concurrent streams for HTTP/2 connections | 256   |
+| DNS policies per account                  | 500   |
+| HTTP policies per account                 | 500   |
+| Network policies per account              | 500   |
+| Source IP addresses per proxy endpoint    | 2,000 |
 
 ## Data Loss Prevention
 
-| Feature                | Limit   |
-| ---------------------- | ------- |
-| Custom entries         | 25      |
-| Exact Data Match cells | 100,000 |
+| Feature                                  | Limit   |
+| ---------------------------------------- | ------- |
+| Custom entries                           | 25      |
+| Exact Data Match cells per spreadsheet   | 100,000 |
+| Custom Wordlist keywords per spreadsheet | 200     |
+| Custom Wordlist keywords per account     | 1,000   |
 
 ## Cloudflare Tunnel
 

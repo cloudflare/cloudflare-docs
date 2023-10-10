@@ -29,7 +29,7 @@ The following example rule will disable compression for AVIF images, based on ei
 <summary>Example API request</summary>
 <div>
 
-The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 curl --request PUT \
@@ -72,7 +72,7 @@ The following example rule will configure GZIP compression as the preferred comp
 <summary>Example API request</summary>
 <div>
 
-The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 curl --request PUT \
@@ -118,7 +118,7 @@ Since the rule configuration does not include _Auto_ at the end of the custom al
 <summary>Example API request</summary>
 <div>
 
-The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 curl --request PUT \

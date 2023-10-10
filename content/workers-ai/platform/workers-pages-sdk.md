@@ -6,7 +6,7 @@ weight: 1
 
 # Workers + Pages SDK
 
-This SDK provides a simmple interface between a Worker or Pages function and Workers AI 
+This SDK provides an interface between a Worker or Pages function and Workers AI 
 
 ```javascript
 import { run } from "@cloudflare/ai";
@@ -46,7 +46,7 @@ const ai = new Ai(env.AI);
 Runs a model. Takes a list of tensors as the input.
 
 ```javascript
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 const ai = new Ai(env.AI);
 

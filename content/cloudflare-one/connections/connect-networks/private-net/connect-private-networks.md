@@ -21,11 +21,11 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 ## 2. Set up the client
 
-{{<render file="_warp-to-tunnel-client.md">}}
+{{<render file="tunnel/_warp-to-tunnel-client.md">}}
 
 ## 3. Route private network IPs through WARP
 
-{{<render file="_warp-to-tunnel-route-ips.md">}}
+{{<render file="tunnel/_warp-to-tunnel-route-ips.md">}}
 
 ## 4. (Recommended) Filter network traffic with Gateway
 

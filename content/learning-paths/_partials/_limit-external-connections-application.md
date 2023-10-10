@@ -16,7 +16,7 @@ _build:
 </details>
 
 <details>
-<summary>HTTP Basic Authentication</summary>
+<summary>HTTP Header Validation</summary>
 
 <div>
 
@@ -27,9 +27,11 @@ Only allow traffic with specific (and secret) HTTP headers.
 - **Challenges**:
     - Requires more configuration efforts on application- and server-side to accept those headers.
     - Basic authentication is vulnerable to replay attacks. Because basic authentication does not encrypt user credentials, it is important that traffic always be sent over an encrypted SSL session.
+    - There might be valid use cases for a mismatch in SNI / Host headers such as through [Page Rules](/support/page-rules/using-page-rules-to-rewrite-host-headers/), [Load Balancing](/load-balancing/additional-options/override-http-host-headers/), or [Workers](/workers/runtime-apis/request/), which all offer HTTP Host Header overrides.
 - **Process**:
     1. Use [Transform rules](/rules/transform/request-header-modification/) or [Workers](/workers/examples/alter-headers/) to add an HTTP Auth Header.
     2. Configure your origin server to restrict access based on the [HTTP Auth Header](/workers/examples/auth-with-headers/) (or perform [HTTP Basic Authentication](/workers/examples/basic-auth/)).
+    3. Configure your origin server to restrict access based on the [HTTP Host Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host). Specifically, only allow requests which contain expected HTTP Host Header values, and reject all other requests. 
 
 </div>
 </details>

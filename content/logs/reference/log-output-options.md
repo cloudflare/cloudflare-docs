@@ -10,6 +10,8 @@ Jobs in Logpush now have a new key **output_options** which replaces **logpull_o
 
 Edge Logstream jobs do not support this yet.
 
+You can modify log output options via the Cloudflare dashboard when creating or editing a Logpush job, or via the API as shown below.
+
 ## Replace logpull_options
 
 Previously, Logpush jobs could be customized by specifying the list of fields, sampling rate, and timestamp format in **logpull_options** as [URL-encoded parameters](/logs/get-started/api-configuration/#options). For example:

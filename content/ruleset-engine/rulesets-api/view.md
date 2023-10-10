@@ -38,7 +38,7 @@ Not all zone-level phases support all types of rulesets, even if they are presen
 
 {{</Aside>}}
 
-The result does not include the list of rules in the ruleset. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
+The result does not include the list of rules in the ruleset. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
 
 ### Example
 
@@ -177,7 +177,7 @@ Use one of the following API endpoints:
 [lev-account]: /api/operations/listAccountEntrypointRulesetVersions
 [lev-zone]: /api/operations/listZoneEntrypointRulesetVersions
 
-The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
+The result contains the ruleset properties of each version, but it does not include the list of rules. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) for instructions on obtaining this information.
 
 When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 

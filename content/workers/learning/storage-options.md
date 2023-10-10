@@ -80,12 +80,6 @@ To get started with Durable Objects:
 
 ## D1
 
-{{<Aside type="note">}}
-
-D1 is currently in [public (open) alpha](/workers/platform/betas/).
-
-{{</Aside>}}
-
 [D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
@@ -140,7 +134,7 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
 | Cached                                        | Always       | Programmatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
-| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms-in-durable-objects/) |
+| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms/) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 500 - 1500 requests/second per Durable Object<sup>3</sup> |
 
 {{</table-wrap>}}
