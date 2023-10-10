@@ -16,7 +16,7 @@ Workers AI includes the following built-in text embedding models:
 
 | Model ID                        | Max Input Tokens <sup>1</sup> | Output Dimensions  |
 | ------------------------------- | ----------------------------- | ------------------ |
-| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 386                | 
+| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 384                | 
 | `@cf/baai/bge-base-en-v1.5`     | 512 tokens                    | 768                | 
 | `@cf/baai/bge-large-en-v1.5`    | 512 tokens                    | 1024               |
 
@@ -35,12 +35,10 @@ Workers AI includes the following built-in text embedding models:
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
-```js
+```ts
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "AI" with the variable name you defined.
   AI: any;
 }
 
@@ -60,7 +58,7 @@ export default {
       }
     );
 
-    return new Response(JSON.stringify(embeddings));
+    return Response.json(embeddings);
   },
 };
 ```
@@ -70,27 +68,27 @@ export default {
 
 ```js
 async function run(model, input) {
-  const response = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/${model}`,
-    {
-      headers: { Authorization: "Bearer {API_TOKEN}" },
-      method: "POST",
-      body: JSON.stringify(input),
-    }
-  );
-  const result = await response.json();
-  return result;
+	const response = await fetch(
+	  `https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${model}`,
+	  {
+		headers: { Authorization: "Bearer ${API_TOKEN}" },
+		method: "POST",
+		body: JSON.stringify(input),
+	  }
+	);
+	const result = await response.json();
+	return result;
 }
-
+  
 // Can be a string or array of strings]
 const stories = [
-  'This is a story about an orange cloud',
-  'This is a story about a llama',
-  'This is a story about a hugging emoji'
+'This is a story about an orange cloud',
+'This is a story about a llama',
+'This is a story about a hugging emoji'
 ];
 
-run('cf/baai/bge-base-en-v1.5', { text: input }).then((response) => {
-    console.log(JSON.stringify(response));
+run('@cf/baai/bge-base-en-v1.5', { text: stories }).then((response) => {
+  console.log(JSON.stringify(response));
 });
 ```
 
@@ -100,11 +98,10 @@ run('cf/baai/bge-base-en-v1.5', { text: input }).then((response) => {
 
 ```py
 import requests
-
-API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}}/ai/run/"
 headers = {"Authorization": "Bearer {API_TOKEN}"}
 
-def run(model, input)
+def run(model, input):
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
 
@@ -114,17 +111,18 @@ stories = [
   'This is a story about a hugging emoji'
 ]
     
-output = run("@cf/baai/bge-base-en-v1.5", { input: stories })
+output = run("@cf/baai/bge-base-en-v1.5", { "text": stories })
+print(output)
 ```
 
 {{</tab>}}
 {{<tab label="curl">}}
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/baai/bge-base-en-v1.5 \
-    -X POST \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    -d '{ "text": "['This is a story about an orange cloud','This is a story about a llama','This is a story about a hugging emoji']" }'
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/baai/bge-base-en-v1.5 \
+  -X POST \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }
 ```
 
 {{</tab>}}

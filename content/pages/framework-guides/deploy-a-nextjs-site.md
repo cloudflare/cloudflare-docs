@@ -181,8 +181,6 @@ To deploy your site to Pages:
 
 {{<pages-build-preset framework="next-js-static">}}
 
-4. Next.js requires a specific Node.js version to build successfully. Refer to [System Requirements in Next.js Installation guide](https://nextjs.org/docs/getting-started/installation) to review the required Node.js version. To set your Node.js version, go to your Pages project > **Settings** > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of the required version. For example, if the required Node.js version on Next.js's Installation guide is Node.js `16.8` or later, your environment variable value must be set to `16` or greater.
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
 ## Preview your site
@@ -217,28 +215,15 @@ export async function GET(request: Request) {
 };
 ```
 
-## Statically imported images on Pages
+## `Image` component
 
-Pages does not currently support the default Next.js image optimization API. As a result, static imports of images break.
+The Cloudflare network does not provide the same image optimization support as the Vercel network does, because of this the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
 
-```js
-import Image from 'next/image';
-import MyImage from './myImage.png';
+ - If you build your application as a static site, the `<Image />` component will not serve any images.
 
-const MyImage = props => {
-  return (
-    <Image
-      src={MyImage} // <- Not supported
-      alt="Picture of the author"
-      width={500}
-      height={500}
-    />
-  );
-};
-```
+ - If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
 
-To use image assets, upload your statically imported images to a remote provider like [Cloudflare Images](https://www.cloudflare.com/en-gb/products/cloudflare-images/) or [R2](https://www.cloudflare.com/en-gb/products/r2/).
+Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/cloudflare-images/), refer to the [Next.js image resizing integration guide](/images/image-resizing/integration-with-frameworks/#nextjs).
 
-To serve optimized images, define a global [loaderFile](/images/image-resizing/integration-with-frameworks/) for your app and integrate on-demand resizing with [flexible image variants](/images/cloudflare-images/transform/flexible-variants/) (for Cloudflare Images) or [Image Resizing](/images/image-resizing/url-format/) (for all other remote sources).
 
 {{<render file="_learn-more.md" withParameters="Next.js">}}

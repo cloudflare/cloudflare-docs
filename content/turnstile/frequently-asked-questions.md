@@ -229,3 +229,12 @@ Refer to the [list of supported languages](/turnstile/reference/supported-langua
 
 {{</faq-answer>}}
 {{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Does Turnstile conform to WCAG 2.1 Level AA accessibility standard?" >}}
+{{<faq-answer>}}
+
+Yes, Turnstile is WCAG 2.1 Level AA compliant.
+
+{{</faq-answer>}}
+{{</faq-item>}}

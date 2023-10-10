@@ -150,7 +150,7 @@ async function run(): Promise<void> {
           if (path.includes(" ") || path.startsWith("/support/")) {
             return UnicodeSanitize(path);
           } else {
-            return path;
+            return DISABLE_PATH_TO_LOWER ? path : path.toLowerCase();
           }
         };
 

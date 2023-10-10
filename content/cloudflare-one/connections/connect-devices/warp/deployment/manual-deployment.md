@@ -16,18 +16,18 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ### Windows and macOS
 
-{{<render file="_enroll-windows-mac.md">}}
+{{<render file="warp/_enroll-windows-mac.md">}}
 
 The device is now protected by your organization's Zero Trust policies.
 
 ### Linux
 
-{{<render file="_enroll-linux.md">}}
+{{<render file="warp/_enroll-linux.md">}}
 
 The device is now protected by your organization's Zero Trust policies. For more information on all available commands, run `warp-cli --help`.
 
 ### iOS, Android, and ChromeOS
 
-{{<render file="_enroll-ios-android.md">}}
+{{<render file="warp/_enroll-ios-android.md">}}
 
 The device is now protected by your organization's Zero Trust policies.

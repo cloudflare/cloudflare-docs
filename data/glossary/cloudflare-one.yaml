@@ -21,11 +21,25 @@ entries:
   associated_products:
     - Access
 
+- term: Cloudflare Browser Isolation
+  general_definition: |-
+    Cloudflare Browser Isolation seamlessly executes active webpage content in a secure isolated browser to protect users from zero-day attacks, malware, and phishing.
+  associated_products:
+    - RBI
+    - Gateway
+    - ZTNA
+
 - term: Cloudflare CASB
   general_definition: |-
     Cloudflare CASB provides comprehensive visibility and control over SaaS apps to prevent data leaks and compliance violations. It helps detect insider threats, Shadow IT, risky data sharing, and bad actors.
   associated_products:
     - CASB
+
+- term: Cloudflare Data Loss Prevention (DLP)
+  general_definition: |-
+    Cloudflare Data Loss Prevention (DLP) allows you to scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers, financial information, secret keys, and source code.
+  associated_products:
+    - DLP
 
 - term: Cloudflare Gateway
   general_definition: |-
@@ -63,7 +77,11 @@ entries:
 
 - term: DNS location
   general_definition: |-
-    DNS locations are physical entities such as offices, homes, retail stores, or data centers in Cloudflare Zero Trust.
+    DNS locations are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes, or data centers.
+  associated_products:
+    - Access
+    - Gateway
+    - DNS
 
 - term: identity provider
   general_definition: |-
@@ -85,6 +103,10 @@ entries:
 - term: OpenID Connect
   general_definition: |-
     a simple identity layer on top of OAuth 2.0 for verifying user identity and obtaining basic profile information.
+
+- term: PAC file
+  general_definition: |-
+    a file containing a JavaScript function which can instruct a browser to forward traffic to a proxy server instead of directly to the destination server.
 
 - term: policy
   general_definition: |-

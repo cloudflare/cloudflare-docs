@@ -13,6 +13,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
+- [`vectorize`](#vectorize) - Interact with Vectorize indexes.
+- [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
@@ -118,7 +120,7 @@ $ wrangler generate [name] [template]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+D1 is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -337,6 +339,92 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--local` {{<type>}}boolean{{</type>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
     {{</definitions>}}
+
+---
+
+## `hyperdrive`
+
+Manage [Hyperdrive](/hyperdrive/) database configurations.
+
+### `create`
+
+Create a new Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive create <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the Hyperdrive configuration to create.
+- `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The database connection string in the form `postgres://user:password@hostname:port/database`.
+
+{{</definitions>}}
+
+### `update`
+
+Update an existing Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive update <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the Hyperdrive configuration to update.
+- `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new database hostname or IP address Hyperdrive should connect to.
+- `--origin-port` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new database port to connect to.
+- `--database` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new database (name) to connect to. For example, postgres or defaultdb.
+- `--origin-user` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new username used to authenticate to the database.
+- `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new password used to authenticate to the database.
+
+{{</definitions>}}
+
+### `list`
+
+List all Hyperdrive configurations.
+
+```sh
+$ wrangler hyperdrive list [OPTIONS]
+```
+
+### `delete`
+
+Delete an existing Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive delete <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Hyperdrive configuration to delete.
+
+{{</definitions>}}
+
+### `get`
+
+Get an existing Hyperdrive configuration.
+
+```sh
+$ wrangler hyperdrive get <ID> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Hyperdrive configuration to get.
+
+{{</definitions>}}
 
 ---
 
@@ -1532,6 +1620,23 @@ $ wrangler pages project create [PROJECT-NAME] [OPTIONS]
 
 {{</definitions>}}
 
+### `project delete`
+
+Delete a Cloudflare Pages project.
+
+```sh
+$ wrangler pages project delete <PROJECT-NAME> [-y / --yes]
+```
+
+{{<definitions>}}
+
+- `PROJECT-NAME` {{<type>}}string{{</type>}}
+  - The name of the Pages project to delete.
+- `--yes` {{<type>}}boolean{{</type>}}
+  - Answer "yes" to confirmation prompt.
+
+{{</definitions>}}
+  
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
