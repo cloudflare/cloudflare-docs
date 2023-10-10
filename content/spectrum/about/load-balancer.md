@@ -26,7 +26,6 @@ The example below shows a TCP health check configuration for an application runn
 <summary>
   TCP health check - Dashboard example
 </summary>
-<div class="special-class" markdown="1">
 
 ![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/images/spectrum/spectrum-tcp-check.png)
 
@@ -36,8 +35,7 @@ The example below shows a TCP health check configuration for an application runn
 <summary>
   TCP health check - API example
 </summary>
-  <div class="special-class" markdown="1">
-
+  
 ```bash
 curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers/monitors'  \
 -H 'Content-Type: application/json' \

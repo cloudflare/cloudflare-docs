@@ -37,7 +37,6 @@ Refer to the image below for guidance on which values to use.
 <summary>
   Policy-based configuration
 </summary>
- <div class="special-class" markdown="1">
 
 ![pfSense IPsec phase 1 setting values for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-settings.png)
 
@@ -63,7 +62,6 @@ Refer to the image below for guidance on which values to use.
 <summary>
   Route-based configuration
 </summary>
- <div class="special-class" markdown="1">
 
  ![pfSense IPsec phase 1 setting values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-settings.png)
 
@@ -90,7 +88,6 @@ Refer to the image below for guidance on which values to use.
 <summary>
   Policy-based configuration
 </summary>
- <div class="special-class" markdown="1">
 
 ![pfSense IPsec phase 2 general information values](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info.png)
 
@@ -124,7 +121,6 @@ Refer to the image below for guidance on which values to use.
 <summary>
   Route-based configuration
 </summary>
- <div class="special-class" markdown="1">
 
 ![pfSense IPsec phase 2 general information for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info-route-based.png)
 

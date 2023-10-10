@@ -63,7 +63,6 @@ Currently, you can only send one collect request per minute for simple PCAPs, an
 <summary>
   Full PCAP
 </summary>
-<div class="special-class" markdown="1">
 
 For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than simple packets.
 
@@ -123,7 +122,6 @@ header: Full PCAP example response
 <summary>
   Simple PCAP
 </summary>
-<div class="special-class" markdown="1">
 
 To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](/api/operations/magic-pcap-collection-create-pcap-request).
 

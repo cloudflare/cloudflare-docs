@@ -21,7 +21,6 @@ List all prefixes and the ASNs where they should originate. When specifying pref
 <summary>
   Prefix configuration example
 </summary>
-<div class="special-class" markdown="1">
 
 | Prefix          | Originating AS |
 | --------------- | -------------- |

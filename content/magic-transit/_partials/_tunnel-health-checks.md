@@ -28,8 +28,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 <summary>
     Wireshark example of health check packets
 </summary>
-  <div class="special-class" markdown="1">
-
+  
 ![Wireshark example for tunnel health checks with ICMP reply packet](/images/magic-transit/tunnel-health-check-packets.png)
 
 {{</details>}}
