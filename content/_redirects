@@ -274,6 +274,7 @@
 
 # durable-objects
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
+/durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
