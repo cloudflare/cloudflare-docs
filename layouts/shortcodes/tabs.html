@@ -7,7 +7,7 @@
 {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
 <li class="tab-label-wrapper">
 {{ if (eq $link "js") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}" onclick="zarazTrack({{$link}})">
 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
     xmlns="http://www.w3.org/2000/svg">
 <path
@@ -19,7 +19,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "js-sw") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}" onclick="zarazTrack({{$link}})">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
         xmlns="http://www.w3.org/2000/svg">
     <title>JavaScript</title>
@@ -32,7 +32,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "ts") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}" onclick="zarazTrack({{$link}})">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "ts-sw") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}" onclick="zarazTrack({{$link}})">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +59,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "js-esm") }}
-<a class="tab-label " href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label " href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}" onclick="zarazTrack({{$link}})">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
         xmlns="http://www.w3.org/2000/svg">
     <title>JavaScript</title>
@@ -72,7 +72,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "ts-esm") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}" onclick="zarazTrack({{$link}})">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +86,7 @@ JavaScript
 </a>
 
 {{ else }}
-<a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
+<a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}" onclick="zarazTrack({{$link}})">
 {{$link}}
 </a>
 {{ end }}
@@ -97,3 +97,9 @@ JavaScript
 
 {{ replace .Inner "UNIQUE_ID" $unique_id | .Page.RenderString  }}
 </div>
+
+<script>
+function zarazTrack(tabName) {
+  zaraz.track("tab click", {tab_name: tabName})
+}
+</script>
