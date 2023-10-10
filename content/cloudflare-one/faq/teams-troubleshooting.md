@@ -1,4 +1,4 @@
-g---
+---
 pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 4
