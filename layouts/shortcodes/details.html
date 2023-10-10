@@ -1,5 +1,5 @@
 <details class="DocsMarkdown">
-  <summary>{{ .Get "header" | default "Summary Text" }}</summary>
+  <summary>{{ .Get "header" | default "Header tag required!" }}</summary>
   <div>
     {{- .Page.RenderString .Inner -}}
   </div>
