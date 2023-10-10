@@ -43,11 +43,11 @@ export async function onRequest(context) {
 
 After you deploy the code above, run `wrangler pages deployment tail` in your terminal. Then access the route at which your Function lives. Your terminal will display:
 
-![Run `wrangler pages deployment tail`](/pages/platform/functions/media/wrangler-custom-logs.png)
+![Run `wrangler pages deployment tail`](/images/pages/platform/functions/wrangler-custom-logs.png)
 
 Your dashboard will display:
 
-![Follow the above steps to access custom logs in the dashboard](/pages/platform/functions/media/dash-custom-logs.png)
+![Follow the above steps to access custom logs in the dashboard](/images/pages/platform/functions/dash-custom-logs.png)
 
 ## View logs with Wrangler
 
@@ -85,9 +85,9 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 
 To view logs for your `production` or `preview` environments associated with any deployment:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/). 
-2. In **Account Home**, select **Pages**.
-3. In your your **Pages project**, go to the deployment you want to view logs for and select **View details** > **Functions**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Pages project, go to the deployment you want to view logs for and select **View details** > **Functions**. 
 
 Logging is available for all customers (Free, Paid, Enterprise).
 

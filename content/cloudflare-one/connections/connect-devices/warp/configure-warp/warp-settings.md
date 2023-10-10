@@ -33,7 +33,7 @@ In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch)
 
 {{</Aside>}}
 
-When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public WiFi, or a firewall at a customer site blocking the connection).
+When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
 
 You can also set a **Timeout** to define how long the user is allowed to toggle on or off the WARP switch.
 
@@ -92,7 +92,7 @@ Captive portal detection is the ability for the WARP client to detect a third-pa
 
 When `Enabled`, the WARP client will automatically turn off when it detects a captive portal, and it will automatically turn back on after the **Timeout** duration.
 
-Since captive portal implementations vary, WARP may not detect all captive portals. If captive portal detection does not work, you can provide end users with a temporary [admin override](#admin-override) code. For more information, refer to the [FAQ](/cloudflare-one/faq/teams-devices-faq/#why-is-my-device-not-connecting-to-a-public-wifi).
+Since captive portal implementations vary, WARP may not detect all captive portals. If captive portal detection does not work, you can provide end users with a temporary [admin override](#admin-override) code. For more information, refer to the [FAQ](/cloudflare-one/faq/teams-devices-faq/#why-is-my-device-not-connecting-to-a-public-wi-fi).
 
 ### Mode switch
 
@@ -178,7 +178,7 @@ When `Enabled`, users will receive update notifications when a new version of th
 
 When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](#lock-warp-switch) above.
 
-We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
+We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
 
 **Value:**
 

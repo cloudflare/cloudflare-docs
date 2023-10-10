@@ -47,7 +47,7 @@ ___
 
 -   In dem Beispiel hier läuft WordPress auf https://junade.com. Daher sollte die Page Rule mit https://junade.com/\* übereinstimmen.
 
-![Screen_Shot_2017-03-09_at_16.54.36.png](/support/static/Screen_Shot_2017-03-09_at_16.54.36.png)
+![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
 4\. Legen Sie zusätzliche Page Rules fest, um statisches HTML zwischenzuspeichern:
 

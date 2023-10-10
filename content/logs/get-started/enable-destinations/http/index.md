@@ -33,7 +33,7 @@ The supported parameters are as follows:
     - **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that you cannot to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
 {{<Aside type="note" header="Note">}}
-Note that the `ownership_challenge` parameter is not required to create a Logpush job to an HTTP endpoint.
+The `ownership_challenge` parameter is not required to create a Logpush job to an HTTP endpoint. You need to make sure that the file upload to validate the destination accepts a gzipped `test.txt.gz` with content as {"content":"tests"} compressed, otherwise it will return an error, like `error validating destination: error writing object: error uploading`.
 {{</Aside>}}
 
 

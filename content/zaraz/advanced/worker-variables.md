@@ -20,12 +20,12 @@ Worker Variables are only available for accounts on a [Workers Paid plan](/worke
 
 To use a Worker Variable, you first need to create a new Cloudflare Worker. You can do this through the Cloudflare dashboard or by using [Wrangler](/workers/get-started/guide/).
 
-To create a new worker in the Cloudflare dashboard:
+To create a new Worker in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers** and select **Create a Service**.
-2. Give a name to your service and choose the **HTTP Handler** as your starter template.
-3. Click **Create Service**, and then **Quick Edit**.
+2. Go to **Workers & Pages** and select **Create application**.
+3. Give a name to your Worker and select **Deploy**.
+4. Select **Edit code**.
 
 You have now created a basic Worker that responds with "Hello world." If you use this Worker as a Variable, your Variable will always output "Hello world." The response body coming from your Worker will be the value of your Worker Variable. To make this Worker useful, you will usually want to use information coming from Zaraz, which is known as the Zaraz Context.
 
@@ -108,7 +108,7 @@ export default {
 
 ### Match a cookie with a user in your backend
 
-Zaraz exposes all cookies automatically under the `system.cookies` object, so they are always available. Accesing the cookie and using it to query your backend could look like this:
+Zaraz exposes all cookies automatically under the `system.cookies` object, so they are always available. Accessing the cookie and using it to query your backend might look like this:
 
 ```js
 export default {
@@ -158,7 +158,7 @@ export default {
 
     const { email } = client;
 
-    return new Response(await digestMessage(text));
+    return new Response(await digestMessage(email));
   },
 };
 ```

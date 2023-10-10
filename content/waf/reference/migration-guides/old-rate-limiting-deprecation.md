@@ -9,9 +9,9 @@ meta:
 
 # Rate limiting (previous version) deprecation notice
 
-**The [previous version of rate limiting rules](/support/firewall/tools/configuring-cloudflare-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
+**The [previous version of rate limiting rules](/waf/reference/legacy/old-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
 
-![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/waf/static/reference/rate-limiting-both-versions.png)
+![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/images/waf/reference/rate-limiting-both-versions.png)
 
 Cloudflare recommends that you create new rate limiting rules (**A**) in the Cloudflare dashboard to replace any existing rate limiting rules you may have configured in the previous version of the feature (**B**). Refer to [Migrating to the new rate limiting rules](#migrating-to-the-new-rate-limiting-rules) for details.
 
@@ -52,13 +52,13 @@ For more details on the differences between old and new rate limiting rules, ref
 
 If you had access to the previous version of Cloudflare Rate Limiting, you will find both rate limiting products, old and new, in the Cloudflare dashboard in **Security** > **WAF** > **Rate limiting rules**. The previous version (left) allows you to filter traffic for one URL. The new version (right) allows you to combine different fields, similar to the functionality of WAF custom rules.
 
-![Comparison between rate limiting rule creation pages (old and new version)](/waf/static/reference/rate-limiting-compare-creation-page.png)
+![Comparison between rate limiting rule creation pages (old and new version)](/images/waf/reference/rate-limiting-compare-creation-page.png)
 
 ### Relevant changes for API users
 
 The new rate limiting rules are based on the [Ruleset Engine](/ruleset-engine/). To configure rate limiting rules via the API, you must use the [Rulesets API](/ruleset-engine/rulesets-api/). The Rulesets API is used on all recent Cloudflare security products to provide a uniform user experience when interacting with the Cloudflare API.
 
-**The [previous Rate Limiting API](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after 2024-05-01.
+**The [previous Rate Limiting API](/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after 2024-05-01.
 
 ### Relevant changes for Terraform users
 

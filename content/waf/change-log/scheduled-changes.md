@@ -4,7 +4,6 @@ pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
-rss: file
 ---
 
 # Scheduled changes
@@ -24,22 +23,31 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-05-10</td>
-      <td>2023-05-22</td>
+      <td>2023-10-10</td>
+      <td>2023-10-16</td>
       <td>Block</td>
-      <td>100583</td>
-      <td>...dae05f0a</td>
-      <td>Sophos - Code Injection - CVE:CVE-2023-1671</td>
-      <td>New Detection</td>
+      <td>100606</td>
+      <td>...3e3f706d</td>
+      <td>JetBrains TeamCity - Auth Bypass, Remote Code Execution - CVE:CVE-2023-42793</td>
+      <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-05-10</td>
-      <td>2023-05-22</td>
-      <td>Disabled</td>
-      <td>100584</td>
-      <td>...dd1b7502</td>
-      <td>Oracle Opera - Code Injection - CVE:CVE-2023-21932</td>
-      <td>New Detection</td>
+      <td>2023-10-10</td>
+      <td>2023-10-16</td>
+      <td>Block</td>
+      <td>100607</td>
+      <td>...469c4a38</td>
+      <td>Progress WS_FTP - Information Disclosure - CVE:CVE-2023-40044</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2023-10-10</td>
+      <td>2023-10-16</td>
+      <td>Block</td>
+      <td>100608</td>
+      <td>...7ccccdce</td>
+      <td>Progress WS_FTP - Remote Code Execution - CVE:CVE-2023-40044</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

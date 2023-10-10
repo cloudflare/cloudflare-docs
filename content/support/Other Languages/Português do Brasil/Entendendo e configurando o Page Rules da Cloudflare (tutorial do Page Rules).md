@@ -243,7 +243,7 @@ TTL de cache de navegador
 
  | 
 
-Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/about/edge-browser-cache-ttl).
+Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +287,7 @@ Cache por tipo de dispositivo
 
  | 
 
-Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -300,7 +300,7 @@ Armadura contra Fraude do Cache
 
  | 
 
-Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/about/cache-deception-armor)
+Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
@@ -315,7 +315,7 @@ Chave do cache
 
 Também conhecida como _Chave do cache Personalizada_ .
 
-Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/about/cache-keys).
+Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/how-to/cache-keys/).
 
  | 
 
@@ -338,7 +338,7 @@ A aplicação do caching personalizado com base na opção selecionada:
 
 **Standard —** armazena em cache todo o conteúdo estático que possui uma cadeia de consulta.
 
-**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
+**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
 
 
  | 
@@ -538,7 +538,7 @@ Ative ou desative o recurso **Criptografia Oportunística da Cloudflare** da g
 -   Todos
 
  |
-| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/about/cache-control) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
+| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/concepts/cache-control/) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
 
 -   Todos
 
@@ -714,11 +714,11 @@ ___
 
 **Causa raiz**: Isso pode ser devido a um problema de configuração em uma regra de página. Ao criar uma regra de página que usa dois curingas, como uma regra de _redirecionamento de URL_, é possível criar uma regra que menciona o segundo curinga com o marcador de posição $2. Veja o exemplo abaixo:
 
-![configuração de regra de página de exemplo com dois curingas. O URL de encaminhamento contém um espaço reservado $2, que será substituído pelo conteúdo correspondente à segunda ](/support/static/page-rule-create.png)
+![configuração de regra de página de exemplo com dois curingas. O URL de encaminhamento contém um espaço reservado $2, que será substituído pelo conteúdo correspondente à segunda ](/images/support/page-rule-create.png)
 
 Ao atualizar a mesma regra, você pode remover um dos curingas do campo **Se o URL corresponder** e salvá-la. Veja o exemplo abaixo:
 
-![configuração de regra de página incorreta com um único curinga, mas ainda usando o espaço reservado de $2 no URL de encaminhamento. Essa configuração causa ](/support/static/page-rule-update.png)
+![configuração de regra de página incorreta com um único curinga, mas ainda usando o espaço reservado de $2 no URL de encaminhamento. Essa configuração causa ](/images/support/page-rule-update.png)
 
 Se você fizer isso, o marcador de posição $2 fará referência a um caractere curinga que não existe mais e, como tal, um "_Erro 500 (erro interno do servidor)_"é lançado quando um URL aciona a regra da página .
 
@@ -764,12 +764,12 @@ Observe que `example.com/some-path/cloudflare.com` será salvo _sem_ a barra no 
 
 No campo **Se o URL corresponder** de uma regra de página, somente as portas a seguir podem ser especificadas:
 
--   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
 -   Uma porta personalizada de um aplicativo HTTPS do [Cloudflare Spectrum](/spectrum/).
 
 ### Como usar Page Rules com o Workers
 
-Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/platform/workers-with-page-rules/) na documentação para desenvolvedores.
+Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) na documentação para desenvolvedores.
 
 ___
 

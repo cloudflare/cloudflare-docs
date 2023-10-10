@@ -56,7 +56,7 @@
         "body": [
             "---",
             "title: ${1:title}",
-            "pcx_content_type: ${2|overview,concept,how-to,tutorial,integration-guide,configuration,reference,navigation,best-practices,faq,glossary|}",
+            "pcx_content_type: ${2|overview,get-started,tutorial,concept,how-to,integration-guide,configuration,reference,navigation,faq,troubleshooting,changelog,glossary,learning-path,learning-module,learning-unit|}",
             "weight: TODO",
             "---",
             "",
@@ -117,6 +117,22 @@
       "description": "Meta description in Markdown header",
       "scope": "yaml"
     },
+    "Heading pill": {
+      "prefix": ["headingpill", "pillheading"],
+      "body": [
+          "{{<heading-pill style=\"${1|alpha,beta,early-access,deprecated|}\">}}$0{{</heading-pill>}}",
+      ],
+      "description": "Heading pill enclosing some text",
+      "scope": "markdown"
+    },
+    "Inline pill": {
+      "prefix": ["inlinepill", "pillinline"],
+      "body": [
+          "{{<inline-pill style=\"${1|alpha,beta,early-access,deprecated|}\">}}",
+      ],
+      "description": "Inline pill after some text",
+      "scope": "markdown"
+    },
     "Render/include partial": {
         "prefix": ["partialinclude", "renderpartial"],
         "body": [
@@ -167,4 +183,19 @@
       "description": "Creates a new collapsible <details> element with a title and a body",
       "scope": "markdown"
   },
+  "Create FAQ entry": {
+    "prefix": ["faqentry", "faqitem"],
+    "body": [
+      "{{<faq-item>}}",
+      "{{<faq-question text=\"${1:question}\">}}",
+      "{{<faq-answer>}}",
+      "",
+      "$0$TM_SELECTED_TEXT",
+      "",
+      "{{</faq-answer>}}",
+      "{{</faq-item>}}",
+    ],
+    "description": "Create FAQ entry (heading level 2, default)",
+    "scope": "markdown"
+},
 }

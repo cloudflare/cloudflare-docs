@@ -35,17 +35,17 @@ Por el momento, solo Chrome y Firefox tienen acceso a la función HAR de forma p
 
 1\. Haz clic derecho en cualquier lugar de la página del navegador y selecciona **Inspeccionar elemento**.
 
-2\. Las herramientas del desarrollador aparecen en la parte inferior o en el costado izquierdo del navegador. Haz clic en la pestaña **Network** (Red) ![gathering_har_file_network.png](/support/static/gathering_har_file_network.png)
+2\. Las herramientas del desarrollador aparecen en la parte inferior o en el costado izquierdo del navegador. Haz clic en la pestaña **Network** (Red) ![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
 
 3\. Marca **Preserve log** (Conservar registro)
 
 4\. Haz clic en el registro
 
- ![gathering_har_file_record.png](/support/static/gathering_har_file_record.png)
+ ![gathering_har_file_record.png](/images/support/gathering_har_file_record.png)
 
 5\. Navega a la URL que genera los problemas. Una vez que hayas experimentado el problema, haz clic con el botón derecho en cualquiera de los elementos de la pestaña **Network** (Red) y selecciona **Save all as HAR with Content** (Guardar todo como HAR con contenido).
 
- ![save_har_with_content.png](/support/static/save_har_with_content.png)
+ ![save_har_with_content.png](/images/support/save_har_with_content.png)
 
  6. Adjunta el archivo HAR a tu ticket de asistencia.
 
@@ -227,7 +227,7 @@ ___
 
 ## Ejecutar traceroute
 
-Traceroute es una herramienta de diagnóstico que mide la latencia de la ruta de los paquetes en una red. La mayoría de los sistemas operativos admiten el comando _traceroute_. Si tienes problemas de conectividad con el sitio web con proxy de Clouflare y [solicitas ayuda a asistencia de Cloudflare,](https://support.cloudflare.com/hc/articles/200172476), recuerda brindar los resultados de traceroute.
+Traceroute es una herramienta de diagnóstico que mide la latencia de la ruta de los paquetes en una red. La mayoría de los sistemas operativos admiten el comando _traceroute_. Si tienes problemas de conectividad con el sitio web con proxy de Cloudflare y [solicitas ayuda a asistencia de Cloudflare,](https://support.cloudflare.com/hc/articles/200172476), recuerda brindar los resultados de traceroute.
 
 {{<Aside type="tip">}}
 Los tiempos de espera son posibles para los resultados ping, ya que
@@ -278,7 +278,7 @@ ___
 
 ## Agregar el encabezado CF-RAY a tus registros
 
-El encabezado **CF-RAY** rastrea una solicitud de sitio web a través de la red de Cloudflare. Proporciona el encabezado **CF-RAY** de una solicitud web a la asistencia de Clouflare cuando trates de resolver un problema. También puedes agregar el encabezado **CF-RAY** a tus registros mediante la edición de la configuración del servidor web de origen con el fragmento de abajo que corresponda a la marca de tu servidor web.
+El encabezado **CF-RAY** rastrea una solicitud de sitio web a través de la red de Cloudflare. Proporciona el encabezado **CF-RAY** de una solicitud web a la asistencia de Cloudflare cuando trates de resolver un problema. También puedes agregar el encabezado **CF-RAY** a tus registros mediante la edición de la configuración del servidor web de origen con el fragmento de abajo que corresponda a la marca de tu servidor web.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-agent}i\&quot; %{CF-Ray}i&quot; cf_custom</span></div></span></span></span></code></pre>{{</raw>}}

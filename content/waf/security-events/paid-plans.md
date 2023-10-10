@@ -16,11 +16,11 @@ Additionally, Enterprise customers have access to the account-level dashboard in
 
 You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs.
 
-![Example of adding a new filter in Security Events for the Allow action](/waf/static/analytics-add-filter.png)
+![Example of adding a new filter in Security Events for the Allow action](/images/waf/events-add-filter.png)
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
-## Create firewall rule from current filters
+## Create custom rule from current filters
 
 {{<render file="_analytics-create-firewall-rule.md">}}
 
@@ -28,25 +28,25 @@ You can apply multiple filters and exclusions to narrow the scope of Security Ev
 
 The **Events summary** section provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
 
-![Filter by action by selecting Filter when hovering the desired action in Events summary](/waf/static/analytics-events-summary.png)
+![Filter by action by selecting Filter when hovering the desired action in Events summary](/images/waf/events-summary.png)
 
 You can adjust the displayed data according to one of the values by selecting **Filter** or **Exclude** when hovering the legend.
 
 ## Events by service
 
-The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules**, **Firewall rules**, **API Shield**).
+The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules** or **API Shield**).
 
 You can adjust the scope of Security Events to one of the displayed services by selecting **Filter** or **Exclude** when hovering the legend or by selecting the corresponding graph bar.
 
 ## Top events by source
 
-In **Top events by source** you can find details of the traffic flagged or actioned by a security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall rules**.
+In **Top events by source** you can find details of the traffic flagged or actioned by a security feature — for example, **IP Addresses**, **User Agents**, **Paths**, and **Countries**.
 
 You can adjust the scope of Security Events to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
 
 {{<Aside type="note">}}
 
-A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
+A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
 
 {{</Aside>}}
 

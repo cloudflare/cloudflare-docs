@@ -21,14 +21,14 @@ verwenden (dokumentiert in Cloudflares Support KB), sind
 Cache-Ressourcen und bekannte Suchmaschinen-Crawler von Ihren
 Durchsatzbegrenzungsregeln ausgenommen. Daher haben sie keinen Einfluss
 auf das
-[SEO-Ranking](/fundamentals/get-started/task-guides/improve-seo/)
+[SEO-Ranking](/fundamentals/basic-tasks/improve-seo/)
 Ihrer Website. Wenn Sie jedoch die [neue Version der
 Durchsatzbegrenzungsregeln](/waf/rate-limiting-rules/)
 verwenden (dokumentiert in der Entwicklerdokumentation), sollten Sie
 darauf achten, dass Ihre Durchsatzbegrenzungsregeln keine bekannten
 guten Bots betreffen. Dies könnte sonst das SEO-Ranking Ihrer Website
 beeinträchtigen. Weitere Informationen finden Sie unter [SEO
-verbessern](/fundamentals/get-started/task-guides/improve-seo/).
+verbessern](/fundamentals/basic-tasks/improve-seo/).
 {{</Aside>}}
 
 {{<Aside type="note">}}
@@ -193,7 +193,7 @@ Aktionen der Durchsatzbegrenzung basieren auf dem Tarif der Domain, wie oben unt
 
 -   **Blockieren****:** Cloudflare gibt einen HTTP-429-Fehler aus, wenn der Schwellenwert überschritten wird.
 -   **Legacy-CAPTCHA** **–** Der Besucher muss eine Captcha-Herausforderung bestehen.  Wenn er besteht, lässt Cloudflare die Anfrage durch.
--   **JS Challenge** **–** Der Besucher muss eine Cloudflare Javascript Challenge bestehen. Wenn er besteht, lässt Cloudflare die Anfrage durch.
+-   **JS Challenge** **–** Der Besucher muss eine Cloudflare JavaScript Challenge bestehen. Wenn er besteht, lässt Cloudflare die Anfrage durch.
 -   **Protokollieren -** Anfragen werden in [Cloudflare-Protokollen](https://support.cloudflare.com/hc/articles/216672448) aufgezeichnet. Damit kann die Regel getestet werden, bevor sie produktiv eingesetzt wird.
 
 #### **Dauer der Sperre**
@@ -234,7 +234,7 @@ In unserer **Durchsatzbegrenzung** finden Sie das Ein-Klick-Tool „**Schützen 
 
 4\. Klicken Sie auf **Benutzerdefinierte Durchsatzbegrenzungsregel erstellen**.  Legen Sie im Dialogfeld die Einzelheiten Ihrer neuen Regel fest.
 
-![Erstellen Sie ein Popup-Dialogfenster für Durchsatzbegrenzungsregeln mit einer Beispielkonfiguration der Regel. Die Regel blockiert eine Stunde lang Anfragen von IP-Adressen, die 150 Anfragen pro Minute überschreiten.](/support/static/previous-rate-limiting-create-rule.png)
+![Erstellen Sie ein Popup-Dialogfenster für Durchsatzbegrenzungsregeln mit einer Beispielkonfiguration der Regel. Die Regel blockiert eine Stunde lang Anfragen von IP-Adressen, die 150 Anfragen pro Minute überschreiten.](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. Geben Sie einen beschreibenden **Regelnamen** ein.
 
@@ -276,7 +276,7 @@ Zur Konfiguration erweiterter Kriterien für eine neue oder vorhandene Regel geh
 
 1\. Öffnen Sie **Erweiterte Kriterien**.
 
-![Verfügbare Felder bei der Konfiguration der erweiterten Kriterien für eine Durchsatzbegrenzungsregel.](/support/static/previous-rate-limiting-advanced-criteria.png)
+![Verfügbare Felder bei der Konfiguration der erweiterten Kriterien für eine Durchsatzbegrenzungsregel.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. Wählen Sie einen Wert aus der Dropdown-Liste **„Methode(n)“** aus. _ANY_ ist ein Standardwert, der auf alle HTTP-Methoden passt.
 
@@ -302,7 +302,7 @@ So konfigurieren Sie eine Klartext- oder JSON-Antwort:
 
 1\. Öffnen Sie **Erweiterte Antwort**.
 
-![Verfügbare Felder bei der Konfiguration der Erweiterten Reaktion für eine Durchsatzbegrenzungsregel.](/support/static/previous-rate-limiting-advanced-response.png)
+![Verfügbare Felder bei der Konfiguration der Erweiterten Reaktion für eine Durchsatzbegrenzungsregel.](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. Wählen Sie einen anderen **Reaktionstyp** als den Standard: _Benutzerdefiniertes JSON_ oder _Benutzerdefiniertes TEXT_.
 
@@ -351,7 +351,7 @@ ___
 
 2\. Geben Sie bei **Regel für diese URLs umgehen** die URL(s) ein, die von der Durchsatzbegrenzungsregel ausgenommen werden sollen. Geben Sie jede URL in einer eigenen Zeile ein. Ein „HTTP“ oder „HTTPS“, das in der URL angegeben ist, wird beim Speichern der Regel automatisch entfernt. Sie gilt stattdessen sowohl für HTTP als auch für HTTPS.
 
-![Konfigurieren Sie zwei URLs, die für eine Durchsatzbegrenzungsregel umgangen werden sollen (eine pro Zeile).](/support/static/previous-rate-limiting-bypass.png)
+![Konfigurieren Sie zwei URLs, die für eine Durchsatzbegrenzungsregel umgangen werden sollen (eine pro Zeile).](/images/support/previous-rate-limiting-bypass.png)
 
 3\. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
 
@@ -389,7 +389,6 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Abrechnung für Cloudflare-Durchsatzbegrenzung](https://support.cloudflare.com/hc/articles/115000272247)
 -   [Wie wird die Durchsatzbegrenzung in ELS (Enterprise Log Share) gemeldet?](/logs/reference/log-fields)
 -   [Fehlerbehebung bei der Durchsatzbegrenzung von Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Durchsatzbegrenzung über die Cloudflare-API konfigurieren](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

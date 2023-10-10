@@ -21,13 +21,13 @@ Cloudflare teste toutes les tentatives de connexion si l’utilisateur fournit d
 
 ![Ancienne URL : https://support.cloudflare.com/hc/article_attachments/360035322751/account_access_email.png
 ID de l'article : 115003614752 | Authentification multifacteur par e-mail
-](/support/static/hc-import-account_access_email.png)
+](/images/support/hc-import-account_access_email.png)
 
 Cloudflare teste la connexion en envoyant, à l’adresse e-mail associée à ce compte dans notre base de données, un code unique qui expire après 30 minutes. Lorsque le code correct est saisi dans le tableau de bord, cette adresse IP est enregistrée, et, pendant 90 jours, toute tentative de connexion ultérieure depuis cette adresse IP ne fera plus l’objet d’un test.
 
 ![Ancienne URL : https://support.cloudflare.com/hc/article_attachments/360035323072/login_authentication.png
 ID de l'article : 115003614752 | Authentification multifacteur par e-mail
-](/support/static/hc-import-login_authentication.png)
+](/images/support/hc-import-login_authentication.png)
 
 Si vous cochez la case « Remember this computer » (Se souvenir de cet ordinateur), cet appareil/navigateur ne recevra pas de tests d’authentification multifacteur pendant 14 jours. Au bout de 14 jours, Cloudflare vérifiera à nouveau l’adresse IP pour les connexions à partir de cet appareil/ ce navigateur.
 

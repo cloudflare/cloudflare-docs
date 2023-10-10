@@ -35,21 +35,13 @@ This is the directory name that you will set in the build command.
 
 ## Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Pelican* as your **Framework preset**. Your selection will provide the following information. The build command `pelican content` refers to the `content` folder you made earlier in this guide.
 
-{{<table-wrap>}}
-
-| Configuration option | Value                       |
-| -------------------- | --------------------------- |
-| Production branch    | `main`                      |
-| Build command        | `pelican content`           |
-| Build directory      | `output`                    |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="pelican">}}
 
 4. Select **Environment variables (advanced)** and set the `PYTHON_VERSION` variable with the value of `3.7`.
 

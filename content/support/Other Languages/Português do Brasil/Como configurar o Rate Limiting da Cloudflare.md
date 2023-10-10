@@ -216,7 +216,7 @@ O **Rate Limiting** contém uma ferramenta de um clique **Proteger seu login** q
 
 4\. Clique em **Criar uma regra de limitação de taxa**.  Será aberta uma caixa de diálogo para especificar os detalhes da nova regra.
 
-![Crie uma caixa de diálogo pop-up de regra de limitação de taxa com um exemplo de configuração de regra. A regra bloqueará solicitações de endereços de IP que excedam 150 solicitações por minuto por uma hora.](/support/static/previous-rate-limiting-create-rule.png)
+![Crie uma caixa de diálogo pop-up de regra de limitação de taxa com um exemplo de configuração de regra. A regra bloqueará solicitações de endereços de IP que excedam 150 solicitações por minuto por uma hora.](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. Insira um **Nome da regra** descritivo.
 
@@ -251,7 +251,7 @@ Para configurar seus critérios avançados para uma regra nova ou existente, sig
 
 1\. Expandir os **Critérios avançados**.
 
-![Campos disponíveis ao configurar os critérios avançados para uma regra de limitação de taxa.](/support/static/previous-rate-limiting-advanced-criteria.png)
+![Campos disponíveis ao configurar os critérios avançados para uma regra de limitação de taxa.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. Selecionar um valor na lista suspensa **Método(s)**. O valor padrão é _QUALQUER_, que corresponde a todos os métodos HTTP.
 
@@ -277,7 +277,7 @@ Para configurar texto simples ou uma resposta JSON:
 
 1\. Expandir **Resposta avançada**.
 
-![Campos disponíveis ao configurar uma resposta avançada para uma regra de limitação de taxa.](/support/static/previous-rate-limiting-advanced-response.png)
+![Campos disponíveis ao configurar uma resposta avançada para uma regra de limitação de taxa.](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. Selecionar um formato de **Tipo de resposta** diferente do padrão: _JSON personalizado_ ou _TEXT personalizado_.
 
@@ -326,7 +326,7 @@ ___
 
 2\. Na caixa de texto **Ignorar regra para estes URLs**, inserir os URLs que estão isentos da regra de limitação de taxa. Inserir cada URL em sua própria linha. Um HTTP ou HTTPS especificado no URL será removido automaticamente quando a regra for salva e, em vez disso, se aplica a HTTP e HTTPS.
 
-![Configurar dois URLs para ignorar uma regra de limitação de taxa (um por linha).](/support/static/previous-rate-limiting-bypass.png)
+![Configurar dois URLs para ignorar uma regra de limitação de taxa (um por linha).](/images/support/previous-rate-limiting-bypass.png)
 
 3\. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
 
@@ -364,7 +364,6 @@ ___
 
 ## Recursos relacionados
 
--   [Cobrança do Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/articles/115000272247)
 -   [Como o Rate Limiting é relatado no ELS (Enterprise Log Share)?](/logs/reference/log-fields)
 -   [Solução de problemas no Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configurar Rate Limiting por meio da API da Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

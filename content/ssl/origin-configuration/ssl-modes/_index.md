@@ -39,3 +39,5 @@ If you are not sure which encryption mode to use, enable the [SSL/TLS Recommende
  
 {{</tab>}}
 {{</tabs>}}
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}

@@ -11,13 +11,17 @@ In this guide, you will create a new React application and deploy it using Cloud
 
 ## Setting up a new project
 
-Create a new project using `npx`, giving it the title `my-react-app` in your terminal.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate React's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new React project, run the following command:
 
 ```sh
-$ npx create-react-app my-react-app
+$ npm create cloudflare@latest my-react-app -- --framework=react
 ```
 
-And move into the application's directory via:
+`create-cloudflare` will install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the Cloudflare Pages adapter, and ask you setup questions.
+
+Go to the application's directory:
 
 ```sh
 $ cd my-react-app
@@ -33,17 +37,19 @@ $ npm start
 
 {{<render file="_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+{{<render file="_deploy-via-c3.md" withParameters="React">}}
+
+### Deploy via the Cloudflare dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `build`         |
+{{<pages-build-preset framework="create-react-app">}}
 
 </div>
 

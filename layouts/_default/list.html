@@ -12,6 +12,10 @@
     </div>
 
     <main class="DocsBody">
+      {{ with .Params.sidebar_toc }}
+      {{ partial "sidebar.toc" . }}
+      {{- $type = "document" -}}
+      {{- end -}}
       <div id="docs-content" data-reach-skip-nav-content></div>
       {{- partial "breadcrumbs" . -}}
 

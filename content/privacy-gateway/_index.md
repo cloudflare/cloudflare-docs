@@ -5,7 +5,7 @@ layout: overview
 weight: 1
 ---
 
-{{<beta>}}Cloudflare Privacy Gateway{{</beta>}}
+{{<heading-pill style="beta">}}Cloudflare Privacy Gateway{{</heading-pill>}}
 
 {{<description>}}
 Implements the Oblivious HTTP IETF standard to improve client privacy.

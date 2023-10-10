@@ -270,7 +270,7 @@ impl WorkersKv {
 
 The above wrapper only exposes a subset of the options supported by the KV API, other options such as `expiration` instead of `expirationTtl` for `PUT` and other types than `text` and `arrayBuffer` for `GET` could be wrapped in a similar fashion. Conceptually, the wrapper methods all manually construct a JavaScript object using `Reflect::set` and then convert the return value into a standard Rust type where necessary.
 
-## Using the wrapper
+## Use the wrapper
 
 You are now ready to use the wrapper to read and write values to and from your KV namespace.
 
@@ -324,7 +324,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-You can use [`wrangler dev`](/workers/wrangler-legacy/commands/#dev) to test the Worker:
+You can use [`wrangler dev`](/workers/wrangler/commands/#dev) to test the Worker:
 
 ```sh
 $ curl 'localhost:8787/foo'

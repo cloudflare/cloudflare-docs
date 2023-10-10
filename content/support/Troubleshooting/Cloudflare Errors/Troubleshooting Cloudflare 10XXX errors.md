@@ -10,11 +10,11 @@ title: Troubleshooting Cloudflare 10XXX errors
 
 ## Error 10028: The add list items operation contains duplicate items
 
-This error occurs when there are duplicate list items in a single operation to add items to a List (either an IP List or a Bulk Redirect List).
+This error occurs when there are duplicate list items in a single operation to add items to a List (either an IP list or a Bulk Redirect List).
 
 This error can happen when you:
 
--   Add a repeated IP address to an IP List
+-   Add a repeated IP address to an IP list
 -   Add a repeated source URL to a Bulk Redirect List
 
 ### **Resolution**
@@ -178,26 +178,27 @@ ___
 
 ## Error 10056: The add list items operation contains different types of list items
 
-This error occurs when there are different types of list items (both IP addresses and URL redirects) in a single operation to add items to a List. The error may occur for an IP List or a Bulk Redirect List.
+This error occurs when there are different types of list items (for example, IP addresses, hostnames, and URL redirects) in a single operation to add items to a list. The error may occur for an IP list, a hostname list, or a Bulk Redirect List.
 
 ### **Resolution**
 
 Remove the list items that do not apply to the list type. This means:
 
 -   Removing IP addresses from a request to add items to a Bulk Redirect List
--   Removing URL redirects from a request to add items to an IP List
+-   Removing URL redirects from a request to add items to an IP list
 
 ___
 
 ## Error 10058: List items incompatible with list type
 
-This error occurs when you are adding items to a List (either IP List or Bulk Redirect List) and the list items are incompatible with the list type.
+This error occurs when you are adding items to a list (either IP list, hostname list, or Bulk Redirect List) and the list items are incompatible with the list type.
 
 ### **Resolution**
 
 Make sure you are adding the items to the correct list:
 
--   IP Lists can only contain IP addresses as list items
+-   Custom lists with IP addresses (IP lists) can only contain IP addresses as list items
+-   Custom lists with hostnames can only contain hostnames as list items
 -   Bulk Redirect Lists can only contain URL redirects as list items
 
 ___

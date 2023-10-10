@@ -184,6 +184,12 @@ lower(http.request.uri.path) contains "/wp-login.php"
 Comparison operators, namely the `eq` operator, do not support wildcards (for example, `*`) in strings. However, the `matches` operator supports regular expressions like `.*`, which matches zero or more occurrences of any character.
 {{</Aside>}}
 
+### Regular expression matching
+
+Customers on Business and Enterprise plans have access to the `matches` operator. Regular expression matching is performed using the Rust regular expression engine.
+
+If you are using a regular expression, you can test it using a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk/).
+
 ## Logical operators
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
@@ -273,7 +279,7 @@ To avoid ambiguity when working with logical operators, use grouping symbols so 
 
 The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
-Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
+Only the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) does not.
 
 
 ### Group expressions

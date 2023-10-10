@@ -12,7 +12,7 @@ Speed up and protect entire authoritative nameservers
 
 {{<plan type="ent-add-on">}}
 
-Cloudflare DNS Firewall proxies all DNS queries to your nameservers through Cloudflare’s global edge network. This action protects upstream nameservers from DDoS attacks and reduces load by caching DNS responses.
+Cloudflare DNS Firewall proxies all DNS queries to your nameservers through Cloudflare’s global network. This action protects upstream nameservers from DDoS attacks and reduces load by caching DNS responses.
 
 ![Diagram showing protection provided by DNS Firewall. For more details, read further.](/images/dns/dns-firewall-overview.png)
 
@@ -40,6 +40,6 @@ DNS Firewall provides the following benefits while allowing your organization to
 * Global distribution
 * Enhanced performance
 * Bandwidth savings
-* Rate limiting per data center
+* [Rate limiting per data center](/dns/dns-firewall/setup/#additional-options)
 * Minimum and maximum cache TTL specification
 * DNS [ANY](https://datatracker.ietf.org/doc/html/rfc8482) query type block

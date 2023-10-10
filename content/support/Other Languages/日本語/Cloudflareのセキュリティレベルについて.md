@@ -35,4 +35,4 @@ ___
 
 -   [Cloudflare CHAPTCHAについて](https://support.cloudflare.com/hc/articles/200170136)
 -   [Cloudflare 攻撃下モードについて](https://support.cloudflare.com/hc/articles/200170076)
--   [DDoS攻撃への対応](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS攻撃への対応](/ddos-protection/best-practices/respond-to-ddos-attacks/)

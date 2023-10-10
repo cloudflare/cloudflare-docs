@@ -37,7 +37,7 @@ ___
 
 ## SameSite Cookieとcf\_clearance Cookieに関する既知の問題
 
-[**ファイアウォールルール**](https://support.cloudflare.com/hc/articles/360016473712)や[**IPアクセスルール**](https://support.cloudflare.com/hc/articles/217074967)などに対して[Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136)またはJavascriptのチャレンジが解決されると、クライアントブラウザーに**cf\_clearance** Cookieが設定されます。_cf\_clearance_ Cookieのデフォルトの寿命は30分ですが、Cloudflare **Firewall**アプリの **「設定（Settings）」**タブにある[**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e)を介して設定されます。
+[**ファイアウォールルール**](https://support.cloudflare.com/hc/articles/360016473712)や[**IPアクセスルール**](https://support.cloudflare.com/hc/articles/217074967)などに対して[Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136)またはJavaScriptのチャレンジが解決されると、クライアントブラウザーに**cf\_clearance** Cookieが設定されます。_cf\_clearance_ Cookieのデフォルトの寿命は30分ですが、Cloudflare **Firewall**アプリの **「設定（Settings）」**タブにある[**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e)を介して設定されます。
 
 さまざまなホスト名からの訪問者のリクエストが後続のチャレンジやエラーに遭遇しないように、**cf\_clearance** Cookie依頼はCloudflareは**SameSite**\=_None_を使用しています。**SameSite**\=_None_を使用する場合、_Secure_フラグと一緒に設定しなければなりません。
 

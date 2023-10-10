@@ -14,8 +14,8 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Create an account ruleset][cr-account] | `POST /accounts/<ACCOUNT_ID>/rulesets` |
-| [Create a zone ruleset][cr-zone] | `POST /zones/<ZONE_ID>/rulesets` |
+| [Create an account ruleset][cr-account] | `POST /accounts/{account_id}/rulesets` |
+| [Create a zone ruleset][cr-zone] | `POST /zones/{zone_id}/rulesets` |
 
 [cr-account]: /api/operations/createAccountRuleset
 [cr-zone]: /api/operations/createZoneRuleset
@@ -50,15 +50,15 @@ The following parameters are required:
       <td>String</td>
       <td><p>Allowed values:
           <ul>
-            <li><em>custom</em> - creates a custom ruleset</li>
-            <li><em>root</em> - creates a phase entry point ruleset at the account level</li>
-            <li><em>zone</em> - creates a phase entry point ruleset at the zone level</li>
+            <li><code>custom</code>: Creates a custom ruleset</li>
+            <li><code>root</code>: Creates a phase entry point ruleset at the account level</li>
+            <li><code>zone</code>: Creates a phase entry point ruleset at the zone level</li>
           </ul>
         </p></td>
     </tr>
     <tr>
       <td><code>phase</code></td>
-      <td>The name of the phase where the ruleset will be created.</td>
+      <td>The name of the <a href="/ruleset-engine/about/phases/">phase</a> where the ruleset will be created.</td>
       <td>String</td>
       <td>Check the specific Cloudflare product documentation for more information on the phases where you can create rulesets for that product.</td>
     </tr>
@@ -75,10 +75,11 @@ The following example request creates a custom ruleset in the `http_request_fire
 <summary>Request</summary>
 <div>
 
-```json
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "Example custom ruleset",
   "kind": "custom",
   "description": "Example ruleset description",
@@ -142,10 +143,11 @@ You do not have to use this method to create a phase entry point ruleset — Clo
 <summary>Request</summary>
 <div>
 
-```json
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "Zone-level phase entry point",
   "kind": "zone",
   "description": "This ruleset executes a managed ruleset.",

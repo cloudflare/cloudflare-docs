@@ -13,7 +13,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting 
 
 A rate limiting rule is similar to a regular rule handled by the Ruleset Engine, but contains an additional `ratelimit` object with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on this field and its parameters.
 
-You must deploy rate limiting rules to the `http_ratelimit` [phase entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset).
+You must deploy rate limiting rules to the `http_ratelimit` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
 Rate limiting rules must appear at the end of the rules list.
 
@@ -27,9 +27,9 @@ This example adds a rate limiting rule to the `http_ratelimit` phase entry point
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My rate limiting rule",
   "expression": "(http.request.uri.path matches \"^/api/\")",
   "action": "block",
@@ -59,9 +59,9 @@ The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-da
 highlight: 9-13
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My rate limiting rule",
   "expression": "(http.request.uri.path matches \"^/api/\")",
   "action": "block",
@@ -98,9 +98,9 @@ The new rule does not consider requests for cached assets when calculating the r
 highlight: 17
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My rate limiting rule",
   "expression": "(http.request.uri.path matches \"^/api/\")",
   "action": "block",
@@ -136,9 +136,9 @@ The new rule is a complexity-based rate limiting rule that takes the `my-score` 
 highlight: 14-15
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My complexity-based rate limiting rule",
   "expression": "http.request.uri.path matches \"^/graphql/\"",
   "action": "block",
@@ -157,3 +157,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 ```
 
 {{<render file="_api-create-ruleset-with-rule.md">}}
+
+---
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks for working with rate limiting rules at the zone level:
+
+{{<render file="_rules-next-steps-table.md" withParameters="rate limiting rules;;http_ratelimit">}}

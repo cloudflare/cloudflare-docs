@@ -101,6 +101,12 @@ For example, typing:
 NSLookup(B1, B2)
 ```
 
+Or - depending on your regional settings - you may have to use this formula:
+
+```txt
+NSLookup(B1; B2)
+```
+
 <div class="medium-img">
 
 ![Google sheets function](/images/1.1.1.1/google-sheet-function.png)

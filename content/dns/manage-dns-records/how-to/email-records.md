@@ -24,7 +24,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
      | **Type** | **Name** | **IPv4 address** | **Proxy status** |
      | -------- | -------- | ---------------- | ---------------- |
-     | A        | `mail`   | `192.0.2.1`      | Proxied          |
+     | A        | `mail`   | `192.0.2.1`      | DNS only         |
 
      <details>
       <summary>API example</summary>
@@ -105,8 +105,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
         "type":"MX",
         "name":"example.com",
         "content":"mail.example.com",
-        "ttl":3600,
-        "proxied":false
+        "ttl":3600
       }'
       ```
 
@@ -151,24 +150,8 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
 ## Prevent domain spoofing
 
-There are several DNS mechanisms to prevent others from sending emails on behalf of your domain. These all work as TXT records that need to be added on your domain:
-
-- [Sender Policy Framework (SPF)](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/): List authorized IP addresses and domains that can send email on behalf of your domain.
-- [DomainKeys Identified Mail (DKIM)](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/): Ensure email authenticity by cryptographically signing emails.
-- [Domain-based Message Authentication Reporting and Conformance (DMARC)](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/): Receive aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
-
-{{<Aside type="note">}}
-
-For additional background on email security records, refer to the [introductory blog post](https://blog.cloudflare.com/tackling-email-spoofing/).
-
-{{</Aside>}}
+{{<render file="_domain-spoofing.md" productFolder="dmarc-management">}}
 
 ### Configure email security records
 
-To set up email security records:
-
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2.  Go to **DNS** > **Settings**.
-3.  For **Email Security**, click **Configure**.
-    - If your domain sends email, use the available options to set up SPF, DKIM, and DMARC records.
-    - If your domain does not send email, use the **Your domain is not used to send email** section to set up restrictive email records.
+Refer to [Security records](/dmarc-management/security-records/) to learn how to set up your email security records.

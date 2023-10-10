@@ -66,7 +66,7 @@ die Cloudflares Universal SSL verwenden.
 
 Allein verwendet, erlaubt _issuewild_ nur die Ausgabe von Platzhaltern.  Daher kann Cloudflare Ihre Stammdomain nur zum Zertifikat hinzufügen, wenn Sie die Option _Platzhalter und bestimmte Hostnamen zulassen_ in der Dropdown-Liste **Tag** angeben:
 
-![configuring_caa_records_comodoca_annotated.png](/support/static/configuring_caa_records_comodoca_annotated.png)
+![configuring_caa_records_comodoca_annotated.png](/images/support/configuring_caa_records_comodoca_annotated.png)
 
 ___
 

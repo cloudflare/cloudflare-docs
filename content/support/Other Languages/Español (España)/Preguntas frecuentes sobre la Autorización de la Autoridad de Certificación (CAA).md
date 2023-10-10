@@ -64,7 +64,7 @@ Universal SSL de Cloudflare.
 
 Utilizado de manera independiente, _issuewild_ solo permite la emisión de comodines.  Por este motivo, Cloudflare no puede añadir tu dominio raíz al certificado, a menos que especifiques la opción _Permitir comodines y nombres de host específicos_ en el menú desplegable **Etiqueta**:  
 
-![configuring_caa_records_comodoca_annotated.png](/support/static/configuring_caa_records_comodoca_annotated.png)
+![configuring_caa_records_comodoca_annotated.png](/images/support/configuring_caa_records_comodoca_annotated.png)
 
 ___
 

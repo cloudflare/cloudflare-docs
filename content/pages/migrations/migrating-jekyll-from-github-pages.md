@@ -109,11 +109,15 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 {{<Aside type="note">}}
 
-If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/pages/get-started/#connect-your-git-provider-to-pages), which explains how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/pages/get-started/guide/#connect-your-git-provider-to-pages), which explains how to connect your existing GitHub repository to Cloudflare Pages.
 
 {{</Aside>}}
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 

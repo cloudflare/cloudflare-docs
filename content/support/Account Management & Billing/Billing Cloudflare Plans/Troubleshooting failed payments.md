@@ -37,8 +37,6 @@ Below are common validation methods as well as next steps to rectify the issue:
 
 **Card type validation -** The card type is being validated, which means that card types that we do not support will fail. Not all card types are supported by us, this means that some Visa and Mastercard methods may not be supported.
 
-**Address validation** \- The address entered is checked against a database to verify if it is correct. If there is a mismatch the verification will fail.
-
 **Email validation** \- A verification email is sent to the address on file for your PayPal account.
 
 ___

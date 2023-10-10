@@ -15,33 +15,26 @@ The most common way you will encounter a `Request` object is as a property of an
 ---
 highlight: [2]
 ---
-addEventListener("fetch", event => {
-  let request = event.request // Request object
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) { 
+		return new Response('Hello World!');
+	},
+};
 ```
 
 You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
 
 ```js
-addEventListener("fetch", event => {
-  const request = event.request
-  const url = "https://example.com"
-
-  const modifiedRequest = new Request(url, request)
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) { 
+        const url = "https://example.com";
+        const modifiedRequest = new Request(url, request);
+		// ...
+	},
+};
 ```
 
-The global `fetch` method itself invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to `fetch`.
-
-{{<Aside type="note" header="Learn more">}}
-
-Review the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event/) for a deeper understanding of these fundamental Workers concepts.
-
-{{</Aside>}}
+The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
 
 ---
 
@@ -110,7 +103,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *    Treats all content as static and caches all [file types](/cache/about/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/articles/200172266). Defaults to `false`.
+    *    Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/articles/200172266). Defaults to `false`.
         This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheKey` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -119,7 +112,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTags` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/#cache-tags-enterprise-only) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
+    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -341,20 +334,20 @@ These methods are only available on an instance of a `Request` object or through
 
 ## The `Request` context
 
-The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the `Request` context.
-
-The `Request` context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
+Each time a Worker is invoked by an incoming HTTP request, the [`fetch()` handler](/workers/runtime-apis/handlers/fetch) is called on your Worker. The `Request` context starts when the `fetch()` handler is called, and asynchronous tasks (such as making a subrequest using the [`fetch() API`](/workers/runtime-apis/fetch/)) can only be run inside the `Request` context:
 
 ```js
-addEventListener("fetch", event => {
-  // Request context available here
-  event.respondWith(/*...*/)
-})
+export default {
+	async fetch(request, env, ctx) {
+        // Request context starts here
+		return new Response('Hello World!');
+	},
+};
 ```
 
 ### When passing a promise to fetch event `.respondWith()`
 
-If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
+If you pass a Response promise to the fetch event `.respondWith()` method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
 
 ```js
 addEventListener("fetch", event => {

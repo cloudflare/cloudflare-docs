@@ -19,7 +19,7 @@ title: Cloudflare IP 地理位置有什么作用？
 
 IP 地理定位的选项位于页面底部：
 
-![](/support/static/IPGeolocation2.png)
+![](/images/support/IPGeolocation2.png)
 
 启用后，Cloudflare 会将名为“CF-IPCountry”的标头添加到我们向您源站发出的所有请求中。以下是一些如何定位/存储这个值的示例：
 

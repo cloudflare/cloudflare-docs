@@ -16,7 +16,7 @@ For example, if you install applications that depend on the incoming IP address 
 
 The diagram below illustrates the different ways that IP addresses are handled with and without Cloudflare.
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 {{<Aside type="warning">}}
 Cloudflare no longer updates and supports *mod\_cloudflare*, starting
@@ -233,7 +233,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
 
-When using Railgun (or other reverse proxy software, such as Varnish), user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
+When using [Railgun](/railgun/) (deprecated) or other reverse proxy software such as Varnish, user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
 
 1.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
 2.  At the very end add:`CloudflareRemoteIPTrustedProxy railgun_address`So, if your Railgun server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
@@ -401,5 +401,5 @@ ___
 
 ## Related Resources
 
--   [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/)
+-   [HTTP request headers](/fundamentals/reference/http-request-headers/)
 -   [Transform Rules](/rules/transform/)

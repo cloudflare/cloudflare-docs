@@ -10,8 +10,10 @@ meta:
 
 Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
-{{<Aside type="note">}}
 For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
+
+{{<Aside type="note">}}
+Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 {{</Aside>}}
 
 ## Availability
@@ -33,7 +35,7 @@ To create an Origin CA certificate in the dashboard:
 5.  Choose either:
     - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
     - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
-6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
+6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone apex and first level wildcard hostname are included by default.
 7.  Choose a **Certificate Validity** period.
 8.  Select **Create**.
 9.  Choose the **Key Format**:
@@ -104,7 +106,7 @@ Some origin web servers require upload of the Cloudflare Origin CA root certific
 
 ### Hostname and wildcard coverage
 
-Certificates may be generated with up to 100 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
+Certificates may be generated with up to 200 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
 
 Wildcards may only cover one level, but can be used multiple times on the same certificate for broader coverage (for example, `*.example.com` and `*.secure.example.com` may co-exist).
 

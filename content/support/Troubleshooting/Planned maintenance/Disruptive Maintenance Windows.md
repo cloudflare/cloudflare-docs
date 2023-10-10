@@ -23,6 +23,10 @@ All dates in the calendar are in UTC Timezone.
 [Download iCal](https://calendar.google.com/calendar/ical/c_83vui762nfm498l9a0ciojbju0%40group.calendar.google.com/public/basic.ics "Download iCal")  
 [Add to Google Calendar](https://calendar.google.com/calendar/u/0?cid=Y184M3Z1aTc2Mm5mbTQ5OGw5YTBjaW9qYmp1MEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t "Add to Google Calendar")
 
+### Notifications
+
+Scheduled maintenances can also be sent out via [Cloudflare Notifications](/notifications/).
+
 ## Unplanned Maintenance
 
 Should there be a need for unplanned or emergency maintenance, an incident will be declared and will appear on https://www.cloudflarestatus.com/.

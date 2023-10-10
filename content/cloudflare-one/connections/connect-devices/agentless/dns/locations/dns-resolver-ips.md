@@ -9,15 +9,15 @@ weight: 2
 
 When you create a DNS location, Gateway assigns IPv4/IPv6 addresses and DoT/DoH hostnames to that location. These are the IP addresses and hostnames you send your DNS queries to for Gateway to resolve.
 
-To view the DNS resolver IPs for a DNS location, navigate to **Gateway** > **DNS Locations** and expand its location card.
+To view the DNS resolver IPs for a DNS location, go to **Gateway** > **DNS Locations** and expand its location card.
 
-![View IP addresses and hostnames assigned to a DNS location](/cloudflare-one/static/documentation/policies/location-ips.png)
+![View IP addresses and hostnames assigned to a DNS location](/images/cloudflare-one/policies/location-ips.png)
 
 ## How Gateway matches queries to DNS locations
 
 Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
-![Flowchart for how Gateway determines the location of a DNS query. See below for discussion.](/cloudflare-one/static/documentation/policies/gateway-determine-location-dns.png)
+![Flowchart for how Gateway determines the location of a DNS query. See below for discussion.](/images/cloudflare-one/policies/gateway-determine-location-dns.png)
 
 **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
 
@@ -52,7 +52,7 @@ Each DNS location is assigned a unique hostname for DNS over TLS (DoT). Gateway 
 
 ## DNS over HTTPS
 
-Each DNS ocation is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
+Each DNS location is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
 
 ### DoH subdomain
 
@@ -68,8 +68,8 @@ In the example below, the DoH subdomain is: `65y9p2vm1u`.
 
 By default, all queries from a configured DNS location will be sent to its DNS resolver IP address to be inspected by Gateway. You can configure Gateway to only filter queries originating from specific networks within a location:
 
-1. [Create an IP list](/cloudflare-one/policies/filtering/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
-2. Add a [Source IP](/cloudflare-one/policies/filtering/dns-policies/#source-ip) condition to your DNS policies.
+1. [Create an IP list](/cloudflare-one/policies/gateway/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
+2. Add a [Source IP](/cloudflare-one/policies/gateway/dns-policies/#source-ip) condition to your DNS policies.
 
 For example, if you want to block security threats for specific networks, you could create the following policy:
 
@@ -87,4 +87,4 @@ For example, if you want to block security threats for specific networks, you co
 
 **Action**: Block
 
-DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/analytics/logs/gateway-logs/).
+DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).

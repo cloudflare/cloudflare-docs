@@ -39,5 +39,4 @@ ___
 
 ## Recursos relacionados
 
--   [Como configurar o Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/pt-br/articles/115000272247)
--   [Cobrança do Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/pt-br/articles/115000272247)
+-   [Como configurar o Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/articles/115001635128)

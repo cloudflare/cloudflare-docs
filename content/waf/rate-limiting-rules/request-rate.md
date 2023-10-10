@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
 type: overview
-title: Determining the rate
+title: Request rate calculation
 weight: 12
+meta:
+  title: How Cloudflare determines the request rate
 ---
 
-# Determining the rate
+# How Cloudflare determines the request rate
 
 Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the rule characteristics.
 
@@ -55,7 +57,7 @@ _**Rate limiting rule #1**_
 
 The following diagram shows how Cloudflare handles four incoming requests in the context of the above rate limiting rule.
 
-![Rate limiting example with four requests where one of the requests is being rate limited. For details, keep reading.](/waf/static/custom-rules/rate-limiting-example.png)
+![Rate limiting example with four requests where one of the requests is being rate limited. For details, keep reading.](/images/waf/custom-rules/rate-limiting-example.png)
 
 Since request 1 matches the rule expression, the rate limiting rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the rate limiting rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests**, the request is allowed.
 
@@ -98,7 +100,7 @@ _**Rate limiting rule #2**_
 
 The following diagram shows how Cloudflare handles these four incoming requests received during a 10-second period in the context of the above rate limiting rule.
 
-![Rate limiting example with four requests where the rate limiting rule uses a response field (the HTTP response code) in the counting expression. For details, keep reading.](/waf/static/custom-rules/rate-limiting-example-response-field.png)
+![Rate limiting example with four requests where the rate limiting rule uses a response field (the HTTP response code) in the counting expression. For details, keep reading.](/images/waf/custom-rules/rate-limiting-example-response-field.png)
 
 Since request 1 matches the rule expression, the rate limiting rule is evaluated. The request is sent to the origin, skipping any cached content, because the rate limiting rule includes a response field (`http.response.code`) in the counting expression. The origin responds with a `400` status code. Since there is a match for the counting expression, Cloudflare creates a request counter for the values of the characteristics in the context of the rate limiting rule, and sets this counter to `1`.
 

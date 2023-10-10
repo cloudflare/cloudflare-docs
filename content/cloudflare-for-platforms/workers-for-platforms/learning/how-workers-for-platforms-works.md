@@ -24,7 +24,7 @@ Workers for Platforms introduces a new architecture model as outlined on this pa
 
 ### Dispatch namespace
 
-A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any User Worker in a namespace.
+A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace.
 
 {{<Aside type="note" header="Best practice">}}
 
@@ -38,7 +38,7 @@ If you have multiple distinct services you are providing your customers, you sho
 
 A dynamic dispatch Worker is written by Cloudflare’s platform customers to run their own logic before dispatching (routing) the request to user Workers. In addition to routing, it can be used to run authentication, create boilerplate functions and sanitize responses.
 
-The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. The dynamic dispatch Worker is configured with a [dispatch namespace binding](/workers/platform/bindings/#dispatch-namespace-bindings-workers-for-platforms). The binding is the entrypoint for all requests to user Workers.
+The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. The dynamic dispatch Worker is configured with a [dispatch namespace binding](/workers/configuration/bindings/#dispatch-namespace-bindings-workers-for-platforms). The binding is the entrypoint for all requests to user Workers.
 
 ### User Workers
 

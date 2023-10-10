@@ -65,7 +65,7 @@ ___
 -   Eine externe Domain, die nicht über Cloudflare läuft, hat einen CNAME-Eintrag zu einer auf Cloudflare aktiven Domain.
 -   Das Ziel des DNS-CNAME-Eintrags lässt sich nicht auflösen.
 -   Ein CNAME-Eintrag in Ihrer Cloudflare-DNS-App erfordert eine Auflösung durch einen DNS-Provider, der zurzeit offline ist.
--   [Always Online](/cache/about/always-online) ist für eine Domain mit [benutzerdefiniertem Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) aktiviert.
+-   [Always Online](/cache/how-to/always-online/) ist für eine Domain mit [benutzerdefiniertem Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) aktiviert.
 
 ### Lösung
 
@@ -73,7 +73,7 @@ Eine Cloudflare-fremde Domain kann sich nicht per CNAME auf eine Cloudflare-Doma
 
 Der direkte Zugriffsversuch auf DNS-Einträge, die für [Cloudflare CNAME-Setups](/dns/zone-setups/partial-setup) verwendet werden, führt ebenfalls zu Fehler 1001 (zum Beispiel:_www.beispiel.com.cdn.cloudflare.net_).
 
-Deaktivieren Sie [Always Online](/cache/how-to/enable-always-online), wenn Sie [benutzerdefinierte Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) verwenden.
+Deaktivieren Sie [Always Online](/cache/how-to/always-online/#enable-always-online), wenn Sie [benutzerdefinierte Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas/) verwenden.
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 ### Häufige Ursache
 
-Der vom Client oder Browser durch [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) gesendete Hostname stimmt nicht mit dem Host-Header der Anfrage überein.
+Der vom Client oder Browser durch [Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) gesendete Hostname stimmt nicht mit dem Host-Header der Anfrage überein.
 
 ### Lösung
 
@@ -418,7 +418,7 @@ Sie haben eine Seite auf einer Website angefordert (`tunnel.beispiel.com`), die 
 ### Lösung
 
 -   **Wenn Sie Besucher dieser Website sind**: Bitte versuchen Sie es in ein paar Minuten erneut.
--   **Wenn Sie der Besitzer dieser Website sind**: Überprüfen Sie, ob _cloudflared_ ausgeführt wird und das Netzwerk erreicht werden kann. Möglicherweise sollten Sie [Load Balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) für Ihren Tunnel aktivieren.
+-   **Wenn Sie der Besitzer dieser Website sind**: Überprüfen Sie, ob _cloudflared_ ausgeführt wird und das Netzwerk erreicht werden kann. Möglicherweise sollten Sie [Load Balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) für Ihren Tunnel aktivieren.
 
 ___
 
@@ -525,7 +525,7 @@ ___
 
 ### Häufige Ursache
 
-Ein Cloudflare-Worker überschreitet ein [CPU-Zeitlimit](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Die CPU-Zeit ist die Zeit, die mit der Ausführung von Code verbracht wird (z. B. Schleifen, JSON-Parsing usw.). Die Zeit, die mit Netzwerkanfragen verbracht wird (Abrufen, Antworten), zählt nicht zur CPU-Zeit.
+Ein Cloudflare-Worker überschreitet ein [CPU-Zeitlimit](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Die CPU-Zeit ist die Zeit, die mit der Ausführung von Code verbracht wird (z. B. Schleifen, JSON-Parsing usw.). Die Zeit, die mit Netzwerkanfragen verbracht wird (Abrufen, Antworten), zählt nicht zur CPU-Zeit.
 
 ### Lösung
 

@@ -20,7 +20,7 @@ avoid breaking specific API endpoints and other web applications.
 Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
 
 {{<Aside type="note">}}
-Enable Origin Error Pages excludes 521 and 522 errors.
+Enable Origin Error Pages excludes errors 520 to 527.
 {{</Aside>}}
 
 ___
@@ -40,10 +40,9 @@ You can use the following custom error template to start building your page:
 </html>
 ```
 
-{{<Aside type="warning">}}
-Your custom error page must include a custom error token and cannot
-exceed 1.43 MB. Also, it must include HTML *\<head\>* and *\</head\>*
-tags.
+{{<Aside type="warning" header="Warnings">}}
+* Your custom error page must include a custom error token and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
@@ -112,11 +111,9 @@ After customizing your custom error page, there are two options for adding the p
 -   Domain level: the custom error page will apply to only one domain associated with your account.
 
 {{<Aside type="note">}}
-If Cloudflare cannot load your site or you have blocked the United
-States (US) via [IP Access
-Rules](https://support.cloudflare.com/hc/articles/217074967 "Configuring IP Access Rules")
-or firewall rules, publishing and previewing the error page will not
-work.
+If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work. 
+
+A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
 {{</Aside>}}
 
 ### Account-level custom error page
@@ -149,11 +146,15 @@ ___
 
 ## Troubleshoot common custom pages issues
 
-### IP/Country Block vs 1000 Class Errors pages
+### Error pages for blocked requests
 
-If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
+If you block countries or IP addresses with an [IP Access rule](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rules/) and you do not configure a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests in the rule, affected visitors will get your **WAF Block** page.
+
+If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom response for blocked requests](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) in the rule, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
+
+If you block countries or IP addresses with a firewall rule (now deprecated), affected visitors will get your **1000 Class Errors page**.
 
 ### 1xxx errors
 
@@ -175,9 +176,12 @@ Your custom error page cannot be blank and cannot exceed 1.43 MB. To avoid excee
 
 ___
 
-## Related Resources
+## Related resources
 
--   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
--   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
--   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
+-   [WAF custom rules](/waf/custom-rules/)
+-   [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/)
+-   [Troubleshooting Cloudflare errors](/support/troubleshooting/cloudflare-errors/)
+-   [IP Access rules](/waf/tools/ip-access-rules/)
+-   [Rate limiting rules](/waf/rate-limiting-rules/)
 -   [Collapsify](https://github.com/cloudflare/collapsify)
+-   [Firewall rules](/firewall/cf-firewall-rules/) (deprecated)

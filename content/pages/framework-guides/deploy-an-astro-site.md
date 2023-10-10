@@ -11,28 +11,29 @@ Refer to the [Astro Docs](https://docs.astro.build/) to learn more about Astro o
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
 
-## Setting up a new project
+## Set up a new project
 
-Create a new project directory and then initiate Astro's official setup tool by running:
+To use `create-cloudflare` to create a new Astro project, run the following command:
 
 ```sh
-$ npm create astro@latest
-$ cd <project-name>
+$ npm create cloudflare@latest my-astro-app -- --framework=astro
 ```
 
 Astro will ask:
 
 1. Which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
 
-2. If you want to install dependencies. Select `Yes`. If you select `No`, you must run `npm install` before running or building your application for the first time.
+2. If you want to initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
 
-3. If you want to set initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@astrojs/cloudflare` adapter, and ask you setup questions.
 
 ### Astro configuration
 
 You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
-To enable an SSR site and deploy to Cloudflare Pages, add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+{{<render file="_c3-adapter.md">}}
+
+Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
 $ npm run astro add cloudflare
@@ -42,9 +43,14 @@ $ npm run astro add cloudflare
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
+{{<render file="_deploy-via-c3.md" withParameters="Astro">}}
+
+### Deploy via the Cloudflare dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -52,23 +58,11 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 <div>
 
-| Configuration option  | Value                   |
-| --------------------- | ----------------------- |
-| Production branch     | `main`                  |
-| Framework preset      | `Astro`                 |
-| Build command         | `npm run build`         |
-| Build directory       | `dist`                  |
-| Environment Variables | `NODE_VERSION: 16.12.0` |
+{{<pages-build-preset framework="astro">}}
 
 </div>
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
-
-{{<Aside type="warning" header="Important">}}
-
-Astro requires Node.js version `16.12.0` or later to build successfully. When creating your Pages project, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16.12.0` or greater.
-
-{{</Aside>}}
 
 After completing configuration, select **Save and Deploy**.
 
@@ -116,29 +110,68 @@ export default defineConfig({
 
 ## Use bindings in your Astro application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In Astro you can add server-side code via [endpoints](https://docs.astro.build/en/core-concepts/endpoints/), in such endpoints you can then use the `getRuntime()` method to access Cloudflare's environment and consecutively any bindings set for your application.
+Use bindings in Astro components and API routes by using `context.local` from [Astro Middleware](https://docs.astro.build/en/guides/middleware/) to access the Cloudflare runtime which amongst other fields contains the Cloudflare's environment and consecutively any bindings set for your application.
 
-The following code block shows an example of accessing a KV namespace in Astro.
+Refer to the following example of how to access a KV namespace with TypeScript.
+
+First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`:
 
 ```typescript
 ---
-filename: src/my-endpoint.ts
-highlight: [2, 5, 6, 7]
+filename: src/env.d.ts
+---
+/// <reference types="astro/client" />
+
+type KVNamespace = import("@cloudflare/workers-types").KVNamespace;
+type ENV = {
+  // replace `MY_KV` with your KV namespace
+  MY_KV: KVNamespace;
+};
+
+// Depending on your adapter mode
+// use `AdvancedRuntime<ENV>` for advance runtime mode
+// use `DirectoryRuntime<ENV>` for directory runtime mode
+type Runtime = import("@astrojs/cloudflare").AdvancedRuntime<ENV>;
+declare namespace App {
+  interface Locals extends Runtime {}
+}
+```
+
+You can then access your KV from an API endpoint in the following way:
+
+```typescript
+---
+filename: src/pages/my-endpoint.ts
+highlight: [3, 4, 5]
 ---
 import type { APIContext } from "astro";
-import { getRuntime } from "@astrojs/cloudflare/runtime";
 
-export async function get({request}: APIContext) => {
-  const runtime = getRuntime(request);
+export async function get({locals}: APIContext) => {
   // the type KVNamespace comes from the @cloudflare/workers-types package
-  const { MY_KV } = (runtime.env as { MY_KV: KVNamespace }));
+  const { MY_KV } = locals.runtime.env;
 
   return {
     // ...
   };
 };
 ```
+
+Besides endpoints, you can also use bindings directly from your Astro components:
+
+```typescript
+---
+filename: src/pages/index.astro
+highlight: [2, 3]
+---
+---
+const myKV = Astro.locals.runtime.env.MY_KV;
+const value = await myKV.get("key");
+---
+<div>{value}</div>
+```
+
+To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
 {{<render file="_learn-more.md" withParameters="Astro">}}

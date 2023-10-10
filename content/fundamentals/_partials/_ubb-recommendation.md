@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Since this is a service with [usage-based billing](/support/account-management-billing/billing-cloudflare-add-on-services/understanding-billing-for-add-on-services/), Cloudflare recommends that you set up usage-based billing notifications to avoid unexpected bills.
+Since this is a service with [usage-based billing](/support/account-management-billing/billing-add-on-service/), Cloudflare recommends that you set up usage-based billing notifications to avoid unexpected bills.
 
 To set up those notifications:
 
@@ -20,7 +20,7 @@ To set up those notifications:
     - **Notification limit** (exact metric will vary based on product)
     - **Notification email**
 
-    {{<Aside type="note">}}Some plans also have access to alerts through [PagerDuty](/fundamentals/notifications/create-notifications/create-pagerduty/) and [Webhooks](/fundamentals/notifications/create-notifications/configure-webhooks/).
+    {{<Aside type="note">}}Some plans also have access to alerts through [PagerDuty](/notifications/create-notifications/create-pagerduty/) and [Webhooks](/notifications/create-notifications/configure-webhooks/).
     {{</Aside>}}
 
 6. Select **Save**.

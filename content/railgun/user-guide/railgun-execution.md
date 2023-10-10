@@ -6,6 +6,8 @@ weight: 3
 
 # Railgun execution
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 Railgun consists of two programs: `rg-listener` and `rg-sender`. `rg-listener` is to be installed at a hosting provider or end-user environment and listens for WAN connections. `rg-sender` is to be installed at Cloudflare locations and establishes connections across the WAN.
 
 `rg-sender` acts as an HTTP proxy and accepts HTTP requests (with the `CF-ORIGIN-IP` and `CF-WAN-ID` headers) and sends them across the WAN to the `rg-listener` which then contacts the real web server.

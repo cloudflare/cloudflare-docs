@@ -58,11 +58,11 @@ For help setting up DKIM in SES, refer to the [Amazon documentation](https://doc
 
 Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon, but generally you should:
 
-Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare for the hostname, for example:
+Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare for the hostname you receive from AWS, for example:
 
 | Type | Name | Target | Proxy status |
 | --- | --- | --- | --- |
-| `CNAME` | `elb` | `_<AWS HOSTNAME>.<REGION>._elb.amazonaws.com` | Proxied |
+| `CNAME` | `elb` | `<AWS_HOSTNAME>.<REGION>._elb.amazonaws.com` | Proxied |
   
 ---
 
@@ -160,7 +160,13 @@ Then, set up your Squarespace DNS records:
     - The `CNAME` record for `verify.squarespace.com` should be **DNS-only**.
 3. If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
 
-![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings-test-2.png)
+![Screenshot of error warnings in squarespace](/images/support/hc-import-squarespace_dns_settings-test-2.png)
+  
+#### Pending domain owner verification
+  
+The `CNAME` record you added for `verify.squarespace.com` should be **DNS-only**.
+  
+If you proxy this record, Squarespace will not be able to verify your domain ownership and show you a `This website is pending domain owner verification` error. To fix the issue, [edit](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) the `CNAME` record and change the **Proxy status** to **DNS-only**.
 
 ### Tumblr custom domain
 

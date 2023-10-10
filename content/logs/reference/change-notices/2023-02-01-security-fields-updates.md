@@ -64,7 +64,7 @@ The following fields will be renamed in the [HTTP Requests](/logs/reference/log-
 
 {{<table-wrap>}}
 
-New field name | Type | Description | Old field name<br>(removed on Aug 1, 2023)
+New field name | Type | Description | Old field name<br>(deprecated on Aug 1, 2023)
 ---|---|---|---
 `SecurityRuleID` | String | Rule ID of the security rule that triggered a terminating action, if any. | `WAFRuleID`
 `SecurityRuleDescription`	| String | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`
@@ -144,7 +144,7 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job via API
 
-Follow the instructions in [Updating log_pull options](/logs/tutorials/examples/example-logpush-curl/#step-6---updating-logpull_options) to update the fields in the Logpush job.
+Follow the instructions in [Update log_pull options](/logs/tutorials/examples/example-logpush-curl/#step-6---update-logpull_options) to update the fields in the Logpush job.
 
 ### Update Logpush job via Terraform
 

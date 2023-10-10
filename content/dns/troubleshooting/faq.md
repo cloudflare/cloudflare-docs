@@ -1,11 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: FAQ
+title: General FAQ
 weight: 1
 ---
 
-# FAQ
+# General FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -22,7 +22,7 @@ Cloudflare never limits or caps DNS queries, but the pricing depends on your pla
 
 For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.
 
-For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote. Any overages will not be charged.
+For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 {{<render file="_dnssec-providers.md">}}
 
-For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/additional-options/dnssec/).
+For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
+By default, only A and CNAME records that handle web traffic (HTTP and HTTPS) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -175,12 +175,12 @@ ___
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
-This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record).
+This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
-1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
+1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/get-started/setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 {{<Aside type="note">}}
 Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the root domain.
+server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
 {{</Aside>}}
 
 ___

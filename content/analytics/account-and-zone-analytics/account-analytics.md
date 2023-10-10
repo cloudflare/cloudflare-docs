@@ -10,7 +10,7 @@ weight: 2
 Cloudflare account analytics lets you access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
 {{<Aside type="note">}}
-For general information about all of Cloudflare's analytics offerings, refer to [About Cloudflare Analytics](/fundamentals/data-products/about-analytics/).
+For general information about all of Cloudflare's analytics offerings, refer to [About Cloudflare Analytics](/analytics/faq/about-analytics/).
 {{</Aside>}}
 
 ___
@@ -49,7 +49,7 @@ Below is a brief description of the major elements comprising the metrics availa
 
 These charts aggregate data for HTTP traffic, and include:
 
-![Chart showing last week's data for HTTP traffic](/support/static/hc-dash-account-analytics-map.png)
+![Chart showing last week's data for HTTP traffic](/images/support/hc-dash-account-analytics-map.png)
 
 -   Spark lines for _Requests_, _Bandwidth_, _Page views_, and _Visitors_ (_Unique IPs)_
 -   An interactive map that breaks down the number of requests by country
@@ -57,25 +57,25 @@ These charts aggregate data for HTTP traffic, and include:
 
 #### Security
 
-![Panel displaying lines highlighting encryption metrics: requests, requests rate, bandwidth, and bandwidth rate](/support/static/hc-dash-account-analytics_security_panel.png)
+![Panel displaying lines highlighting encryption metrics: requests, requests rate, bandwidth, and bandwidth rate](/images/support/hc-dash-account-analytics_security_panel.png)
 
 This panel features spark lines highlighting various encryption metrics, including: _requests_, _requests rate_, _bandwidth_, and _bandwidth rate_.  These also include a comparative percentage change based on the previous period.
 
 #### Cache
 
-![Panel displaying lines for caching metrics: requests, requests rate, bandwidth, and bandwidth rate](/support/static/hc-dash-account-analytics_cache_card.png)
+![Panel displaying lines for caching metrics: requests, requests rate, bandwidth, and bandwidth rate](/images/support/hc-dash-account-analytics_cache_card.png)
 
 This panel features spark lines for various caching metrics, including: _requests_, _requests rate_, _bandwidth_, and _bandwidth rate_.  These also include a comparative percentage change based on the previous equivalent period.  For example, if you selected _Last week_ as your time period, the previous period refers to the _week_ before.
 
 #### Errors
 
-![Panel displaying lines for 4xx and 5xx error rates](/support/static/hc-account-analytics_errors_card.png)
+![Panel displaying lines for 4xx and 5xx error rates](/images/support/hc-account-analytics_errors_card.png)
 
-This panel displays spark lines for 4xx and 5xx error rates, respectively. Learn more about [HTTP Status Codes](https://support.cloudflare.com/hc/articles/115003014432-HTTP-Status-Codes). 
+This panel displays spark lines for 4xx and 5xx error rates, respectively. Learn more about [HTTP Status Codes](/support/troubleshooting/http-status-codes/http-status-codes/). 
 
 #### Network
 
-![Statistics showing the percentage of requests that use a specific version of HTTP](/support/static/hc-dash-account-analytics_network_card.png)
+![Statistics showing the percentage of requests that use a specific version of HTTP](/images/support/hc-dash-account-analytics_network_card.png)
 
 #### Client HTTP Version Used
 

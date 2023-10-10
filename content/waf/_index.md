@@ -47,16 +47,8 @@ Displays information about all incoming HTTP requests, including those not affec
 
 ---
 
-## More resources
+## Related products
 
-{{<resource-group>}}
-
-{{<resource header="WAF managed rules (previous version)" href="https://support.cloudflare.com/hc/articles/200172016" icon="documentation-clipboard">}}
-Documentation on the previous implementation of WAF managed rules.
-{{</resource>}}
-
-{{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}
-Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests. Use firewall rules if you do not have access to WAF custom rules.
-{{</resource>}}
-
-{{</resource-group>}}
+{{<related header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">}}
+Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.
+{{</related>}}

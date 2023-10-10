@@ -175,7 +175,7 @@ _POST_ 或 _GET_。如果未指定，则所有方法都匹配，规则将列出 
 
 -   **阻止** **\-** 超过阈值时，Cloudflare 发出 HTTP 429 错误。
 -   **旧版 CAPTCHA** **\-** 访问者必须通过 CAPTCHA 质询。如果通过，则 Cloudflare 允许该请求。
--   **JS 质询** **\-** 访问者必须通过 Cloudflare Javascript 质询。如果通过，则 Cloudflare 允许该请求。
+-   **JS 质询** **\-** 访问者必须通过 Cloudflare JavaScript 质询。如果通过，则 Cloudflare 允许该请求。
 -   **记录 -** 请求记录到 [Cloudflare Logs](https://support.cloudflare.com/hc/articles/216672448) 中。这有助于在应用至生产环境前测试规则。
 
 #### **禁令期限**
@@ -216,7 +216,7 @@ ___
 
 4\. 单击**创建速率限制规则**。这会打开一个对话框，供您输入新规则的详细信息。
 
-![创建速率限制规则弹出对话框，其中包含了规则配置示例。如果某些 IP 地址在一小时内每分钟发送超过 150 个请求，该规则将阻止来自这些 IP 地址的请求。](/support/static/previous-rate-limiting-create-rule.png)
+![创建速率限制规则弹出对话框，其中包含了规则配置示例。如果某些 IP 地址在一小时内每分钟发送超过 150 个请求，该规则将阻止来自这些 IP 地址的请求。](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. 输入一个描述性强的**规则名称**。
 
@@ -251,7 +251,7 @@ ___
 
 1\. 展开**高级条件**。
 
-![为速率限制规则配置“高级条件”时可用的字段。](/support/static/previous-rate-limiting-advanced-criteria.png)
+![为速率限制规则配置“高级条件”时可用的字段。](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. 从**方法**下列菜单中选择一个值。默认值是 _ANY_，其匹配所有 HTTP 方法。
 
@@ -277,7 +277,7 @@ ___
 
 1\. 展开**高级响应**。
 
-![为速率限制规则配置“高级响应”时可用的字段。](/support/static/previous-rate-limiting-advanced-response.png)
+![为速率限制规则配置“高级响应”时可用的字段。](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. 选择除默认值以外的**响应类型**格式：_自定义 JSON_ 或_自定义 TEXT_。
 
@@ -326,7 +326,7 @@ ___
 
 2\. 在**对以下 URL 绕过规则**中，输入要从速率限制规则能够排除的 URL。一行输入一个 URL。保存规则时会自动删除 URL 中指定的 HTTP 或 HTTPS，规则会同时应用于 HTTP 和 HTTPS。
 
-![为速率限制规则配置两个要绕过的 URL（每行一个）。](/support/static/previous-rate-limiting-bypass.png)
+![为速率限制规则配置两个要绕过的 URL（每行一个）。](/images/support/previous-rate-limiting-bypass.png)
 
 3.（可选）根据您的计划，配置额外的速率限制功能。
 
@@ -364,7 +364,6 @@ ___
 
 ## 相关资源
 
--   [Cloudflare Rate Limiting 计费](https://support.cloudflare.com/hc/articles/115000272247)
 -   [ELS (Enterprise Log Share) 中如何报告 Rate Limiting？](/logs/reference/log-fields)
 -   [Cloudflare Rate Limiting 故障排除](https://support.cloudflare.com/hc/articles/115000546328)
 -   [从 Cloudflare API 配置 Rate Limiting](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

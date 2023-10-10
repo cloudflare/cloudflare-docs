@@ -8,7 +8,7 @@ meta:
 
 # Enable Total TLS
 
-To enable Total TLS - which issue individual certificates for every proxied hostname - follow these instructions:
+To enable Total TLS - which issues individual certificates for your proxied hostnames - follow these instructions:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -30,8 +30,8 @@ You can also specify a desired certificate authority by adding a value to the `c
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
+## Aspects to consider
 
-If you select a preferred certificate authority, you cannot change your certificate authority without first disabling Total TLS.
+* If you select a preferred certificate authority, you cannot change your certificate authority without first disabling Total TLS.
 
-{{</Aside>}}
+* {{<render file="_total-tls-character-limitation.md">}}

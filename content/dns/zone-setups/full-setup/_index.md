@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Full setup
 weight: 1
+layout: single
 ---
 
 # Full setup

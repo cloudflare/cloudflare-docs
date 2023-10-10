@@ -19,7 +19,7 @@ Esta función complementa nuestros encabezados CF-Connecting-IP y X-Forwarded-Fo
 ¿Cómo puedo habilitar True-Client-IP?  
 True-Client-IP se encuentra disponible en la aplicación Network del panel de Cloudflare.
 
-![](/support/static/Screen_Shot_2015-06-30_at_3.55.04_PM.png)
+![](/images/support/Screen_Shot_2015-06-30_at_3.55.04_PM.png)
 
 ¿Para quién está disponible True-Client-IP?  
 True-Client-IP está disponible para todos los clientes con el plan Enterprise. Si desea contratar el plan Enterprise, [póngase en contacto con el equipo de ventas de Cloudflare](https://www.cloudflare.com/enterprise-service-request).

@@ -6,19 +6,19 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
           "external_link": true,
           "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
           "title": "Cannot add a new account member"
-        }, 
+        },
         {
           "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
           "title": "Proxied DNS records"
@@ -53,12 +53,12 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -80,10 +80,10 @@
           "external_link": true,
           "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
           "title": "Cannot add a new account member"
-        }, 
+        },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
@@ -95,8 +95,7 @@
           "title": "Change your nameservers"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+          "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
           "title": "Set up two-factor authentication (2FA)"
         }
       ]
@@ -110,7 +109,7 @@
           "title": "Get started with Cloudflare"
         },
         {
-          "url_path": "/fundamentals/get-started/setup/add-site/",
+          "url_path": "/fundamentals/setup/account-setup/add-site/",
           "title": "Add a site to Cloudflare"
         },
         {
@@ -152,7 +151,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -175,7 +174,7 @@
           "title": "Solving 'Registry Status: Client transfer prohibited'"
         },
         {
-          "url_path": "/fundamentals/get-started/setup/add-site/",
+          "url_path": "/fundamentals/setup/account-setup/add-site/",
           "title": "Add a site to Cloudflare"
         },
         {
@@ -197,7 +196,7 @@
       "dashPath": "/:accountId/members",
       "recommendations": [
         {
-          "url_path": "/fundamentals/account-and-billing/members/manage/",
+          "url_path": "/fundamentals/setup/manage-members/manage/",
           "title": "Manage account members"
         },
         {
@@ -279,7 +278,7 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -307,7 +306,7 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -315,19 +314,19 @@
           "title": "Purge cache"
         },
         {
-          "url_path": "/cache/about/cache-control/",
+          "url_path": "/cache/concepts/cache-control/",
           "title": "Cache control"
         },
         {
-          "url_path": "/cache/about/cache-rules/",
+          "url_path": "/cache/how-to/cache-rules/",
           "title": "Cache Rules"
         },
         {
-          "url_path": "/cache/about/default-cache-behavior/",
+          "url_path": "/cache/concepts/default-cache-behavior/",
           "title": "Default cache behavior"
         },
         {
-          "url_path": "/cache/best-practices/customize-cache/",
+          "url_path": "/cache/concepts/customize-cache/",
           "title": "Customize cache"
         }
       ]
@@ -350,16 +349,16 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
-          "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
-          "title": "Create root domain"
+          "url_path": "/dns/manage-dns-records/how-to/create-zone-apex/",
+          "title": "Create zone apex record"
         },
         {
           "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
-          "title": "Create subdomain"
+          "title": "Create subdomain records"
         }
       ]
     },
@@ -399,7 +398,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -421,8 +420,7 @@
       "dashPath": "/:accountId/:zoneName/rules",
       "recommendations": [
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/218411427",
+          "url_path": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
           "title": "Page Rules"
         },
         {
@@ -445,20 +443,20 @@
       "dashPath": "/:accountId/:zoneName/security",
       "recommendations": [
         {
-          "url_path": "/firewall/cf-firewall-rules/actions/",
-          "title": "Firewall rules actions"
+          "url_path": "/ruleset-engine/rules-language/actions/",
+          "title": "Rule actions"
         },
         {
-          "url_path": "/waf/",
-          "title": "Cloudflare Web Application Firewall (WAF)"
+          "url_path": "/waf/managed-rules/",
+          "title": "WAF Managed Rules"
         },
         {
-          "url_path": "/firewall/cf-firewall-rules/",
-          "title": "Firewall Rules"
+          "url_path": "/waf/custom-rules/",
+          "title": "WAF custom rules"
         },
         {
           "url_path": "/waf/tools/ip-access-rules/",
-          "title": "IP Access Rules"
+          "title": "IP Access rules"
         },
         {
           "url_path": "/waf/security-events/",
@@ -466,7 +464,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         }
       ]

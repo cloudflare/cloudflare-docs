@@ -97,7 +97,7 @@ ___
 
 _:525,_（コロン、ステータスコード、カンマ）というパターンは、_EdgeResponseStatus_フィールドに固有のものです。コロンと末尾のカンマがないHTTPステータスコード「_525_」を検索すると、_EdgeStartTimeStamp_のような他のフィールドに _525_がついたログエントリを含むということになります。例えば、数字が長かったり、数値列「_525_」を含むこともあります。
 
-![EdgeResponseStatusフィールドが強調表示された出力ファイルのスクリーンショット](/support/static/hc-external-edge_response_status_ELS.png)
+![EdgeResponseStatusフィールドが強調表示された出力ファイルのスクリーンショット](/images/support/hc-external-edge_response_status_ELS.png)
 
 出力ファイル（els-200.txt と els-525.txt）はそのままで読み取りができる状態ではありません。読みやすい形式で表示するために、jqを次のコマンドで使います。
 
@@ -116,7 +116,7 @@ _:525,_（コロン、ステータスコード、カンマ）というパター�
 
 ### 出力（例）：
 
-![ELSログをソートする際の出力例のスクリーンショット](/support/static/hc-import-11.png)
+![ELSログをソートする際の出力例のスクリーンショット](/images/support/hc-import-11.png)
 
  _ClientRequestURI、 ClientIP、ClientRequestUserAgent、ClientCountry_、_ClientRequestHost_フィールドは通常、こうしたログで攻撃パターンを見つける際に最も役に立つフィールドです。
 

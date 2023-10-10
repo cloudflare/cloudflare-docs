@@ -11,7 +11,7 @@ Only certain customers can use queue methods besides First In First Out (FIFO). 
 
 {{<Aside type="note" header="Note:">}}
 
-Regardless of the queueing method, if `queueAll` is enabled or an event is prequeueing, users in the waiting room will not be accepted to the origin. These users will always see a waiting room page that refreshes automatically.
+Regardless of the queueing method, if `queueAll` is enabled or an event is prequeueing, users in the waiting room will not be accepted to the origin. These users will always get a waiting room page that refreshes automatically.
 
 {{</Aside>}}
 
@@ -41,10 +41,10 @@ Use this setup when you only want to use your waiting room for events — where 
 
 ## Reject
 
-Prevent any traffic from reaching your application by setting its `queueing_method` to **reject**. Users will see a static page.
+Prevent any traffic from reaching your application by setting its `queueing_method` to **reject**. Users will get a static page.
 
 Use this setup for event-only endpoints or to perform application maintenance.
 
-## Changing queueing methods
+## Change queueing methods
 
 {{<render file="_change-queueing-method.md">}}
