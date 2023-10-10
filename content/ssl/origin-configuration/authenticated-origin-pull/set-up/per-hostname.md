@@ -32,6 +32,4 @@ If you had set up logging on your origin during step 2, test and confirm that Au
 
 ## 5. Enforce validation check on your origin
 
-Once you can confirm everything is working as expected for your specific origin setup, configure your origin to enforce the authentication.
-
-After completing the process, you can use `curl` to send requests directly to your origin IPs, verifying that the requests fail due to certificate validation being enforced.
+{{<render file="_aop-enforce-validation.md">}}

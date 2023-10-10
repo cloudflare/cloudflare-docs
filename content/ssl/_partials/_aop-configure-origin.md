@@ -14,7 +14,6 @@ With the certificate installed, set up your origin web server to accept client c
 For this example, you would have saved the certificate `/path/to/origin-pull-ca.pem`.
 
 ```txt
-SSLVerifyClient require
 SSLVerifyDepth 1
 SSLCACertificateFile /path/to/origin-pull-ca.pem
 ```
@@ -30,7 +29,6 @@ For this example, you would have saved your certificate to `/etc/nginx/certs/clo
 
 ```txt
 ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
-ssl_verify_client on;
 ```
 
 </div>

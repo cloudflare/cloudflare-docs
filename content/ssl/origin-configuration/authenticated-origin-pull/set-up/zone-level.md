@@ -32,39 +32,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 ## 2. Configure origin to accept client certificates
 
-With the certificate installed, set up your origin web server to accept client certificates.
-
-<details>
-<summary>Apache example</summary>
-<div>
-
-For this example, you would have saved the certificate `/path/to/origin-pull-ca.pem`.
-
-```txt
-SSLVerifyClient require
-SSLVerifyDepth 1
-SSLCACertificateFile /path/to/origin-pull-ca.pem
-```
-
-</div>
-</details>
-
-<details>
-<summary>NGINX example</summary>
-<div>
-
-For this example, you would have saved your certificate to `/etc/nginx/certs/cloudflare.crt`.
-
-```txt
-ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
-ssl_verify_client on;
-```
-
-</div>
-
-</details>
-
-At this point, you may also want to enable logging on your origin so that you can verify the configuration is working.
+{{<render file="_aop-configure-origin.md">}}
 
 ## 3. Configure Cloudflare to use client certificate
 
@@ -78,6 +46,4 @@ If you had set up logging on your origin during [step 2](#2-configure-origin-to-
 
 ##  5. Enforce validation check on your origin
 
-Once you can confirm everything is working as expected for your specific origin setup, configure your origin to enforce the authentication.
-
-After completing the process, you can use `curl` to send requests directly to your origin IPs, verifying that the requests fail due to certificate validation being enforced.
+{{<render file="_aop-enforce-validation.md">}}
