@@ -11,7 +11,7 @@ WebSockets are long-lived TCP connections that enable bi-directional, real-time 
 
 [Durable Objects](/durable-objects/) support WebSockets — your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
-For more information beyond the API reference, refer to [Using WebSockets in Durable Objects](/durable-objects/learning/websockets/).
+For more information beyond the API reference, refer to [Use WebSockets in Durable Objects](/durable-objects/learning/websockets/).
 
 ## WebSocket Methods
 
@@ -191,6 +191,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 ## Handler Methods {{<inline-pill style="beta">}}
 
 These methods are part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
+
 ### webSocketMessage
 
 {{<definitions>}}

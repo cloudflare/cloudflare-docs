@@ -1,10 +1,10 @@
 ---
-title: Transactional Storage API
+title: Transactional Storage
 pcx_content_type: concept
 weight: 16
 ---
 
-# Transactional Storage API
+# Transactional Storage
 
 The Transactional Storage API allows you to achieve consistent key-value storage. 
 
