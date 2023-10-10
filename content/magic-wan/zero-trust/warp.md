@@ -7,9 +7,11 @@ meta:
 
 # WARP on-ramp to Magic WAN
 
-Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/reference/tunnels/#ipsec-tunnels), or [CNI](/network-interconnect/)).
+Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE, IPsec](/magic-wan/get-started/configure-tunnels/#tunnels), or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
 
-{{<render file="_traceroute.md">}}
+Depending on your use case, you will see the following IP addresses when connecting a WARP device to Magic WAN:
+- `100.96.0.0/12`: When connecting a WARP device to an origin behind a GRE or IPsec tunnel.
+- [Cloudflare IP addresses](/magic-wan/zero-trust/cloudflare-gateway/): When you are connecting a WARP device, and using Zero Trust policies - for example, you have Gateway set up.
 
 ## Prerequisites
 
@@ -17,9 +19,9 @@ Before you can begin using WARP as an on-ramp to Magic WAN, you must set up your
 
 ## 1. Route packets back to WARP devices
 
-Route packets back to WARP devices from services behind an Anycast GRE or other type tunnel.
+Route packets back to WARP devices from services behind an Anycast GRE or other type tunnel. You need to do this before actually installing WARP. Otherwise, your infrastructure will not route packets correctly to Cloudflare global network and connectivity will fail.
 
-Cloudflare will assign IP addresses from the WARP virtual IP (VIP) space to your WARP devices. To view your virtual IP address, open the **[Cloudflare Zero Trust](https://one.dash.cloudflare.com/)** dashboard and select **My Team** > **Devices**.
+Cloudflare will assign IP addresses from the WARP virtual IP (VIP) space to your WARP devices. To view your virtual IP address, open the [Cloudflare Zero Trust dashboard](https://one.dash.cloudflare.com/), and select **My Team** > **Devices**.
 
 All packets with a destination IP in the VIP space need to be routed back through the tunnel. For example, with a single GRE tunnel named `gre1`, in Linux, the following command would add a routing rule that would route such packets:
 
@@ -28,14 +30,12 @@ $ ip route add 100.96.0.0/12 dev gre1
 ```
 
 {{<Aside type="note" header="Note">}}
-
-After set up, **HTTP** and **Network** logs in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare's public-facing resolver.
-
+After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver.
 {{</Aside>}}
 
 ## 2. Configure Split Tunnels
 
-[Configure Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) from your Zero Trust account to only include traffic from the private IP addresses you want to access.
+Configure [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) from your Zero Trust account to only include traffic from the private IP addresses you want to access.
 
 Optionally, you can configure Split Tunnels to include IP ranges or domains you want to use for connecting to public IP addresses.
 
@@ -45,7 +45,9 @@ Refer to [Deploy WARP to your organization](/cloudflare-one/connections/connect-
 
 You should be able to access Private IP addresses specified in the Split Tunnel configuration.
 
-{{<Aside type="note">}}You must log out and log back in with at least one WARP device to ensure the configuration updates on your device.{{</Aside>}}
+You must log out and log back in with at least one WARP device to ensure the configuration updates on your device.
+
+{{<render file="_traceroute.md">}}
 
 ## Test WARP integration
 
@@ -63,4 +65,4 @@ $ nslookup <SERVER_BEHIND_MAGIC_WAN>
 
 This DNS lookup should return a valid IP address associated with the server or service you are testing for.
 
-Next, test with a browser that you can connect to a service on the WAN by opening a web page that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.
+Next, test with a browser that you can connect to a service on the WAN by opening a webpage that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.
