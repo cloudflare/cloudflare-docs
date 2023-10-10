@@ -261,7 +261,7 @@ To check for tunnel health, Cloudflare sends a health check probe consisting of 
 
 Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirectional health checks for Magic Transit (direct server return). However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
-Refer to [Tunnel Health Checks]($8) to learn more.
+Refer to [Tunnel health checks]($8) to learn more.
 
 ## Next steps
 
