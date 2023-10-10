@@ -93,12 +93,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -126,8 +123,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Example - Create a zone-level phase entry point ruleset
 
@@ -164,12 +160,9 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -200,5 +193,4 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}

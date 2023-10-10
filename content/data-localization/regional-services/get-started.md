@@ -41,9 +41,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 
 You can also use Regional Services via API. These are some examples of API requests.
 
-<details>
-<summary>List all the available regions</summary>
-<div>
+{{<details header="List all the available regions">}}
 
 ```bash
 ---
@@ -76,12 +74,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Create a new regional hostname entry</summary>
-<div>
+{{<details header="Create a new regional hostname entry">}}
 
 ```bash
 ---
@@ -110,12 +105,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>List all regional hostnames for a zone or get a specific one</summary>
-<div>
+{{<details header="List all regional hostnames for a zone or get a specific one">}}
 
 ```bash
 ---
@@ -145,12 +137,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>List all regional hostnames for a specific zone</summary>
-<div>
+{{<details header="List all regional hostnames for a specific zone">}}
 
 ```bash
 ---
@@ -178,12 +167,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Patch the region for a specific hostname</summary>
-<div>
+{{<details header="Patch the region for a specific hostname">}}
 
 ```bash
 ---
@@ -212,12 +198,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Delete the region configuration</summary>
-<div>
+{{<details header="Delete the region configuration">}}
 
 ```bash
 ---
@@ -241,8 +224,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Terraform support
 

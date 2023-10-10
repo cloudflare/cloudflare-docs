@@ -30,8 +30,7 @@ The example below shows a TCP health check configuration for an application runn
 
 ![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/images/spectrum/spectrum-tcp-check.png)
 
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>
@@ -59,8 +58,7 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Weights
 

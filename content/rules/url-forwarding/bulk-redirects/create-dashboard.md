@@ -24,9 +24,7 @@ To create Bulk Redirects in the Cloudflare dashboard you must:
 
 5. You can import a CSV file containing several URL redirects or enter URL redirects one at a time in the dashboard.
 
-    <details>
-    <summary>Import a CSV file</summary>
-    <div>
+    {{<details header="Import a CSV file">}}
 
     1\. Drag and drop a CSV file containing URL redirects or select **browse** and select a CSV file. For more information on the file format, refer to [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
 
@@ -37,9 +35,7 @@ To create Bulk Redirects in the Cloudflare dashboard you must:
     </div>
     </details>
 
-    <details>
-    <summary>Add URL redirects manually</summary>
-    <div>
+    {{<details header="Add URL redirects manually">}}
 
     1\. Select **Or, manually add URL redirects**.
 

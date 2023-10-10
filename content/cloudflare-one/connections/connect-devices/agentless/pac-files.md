@@ -30,9 +30,7 @@ You can generate a proxy endpoint on the Zero Trust dashboard or through the Clo
 All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
 {{</Aside>}}
 
-<details>
-<summary>Create a proxy endpoint (dashboard)</summary>
-<div>
+{{<details header="Create a proxy endpoint (dashboard)">}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy Endpoints**.
 2. Select **Create endpoint**.
@@ -48,12 +46,9 @@ Your Cloudflare proxy server domain is of the form:
 https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Create a proxy endpoint (API)</summary>
-<div>
+{{<details header="Create a proxy endpoint (API)">}}
 
 1. Run the following command:
 
@@ -98,8 +93,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
    In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
 
-</div>
-</details>
+{{</details>}}
 
 ## 2. Test your proxy server
 

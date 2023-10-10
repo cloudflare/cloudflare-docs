@@ -269,48 +269,36 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
 
 Review the examples below to learn which directives to use with the Cache-Control header to control specific caching behavior.
 
-<details>
-  <summary>Cache a static asset</summary>
-  <div>
-    <code>Cache-Control: public, max-age=86400</code>
-  </div>
-</details>
+{{<details header="Cache a static asset">}}
+  
+      <code>Cache-Control: public, max-age=86400</code>
+  {{</details>}}
 
-<details>
-  <summary>Ensure a secret asset is never cached</summary>
-  <div>
-    <code>Cache-Control: no-store</code>
-  </div>
-</details>
+{{<details header="Ensure a secret asset is never cached">}}
+  
+      <code>Cache-Control: no-store</code>
+  {{</details>}}
 
-<details>
-  <summary>Cache assets on browsers but not on proxy caches</summary>
-  <div>
-    <code>Cache-Control: private, max-age=3600</code>
-  </div>
-</details>
+{{<details header="Cache assets on browsers but not on proxy caches">}}
+  
+      <code>Cache-Control: private, max-age=3600</code>
+  {{</details>}}
 
-<details>
-  <summary>Cache assets in client and proxy caches, but prefer revalidation when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache</code>
-  </div>
-</details>
+{{<details header="Cache assets in client and proxy caches, but prefer revalidation when served">}}
+  
+      <code>Cache-Control: public, no-cache</code>
+  {{</details>}}
 
-<details>
-  <summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or
+{{<details header="Cache assets in proxy caches but REQUIRE revalidation by the proxy when served">}}
+  
+      <code>Cache-Control: public, no-cache, proxy-revalidate</code> or
     <code>Cache-Control: public, s-maxage=0</code>
-  </div>
-</details>
+  {{</details>}}
 
-<details>
-  <summary>Cache assets in proxy caches, but REQUIRE revalidation by any cache when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache, must-revalidate</code>
-  </div>
-</details>
+{{<details header="Cache assets in proxy caches, but REQUIRE revalidation by any cache when served">}}
+  
+      <code>Cache-Control: public, no-cache, must-revalidate</code>
+  {{</details>}}
 
 <details>
   <summary>
@@ -321,8 +309,7 @@ Review the examples below to learn which directives to use with the Cache-Contro
 
 This configuration also disables transformation like gzip or brotli compression from our edge to your visitors if the original payload was served uncompressed.
 
-  </div>
-</details>
+  {{</details>}}
 
 <details>
   <summary>
@@ -333,8 +320,7 @@ This configuration also disables transformation like gzip or brotli compression 
 
 With this configuration, Cloudflare attempts to revalidate the content with the origin server after it has been in cache for 3600 seconds (one hour). If the server returns an error instead of proper revalidation responses, Cloudflare continues serving the stale resource for a total of one minute beyond the expiration of the resource.
 
-  </div>
-</details>
+  {{</details>}}
 
 <details>
   <summary>
@@ -342,8 +328,7 @@ With this configuration, Cloudflare attempts to revalidate the content with the 
   </summary>
   <div>
     <code>Cache-Control: public, max-age=7200, s-maxage=3600</code>
-  </div>
-</details>
+  {{</details>}}
 
 <details>
   <summary>
@@ -354,8 +339,7 @@ With this configuration, Cloudflare attempts to revalidate the content with the 
 
 This configuration indicates the asset is fresh for 600 seconds. The asset can be served stale for up to an additional 30 seconds to parallel requests for the same resource while the initial synchronous revalidation is attempted.
 
-  </div>
-</details>
+  {{</details>}}
 
 ## Interaction with other Cloudflare features
 

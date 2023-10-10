@@ -16,8 +16,7 @@ To remedy a false positive:
 
 2. Go to the analytics dashboard and apply filters to the displayed data.
 
-    <details><summary>For WAF/CDN customers</summary><div>
-
+    {{<details header="For WAF/CDN customers">}}
     1\. Select the zone that is experiencing DDoS attack false positives.
 
     2\. Go to **Security** > **Events**.
@@ -26,8 +25,7 @@ To remedy a false positive:
 
     </div></details>
 
-    <details><summary>For Magic Transit and Spectrum customers</summary><div>
-
+    {{<details header="For Magic Transit and Spectrum customers">}}
     1\. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
     2\. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.

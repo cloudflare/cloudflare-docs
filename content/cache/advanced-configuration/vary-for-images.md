@@ -39,8 +39,7 @@ You can use vary for images on the file extensions below if the origin server se
     <li>.tiff</li>
     <li>.webp</li>
   </ul>
-</div>
-</details>
+{{</details>}}
 
 ## Enable vary for images
 

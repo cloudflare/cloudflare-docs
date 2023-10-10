@@ -57,8 +57,7 @@ Refer to the image below for guidance on which values to use.
 | **Rekey Time**            | 14400              |
 | **Reauth Time**           | 0                  |
 
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>
@@ -83,8 +82,7 @@ Refer to the image below for guidance on which values to use.
 | **Life Time**             | 28800              |
 | **Rekey Time**            | 14400              |
 | **Reauth Time**           | 0                  |
-</div>
-</details>
+{{</details>}}
 
 ## Phase 2
 
@@ -93,7 +91,6 @@ Refer to the image below for guidance on which values to use.
   Policy-based configuration
 </summary>
  <div class="special-class" markdown="1">
- 
 
 ![pfSense IPsec phase 2 general information values](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info.png)
 
@@ -121,8 +118,7 @@ Refer to the image below for guidance on which values to use.
 | **Rekey Time**            | 3240               |
 | **Rand Time**             | 360                |
 | **Automatically ping host**| Specify an IP address available via the tunnel. Refer to the Description field for more information.    |
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>
@@ -157,8 +153,7 @@ Refer to the image below for guidance on which values to use.
 | **Rekey Time**            | 3240               |
 | **Rand Time**             | 360                |
 | **Automatically ping host**| Specify an IP address available via the tunnel. Refer to the Description field for more information.    |
-</div>
-</details>
+{{</details>}}
 
 ## (Route-based only) Interface assignment
 

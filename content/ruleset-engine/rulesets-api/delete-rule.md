@@ -36,12 +36,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -72,7 +69,6 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset after deleting the rule.

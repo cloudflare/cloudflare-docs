@@ -51,8 +51,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details open>
 <summary>Response</summary>
@@ -77,8 +76,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific ruleset
 
@@ -120,8 +118,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details open>
 <summary>Response</summary>
@@ -156,8 +153,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## List all versions of a ruleset
 
@@ -192,8 +188,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details open>
 <summary>Response</summary>
@@ -227,8 +222,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific version of a ruleset
 
@@ -261,8 +255,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details open>
 <summary>Response</summary>
@@ -297,8 +290,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note" header="Note">}}
 
@@ -327,8 +319,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details open>
 <summary>Response</summary>
@@ -381,5 +372,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 }
 ```
 
-</div>
-</details>
+{{</details>}}

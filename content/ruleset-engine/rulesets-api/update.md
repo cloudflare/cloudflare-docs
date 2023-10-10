@@ -56,12 +56,9 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -92,8 +89,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Example - Deploy a ruleset
 
@@ -124,12 +120,9 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -164,8 +157,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information on deploying rulesets, refer to [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).
 
@@ -193,14 +185,11 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset definition, including all the rules.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -222,5 +211,4 @@ The response includes the complete ruleset definition, including all the rules.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
