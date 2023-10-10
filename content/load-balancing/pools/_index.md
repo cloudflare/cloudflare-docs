@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Pools
 weight: 4
+layout: single
 ---
 
 # Pools
