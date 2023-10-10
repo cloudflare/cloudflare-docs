@@ -5,7 +5,7 @@ title: FAQ
 
 # FAQ
 
-In the following sections, you can find frequently asked questions about Performance, Privacy and security, and Implementation and integration.
+In the following sections, you can find frequently asked questions about performance, privacy, security, implementation and integration.
 
 ## Performance
 
