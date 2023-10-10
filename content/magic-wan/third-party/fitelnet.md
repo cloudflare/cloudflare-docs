@@ -56,7 +56,10 @@ crypto ipsec policy IPsec_POLICY
  set mss 1350
  set ip df-bit 0
  set ip fragment post
+ ! if there is a NAT router between Cloudflare and FITELnet,
+ ! add the two udp-encapsulation options below
  set udp-encapsulation nat-t keepalive interval 30 always-send
+ set udp-encapsulation-force
 exit
 !
 crypto ipsec selector SELECTOR
@@ -78,25 +81,15 @@ crypto isakmp policy ISAKMP_POLICY
  group 14
  lifetime 14400
  hash sha sha-256
- initiate-mode main
-exit
-!
-crypto isakmp policy P1-POLICY
- authentication pre-share
- encryption aes
- encryption-keysize aes 256 256 256
- group 14
- lifetime 14400
- hash sha sha-256
- initiate-mode main
+ initiate-mode aggressive
 exit
 !
 crypto isakmp profile PROF1
- local-address <ROUTER1_ADDRESS>
- self-identity address <ROUTER1_ADDRESS>
+ ! set the value of FQDN ID for self-identify
+ self-identity fqdn <FQDN-ID-TUNNEL01>
  set isakmp-policy ISAKMP_POLICY
  set ipsec-policy IPsec_POLICY
- set peer anycast-address
+ set peer <CLOUDFLARE-ANYCAST-ADDRESS>
  ike-version 2
  local-key <PRE-SHARED-KEY-TUNNEL01>
 exit
@@ -113,8 +106,8 @@ exit
 Use the CLI to configure these settings:
 
 ```txt
-interface Tunnel 2
- ip address 10.0.0.2 255.255.255.254
+interface Tunnel 1
+ ip address 10.0.0.3 255.255.255.254
  tunnel mode ipsec map MAP1
  link-state sync-sa
 exit
@@ -129,7 +122,10 @@ crypto ipsec policy IPsec_POLICY
  set mss 1350
  set ip df-bit 0
  set ip fragment post
+ ! if there is a NAT router between Cloudflare and FITELnet,
+ ! add the two udp-encapsulation options below
  set udp-encapsulation nat-t keepalive interval 30 always-send
+ set udp-encapsulation-force
 exit
 !
 crypto ipsec selector SELECTOR
@@ -151,25 +147,15 @@ crypto isakmp policy ISAKMP_POLICY
  group 14
  lifetime 14400
  hash sha sha-256
- initiate-mode main
-exit
-!
-crypto isakmp policy P1-POLICY
- authentication pre-share
- encryption aes
- encryption-keysize aes 256 256 256
- group 14
- lifetime 14400
- hash sha sha-256
- initiate-mode main
+ initiate-mode aggressive
 exit
 !
 crypto isakmp profile PROF1
- local-address <ROUTER2_ADDRESS>
- self-identity address <ROUTER2_ADDRESS>
+ ! set the value of FQDN ID for self-identify
+ self-identity fqdn <FQDN-ID-TUNNEL02>
  set isakmp-policy ISAKMP_POLICY
  set ipsec-policy IPsec_POLICY
- set peer anycast-address
+ set peer <CLOUDFLARE-ANYCAST-ADDRESS>
  ike-version 2
  local-key <PRE-SHARED-KEY-TUNNEL02>
 exit
