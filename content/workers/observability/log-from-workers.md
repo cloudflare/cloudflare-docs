@@ -156,7 +156,11 @@ When a Worker running in production has an error that prevents it from returning
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
 | 1101       | Worker threw a JavaScript exception.                                                                              |
 | 1102       | Worker exceeded [CPU time limit](/workers/platform/limits/).                                                      |
-| 1015       | Your client IP is being rate limited.                                                                             |
+| 1015       | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
+| 1019       | Worker hit [loop limit](/workers/platform/limits/#loop-limit).                                                    |
+| 1021       | Worker has requested a host it cannot access.                                                                     |
+| 1022       | Cloudflare has failed to route the request to the Worker.                                                         |
+| 1024       | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
 | 1027       | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
 | 1042       | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
 
