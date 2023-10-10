@@ -25,6 +25,10 @@ Provision and manage Cloudflare using infrastructure as code through [Pulumi](ht
 [Pulumi](https://github.com/pulumi/pulumi) is open source and uses the Apache 2.0 license.
 {{</feature>}}
 
+{{<feature header="Multiple languages and SDKs" href="https://www.pulumi.com/docs/languages-sdks/" >}}
+Use TypeScript, JavaScript, Python, Go, .Net, Java or YAML to write Pulumi programs. Each language is as capable as the other and supports the entire [Pulumi Registry](https://www.pulumi.com/registry/).
+{{</feature>}}
+
 ---
 
 ## Related products
@@ -37,6 +41,9 @@ Pulumi Cloud fully manages infrastructure state and secrets, provides rich searc
 Pulumi AI is an experimental feature that lets you use natural-language prompts to generate Pulumi infrastructure-as-code programs in any language.
 {{</related>}}
 
+{{<related header="Pulumi ESC" href="https://www.pulumi.com/product/esc/">}}
+Pulumi ESC provides centralized management of environments, secrets, and configurations.
+{{</related>}}
 ---
 
 ## More resources
