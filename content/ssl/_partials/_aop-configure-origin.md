@@ -7,6 +7,8 @@ _build:
 
 With the certificate installed, set up your origin web server to accept client certificates.
 
+Check the examples below for Apache and NGINX examples or refer to your origin web server documentation - e.g. [HAProxy](https://www.haproxy.com/documentation/hapee/latest/security/authentication/client-certificate-authentication/), [Traefik](https://doc.traefik.io/traefik/https/tls/#client-authentication-mtls), [Caddy](https://caddyserver.com/docs/json/apps/http/servers/tls_connection_policies/client_authentication/mode/).
+
 <details>
 <summary>Apache example</summary>
 <div>
