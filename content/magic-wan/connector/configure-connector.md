@@ -105,7 +105,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 ## IP sec tunnels and static routes
 
-Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) and [static routes](/magic-wan/get-started/configure-static-routes/) for you. You do not need to configure these manually.
+Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) and [static routes](/magic-wan/get-started/configure-static-routes/) for you. You cannot configure these manually.
 
 To check IPsec tunnels and static routes created by your Magic Wan Connector:
 
