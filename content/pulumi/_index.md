@@ -26,7 +26,7 @@ Provision and manage Cloudflare using infrastructure as code through [Pulumi](ht
 {{</feature>}}
 
 {{<feature header="Multiple languages and SDKs" href="https://www.pulumi.com/docs/languages-sdks/" >}}
-Use TypeScript, JavaScript, Python, Go, .Net, Java or YAML to write Pulumi programs. Each language is as capable as the other and supports the entire [Pulumi Registry](https://www.pulumi.com/registry/).
+Use TypeScript, JavaScript, Python, Go, .Net, Java, or YAML to write Pulumi programs. Each language is as capable as the other and supports the entire [Pulumi Registry](https://www.pulumi.com/registry/).
 {{</feature>}}
 
 ---
