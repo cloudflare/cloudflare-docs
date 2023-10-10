@@ -1,6 +1,14 @@
-<details class="DocsMarkdown">
-  <summary>{{ .Get "header" | default "Header tag required!" }}</summary>
+{{ $header := default "Header tag required!" (.Get "header") }}
+
+<details class="DocsMarkdown" onclick="zarazTrackDetails({{$header}})">
+  <summary>{{ $header }}</summary>
   <div>
     {{- .Page.RenderString .Inner -}}
   </div>
 </details>
+
+<script>
+  function zarazTrackDetails(header) {
+    zaraz.track("dropdown click", {dropdown_name: header})
+  }
+</script>
