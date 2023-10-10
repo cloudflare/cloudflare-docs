@@ -55,9 +55,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 ### Unimplemented bucket-level operations
 
-<details>
-<summary> Click to expand a list of unimplemented bucket-level operations. </summary>
-
+{{<details header=" Click to expand a list of unimplemented bucket-level operations. ">}}
 {{<table-wrap style="width:110%">}}
 
 | API Name       | Feature                           |
@@ -148,9 +146,7 @@ Even though `ListObjects` is a supported operation, it is recommended that you u
 
 ### Unimplemented object-level operations
 
-<details>
-<summary> Click to expand a list of unimplemented object-level operations. </summary>
-
+{{<details header=" Click to expand a list of unimplemented object-level operations. ">}}
 {{<table-wrap style="width:110%">}}
 
 | API Name       | Feature                           |

@@ -25,8 +25,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
 3. Enter a name and optional description for the profile.
 4. Add custom or existing detection entries.
 
-   <details>
-   <summary>Add a custom entry</summary>
+   {{<details header="Add a custom entry">}}
    <div class="special-class" markdown="1">
 
    1. Select **Add custom entry** and give it a name.
@@ -41,8 +40,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
    </div>
    </details>
 
-   <details>
-   <summary>Add existing entries</summary>
+   {{<details header="Add existing entries">}}
    <div class="special-class" markdown="1">
 
    Existing entries include [predefined detection entries](predefined-profiles/) and [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/).

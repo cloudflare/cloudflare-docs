@@ -12,8 +12,7 @@ This page lists Cloudflare requirements for custom certificates and explains how
 
 Before accepting custom certificates, Cloudflare parses them and checks for validity according to a list of requirements.
 
-<details>
-<summary>Full list of requirements</summary>
+{{<details header="Full list of requirements">}}
 <div>
 
 Each custom certificate you upload must:

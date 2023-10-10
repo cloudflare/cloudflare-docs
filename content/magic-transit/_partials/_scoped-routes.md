@@ -19,9 +19,7 @@ Regions and regional objects are automatically updated. If you route traffic thr
 
 {{</Aside>}}
 
-<details>
-  <summary>Scoping configuration data example</summary>
-  
+{{<details header="Scoping configuration data example">}}
 | Tunnel      | Region code |
 | --------------- | ----------- |
 | TUNNEL_1_IAD       | AFR         |
@@ -33,9 +31,7 @@ Regions and regional objects are automatically updated. If you route traffic thr
 
 Cloudflare has nine geographic regions across the world which are listed below.
 
-<details>
-  <summary>Region codes and associated regions</summary>
-
+{{<details header="Region codes and associated regions">}}
 | Region code     | Region                |
 | --------------- | --------------------- |
 | AFR             | Africa                |
