@@ -1,0 +1,6 @@
+<details class="DocsMarkdown">
+  <summary>{{ .Get "header" | default "Summary Text" }}</summary>
+  <div>
+    {{- .Page.RenderString .Inner -}}
+  </div>
+</details>
