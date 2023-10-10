@@ -5,9 +5,9 @@ _build:
   list: never
 ---
 
-To create an account under your tenant using the Cloudflare dashboard:
+To create an account under your tenant using the dashboard:
 
-1. Log into the [dashboard](https://dash.cloudflare.com).
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Tenants** > **Managed Accounts**.
 3. Select **Create Account**.
 4. Enter the **Account Name**, **Account Description**, and **Tenant Unit**.
