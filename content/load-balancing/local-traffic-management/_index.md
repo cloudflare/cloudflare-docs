@@ -13,7 +13,7 @@ LTM supports not only public IPs but also virtual IPs and private IPs as origin 
 
 {{<Aside type="warning">}}
 
-Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). Refer to [Set up LTM with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
+Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
 
 {{</Aside>}}
 
@@ -29,12 +29,12 @@ Before, you could only enter tunnel addresses in your load balancer and configur
 
 ## Off-ramps
 
-Off-ramps create a direct and secure way to connect into your networks that are not publicly available. Cloudflare local traffic management currently supports Cloudflare Tunnel as off-ramps. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support is coming soon.
+Off-ramps create a direct and secure way to connect into your networks that are not publicly available. Cloudflare local traffic management currently supports Cloudflare Tunnel as off-ramps. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support will be added in the future.
 
 ---
 
 ## Use cases
 
-* **Requests originating from the public Internet and directed to a private/internal service**: You can route requests from the Internet to your internal services on internal IPs - such as accounting or production automation systems - using Cloudflare Tunnel.
+* **Requests originating from the public Internet and directed to a private/internal service**: You can route requests from the Internet to your internal services on internal IPs - such as accounting or production automation systems - using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
 
 * **Intelligent traffic routing**: Benefit from failover for your private traffic and have the ability to monitor the health of these IP targets directly, rather than load balancing to a tunnel and only monitoring the health of the tunnel itself.

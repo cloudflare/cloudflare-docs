@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Set up LTM with Tunnel
+title: Set up private IPs with Tunnel
 weight: 2
 ---
 
-# Set up LTM with Cloudflare Tunnel
+# Set up private IPs with Cloudflare Tunnel
 
 Consider the following steps to learn how to configure Cloudflare local traffic management (LTM) solution, using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) as the off-ramp to securely connect to your private/internal services.
 
