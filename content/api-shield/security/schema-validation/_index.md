@@ -44,6 +44,41 @@ Changes may take a few minutes to process depending on the number of added endpo
 4. Select **Apply learned schema**.
 5. Choose an action and select **Apply schema**.
 
+### Add validation by applying a learned schema to a single endpoint
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Go to **Schema Validation** and filter by the learned schema available.
+4. Select **Apply learned schema**.
+5. Choose an action and select **Apply schema**.
+
+### Add validation by applying a learned schema to an entire hostname
+
+At this time, learned schemas will not overwrite customer-uploaded schemas. If an endpoint is covered by a customer-uploaded schema and also appears in a learned schema, the **Changes** field is set to `Unaffected`.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Go to **Schema Validation** and select **Add Validation**.
+4. Select **Apply learned schema**.
+5. Choose a hostname and review the endpoints that will be protected by the learned schema. 
+6. (Optional) Change the action to take if a request does not match the schema.
+7. Select **Apply schema**.
+   
+{{<Aside type="note">}}
+If an endpoint is currently protected by a learned schema, the date of the last applied learned schema will be shown in the current schema field.
+{{</Aside>}}
+
+### Change the action of an entire schema
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Go to **Schema Validation** and select the schema in the Schema list.
+4. Check the multi-select box to select the endpoints shown on the current page.
+5. Choose **Select all endpoints**.
+6. Select **Change Action**.
+7. Choose an action from the dropdown menu.
+8. Select **Set action**.
+
 ### Change the global default action of Schema Validation
 
 Schema Validation’s default action is visible on the main Schema Validation page. This action applies to any endpoint with its action set to `Default`. 
