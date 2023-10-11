@@ -14,8 +14,7 @@ meta:
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Windows           | WARP with Gateway                                                                         | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 The Domain Joined device posture attribute ensures that a user is a member of a specific Windows Active Directory domain.
 

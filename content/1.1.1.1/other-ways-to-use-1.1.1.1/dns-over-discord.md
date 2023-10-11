@@ -51,8 +51,7 @@ Discord has a limit of 25 options in slash commands, so DNS over Discord offers 
 * `TXT`
 * `URI`
 
-</div>
-</details>
+{{</details>}}
 
 To query other DNS record types, or multiple record types at once, use the `/multi-dig` command.
 
@@ -142,8 +141,7 @@ Use a `*` (asterisk) in place of a record type to get DNS results for all suppor
 * `URI`
 * `ZONEMD`
 
-</div>
-</details>
+{{</details>}}
 
 ### Short form response
 

@@ -43,15 +43,13 @@ When you [create a monitor](/load-balancing/how-to/create-monitor/), there are s
 
 {{<render file=_monitor-settings-basic.md productFolder="load-balancing">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Advanced settings">}}
 
 {{<render file=_monitor-settings-advanced.md productFolder="load-balancing">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<render file=_monitor-settings-consecutive.md productFolder="load-balancing">}}
 

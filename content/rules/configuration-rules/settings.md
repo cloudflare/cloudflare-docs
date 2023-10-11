@@ -29,8 +29,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Auto Minify
 
@@ -55,8 +54,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Browser Integrity Check
 
@@ -77,8 +75,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Disable Apps
 
@@ -99,8 +96,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="warning">}}
 This setting will not disable [Apps with Workers](https://cloudflareapps.com/apps/developer/docs/workers). These apps request permission to add a Worker when you are installing them.
@@ -125,8 +121,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Disable Zaraz
 
@@ -147,8 +142,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Hotlink Protection
 
@@ -169,8 +163,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Email Obfuscation
 
@@ -191,8 +184,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Mirage
 
@@ -213,8 +205,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Opportunistic Encryption
 
@@ -235,8 +226,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Polish
 
@@ -259,8 +249,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Rocket Loader
 
@@ -281,8 +270,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Security Level
 
@@ -305,8 +293,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Server Side Excludes
 
@@ -327,8 +314,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## SSL
 
@@ -351,8 +337,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## SXG
 
@@ -373,8 +358,7 @@ header: API configuration example
 
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 [^1]: Automatic HTTPS Rewrites prevents end users from seeing “mixed content” errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
 

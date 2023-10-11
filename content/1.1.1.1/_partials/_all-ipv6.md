@@ -14,8 +14,7 @@ Depending on what you want to configure, choose one of the following DNS address
 2606:4700:4700::1001
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Block malware with 1.1.1.1 for Families">}}
 
@@ -24,8 +23,7 @@ Depending on what you want to configure, choose one of the following DNS address
 2606:4700:4700::1002
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Block malware and adult content with 1.1.1.1 for Families">}}
 
@@ -34,5 +32,4 @@ Depending on what you want to configure, choose one of the following DNS address
 2606:4700:4700::1003
 ```
 
-</div>
-</details>
+{{</details>}}

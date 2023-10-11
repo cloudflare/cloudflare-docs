@@ -40,8 +40,7 @@ The registration process may take a few minutes to complete. If the registration
 
 If you get an API error, then the token has expired. Generate a new one by refreshing the web page and quickly grab the new token from the page source.
 
-</div>
-</details>
+{{</details>}}
 
 7. If you did not configure WARP to [auto-connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect), manually turn on WARP:
 

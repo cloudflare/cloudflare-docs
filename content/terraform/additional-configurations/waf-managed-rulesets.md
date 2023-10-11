@@ -112,8 +112,7 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Configure skip rules
 

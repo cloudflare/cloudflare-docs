@@ -41,8 +41,7 @@ mode=0
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -60,8 +59,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_set
 
@@ -94,8 +92,7 @@ mode=0
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -113,8 +110,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST conn\_setmode\_enabled
 
@@ -145,8 +141,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -164,8 +159,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_setmode\_enabled
 
@@ -196,8 +190,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -215,8 +208,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST conn\_setmode\_disabled
 
@@ -247,8 +239,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -266,8 +257,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_setmode\_disabled
 
@@ -298,8 +288,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -317,8 +306,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST conn\_delete
 
@@ -349,8 +337,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -368,8 +355,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_delete
 
@@ -400,8 +386,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -419,5 +404,4 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}

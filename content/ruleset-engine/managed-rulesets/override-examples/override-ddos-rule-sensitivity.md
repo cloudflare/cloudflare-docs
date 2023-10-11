@@ -44,5 +44,4 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/ddos_l7/ent
 }'
 ```
 
-</div>
-</details>
+{{</details>}}

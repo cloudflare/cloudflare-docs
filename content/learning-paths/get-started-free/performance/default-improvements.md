@@ -28,5 +28,4 @@ When Cloudflare stores content in its cache, the request never needs to go to yo
 
 For more details, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
-</div>
-</details>
+{{</details>}}

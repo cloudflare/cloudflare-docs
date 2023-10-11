@@ -12,8 +12,7 @@ weight: 1
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | macOS, Windows           | WARP not required                                                                 | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 Cloudflare Access can integrate with Azure AD's Conditional Access feature to require that users connect to certain applications from managed devices. To enable, you must integrate Azure AD with Cloudflare Access as a cloud app that requires managed device connections. You can configure [per-app identity providers](/cloudflare-one/identity/idp-integration/) to segment which Access applications require Azure AD with managed devices and which only require Azure AD logins.
 

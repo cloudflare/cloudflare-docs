@@ -57,8 +57,7 @@ After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 4. Select the site under **Main origin**.
 5. Under **Connection**, confirm that the protocol is **TLS 1.3**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Firefox">}}
 
@@ -71,8 +70,7 @@ After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 2. Select **Connection secure** > **More information**.
 3. Under **Technical Details**, verify that the TLS version is TLS 1.3.
 
-</div>
-</details>
+{{</details>}}
 
 ### Troubleshooting
 

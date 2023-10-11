@@ -98,8 +98,7 @@ For example, if you wanted to see which five data centers had the most number of
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## `httpRequestsAdaptiveGroups` GraphQL API node
 
@@ -220,8 +219,7 @@ With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByCo
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 This query says:
 

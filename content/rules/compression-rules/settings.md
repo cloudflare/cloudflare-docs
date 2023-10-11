@@ -89,8 +89,7 @@ To compress a response according to the algorithms supported by the visitor (if 
 
 The `auto` algorithm will always apply compression to the response as long as the website visitor supports compression. Cloudflare will define the order of preference for the compression algorithms, which may change in the future.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Disable compression">}}
 
@@ -104,8 +103,7 @@ To disable compression for matching requests, set the `algorithms` list to a sin
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Define a custom order for compression algorithms">}}
 
@@ -121,5 +119,4 @@ This example sets the preferred compression algorithm to Brotli, using GZIP as a
 }
 ```
 
-</div>
-</details>
+{{</details>}}

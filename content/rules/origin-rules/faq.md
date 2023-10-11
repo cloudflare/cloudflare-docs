@@ -82,8 +82,7 @@ When [using the API](/rules/origin-rules/create-api/), you configure origin rule
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The merged configuration to apply would be the following:
 

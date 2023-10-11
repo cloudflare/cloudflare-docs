@@ -72,8 +72,7 @@ The final data we get looks like the following response:
 ...
 ```
 
-</div>
-</details>
+{{</details>}}
 
 How do we get the same result using the GraphQL API?
 

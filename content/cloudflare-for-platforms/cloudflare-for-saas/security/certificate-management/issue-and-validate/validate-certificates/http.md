@@ -36,9 +36,7 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
 
 {{<render file="_cname-cert-verification.md" productFolder="ssl" >}}
 
-</div>
-
-</details>
+{{</details>}}
 
 {{<Aside type="note">}}
 

@@ -12,8 +12,7 @@ meta:
 
 DNS Firewall alternates between a customer's nameservers, using an algorithm is more likely to send queries to the faster upstream nameservers than slower nameservers.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="How long does DNS Firewall cache a stale object?">}}
 
@@ -21,15 +20,13 @@ DNS Firewall sets cache longevity according to allocated memory.
 
 As long as there is enough allocated memory, Cloudflare does not clear items from the cache forcefully, even when the TTL expires. This feature allows Cloudflare to serve stale objects from cache if your nameservers are offline.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Does the DNS Firewall cache SERVFAIL?">}}
 
 No. If the customer's nameservers respond with a SERVFAIL, the DNS Firewall will try again on the next request.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Does DNS Firewall support EDNS-Client-Subnet?">}}
 
@@ -50,19 +47,16 @@ EDNS limits the effectiveness of the DNS cache.
 
 Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](/api/operations/dns-firewall-update-dns-firewall-cluster), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Does DNS Firewall cache negative answers?">}}
 
 Not by default, but you can set `negative_cache_ttl` via the [API](/api/operations/dns-firewall-update-dns-firewall-cluster). This will affect the TTL of responses with status `REFUSED` or `NXDOMAIN`.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="How can I set PTR records for nameserver hostnames?">}}
 
 If you want PTR records on the assigned DNS Firewall cluster IPs that point to your nameserver hostnames, please reach out to your Cloudflare account team.
 
-</div>
-</details>
+{{</details>}}

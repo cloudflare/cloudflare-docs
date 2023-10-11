@@ -32,8 +32,7 @@ The process for removing the password depends on your operating system. The foll
 
 6. [Upload the file contents](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) to Cloudflare.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Windows">}}
 
@@ -53,5 +52,4 @@ The process for removing the password depends on your operating system. The foll
 
 6. [Upload](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) the contents of the `key.pem` file to Cloudflare.
 
-</div>
-</details>
+{{</details>}}

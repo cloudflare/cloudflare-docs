@@ -56,8 +56,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 * `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
 * `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Enable only Joomla rules using category overrides at the account level">}}
 
@@ -93,8 +92,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_
 * `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
 * `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
-</div>
-</details>
+{{</details>}}
 
 You can add more than one category override to a rule.
 
@@ -136,8 +134,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Add more than one category override at the account level">}}
 
@@ -173,8 +170,7 @@ https://api.cloudflare.com/client/v4/account/{account_id}/rulesets/phases/http_r
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The order of the overrides in the root ruleset affects whether rules in the deployed managed ruleset are enabled or disabled. Overrides placed later in the list take precedence over earlier overrides. Consider four rules from the managed ruleset in the code above that have different combinations of `category` tags.
 

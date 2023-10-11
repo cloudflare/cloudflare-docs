@@ -27,8 +27,7 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 8. If your application requires the client IP and supports [Proxy Protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/), enable **Proxy Protocols**. Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to the origin application.
 9. Select **Add**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Add your application via API">}}
 
@@ -76,8 +75,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Create a Spectrum application using a CNAME record
 
@@ -94,8 +92,7 @@ To create a Spectrum application using a CNAME record, you will need to create a
 8. Under **Origin**, enter your `CNAME` record name.
 9. Select **Add**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Add your application via API">}}
 
@@ -131,8 +128,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Create a Spectrum application using a Load Balancer
 
@@ -156,8 +152,7 @@ To prevent issues with DNS resolution for a Spectrum application, do not use the
 8. Select the load balancer you want to use from the dropdown. Disabled load balancers will not show on the **Load Balancer** menu.
 9. Select **Add**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Add your application via API">}}
 
@@ -193,8 +188,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View traffic
 

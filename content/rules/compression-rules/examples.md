@@ -51,8 +51,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Use GZIP compression for CSV files or other algorithm if not available
 
@@ -95,8 +94,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Use only Brotli compression for a specific URI path
 
@@ -140,5 +138,4 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}

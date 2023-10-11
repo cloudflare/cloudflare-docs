@@ -58,8 +58,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Add a rule that enables Email Obfuscation and Browser Integrity Check">}}
 
@@ -88,8 +87,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>Example: Add a rule that sets the Security Level to <em>High</em></summary>
@@ -119,8 +117,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

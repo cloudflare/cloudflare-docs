@@ -33,8 +33,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 | jq '.'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Setting regions">}}
 
@@ -55,8 +54,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 This will overwrite any previous regions.
 Change will be in effect after several minutes.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Delete regions">}}
 
@@ -69,8 +67,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 | jq '.'
 ```
 
-</div>
-</details>
+{{</details>}}
   
 ## View or change settings
 

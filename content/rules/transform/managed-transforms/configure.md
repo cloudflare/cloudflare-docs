@@ -98,8 +98,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 **2. Change the status of Managed Transforms**
 
@@ -192,8 +191,7 @@ The response will include all the available Managed Transforms and their new sta
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{</tab>}}
 {{</tabs>}}

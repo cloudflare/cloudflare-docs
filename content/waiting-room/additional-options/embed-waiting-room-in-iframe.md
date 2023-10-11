@@ -67,9 +67,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
             }'
 ```
 
-</div>
-
-</details>
+{{</details>}}
 
 {{<details header="Response">}}
 
@@ -103,6 +101,4 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 }
 ```
 
-</div>
-
-</details>
+{{</details>}}

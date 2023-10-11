@@ -57,8 +57,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Configure ruleset and rule overrides at the account level">}}
 
@@ -103,5 +102,4 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_
 }'
 ```
 
-</div>
-</details>
+{{</details>}}

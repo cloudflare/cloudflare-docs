@@ -12,8 +12,7 @@ weight: 3
 | ---------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | iOS, Android, ChromeOS | WARP with Gateway                                                                         | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 Cloudflare Zero Trust allows you to build Zero Trust rules based on device UUIDs supplied in an MDM file. You can create these rules so that access to applications is granted only to users connecting from company devices.
 

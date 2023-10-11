@@ -39,8 +39,7 @@ pubname=My%20Railgun
 name=my-railgun
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -61,8 +60,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET init
 
@@ -93,8 +91,7 @@ pubname=My%20Railgun
 name=my-railgun
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -115,8 +112,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST delete
 
@@ -145,8 +141,7 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -164,8 +159,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET delete
 
@@ -194,8 +188,7 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -213,5 +206,4 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}

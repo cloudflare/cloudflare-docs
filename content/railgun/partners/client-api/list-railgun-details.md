@@ -35,8 +35,7 @@ email=user%40cloudflare.com
 tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -108,8 +107,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET user\_get\_all
 
@@ -136,8 +134,7 @@ email=user%40cloudflare.com
 tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -209,8 +206,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST zone\_conn\_get\_active
 
@@ -238,8 +234,7 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -265,8 +260,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET zone\_conn\_get\_active
 
@@ -294,8 +288,7 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example response">}}
 
@@ -321,5 +314,4 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}

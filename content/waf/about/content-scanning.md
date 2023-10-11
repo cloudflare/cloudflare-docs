@@ -210,8 +210,7 @@ curl --request POST \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Disable WAF content scanning">}}
 
@@ -227,8 +226,7 @@ curl --request POST \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Get WAF content scanning status">}}
 
@@ -243,8 +241,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/s
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### Custom expression operations
 
@@ -278,8 +275,7 @@ header: Example response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Add a custom scan expression">}}
 
@@ -299,8 +295,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/p
 ]'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Delete a custom scan expression">}}
 
@@ -316,5 +311,4 @@ curl --request DELETE \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}

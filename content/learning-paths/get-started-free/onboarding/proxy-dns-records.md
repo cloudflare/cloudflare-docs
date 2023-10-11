@@ -15,8 +15,7 @@ Without DNS, we would have to remember long strings of numbers to access our fav
 
 For more details on DNS, refer to the [Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="What are DNS records?">}}
 
@@ -26,8 +25,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 - [DNS records in Cloudflare](/dns/manage-dns-records/reference/dns-record-types/)
 - [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/)
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="What is "proxying my DNS through Cloudflare"?">}}
 
@@ -37,8 +35,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 - [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/)
 - [DNS record proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
 
-</div>
-</details>
+{{</details>}}
 
 ## Prerequisites
 

@@ -12,8 +12,7 @@ weight: 8
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems               | WARP with Gateway                                                                         | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than the configured value.
 

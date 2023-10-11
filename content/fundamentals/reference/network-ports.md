@@ -21,8 +21,7 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 - 2086
 - 2095
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="HTTPS ports supported by Cloudflare">}}
 
@@ -33,8 +32,7 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 - 2096
 - 8443
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Ports supported by Cloudflare, but with caching disabled">}}
 
@@ -49,8 +47,7 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 - 8880
 - 8443
 
-</div>
-</details>
+{{</details>}}
 
 ## How to enable Cloudflare's proxy for additional ports
 

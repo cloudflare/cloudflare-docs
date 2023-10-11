@@ -15,15 +15,13 @@ To configure your device to send traffic to Gateway:
 
 ![macOS DNS Resolver Options](/images/dns/dns-resolvers-macosx.png)
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Windows">}}
 
 ![Windows DNS Resolver Options](/images/dns/dns-resolvers-windows.png)
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Linux">}}
 
@@ -34,22 +32,19 @@ nameserver 172.64.X.X
 nameserver 172.64.X.X
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="iPhone">}}
 
 ![iPhone DNS Resolver Options](/images/dns/dns-resolvers-iphone.png)
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Android">}}
 
 ![Android DNS Resolver Options](/images/dns/dns-resolvers-android.png)
 
-</div>
-</details>
+{{</details>}}
 
 ## Change DNS resolver in the browser
 

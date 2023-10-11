@@ -18,8 +18,7 @@ SSLVerifyDepth 1
 SSLCACertificateFile /path/to/origin-pull-ca.pem
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="NGINX example">}}
 
@@ -29,8 +28,6 @@ For this example, you would have saved your certificate to `/etc/nginx/certs/clo
 ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
 ```
 
-</div>
-
-</details>
+{{</details>}}
 
 At this point, you may also want to enable logging on your origin so that you can verify the configuration is working.

@@ -43,20 +43,17 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 {{<details header="Windows and macOS">}}
 
 {{<render file="warp/_enroll-windows-mac.md" productFolder="cloudflare-one">}}
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Linux">}}
 
 {{<render file="warp/_enroll-linux.md" productFolder="cloudflare-one">}}
-</div>
-</details>
+{{</details>}}
 
 {{<details header="iOS, Android, and ChromeOS">}}
 
 {{<render file="warp/_enroll-ios-android.md" productFolder="cloudflare-one">}}
 
-</div>
-</details>
+{{</details>}}
 
 The WARP client should show as **Connected**. By default, all DNS queries from the device will be forwarded to Cloudflare Gateway for filtering.

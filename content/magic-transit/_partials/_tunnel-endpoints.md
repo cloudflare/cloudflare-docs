@@ -70,8 +70,7 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For $2 this
 16. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
 17. After adding your tunnel information, select **Add tunnels** to save your changes.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="IPsec tunnel">}}
 
@@ -101,8 +100,7 @@ Bidirectional health checks are available for GRE and IPsec tunnels. For $2 this
 
 16. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
 
-</div>
-</details>
+{{</details>}}
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -131,8 +129,7 @@ curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="IPsec tunnel">}}
 
@@ -224,8 +221,7 @@ You will receive a response like the following:
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Configure bidirectional health checks">}}
 

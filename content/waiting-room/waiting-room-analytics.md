@@ -149,8 +149,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Find the average of total active users and new users per minute over a certain period, and aggregate this data over a period of 15 minutes.">}}
 
@@ -220,8 +219,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Find the weighted averages of time on origin (50th percentile) and total time waited (90th percentile) for a certain period and aggregate this data over one hour.">}}
 
@@ -273,8 +271,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Why is there no data for my waiting room?
 

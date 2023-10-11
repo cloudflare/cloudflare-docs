@@ -79,5 +79,4 @@ AuthorizedPrincipalsCommandUser nobody
 
 Since this will put the security of your server entirely dependent on your Access configuration, make sure your [Access policies](/cloudflare-one/policies/access/policy-management/) are correctly configured.
 
-</div>
-</details>
+{{</details>}}

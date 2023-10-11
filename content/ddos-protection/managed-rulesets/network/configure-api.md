@@ -120,7 +120,6 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information on defining overrides for managed rulesets using the Rulesets API, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).

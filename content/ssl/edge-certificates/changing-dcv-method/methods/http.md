@@ -52,9 +52,7 @@ This process may involve a few minutes of downtime.
 
 {{<render file="_cname-cert-verification.md">}}
 
-</div>
-
-</details>
+{{</details>}}
 
 {{<render file="_acm-validate-cert.md">}}
 

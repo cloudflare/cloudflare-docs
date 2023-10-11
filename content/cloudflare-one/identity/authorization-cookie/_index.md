@@ -103,16 +103,14 @@ To enable third-party cookies for an Access application:
     - Hostname of your Access application (for example, `https://jira.site.com`)
     - `https://<your-team-name>.cloudflareaccess.com`
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Safari">}}
 
 1. Go to **Safari** > **Settings** > **Privacy**.
 2. Deselect **Block all cookies**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Firefox">}}
 
@@ -123,8 +121,7 @@ To enable third-party cookies for an Access application:
 5. Enter `https://<your-team-name>.cloudflareaccess.com` and select **Allow**.
 6. Select **Save Changes**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Brave">}}
 
@@ -133,5 +130,4 @@ To enable third-party cookies for an Access application:
     - Hostname of your Access application (for example, `https://jira.site.com`)
     - `https://<your-team-name>.cloudflareaccess.com`
 
-</div>
-</details>
+{{</details>}}

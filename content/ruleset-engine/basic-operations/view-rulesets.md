@@ -68,8 +68,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: View available rulesets at the account level">}}
 
@@ -136,8 +135,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View the rules included in a ruleset
 
@@ -187,8 +185,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: View rules in a managed ruleset">}}
 
@@ -254,8 +251,7 @@ header: Response
 
 Each rule in a managed ruleset can have associated tags or categories, listed in the `categories` field.
 
-</div>
-</details>
+{{</details>}}
 
 ## Related resources
 

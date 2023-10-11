@@ -15,8 +15,7 @@ By default, the [DNS server](https://www.cloudflare.com/learning/dns/what-is-dns
 
 {{<directory-listing>}}
 
-</div>
-</details>
+{{</details>}}
 
 You can also set up [1.1.1.1 for Families](#1111-for-families) for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that Cloudflare committed to when launching 1.1.1.1.
 
@@ -37,8 +36,7 @@ Use the following DNS resolvers to block malicious content:
 * `2606:4700:4700::1112`
 * `2606:4700:4700::1002`
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Block malware and adult content">}}
 
@@ -49,8 +47,7 @@ Use the following DNS resolvers to block malware and adult content:
 * `2606:4700:4700::1113`
 * `2606:4700:4700::1003`
 
-</div>
-</details>
+{{</details>}}
 
 Cloudflare returns `0.0.0.0` if the [fully qualified domain name (FQDN)](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) or IP in a DNS query is classified as malicious.
 
@@ -81,8 +78,7 @@ To configure an encrypted DoH connection to 1.1.1.1 for Families, type one of th
 https://security.cloudflare-dns.com/dns-query
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Block malware and adult content">}}
 
@@ -90,8 +86,7 @@ https://security.cloudflare-dns.com/dns-query
 https://family.cloudflare-dns.com/dns-query
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### DNS over TLS (DoT)
 
@@ -105,8 +100,7 @@ To configure an encrypted DoT connection to 1.1.1.1 for Families, type one of th
 security.cloudflare-dns.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Block malware and adult content">}}
 
@@ -114,5 +108,4 @@ security.cloudflare-dns.com
 family.cloudflare-dns.com
 ```
 
-</div>
-</details>
+{{</details>}}

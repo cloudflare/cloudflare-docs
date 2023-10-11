@@ -18,15 +18,13 @@ If you want to register a `.us` domain, you must have a genuine connection to th
 
 **C12**: A natural person who is a permanent resident of the United States of America, or any of its possessions or territories.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Nexus Category 2">}}
 
 **C21**: A U.S.-based organization or company formed within one of the fifty (50) U.S. states, the District of Columbia, or any of the United States possessions or territories, or organized or otherwise constituted under the laws of a state of the United States of America, the District of Columbia or any of its possessions or territories or a U.S. federal, state, or local government entity or a political subdivision thereof.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Nexus Category 3">}}
 
@@ -34,8 +32,7 @@ If you want to register a `.us` domain, you must have a genuine connection to th
 
 **C32**: A foreign entity that has an office or other facility in the United States.
 
-</div>
-</details>
+{{</details>}}
 
 The nexus category information will be supplied to the .US registry. Failure to provide accurate information and/or to respond to requests for information may result in the suspension or cancellation of the domain registration.
 
@@ -58,4 +55,3 @@ The .US registry requires that domain contact data is displayed in the public WH
 Transferring a `.us` domain works in a similar way to other domains, but always requires approval via the Form of Authorization (FOA) email. You must select the approve link within five days for the transfer to proceed. If you do not respond, the transfer request will be cancelled.
 
 Refer to [Transfer your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/) for more information.
-

@@ -30,8 +30,7 @@ If you want to enforce DNS policies through WARP instead of over DoH, you can di
 
 Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Microsoft Edge">}}
 
@@ -41,8 +40,7 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 4. Select **Choose a service provider**.
 5. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Brave">}}
 
@@ -51,10 +49,8 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 3. Select **With Custom**.
 4. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Safari">}}
 As of today, Safari does not support DNS over HTTPS.
-</div>
-</details>
+{{</details>}}

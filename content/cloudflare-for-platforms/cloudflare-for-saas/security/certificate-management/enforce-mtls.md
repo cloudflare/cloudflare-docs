@@ -46,12 +46,10 @@ For security and regulatory reasons, you may want to only allow connections from
 
 Refer to [change ciphers setting on a zone](/api/operations/zone-settings-change-ciphers-setting).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Restrict cipher suites for custom hostname">}}
 
 Refer to [SSL properties of a custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname).
 
-</div>
-</details>
+{{</details>}}

@@ -94,8 +94,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Add a single rule to a phase entry point ruleset at the zone level">}}
 
@@ -159,5 +158,4 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}

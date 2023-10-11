@@ -53,15 +53,13 @@ Select **Respect origin** if matching requests will respect cache headers receiv
 
 - In **Status code TTL** you can define the cache time-to-live (TTL) duration for one or more response status codes received from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than_ or _Less than_ status code or to a _Range_ of status codes. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Browser TTL">}}
 
 Select if you want to **Respect origin** or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid. For more information, refer to [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Cache Key">}}
 
@@ -77,29 +75,25 @@ Enterprise customers have these additional options for custom cache keys:
 - In the **Host** section, you can select **Use original host** and **Resolved host**.
 - In the **User** section, you can select **Device type**, **Country**, and **Language**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Serve stale content">}}
 
 Enable or disable serving stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Respect Strong ETags">}}
 
 Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. When enabled, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-by-byte identical. If disabled, Cloudflare converts ETag headers into weak ETag headers.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Origin error page pass-thru">}}
 
 Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin.
 
-</div>
-</details>
+{{</details>}}
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
@@ -213,8 +207,7 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Browser Cache TTL">}}
 
@@ -267,8 +260,7 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Cache Key">}}
 
@@ -326,8 +318,7 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Serve stale content">}}
 
@@ -355,8 +346,7 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Respect strong ETags">}}
 
@@ -382,8 +372,7 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Origin error page pass-thru">}}
 
@@ -409,8 +398,7 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Terraform example
 
@@ -488,7 +476,6 @@ resource "cloudflare_ruleset" "cache_rules_example" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For additional guidance on using Terraform with Cloudflare, refer to [Terraform](/terraform/).

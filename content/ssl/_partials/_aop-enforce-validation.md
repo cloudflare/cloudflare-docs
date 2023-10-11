@@ -13,8 +13,7 @@ Once you can confirm everything is working as expected for your specific origin 
 SSLVerifyClient require
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="NGINX example">}}
 
@@ -22,7 +21,6 @@ SSLVerifyClient require
 ssl_verify_client on;
 ```
 
-</div>
-</details>
+{{</details>}}
 
 After completing the process, you can use `curl` to send requests directly to your origin IPs, verifying that the requests fail due to certificate validation being enforced.

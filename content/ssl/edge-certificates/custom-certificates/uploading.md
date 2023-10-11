@@ -29,8 +29,7 @@ Each custom certificate you upload must:
   - Domain Validated (DV)
   - Organization Validated (OV)
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

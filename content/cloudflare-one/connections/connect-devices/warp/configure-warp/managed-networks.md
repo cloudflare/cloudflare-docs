@@ -66,8 +66,7 @@ To serve the TLS certificate using Python:
    $ python3 myserver.py
    ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="nginx in Docker">}}
 
@@ -122,8 +121,7 @@ If needed, replace `/certs/example.pem` and `/certs/example.key` with the locati
    $ docker-compose up -d
    ```
 
-</div>
-</details>
+{{</details>}}
 
 3. To test that the server is working, run a curl command from the end user's device:
 

@@ -14,8 +14,7 @@ To make your first request to the Images API, you must obtain these pieces of in
 account and website.
 2. In **Overview**, scroll down to find your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Your Global API Key or API Token">}}
 
@@ -37,8 +36,7 @@ Your token for Cloudflare Images is now created. Copy it and keep it in a safe p
 
 Refer to [Creating API tokens](/fundamentals/api/get-started/create-token/) for more details about API tokens.
 
-</div>
-</details>
+{{</details>}}
 
 Once you have this information, you are ready to upload your first image to Cloudflare Images using the API. In the following example, the `-F` flag is used to upload images from your local computer:
 

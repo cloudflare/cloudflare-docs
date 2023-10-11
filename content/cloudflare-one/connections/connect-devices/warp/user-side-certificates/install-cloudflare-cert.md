@@ -470,8 +470,7 @@ You can verify the update with the following command.
 $ defaults read /Library/Preferences/com.google.drivefs.settings
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Windows">}}
 
@@ -495,8 +494,7 @@ You can verify the update with the following command.
 $ reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
@@ -572,8 +570,7 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
 3. Restart Eclipse.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Windows">}}
 
@@ -591,8 +588,7 @@ set JAVA_HOME="\path\to\java.home"
 
 3. Restart Eclipse.
 
-</div>
-</details>
+{{</details>}}
 
 For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
 
@@ -623,8 +619,7 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 5. Restart RubyGems.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Windows">}}
 
@@ -649,8 +644,7 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 5. Restart RubyGems.
 
-</div>
-</details>
+{{</details>}}
 
 ### Minikube
 

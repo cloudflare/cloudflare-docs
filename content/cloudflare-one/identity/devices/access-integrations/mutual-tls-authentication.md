@@ -12,8 +12,7 @@ weight: 3
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems       | WARP not required                                                                         | Enterprise plans                                              |
 
-</div>
-</details>
+{{</details>}}
 
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 

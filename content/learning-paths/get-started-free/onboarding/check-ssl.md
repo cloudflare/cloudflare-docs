@@ -13,8 +13,7 @@ SSL/TLS certificates let websites use `https` at the start of the URL (instead o
 
 For more details on SSL/TLS, refer to the [Learning Center](https://www.cloudflare.com/learning/ssl/what-is-ssl/).
 
-</div>
-</details>
+{{</details>}}
 
 By default, Cloudflare issues — and renews — free, unshared, publicly trusted **Universal SSL** certificates to all domains added to and activated on Cloudflare.
 

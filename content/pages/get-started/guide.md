@@ -89,8 +89,7 @@ The root directory is where your site’s content lives. If not specified, Cloud
 
 Refer to [Build configuration](/pages/platform/build-configuration/) for more information.
 
-</div>
-</details>
+{{</details>}}
 
 ### Environment variables
 

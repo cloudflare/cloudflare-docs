@@ -118,9 +118,7 @@ header: Response (truncated)
 }
 ```
 
-</div>
-
-</details>
+{{</details>}}
 
 {{<details header="Requests per data center">}}
 
@@ -198,6 +196,4 @@ header: Response (truncated)
 }
 ```
 
-</div>
-
-</details>
+{{</details>}}

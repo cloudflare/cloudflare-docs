@@ -14,8 +14,7 @@ meta:
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | macOS, Windows    | WARP with Gateway                                                                         | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 The Firewall device posture attribute ensures that a firewall is running on a device.
 

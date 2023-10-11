@@ -40,8 +40,7 @@ To prevent HTTP/3 traffic from bypassing inspection, disable QUIC in your users'
 2. Disable **Experimental QUIC protocol**.
 3. Relaunch Chrome.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Safari">}}
 
@@ -49,8 +48,7 @@ To prevent HTTP/3 traffic from bypassing inspection, disable QUIC in your users'
 2. Go to **Develop** > **Experimental Features** and disable **HTTP/3**.
 3. Relaunch Safari.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Firefox">}}
 
@@ -59,8 +57,7 @@ To prevent HTTP/3 traffic from bypassing inspection, disable QUIC in your users'
 3. Disable **network.http.http3.enable**.
 4. Relaunch Firefox.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Microsoft Edge">}}
 
@@ -68,5 +65,4 @@ To prevent HTTP/3 traffic from bypassing inspection, disable QUIC in your users'
 2. Disable **Experimental QUIC protocol**.
 3. Relaunch Edge.
 
-</div>
-</details>
+{{</details>}}

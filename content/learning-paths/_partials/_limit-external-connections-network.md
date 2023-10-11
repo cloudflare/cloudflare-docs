@@ -15,5 +15,4 @@ Explicitly block all traffic that does not come from [Cloudflare IP addresses](/
   - Requires allowlisting Cloudflare IP ranges at your origin server.
   - Vulnerable to IP spoofing.
 
-</div>
-</details>
+{{</details>}}

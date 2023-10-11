@@ -96,8 +96,7 @@ nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 
 For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
-</div>
-</details>
+{{</details>}}
 
 ## Filter DoH requests by user
 
@@ -139,8 +138,7 @@ highlight: [3, 4, 7]
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### 2. Enable DoH functionality for the service token
 
@@ -172,8 +170,7 @@ If you get an `access.api.error.service_token_not_found` error, check that `<SER
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### 3. Create a user
 
@@ -223,8 +220,7 @@ highlight: [3]
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note">}}
 
@@ -251,8 +247,7 @@ The response contains a unique DoH token associated with the user. This token ex
 {"token":"y2khbGciOiJSUzI1NiIsImtpZCI6ImJlZjVkYjg4ZTEwMjk3ZDEwNzhkMmEyYjE0MjMxZTljYTQwMjQ2NjAwOTQzNmJhOTQwOGJkODY3ZmI4OWFiOGQifQ.eyJ0eXBlIjoiZG9oIiwiYXVkIjoiY2xvdWRmbGFyZS1nYXRld2F5LmNvbSIsImlhdCI6MTY1NDc1MTg3NSwiZXhwIjoxNjU0ODM4Mjc1LCJhY2NvdW50LWlkIjoiMTA4MDM0OGIyZGYzYmQwN2QxZmI1MjM3Y2Q1ZDU5M2EiLCJ1c2VyLWlkIjoiNTRkNDI1ZGUtN2E3OC00MTg2LTk5NzUtZDQzYzg4ZWU3ODk5In0.I5p4WsH2dPhQ8vwy84zF05PsoBHCsUSXAaMpNhEH36oFZ3tXcs9ksLz7OzpZ_x3HxUfO3n57LlpAF1VehaBt2i94XCkvSgtHpYcwd_qZydLp-BGtcyfU1LbdXQC3m6zxKcIWu5VySi8I-J25UYlpyJhYgZ4DQUZIpqbSSt6WcVRKvA7OBa7xjkTux4OcqWAViO_ZS-GLwl-fqhvolmiwk37seBD3YuV1zG06VeWXfrMkZ5MbhooHD1DZDBHOZpTtmN8MbeKeI4tlY1mb_O3-jE-um6F9Hrl4NQm89MKFzsum-_Rywi5m4PTSlDza7fjdJs7RzFgJd3VWgzG-jgyQKw"}%
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### 5. Send an authenticated DoH query
 
@@ -293,7 +288,6 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/gateway/identity-selectors/).

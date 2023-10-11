@@ -27,20 +27,17 @@ If you are unsure of which setup to use, consider the questions below for an ove
 
 If you are on a Free or Pro plan, [full setup](/dns/zone-setups/full-setup/) is the only one available. This is the recommended and most common option.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Will you be using Cloudflare with other DNS providers?">}}
 
 If you are on a Business or Enterprise plan, you can use [partial (CNAME) setup](/dns/zone-setups/partial-setup/) to keep your primary DNS provider and only proxy individual subdomains through Cloudflare.
 
 If you are on an Enterprise plan, you also have the option to use [zone transfers](/dns/zone-setups/zone-transfers/) to set up Cloudflare as either a primary or a secondary DNS provider.
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Do you need to manage subdomains separately?">}}
 
 If you are on an Enterprise plan, you can use [subdomain setup](/dns/zone-setups/subdomain-setup/) to manage the Cloudflare settings for one or more subdomains separately from your domain apex.
 
-</div>
-</details>
+{{</details>}}

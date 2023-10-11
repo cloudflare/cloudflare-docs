@@ -75,13 +75,11 @@ Filters use the form `dimension operator expression`, where each part correspond
 - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
 - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
   
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Examples using AND">}}
   
 - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
 - `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
 
-</div>
-</details>
+{{</details>}}

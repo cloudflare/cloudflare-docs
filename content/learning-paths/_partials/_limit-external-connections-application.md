@@ -9,8 +9,7 @@ _build:
 
 {{<render file="_cloudflare-tunnels-origin-description.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="HTTP Header Validation">}}
 
@@ -27,8 +26,7 @@ Only allow traffic with specific (and secret) HTTP headers.
     2. Configure your origin server to restrict access based on the [HTTP Auth Header](/workers/examples/auth-with-headers/) (or perform [HTTP Basic Authentication](/workers/examples/basic-auth/)).
     3. Configure your origin server to restrict access based on the [HTTP Host Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host). Specifically, only allow requests which contain expected HTTP Host Header values, and reject all other requests.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="JSON Web Tokens (JWT) Validation">}}
 
@@ -43,5 +41,4 @@ Only allow traffic with the appropriate JWT.
   - [Validate JWTs for an Access application](/cloudflare-one/identity/authorization-cookie/validating-json/)
   - [Validate JWTs for an API](/api-shield/security/jwt-validation/)
 
-</div>
-</details>
+{{</details>}}

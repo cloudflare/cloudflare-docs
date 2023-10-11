@@ -42,8 +42,7 @@ The only required parameter is `<STATIC_URL_VALUE>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Dynamic URL redirect
 
@@ -77,5 +76,4 @@ The only required parameter is `<DYNAMIC_URL_EXPRESSION>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
-</div>
-</details>
+{{</details>}}

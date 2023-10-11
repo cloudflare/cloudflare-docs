@@ -74,8 +74,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Create a new regional hostname entry">}}
 
@@ -106,8 +105,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="List all regional hostnames for a zone or get a specific one">}}
 
@@ -139,8 +137,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="List all regional hostnames for a specific zone">}}
 
@@ -170,8 +167,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Patch the region for a specific hostname">}}
 
@@ -202,8 +198,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Delete the region configuration">}}
 
@@ -229,8 +224,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Terraform support
 

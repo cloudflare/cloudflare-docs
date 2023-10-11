@@ -182,8 +182,7 @@ To clear your DNS cache:
 1. Go to `chrome://net-internals/#dns`.
 2. Select **Clear host cache**.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Windows">}}
 
@@ -194,8 +193,7 @@ To clear your DNS cache:
 ipconfig /flushdns
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="macOS">}}
 
@@ -208,5 +206,4 @@ $ sudo killall mDNSResponderHelper
 $ sudo dscacheutil -flushcache
 ```
 
-</div>
-</details>
+{{</details>}}

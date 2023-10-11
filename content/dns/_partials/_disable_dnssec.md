@@ -13,5 +13,4 @@ If you are onboarding an existing domain to Cloudflare, make sure DNSSEC **is di
 
 {{<render file="_why-disable-dnssec.md">}}
 
-</div>
-</details>
+{{</details>}}

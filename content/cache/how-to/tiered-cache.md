@@ -88,8 +88,7 @@ curl --request GET \
  --header 'X-Auth-Email: '
  ```
 
- </div>
-</details>
+ {{</details>}}
 
 {{<details header="Enable Regional Tiered Cache">}}
 
@@ -100,8 +99,7 @@ curl --request GET \
  --header 'X-Auth-Email: '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more API examples and configuration options for Tiered Cache, refer to the [API documentation](/api/operations/tiered-caching-get-tiered-caching-setting).
 

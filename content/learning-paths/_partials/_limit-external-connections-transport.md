@@ -17,12 +17,10 @@ _build:
   - For more strict security, you should upload your own certificate. Although Cloudflare provides you a certificate for easy configuration, this certificate only guarantees that a request is coming from the Cloudflare network.
   - Not scalable for large numbers of origin servers.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Cloudflare Tunnel (SSH / RDP)">}}
 
 {{<render file="_cloudflare-tunnels-origin-description.md">}}
 
-</div>
-</details>
+{{</details>}}

@@ -37,8 +37,7 @@ Purchase of Access.
 
 Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.com/) under **Configuration** > **Service Auth**.
 
-</div>
-</details>
+{{</details>}}
 
 ## Billing
 
@@ -63,8 +62,7 @@ Professional plans or higher.
 
 Review your usage of the product and adjust the configuration and/or increase the alerting threshold.
 
-</div>
-</details>
+{{</details>}}
 
 ## Brand Protection
 
@@ -86,8 +84,7 @@ Professional plans or higher.
 
 Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Brand Protection Digest">}}
 
@@ -107,8 +104,7 @@ Professional plans or higher.
 
 Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
 
-</div>
-</details>
+{{</details>}}
 
 ## Cloudflare Status
 
@@ -134,8 +130,7 @@ If the notification is announcing new scheduled maintenance, you may want to add
 
 During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Incident Alerts">}}
 
@@ -159,8 +154,7 @@ All Cloudflare plans.
 
 Review your [analytics](/analytics/) page to see if your domain is impacted.
 
-</div>
-</details>
+{{</details>}}
 
 ## DNS
 
@@ -184,8 +178,7 @@ Purchase of Secondary DNS.
 2. Confirm that the [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/) on your primary nameservers are configured correctly.
 3. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Secondary DNS Primaries Failing">}}
 
@@ -207,8 +200,7 @@ Purchase of Secondary DNS.
 2. Confirm that the [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/) on your primary nameservers are configured correctly.
 3. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Secondary DNS Successfully Updated">}}
 
@@ -228,8 +220,7 @@ Purchase of Secondary DNS.
 
 No action needed. Everything is working correctly.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Secondary DNSSEC Validation Warning">}}
 
@@ -253,8 +244,7 @@ Success alerts require no further action. Actions for failure notifications will
 - Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
 - Checking logs on primary nameservers for other errors.
 
-</div>
-</details>
+{{</details>}}
 
 ## DDoS Protection
 
@@ -276,8 +266,7 @@ All Cloudflare plans.
 
 {{<render file="_ddos.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Advanced HTTP DDoS Attack Alert">}}
 
@@ -301,8 +290,7 @@ Enterprise plans.
 
 {{<render file="_ddos.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Advanced Layer 3/4 DDoS Attack Alert">}}
 
@@ -328,8 +316,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 {{<render file="_ddos.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Health checks
 
@@ -357,8 +344,7 @@ Professional plans or higher.
 
 Review your [health check analytics](/health-checks/health-checks-analytics/#common-error-codes).
 
-</div>
-</details>
+{{</details>}}
 
 ## Load Balancing
 
@@ -386,8 +372,7 @@ All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enabl
 
 No direct call to action.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Load Balancing Health Alert">}}
 
@@ -418,8 +403,7 @@ All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enabl
 
 Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) to review changes in health status over time.
 
-</div>
-</details>
+{{</details>}}
 
 ## Logpush
 
@@ -446,8 +430,7 @@ Enterprise plans.
 
 In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
-</div>
-</details>
+{{</details>}}
 
 ## Magic Transit
 
@@ -469,8 +452,7 @@ Purchase of Magic Transit.
 
 No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Magic Network Monitoring: DDoS Attack">}}
 
@@ -490,8 +472,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 {{<render file="_ddos.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Magic Network Monitoring: Volumetric Attack">}}
 
@@ -511,8 +492,7 @@ Purchase of Magic Transit.
 
 If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, refer to [Dynamic advertisement](/byoip/concepts/dynamic-advertisement/).
 
-</div>
-</details>
+{{</details>}}
 
 ## Pages
 
@@ -541,8 +521,7 @@ All Cloudflare plans.
 
 For failed deployments, review our [debugging guide](/pages/platform/debugging-pages/#check-your-build-log).
 
-</div>
-</details>
+{{</details>}}
 
 ## Page Shield
 
@@ -564,8 +543,7 @@ Enterprise plans with paid add-on.
 
 Investigate to confirm it is an expected change.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Page Shield New Domain Alert">}}
 
@@ -585,8 +563,7 @@ Business plans or higher.
 
 Investigate to confirm it is an expected change.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Page Shield New Malicious Domain Alert">}}
 
@@ -608,8 +585,7 @@ Enterprise plans with paid add-on.
 
 {{<render file="_script-monitor-review-malicious-scripts.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Page Shield New Malicious Script Alert">}}
 
@@ -631,8 +607,7 @@ Enterprise plans with paid add-on.
 
 {{<render file="_script-monitor-review-malicious-scripts.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Page Shield New Malicious URL Alert">}}
 
@@ -654,8 +629,7 @@ Enterprise plans with paid add-on.
 
 {{<render file="_script-monitor-review-malicious-scripts.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Page Shield New Resources Alert">}}
 
@@ -675,8 +649,7 @@ Business plans or higher.
 
 Investigate to confirm it is an expected change.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Page Shield New Resource Exceeds Max URL Length Alert">}}
 
@@ -696,8 +669,7 @@ Business plans or higher.
 
 Manually check the resource.
 
-</div>
-</details>
+{{</details>}}
 
 ## Route Leak Detection
 
@@ -719,8 +691,7 @@ Purchase of BYOIP.
 
 Confirm your traffic is healthy: reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.
 
-</div>
-</details>
+{{</details>}}
 
 ## SSL/TLS
 
@@ -742,8 +713,7 @@ None.
 
 Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Advanced Certificate Alert">}}
 
@@ -763,8 +733,7 @@ When an advanced certificate is validated, issued, renewed, or expired.
 
 Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/ssl/troubleshooting/version-cipher-mismatch/) for more information.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Hostname-level Authenticated Origin Pulls Certificate Expiration Alert">}}
 
@@ -784,8 +753,7 @@ Authenticated Origin Pull.
 
 Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="SSL for SaaS Custom Hostnames Alert">}}
 
@@ -807,8 +775,7 @@ Purchase of Cloudflare for SaaS.
 
 {{<render file="_troubleshoot-ssl.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Universal SSL Alert">}}
 
@@ -828,8 +795,7 @@ All Cloudflare plans.
 
 {{<render file="_troubleshoot-ssl.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Zone-level Authenticated Origin Pulls Certificate Expiration Alert">}}
 
@@ -846,8 +812,7 @@ Authenticated Origin Pull
 **What should you do if you receive one?**
 Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
 
-</div>
-</details>
+{{</details>}}
 
 ## Stream
 
@@ -874,8 +839,7 @@ Stream subscription.
 
 Stream notifications are entirely customizable by the customer. Action will depend on the customizations enabled.
 
-</div>
-</details>
+{{</details>}}
 
 ## Traffic Monitoring
 
@@ -910,8 +874,7 @@ Enterprise plans.
 2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
 3. {{<render file="_errors.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Origin Error Rate Alert">}}
 
@@ -939,8 +902,7 @@ Enterprise plans.
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
 2. {{<render file="_errors.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Passive Origin Monitoring">}}
 
@@ -960,8 +922,7 @@ All Cloudflare plans.
 
 {{<render file="_errors.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Traffic Anomalies Alert">}}
 
@@ -986,8 +947,7 @@ Enterprise plans.
 1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
 2. {{<render file="_errors.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Trust and Safety Blocks
 
@@ -1009,8 +969,7 @@ All Cloudflare plans.
 
 Take care of any abuse on your website. Then, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and request a review.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="New Blocks">}}
 
@@ -1030,8 +989,7 @@ All Cloudflare plans.
 
 Take care of any abuse on your website. Then, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and request a review.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Removed Blocks">}}
 
@@ -1051,8 +1009,7 @@ All Cloudflare plans.
 
 This is informational follow up.
 
-</div>
-</details>
+{{</details>}}
 
 ## Tunnel
 
@@ -1074,8 +1031,7 @@ All Cloudflare Zero Trust plans.
 
 No direct call to action.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Tunnel Health Alert">}}
 
@@ -1095,8 +1051,7 @@ All Cloudflare Zero Trust plans.
 
 Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/).
 
-</div>
-</details>
+{{</details>}}
 
 ## WAF
 
@@ -1122,8 +1077,7 @@ Enterprise plans.
 
 Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Security Events Alert">}}
 
@@ -1146,8 +1100,7 @@ Business and Enterprise plans.
 
 Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
-</div>
-</details>
+{{</details>}}
 
 ## Web Analytics
 
@@ -1169,5 +1122,4 @@ All Cloudflare plans.
 
 No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
 
-</div>
-</details>
+{{</details>}}

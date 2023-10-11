@@ -90,8 +90,7 @@ When you feed the function `NSLookup` a record type and a domain, you will get a
 * `SOA`
 * `TXT`
 
-</div>
-</details>
+{{</details>}}
 
 For example, typing:
 

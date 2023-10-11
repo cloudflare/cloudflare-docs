@@ -110,8 +110,7 @@ echo '{ "query":
 --data @-
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Get policy violations via Logpush
 

@@ -251,8 +251,7 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https:
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 As you can see from the response, Zone Analytics returns metrics along many dimensions and does not give you the option to control what you receive. With GraphQL Analytics, you can ask for only the data that you need. However, if you wanted to get exactly the same metrics and dimensions as you would from Zone Analytics, here is the query you would make:
 
@@ -499,8 +498,7 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 Notice that you can specify the request time period using a dataset filter (refer to [Filtering](/analytics/graphql-api/features/filtering/)). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it is available.
 

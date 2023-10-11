@@ -35,8 +35,7 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 
 The new replica will appear on the **Connectors** list for the tunnel.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Via the command line">}}
 
@@ -66,8 +65,7 @@ The new replica will appear on the **Connectors** list for the tunnel.
 
   This will output your tunnel UUID as well as two Connector IDs, one for each `cloudflared` process running your tunnel. With this command, you can also see that your tunnel is now being served by eight connections.
 
-</div>
-</details>
+{{</details>}}
 
 You can run the same tunnel across various `cloudflared` processes for up to 100 connections (25 replicas) per tunnel. Cloudflare Load Balancers and DNS records can still point to the tunnel and its UUID. Traffic will be sent to all `cloudflared` processes associated with the tunnel.
 

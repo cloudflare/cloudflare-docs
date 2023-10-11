@@ -46,8 +46,7 @@ Your Cloudflare proxy server domain is of the form:
 https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Create a proxy endpoint (API)">}}
 
@@ -94,8 +93,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
    In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
 
-</div>
-</details>
+{{</details>}}
 
 ## 2. Test your proxy server
 

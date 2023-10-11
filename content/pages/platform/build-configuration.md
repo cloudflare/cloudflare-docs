@@ -25,8 +25,7 @@ The build directory is generated from the build command. Each framework has its 
 
 The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
-</div>
-</details>
+{{</details>}}
 
 ## Framework presets
 

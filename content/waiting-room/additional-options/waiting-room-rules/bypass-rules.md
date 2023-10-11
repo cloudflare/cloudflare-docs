@@ -97,8 +97,7 @@ curl -X POST \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Allow a defined list of IPs to bypass the waiting room">}}
 
@@ -113,8 +112,7 @@ curl -X POST \
 }'  
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### Other API options for managing bypass rules
 

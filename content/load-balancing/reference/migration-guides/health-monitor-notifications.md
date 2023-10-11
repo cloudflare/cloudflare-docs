@@ -61,8 +61,7 @@ header: Response
 ]
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="No code">}}
 
@@ -74,8 +73,7 @@ To find pools with existing notifications in the dashboard:
 4. On a pool, click **Edit**.
 5. For **Health Monitor Notifications**, check the value is toggled to **On** and an email address is present in the **Notification email address** field.
 
-</div>
-</details>
+{{</details>}}
 
 ### Step 2 - Create new notifications
 
@@ -94,15 +92,13 @@ If using the Cloudflare API, [re-create all your existing notifications](/api/op
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="No code">}}
 
 On the pool you located in [Step 1](#step-1---find-existing-notifications), look for **Pool Notifications**. Click **Create a Health Alert** to start [creating a notification](/notifications/create-notifications/).
 
-</div>
-</details>
+{{</details>}}
 
 ### Step 3 - Remove deprecated notifications
 
@@ -129,8 +125,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/:account_identifier
 
 This API call supports the standard pagination query parameters, either `limit/offset` or `per_page/page`, so by default it only updates the first 25 pools listed. To make sure you update all your pools, you may want to adjust your API call so it loops through various pages or includes a larger number of pools with each request.
 
-</div>
-</details>
+{{</details>}}
 
 If needed, you can remove legacy notifications by using the dashboard.
 
@@ -138,7 +133,6 @@ If needed, you can remove legacy notifications by using the dashboard.
 
 Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, you must remove all notification email addresses from the field.
 
-</div>
-</details>
+{{</details>}}
 
 If you do not complete this step (removing all notification emails from all pools), your migration will not be considered complete and you will continue to receive additional emails about this deprecation.

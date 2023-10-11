@@ -119,8 +119,7 @@ multisigner.info.    3600    IN    DNSKEY    256 3 13 oJM<bla_bla_bla>XhSA==
 multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{</Aside>}}
 

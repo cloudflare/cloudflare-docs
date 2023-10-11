@@ -24,15 +24,13 @@ After purchasing a gateway subscription, create a gateway.
 
 {{<render file="_create-gateway-dashboard.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Create via API">}}
 
 {{<render file="_create-gateway-api.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<render file="_post-creation-steps.md">}}
 

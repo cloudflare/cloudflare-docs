@@ -114,8 +114,7 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Create an advanced rate limiting rule
 

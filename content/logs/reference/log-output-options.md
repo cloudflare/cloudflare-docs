@@ -84,8 +84,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output_options">}}
 
@@ -96,8 +95,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output">}}
 
@@ -107,8 +105,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 {"ClientIP":"89.163.242.208","EdgeStartTimestamp":1506702504433000400,"RayID":"3a6050bcbe121a89"}
 ```
 
-</div>
-</details>
+{{</details>}}
 
 - `ndjson` with different field names:
 
@@ -122,8 +119,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output">}}
 
@@ -135,8 +131,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 
 Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, can be inserted following go text/template convention, that is, `"{{`double{{curly}}braces`}}"`.
 
-</div>
-</details>
+{{</details>}}
 
 ### csv
 
@@ -149,8 +144,7 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output_options">}}
 
@@ -161,8 +155,7 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output">}}
 
@@ -173,8 +166,7 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### csv/json variants
 
@@ -192,8 +184,7 @@ Based on above, other formats similar to csv or json are also supported:
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output">}}
 
@@ -204,8 +195,7 @@ ClientIP,EdgeStartTimestamp,RayID
 "89.163.242.208",1506702504433000400,"3a6050bcbe121a89"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 - tsv with header:
 
@@ -220,8 +210,7 @@ ClientIP,EdgeStartTimestamp,RayID
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output">}}
 
@@ -232,8 +221,7 @@ ClientIP EdgeStartTimestamp  RayID
 "89.163.242.208"    1506702504433000400 "3a6050bcbe121a89"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 - json with nested object:
 
@@ -251,8 +239,7 @@ ClientIP EdgeStartTimestamp  RayID
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example output">}}
 
@@ -264,8 +251,7 @@ ClientIP EdgeStartTimestamp  RayID
 ]}
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## How to migrate
 

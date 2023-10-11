@@ -24,8 +24,7 @@ Cloudflare Images is an end-to-end solution that offers storage, resizing, optim
 
 **Image Resizing** - Images can be stored anywhere on the Internet as long as they have public access.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Billing">}}
 
@@ -33,8 +32,7 @@ Cloudflare Images is an end-to-end solution that offers storage, resizing, optim
 
 **Image Resizing** - Cloudflare charges when there are cache misses, and for some [request errors](#are-image-resizing-errors-billed).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Delivery">}}
 
@@ -42,8 +40,7 @@ Cloudflare Images is an end-to-end solution that offers storage, resizing, optim
 
 **Image Resizing** - Images are served from one of your domains on Cloudflare.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Available optimizations">}}
 
@@ -51,8 +48,7 @@ Cloudflare Images is an end-to-end solution that offers storage, resizing, optim
 
 **Image Resizing** - For more information on Image Resizing optimizations refer to [URL format options](/images/image-resizing/url-format/#options).
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Plan availability">}}
 
@@ -60,8 +56,7 @@ Cloudflare Images is an end-to-end solution that offers storage, resizing, optim
 
 **Image Resizing** - Available with Pro, Business, and Enterprise plans.
 
-</div>
-</details>
+{{</details>}}
 
 ### How much does Cloudflare Images cost?
 

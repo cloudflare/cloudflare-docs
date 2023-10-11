@@ -107,8 +107,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The following request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase, and defines a ruleset override that sets the action to `log` for all (enabled) rules.
 
@@ -136,7 +135,6 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For additional examples of configuring overrides, refer to [Managed ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).

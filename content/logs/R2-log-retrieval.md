@@ -140,33 +140,28 @@ Contact your account representative to have the beta Logpull RayID Lookup subscr
 
 High volume zones can produce many log files in R2. Try reducing your start and end time range until you find a duration that works best for your log volume.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="How do I know what time range to index?">}}
 
 Currently, there is no process to index logs as they arrive. If you have the RayID and know the time the request was made, try indexing the next 5-10 minutes of logs after the request was completed.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="What is the time delay between when an event happens and when I can query for it?">}}
 
 Logpush delivers logs in batches as soon as possible, generally in less than one minute. After this, logs can be accessed using Logs Engine.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Does R2 have retention controls?">}}
 
 R2 does not currently have retention controls in place. You can query back as far as when you created the Logpush job.
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Which datasets is Logs Engine compatible with?">}}
 
 The retrieval API is compatible with all the datasets we support. The full list is available on the [Log fields](/logs/reference/log-fields/) section.
 
-</div>
-</details>
+{{</details>}}

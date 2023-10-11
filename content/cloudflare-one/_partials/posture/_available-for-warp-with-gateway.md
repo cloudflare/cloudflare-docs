@@ -11,5 +11,4 @@ _build:
 | --------------------- | ----------------- | --------- |
 | macOS, Windows, Linux | WARP with Gateway | All plans |
 
-</div>
-</details>
+{{</details>}}
