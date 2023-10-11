@@ -106,8 +106,8 @@ exit
 Use the CLI to configure these settings:
 
 ```txt
-interface Tunnel 1
- ip address 10.0.0.3 255.255.255.254
+interface Tunnel 2
+ ip address 10.0.0.2 255.255.255.254
  tunnel mode ipsec map MAP1
  link-state sync-sa
 exit
