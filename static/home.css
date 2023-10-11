@@ -788,7 +788,6 @@ html[is-site-page] .DocsContent {
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-    margin-bottom: 80px;
     justify-content: space-between;
 }
 
@@ -887,6 +886,7 @@ html[is-site-page] .DocsContent {
 .SiteFooter {
     display: flex;
     align-items: stretch;
+    justify-content: center;
     width: 100%;
     flex-wrap: wrap;
     max-width: var(--docs-max-page-width);
@@ -894,6 +894,13 @@ html[is-site-page] .DocsContent {
     margin-right: auto;
     gap: 6em;
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
+}
+
+@media (max-width:1123px) {
+.SiteFooter {
+    justify-content: flex-start;
+}
+
 }
 
 .SiteFooterItem ul,
@@ -940,7 +947,7 @@ a {
 }
 
 .FeaturedContentBlock {
-    padding-top: 80px;
+    padding-top: 40px;
 }
 
 .FeatureContentWithImage {
@@ -997,9 +1004,6 @@ a {
 }
 
 @media (max-width:768px) {
-    .FeaturedContentSection {
-        margin-top: 5em;
-    }
 
     .FeatureContentGrid {
         margin-bottom: .8em;
