@@ -12,9 +12,9 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure the execution
 
 Follow the steps below to configure the execution of a managed ruleset with two overrides for enabling only the rules tagged with `joomla`.
 
-1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a managed ruleset.
-2.  [Configure a ruleset override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that disables all rules in the managed ruleset.
-3.  Configure a tag override that enables only the rules with a given tag.
+1. [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a managed ruleset.
+2. [Configure a ruleset override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that disables all rules in the managed ruleset.
+3. Configure a tag override that enables only the rules with a given tag.
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
@@ -22,9 +22,7 @@ Tag overrides take precedence over ruleset overrides. Only the rules with the sp
 
 This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
-<details>
-<summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
-<div>
+{{<details header="Example: Enable only Joomla rules using category overrides at the zone level">}}
 
 ```bash
 curl --request PUT \
@@ -54,16 +52,14 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone_id}`).
-*   `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
-*   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone_id}`).
+* `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
 
-<details>
-<summary>Example: Enable only Joomla rules using category overrides at the account level</summary>
-<div>
+{{<details header="Example: Enable only Joomla rules using category overrides at the account level">}}
 
 ```bash
 curl --request PUT \
@@ -93,9 +89,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_
 }'
 ```
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
-*   `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
-*   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
+* `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -106,9 +102,7 @@ You can add more than one category override to a rule.
 
 This example uses a `PUT` request to add two overrides to the rule that executes a managed ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
-<details>
-<summary>Example: Add more than one category override at the zone level</summary>
-<div>
+{{<details header="Example: Add more than one category override at the zone level">}}
 
 ```bash
 curl --request PUT \
@@ -145,9 +139,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 </div>
 </details>
 
-<details>
-<summary>Example: Add more than one category override at the account level</summary>
-<div>
+{{<details header="Example: Add more than one category override at the account level">}}
 
 ```bash
 curl --request PUT \

@@ -7,9 +7,7 @@ _build:
 
 Depending on what you want to configure, choose one of the following DNS addresses for IPv4:
 
-<details>
-<summary>Use 1.1.1.1 resolver</summary>
-<div>
+{{<details header="Use 1.1.1.1 resolver">}}
 
 ```txt
 1.1.1.1
@@ -19,9 +17,7 @@ Depending on what you want to configure, choose one of the following DNS address
 </div>
 </details>
 
-<details>
-<summary>Block malware with 1.1.1.1 for Families</summary>
-<div>
+{{<details header="Block malware with 1.1.1.1 for Families">}}
 
 ```txt
 1.1.1.2
@@ -31,9 +27,7 @@ Depending on what you want to configure, choose one of the following DNS address
 </div>
 </details>
 
-<details>
-<summary>Block malware and adult content with 1.1.1.1 for Families</summary>
-<div>
+{{<details header="Block malware and adult content with 1.1.1.1 for Families">}}
 
 ```txt
 1.1.1.3

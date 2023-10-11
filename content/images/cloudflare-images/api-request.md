@@ -8,9 +8,7 @@ weight: 3
 
 To make your first request to the Images API, you must obtain these pieces of information:
 
-<details>
-<summary>Your Cloudflare Account ID</summary>
-<div>
+{{<details header="Your Cloudflare Account ID">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your
 account and website.
@@ -19,9 +17,7 @@ account and website.
 </div>
 </details>
 
-<details>
-<summary>Your Global API Key or API Token</summary>
-<div>
+{{<details header="Your Global API Key or API Token">}}
 
 To use Cloudflare Images you need to create a custom token with the correct `Read` and `Update` permissions:
 

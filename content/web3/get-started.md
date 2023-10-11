@@ -20,18 +20,14 @@ To get access to Web3 gateways for your account, you need to first [subscribe to
 
 After purchasing a gateway subscription, create a gateway.
 
-<details>
-<summary>Create via dashboard</summary>
-<div>
+{{<details header="Create via dashboard">}}
 
 {{<render file="_create-gateway-dashboard.md">}}
 
 </div>
 </details>
 
-<details>
-<summary>Create via API</summary>
-<div>
+{{<details header="Create via API">}}
 
 {{<render file="_create-gateway-api.md">}}
 

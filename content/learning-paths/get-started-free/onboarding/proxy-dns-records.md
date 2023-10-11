@@ -7,9 +7,7 @@ layout: learning-unit
 
 Since it affect so many other parts of Cloudflare, you should proxy your DNS records through Cloudflare.
 
-<details>
-<summary>What is DNS?</summary>
-<div>
+{{<details header="What is DNS?">}}
 
 DNS stands for Domain Name System.
 
@@ -20,9 +18,7 @@ For more details on DNS, refer to the [Learning Center](https://www.cloudflare.c
 </div>
 </details>
 
-<details>
-<summary>What are DNS records?</summary>
-<div>
+{{<details header="What are DNS records?">}}
 
 DNS records are instructions that live in authoritative DNS servers and provide information about a domain including what IP address is associated with that domain and how to handle requests for that domain.
 
@@ -33,9 +29,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 </div>
 </details>
 
-<details>
-<summary>What is "proxying my DNS through Cloudflare"?</summary>
-<div>
+{{<details header="What is "proxying my DNS through Cloudflare"?">}}
 
 {{<render file="_proxied-records-definition.md" productFolder="dns">}}
 

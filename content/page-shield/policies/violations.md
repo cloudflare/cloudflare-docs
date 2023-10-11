@@ -66,9 +66,7 @@ query PageShieldReports($zoneTag: string, $datetimeStart: string, $datetimeEnd: 
 }
 ```
 
-<details>
-<summary>Example curl request</summary>
-<div>
+{{<details header="Example curl request">}}
 
 ```bash
 echo '{ "query":

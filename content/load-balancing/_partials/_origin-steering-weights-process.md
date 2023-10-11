@@ -11,9 +11,7 @@ To customize weights when you [create or edit a pool](/load-balancing/how-to/cre
 % of traffic to origin = origin weight ÷ sum of all weights in the pool
 ```
 
-<details>
-<summary>Origin weight example</summary>
-<div>
+{{<details header="Origin weight example">}}
 
 Here’s an example applying weights to three origin servers with a **Random** origin steering policy:
 

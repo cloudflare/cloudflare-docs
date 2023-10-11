@@ -25,9 +25,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it on multiple hosts. If your tunnel runs as a service, only one `cloudflared` instance is allowed per host.
 
-<details>
-<summary>Via the dashboard</summary>
-<div>
+{{<details header="Via the dashboard">}}
 
 1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
@@ -40,9 +38,7 @@ The new replica will appear on the **Connectors** list for the tunnel.
 </div>
 </details>
 
-<details>
-<summary>Via the command line</summary>
-<div>
+{{<details header="Via the command line">}}
 
 1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/).
 

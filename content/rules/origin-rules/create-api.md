@@ -93,9 +93,7 @@ header: Response
 </div>
 </details>
 
-<details>
-<summary>Example: Add a rule that overrides the SNI value of incoming requests</summary>
-<div>
+{{<details header="Example: Add a rule that overrides the SNI value of incoming requests">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -199,9 +197,7 @@ header: Response
 </div>
 </details>
 
-<details>
-<summary>Example: Add a rule that overrides the port of incoming requests</summary>
-<div>
+{{<details header="Example: Add a rule that overrides the port of incoming requests">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the port of incoming requests — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 

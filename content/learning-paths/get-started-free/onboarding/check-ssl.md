@@ -7,9 +7,7 @@ layout: learning-unit
 
 Once you [add and activate](/learning-paths/get-started-free/onboarding/add-and-activate/) your domain at Cloudflare, you also should check your domain's SSL/TLS certificate is working correctly.
 
-<details>
-<summary>What are SSL/TLS certificates?</summary>
-<div>
+{{<details header="What are SSL/TLS certificates?">}}
 
 SSL/TLS certificates let websites use `https` at the start of the URL (instead of `http`), which is a more secure connection protocol. HTTPS is good for website security, user privacy, SEO, and much more.
 
@@ -42,6 +40,7 @@ D --> E[Redirect loop between <code>http</code> and <code>https</code>]
 A --> F[Error <code>525</code> or <code>526</code>]
 F --> G[Mismatch origin and Cloudflare settings]
 ```
+
 </br>
 
 For more details on these errors and how to fix them, refer to the following resources:

@@ -14,9 +14,7 @@ You can change the configuration settings described below in a configuration rul
 
 Enable or disable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) [^1] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"automatic_https_rewrites"` (boolean).
 
@@ -38,9 +36,7 @@ header: API configuration example
 
 Select which file extensions to minify automatically using [Auto Minify](/speed/optimization/content/auto-minify/) [^2].
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration object name: `"autominify"` (object).
 
@@ -66,9 +62,7 @@ header: API configuration example
 
 Enable or disable [Browser Integrity Check](/waf/tools/browser-integrity-check/) [^3] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"bic"` (boolean).
 
@@ -90,9 +84,7 @@ header: API configuration example
 
 Disable all active [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started) [^4] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"disable_apps"` (boolean).
 
@@ -118,9 +110,7 @@ This setting will not disable [Apps with Workers](https://cloudflareapps.com/app
 
 Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"disable_railgun"` (boolean).
 
@@ -142,9 +132,7 @@ header: API configuration example
 
 Disable [Cloudflare Zaraz](/zaraz/) [^6] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"disable_zaraz"` (boolean).
 
@@ -166,9 +154,7 @@ header: API configuration example
 
 Enable or disable [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) [^7] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"hotlink_protection"` (boolean).
 
@@ -190,9 +176,7 @@ header: API configuration example
 
 Enable or disable [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016) [^8] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"email_obfuscation"` (boolean).
 
@@ -214,9 +198,7 @@ header: API configuration example
 
 Enable or disable [Mirage](/speed/optimization/images/mirage/) [^9] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"mirage"` (boolean).
 
@@ -238,9 +220,7 @@ header: API configuration example
 
 Enable or disable [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) [^10] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"opportunistic_encryption"` (boolean).
 
@@ -262,9 +242,7 @@ header: API configuration example
 
 Set [Polish](/images/polish/) [^11] compression options for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"polish"` (string).
 
@@ -288,9 +266,7 @@ header: API configuration example
 
 Enable or disable [Rocket Loader](/speed/optimization/content/rocket-loader/) [^12] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"rocket_loader"` (boolean).
 
@@ -312,9 +288,7 @@ header: API configuration example
 
 Select the [Security Level](/waf/tools/security-level/) [^13] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"security_level"` (string).
 
@@ -338,9 +312,7 @@ header: API configuration example
 
 Enable or disable [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036) [^14] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"server_side_excludes"` (boolean).
 
@@ -362,9 +334,7 @@ header: API configuration example
 
 Select the [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) [^15] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"ssl"` (string).
 
@@ -388,9 +358,7 @@ header: API configuration example
 
 Enable or disable [Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) [^16] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"sxg"` (boolean).
 

@@ -171,18 +171,22 @@ When enabled, WAF content scanning provides the following fields you can use in 
 ## Example rules
 
 The following custom rule example logs all requests with at least one uploaded content object:
+
 * Expression: `cf.waf.content_scan.has_obj`
 * Action: _Log_
 
 The following example blocks requests addressed at `/upload.php` that contain at least one uploaded content object considered malicious:
+
 * Expression: `cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php"`
 * Action: _Block_
 
 The following example blocks requests addressed at `/upload` with uploaded content objects that are not PDF files:
+
 * Expression: `any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"`
 * Action: _Block_
 
 The following example blocks requests addressed at `/upload` with uploaded content objects over 500 KB in size:
+
 * Expression: `any(cf.waf.content_scan.obj_sizes[*] > 500000) and http.request.uri.path eq "/upload"`
 * Action: _Block_
 
@@ -192,9 +196,7 @@ The following example blocks requests addressed at `/upload` with uploaded conte
 
 ### General operations
 
-<details>
-<summary>Enable WAF content scanning</summary>
-<div>
+{{<details header="Enable WAF content scanning">}}
 
 To enable content scanning, use a `POST` request similar to the following:
 
@@ -211,9 +213,7 @@ curl --request POST \
 </div>
 </details>
 
-<details>
-<summary>Disable WAF content scanning</summary>
-<div>
+{{<details header="Disable WAF content scanning">}}
 
 To disable content scanning, use a `POST` request similar to the following:
 
@@ -230,9 +230,7 @@ curl --request POST \
 </div>
 </details>
 
-<details>
-<summary>Get WAF content scanning status</summary>
-<div>
+{{<details header="Get WAF content scanning status">}}
 
 To obtain the current status of the content scanning feature, use a `GET` request similar to the following:
 
@@ -250,9 +248,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/s
 
 ### Custom expression operations
 
-<details>
-<summary>Get existing custom scan expressions</summary>
-<div>
+{{<details header="Get existing custom scan expressions">}}
 
 To get a list of existing custom scan expressions, use a `GET` request similar to the following:
 
@@ -285,9 +281,7 @@ header: Example response
 </div>
 </details>
 
-<details>
-<summary>Add a custom scan expression</summary>
-<div>
+{{<details header="Add a custom scan expression">}}
 
 Use a `POST` request similar to the following:
 
@@ -308,9 +302,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/p
 </div>
 </details>
 
-<details>
-<summary>Delete a custom scan expression</summary>
-<div>
+{{<details header="Delete a custom scan expression">}}
 
 Use a `DELETE` request similar to the following:
 

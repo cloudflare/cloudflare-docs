@@ -6,9 +6,7 @@ weight: 3
 
 # Mutual TLS
 
-<details>
-<summary>Feature availability</summary>
-<div>
+{{<details header="Feature availability">}}
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
@@ -247,5 +245,6 @@ You will need to add the CRL to your server or enforce the revocation in a Cloud
 ## Known limitations
 
 mTLS does not currently work for:
+
 - HTTP/3 traffic
 - Cloudflare Pages site served on a [custom domain](/pages/platform/custom-domains/)

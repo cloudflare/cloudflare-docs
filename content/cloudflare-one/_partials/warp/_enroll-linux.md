@@ -25,9 +25,7 @@ _build:
     $ warp-cli account
     ```
 
-<details>
-<summary>Troubleshoot missing registration</summary>
-<div>
+{{<details header="Troubleshoot missing registration">}}
 
 The registration process may take a few minutes to complete. If the registration continues to be missing, then manually copy the authentication token from the browser to the WARP client:
 

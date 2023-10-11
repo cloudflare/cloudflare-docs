@@ -49,9 +49,7 @@ Set DNS hostname   | `example.net`
 
 {{</example>}}
 
-<details>
-<summary>JSON example for API users</summary>
-<div>
+{{<details header="JSON example for API users">}}
 
 When [using the API](/rules/origin-rules/create-api/), you configure origin rule parameters in an `action_parameters` object.
 

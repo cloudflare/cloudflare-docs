@@ -18,12 +18,10 @@ Assign a Railgun to a domain.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/user_get_all HTTP/1.1
@@ -40,9 +38,7 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 </div>
 </details>
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -123,12 +119,10 @@ Assign a Railgun to a domain.
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/user_get_all?email=&tkn= HTTP/1.1
@@ -145,9 +139,7 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 </div>
 </details>
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -228,12 +220,10 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/zone_conn_get_active HTTP/1.1
@@ -251,9 +241,7 @@ z=example.com
 </div>
 </details>
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -288,12 +276,10 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/zone_conn_get_active?email=&tkn=&z= HTTP/1.1
@@ -311,9 +297,7 @@ z=example.com
 </div>
 </details>
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK

@@ -33,9 +33,7 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 
 2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
 
-<details>
-<summary>Python</summary>
-<div>
+{{<details header="Python">}}
 
 To serve the TLS certificate using Python:
 
@@ -71,9 +69,7 @@ To serve the TLS certificate using Python:
 </div>
 </details>
 
-<details>
-<summary>nginx in Docker</summary>
-<div>
+{{<details header="nginx in Docker">}}
 
 To serve the TLS certificate from an nginx container in Docker:
 

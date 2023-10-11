@@ -77,9 +77,7 @@ It is **not recommended** that you enable all the rules in a managed ruleset at 
 
 The following request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase, and defines a rule override to enable rule `<RULE_ID>` and set its action to `log`.
 
-<details>
-<summary>Example: Execute a managed ruleset with overrides in a phase at the zone level</summary>
-<div>
+{{<details header="Example: Execute a managed ruleset with overrides in a phase at the zone level">}}
 
 ```bash
 curl --request PUT \
@@ -114,9 +112,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 
 The following request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase, and defines a ruleset override that sets the action to `log` for all (enabled) rules.
 
-<details>
-<summary>Example: Execute a managed ruleset with overrides in a phase at the account level</summary>
-<div>
+{{<details header="Example: Execute a managed ruleset with overrides in a phase at the account level">}}
 
 ```bash
 curl --request PUT \

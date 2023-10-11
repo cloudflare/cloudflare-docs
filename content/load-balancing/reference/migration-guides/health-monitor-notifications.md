@@ -22,9 +22,7 @@ You should use this guide to migrate over **all** your existing health monitor n
 
 First you should determine which pools are using notifications. It's often easier if you use the Cloudflare API to list all your pools and look for the `notification_email` parameter.
 
-<details>
-<summary>With code</summary>
-<div>
+{{<details header="With code">}}
 
 Use the [Cloudflare API](/api/operations/account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
 
@@ -66,10 +64,7 @@ header: Response
 </div>
 </details>
 
-<details>
-<summary>No code</summary>
-
-<div>
+{{<details header="No code">}}
 
 To find pools with existing notifications in the dashboard:
 
@@ -86,10 +81,7 @@ To find pools with existing notifications in the dashboard:
 
 In this step, you should create new notifications to replace all of your existing legacy notifications.
 
-<details>
-<summary>With code</summary>
-
-<div>
+{{<details header="With code">}}
 
 If using the Cloudflare API, [re-create all your existing notifications](/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
 
@@ -105,10 +97,7 @@ If using the Cloudflare API, [re-create all your existing notifications](/api/op
 </div>
 </details>
 
-<details>
-<summary>No code</summary>
-
-<div>
+{{<details header="No code">}}
 
 On the pool you located in [Step 1](#step-1---find-existing-notifications), look for **Pool Notifications**. Click **Create a Health Alert** to start [creating a notification](/notifications/create-notifications/).
 
@@ -121,10 +110,7 @@ As the final step in the migration process, you need to remove all emails from y
 
 Though you can perform these steps in the dashboard, Cloudflare recommends you use our new API endpoint for added convenience.
 
-<details>
-<summary>With code</summary>
-
-<div>
+{{<details header="With code">}}
 
 If using the Cloudflare API, we recently added a [`PATCH`](/api/operations/account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
@@ -148,10 +134,7 @@ This API call supports the standard pagination query parameters, either `limit/o
 
 If needed, you can remove legacy notifications by using the dashboard.
 
-<details>
-<summary>No code</summary>
-
-<div>
+{{<details header="No code">}}
 
 Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, you must remove all notification email addresses from the field.
 

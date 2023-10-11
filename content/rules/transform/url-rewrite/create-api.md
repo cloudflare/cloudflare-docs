@@ -26,9 +26,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 ## Example requests
 
-<details>
-<summary>Example: Add a rule that performs a static URL rewrite</summary>
-<div>
+{{<details header="Example: Add a rule that performs a static URL rewrite">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single rewrite URL rule — performing a static rewrite of the URI path — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -101,9 +99,7 @@ header: Response
 </div>
 </details>
 
-<details>
-<summary>Example: Add a rule that performs a dynamic URL rewrite</summary>
-<div>
+{{<details header="Example: Add a rule that performs a dynamic URL rewrite">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single rewrite URL rule — performing a dynamic rewrite of the URI path — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 

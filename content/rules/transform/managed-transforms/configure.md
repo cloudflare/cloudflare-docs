@@ -41,9 +41,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -137,9 +135,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 
 The response will include all the available Managed Transforms and their new status after the update.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {

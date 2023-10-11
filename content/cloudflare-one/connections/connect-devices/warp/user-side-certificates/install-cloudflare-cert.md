@@ -448,9 +448,7 @@ If you use Kaniko with Google Cloud SDK, you must install the Cloudflare certifi
 
 To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
-<details>
-<summary>macOS</summary>
-<div>
+{{<details header="macOS">}}
 
 1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
 2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
@@ -475,9 +473,7 @@ $ defaults read /Library/Preferences/com.google.drivefs.settings
 </div>
 </details>
 
-<details>
-<summary>Windows</summary>
-<div>
+{{<details header="Windows">}}
 
 1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
 2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
@@ -560,9 +556,8 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
 3. Add the Cloudflare certificate to Eclipse's JVM.
 
-<details>
-<summary>macOS and Linux</summary>
-<div>
+{{<details header="macOS and Linux">}}
+
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
    ```sh
@@ -580,9 +575,7 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 </div>
 </details>
 
-<details>
-<summary>Windows</summary>
-<div>
+{{<details header="Windows">}}
 
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
@@ -607,9 +600,7 @@ For more information on adding certificates to Eclipse with `keytool`, refer to 
 
 To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
-<details>
-<summary>macOS and Linux</summary>
-<div>
+{{<details header="macOS and Linux">}}
 
 1. Install [OpenSSL](https://www.openssl.org/).
 2. In a terminal, format the Cloudflare certificate for Ruby.
@@ -635,9 +626,7 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 </div>
 </details>
 
-<details>
-<summary>Windows</summary>
-<div>
+{{<details header="Windows">}}
 
 1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 2. In a terminal, format the Cloudflare certificate for Ruby.

@@ -19,9 +19,7 @@ Refer to information below to understand what each Notification does and what to
 
 ## Access
 
-<details>
-<summary>Expiring Access Service Token Alert</summary>
-<div>
+{{<details header="Expiring Access Service Token Alert">}}
 
 **Who is it for?**
 
@@ -44,9 +42,7 @@ Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.
 
 ## Billing
 
-<details>
-<summary>Usage Based Billing</summary>
-<div>
+{{<details header="Usage Based Billing">}}
 
 **Who is it for?**
 
@@ -72,9 +68,7 @@ Review your usage of the product and adjust the configuration and/or increase th
 
 ## Brand Protection
 
-<details>
-<summary>Brand Protection Alerts</summary>
-<div>
+{{<details header="Brand Protection Alerts">}}
 
 **Who is it for?**
 
@@ -95,9 +89,7 @@ Investigate and potentially block any suspicious domains that may be trying to i
 </div>
 </details>
 
-<details>
-<summary>Brand Protection Digest</summary>
-<div>
+{{<details header="Brand Protection Digest">}}
 
 **Who is it for?**
 
@@ -120,9 +112,7 @@ Investigate and potentially block any suspicious domains that may be trying to i
 
 ## Cloudflare Status
 
-<details>
-<summary>Maintenance Notification</summary>
-<div>
+{{<details header="Maintenance Notification">}}
 
 **Who is it for?**
 
@@ -132,7 +122,7 @@ Specifically, the notification lets you know when maintenance has been scheduled
 
 **Other options / filters**
 
-Customers can filter maintenance notifications for specific points of presence and updates (scheduled, changed, canceled). 
+Customers can filter maintenance notifications for specific points of presence and updates (scheduled, changed, canceled).
 
 **Included with**
 
@@ -147,9 +137,7 @@ During these maintenance windows, you may experience a slight increase in latenc
 </div>
 </details>
 
-<details>
-<summary>Incident Alerts</summary>
-<div>
+{{<details header="Incident Alerts">}}
 
 **Who is it for?**
 
@@ -159,7 +147,7 @@ The notification lets you know when Cloudflare incidents are created, updated, a
 
 **Other options / filters**
 
-Customers can filter incident alerts to specific impact levels (minor, major, critical). 
+Customers can filter incident alerts to specific impact levels (minor, major, critical).
 
 Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.
 
@@ -176,9 +164,7 @@ Review your [analytics](/analytics/) page to see if your domain is impacted.
 
 ## DNS
 
-<details>
-<summary>Secondary DNS all Primaries Failing</summary>
-<div>
+{{<details header="Secondary DNS all Primaries Failing">}}
 
 **Who is it for?**
 
@@ -201,9 +187,7 @@ Purchase of Secondary DNS.
 </div>
 </details>
 
-<details>
-<summary>Secondary DNS Primaries Failing</summary>
-<div>
+{{<details header="Secondary DNS Primaries Failing">}}
 
 **Who is it for?**
 
@@ -226,9 +210,7 @@ Purchase of Secondary DNS.
 </div>
 </details>
 
-<details>
-<summary>Secondary DNS Successfully Updated</summary>
-<div>
+{{<details header="Secondary DNS Successfully Updated">}}
 
 **Who is it for?**
 
@@ -249,9 +231,7 @@ No action needed. Everything is working correctly.
 </div>
 </details>
 
-<details>
-<summary>Secondary DNSSEC Validation Warning</summary>
-<div>
+{{<details header="Secondary DNSSEC Validation Warning">}}
 
 **Who is it for?**
 
@@ -278,9 +258,7 @@ Success alerts require no further action. Actions for failure notifications will
 
 ## DDoS Protection
 
-<details>
-<summary>HTTP DDoS Attack Alert</summary>
-<div>
+{{<details header="HTTP DDoS Attack Alert">}}
 
 **Who is it for?**
 
@@ -301,9 +279,7 @@ All Cloudflare plans.
 </div>
 </details>
 
-<details>
-<summary>Advanced HTTP DDoS Attack Alert</summary>
-<div>
+{{<details header="Advanced HTTP DDoS Attack Alert">}}
 
 **Who is it for?**
 
@@ -312,6 +288,7 @@ WAF/CDN customers with the Advanced DDoS Protection subscription who want to rec
 **Other options / filters**
 
 Customers can choose when to trigger a notification. Available filters are:
+
 - The zones in the account for which they wish to receive notifications.
 - The specific hostnames for which they wish to receive notifications.
 - The minimum requests-per-second rate that will trigger the alert.
@@ -327,9 +304,7 @@ Enterprise plans.
 </div>
 </details>
 
-<details>
-<summary>Advanced Layer 3/4 DDoS Attack Alert</summary>
-<div>
+{{<details header="Advanced Layer 3/4 DDoS Attack Alert">}}
 
 **Who is it for?**
 
@@ -338,10 +313,11 @@ BYOIP and Magic Transit customers with Network Analytics who want to receive a n
 **Other options / filters**
 
 Customers can choose when to trigger a notification. Available filters are:
+
 - The IP prefixes for which they wish to receive notifications.
 - The specific IP addresses for which they wish to receive notifications.
 - The minimum packets-per-second rate that will trigger the alert.
-- The minimum megabits-per-second rate that will trigger the alert. 
+- The minimum megabits-per-second rate that will trigger the alert.
 - The protocols for which they wish to receive notifications.
 
 **Included with**
@@ -357,9 +333,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 ## Health checks
 
-<details>
-<summary>Health Checks status notification</summary>
-<div>
+{{<details header="Health Checks status notification">}}
 
 **Who is it for?**
 
@@ -388,9 +362,7 @@ Review your [health check analytics](/health-checks/health-checks-analytics/#com
 
 ## Load Balancing
 
-<details>
-<summary>Pool Enablement</summary>
-<div>
+{{<details header="Pool Enablement">}}
 
 **Who is it for?**
 
@@ -417,9 +389,7 @@ No direct call to action.
 </div>
 </details>
 
-<details>
-<summary>Load Balancing Health Alert</summary>
-<div>
+{{<details header="Load Balancing Health Alert">}}
 
 **Who is it for?**
 
@@ -453,9 +423,7 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 ## Logpush
 
-<details>
-<summary>Failing Logpush Job Disabled</summary>
-<div>
+{{<details header="Failing Logpush Job Disabled">}}
 
 **Who is it for?**
 
@@ -483,9 +451,7 @@ In the email for the notification, you can find the destination name for the fai
 
 ## Magic Transit
 
-<details>
-<summary>Magic Network Monitoring: Auto Advertisement</summary>
-<div>
+{{<details header="Magic Network Monitoring: Auto Advertisement">}}
 
 **Who is it for?**
 
@@ -506,9 +472,7 @@ No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?
 </div>
 </details>
 
-<details>
-<summary>Magic Network Monitoring: DDoS Attack</summary>
-<div>
+{{<details header="Magic Network Monitoring: DDoS Attack">}}
 
 **Who is it for?**
 
@@ -529,9 +493,7 @@ Purchase of Magic Transit and/or BYOIP.
 </div>
 </details>
 
-<details>
-<summary>Magic Network Monitoring: Volumetric Attack</summary>
-<div>
+{{<details header="Magic Network Monitoring: Volumetric Attack">}}
 
 **Who is it for?**
 
@@ -554,9 +516,7 @@ If you do not have auto advertisement enabled, you need to advertise your IP pre
 
 ## Pages
 
-<details>
-<summary>Project updates</summary>
-<div>
+{{<details header="Project updates">}}
 
 **Who is it for?**
 
@@ -586,9 +546,7 @@ For failed deployments, review our [debugging guide](/pages/platform/debugging-p
 
 ## Page Shield
 
-<details>
-<summary>Page Shield New Code Change Detection Alert</summary>
-<div>
+{{<details header="Page Shield New Code Change Detection Alert">}}
 
 **Who is it for?**
 
@@ -609,9 +567,7 @@ Investigate to confirm it is an expected change.
 </div>
 </details>
 
-<details>
-<summary>Page Shield New Domain Alert</summary>
-<div>
+{{<details header="Page Shield New Domain Alert">}}
 
 **Who is it for?**
 
@@ -632,9 +588,7 @@ Investigate to confirm it is an expected change.
 </div>
 </details>
 
-<details>
-<summary>Page Shield New Malicious Domain Alert</summary>
-<div>
+{{<details header="Page Shield New Malicious Domain Alert">}}
 
 **Who is it for?**
 
@@ -657,9 +611,7 @@ Enterprise plans with paid add-on.
 </div>
 </details>
 
-<details>
-<summary>Page Shield New Malicious Script Alert</summary>
-<div>
+{{<details header="Page Shield New Malicious Script Alert">}}
 
 **Who is it for?**
 
@@ -682,9 +634,7 @@ Enterprise plans with paid add-on.
 </div>
 </details>
 
-<details>
-<summary>Page Shield New Malicious URL Alert</summary>
-<div>
+{{<details header="Page Shield New Malicious URL Alert">}}
 
 **Who is it for?**
 
@@ -707,9 +657,7 @@ Enterprise plans with paid add-on.
 </div>
 </details>
 
-<details>
-<summary>Page Shield New Resources Alert</summary>
-<div>
+{{<details header="Page Shield New Resources Alert">}}
 
 **Who is it for?**
 
@@ -730,9 +678,7 @@ Investigate to confirm it is an expected change.
 </div>
 </details>
 
-<details>
-<summary>Page Shield New Resource Exceeds Max URL Length Alert</summary>
-<div>
+{{<details header="Page Shield New Resource Exceeds Max URL Length Alert">}}
 
 **Who is it for?**
 
@@ -755,9 +701,7 @@ Manually check the resource.
 
 ## Route Leak Detection
 
-<details>
-<summary>Route Leak Detection Alert</summary>
-<div>
+{{<details header="Route Leak Detection Alert">}}
 
 **Who is it for?**
 
@@ -780,9 +724,7 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 
 ## SSL/TLS
 
-<details>
-<summary>Access mTLS Certificate Expiration Alert</summary>
-<div>
+{{<details header="Access mTLS Certificate Expiration Alert">}}
 
 **Who is it for?**
 
@@ -803,9 +745,7 @@ Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrati
 </div>
 </details>
 
-<details>
-<summary>Advanced Certificate Alert</summary>
-<div>
+{{<details header="Advanced Certificate Alert">}}
 
 **Who is it for?**
 
@@ -826,9 +766,7 @@ Action only needed if notification is about a certificate that failed to be issu
 </div>
 </details>
 
-<details>
-<summary>Hostname-level Authenticated Origin Pulls Certificate Expiration Alert</summary>
-<div>
+{{<details header="Hostname-level Authenticated Origin Pulls Certificate Expiration Alert">}}
 
 **Who is it for?**
 
@@ -849,9 +787,7 @@ Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configu
 </div>
 </details>
 
-<details>
-<summary>SSL for SaaS Custom Hostnames Alert</summary>
-<div>
+{{<details header="SSL for SaaS Custom Hostnames Alert">}}
 
 **Who is it for?**
 
@@ -874,9 +810,7 @@ Purchase of Cloudflare for SaaS.
 </div>
 </details>
 
-<details>
-<summary>Universal SSL Alert</summary>
-<div>
+{{<details header="Universal SSL Alert">}}
 
 **Who is it for?**
 
@@ -897,9 +831,7 @@ All Cloudflare plans.
 </div>
 </details>
 
-<details>
-<summary>Zone-level Authenticated Origin Pulls Certificate Expiration Alert</summary>
-<div>
+{{<details header="Zone-level Authenticated Origin Pulls Certificate Expiration Alert">}}
 
 **Who is it for?**
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
@@ -919,9 +851,7 @@ Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configurati
 
 ## Stream
 
-<details>
-<summary>Stream Live Notifications</summary>
-<div>
+{{<details header="Stream Live Notifications">}}
 
 **Who is it for?**
 
@@ -949,9 +879,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 ## Traffic Monitoring
 
-<details>
-<summary>Advanced Error Rate Alert</summary>
-<div>
+{{<details header="Advanced Error Rate Alert">}}
 
 **Who is it for?**
 
@@ -960,6 +888,7 @@ Enterprise customers who want to receive a notification when Cloudflare detects 
 **Other options / filters**
 
 Multiple filters available:
+
 - Customers can search and add domains from their list of domains.
 - Customers can filter alerts by:
   - Edge status code
@@ -984,9 +913,7 @@ Enterprise plans.
 </div>
 </details>
 
-<details>
-<summary>Origin Error Rate Alert</summary>
-<div>
+{{<details header="Origin Error Rate Alert">}}
 
 **Who is it for?**
 
@@ -1015,9 +942,7 @@ Enterprise plans.
 </div>
 </details>
 
-<details>
-<summary>Passive Origin Monitoring</summary>
-<div>
+{{<details header="Passive Origin Monitoring">}}
 
 **Who is it for?**
 
@@ -1038,9 +963,7 @@ All Cloudflare plans.
 </div>
 </details>
 
-<details>
-<summary>Traffic Anomalies Alert</summary>
-<div>
+{{<details header="Traffic Anomalies Alert">}}
 
 **Who is it for?**
 
@@ -1049,6 +972,7 @@ Enterprise customers who want to receive a notification when one zone is experie
 **Other options / filters**
 
 Multiple filters available:
+
 - Customers can search and add domains from their list of domains.
 - Customers can include or exclude traffic mitigated by the Web Application Firewall.
 - Customers can choose whether to be notified of either spikes or drops in traffic.
@@ -1065,12 +989,9 @@ Enterprise plans.
 </div>
 </details>
 
-
 ## Trust and Safety Blocks
 
-<details>
-<summary>Block Review Rejection</summary>
-<div>
+{{<details header="Block Review Rejection">}}
 
 **Who is it for?**
 
@@ -1091,9 +1012,7 @@ Take care of any abuse on your website. Then, go to the [Cloudflare dashboard](h
 </div>
 </details>
 
-<details>
-<summary>New Blocks</summary>
-<div>
+{{<details header="New Blocks">}}
 
 **Who is it for?**
 
@@ -1114,9 +1033,7 @@ Take care of any abuse on your website. Then, go to the [Cloudflare dashboard](h
 </div>
 </details>
 
-<details>
-<summary>Removed Blocks</summary>
-<div>
+{{<details header="Removed Blocks">}}
 
 **Who is it for?**
 
@@ -1139,9 +1056,7 @@ This is informational follow up.
 
 ## Tunnel
 
-<details>
-<summary>Tunnel Creation or Deletion Event</summary>
-<div>
+{{<details header="Tunnel Creation or Deletion Event">}}
 
 **Who is it for?**
 
@@ -1162,9 +1077,7 @@ No direct call to action.
 </div>
 </details>
 
-<details>
-<summary>Tunnel Health Alert</summary>
-<div>
+{{<details header="Tunnel Health Alert">}}
 
 **Who is it for?**
 
@@ -1187,9 +1100,7 @@ Monitor tunnel health over time and consider deploying [`cloudflared` replicas o
 
 ## WAF
 
-<details>
-<summary>Advanced Security Events Alert</summary>
-<div>
+{{<details header="Advanced Security Events Alert">}}
 
 **Who is it for?**
 
@@ -1214,9 +1125,7 @@ Review the information in [Security Events](/waf/security-events/paid-plans/) to
 </div>
 </details>
 
-<details>
-<summary>Security Events Alert</summary>
-<div>
+{{<details header="Security Events Alert">}}
 
 **Who is it for?**
 
@@ -1242,9 +1151,7 @@ Review the information in [Security Events](/waf/security-events/paid-plans/) to
 
 ## Web Analytics
 
-<details>
-<summary>Weekly summary</summary>
-<div>
+{{<details header="Weekly summary">}}
 
 **Who is it for?**
 

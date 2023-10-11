@@ -96,9 +96,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 </div>
 </details>
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -167,9 +165,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 </div>
 </details>
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {

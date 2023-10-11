@@ -17,17 +17,17 @@ The following example rule will disable compression for AVIF images, based on ei
 {{<example>}}
 
 **When incoming requests match**
+
 - _Media Type_ _equals_ `image/avif` **OR**
 - _File extension_ _equals_ `avif`
 
 **Then**
+
 - **Compression options** > _Disable compression_
 
 {{</example>}}
 
-<details>
-<summary>Example API request</summary>
-<div>
+{{<details header="Example API request">}}
 
 The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -61,16 +61,16 @@ The following example rule will configure GZIP compression as the preferred comp
 {{<example>}}
 
 **When incoming requests match**
+
 - _File extension_ _equals_ `csv`
 
 **Then**
+
 - **Compression options** > _Custom_ > `Gzip`, `Auto`
 
 {{</example>}}
 
-<details>
-<summary>Example API request</summary>
-<div>
+{{<details header="Example API request">}}
 
 The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -105,18 +105,18 @@ The following example rule will configure only Brotli compression for a specific
 {{<example>}}
 
 **When incoming requests match**
+
 - _URI Path_ _equals_ `/download/assets.tar`
 
 **Then**
+
 - **Compression options** > _Custom_ > `Brotli`
 
 {{</example>}}
 
 Since the rule configuration does not include _Auto_ at the end of the custom algorithms list, the response will be uncompressed if the web visitor does not support Brotli.
 
-<details>
-<summary>Example API request</summary>
-<div>
+{{<details header="Example API request">}}
 
 The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 

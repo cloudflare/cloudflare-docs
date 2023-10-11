@@ -7,9 +7,7 @@ _build:
 
 Once you can confirm everything is working as expected for your specific origin setup, configure your origin to enforce the authentication.
 
-<details>
-<summary>Apache example</summary>
-<div>
+{{<details header="Apache example">}}
 
 ```txt
 SSLVerifyClient require
@@ -18,9 +16,7 @@ SSLVerifyClient require
 </div>
 </details>
 
-<details>
-<summary>NGINX example</summary>
-<div>
+{{<details header="NGINX example">}}
 
 ```txt
 ssl_verify_client on;
