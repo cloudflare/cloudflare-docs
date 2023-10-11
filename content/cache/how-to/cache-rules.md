@@ -404,9 +404,7 @@ curl -X PUT \
 
 The following example defines a single cache rule for a zone using Terraform. The rule configures several cache settings and sets a custom cache key for incoming requests addressed at `example.net`.
 
-<details>
-<summary>Terraform <code>cloudflare_ruleset</code> resource</summary>
-<div>
+{{<details header="Terraform `cloudflare_ruleset` resource">}}
 
 ```tf
 # Cache rule configuring cache settings and defining custom cache keys

@@ -27,7 +27,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 
 {{</details>}}
 
-{{<details header="What is "proxying my DNS through Cloudflare"?">}}
+{{<details header="What is \"proxying my DNS through Cloudflare\"?">}}
 
 {{<render file="_proxied-records-definition.md" productFolder="dns">}}
 

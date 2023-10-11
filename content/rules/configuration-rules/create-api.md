@@ -89,9 +89,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 {{</details>}}
 
-<details>
-<summary>Example: Add a rule that sets the Security Level to <em>High</em></summary>
-<div>
+{{<details header="Example: Add a rule that sets the Security Level to _High_">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — changing the Security Level to _High_ for the administration area — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
