@@ -1,5 +1,6 @@
 # homepage
 /docs/ /products/ 301
+/zero-trust/ /products/?product-group=Cloudflare+One 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
