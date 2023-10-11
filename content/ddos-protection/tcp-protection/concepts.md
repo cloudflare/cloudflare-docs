@@ -29,7 +29,7 @@ For example, you could add prefixes used only by partners of your company to the
 
 ## Rule
 
-A rule configures Advanced TCP Protection for a given [scope](/ddos-protection/tcp-protection/rule-settings/#scope), given several [settings](/ddos-protection/tcp-protection/rule-settings/): execution mode, burst sensitivity, and rate sensitivity.
+A rule configures Advanced TCP Protection for a given [scope](/ddos-protection/tcp-protection/rule-settings/#scope), according to several [settings](/ddos-protection/tcp-protection/rule-settings/): execution mode, burst sensitivity, and rate sensitivity.
 
 Each system component (SYN flood protection and out-of-state TCP protection) has its own list of rules, and it should have at least one rule.
 
