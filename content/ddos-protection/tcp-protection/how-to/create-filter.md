@@ -11,7 +11,7 @@ meta:
 {{<render file="_atp-filter-definition.md">}}
 <br>
 
-Each protection system component (SYN flood protection or out-of-state TCP protection) should have one or more [rules](/ddos-protection/tcp-protection/concepts/#rule), but filters are optional.
+Each protection system component (SYN flood protection or out-of-state TCP protection) should have at least one [rule](/ddos-protection/tcp-protection/concepts/#rule), but filters are optional.
 
 ## Procedure
 
