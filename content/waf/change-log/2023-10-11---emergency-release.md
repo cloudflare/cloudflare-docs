@@ -25,7 +25,7 @@ layout: list
       <tr>
       <td>Cloudflare Specials</td>
       <td>...ec9f34e1</td>
-      <td>100604,100605</td>
+      <td>100604</td>
       <td>Atlassian Confluence - Privilege Escalation - CVE:CVE-2023-22515</td>
       <td>N/A</td>
       <td>Block</td>
