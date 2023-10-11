@@ -34,7 +34,7 @@ The allowlist only applies to source IPs — it does not apply to your own IPs o
 
 [Create a rule](/ddos-protection/tcp-protection/how-to/create-rule/) for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received packets.
 
-Optionally, you can create [filters](/ddos-protection/tcp-protection/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). A filter modifies Advanced TCP Protection's [execution mode](/ddos-protection/tcp-protection/rule-settings/#mode) — monitoring, mitigation (enabled), or disabled — for all incoming packets matching an expression.
+Optionally, you can create [filters](/ddos-protection/tcp-protection/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). {{<render file="_atp-filter-definition.md">}}
 
 ## 5. Enable Advanced TCP Protection
 

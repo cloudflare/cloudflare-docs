@@ -51,7 +51,7 @@ For instructions on creating filters in the Cloudflare dashboard, refer to [Crea
 
 You can create a monitor filter for a new prefix that you are onboarding by using the expression to match against the prefix.
 
-Your already onboarded prefixes can remain protected with a one or more configured rules in mitigation mode.
+Your already onboarded prefixes can remain protected with one or more configured rules in mitigation mode.
 
 When onboarding a new prefix, you would configure a monitoring filter for this prefix and then add it to Advanced TCP Protection.
 
