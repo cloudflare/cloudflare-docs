@@ -6,7 +6,7 @@ weight: 850
 layout: list
 ---
 
-# 2023-10-11- Emergency Release
+# 2023-10-11 - Emergency Release
 
 {{<table-wrap>}}
 <table style="width: 100%">
