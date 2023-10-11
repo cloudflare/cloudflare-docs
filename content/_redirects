@@ -1122,6 +1122,8 @@
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
+/workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
+/workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
