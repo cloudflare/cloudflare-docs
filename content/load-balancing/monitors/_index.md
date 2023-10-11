@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Monitors
-weight: 3
+weight: 5
 layout: single
 ---
 
