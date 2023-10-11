@@ -410,7 +410,7 @@ local_protocol = "https"
 
 ### build
 
-A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules` (beta).
+A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules`.
 
 #### Service Workers
 
@@ -468,7 +468,7 @@ Ensure the `main` field in your `package.json` references the Worker script you 
 
 #### Modules
 
-Workers now supports the ES Modules syntax. Modules support in Cloudflare Workers is currently in beta. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
+Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
 
 Module Workers `export` their event handlers instead of using `addEventListener` calls.
 
