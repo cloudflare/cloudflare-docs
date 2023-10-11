@@ -39,9 +39,9 @@ Each system component (SYN flood protection and out-of-state TCP protection) has
 
 Each Advanced TCP Protection system component has its own filters. You can configure a filter for each execution mode:
 
-* **Mitigation Filter**: The system will drop matching packets.
-* **Monitoring Filter**: The system will log matching packets.
-* **Off Filter**: The system will ignore matching packets.
+* **Mitigation Filter**: The system will drop packets matching the filter expression.
+* **Monitoring Filter**: The system will log packets matching the filter expression.
+* **Off Filter**: The system will ignore packets matching the filter expression.
 
 When there is a match, a filter will alter the execution mode for all configured rules in a given system component (SYN flood protection or out-of-state TCP protection), including disabled rules.
 
