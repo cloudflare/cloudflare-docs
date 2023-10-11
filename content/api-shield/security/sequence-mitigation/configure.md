@@ -66,7 +66,7 @@ header: Example of a rule object
 | `last_updated` | When this rule was last changed. | A date string | `2023-05-02T12:06:51.796286Z` |
 | `created_at` | When this rule was created. | A date string | `2023-05-02T12:06:51.796286Z` |
 
-You can find an endpoint's operation ID by exporting the schema in [Endpoint Management](/api-shield/management-and-monitoring/#export-a-schema) or via the [API](/api/operations/api-shield-endpoint-management-retrieve-information-about-all-operations-on-a-zone)
+You can find an endpoint's operation ID by exporting the schema in [Endpoint Management](/api-shield/management-and-monitoring/#export-a-schema) or via the [API](/api/operations/api-shield-endpoint-management-retrieve-information-about-all-operations-on-a-zone).
 
 ### List sequence rules
 
