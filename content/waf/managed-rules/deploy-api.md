@@ -23,15 +23,3 @@ To customize the behavior of the rules included in a managed ruleset, [create an
 To skip the execution of WAF managed rulesets or some of their rules, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-api/) (also called a skip rule).
 
 WAF exceptions have priority over overrides.
-
-## Additional notes
-
-* The zone-level `http_request_firewall_managed` phase can have at most three `execute` rules deploying managed rulesets, one for each available managed ruleset.
-
-* Currently, each managed ruleset will execute **at most once per request**. Configuring a second rule that executes the same managed ruleset will have no effect.
-
-    For example, consider two account-level rules with different expressions that execute the same managed ruleset. If the two rules match for the same request, the managed ruleset will not be executed for the second rule.
-
-    As another example, consider an account-level rule that executes a managed ruleset and a zone-level rule that executes the same managed ruleset. If both rules match for the same request, the managed ruleset is only executed when the account-level rule is evaluated.
-
-    This behavior will change in the future so that you can execute each managed ruleset multiple times per request.
