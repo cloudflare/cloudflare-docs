@@ -31,13 +31,13 @@ For example, you could add prefixes used only by partners of your company to the
 
 A rule configures Advanced TCP Protection for a given [scope](/ddos-protection/tcp-protection/rule-settings/#scope), given several [settings](/ddos-protection/tcp-protection/rule-settings/): execution mode, burst sensitivity, and rate sensitivity.
 
-Each system component (SYN flood protection and out-of-state TCP protection) has its own list of rules.
+Each system component (SYN flood protection and out-of-state TCP protection) has its own list of rules. Create one or more rule for each system component to enable Advanced TCP Protection.
 
 ## Filter
 
-A filter modifies Advanced TCP Protection's [execution mode](/ddos-protection/tcp-protection/rule-settings/#mode) — monitoring, mitigation (enabled), or disabled — for all incoming packets matching an expression. The filter expression can reference source and destination IP addresses and ports.
+{{<render file="_atp-filter-definition.md">}} The filter expression can reference source and destination IP addresses and ports. Each system component (SYN flood protection and out-of-state TCP protection) should have one or more [rules](#rule), but filters are optional.
 
-Each system component (SYN flood protection and out-of-state TCP protection) has its own filters. You can configure a filter for each execution mode:
+Each Advanced TCP Protection system component has its own filters. You can configure a filter for each execution mode:
 
 * **Mitigation Filter**: The system will drop matching packets.
 * **Monitoring Filter**: The system will log matching packets.
@@ -46,6 +46,14 @@ Each system component (SYN flood protection and out-of-state TCP protection) has
 When there is a match, a filter will alter the execution mode for all configured rules in a given system component (SYN flood protection or out-of-state TCP protection), including disabled rules.
 
 For instructions on creating filters in the Cloudflare dashboard, refer to [Create a filter](/ddos-protection/tcp-protection/how-to/create-filter/). For API examples, refer to [Common API calls](/ddos-protection/tcp-protection/api/examples/).
+
+### Example use case
+
+You can create a monitor filter for a new prefix that you are onboarding by using the expression to match against the prefix.
+
+Your already onboarded prefixes can remain protected with a one or more configured rules in mitigation mode.
+
+When onboarding a new prefix, you would configure a monitoring filter for this prefix and then add it to Advanced TCP Protection.
 
 ---
 
