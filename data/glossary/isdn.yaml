@@ -1,0 +1,16 @@
+---
+productName: ISDN
+entries:
+- term: Internet services digital Network
+  general_definition: |-
+   The integrated services Digital Network this is the present telephone lines process delivery this is used for connecting various places to cloufare and for this the other place also has an ISDN in it. 
+
+- term: ATM network channel
+  general_definition: |-
+  ATM operates as a channel-based transport layer, using VCs. This is encompassed in the concept of the virtual paths (VP) and virtual channels. Every ATM cell has an 8- or 12-bit virtual path identifier (VPI) and 16-bit virtual channel identifier (VCI) pair defined in its header.
+- term: multiplexing
+  general_definition: |-
+    In telecommunications and computer networking, multiplexing (sometimes contracted to muxing) is a method by which multiple analog or digital signals are combined into one signal over a shared medium. The aim is to share a scarce resource – a physical transmission medium.
+- term: broadband and narrowband ISDN
+  general_definition: |-
+   Bandwidth represents the range of frequencies used in communication. Based on the size of the frequency band, there are two classifications: narrowband and broadband. Narrowband signals cover only a small fraction of the frequency spectrum, whereas broadband signals occupy a fairly large portion.
