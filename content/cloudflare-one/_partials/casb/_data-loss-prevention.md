@@ -3,7 +3,6 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: integrationName;;integrationAccountType
 ---
 
 <div class="special-class" markdown="1">
