@@ -23,7 +23,7 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
 
 ## Parameter binding
 
-D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (?NNNN) and Anonymous (?) parameters. In the future, D1 will support named parameters as well.
+D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (`?NNNN`) and Anonymous (`?`) parameters. In the future, D1 will support named parameters as well.
 
 | Syntax | Type | Description |
 | ----- | ----- | -----|
