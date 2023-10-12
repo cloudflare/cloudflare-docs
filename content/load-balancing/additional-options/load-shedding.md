@@ -33,9 +33,8 @@ To enable load shedding for a specific pool via the dashboard:
 4. Click the **Configure Load Shedding** dropdown.
 5. For **Default traffic**, select a **Policy** and a **Shed %**:
 
-     <details>
-     <summary>Policy options</summary>
-     <div>
+     {{<details header="Policy options">}}
+
      When shedding <strong>Default traffic</strong>, you have two <strong>Policy</strong> options:
 
     * **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
@@ -43,17 +42,13 @@ To enable load shedding for a specific pool via the dashboard:
 
     For more guidance on choosing a policy, refer to [Shedding policies](#shedding-policies).
 
-     </div>
-     </details>
+     {{</details>}}
 
-     <details>
-     <summary>Shed %</summary>
-     <div>
+     {{<details header="Shed %">}}
 
      When choosing a **Shed %**, start with a small percentage and increase gradually. Particularly if you choose the [IP hash shedding policy](#shedding-policies), you might shed more traffic than expected.
 
-     </div>
-     </details>
+     {{</details>}}
 
 ### Configure via API
 

@@ -26,9 +26,7 @@ You can update the definition of the rule, changing its fields, or change the or
 
 To update the definition of a rule, include the new rule definition in the request body. You must include all the rule fields that you want to be part of the new rule definition, even if you are not changing their values.
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl --request PATCH \
@@ -42,8 +40,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset after updating the rule.
 
@@ -87,8 +84,7 @@ The response includes the complete ruleset after updating the rule.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Change the order of a rule in a ruleset
 

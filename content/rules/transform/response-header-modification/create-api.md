@@ -174,9 +174,7 @@ header: Response
 
 {{</details>}}
 
-<details>
-<summary>Example: Add a <code>set-cookie</code> HTTP response header with a static value</summary>
-<div>
+{{<details header="Example: Add a `set-cookie` HTTP response header with a static value">}}
 
 The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — adding a `set-cookie` HTTP response header with a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response.
 

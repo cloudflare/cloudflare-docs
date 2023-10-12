@@ -12,10 +12,10 @@ Creates a ruleset of a given kind in the specified phase. Allows you to create p
 
 Use one of the following API endpoints:
 
-| Operation | Method + Endpoint |
-|-----------|-------------------|
+| Operation                               | Method + Endpoint                      |
+| --------------------------------------- | -------------------------------------- |
 | [Create an account ruleset][cr-account] | `POST /accounts/{account_id}/rulesets` |
-| [Create a zone ruleset][cr-zone] | `POST /zones/{zone_id}/rulesets` |
+| [Create a zone ruleset][cr-zone]        | `POST /zones/{zone_id}/rulesets`       |
 
 [cr-account]: /api/operations/createAccountRuleset
 [cr-zone]: /api/operations/createZoneRuleset
@@ -71,9 +71,7 @@ Use the `rules` parameter to supply a list of rules for the ruleset. For an obje
 
 The following example request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
@@ -93,8 +91,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Response">}}
 
@@ -124,8 +121,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Example - Create a zone-level phase entry point ruleset
 
@@ -137,9 +133,7 @@ You do not have to use this method to create a phase entry point ruleset — Clo
 
 {{</Aside>}}
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
@@ -162,8 +156,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Response">}}
 
@@ -196,5 +189,4 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}

@@ -82,9 +82,7 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
 
     2. Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
 
-        <details>
-        <summary>Example CNAME record at authoritative DNS provider</summary>
-        <div>
+        {{<details header="Example CNAME record at authoritative DNS provider">}}
 
         The `CNAME` record for `www.example.com` would be:
 
@@ -92,8 +90,7 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
         www.example.com CNAME www.example.com.cdn.cloudflare.net
         ```
 
-        </div>
-        </details>
+        {{</details>}}
 
     3. Repeat this process for each subdomain proxied to Cloudflare.
 

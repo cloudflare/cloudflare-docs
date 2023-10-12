@@ -25,8 +25,7 @@ Below you can find examples of Threat Intelligence API calls. Make sure you are 
 
 ### ASN Intelligence
 
-<details open>
-<summary>Get ASN Overview</summary>
+{{<details header="Get ASN Overview" open="true">}}
 
 ```bash
 
@@ -48,7 +47,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 ```
 
-</details>
+{{</details>}}
 
 ### Domain Intelligence
 
@@ -104,7 +103,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 ```
 
-</details>
+{{</details>}}
 
 ### Domain History
 
@@ -154,7 +153,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 ```
 
-</details>
+{{</details>}}
 
 ### IP Intelligence
 
@@ -194,7 +193,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 ```
 
-</details>
+{{</details>}}
 
 ### Passive DNS by IP
 
@@ -247,7 +246,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 
 ```
 
-</details>
+{{</details>}}
 
 ### Phishing Intelligence
 
@@ -290,7 +289,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/bra
 }
 ```
 
-</details>
+{{</details>}}
 
 ### Miscategorization Intelligence
 
@@ -329,7 +328,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 ```
 
-</details>
+{{</details>}}
 
 ### WHOIS
 
@@ -366,4 +365,4 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 ```
 
-</details>
+{{</details>}}
