@@ -6,31 +6,14 @@
     throw new Error('Algolia config not found, needs addition in product toml config')
   }
 
-  let {
-    apikey: apiKey,
-    product,
-    index: indexName,
-  } = algoliaConfig
-
-  const facetFilters = product ? [`product:${product}`] : []
-
   function loaded() {
     window.docsearch({
-      indexName,
-      appId: '8MU1G3QO9P',
-      apiKey,
+      indexName: 'API Docs - TEST',
+      appId: 'BC1TY5QF4Y',
+      apiKey: '00514d57de5577c5a173ad19713069cd',
       container: '#algolia',
       maxResultsPerGroup: 20,
-      insights: true,
-      searchParameters: {
-        optionalFilters: facetFilters
-      },
-      transformItems: items => {
-        return items.filter(item => {
-          const url = new URL(item.url)
-          return url.pathname.endsWith('/')
-        })
-      }
+      insights: true
     });
 
     // instantiate mobile search button
@@ -44,7 +27,6 @@
 
   // init
   (function check() {
-    if (!indexName || !apiKey) return
     if (window.docsearch) loaded();
     else setTimeout(check, 25);
   })();
