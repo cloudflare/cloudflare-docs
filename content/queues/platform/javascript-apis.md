@@ -131,7 +131,7 @@ If the `queue()` function throws, or the promise returned by it or any of the pr
 
 {{<Aside type="note">}}
 
-`waitUntil()` is the only supported way to run tasks (such as logging or metrics calls) that resolve after a queue handler has completed. Promises that have not resolved by the time the queue handler returns may not complete and will not block completion of execution. 
+`waitUntil()` is the only supported method to run tasks (such as logging or metrics calls) that resolve after a queue handler has completed. Promises that have not resolved by the time the queue handler returns may not complete and will not block completion of execution. 
 
 {{</Aside>}}
 
