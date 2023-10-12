@@ -56,8 +56,8 @@ To set up Delegated DCV:
 For example, a certificate covering `example.com`, `*.example.com`, and `sub.example.com` would require the following records.
 
 ```txt
-_acme-challenge.example.com CNAME .example.com.<COPIED_HOSTNAME>.
-_acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_HOSTNAME>.
+_acme-challenge.example.com CNAME .example.com.<COPIED_VALIDATION_URL>.
+_acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_VALIDATION_URL>.
 ```
 
 {{</example>}}
@@ -68,4 +68,4 @@ Because DCV happens regularly, do not remove this `CNAME` record(s) at your auth
 
 ## Moved domains
 
- If you [move your zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record at your authoritative DNS provider with a new hostname value.
+ If you [move your zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record at your authoritative DNS provider with a new validation URL.
