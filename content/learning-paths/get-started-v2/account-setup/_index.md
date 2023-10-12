@@ -5,14 +5,14 @@ weight: 2
 layout: learning-module
 ---
 
-# Onboarding
+# Account setup
 
-Make sure your zone is set up correctly, so you can fully take advantage of Cloudflare’s performance and security benefits.
+Make sure your zone's basics are configured properly. 
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Confirm your zone is set up correctly on Cloudflare.
-- Recognize and troubleshoot issues in your DNS records.
-- Recognize and troubleshoot issues in your SSL/TLS certificate.
+- Ensure your account is configured and your team members are added
+- Configure your billing information, if applicable
+- Enhance your accounts security by enabling 2FA

@@ -5,7 +5,7 @@ weight: 3
 layout: learning-module
 ---
 
-# Onboarding
+# Add your domain to Cloudflare
 
 Make sure your zone is set up correctly, so you can fully take advantage of Cloudflare’s performance and security benefits.
 
@@ -13,6 +13,5 @@ Make sure your zone is set up correctly, so you can fully take advantage of Clou
 
 By the end of this module, you will be able to:
 
-- Confirm your zone is set up correctly on Cloudflare.
-- Recognize and troubleshoot issues in your DNS records.
-- Recognize and troubleshoot issues in your SSL/TLS certificate.
+- Add your zone to Cloudflare and avoid downtime by disabling DNSSEC, if applicable
+- Securing your origin by only allowing requests from the Cloudflare Network
