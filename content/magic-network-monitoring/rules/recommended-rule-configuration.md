@@ -4,11 +4,11 @@ pcx_content_type: how-to
 weight: 1
 ---
 
-# Recommended Rule Configuration
+# Recommended rule configuration
 
-Customers can create [Magic Network Monitoring rules](/magic-network-monitoring/rules/) to monitor the traffic volume of their network, for a set of IP addresses and / or IP prefixes. Magic Network Monitoring rules have a traffic volume threshold that is set by the customer. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
+Customers can create [Magic Network Monitoring rules](/magic-network-monitoring/rules/) to monitor the traffic volume of their network, for a set of IP addresses and/or IP prefixes. Magic Network Monitoring rules have a traffic volume threshold that is set by the customer. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
 
-We have outlined a guide that customers can follow to create appropriate Magic Network Monitoring rules, and set accurate rule thresholds.
+Follow the guidelines outlined in this page to create appropriate Magic Network Monitoring rules and set accurate rule thresholds.
 
 ## Rule IP prefixes
 
@@ -24,9 +24,9 @@ Customers can follow the steps below to configure appropriate rule thresholds.
 
 When customers initially configure Magic Network Monitoring, they may not know the typical traffic volume patterns across each of their IP prefixes. Cloudflare recommends that customers set a high rule threshold of either 10 Gbps (gigabits per second) or 10 Mpps (million packets per second) that is unlikely to be crossed during initial configuration.
 
-This will allow customers to collect initial information about the typical traffic volume for an Magic Network Monitoring rule without receiving any alerts. After the customer has collected and analyzed the historical traffic data for an Magic Network Monitoring rule, the threshold should be adjusted to an appropriate value.
+This will allow customers to collect initial information about the typical traffic volume for a Magic Network Monitoring rule without receiving any alerts. After the customer has collected and analyzed the historical traffic data for an Magic Network Monitoring rule, the threshold should be adjusted to an appropriate value.
 
-Threshold Type | Recommended rule threshold to collect initial data
+Threshold type | Recommended rule threshold to collect initial data
 ---            | ---
 Bits           | 10 Gpbs (10,000,000,000 bits per second)
 Packets        | 10 Mpps (10,000,000 packets per second)
@@ -35,17 +35,17 @@ Packets        | 10 Mpps (10,000,000 packets per second)
 
 After customers have created the initial set of rules to monitor their network traffic, they should collect 14-30 days of historical traffic volume data for each rule.
 
-Cloudflare recommends that new customers should set a rule threshold that is two times larger than the maximum non-attack traffic observed for a one minute time interval within an Magic Network Monitoring rule.
+Cloudflare recommends that new customers set a rule threshold that is two times larger than the maximum non-attack traffic observed for a one minute time interval within an Magic Network Monitoring rule.
 
 To find the maximum non-attack traffic for a one minute time interval over the past 14-30 days, customers can filter for the specific rule they want to analyze. To do that:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Add filter**.
-4. In **New filter**, use the dropdown menus to create the following filter:
+4. In **New filter**, use the drop-down menus to create the following filter:
     Field           | Operator | Rule name
     ---             |---       | ---
-    _Monitoring Rule_ | _equals_   | `<RULE_NAME>`.
+    _Monitoring Rule_ | _equals_   | `<RULE_NAME>`
 
 Once the rule filter is selected in Magic Network Monitoring Analytics, customers can view the historical traffic volume data for the rule over the selected time period. We recommend that customers view their historical traffic volume data in increments of seven days since that is the largest window that shows one hour time intervals. You can select a custom seven day time range in Magic Network Monitoring Analytics by going to the top right corner of Magic Network Monitoring analytics, opening the time window dropdown, and selecting **Custom range**.
 
@@ -57,8 +57,8 @@ Record the largest traffic volume peak for the rule in a spreadsheet, then repea
 
 ## Rule duration
 
-A customer’s IP prefixes may experience inconsistent spikes in traffic volume across one minute time intervals. We recommend that customers set a rule duration of 120 seconds to reduce false positive alerts on short term non-malicious traffic spikes. A rule duration of 120 seconds means that the traffic volume must be above the rule threshold for 120 seconds before an alert is fired.
+A customer’s IP prefixes may experience inconsistent spikes in traffic volume across one minute time intervals. We recommend that customers set a rule duration of 120 seconds to reduce false positive alerts on short-term non-malicious traffic spikes. A rule duration of 120 seconds means that the traffic volume must be above the rule threshold for 120 seconds before an alert is fired.
 
-## Adjusting rules overtime
+## Adjusting rules over time
 
 After customers update their first set of rule thresholds based on historical traffic data, it will be important to monitor for MNM alerts to see if the rule thresholds are appropriate. Customers are encouraged to adjust the rule thresholds and the duration overtime to find the ideal alert sensitivity level for their specific network environment.
