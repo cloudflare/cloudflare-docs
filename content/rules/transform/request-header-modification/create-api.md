@@ -99,8 +99,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Add an HTTP request header with a dynamic value">}}
 
@@ -174,8 +173,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Remove an HTTP request header">}}
 
@@ -247,8 +245,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

@@ -237,6 +237,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunn
 --data '{"health_check": {"direction": "bidirectional"}}'
 ```
 
+{{</details>}}
+
 {{</tab>}}
 {{</tabs>}}
 

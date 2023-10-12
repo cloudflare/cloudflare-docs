@@ -79,8 +79,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/{account-id}/load_b
      }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more guidance on choosing a shedding policy, see [Shedding policies](#shedding-policies).
 

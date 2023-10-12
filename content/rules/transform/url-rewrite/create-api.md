@@ -96,8 +96,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Add a rule that performs a dynamic URL rewrite">}}
 
@@ -169,8 +168,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

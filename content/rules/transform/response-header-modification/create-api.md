@@ -98,8 +98,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Set an HTTP response header to a dynamic value">}}
 
@@ -173,8 +172,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>Example: Add a <code>set-cookie</code> HTTP response header with a static value</summary>
@@ -250,8 +248,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<details header="Example: Remove an HTTP response header">}}
 
@@ -323,8 +320,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 
