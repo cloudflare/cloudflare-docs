@@ -24,15 +24,15 @@ Los clientes Enterprise de Cloudflare pueden utilizar _claves de memoria caché 
 
 Antes de empezar, asegúrese de que se haya configurado Cloudflare para que respete los encabezados _Control de caché_ de su servidor web de origen; de lo contrario, Cloudflare podría anular los encabezados _Control de caché_ con el valor configurado en la opción de **caducidad de la memoria caché del navegador**. Para configurar la opción _Respetar los encabezados existentes_, visite la aplicación **Almacenamiento en memoria caché** del panel de Cloudflare:
 
-![](/support/static/Screen_Shot_2016-12-21_at_01.58.16.png)
+![](/images/support/Screen_Shot_2016-12-21_at_01.58.16.png)
 
 Desplácese hacia abajo hasta encontrar la opción de **caducidad de la memoria caché del navegador** y seleccione el valor _Respetar los encabezados existentes_:
 
-![](/support/static/Screen_Shot_2016-12-20_at_23.22.51.png)
+![](/images/support/Screen_Shot_2016-12-20_at_23.22.51.png)
 
 A continuación, configure la regla **Omitir memoria caché en cookie**. Puede hacerlo en la aplicación **Page Rules** del panel de Cloudflare:
 
-![](/support/static/VFGgnIk.png)
+![](/images/support/VFGgnIk.png)
 
 Posteriormente, haga clic en **Crear Page Rule** para configurar el almacenamiento del HTML estático en nuestro sitio.
 
@@ -40,7 +40,7 @@ El primer paso consiste en configurar la page rule para que coincida con su rut
 
 En este ejemplo, WordPress se ejecuta en https://junade.com, de modo que la Page Rule debe coincidir con https://junade.com/\*.
 
-![Screen_Shot_2017-03-09_at_16.54.36.png](/support/static/Screen_Shot_2017-03-09_at_16.54.36.png)
+![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
 A continuación, puede configurar las reglas que desee aplicar.
 

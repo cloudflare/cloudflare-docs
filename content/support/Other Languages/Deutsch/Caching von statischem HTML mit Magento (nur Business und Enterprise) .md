@@ -46,7 +46,7 @@ Mit dieser Einstellung können Sie die erforderlichen Page Rules festlegen, um a
 
 -   Schließlich definiert die Einstellung _Edge-Cache-TTL_ die maximale Zeitspanne, für die Cloudflare die zwischengespeicherten Dateien aufbewahren soll, bevor sie vom Ursprung abgerufen werden. Selbst wenn Sie eine lange Edge-Cache-TTL-Zeit festgelegt haben, können Sie den Cache vor Ablauf dieser Zeitspanne noch manuell löschen.
 
-![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/support/static/hc-import-page_rules_caching_static_html_with_magento.png)
+![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
 6\. Klicken Sie auf **Speichern und bereitstellen**.
 
@@ -81,7 +81,7 @@ Es gibt verschiedene Möglichkeiten, es zu installieren:
 
 Nachdem Sie das Plugin installiert haben, navigieren Sie zu _System -> Konfiguration -> TURPENTINE -> Varnish-Optionen_, suchen Sie die Option „Use VCL fix“, setzen Sie sie auf „Disable“ und speichern Sie.
 
-![Use VCL fix option set to Disable.](/support/static/hc-import-use_vcl_fix_magento_cache_static_html.png)
+![Use VCL fix option set to Disable.](/images/support/hc-import-use_vcl_fix_magento_cache_static_html.png)
 
 ___
 

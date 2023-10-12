@@ -29,7 +29,7 @@ Heroku 是一个支持多种预配置编程语言的云 PaaS。Heroku 可处理�
 
 首先，登录您的 Cloudflare 帐户，导航到 **DNS** 应用并为您的 Heroku 应用添加 _CNAME_ 条目。
 
-![Screen_Shot_2018-01-23_at_2.58.16_PM.png](/support/static/Screen_Shot_2018-01-23_at_2.58.16_PM.png)
+![Screen_Shot_2018-01-23_at_2.58.16_PM.png](/images/support/Screen_Shot_2018-01-23_at_2.58.16_PM.png)
 
 ## 添加根域
 
@@ -61,7 +61,7 @@ Heroku 是一个支持多种预配置编程语言的云 PaaS。Heroku 可处理�
 
 导航到 Page Rule 应用后，便可以开始添加涵盖整个域的新规则：
 
-![Capto_Capture_2018-01-23_03-17-19_PM.png](/support/static/Capto_Capture_2018-01-23_03-17-19_PM.png)
+![Capto_Capture_2018-01-23_03-17-19_PM.png](/images/support/Capto_Capture_2018-01-23_03-17-19_PM.png)
 
 输入您的 Page Rule（即“http://\*example.com/\*”），然后单击**保存并部署**。
 

@@ -66,6 +66,10 @@
   width: 80%;
 }
 
+.ProductGrid--link:hover {
+ background: rgba(var(--orange-rgb), .2)
+}
+
 .emptyState a {
   text-decoration: underline;
 }
@@ -372,7 +376,7 @@ span a img {
     </fieldset>
     <fieldset>
       <legend class="FilterLegend">Enterprise preview
-        <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
+        <span><a href="/fundamentals/account-and-billing/preview-services/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
         <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available">
@@ -397,7 +401,6 @@ span a img {
           href="{{ .url }}"
           data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
-          style="display: none"
         >
           <span>{{ .title }}</span>
         </a>
@@ -405,7 +408,7 @@ span a img {
       {{- end -}}
       
   </div>
-  <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="/search/">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
+  <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="javascript:triggerSearch();">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
   </div>
 
 <script>
@@ -492,8 +495,6 @@ function filterList() {
   if (!visibleItems) {
     emptyStateMessage.style.display = "";
     emptyStateMessage.children[0].style.display = "";
-    emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + 
-    searchTerm.toLowerCase() + "&t=Docs" );
     productGridContent.style.display = "none";
   } else {
     emptyStateMessage.style.display = "none";
@@ -546,6 +547,10 @@ function hideElement(id) {
   if (element.style.display === 'block') {
     element.style.display = '';
   }
+}
+
+function triggerSearch() {
+  document.querySelector(".DocSearch.DocSearch-Button").click()
 }
 
 </script>

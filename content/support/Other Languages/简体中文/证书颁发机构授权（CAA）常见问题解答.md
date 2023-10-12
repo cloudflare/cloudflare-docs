@@ -50,7 +50,7 @@ ___
 
 单独使用时，_issuewild_ 只允许颁发通配符证书。  因此，除非您在**标记**下拉列表中指定_允许通配符和特定主机名_选项，否则 Cloudflare 无法将您的根域添加到证书中：  
 
-![configuring_caa_records_comodoca_annotated.png](/support/static/configuring_caa_records_comodoca_annotated.png)
+![configuring_caa_records_comodoca_annotated.png](/images/support/configuring_caa_records_comodoca_annotated.png)
 
 ___
 

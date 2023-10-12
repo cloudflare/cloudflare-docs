@@ -19,9 +19,9 @@ When the Internet Archive integration is enabled, Cloudflare tells the Internet 
 
 ## Visitor Experience
 
-When Always Online with Internet Archive integration is enabled, visitors see a banner at the top of the web page explaining they are visiting an archived version of the website. Visitors can select the Refresh button to check whether the origin has recovered and fresh content is available.
+When Always Online with Internet Archive integration is enabled, visitors see a banner at the top of the webpage explaining they are visiting an archived version of the website. Visitors can select the Refresh button to check whether the origin has recovered and fresh content is available.
 
-When a visitor requests content for an offline website, Cloudflare returns an HTTP response status code in the range [520–527](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#:~:text=Error%20520%20occurs%20when%20the,or%20unexpected%20response%20to%20Cloudflare.&text=Contact%20your%20hosting%20provider%20or%20site%20administrator%20and%20request%20a,Origin%20web%20server%20application%20crashes), depending on the issue. These status codes indicate that the origin is unreachable.
+When a visitor requests content for an offline website, Cloudflare returns an HTTP response status code in the range [520–527](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-520-web-server-returns-an-unknown-error), depending on the issue. These status codes indicate that the origin is unreachable.
 
 When the Internet Archive integration is enabled, Cloudflare checks the archive and serves the most recently archived version of the page.
 

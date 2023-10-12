@@ -9,8 +9,6 @@ weight: 4
 layout: example
 ---
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/dash-js) 
-
 ```html
 <html>
 	<head>

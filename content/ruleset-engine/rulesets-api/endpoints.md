@@ -11,13 +11,13 @@ For some operations, you can use specific endpoints provided by the Rulesets API
 For example, instead of using the following endpoint:
 
 ```txt
-PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>
+PUT /zones/{zone_id}/rulesets/{ruleset_id}
 ```
 
 You can use the following endpoint:
 
 ```txt
-PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint
+PUT /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint
 ```
 
 To invoke a Rulesets API operation, append the endpoint to the Cloudflare API base URL:
@@ -32,7 +32,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 {{<Aside>}}
 
-The Rulesets API endpoints require a value for `<ACCOUNT_ID>` or `<ZONE_ID>`.
+The Rulesets API endpoints require a value for `{account_id}` or `{zone_id}`.
 
 To retrieve a list of accounts you have access to, use the [List Accounts](/api/operations/accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
 

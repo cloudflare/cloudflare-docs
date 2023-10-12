@@ -16,4 +16,4 @@ If you are still seeing an error page, it's likely an issue with the web server 
 
 These problems generally are not caused by Cloudflare.
 
-![](/support/static/5xx_Error___Cloudflare.png)
+![](/images/support/5xx_Error___Cloudflare.png)

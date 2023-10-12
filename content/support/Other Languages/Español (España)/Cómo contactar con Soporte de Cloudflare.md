@@ -28,7 +28,7 @@ Por seguridad de la cuenta, debes verificar tu identidad y la propiedad de la cu
 
 3\. Haz clic en **Contactar con Soporte**. Desplázate hasta _Línea de asistencia telefónica de emergencia - Autenticación_.
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4\. Para autenticarte usando un token de un solo uso, haz clic en **Obtener un token de un solo uso**. Aparecerá una ventana emergente con el código de token. El código se actualiza automáticamente cada 30 segundos.
 

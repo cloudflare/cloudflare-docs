@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Change the headers sent in a request or returned in a response.
+summary: Example of how to add, change, or delete headers sent in a request or returned in a response.
 tags:
   - Headers
   - Middleware
@@ -70,4 +70,4 @@ export default handler;
 {{</tab>}}
 {{</tabs>}}
 
-You can also use the [`custom-headers-example` template](https://github.com/codewithkristian/custom-headers-example) to deploy this code to your custom domain.
+You can also use the [`custom-headers-example` template](https://github.com/kristianfreeman/custom-headers-example) to deploy this code to your custom domain.

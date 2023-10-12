@@ -28,7 +28,7 @@ When resizing fails, the response body contains an error message explaining the 
 -  9402 — The image was too large or the connection was interrupted. Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) for more information.
 -  9403 — A [request loop](/images/image-resizing/resize-with-workers/#prevent-request-loops) occurred because the image was already resized or the Worker fetched its own URL. Verify your Worker path and image path on the server do not overlap.
 -  9406 & 9419 — The image URL is a non-HTTPS URL or the URL has spaces or unescaped Unicode. Check your URL and try again.
--  9407 — A lookup error occured with the origin server's domain name. Check your DNS settings and try again.
+-  9407 — A lookup error occurred with the origin server's domain name. Check your DNS settings and try again.
 -  9404 — The image does not exist on the origin server or the URL used to resize the image is wrong. Verify the image exists and check the URL.
 -  9408 — The origin server returned an HTTP 4xx status code and may be denying access to the image. Confirm your image settings and try again.
 -  9509 — The origin server returned an HTTP 5xx status code. This is most likely a problem with the origin server-side software, not Image Resizing.
@@ -37,7 +37,7 @@ When resizing fails, the response body contains an error message explaining the 
 -  9420 — The origin server redirected to an invalid URL. Confirm settings at your origin and try again.
 -  9421 — The origin server redirected too many times. Confirm settings at your origin and try again.
 -  9504, 9505, & 9510 — The origin server could not be contacted because the origin server may be down or overloaded. Try again later.
--  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. Check your Workers and try again.
+-  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. Check your Workers and try again. This can also happen when using a `pages.dev` URL of a [Cloudflare Pages](/pages/) project. In that case, you can use a [Custom Domain](/pages/platform/custom-domains/) instead.
 -  9511 — The image format is not supported. Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) to learn about supported input and output formats.
 -  9522 — The image exceeded the processing limit. This may happen briefly after purging an entire zone or when files with very large dimensions are requested. If the problem persists, contact support.
 -  9424, 9516, 9517, 9518, 9522 & 9523 — Internal errors. Please contact support if you encounter these errors.

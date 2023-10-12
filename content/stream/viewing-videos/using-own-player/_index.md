@@ -17,7 +17,7 @@ Platform-specific guides:
 
 ## Fetch HLS and Dash manifests
 
-### URL 
+### URL
 
 Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
@@ -33,6 +33,17 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8
 header: DASH
 ---
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
+```
+
+{{<heading-pill heading="h4" style="beta">}}LL-HLS playback{{</heading-pill>}}
+
+If a Live Inputs is enabled for the Low-Latency HLS beta, add the query string `?protocol=llhls` to the HLS manifest URL to test the low latency manifest in a custom player. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.
+
+```text
+---
+header: HLS
+---
+https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8?protocol=llhls
 ```
 
 ### Dashboard
@@ -84,9 +95,5 @@ We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cr
 
 ### Examples
 
-* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback)
-* [SRT playback with ffplay](/stream/examples/srt_playback)
-
-## Limitations
-
-[Client-side Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback/)
+* [SRT playback with ffplay](/stream/examples/srt_playback/)

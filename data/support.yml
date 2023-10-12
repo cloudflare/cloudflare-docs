@@ -10,7 +10,6 @@ meta:
   title: Cloudflare Support docs
   description: Cloudflare Support focused documentation.
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/support

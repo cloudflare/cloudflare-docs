@@ -91,11 +91,11 @@ ___
 3.  如果 DNSViz 之前从未分析过该站点，则单击显示的**分析**按钮。
 4.  如果 DNSViz 之前已分析过该站点，
 
-![Screen_Shot_2018-09-18_at_10.31.54_AM.png](/support/static/Screen_Shot_2018-09-18_at_10.31.54_AM.png)
+![Screen_Shot_2018-09-18_at_10.31.54_AM.png](/images/support/Screen_Shot_2018-09-18_at_10.31.54_AM.png)
 
-![Screen_Shot_2018-10-16_at_2.png](/support/static/Screen_Shot_2018-10-16_at_2.png)
+![Screen_Shot_2018-10-16_at_2.png](/images/support/Screen_Shot_2018-10-16_at_2.png)
 
-![Screen_Shot_2018-09-18_at_10.25.49_AM.png](/support/static/Screen_Shot_2018-09-18_at_10.25.49_AM.png)
+![Screen_Shot_2018-09-18_at_10.25.49_AM.png](/images/support/Screen_Shot_2018-09-18_at_10.25.49_AM.png)
 
 ___
 

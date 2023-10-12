@@ -18,6 +18,9 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 <div>
 
 ```html
+---
+header: Turnstile script snippet
+---
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 ```
 
@@ -28,6 +31,9 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 <div>
 
 ```js
+---
+header: Render
+---
 // before
 hcaptcha.render(element, {
     sitekey: "00000000-0000-0000-0000-000000000000"
@@ -40,12 +46,10 @@ turnstile.render(element, {
 
 </div>
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 Turnstile supports:
 * the `render()` call
 * hCaptcha invisible mode with the `execute()` call
-
 {{</Aside>}}
 
 ## Server-side integration

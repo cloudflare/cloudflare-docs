@@ -33,41 +33,10 @@ Page Ruleを定義し、URLパターンが一致するたびに、複数のア�
 
 | **プラン** | **許可されているページルール数の上限** |
 | --- | --- |
-| 
-Free
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-Enterprise
-
- | 
-
-125
-
- |
+| Free | 3 |
+| Pro | 20 |
+| Business | 50 |
+| Enterprise | 125 |
 
 Freeプラン、Proプラン、Businessプランのドメインに関しては、（最大100まで）[追加のルールを購入](https://www.cloudflare.com/features-page-rules/)できます。
 
@@ -716,11 +685,11 @@ ___
 
 **根本原因**：Page Rule の設定問題に起因する可能性があります。_転送URL_ルールのような、2つのワイルドカードを使用するPage Ruleを作成する場合、$2 プレースホルダーが2番目のワイルドカードを指すルールを作成することができます。下記の例をご覧ください。
 
-![２つのワイルドカードを使ったPage Rule 設定の例転送URLには＄2プレースホルダー1つが含まれ、これが２つ目と一致するコンテンツに置き換えられます。 ](/support/static/page-rule-create.png)
+![２つのワイルドカードを使ったPage Rule 設定の例転送URLには＄2プレースホルダー1つが含まれ、これが２つ目と一致するコンテンツに置き換えられます。 ](/images/support/page-rule-create.png)
 
 同じルールを更新する場合、**URLが一致する場合**欄のワイルドカードを1つ削除して保存することができます。下記の例をご覧ください。
 
-![単一のワイルドカードを使った不正確なPage Rule設定で、その$2 プレースホルダーを転送URLで使用する場合。この設定が原因で ](/support/static/page-rule-update.png)
+![単一のワイルドカードを使った不正確なPage Rule設定で、その$2 プレースホルダーを転送URLで使用する場合。この設定が原因で ](/images/support/page-rule-update.png)
 
 これを行った場合、$2 プレースホルダーが存在しないワイルドカードを参照することになるため、URLがPage Rule をトリガーする際「_エラー 500（内部サーバーエラー）_」が発生します。
 
@@ -766,12 +735,12 @@ Page Ruleを保存する際、Cloudflareは**URLが一致する場合**フィー
 
 Page Ruleの**URLが一致する場合**フィールドでポートを特定する場合、ポートは次のどれかである必要があります。
 
--   [Cloudflareのプロキシと互換性がある](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy)HTTP/HTTPSポートの1つ。
+-   [Cloudflareのプロキシと互換性がある](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy)HTTP/HTTPSポートの1つ。
 -   [Cloudflare Spectrum](/spectrum/) HTTPSアプリケーションのカスタムポート。
 
 ### WorkersでPage Rulesを使う
 
-現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/platform/workers-with-page-rules/)を参照してください。
+現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/configuration/workers-with-page-rules/)を参照してください。
 
 ___
 

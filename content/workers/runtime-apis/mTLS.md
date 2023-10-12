@@ -9,7 +9,7 @@ When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a se
 
 This process - known as [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) - moves authentication to the protocol of TLS, rather than managing it in application code. Connections from unauthorized clients are rejected during the TLS handshake instead.
 
-To present a client certificate when communicating with a service, create a [mTLS certificate binding](/workers/platform/bindings/#mtls-certificate-bindings) in your Worker project's `wrangler.toml` file. This will allow your Worker to present a client certificate to a service on your behalf.
+To present a client certificate when communicating with a service, create a [mTLS certificate binding](/workers/configuration/bindings/#mtls-certificate-bindings) in your Worker project's `wrangler.toml` file. This will allow your Worker to present a client certificate to a service on your behalf.
 
 {{<Aside type="warning">}}
 
@@ -18,6 +18,12 @@ Currently, mTLS for Workers is not supported for domains [proxied](/dns/manage-d
 {{</Aside>}}
 
 First, upload a certificate and its private key to your account using the [`wrangler mtls-certificate`](/workers/wrangler/commands/#mtls-certificate) command:
+
+{{<Aside type="warning">}}
+
+
+The `wrangler mtls-certificate upload` command requires the [SSL and Certificates Edit API token scope](/fundamentals/api/reference/permissions/). If you are using the OAuth flow triggered by  `wrangler login`, the correct scope is set automatically. If you are using API tokens, refer to [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) to set the right scope for your API token.
+{{</Aside>}}
 
 ```sh
 $ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert

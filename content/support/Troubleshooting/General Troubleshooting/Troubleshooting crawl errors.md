@@ -42,11 +42,11 @@ Review the following recommendations to prevent crawler errors:
     -   [Monitor.Us](http://www.monitor.us/)
     -   [Updown](https://updown.io/)
 
--   Do not block Google crawler IP addresses via **firewall rules** or **IP Access Rules** within the **Security** app. If you are using [rate limiting rules](/waf/rate-limiting-rules/) (new version), make sure they do not apply to the Google crawler.
+-   Do not block Google crawler IP addresses via **custom rules** or **IP Access rules** within the **Security** app. If you are using [rate limiting rules](/waf/rate-limiting-rules/), make sure they do not apply to the Google crawler.
 
 Confirm an IP address belongs to Google by consulting Google’s documentation on [verifying googlebot IP addresses](https://support.google.com/webmasters/bin/answer.py?answer=80553).
 
--   Do not block the United States via **firewall rules** or **IP Access Rules** within the **Security** app.
+-   Do not block the United States via **custom rules** or **IP Access rules** within the **Security** app.
 -   Do not block or User-Agents in your .htaccess, server configuration, [robots.txt](http://support.google.com/webmasters/bin/answer.py?answer=35303), or web application.
 
 Google uses a [variety of User-Agents](https://support.google.com/webmasters/answer/1061943) to crawl your website. You can [test your robots.txt via Google](https://support.google.com/webmasters/answer/6062598?hl=en).

@@ -225,7 +225,7 @@ ___
 
 ### Cause courante
 
-Le nom d'hôte envoyé par le client ou le navigateur via [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) ne correspond pas à l'en-tête de l’hôte de la requête.
+Le nom d'hôte envoyé par le client ou le navigateur via [Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) ne correspond pas à l'en-tête de l’hôte de la requête.
 
 ### Résolution
 
@@ -376,7 +376,7 @@ Vous avez demandé une page d'un site web (`tunnel.example.com`) figurant sur le
 ### Résolution
 
 -   **Si vous êtes un visiteur de ce site web** : veuillez réessayer dans quelques minutes.
--   **Si vous êtes le propriétaire de ce site web** : assurez-vous que _cloudflared_ est en cours d'exécution et qu'il peut atteindre le réseau. Vous devrez peut-être activer [Load Balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) pour votre tunnel.
+-   **Si vous êtes le propriétaire de ce site web** : assurez-vous que _cloudflared_ est en cours d'exécution et qu'il peut atteindre le réseau. Vous devrez peut-être activer [Load Balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) pour votre tunnel.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### Cause courante
 
-Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
+Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
 
 ### Résolution
 

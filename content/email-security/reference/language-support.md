@@ -19,7 +19,7 @@ The Area 1 email dashboard is localized to several languages. To update your lan
 
     <div class="medium-img">
 
-    ![Select the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
+    ![Select the language icon to toggle your dashboard between English and Japanese.](/images/email-security/language-switcher.png)
 
     </div>
 

@@ -1,11 +1,14 @@
 ---
 pcx_content_type: concept
-title: Node.js Compatibility
+title: Node.js compatibility
+layout: single
 ---
 
 # Node.js compatibility
 
-The following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code:
+Most Workers import one or more packages of JavaScript or TypeScript code from [npm](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
+
+To ensure compatibility with a wider set of npm packages, and make it easier for you to run existing applications on Cloudflare Workers, the following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code:
 
 {{<directory-listing>}}
 
@@ -18,10 +21,11 @@ import { Buffer } from 'node:buffer';
 // Do not do this:
 import { Buffer } from 'buffer';
 ```
+Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
 
 ## Enable Node.js with Workers
 
-Add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
 ```toml
 ---
@@ -30,8 +34,6 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-{{<render file="_nodejs-compat-local-dev.md">}}
-
 ## Enable Node.js with Pages Functions
 
 ### Enable Node.js with Wrangler
@@ -39,7 +41,7 @@ compatibility_flags = [ "nodejs_compat" ]
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
 ```sh
-$ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat" --experimental-local
+$ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
 ```
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).

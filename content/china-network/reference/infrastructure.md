@@ -16,7 +16,7 @@ For up-to-date information, refer to the [Cloudflare China Network](https://www.
 
 Cloudflare publishes a list of IP addresses for JD Cloud data centers, used by Cloudflare when connecting to the origin networks of customers to retrieve assets. These addresses are not the same IP addresses returned to website visitors as part of DNS resolution.
 
-You can obtain the list of JD Cloud data center IP addresses via Cloudflare API. Use the [JD Cloud IP Details](/api/operations/cloudflare-i-ps-cloudflare-ip-details-jdcloud) operation with the `networks=jdcloud` query string parameter:
+You can obtain the list of JD Cloud data center IP addresses via Cloudflare API. Use the [Cloudflare/JD Cloud IP Details](/api/operations/cloudflare-i-ps-cloudflare-ip-details) operation with the `networks=jdcloud` query string parameter:
 
 ```sh
 ---
@@ -52,13 +52,3 @@ highlight: [9,10,11]
 ```
 
 Cloudflare will add new IP addresses to this list 30 days in advance before connecting from those IP addresses to an origin server. If you are using the China Network on JD Cloud, you should update your firewalls to reflect any IP address changes at least once every 30 days.
-
-## Certifications
-
-JD Cloud's infrastructure has the following certifications:
-
-* ISO/IEC 27001 Audit and Certification
-* ISO/IEC 27018 Audit and Certification
-* CSA C-STAR (Security, Trust & Assurance Registry) Certificate
-* Certificate of PCI DSS Compliance
-

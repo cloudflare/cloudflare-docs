@@ -114,16 +114,6 @@ No. A domain cannot have more than 10 years on the term. If you registered your 
 ## Domain registrations
 
 {{<faq-item>}}
-{{<faq-question level=3 text="Can I register a premium domain?" >}}
-
-{{<faq-answer>}}
-
-Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=3 text="My domain’s registration was not extended by one year after transferring to Cloudflare" >}}
 
 {{<faq-answer>}}
@@ -155,6 +145,10 @@ In summary, here is what will happen after a domain expires:
 - **Day 71 - 75:** Pending Delete Period.
 
 {{</faq-answer>}}
+
+{{<Aside type="note" header="Note">}}Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.{{</Aside>}}
+
+
 {{</faq-item>}}
 
 ---

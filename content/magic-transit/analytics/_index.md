@@ -4,8 +4,10 @@ title: Analytics
 weight: 6
 ---
 
-# Magic Transit analytics
+{{<render file="_network-analytics.md" productFolder="magic-wan" withParameters="Magic Transit">}}
 
-Review the topics below to learn more about analytics in Magic Transit.
+## Query analytics with GraphQL
+
+Review the topics below to learn more about querying analytics data with GraphQL.
 
 {{<directory-listing>}}

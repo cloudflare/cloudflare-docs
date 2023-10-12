@@ -62,12 +62,18 @@ Here is an example of markup to configure a maximum size for your image:
 
 The `fit=scale-down` option ensures that the image will not be enlarged unnecessarily.
 
-You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](https://support.cloudflare.com/hc/articles/229373388).
+You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only).
 
 ## Caching
 
 Resizing causes the original image to be fetched from the origin server and cached — following the usual rules of HTTP caching, `Cache-Control` header, etc.. Requests for multiple different image sizes are likely to reuse the cached original image, without causing extra transfers from the origin server.
 
+{{<Aside type="note">}}
+
+If Custom Cache Keys are used for the origin image, the origin image might not be cached and might result in more calls to the origin.
+
+{{</Aside>}}
+ 
 Resized images follow the same caching rules as the original image they were resized from, except the minimum cache time is one hour. If you need images to be updated more frequently, add `must-revalidate` to the `Cache-Control` header. Resizing supports cache revalidation, so we recommend serving images with the `Etag` header. Refer to the [Cache docs for more information](/cache/concepts/cache-control/#revalidation).
 
 We do not support purging of resized variants individually. URLs starting with `/cdn-cgi/` cannot be purged. However, purging of the original image's URL will also purge all of its resized variants.

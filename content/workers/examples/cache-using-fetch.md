@@ -160,12 +160,6 @@ Workers operating on behalf of different zones cannot affect each other's cache.
 
 ## Override based on origin response code
 
-{{<Aside type="note">}}
-
-This feature is available only to Enterprise customers.
-
-{{</Aside>}}
-
 ```js
 // Force response to be cached for 86400 seconds for 200 status
 // codes, 1 second for 404, and do not cache 500 errors.

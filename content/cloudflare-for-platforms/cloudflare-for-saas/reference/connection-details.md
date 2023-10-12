@@ -10,7 +10,7 @@ When forwarding connections to your origin server, Cloudflare will set request p
 
 ## Host header
 
-Cloudflare will not alter the Host header by default, and will forward exactly as sent by the client. If you wish to change the value of the Host header you can utilise [Page-Rules](/workers/platform/workers-with-page-rules/) or [Workers](/workers/) using the steps outlined in [certificate management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
+Cloudflare will not alter the Host header by default, and will forward exactly as sent by the client. If you wish to change the value of the Host header you can utilise [Page-Rules](/workers/configuration/workers-with-page-rules/) or [Workers](/workers/) using the steps outlined in [certificate management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
 
 ## SNI
 

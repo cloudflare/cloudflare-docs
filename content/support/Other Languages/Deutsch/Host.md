@@ -22,4 +22,4 @@ Um sicherzustellen, dass der Header neu geschrieben wird, gehen Sie zu Page Rule
 
 Jetzt wird bei jeder Anfrage, die mit der von Ihnen angegebenen URL übereinstimmt, der Host-Header mit dem von Ihnen in das Textfeld **Host Header Override** eingetragenen Header überschrieben. Siehe das folgende Beispiel:
 
-![Page Rules Host-Header-Überschreibung](/support/static/cf-page-rules-host-header-override.png)
+![Page Rules Host-Header-Überschreibung](/images/support/cf-page-rules-host-header-override.png)

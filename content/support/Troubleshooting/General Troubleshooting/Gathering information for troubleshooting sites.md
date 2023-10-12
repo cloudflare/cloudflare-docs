@@ -32,23 +32,27 @@ Support.
 
 Currently, only Chrome and Firefox can access the HAR feature by default. Other browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
 
+### In Chrome
+
 1\. In a browser page, right-click anywhere and select **Inspect Element**.
 
 2\. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab. 
 
-![HAR network tab screenshot from Chrome developer tools](/support/static/gathering_har_file_network.png)
+![HAR network tab screenshot from Chrome developer tools](/images/support/gathering_har_file_network.png)
 
 3\. Check **Preserve log**.
 
 4\. Click record.
 
-![HAR record button in chrome dev tools.](/support/static/gathering_har_file_record.png)
+![HAR record button in chrome dev tools.](/images/support/gathering_har_file_record.png)
 
 5\. Browse to the URL that causes issues. Once the issue is experienced, right click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
 
-![HAR save menu in Chrome developer tools.](/support/static/gathering_har_file_save.png)
+![HAR save menu in Chrome developer tools.](/images/support/gathering_har_file_save.png)
 
  6. Attach the HAR file to your support ticket.
+
+ ### In Firefox
 
 1\. From the application menu, select **Tools** > **Web Developer** > **Network** or press _Ctrl+Shift+I_ (Windows/Linux) or _Cmd+Option+I_ (OS X).
 
@@ -56,11 +60,15 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
 
 3\. After duplicating the issue, right-click and choose **Save All As HAR**.
 
+### In Microsoft Edge
+
 1\. Navigate to **Developer tools** (use _F12_ as a shortcut) and select the **Network** tab.
 
 2\. Browse to the URL that causes issues.
 
 3\. After duplicating the issue, click on **Export as HAR** followed by **Save As...**.
+
+### In Safari
 
 1\. In Safari, ensure a **Develop** menu appears at the top of the browser window. Otherwise, go to **Safari** > **Preferences** > **Advanced** and select **Show Develop Menu in menu bar**
 
@@ -70,6 +78,8 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
 
 4\. Ctrl + click on a resource within Web Inspector and click **Export HAR**.
 
+### In Mobile
+
 **For Android:** 
 
 1\. Enable USB Debugging mode on your mobile device.
@@ -78,7 +88,7 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
 
 3\. If debugging mode is enabled, you will see your device listed below “Remote Target” like the example below:
 
-![Where to find the Inspect Devices when in Debug Mode for Android.](/support/static/step_1.jpg)
+![Where to find the Inspect Devices when in Debug Mode for Android.](/images/support/step_1.jpg)
 
 4\. Type in the URL, select **Open** and **inspect** to open Chrome’s DevTools.
 
@@ -88,11 +98,11 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
 
 7\. Click **record**.
 
-![Where to find the record button in Chrome's dev tools.](/support/static/step_2_-_better.jpg)
+![Where to find the record button in Chrome's dev tools.](/images/support/step_2_-_better.jpg)
 
 8\. Browse to the URL that causes issues. Once the issue is experienced, right-click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
 
-![How to save HAR content. ](/support/static/step_3.png)
+![How to save HAR content. ](/images/support/step_3.png)
 
 9. Attach the HAR file to your support ticket alongside a screen recording from the affected Samsung device. Instructions on how to do this from Samsung devices can be found in [Samsung's documentation here](https://www.samsung.com/au/support/mobile-devices/screen-recorder/).
 
@@ -108,13 +118,17 @@ ___
 
 In certain situations when request is not issued or cancelled by the browser (for example, due to [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS)), we need to get JS console log output, in addition to the HAR file, to identify the root cause.
 
+### In Chrome
+
 1.  Go to the **Console** tab from the Developer Tools bar.
 2.  Go to the Console Settings and select **Preserve Log**.
 3.  Leave the console open and perform the steps that reproduce the issue.
 4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
 5.  Attach the log file to your support ticket.
 
-![How to find the console tab in Chrome's developer tools.](/support/static/console_snapshot.png)
+![How to find the console tab in Chrome's developer tools.](/images/support/console_snapshot.png)
+
+### In Firefox
 
 1.  Go to the **Console** tab from the Web Developer Tools bar.
 2.  Go to the Console Settings and select **Persist Log** and **Show Timestamps**.
@@ -122,11 +136,15 @@ In certain situations when request is not issued or cancelled by the browser (fo
 4.  Right click, **Select All** messages and **Export Visible Messages to File**.
 5.  Attach the log file to your support ticket.
 
+### In Microsoft Edge
+
 1.  Go to the **Console** tab from the Developer Tools bar.
 2.  Go to the Console Settings and select **Preserve Log**.
 3.  Leave the console open and perform the steps that reproduce the issue.
 4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
 5.  Attach the log file to your support ticket.
+
+### In Safari
 
 1.  Go to the **Console** tab from the Web Inspector bar.
 2.  Tick the box **Preserve Log**.
@@ -160,7 +178,7 @@ cURL is not installed by default in Windows and requires an [install
 wizard](http://curl.haxx.se/dlwiz/).
 {{</Aside>}}
 
-Run the following command to send a standard HTTP GET request to your website (replace _www.example.com_ with your domain and host name):
+Run the following command to send a standard HTTP GET request to your website (replace _www.example.com_ with your domain and hostname):
 
 ```
 $ curl -svo /dev/null http://www.example.com/
@@ -174,7 +192,9 @@ options](https://curl.haxx.se/docs/manpage.html) for additional
 functionality.
 {{</Aside>}}
 
-Expand the sections below for tips on troubleshooting HTTP errors, performance, caching, and SSL/TLS certificates:
+View the sections below for tips on troubleshooting HTTP errors, performance, caching, and SSL/TLS certificates:
+
+### HTTP errors
 
 When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare’s proxy):
 
@@ -188,6 +208,8 @@ are no response differences. If you observe the issue when connecting
 directly to your origin web server, contact your hosting provider for
 assistance.
 {{</Aside>}}
+
+### Performance
 
 cURL measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ cURL options](https://curl.haxx.se/docs/manpage.html#-w). The example cURL below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
 
@@ -219,6 +241,8 @@ by denoting a new line with **\\n** before each variable. Otherwise, all
 metrics are displayed together on a single line.
 {{</Aside>}}
 
+### Caching
+
 cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
 
 -   CF-Cache-Status
@@ -233,9 +257,11 @@ behavior](https://support.cloudflare.com/hc/articles/202775670) in
 Cloudflare's Help Center.
 {{</Aside>}}
 
+### SSL/TLS certificates
+
 #### Reviewing Certificates with cURL
 
-The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and host name):
+The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and hostname):
 
 ```sh
 $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
@@ -246,7 +272,7 @@ $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* h
 parses the TLS handshake and certificate information.
 {{</Aside>}}
 
-To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and host name:
+To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and hostname:
 
 ```sh
 $ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
@@ -265,7 +291,7 @@ ___
 
 ## Temporarily pause Cloudflare
 
-For more details, refer to [Pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+For more details, refer to [Pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 
 ___
 
@@ -278,7 +304,9 @@ Timeouts are possible for ping results because Cloudflare limits ping
 requests.
 {{</Aside>}}
 
-Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and host name in the examples below:
+Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and hostname in the examples below:
+
+### Run traceroot on Windows
 
 1\. Open the **Start** menu.
 
@@ -302,6 +330,8 @@ $ tracert -6 www.example.com
 
 6\. You can copy the results to save in a file or paste in another program.
 
+### Run traceroot on Linux
+
 1\. Open a terminal window.
 
 2\. At the command line prompt, type:
@@ -320,6 +350,8 @@ $ traceroute -6 www.example.com
 
 3\. You can copy the results to save in a file or paste in another program.
 
+### Run traceroot on Mac OS
+
 1.  Open the **Network Utility** application.
 2.  Click the **Traceroute** tab.
 3.  Type the _domain_ or _IP address_ in the appropriate input field and press **Trace**.
@@ -333,9 +365,13 @@ ___
 
 The **CF-RAY** header traces a website request through Cloudflare's network. Provide the **CF-RAY** of a web request to Cloudflare support when troubleshooting an issue. You can also add **CF-RAY** to your logs by editing your origin web server configuration with the snippet below that corresponds to your brand of web server:
 
+### For Apache web servers, add %{CF-Ray}i to LogFormat
+
 ```
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" %{CF-Ray}i" cf_custom
 ```
+
+### For Nginx web servers, add '$http_cf_ray' to log_format
 
 ```
 log_format cf_custom '$remote_addr - $remote_user [$time_local] '

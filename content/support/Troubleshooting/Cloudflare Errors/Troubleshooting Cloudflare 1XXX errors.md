@@ -46,6 +46,7 @@ Cloudflare halted the request for one of the following reasons:
 -   Your Cloudflare DNS A or CNAME record references another reverse proxy (such as an nginx web server that uses the proxy\_pass function) that then proxies the request to Cloudflare a second time.
 -   The request X-Forwarded-For header is longer than 100 characters.
 -   The request includes two X-Forwarded-For headers.
+-   The request includes a CF-Connecting-IP header.
 -   A Server Name Indication (SNI) issue or mismatch at the origin.
 
 ### Resolution
@@ -249,7 +250,7 @@ ___
 
 ### Common cause
 
-The hostname sent by the client or browser via [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) does not match the request host header.
+The hostname sent by the client or browser via {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}Server Name Indication (SNI){{</glossary-tooltip>}} does not match the request host header.
 
 ### Resolution
 
@@ -290,7 +291,7 @@ ___
 
 ### Common cause
 
-The site owner implemented [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) that affects your visitor traffic.
+The site owner implemented [Rate Limiting](/waf/reference/legacy/old-rate-limiting/) that affects your visitor traffic.
 
 {{<Aside type="note">}}
 *Unable to purge* is another 1015 error code relating to [Cloudflare
@@ -304,7 +305,7 @@ persist.
 ### Resolution
 
 -   If you are a site visitor, contact the site owner to request exclusion of your IP from rate limiting.
--   If you are the site owner, review [Cloudflare Rate Limiting thresholds](https://support.cloudflare.com/hc/articles/115001635128) and adjust your Rate Limiting configuration.
+-   If you are the site owner, review [Cloudflare Rate Limiting thresholds](/waf/reference/legacy/old-rate-limiting/) and adjust your Rate Limiting configuration.
 -   If your Rate Limiting blocks requests in a short time period (i.e. 1 second) try increasing the time period to 10 seconds.
 
 {{<Aside type="tip">}}
@@ -326,8 +327,9 @@ Common causes for Error 1016 are:
 
 -   A missing DNS _A record_ that mentions origin IP address.
 -   A _CNAME record_ in the Cloudflare DNS points to an unresolvable external domain.
--   The origin host names (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
+-   The origin hostnames (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
 -   When creating a Spectrum app with a CNAME origin, you need first to create a CNAME on the Cloudflare DNS side that points to the origin. Please see [Spectrum CNAME origins](/spectrum/get-started/#create-a-spectrum-application-using-a-cname-record) for more details
+-   There is no DNS record for the hostname in the Cloudflare for SaaS target zone
 
 ### Resolution
 
@@ -375,7 +377,7 @@ ___
 
 ### Common cause
 
-A client or browser is blocked by a Cloudflare customer’s Firewall Rules.
+A client or browser is blocked by a Cloudflare customer’s Firewall Rules (deprecated).
 
 ### Resolution
 
@@ -437,7 +439,7 @@ You've requested a page on a website (`tunnel.example.com`) that is on the Cloud
 ### Resolution
 
 -   **If you are a visitor of this website**: Please try again in a few minutes.
--   **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) for your tunnel.
+-   **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) for your tunnel.
 
 ___
 
@@ -544,7 +546,7 @@ ___
 
 ### Common cause
 
-A Cloudflare Worker exceeds a [CPU time limit](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
+A Cloudflare Worker exceeds a [CPU time limit](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
 
 ### Resolution
 

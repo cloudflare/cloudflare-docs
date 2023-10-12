@@ -6,7 +6,7 @@ weight: 3
 
 # Block lists
 
-When you add **blocked senders**, Area 1 automatically marks all messages from these senders with a `Malicious` [disposition](/email-security/reference/dispositions-and-attributes/).
+When you add **blocked senders**, Area 1 automatically marks all messages from these senders with a `MALICIOUS` [disposition](/email-security/reference/dispositions-and-attributes/).
 
 ## Add a blocked sender
 

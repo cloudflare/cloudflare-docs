@@ -8,7 +8,7 @@ title: ¿Qué hace el modo «I’m Under Attack»?
 
 ## ¿Qué hace el modo «I’m Under Attack»?
 
-![im_under_attack_page.png.scaled500.png](/support/static/im_under_attack_page.png.scaled500.png) 
+![im_under_attack_page.png.scaled500.png](/images/support/im_under_attack_page.png.scaled500.png) 
 
 [«I’m Under Attack»](http://blog.cloudflare.com/introducing-im-under-attack-mode) añadirá protecciones adicionales a un sitio que esté bajo ataque y necesite [protección y mitigación DDoS](https://www.cloudflare.com/ddos). Si recibe un ataque y tiene esta función activada durante el ataque, los visitantes recibirán una página intersticial durante unos cinco segundos mientras analizamos el tráfico para asegurarnos de que sea un visitante humano legítimo.
 

@@ -11,6 +11,17 @@ Zone Lockdown specifies a list of one or more IP addresses, CIDR ranges, or netw
 
 All IP addresses not specified in the Zone Lockdown rule will not have access to the specified resources. Requests from those IP addresses will receive an `Access Denied` response.
 
+{{<Aside type="warning">}}
+Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of Zone Lockdown rules to block requests from IP addresses not present in an allowlist of IPs and CIDR ranges.
+
+For example, a custom rule equivalent to the Zone Lockdown [example rule](#example-rule) provided in this page could have the following configuration:
+
+* **Description**: `Block all traffic to staging and wiki unless it comes from HQ or branch offices`
+* **Expression**: `((http.host eq "staging.example.com") or (http.host eq "staging.example.com" and starts_with(http.request.uri.path, "/wiki/")) and not ip.src in {192.0.2.0/24 2001:DB8::/64 203.0.133.1}`
+* **Action**: _Block_
+
+{{</Aside>}}
+
 ## Availability
 
 Cloudflare Zone Lockdown is available on paid plans. The number of available Zone Lockdown rules depends on your Cloudflare plan.
@@ -46,11 +57,11 @@ Issue a `POST` request for the [Create a Zone Lockdown rule](/api/operations/zon
 For example:
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/lockdowns" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '{
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/lockdowns" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Block all traffic to staging and wiki unless it comes from HQ or branch offices",
   "urls": [
     "staging.example.com/*",

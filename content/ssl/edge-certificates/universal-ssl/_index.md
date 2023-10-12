@@ -8,10 +8,9 @@ meta:
 
 # Universal SSL
 
-{{<render file="_universal-ssl-definition.md">}}
-<br/>
+{{<glossary-definition term_id="Universal SSL certificate">}}
 
-{{<render file="_validation-level-intro.md" withParameters="Universal ceritificates">}}. For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
+{{<render file="_validation-level-intro.md" withParameters="Universal certificates">}}. For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
 {{<Aside type="note">}}
 

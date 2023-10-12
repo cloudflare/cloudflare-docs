@@ -54,7 +54,7 @@ To further investigate exceptions, refer to [Debugging and Logging](/pages/platf
 
 The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling).  Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). 
 
-In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-runtime) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
+In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-time) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
 
 ### Duration per execution
 
@@ -62,7 +62,7 @@ The **Duration** chart underneath **Median CPU time** in the **Functions metrics
 
 Understanding duration on your Function is useful when you are intending to do a significant amount of computation on the Function itself. This is because you may have to use the Unbound usage model which allows up to 30 seconds of CPU time. The Unbound model is charged on duration, refer to [Pricing](/workers/platform/pricing/#workers) for more information. 
 
-Workers on the [Bundled Usage Model](/workers/platform/pricing/#usage-models) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like fetch requests and waiting on responses.
+Workers on the [Bundled Usage Model](/workers/platform/pricing/#workers) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like fetch requests and waiting on responses.
 
 ### Metrics retention
 

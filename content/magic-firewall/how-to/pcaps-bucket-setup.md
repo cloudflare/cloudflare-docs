@@ -6,9 +6,9 @@ pcx_content_type: how-to
 
 # Set up a bucket for full packet captures
 
-Before you can begin a full packet capture, you must first configure a bucket that Cloudflare can use to upload your files. 
+Before you can begin a full packet capture, you must first configure a bucket that Cloudflare can use to upload your files.
 
-You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target. 
+You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target.
 
 ## Set up a bucket
 
@@ -31,9 +31,9 @@ The **Prove ownership** step of the **Bucket configuration** displays.
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Before you can begin using a bucket, you must first enable destinations. 
+Before you can begin using a bucket, you must first enable destinations.
 
-Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) documentation and follow the steps for those specific services.
+Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#create-and-get-access-to-an-s3-bucket) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#create-and-get-access-to-a-gcs-bucket) documentation and follow the steps for those specific services.
 
 {{</tab>}}
 {{</tabs>}}
@@ -62,11 +62,11 @@ The `bucket` field should be the URI of the bucket. For Amazon S3, the `bucket` 
 ---
 header: Ownership challenge request example
 ---
-curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership \
--H 'Content-Type: application/json' \
--H "X-Auth-Email: ${email}" \
--H "X-Auth-Key: ${auth_key}" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
        "destination_conf": "'${bucket}'"
 }'
 ```
@@ -97,14 +97,14 @@ Validate the bucket by inserting the copied text in the `ownership_text` below:
 ```bash
 ---
 header: Bucket validation example
-----
-curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership/validate \
--H 'Content-Type: application/json' \
--H "X-Auth-Email: ${email}" \
--H "X-Auth-Key: ${auth_key}" \
--d '{
-       "destination_conf": "'${bucket}'",
-       "ownership_challenge": "'${ownership_text}'"
+---
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/validate \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "destination_conf": "'${bucket}'",
+  "ownership_challenge": "'${ownership_text}'"
 }'
 ```
 
@@ -159,10 +159,10 @@ The list of buckets associated with your account displays.
 ---
 header: Bucket list request example
 ---
-curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
 -H 'Content-Type: application/json' \
--H "X-Auth-Email: ${email}" \
--H "X-Auth-Key: ${auth_key}"
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

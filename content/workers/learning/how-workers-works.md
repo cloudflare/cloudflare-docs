@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: How Workers works
-weight: 1
 ---
 
 # How Workers works
@@ -68,7 +67,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/fetch-event/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the point of the `respondWith` call all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
+When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/handlers/fetch/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the point of the `respondWith` call all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
 
 ## Distributed execution
 
@@ -81,6 +80,6 @@ Because there is no guarantee that any two user requests will be routed to the s
 
 Learn more about:
 
-- [FetchEvents](/workers/runtime-apis/fetch-event/)
+- [FetchEvents](/workers/runtime-apis/handlers/fetch/)
 - [Request context](/workers/runtime-apis/request/)
 - [Runtime limitations](/workers/platform/limits/)

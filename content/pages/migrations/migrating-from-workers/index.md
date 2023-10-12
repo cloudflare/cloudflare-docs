@@ -18,7 +18,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 
 {{<Aside type="note">}}
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker).
+When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/learning/migrate-to-module-workers/).
 
 {{</Aside>}}
 
@@ -36,7 +36,7 @@ When moving to Cloudflare Pages, remove the Workers application and any associat
 
 ## Migrate headers and redirects
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentation](/pages/platform/redirects/). 
 
 {{<Aside type="note">}}
 

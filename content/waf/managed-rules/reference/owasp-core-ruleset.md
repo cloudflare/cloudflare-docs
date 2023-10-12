@@ -18,7 +18,7 @@ Each rule in the managed ruleset is associated with a certain paranoia level (PL
 
 You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
 
-*   **Set the paranoia level.** The available levels are *PL1*, *PL2*, *PL3*, and *PL4* (default).
+*   **Set the paranoia level.** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
 *   **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
 *   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
 *   **Disable specific rules or rules with specific tags.**
@@ -54,8 +54,8 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
       <div>
       {{<markdown>}}
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
-  -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
       {{</markdown>}}
       </div>
@@ -67,7 +67,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
       {{<markdown>}}
 ```json
 ---
-highlight: [4,5]
+highlight: 4-5
 ---
 {
   "result": [
@@ -99,8 +99,8 @@ highlight: [4,5]
       <div>
       {{<markdown>}}
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
       {{</markdown>}}
       </div>
@@ -112,7 +112,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_
       {{<markdown>}}
 ```json
 ---
-highlight: [12,14,15,16]
+highlight: 12,14-16
 ---
 {
   "result": {
@@ -151,20 +151,20 @@ highlight: [12,14,15,16]
       </div>
     </details>
 
-3.  Update the rule you just identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+3.  Update the rule you identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
 
      <details>
       <summary>Request</summary>
       <div>
       {{<markdown>}}
-```json
+```bash
 ---
-highlight: [9,10,11,12,13,14,15,16,17,18,19,20]
+highlight: 9-20
 ---
-curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<ENTRY_POINT_RULESET_ID>/rules/<EXECUTE_RULE_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
   "action": "execute",
   "action_parameters": {
     "id": "4814384a9e5d4991b9815dcfc25d2f1f",
@@ -210,8 +210,8 @@ This example configures the managed ruleset score threshold and the performed ac
       <div>
       {{<markdown>}}
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
       {{</markdown>}}
       </div>
@@ -223,7 +223,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
       {{<markdown>}}
 ```json
 ---
-highlight: [4,5]
+highlight: 4-5
 ---
 {
   "result": [
@@ -255,8 +255,8 @@ highlight: [4,5]
       <div>
       {{<markdown>}}
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<OWASP_RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{owasp_ruleset_id}" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
       {{</markdown>}}
      </div>
@@ -268,7 +268,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<OWASP
       {{<markdown>}}
 ```json
 ---
-highlight: [12]
+highlight: 12
 ---
 {
   "result": {
@@ -310,8 +310,8 @@ highlight: [12]
       <div>
       {{<markdown>}}
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
       {{</markdown>}}
       </div>
@@ -323,7 +323,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_
       {{<markdown>}}
 ```json
 ---
-highlight: [12,14,15,16]
+highlight: 12,14-16
 ---
 {
   "result": {
@@ -362,23 +362,23 @@ highlight: [12,14,15,16]
       </div>
     </details>
 
-4.  Update the rule you just identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+4.  Update the rule you identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
-    *   `"score_threshold": 60`
-    *   `"action": "managed_challenge"`
+    * `"score_threshold": 60`
+    * `"action": "managed_challenge"`
 
     <details>
       <summary>Request</summary>
       <div>
       {{<markdown>}}
-```json
+```bash
 ---
-highlight: [9,10,11,12,13,14,15,16,17]
+highlight: 9-17
 ---
-curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<ENTRY_POINT_RULESET_ID>/rules/<EXECUTE_RULE_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
   "action": "execute",
   "action_parameters": {
     "id": "4814384a9e5d4991b9815dcfc25d2f1f",

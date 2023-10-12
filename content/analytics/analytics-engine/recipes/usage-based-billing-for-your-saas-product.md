@@ -45,7 +45,7 @@ FROM
 GROUP BY customer_id
 ```
 
-If run in Grafana, this query returns a graph summarising the usage of each customer. The `sum(_sample_interval)` accounts for the sampling - see other Analytics Engine documentation. This query gives you an answer to "which customers are most active?"
+If run in Grafana, this query returns a graph summarising the usage of each customer. The `sum(_sample_interval)` accounts for the sampling - refer to other Analytics Engine documentation. This query gives you an answer to "which customers are most active?"
 
 The example `writeDataPoint` call above writes an endpoint name. If you do that, you can break down customer activity by endpoint:
 
@@ -74,8 +74,8 @@ FROM
   usage_indexed_by_customer_id
 WHERE
   customer_id = 'substitute_customer_id_here'
-  AND timestamp >= '2023-03-01 00:00:00'
-  AND timestamp < '2023-04-01 00:00:00'
+  AND timestamp >= toDateTime('2023-03-01 00:00:00')
+  AND timestamp < toDateTime('2023-04-01 00:00:00')
 GROUP BY customer_id, request_endpoint
 ```
 
@@ -93,8 +93,8 @@ FROM
   usage_indexed_by_customer_id
 WHERE
   customer_id = 'x'
-  AND timestamp >= '2023-03-01 00:00:00'
-  AND timestamp < '2023-04-01 00:00:00'
+  AND timestamp >= toDateTime('2023-03-01 00:00:00')
+  AND timestamp < toDateTime('2023-04-01 00:00:00')
 GROUP BY customer_id, date, request_endpoint
 ```
 

@@ -52,7 +52,7 @@ You should be familiar with setting up a [Worker](/workers/get-started/guide/) b
   
 {{</Aside>}}
 
-To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
+To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/configuration/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
 ```sh
 $ wrangler pubsub broker public-keys YOUR_BROKER --namespace=NAMESPACE_NAME
@@ -173,7 +173,7 @@ const worker = {
     // Retrieve this from your Broker's "publicKey" field.
     //
     // Each Broker has a unique key to distinguish between your Broker vs. others
-    // We store these keys in environmental variables (/workers/platform/environment-variables/)
+    // We store these keys in environmental variables (/workers/configuration/environment-variables/)
     // to avoid needing to fetch them on every request.
     let publicKeys = env.BROKER_PUBLIC_KEYS;
 
@@ -202,7 +202,7 @@ const worker = {
 export default worker;
 ```
 
-Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
+Once you have deployed your Worker using `npx wrangler deploy`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```sh
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --on-publish-url="https://your.worker.workers.dev"
@@ -293,8 +293,7 @@ Some common failure modes can result in messages not being sent to subscribed cl
 - Failing to correctly validate incoming requests. This can happen if you are not using the correct public keys (keys are unique to each of your Brokers), if the keys are malformed, and/or if you have not populated the keys in the Worker via environmental variables.
 - Not returning a HTTP 200 response. Any other HTTP status code is interpreted as an error and the message is dropped.
 - Not returning a valid Content-Type. The Content-Type in the HTTP response header must be `application/octet-stream`
-- Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) if you need to write messages to other destinations after returning the message to the broker.
+- Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) if you need to write messages to other destinations after returning the message to the broker.
 - Returning an invalid or unstructured body, a body or payload that exceeds size limits, or returning no body at all.
 
 Because the Worker is acting as the "server" in the HTTP request-response lifecycle, invalid responses from your Worker can fail silently, as the Broker can no longer return an error response.
-

@@ -96,7 +96,7 @@ ___
 _:525,_ 패턴(콜론, 상태 코드, 쉼표)은 _EdgeResponseStatus_ 필드에 속하는 고유한 값입니다. 콜론과 쉼표 없이 HTTP 상태 코드 _525_를 검색하는 경우에도 _EdgeStartTimeStamp_처럼 다른 필드에 _525_ 패턴이 있는 로그 항목이 포함됩니다. EdgeStartTimeStamp는 많은 숫자로 구성되기 때문에 가끔씩 _525_라는 숫자 배열이 포함될 수 있습니다.
 
 ![EdgeResponseStatus 필드가 강조된 출력 파일 스크린샷
-](/support/static/hc-external-edge_response_status_ELS.png)
+](/images/support/hc-external-edge_response_status_ELS.png)
 
 출력 파일(els-200.txt and els-525.txt)은 원본 상태로는 가독성이 떨어집니다. 가독성을 높이려면, 다음의 명령어에 jq를 사용하세요.
 
@@ -116,7 +116,7 @@ _:525,_ 패턴(콜론, 상태 코드, 쉼표)은 _EdgeResponseStatus_ 필드에
 ### 출력 예:
 
 ![ELS 로그를 정렬할 때 출력 예를 보여주는 스크린샷
-](/support/static/hc-import-11.png)
+](/images/support/hc-import-11.png)
 
 _ClientRequestURI, ClientIP, ClientRequestUserAgent, ClientCountry_ 및 _ClientRequestHost_ 필드는 일반적으로 이러한 형식의 로그에서 공격 패턴을 찾는 데 가장 유용합니다.
 

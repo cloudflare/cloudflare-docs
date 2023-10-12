@@ -9,7 +9,7 @@ title: Faturamento do Cloudflare Apps
 
 Muitos aplicativos que fazem parte do Cloudflare Apps são gratuitos e você não será cobrado por eles.
 
-![captura de tela da página inicial do Apps no painel Cloudflare](/support/static/hc-dash-apps_main_page.png)
+![captura de tela da página inicial do Apps no painel Cloudflare](/images/support/hc-dash-apps_main_page.png)
 
 Todos os aplicativos pagos do Cloudflare Apps são cobrados mensalmente. Você pagará por mês o valor referente a cada domínio para o qual tiver comprado e instalado um aplicativo.
 

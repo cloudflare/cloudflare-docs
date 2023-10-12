@@ -25,8 +25,6 @@ To add the Stream Player to a web page, you can either:
 ></iframe>
 ```
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/stream-player) 
-
 Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 
 ## Player Size
@@ -163,6 +161,10 @@ The Stream player Debug menu can be shown and hidden using the key combination `
 After a live stream ends, a recording is automatically generated and available within 60 seconds. To ensure successful video viewing and playback, keep the following in mind:
 
 - If a live stream ends while a viewer is watching, viewers should wait 60 seconds and then reload the player to view the recording of the live stream.
-- After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.  
+- After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.
 
 While the recording of the live stream is generating, the video may report as `not-found` or `not-started`.
+
+{{<heading-pill heading="h2" style="beta">}}Low-Latency HLS playback{{</heading-pill>}}
+
+If a Live Inputs is enabled for the Low-Latency HLS beta, the Stream player will automatically play in low-latency mode if possible. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.

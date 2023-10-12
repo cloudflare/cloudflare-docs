@@ -36,7 +36,7 @@ title: Integrate Cloudflare Area 1 with Access for SaaS
    | **Assertion Consumer Service URL** | `https://horizon.area1security.com/api/users/saml`|
    | **Name ID Format**| _Email_ |
 
-6. (Optional) In **Application Appearance**, customize your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
+6. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
 7. Choose the **Identity providers** you want to enable for your application.
 
@@ -66,7 +66,7 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
    1. In Zero Trust, copy the **SSO Endpoint** for your application.
 
-      ![Copy SSO settings for a SaaS application from Zero Trust](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+      ![Copy SSO settings for a SaaS application from Zero Trust](/images/cloudflare-one/applications/saas-sso-endpoint.png)
 
    2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
 
@@ -74,7 +74,7 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 6. Return to the Area 1 portal and paste the metadata into **Metadata XML**.
 
-   ![Configure SSO in the Area 1 portal](/cloudflare-one/static/documentation/applications/area1-sso-config.png)
+   ![Configure SSO in the Area 1 portal](/images/cloudflare-one/applications/area1-sso-config.png)
 
 7. Select **Update Settings**.
 

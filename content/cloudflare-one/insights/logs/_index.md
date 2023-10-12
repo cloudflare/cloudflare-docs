@@ -2,6 +2,8 @@
 pcx_content_type: navigation
 title: Logs
 weight: 6
+meta:
+    title: Zero Trust logs
 ---
 
 # Zero Trust logs
@@ -26,4 +28,4 @@ Cloudflare Zero Trust can be used with the Data Localization Suite to ensure tha
 
 ## Data privacy
 
-For more information on how we use this data, please refer to our [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/).
+For more information on how we use this data, refer to our [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/).

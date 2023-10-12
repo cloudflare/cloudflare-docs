@@ -25,13 +25,13 @@ Your IdP will now be listed in the **Login methods** card.
 
 ## Test IdPs in Zero Trust
 
-To test if an IdP is correctly configured, navigate to **Settings** > **Authentication**. Next, click **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
+To test if an IdP is correctly configured, go to **Settings** > **Authentication**. Next, select **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected
 
 If your provider is connected, another window will open in your browser, with this message:
 
-!["Your connection works!" message displayed for a successful IdP test](/cloudflare-one/static/documentation/identity/connected-idp.png)
+!["Your connection works!" message displayed for a successful IdP test](/images/cloudflare-one/identity/connected-idp.png)
 
 ### Your provider is not connected
 

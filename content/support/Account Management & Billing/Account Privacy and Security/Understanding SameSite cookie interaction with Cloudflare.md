@@ -26,26 +26,29 @@ SameSite settings for [Cloudflare cookies](https://support.cloudflare.com/hc/art
 | cf\_clearance | SameSite=None; Secure | Yes |
 | \_\_cflb | SameSite=Lax | No |
 
+When configuring SameSite attributes on session affinity cookies, it is recommended that you set the values. The value `Auto` is translated to `Lax` if **Always Use HTTPS** is enabled, or `None` if **Always Use HTTPS** is disabled. When using the value `None`, the secure attribute cannot be set to `Never`.
+
+- Default value: `Auto`
+- Valid values: `Auto`, `Lax`, `None`, `Script`.
+
 ___
 
-## Known issues with SameSite and cf\_clearance cookies
+## Known issues with SameSite and cf_clearance cookies
 
-When a [Cloudflare Interactive Challenge](https://support.cloudflare.com/hc/articles/200170136) or Javascript challenge is solved such as for a [**Firewall Rule**](https://support.cloudflare.com/hc/articles/360016473712) or [**IP Access Rule**](https://support.cloudflare.com/hc/articles/217074967), a **cf\_clearance** cookie is set in the client browser. The _cf\_clearance_ cookie has a default lifetime of 30 minutes but is configured via [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) within the **Settings** tab of the Cloudflare **Firewall** app. 
+When a visitor solves a [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/) presented due to a [WAF custom rule](/waf/custom-rules/) or an [IP Access rule](/waf/tools/ip-access-rules/), a `cf_clearance` cookie is set in the client browser. The `cf_clearance` cookie has a default lifetime of 30 minutes, which you can configure via [Challenge Passage](/waf/tools/challenge-passage/).
 
-Cloudflare uses **SameSite**\=_None_ in the **cf\_clearance** cookie so that visitor requests from different hostnames are not met with subsequent challenges or errors. When **SameSite**\=_None_ is used, it must be set in conjunction with the _Secure_ flag.
+Cloudflare uses `SameSite=None` in the `cf_clearance` cookie so that visitor requests from different hostnames are not met with subsequent challenges or errors. When `SameSite=None` is used, it must be set in conjunction with the `Secure` flag.
 
-Use of the _Secure_ flag requires sending the cookie via an HTTPS connection.  The **cf\_clearance** cookie defaults to **SameSite**\=_Lax_ if using HTTP on any part of your website and may cause website issues.
+Using the `Secure` flag requires sending the cookie via an HTTPS connection. If you use HTTP on any part of your website, the `cf_clearance` cookie defaults to `SameSite=Lax`, which may cause your website not to function properly. To resolve the issue, move your website traffic to HTTPS. Cloudflare offers two features to assist: 
 
-If using HTTP on any part of your website, the **cf\_clearance** cookie defaults to **SameSite**\=_Lax_, which may cause your website not to function properly. To resolve the issue, move your website traffic to HTTPS.  Cloudflare offers two features to assist: 
-
--   [**Automatic HTTPS Rewrites**](/ssl/edge-certificates/additional-options/automatic-https-rewrites) and 
--   [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https).
+-   [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites)
+-   [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https)
 
 ___
 
 ## Related resources
 
 -   [Learn more about the SameSite cookie](https://web.dev/samesite-cookies-explained/) 
--   [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/)
--   [Cloudflare SSL FAQ](https://support.cloudflare.com/hc/articles/204144518#h_999722138611548960019807)
+-   [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/)
+-   [Cloudflare SSL FAQ](/support/ssl-tls/faq-and-reference/ssl-faq/)
 -   [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)

@@ -48,7 +48,7 @@ _Bypass Cache on Cookie_ ページルールが、当社が設定した基準に
 
 Drupalサイトで追加のCookieを使用する場合、Regexステートメントにこれらが含まれていることを確認しなければなりません：_SESS.\*|phpsessid=.\*_
 
-![page_rules_caching_static_HTML_with_drupal.png](/support/static/page_rules_caching_static_HTML_with_drupal.png)
+![page_rules_caching_static_HTML_with_drupal.png](/images/support/page_rules_caching_static_HTML_with_drupal.png)
 
 そして、Cloudflareがキャッシュされたファイルを提供する時に、  C_F-Cache-Status: HIT_ヘッダがブラウザに返されます。
 

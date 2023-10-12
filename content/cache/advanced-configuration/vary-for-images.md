@@ -50,7 +50,7 @@ Vary for Images is enabled through Cloudflare’s API by creating a variants rul
 
 ```json
 curl -X PATCH 
-"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0 c353/cache/variants" \ 
+"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/cache/variants" \ 
 -H "X-Auth-Email: user@example.com" \ 
 -H "X-Auth-Key: 3xamp1ek3y1234" \ 
 -H "Content-Type: application/json" \ 
@@ -62,7 +62,7 @@ curl -X PATCH
 
 ```json
 curl -X PATCH 
-"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0 c353/cache/variants" \ 
+"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/cache/variants" \ 
 -H "X-Auth-Email: user@example.com" \ 
 -H "X-Auth-Key: 3xamp1ek3y1234" \ 
 -H "Content-Type: application/json" \ 
@@ -88,7 +88,7 @@ curl -X GET
 -H "X-Auth-Key: 3xamp1ek3y1234" 
 ```
 
-To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/#purge-varied-images).
+To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/purge-varied-images/).
 
 ## Limitations
 

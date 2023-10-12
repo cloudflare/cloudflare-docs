@@ -6,7 +6,11 @@ weight: 1
 
 # MailChannels Pages Plugin
 
-The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. It then emails these form submissions using the MailChannels API.
+The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. Then, it emails these form submissions using the MailChannels API.
+
+{{<Aside type="note">}}
+To use the Mailchannels Pages Plugin, you must first add a [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) to the domain you are sending email from. For more information, refer to the [Mailchannels documentation](https://support.mailchannels.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
+{{</Aside>}}
 
 ## Installation
 
@@ -138,7 +142,7 @@ You can choose any value as the selector, as long as it is permitted as a DNS ho
 
 5. Add the content of your `dkim_record.txt` file in the content field.
 
-![Follow the instructions above to add DKIM credentials to your DNS records](/pages/platform/functions/plugins/mailchannel_DKIM_DNS_setup.png)
+![Follow the instructions above to add DKIM credentials to your DNS records](/images/pages/platform/functions/mailchannel_DKIM_DNS_setup.png)
 
 ## Add DKIM fields to personalization object
 
