@@ -10,6 +10,8 @@ Magic Network Monitoring rules will allow you to monitor the traffic volume dest
 
 ## Create rules
 
+Refer to [Recommended rule configuration](/magic-network-monitoring/rules/recommended-rule-configuration/) for more details on the settings we recommend to create appropriate Magic Network Monitoring rules.
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring** > **Add new rule**.
