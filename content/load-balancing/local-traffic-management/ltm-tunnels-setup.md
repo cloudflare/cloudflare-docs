@@ -15,17 +15,42 @@ If you are not familiar with Cloudflare Tunnel, the pages linked on each step pr
 
 1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).
 2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to the data center hosting the origin servers.
-3. [Create a virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/).
+3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
+
+{{<tabs labels="Dashboard | CLI">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To create a virtual network:
+
+1. Within the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** and find the **Virtual networks** setting.
+2. Select **Add new** or **Manage** > **Create virtual network** to create virtual networks.
+3. Define your virtual network name and select **Save**.
+
+To assign the virtual network to the tunnel:
+
+1. Go to **Access** > **Tunnels**.
+2. Select the tunnel you created in the previous steps and select **Configure**.
+3. Under **Private Network**, select **Add a private network**.
+4. Specify an IP range under **CIDR** and select the virtual network under **Additional settings**.
+5. Select **Save private network**.
+
+{{</tab>}}
+{{<tab label="cli" no-code="true">}}
+
+To create a virtual network:
 
 ```sh
 $ cloudflared tunnel vnet add <VNET_NAME>
 ```
 
-4. Assign the virtual network and IP range to the tunnel you created in step 1.
+To assign the virtual network to the tunnel:
 
 ```sh
 $ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## 2. Configure Cloudflare Load Balancing
 
@@ -40,8 +65,6 @@ Once you have Cloudflare tunnels with associated virtual networks (VNETs) config
 * All origins with private IPs must have `virtual_network_id` specified.
 
 {{</Aside>}}
-
-You can create the origin pool via the API or on the dashboard.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
