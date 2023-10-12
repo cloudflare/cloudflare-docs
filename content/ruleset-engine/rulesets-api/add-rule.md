@@ -30,9 +30,7 @@ Invoking this method creates a new version of the ruleset.
 
 The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/listZoneRulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
@@ -45,12 +43,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset after adding the rule.
 
-{{<details header="Response">}}
+{{<details header="Response" open="false">}}
 
 ```json
 {
@@ -90,5 +87,4 @@ The response includes the complete ruleset after adding the rule.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
