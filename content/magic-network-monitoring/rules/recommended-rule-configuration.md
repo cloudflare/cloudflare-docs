@@ -6,7 +6,7 @@ weight: 1
 
 # Recommended Rule Configuration
 
-Customers can create [Magic Network Monitoring rules](/magic-network-monitoring/rules/) to monitor their network’s traffic volume for a set of IP addresses and / or IP prefixes. Magic Network Monitoring rules have a traffic volume threshold that is set by the customer. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
+Customers can create [Magic Network Monitoring rules](/magic-network-monitoring/rules/) to monitor the traffic volume of their network, for a set of IP addresses and / or IP prefixes. Magic Network Monitoring rules have a traffic volume threshold that is set by the customer. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
 
 We have outlined a guide that customers can follow to create appropriate Magic Network Monitoring rules, and set accurate rule thresholds.
 
@@ -22,7 +22,7 @@ Customers can follow the steps below to configure appropriate rule thresholds.
 
 ### Initial rule configuration
 
-When customers initially configure Magic Network Monitoring, they may not know the typical traffic volume patterns across each of their IP prefixes. Cloudflare recommends that customers set a high rule threshold of either 10 Gbps or 10 Mpps that is unlikely to be crossed during initial configuration.
+When customers initially configure Magic Network Monitoring, they may not know the typical traffic volume patterns across each of their IP prefixes. Cloudflare recommends that customers set a high rule threshold of either 10 Gbps (gigabits per second) or 10 Mpps (million packets per second) that is unlikely to be crossed during initial configuration.
 
 This will allow customers to collect initial information about the typical traffic volume for an Magic Network Monitoring rule without receiving any alerts. After the customer has collected and analyzed the historical traffic data for an Magic Network Monitoring rule, the threshold should be adjusted to an appropriate value.
 
@@ -37,7 +37,7 @@ After customers have created the initial set of rules to monitor their network t
 
 Cloudflare recommends that new customers should set a rule threshold that is two times larger than the maximum non-attack traffic observed for a one minute time interval within an Magic Network Monitoring rule.
 
-To find the maximum non-attack traffic for a one minute time interval over the past 14-30 days, customers can filter for the specific rule they want to analyze. To do that: 
+To find the maximum non-attack traffic for a one minute time interval over the past 14-30 days, customers can filter for the specific rule they want to analyze. To do that:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
@@ -47,7 +47,7 @@ To find the maximum non-attack traffic for a one minute time interval over the p
     ---             |---       | ---
     _Monitoring Rule_ | _equals_   | `<RULE_NAME>`.
 
-Once the rule filter is selected in Magic Network Monitoring Analytics, customers can view the rule’s historical traffic volume data over the selected time period. We recommend that customers view their historical traffic volume data in increments of seven days since that is the largest window that shows one hour time intervals. You can select a custom seven day time range in Magic Network Monitoring Analytics by going to the top right corner of Magic Network Monitoring analytics, opening the time window dropdown, and selecting **Custom range**.
+Once the rule filter is selected in Magic Network Monitoring Analytics, customers can view the historical traffic volume data for the rule over the selected time period. We recommend that customers view their historical traffic volume data in increments of seven days since that is the largest window that shows one hour time intervals. You can select a custom seven day time range in Magic Network Monitoring Analytics by going to the top right corner of Magic Network Monitoring analytics, opening the time window dropdown, and selecting **Custom range**.
 
 ![How to choose a custom time range.](/images/magic-network-monitoring/custom-time-range.png)
 
