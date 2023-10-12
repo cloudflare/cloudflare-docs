@@ -27,7 +27,7 @@ D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varpara
 
 | Syntax | Type | Description |
 | ----- | ----- | -----|
-| `?NNN`| Ordered | A question mark followed by a number NNN holds a spot for the NNN-th parameter. NNN must be between 1 and SQLITE_MAX_VARIABLE_NUMBER |
+| `?NNN`| Ordered | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER` |
 | `?` | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead |
 
 To bind a parameter, use the `stmt.bind()` method.
