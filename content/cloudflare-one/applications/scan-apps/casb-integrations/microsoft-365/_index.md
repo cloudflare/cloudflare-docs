@@ -77,12 +77,7 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 
 {{<render file="casb/_data-loss-prevention.md">}}
 
-| Finding               | Severity |
-| --------------------- | -------- |
-| This is a placeholder | Critical |
-| Placeholder           | High     |
-| Placeholder           | Medium   |
-| Placeholder           | Low      |
+{{<render file="casb/_m365-dlp-findings.md">}}
 
 ### Third-party apps
 
