@@ -141,3 +141,8 @@ Note that:
 [Workers Logpush](/workers/observability/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
 
 Refer to the [Workers Logpush documentation](/workers/observability/logpush/) to learn how to create and configure Logpush jobs.
+
+## Related resources
+
+* [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
+* [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.

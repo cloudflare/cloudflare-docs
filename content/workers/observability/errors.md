@@ -29,6 +29,10 @@ When a Worker running in production has an error that prevents it from returning
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
+### Loop limit
+
+A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](/workers/observability/log-from-workers/#error-pages-generated-by-workers) error is returned.
+
 ## Runtime errors
 
 Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
@@ -142,3 +146,8 @@ async function handleRequest(request) {
 ```
 {{</tab>}}
 {{</tabs>}}
+
+## Related resources
+
+* [Log from Workers](/workers/observability/log-from-workers/) - Learn how to log your Workers.
+* [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.

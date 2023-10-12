@@ -150,10 +150,6 @@ Routes in fail open mode will bypass the failing Worker and prevent it from oper
 
 Routes in fail closed mode will display a Cloudflare `1027` error page to visitors, signifying the Worker has been temporarily disabled. Cloudflare recommends this option if your Worker is performing security related tasks.
 
-### Loop limit
-
-A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](/workers/observability/log-from-workers/#error-pages-generated-by-workers) error is returned.
-
 ---
 
 ## Memory
