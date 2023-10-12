@@ -175,7 +175,7 @@ If you installed WARP connector on your router, no additional configuration is n
 
 ### Alternate gateway
 
-If you installed WARP connector on another machine, you will need to manually configure each device on the subnet to egress through the WARP connector instead of the default gateway.
+If you installed WARP connector on another machine, you will need to manually configure each device on the subnet to egress through WARP connector's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) instead of the default gateway.
 
 ```mermaid
     flowchart LR
@@ -195,7 +195,7 @@ If you installed WARP connector on another machine, you will need to manually co
 
 #### Route all traffic
 
-You can configure all traffic on a device to egress through the WARP connector machine. All traffic will be filtered by your Gateway network policies.
+You can configure all traffic on a device to egress through the WARP connector. All traffic will be filtered by your Gateway network policies.
 
 {{<tabs labels="Linux | macOS | Windows ">}}
 {{<tab label="linux" no-code="true">}}
@@ -277,17 +277,20 @@ If you are testing with curl, make sure to add the `--ipv4` to your curl command
 
 ## Troubleshooting
 
-### Restart WARP
+Use the following troubleshooting strategies if you have issues setting up WARP connector.
 
-
-
-### Check WARP connection status
-
-### Check the routing table
-
-### Check your firewall
-
-If your private network uses a firewall to restrict Internet traffic, you may need to allow the [WARP ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+- Ensure that the WARP systemd service is running. To restart the service:
+    ```sh
+    $ sudo systemctl restart warp-svc.service
+    ```
+- Ensure that WARP is connected:
+    ```sh 
+    $ warp-cli status
+    Success
+    Status update: Connected
+    ```
+- [Check your routing table](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) and ensure that traffic is sent through the CloudflareWARP virtual interface.
+- If your private network uses a firewall to restrict Internet traffic, ensure that it allows the [WARP ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 {{<fnsection>}}
 {{<fnentry num="1">}}WARP connector is an extension of the [WARP client](/cloudflare-one/connections/connect-devices/warp/).{{</fnentry>}}
