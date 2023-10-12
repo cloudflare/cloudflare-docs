@@ -77,6 +77,13 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 
 {{<render file="casb/_data-loss-prevention.md">}}
 
+| Finding               | Severity |
+| --------------------- | -------- |
+| This is a placeholder | Critical |
+| Placeholder           | High     |
+| Placeholder           | Medium   |
+| Placeholder           | Low      |
+
 ### Third-party apps
 
 Identify and get alerted about the third-party apps that have access to at least one service in your Microsoft 365 domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into Shadow IT.

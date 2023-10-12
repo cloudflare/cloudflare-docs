@@ -39,3 +39,10 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 ### Data Loss Prevention (optional)
 
 {{<render file="casb/_data-loss-prevention.md">}}
+
+| Finding               | Severity |
+| --------------------- | -------- |
+| This is a placeholder | Critical |
+| Placeholder           | High     |
+| Placeholder           | Medium   |
+| Placeholder           | Low      |
