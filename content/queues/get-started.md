@@ -202,7 +202,7 @@ Every time messages are published to the queue, your consumer Worker's `queue` h
 
 In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](/r2/)), write to a database (like [D1](/d1/)), or further process messages before calling an external API, such as an [email API](/workers/tutorials/) or a data warehouse with your legacy cloud provider.
 
-When performing asyncronous tasks from within your consumer handler you can use `waitUntil()` to ensure the response of the function is handled. Other asyncronous methods are not supported within the scope of this method.
+When performing asynchronous tasks from within your consumer handler, use `waitUntil()` to ensure the response of the function is handled. Other asynchronous methods are not supported within the scope of this method.
 
 ### Connect the consumer Worker to your queue
 
