@@ -13,11 +13,6 @@ Direct creator uploads let your end users to upload videos directly to Cloudflar
 1. For videos under 200MB, [generate URLs that accept an HTTP POST request](/stream/uploading-videos/direct-creator-uploads#basic-upload-flow-for-small-videos).
 2. For videos over 200 MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#advanced-upload-flow-using-tus-for-large-videos).
 
-#### Example Apps
-
-- [Direct Creator Uploads (using a HTTP POST request)](https://workers.new/stream/upload/direct-creator-uploads)
-- [Direct Creator Uploads (using tus for resumable, multi-part uploads)](https://workers.new/stream/upload/direct-creator-uploads-tus)
-
 ## Basic upload flow, for small videos
 
 Use this if your users upload videos under 200MB, and you do not need to allow resumable uploads.
