@@ -1,5 +1,6 @@
 # homepage
 /docs/ /products/ 301
+/zero-trust/ /products/?product-group=Cloudflare+One 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
@@ -1122,6 +1123,8 @@
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
+/workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
+/workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
