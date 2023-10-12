@@ -36,14 +36,6 @@ Endpoints must be added to [Endpoint Management](/api-shield/management-and-moni
 Changes may take a few minutes to process depending on the number of added endpoints.
 {{</Aside>}}
 
-### Add validation by applying a learned schema
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and filter by the learned schema available.
-4. Select **Apply learned schema**.
-5. Choose an action and select **Apply schema**.
-
 ### Add validation by applying a learned schema to a single endpoint
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
@@ -61,7 +53,7 @@ At this time, learned schemas will not overwrite customer-uploaded schemas. If a
 3. Go to **Schema Validation** and select **Add Validation**.
 4. Select **Apply learned schema**.
 5. Choose a hostname and review the endpoints that will be protected by the learned schema. 
-6. (Optional) Change the action to take if a request does not match the schema.
+6. (Optional) Change the action if a request does not match the schema.
 7. Select **Apply schema**.
    
 {{<Aside type="note">}}
