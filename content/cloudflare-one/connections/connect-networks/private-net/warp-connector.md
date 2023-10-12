@@ -8,7 +8,7 @@ meta:
 
 # Set up WARP connector
 
-Cloudflare WARP connector is a piece of software that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
+Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
@@ -124,11 +124,11 @@ If you do not already have a private network range, you can choose one of these 
 
 13. Repeat these steps for subnet `192.168.1.0/24`.
 
-## 7. Configure the host
+## 5. Configure the host
 
 Run the following commands on each machine where you installed WARP connector.
 
-1. Enable IP forwarding:
+1. Ensure that IP forwarding is enabled:
 
   ```sh
   $ sudo sysctl -w net.ipv4.ip_forward=1
@@ -153,7 +153,7 @@ If you are setting up WARP connector on a [virtual private cloud (VPC)](/learnin
 
   ```
 
-## 8. Configure other devices on the subnet
+## 6. Configure other devices on the subnet
 
 Depending on where you installed the WARP connector, you may need to configure other devices on the private network to route traffic through the WARP connector.
 
@@ -249,7 +249,7 @@ $ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
 `100.96.0.0/12` is the CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). If you set `<DESTINATION-IP>` to `100.96.0.0/12`, this configures the server to connect to user devices through Cloudflare.
 {{</Aside>}}
 
-## 9. Test the WARP connector
+## 7. Test the WARP connector
 
 You can now test the connection between the two subnets. For example, on the `10.0.0.2` device run `ping 192.168.1.100`.
 
@@ -279,6 +279,8 @@ If you are testing with curl, make sure to add the `--ipv4` to your curl command
 
 ### Restart WARP
 
+
+
 ### Check WARP connection status
 
 ### Check the routing table
@@ -286,3 +288,8 @@ If you are testing with curl, make sure to add the `--ipv4` to your curl command
 ### Check your firewall
 
 If your private network uses a firewall to restrict Internet traffic, you may need to allow the [WARP ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+
+{{<fnsection>}}
+{{<fnentry num="1">}}WARP connector is an extension of the [WARP client](/cloudflare-one/connections/connect-devices/warp/).{{</fnentry>}}
+
+{{</fnsection>}}
