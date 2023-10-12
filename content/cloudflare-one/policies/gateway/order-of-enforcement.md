@@ -24,8 +24,18 @@ flowchart TB
     subgraph DNS
     dns1["DNS policies"]
     style DNS text-align:left
+    dns1--Resolved by-->dns2["1.1.1.1"]
+    dns1-.Enterprise users only.->dns3
+
+        %% DNS resolution
+        subgraph Resolution
+        dns2["1.1.1.1"]
+        dns3["Resolver policies"]--Resolved by-->dns4["Custom resolver"]
+        end
+
     end
-    dns1--Resolved by-->dns2["1.1.1.1"]------>internet
+    dns2["1.1.1.1"]----->internet
+    dns4----->internet
 
     %% Proxied by Gateway
     subgraph Proxy
