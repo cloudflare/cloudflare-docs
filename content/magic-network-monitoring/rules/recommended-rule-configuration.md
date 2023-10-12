@@ -61,4 +61,4 @@ A customer’s IP prefixes may experience inconsistent spikes in traffic volume 
 
 ## Adjusting rules over time
 
-After customers update their first set of rule thresholds based on historical traffic data, it will be important to monitor for MNM alerts to see if the rule thresholds are appropriate. Customers are encouraged to adjust the rule thresholds and the duration overtime to find the ideal alert sensitivity level for their specific network environment.
+After customers update their first set of rule thresholds based on historical traffic data, it will be important to monitor for Magic Network Monitoring alerts to check if the rule thresholds are appropriate. Customers are encouraged to adjust the rule thresholds and the duration over time to find the ideal alert sensitivity level for their specific network environment.
