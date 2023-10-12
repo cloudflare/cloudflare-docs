@@ -295,7 +295,7 @@ Batched statements are [SQL transactions](https://www.sqlite.org/lang_transactio
 
 ### db.batch()
 
-To send batch statements, feed `batch()` with a list of prepared statements and get the results in the same order.
+To send batch statements, provide `batch()` a list of prepared statements and get the results in the same order.
 
 ```js
 await db.batch([
