@@ -42,7 +42,7 @@ If you use GitHub Actions, we provide [an official action](https://github.com/cl
 
 ```yaml
 ---
-filename: Your GitHub Action workflow file
+filename: .github/workflows/push.yml
 ---
 name: Deploy Worker
 on:
