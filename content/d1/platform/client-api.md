@@ -63,7 +63,7 @@ D1 automatically converts supported JavaScript (including TypeScript) types pass
 
 <sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) are not currently supported in the API yet. JavaScript integers are safe up to [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
-<sup>2</sup> Booleans will be cast to an `INTEGER` type where 1 is `TRUE` and 0 is `FALSE`.
+<sup>2</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and `0` is `FALSE`.
 
 ## Return object
 
