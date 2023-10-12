@@ -163,7 +163,7 @@ In service worker syntax, `event` provides the same fields and methods as `Messa
 
 {{<Aside type="note">}}
 
-When performing async tasks in your queue handler that iterates through messages, ensure you use an asyncronous friendly version of iterating through your messages, for example: `for (const m of batch.messages)`or `await Promise.all(batch.messages.map(work))` allow for waiting for the results of asyncronous calls. `batch.messages.forEach()` does not.
+When performing asynchronous tasks in your queue handler that iterates through messages, use an asynchronous version of iterating through your messages. For example, `for (const m of batch.messages)`or `await Promise.all(batch.messages.map(work))` allow for waiting for the results of asynchronous calls. `batch.messages.forEach()` does not.
 
 {{</Aside>}}
 
