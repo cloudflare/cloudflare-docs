@@ -50,7 +50,7 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 ### 2. Find the rate
 
-1. Choose the request properties (JA3, IP, or both) and the duration (1 min, 5 mins, or 1 hour) for your rate limit rule. The request properties you select will be used as [rate limiting rule characteristics](/waf/rate-limiting-rules/parameters/#characteristics).
+1. Choose the request properties (JA3, IP, or both) and the duration (1 min, 5 mins, or 1 hour) for your rate limit rule. The request properties you select will be used as [rate limiting rule characteristics](/waf/rate-limiting-rules/parameters/#with-the-same-characteristics).
 
 2. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
 
