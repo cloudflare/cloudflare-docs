@@ -117,6 +117,14 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
+Deploy your project once you have created your dynamic dispatch Worker:
+
+```sh
+$ npx wrangler deploy
+```
+
+Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+
 Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/) for more configuration information.
 
 ## 4. Upload user Workers to a namespace
@@ -125,7 +133,7 @@ Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-fo
 
 You will now upload `customer-worker-1` into your dispatch namespace that you created in step 2. This user Worker has a simple `fetch()` handler that sends a `Hello world` response.
 
-
+In your project directory, create a `main.js` file, and add the following code:
 
 ```js
 ---
@@ -138,7 +146,7 @@ export default {
 };
 ```
 
-Do the following to define a simple metadata file for the user Worker:
+In your project directory, create a `metadata.json` file, and define a simple metadata file for the user Worker:
 
 ```js
 ---
