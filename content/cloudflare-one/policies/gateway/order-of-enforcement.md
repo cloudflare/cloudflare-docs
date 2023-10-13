@@ -25,12 +25,12 @@ flowchart TB
     dns1["DNS policies"]
     style DNS text-align:left
     dns1--Resolved by-->dns2["1.1.1.1"]
-    dns1-.Enterprise users only.->dns3
+    dns1-.->dns3
 
         %% DNS resolution
         subgraph Resolution
         dns2["1.1.1.1"]
-        dns3["Resolver policies"]--Resolved by-->dns4["Custom resolver"]
+        dns3["Resolver policies <br />(Enterprise users only)"]--Resolved by-->dns4["Custom resolver"]
         end
 
     end
@@ -43,9 +43,8 @@ flowchart TB
     %% HTTP policies
     subgraph HTTP
     http1{{"Do Not Inspect policies"}}
-    http1-."Inspect <br />(with Browser Isolation add-on only)".->http2["Isolate policies"]
+    http1-."Inspect".->http2["Isolate policies  <br />(with add-on)"]
     http2-->http3["Allow, Block, Do Not Scan policies"]
-    http1--"No DNI policies"-->http3
     end
 
     http1--Do Not Inspect-->network0
@@ -60,7 +59,7 @@ flowchart TB
 
     %% Egress
     subgraph Egress
-    network1-.Enterprise users only.->egress1[Egress policies]
+    network1-.->egress1["Egress policies <br />(Enterprise users only)"]
     end
 
     %% Finish
