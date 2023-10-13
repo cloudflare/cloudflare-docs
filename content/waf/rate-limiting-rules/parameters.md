@@ -49,7 +49,7 @@ Use one or more of the following characteristics:
     <tr>
       <td>N/A<br />(implicitly included)</td>
       <td><code>cf.colo.id</code> (mandatory)</td>
-      <td><ul><li><a href="#do-not-use-field-in-expressions">Do not use in expressions</a></li></ul></td>
+      <td><ul><li><a href="#do-not-use-as-a-field-in-expressions">Do not use in expressions</a></li></ul></td>
     </tr>
     <tr>
       <td><strong>IP</strong></td>
@@ -319,7 +319,7 @@ Cloudflare will consider entire `/64` prefixes as the same IPv6 source address f
 
 Use **IP with NAT support** to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/) for details.
 
-### Do not use field in expressions
+### Do not use as a field in expressions
 
 You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
 
