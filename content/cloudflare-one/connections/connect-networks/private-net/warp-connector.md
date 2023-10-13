@@ -126,7 +126,7 @@ If you do not already have a private network range, you can choose a subnet from
 
 ## 5. Configure the host
 
-Run the following commands on each machine where you installed WARP connector.
+Run the following commands on the machine where you installed WARP connector. You will need to configure the host machine on each subnet.
 
 1. Ensure that IP forwarding is enabled:
 
@@ -142,7 +142,7 @@ Run the following commands on each machine where you installed WARP connector.
   ```
 
 {{<Aside type="note" header="IP forwarding on VPC">}}
-If you are setting up WARP connector on a [virtual private cloud (VPC)](/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance. Here is an example of how to do this in [Google Cloud](https://cloud.google.com/vpc/docs/using-routes#canipforward).
+If you are setting up WARP connector on a [virtual private cloud (VPC)](/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
 
 2. WARP's [virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) has a [maximum transmission unit (MTU)](/learning/network-layer/what-is-mtu/) of 1280 bytes, whereas the standard Ethernet MTU is 1500 bytes. To avoid dropping packets that exceed 1280 bytes, clamp the [maximum segment size (MSS)](/learning/network-layer/what-is-mss/) of the host machine so that incoming payloads are less than the MTU of WARP:
