@@ -246,7 +246,7 @@ $ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
 {{</tabs>}}
 
 {{<Aside type="note">}}
-`100.96.0.0/12` is the CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). If you set `<DESTINATION-IP>` to `100.96.0.0/12`, this configures the server to connect to user devices through Cloudflare.
+`100.96.0.0/12` is the default CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). If you set `<DESTINATION-IP>` to `100.96.0.0/12`, this configures the server to connect to user devices through Cloudflare.
 {{</Aside>}}
 
 ## 7. Test the WARP connector
