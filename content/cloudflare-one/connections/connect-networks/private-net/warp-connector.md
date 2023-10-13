@@ -115,7 +115,7 @@ If you are managing the deployment remotely over SSH, your connection may drop w
 10. In **CIDR**, enter the private IPv4 address range that you wish to route through this WARP connector (for example, `10.0.0.0/24`). IPv6 is not supported at this time.
 
 {{<Aside type="note">}}
-If you do not already have a private network range, you can choose one of these [pre-defined CIDRs](https://datatracker.ietf.org/doc/html/rfc1918#section-3).
+If you do not already have a private network range, you can choose a subnet from one of these [pre-defined CIDRs](https://datatracker.ietf.org/doc/html/rfc1918#section-3).
 {{</Aside>}}
 
 11. Select **Save Tunnel**.
