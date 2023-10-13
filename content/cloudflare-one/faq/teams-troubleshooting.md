@@ -188,23 +188,22 @@ $ sudo systemctl restart systemd-resolved.service
 
 [NCSI](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-overview) is a Windows feature for determining network quality and connectivity. When WARP is enabled, NCSI checks can sometimes fail and cause a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. Some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
 
-To resolve the issue, try the following workarounds:
+To resolve the issue, you will need to edit two Windows registry keys:
 
-- In the Windows Registry, configure Network Connectivity Status Indicator (NCSI) to detect WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
+1. Configure NCSI to detect WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
     ```txt
     HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator
     Type: DWORD
     Value: UseGlobalDNS
     Data: 1
     ```
-- In the Windows Registry, configure NCSI to use active probing mode. It is possible that WARP is obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
+2. Configure NCSI to use active probing mode, as WARP may be obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
     ```txt
     HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet
     Type: DWORD
     Value: EnableActiveProbing
     Data: 1
     ```
-- In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.
 
 ## I see Storage Partitioned Error.
 
