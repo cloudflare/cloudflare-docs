@@ -57,7 +57,7 @@ For debugging Workers inside the Playground, use the developer tools at the bott
 
 ### Network tab
 
-**Network** shows the outgoing requests from your Workers script — that is, any calls to `fetch` inside your script.
+**Network** shows the outgoing requests from your Worker — that is, any calls to `fetch` inside your Worker code.
 
 ### Console Logs
 
