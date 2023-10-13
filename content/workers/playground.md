@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Playground
+weight: 5
 ---
 
 # Playground
