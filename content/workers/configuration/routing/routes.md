@@ -131,7 +131,7 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - The path component of route patterns is case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
-- For routes created prior to October 15th, 2023, the host component of route patterns is case sensitive, for example, `example.com/*` and `Example.com/*` are two distinct routes.
+- For routes created before October 15th, 2023, the host component of route patterns is case sensitive, for example, `example.com/*` and `Example.com/*` are two distinct routes.
 
 - For routes created on or after October 15th, 2023, the host component of route patterns is not case sensitive, for example, `example.com/*` and `Example.com/*` are equivalent routes.
 
