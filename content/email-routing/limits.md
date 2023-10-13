@@ -20,9 +20,13 @@ Currently, Email Routing does not support messages bigger than 25 MiB.
 
 ## Rules and addresses
 
-Feature | Limit
---- | ---
-[Rules](/email-routing/setup/email-routing-addresses/) | 200
-[Addresses](/email-routing/setup/email-routing-addresses/#destination-addresses) | 200
+{{<table-wrap>}}
+
+| Feature                                                                        | Limit |
+|------------------------------------------------------------------------------- | ----- |
+[Rules](/email-routing/setup/email-routing-addresses/)                           | 200   |
+[Addresses](/email-routing/setup/email-routing-addresses/#destination-addresses) | 200   |
+
+{{</table-wrap>}}
 
 {{<render file="_limits_increase.md" productFolder="workers">}}
