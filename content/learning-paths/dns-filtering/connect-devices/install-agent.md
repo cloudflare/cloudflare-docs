@@ -37,14 +37,14 @@ Most admins test by downloading the client and authenticating in with a [one-tim
     - Gateway DoH IPs:
         {{<render file="_doh-ips.md" productFolder="cloudflare-one">}}
 For more information, refer to [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
-6. Uninstall any existing third-party software that may manage DNS resolution. Sometmes products placed in a disconnected or disabled state will still interfere with the WARP client.
+6. Uninstall any existing third-party software that may manage DNS resolution. Sometimes products placed in a disconnected or disabled state will still interfere with the WARP client.
 7. Manually install WARP on the device:
 
 <details>
 <summary>Windows and macOS</summary>
 <div>
 
-{{<render file="_enroll-windows-mac.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_enroll-windows-mac.md" productFolder="cloudflare-one">}}
 </div>
 </details>
 
@@ -52,7 +52,7 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 <summary>Linux</summary>
 <div>
 
-{{<render file="_enroll-linux.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_enroll-linux.md" productFolder="cloudflare-one">}}
 </div>
 </details>
 
@@ -60,7 +60,7 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 <summary>iOS, Android, and ChromeOS</summary>
 <div>
 
-{{<render file="_enroll-ios-android.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_enroll-ios-android.md" productFolder="cloudflare-one">}}
 
 </div>
 </details>

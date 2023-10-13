@@ -18,9 +18,8 @@ As the WARP client has replaced WinDivert with WinTun architecture, all Windows 
 
 As our [Network Map](https://www.cloudflare.com/en-gb/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the data center (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:
 
-- Sometimes your nearest colo might be having problems, although we work hard to prevent it. Check [here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
+- Sometimes your nearest colo may be undergoing maintenance or having problems. Check [here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
 - Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
-- Not all Cloudflare data centers are WARP-enabled. We are constantly evaluating performance and how users are connecting, bringing more colos online with WARP all the time.
 
 ## Why is my public IP address sometimes visible?
 
@@ -42,9 +41,13 @@ To allow end users to connect through a captive portal, administrators can do th
 3. Set an [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) time period.
 4. If WARP fails to automatically detect a portal, provide an [admin override code](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) to your end users. This will allow users to manually turn off WARP and connect to the portal. WARP will automatically turn back on after the auto connect period.
 
-## Why is my device not connecting to the Internet after I deploy WARP?
+## Why is my device not connecting to the Internet?
 
 A third-party service or ISP may be blocking WARP, or Zero Trust settings may be misconfigured. For a list of common issues and steps to resolve, refer to our [troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/).
+
+## Why is my device not connecting to the corporate Wi-Fi?
+
+An [OS firewall rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall) on the device may be blocking the EAP/Radius server that allows users to join the Wi-Fi network. If your corporate Wi-Fi uses a Radius server for network authentication, add the Radius server to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list.
 
 ## Why is my device not connecting to my private network?
 

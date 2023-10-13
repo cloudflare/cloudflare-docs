@@ -225,7 +225,7 @@ ___
 
 ### 考えられる原因
 
-[Server Name Indication](/fundamentals/glossary#server-name-indication-sni)（SNI）を介して、クライアントまたはブラウザが送信したホスト名が、リクエストホストヘッダーと一致しない。
+[Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni)（SNI）を介して、クライアントまたはブラウザが送信したホスト名が、リクエストホストヘッダーと一致しない。
 
 ### 解決方法
 

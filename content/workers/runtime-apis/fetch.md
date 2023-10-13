@@ -11,7 +11,7 @@ The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [M
 
 {{<Aside type="note">}}
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker and must be executed within your `FetchEvent` handler. Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
+Asynchronous tasks such as `fetch` are not executed at the top level in a Worker and must be executed within a `fetch()` handler. Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
 {{</Aside>}}
 

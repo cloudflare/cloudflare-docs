@@ -13,7 +13,7 @@ You can use the results of a DEX test to monitor availability and performance fo
 ### Prerequisites
 
 - At least one test has been created under **DEX** > **Tests**.
-- Admins must have at least the [Cloudflare Zero Trust Reporting role](/cloudflare-one/cloudflare-teams-roles-permissions/#zero-trust-roles).
+- Admins must have at least the [Cloudflare Zero Trust Reporting role](/cloudflare-one/roles-permissions/#zero-trust-roles).
 
 ### View results for all devices
 

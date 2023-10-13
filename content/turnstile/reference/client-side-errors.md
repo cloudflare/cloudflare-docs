@@ -1,7 +1,7 @@
 ---
 title: Client-side error codes
 pcx_content_type: reference
-weight: 12
+weight: 14
 layout: single
 ---
 
@@ -10,7 +10,7 @@ layout: single
 There are instances where Turnstile may encounter problems, invoking `error-callback`. Refer to the list of [common error codes](/turnstile/reference/client-side-errors/#error-codes) below for troubleshooting steps to address them. 
 
 
-## Error Handling
+## Error handling
 
 The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute on implicit rendering provides a JavaScript callback to handle potential errors that occur.
 
@@ -31,7 +31,7 @@ An implementation may call `turnstile.reset()` in their corresponding `error-cal
 
 The interval in between retries of Turnstile can be configured by the `retry-interval` option. 
 
-## Error Codes
+## Error codes
 
 An error callback will retrieve an error code as its first parameter. Error codes are separated by the first three numbers into `error-code` families.
 

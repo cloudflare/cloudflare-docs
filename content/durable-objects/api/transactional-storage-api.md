@@ -1,10 +1,10 @@
 ---
-title: Transactional Storage API
+title: Transactional Storage
 pcx_content_type: concept
 weight: 16
 ---
 
-# Transactional Storage API
+# Transactional Storage
 
 The Transactional Storage API allows you to achieve consistent key-value storage. 
 
@@ -211,4 +211,4 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 ### Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
-- [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/).
+- [Hibernatable WebSockets API](/durable-objects/api/websockets/).

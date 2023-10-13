@@ -1,8 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Compliance documentation
-aliases:
-- /fundamentals/get-started/basic-tasks/access-compliance-docs/
 ---
 
 # Compliance documentation

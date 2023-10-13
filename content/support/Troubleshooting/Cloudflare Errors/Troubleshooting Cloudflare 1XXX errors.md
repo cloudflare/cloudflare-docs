@@ -250,7 +250,7 @@ ___
 
 ### Common cause
 
-The hostname sent by the client or browser via [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) does not match the request host header.
+The hostname sent by the client or browser via {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}Server Name Indication (SNI){{</glossary-tooltip>}} does not match the request host header.
 
 ### Resolution
 
@@ -377,7 +377,7 @@ ___
 
 ### Common cause
 
-A client or browser is blocked by a Cloudflare customer’s Firewall Rules.
+A client or browser is blocked by a Cloudflare customer’s Firewall Rules (deprecated).
 
 ### Resolution
 

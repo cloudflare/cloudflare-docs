@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Google Workspace
 weight: 13
+meta:
+    title: Google Workspace - IdP
 ---
 
 # Google Workspace

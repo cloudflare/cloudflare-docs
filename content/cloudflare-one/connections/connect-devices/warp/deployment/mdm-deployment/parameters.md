@@ -24,7 +24,7 @@ Instructs the client to register the device with your organization. Registration
 
 **Value Type:** `string`
 
-**Value:** Your [team name](/cloudflare-one/glossary/#team-name).
+**Value:** Your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 
 ## Required for DNS-only policy enforcement
 

@@ -14,7 +14,7 @@ Cloudflare Queues is a flexible messaging queue that allows you to queue message
 
 To use Queues, you will need:
 
-1. A [Cloudflare account](/fundamentals/account-and-billing/account-setup/), if you do not have one already.
+1. A [Cloudflare account](/fundamentals/setup/account-setup/), if you do not have one already.
 
 2. C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues. To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
@@ -54,7 +54,7 @@ $ npm create cloudflare@latest
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}
@@ -200,7 +200,9 @@ Replace `MY_QUEUE` with the name you have set for your binding from your `wrangl
 
 Every time messages are published to the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages.
 
-In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](/r2/)), write to a database (like [D1](/d1/)), or further process messages before calling an external API, such as an [email API](/workers/tutorials/) or a data warehouse with your legacy cloud provider.  
+In this example, your consumer Worker transforms the queue's JSON formatted message into a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](/r2/)), write to a database (like [D1](/d1/)), further process messages before calling an external API (such as an [email API](/workers/tutorials/)) or a data warehouse with your legacy cloud provider.
+
+When performing asynchronous tasks from within your consumer handler, use `waitUntil()` to ensure the response of the function is handled. Other asynchronous methods are not supported within the scope of this method.
 
 ### Connect the consumer Worker to your queue
 

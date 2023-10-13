@@ -17,6 +17,8 @@ Available storage and persistency products include:
 * [Durable Objects](#durable-objects) for transactional, coordinated use cases
 * [D1](#d1) for relational, SQL-based database use cases.
 * [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
+* [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
+* [Vectorize](/vectorize/) for vector search.
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
@@ -33,9 +35,9 @@ It is ideal for projects that require:
 To get started with KV:
 
 * Read how [KV works](/workers/learning/how-kv-works/).
-* Create a [KV namespace](/workers/wrangler/workers-kv/).
-* Review the [KV Runtime API](/workers/runtime-apis/kv/).
-* Learn about KV [Limits](/workers/platform/limits/#kv-limits).
+* Create a [KV namespace](/kv/learning/kv-namespaces/).
+* Review the [KV Runtime API](/kv/api/).
+* Learn about KV [Limits](/kv/platform/limits/).
 
 ## R2
 
@@ -77,12 +79,6 @@ To get started with Durable Objects:
 * Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
-
-{{<Aside type="note">}}
-
-D1 is currently in [public (open) alpha](/workers/platform/betas/).
-
-{{</Aside>}}
 
 [D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
@@ -138,7 +134,7 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
 | Cached                                        | Always       | Programmatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
-| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms-in-durable-objects/) |
+| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms/) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 500 - 1500 requests/second per Durable Object<sup>3</sup> |
 
 {{</table-wrap>}}

@@ -11,9 +11,15 @@ meta:
 
 Starting on **August 31, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
-On **October 4, 2023**, Cloudflare will stop using DigiCert as a CA for new advanced certificates. This will not affect existing advanced certificates.
+On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new advanced certificates. This will not affect existing advanced certificates.
 
-On **October 11, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
+{{<Aside type="warning">}}
+
+The offboarding for advanced certificate renewals has been postponed from October 11, 2023 to October 23, 2023.
+
+{{</Aside>}}
+
+On **October 23, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
 {{<Aside type="warning">}}
 
@@ -36,7 +42,7 @@ This table provides a summary of the differences between DigiCert and Cloudflare
 
 ## Required actions
 
-### Before October 4, 2023
+### Before October 5, 2023
 
 If your system integrates with the Cloudflare API to [order advanced certificates](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack), you will need to update the following fields:
 
@@ -44,17 +50,17 @@ If your system integrates with the Cloudflare API to [order advanced certificate
 - The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 - The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
 
-### Changes after October 11, 2023
+### Changes after October 23, 2023
 
-The following changes will automatically affect certificates that are renewed after October 11, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate. 
+The following changes will automatically affect certificates that are renewed after October 23, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate.
 
 #### Certificate authorities
 
-DigiCert certificates renewed after October 11, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
+DigiCert certificates renewed after October 23, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
-Certificates with 14 and 30 day validity periods will be renewed with Google Trust Services. 90 day certificates will either use Let’s Encrypt or Google Trust Services. 
+Certificates with 14 and 30 day validity periods will be renewed with Google Trust Services. 90 day certificates will either use Let’s Encrypt or Google Trust Services.
 
 {{</Aside>}}
 
@@ -88,7 +94,7 @@ If your certificate includes a wildcard hostname, you will see a TXT DCV token r
 
 If you want to take control of migrating your certificates and choose a particular CA - instead of having Cloudflare handle migrations as certificates come up for renewal and choose a CA on your behalf - you will need to:
 
-1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-11-2023) noted before).
+1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-23-2023) noted before).
 2. Make sure your certificates are validated ([partial zones](#dcv---partial-zones) will require additional steps than previously).
 3. [Delete](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) all existing DigiCert certificates (once each has been replaced and the new certificate is active).
 

@@ -3,8 +3,7 @@ pcx_content_type: how-to
 title: Redirecting *.pages.dev to a Custom Domain
 ---
 
-# Redirect *.pages.dev to a custom domain
-
+# Redirect \*.pages.dev to a custom domain
 
 ## Background
 
@@ -22,12 +21,12 @@ To set up a redirect to a custom domain:
 
 ![Create a new Bulk redirects list](/images/pages/how-to//create_a_new_bulk_redirect_list.png)
 
-6. In the content type, select **Redirect**. 
+6. In the content type, select **Redirect**.
 7. Add your application's `*.pages.dev` subdomain as your source URL.
-8. Add your target custom domain URL. Note that you must include `https://` before the apex domain. 
-9. Select **Edit parameters** and select **Preserve query string**, **Subpath matching** and **Preserve path suffix**.
+8. Add your target custom domain URL. Note that you must include `https://` before the apex domain.
+9. Select **Edit parameters** and select **Preserve query string**, **Subpath matching** and **Preserve path suffix**.<br />
+   _Optional_: Tick the **Include subdomains** box. This will automatically redirect all of the preview URLs to your custom domain.
 
-*Optional*: Tick the **Include subdomains** box. This will automatically redirect all of the preview URLs to your custom domain.
 10. Select **Add to list**.
 11. Go to **Bulk Redirects** > **Create Bulk Redirects** > select your list > **Save and Deploy**.
 
@@ -37,4 +36,4 @@ To test that your redirect worked, go to your `*.pages.dev` domain and double-cl
 
 ## Related resources
 
-* [Handle redirects with Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
+- [Handle redirects with Bulk Redirects](/rules/url-forwarding/bulk-redirects/)

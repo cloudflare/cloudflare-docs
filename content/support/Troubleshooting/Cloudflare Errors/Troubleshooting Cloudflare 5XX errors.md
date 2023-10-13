@@ -130,7 +130,7 @@ Error 520 occurs when the origin server returns an empty, unknown, or unexpected
 {{<Aside type="note">}}
 A quick workaround while further investigating 520 errors is to either
 make the record [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records)
-in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 {{</Aside>}}
 
 [Contact your hosting provider or site administrator](#required-error-details-for-hosting-provider) and request a review of your origin web server error logs for crashes and to check for these common causes:
@@ -154,7 +154,7 @@ If 520 errors continue after contacting your hosting provider or site administra
 -   Output from `http://<YOUR_DOMAIN>/cdn-cgi/trace`
 -   Two [HAR files](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file):
     -   one with Cloudflare enabled on your website, and
-    -   the other with [Cloudflare temporarily disabled](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+    -   the other with [Cloudflare temporarily disabled](/fundamentals/setup/manage-domains/pause-cloudflare/).
 
 ___
 
@@ -279,7 +279,7 @@ Contact your hosting provider to exclude the following common causes at your or
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support
+-   No [SNI](https://developers.cloudflare.com/fundamentals/reference/glossary/#server-name-indication-sni) support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
@@ -321,7 +321,7 @@ Request your server administrator or hosting provider to review the origin web s
 -   Certificate is signed by a [Certificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
 -   The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**
 -   Your origin web server accepts connections over port SSL port 443
--   [Temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
+-   [Temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
 ![Screen showing an SSL certificate with no errors.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 

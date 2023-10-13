@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Project Cybersafe Schools
-aliases:
-- /fundamentals/security/cybersafe/
 ---
 
 # Project Cybersafe Schools

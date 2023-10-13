@@ -130,9 +130,11 @@ The siteverify API must not be called by the front end as this may reveal the se
 
 {{<faq-answer>}}
 
-The dummy sitekeys provided below can be used from any domain, including on `localhost`. 
+Dummy sitekeys can be used from any domain, including on `localhost`. 
 
 Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
+
+Refer to [Testing](/turnstile/reference/testing/) for more information. 
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -215,6 +217,24 @@ You will need to provide a [Ray ID](/fundamentals/reference/cloudflare-ray-id/) 
 {{<faq-answer>}}
 
 If you encounter an endless challenge loop, try disabling your browser extensions.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="What languages does Turnstile support?" >}}
+{{<faq-answer>}}
+
+Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information. 
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Does Turnstile conform to WCAG 2.1 Level AA accessibility standard?" >}}
+{{<faq-answer>}}
+
+Yes, Turnstile is WCAG 2.1 Level AA compliant.
 
 {{</faq-answer>}}
 {{</faq-item>}}
