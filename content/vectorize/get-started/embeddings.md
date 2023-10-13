@@ -163,7 +163,7 @@ filename: src/index.ts
 ---
 import { Ai } from '@cloudflare/ai';
 export interface Env {
-	TEXT_EMBEDDINGS: VectorizeIndex;
+	VECTORIZE_INDEX: VectorizeIndex;
 	AI: any;
 }
 interface EmbeddingResponse {
@@ -200,7 +200,7 @@ export default {
 				id++;
 			});
 
-			let inserted = await env.TEXT_EMBEDDINGS.upsert(vectors);
+			let inserted = await env.VECTORIZE_INDEX.upsert(vectors);
 			return Response.json(inserted);
 		}
 
@@ -210,7 +210,7 @@ export default {
 			text: [userQuery],
 		});
 
-		let matches = await env.TEXT_EMBEDDINGS.query(queryVector.data[0], { topK: 1 });
+		let matches = await env.VECTORIZE_INDEX.query(queryVector.data[0], { topK: 1 });
 		return Response.json({
 			// Expect a vector ID. 1 to be your top match with a score of
 			// ~0.896888444

@@ -1,10 +1,11 @@
 {{ $header := default "Header tag required!" (.Get "header") }}
 
-<details class="DocsMarkdown" onclick="zarazTrackDetails({{$header}})">
-  <summary>{{ $header }}</summary>
-  <div>
-    {{- .Page.RenderString .Inner -}}
-  </div>
+<details class="DocsMarkdown" onclick="zarazTrackDetails({{$header}})"
+  {{ with .Get "open" }} open{{ end }}>
+    <summary>{{ $header }}</summary>
+    <div>
+      {{- .Page.RenderString .Inner -}}
+    </div>
 </details>
 
 <script>

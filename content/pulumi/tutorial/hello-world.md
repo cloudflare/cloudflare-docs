@@ -180,7 +180,7 @@ https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
 <!-- ## Step 2: Deploy a "Hello World" script -->
 You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
 
-### a. Replace the contents of `index.ts` with
+### a. Add Cloudflare Worker to index.ts
 
 ```typescript
 ---
@@ -300,7 +300,8 @@ You can view your Cloudflare resource directly in the Cloudflare Dashboard to va
 
 You will now add a Worker Route to the Pulumi stack, `dev` so the script can have an endpoint.
 
-### a. Replace the contents of `index.ts `with
+### a. Add Worker Route to index.ts
+
 ```typescript
 ---
 filename: index.ts
@@ -330,7 +331,7 @@ export const route = new cloudflare.WorkerRoute("hello-world-route", {
 });
 ```
 
-### b. Apply the changes
+### b. Apply changes
 
 At the prompt, Select `yes` with the arrow keys and press the Enter key
 ```sh
@@ -415,7 +416,8 @@ In the Cloudflare Dashboard, you'll notice the Worker application now contains t
 
 You will now add a DNS record to your domain so the previously configured route can be accessed via a URL.
 
-### a. Replace the contents of `index.ts `with
+### a. Add DNS record to index.ts
+
 ```typescript
 ---
 filename: index.ts

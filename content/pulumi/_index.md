@@ -44,6 +44,7 @@ Pulumi AI is an experimental feature that lets you use natural-language prompts 
 {{<related header="Pulumi ESC" href="https://www.pulumi.com/product/esc/">}}
 Pulumi ESC provides centralized management of environments, secrets, and configurations.
 {{</related>}}
+
 ---
 
 ## More resources

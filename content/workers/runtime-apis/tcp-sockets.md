@@ -82,6 +82,7 @@ export default {
 
 - {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
+  - The `WritableStream` returned only accepts chunks of `Uint8Array` or its views.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
