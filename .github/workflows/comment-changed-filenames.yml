@@ -35,10 +35,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          comment_body="This PR changes current filenames or deletes current files. Make sure you have redirects set up to cover the following paths:"
+          comment_body="This PR changes current filenames or deletes current files.\n\nMake sure you have [redirects](https://developers.cloudflare.com/pages/platform/redirects/) set up to cover the following paths:"
           for path in $CHANGED_FILES; do
-            comment_body="$comment_body
-          - [ ] \`$path\`"
+            comment_body=$comment_body
+          - [ ] \`$path\`
           done
 
           existing_comment_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
