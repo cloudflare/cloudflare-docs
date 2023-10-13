@@ -241,7 +241,6 @@ Action to perform when the rate specified in the rule is reached.
 
 Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
 
-
 ### For duration
 
 - Data type: `Number`.
@@ -272,15 +271,15 @@ Only Enterprise customers with a paid add-on can throttle requests using the _Bl
 Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details.
 {{</Aside>}}
 
-  The action behavior can be one of the following:
+The action behavior can be one of the following:
 
-  - **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration.<br>To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [For duration](#for-duration) for more information.
+- **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration.<br>To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [For duration](#for-duration) for more information.
 
-      ![Chart displaying the action of a rate limiting rule configured to apply its action during the entire mitigation period](/images/waf/rate-limiting-rules/behavior-apply-action-for-duration.png)
+    ![Chart displaying the action of a rate limiting rule configured to apply its action during the entire mitigation period](/images/waf/rate-limiting-rules/behavior-apply-action-for-duration.png)
 
-  - **Throttle requests over the maximum configured rate**: Applies the selected action to incoming requests over the configured limit, allowing other requests.<br>To configure this behavior via API, set `mitigation_timeout` to `0` (zero).
+- **Throttle requests over the maximum configured rate**: Applies the selected action to incoming requests over the configured limit, allowing other requests.<br>To configure this behavior via API, set `mitigation_timeout` to `0` (zero).
 
-      ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
+    ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
 
 ### With response type
 
@@ -319,6 +318,10 @@ Cloudflare will consider entire `/64` prefixes as the same IPv6 source address f
 
 Use **IP with NAT support** to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/) for details.
 
+### Incompatible characteristics
+
+You cannot use both **IP with NAT support** and **IP** as characteristics of the same rate limiting rule.
+
 ### Do not use `cf.colo.id` as a field in expressions
 
 You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
@@ -326,10 +329,6 @@ You should not use the `cf.colo.id` characteristic (data center ID) as a field i
 ### Use a lowercased header name (for API users)
 
 If you use the **Header value of** characteristic in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names on the Cloudflare global network.
-
-### Incompatible characteristics
-
-You cannot use both **IP with NAT support** and **IP** as characteristics of the same rate limiting rule.
 
 ### Missing field versus empty value
 
@@ -347,8 +346,8 @@ Where `<header_name>` is the same header name used as a rate limiting characteri
 
 If you use **Cookie value of** as a rate limiting rule characteristic, follow these recommendations:
 
-  - Create a [custom rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
-  - Validate the cookie value at the origin before performing any demanding server operations.
+- Create a [custom rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
+- Validate the cookie value at the origin before performing any demanding server operations.
 
 ---
 
@@ -356,4 +355,4 @@ If you use **Cookie value of** as a rate limiting rule characteristic, follow th
 
 * If the rule expression includes [IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.
