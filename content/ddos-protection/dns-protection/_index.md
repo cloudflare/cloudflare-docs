@@ -25,7 +25,7 @@ Protection for simpler DNS-based DDoS attacks is also included as part of the [N
 
 ## Configure
 
-Currently, you must configure the Advanced DNS Protection via API. For more information, refer to [Configure via API](/ddos-protection/dns-protection/configure-api/).
+Advanced DNS Protection is enabled by default with a global scope in monitoring mode. To configure the system protection you create rules. Currently, you must configure the Cloudflare API to manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
 
 For more information on the configuration settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
 
