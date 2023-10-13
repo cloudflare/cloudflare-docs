@@ -3,8 +3,6 @@ title: Advanced DNS Protection (beta)
 pcx_content_type: concept
 weight: 7
 layout: single
-meta:
-  title: Cloudflare Advanced DNS Protection (beta)
 ---
 
 {{<heading-pill style="beta">}}Cloudflare Advanced DNS Protection{{</heading-pill>}}
@@ -19,13 +17,21 @@ The [Network Analytics v2 dashboard](/analytics/network-analytics/) will display
 
 ## Availability
 
-Advanced DNS Protection is available to all [Magic Transit](/magic-transit/) customers, and is enabled in monitoring mode by default.
+Advanced DNS Protection is available in beta to all [Magic Transit](/magic-transit/) customers.
 
 Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
-## Configure
+## Initial setup
 
-Advanced DNS Protection is enabled by default with a global scope in monitoring mode. To configure the system protection you create rules. Currently, you must configure the Cloudflare API to manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
+Request your account team to enable Advanced DNS Protection and make the initial configuration. The initial thresholds are based on your network’s individual behavior.
+
+By default, Advanced DNS Protection will be enabled in monitoring mode.
+
+## Configuration
+
+After getting Advanced DNS Protection enabled, you can create rules to configure the protection system.
+
+Currently, you must configure the Cloudflare API to create and manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
 
 For more information on the configuration settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
 
