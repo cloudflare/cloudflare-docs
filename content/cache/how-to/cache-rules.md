@@ -47,69 +47,53 @@ Be aware that when you select **Eligible for cache** in Cache Rules, this is equ
 
 7. If you select **Eligible for cache**, you can customize the following options:
 
-<details>
-<summary>Edge TTL</summary>
-<div>
+{{<details header="Edge TTL">}}
 
 Select **Respect origin** if matching requests will respect cache headers received from the origin server, or **Override origin**. If you wish to override the Edge TTL value, you need to select how long you want to cache resources in the Cloudflare global network.
+
 - In **Status code TTL** you can define the cache time-to-live (TTL) duration for one or more response status codes received from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than_ or _Less than_ status code or to a _Range_ of status codes. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Browser TTL</summary>
-<div>
+{{<details header="Browser TTL">}}
 
 Select if you want to **Respect origin** or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid. For more information, refer to [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl).
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Cache Key</summary>
-<div>
+{{<details header="Cache Key">}}
 
 Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
- - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Enable query string sort](/cache/how-to/cache-keys/#query-string).
+
+- You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Enable query string sort](/cache/how-to/cache-keys/#query-string).
 
 Enterprise customers have these additional options for custom cache keys:
 
- - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
- - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
- - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.
- - In the **Host** section, you can select **Use original host** and **Resolved host**.
- - In the **User** section, you can select **Device type**, **Country**, and **Language**.
+- In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
+- In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
+- In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.
+- In the **Host** section, you can select **Use original host** and **Resolved host**.
+- In the **User** section, you can select **Device type**, **Country**, and **Language**.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Serve stale content</summary>
-<div>
+{{<details header="Serve stale content">}}
 
 Enable or disable serving stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Respect Strong ETags</summary>
-<div>
+{{<details header="Respect Strong ETags">}}
 
 Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. When enabled, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-by-byte identical. If disabled, Cloudflare converts ETag headers into weak ETag headers.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Origin error page pass-thru</summary>
-<div>
+{{<details header="Origin error page pass-thru">}}
 
 Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin.
 
-</div>
-</details>
+{{</details>}}
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
@@ -160,9 +144,7 @@ The API token used in API requests to manage Cache Rules must have the following
 
 These examples are setting all the Cache Rules of a zone to a single rule, since using these examples directly will cause any existing rules to be deleted.
 
-<details>
-<summary>Edge cache TTL</summary>
-<div>
+{{<details header="Edge cache TTL">}}
 
 In this setting, you can choose either to `respect_origin` (first example) or `override_origin` (second example). In this first example, `edge_ttl` is set to `respect_origin` and cache TTL is set by status code `404` with a duration of 30 seconds.
 
@@ -196,7 +178,6 @@ curl -X PUT \
 
 In this second example, `status_code_ttl` is set to `override_origin` and cache TTL is set by status code `404` with a duration of 30 seconds. Instead of a single status code, you can also define a range.
 
-
 ```json
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_cache_settings/entrypoint" \
@@ -226,12 +207,9 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Browser Cache TTL</summary>
-<div>
+{{<details header="Browser Cache TTL">}}
 
 For `set_cache_settings`, you can choose either to `respect_origin` (first example) or `override_origin` (second example).
 
@@ -282,12 +260,9 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Cache Key</summary>
-<div>
+{{<details header="Cache Key">}}
 
 In this example, `cache_deception_armor` and `ignore_query_strings_order` parameters are set to `true`. `query_string` is set to query all query string parameters. The `header` parameter is set to include `header1`, check presence of `header_1` and the `origin header` is also included. The `cookie` parameter is set to include `cookie1`, check the presence of `cookie_1` and the `origin header` is also included. The parameter `host : resolved` is set to `false`, `geo`, and `lang` are also set to `false`.
 
@@ -343,12 +318,9 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Serve stale content</summary>
-<div>
+{{<details header="Serve stale content">}}
 
 In this example, `serve_stale` is set to not serve stale content while updating from the origin server.
 
@@ -374,12 +346,9 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Respect strong ETags</summary>
-<div>
+{{<details header="Respect strong ETags">}}
 
 In this example, `respect_strong_etags` is set to `true` to ensure that resources in the Cloudflare cache and on the origin server are byte-by-byte identical.
 
@@ -403,12 +372,9 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Origin error page pass-thru</summary>
-<div>
+{{<details header="Origin error page pass-thru">}}
 
 In this example, `origin_error_page_passthru` is set to `true` to trigger error pages issued by the origin.
 
@@ -432,16 +398,13 @@ curl -X PUT \
 '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Terraform example
 
 The following example defines a single cache rule for a zone using Terraform. The rule configures several cache settings and sets a custom cache key for incoming requests addressed at `example.net`.
 
-<details>
-<summary>Terraform <code>cloudflare_ruleset</code> resource</summary>
-<div>
+{{<details header="Terraform `cloudflare_ruleset` resource">}}
 
 ```tf
 # Cache rule configuring cache settings and defining custom cache keys
@@ -511,7 +474,6 @@ resource "cloudflare_ruleset" "cache_rules_example" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For additional guidance on using Terraform with Cloudflare, refer to [Terraform](/terraform/).

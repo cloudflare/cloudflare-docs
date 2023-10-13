@@ -69,11 +69,10 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 }
 ```
 
-<details>
-<summary>Account-level example configuration</summary>
-<div>
+{{<details header="Account-level example configuration">}}
 
 {{<Aside type="note" header="Before you start">}}
+
 * Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 * Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
@@ -113,8 +112,7 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Configure skip rules
 

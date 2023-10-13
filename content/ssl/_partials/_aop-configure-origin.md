@@ -9,9 +9,7 @@ With the certificate installed, set up your origin web server to accept client c
 
 Check the examples below for Apache and NGINX or refer to your origin web server documentation - e.g. [HAProxy](https://www.haproxy.com/documentation/hapee/latest/security/authentication/client-certificate-authentication/), [Traefik](https://doc.traefik.io/traefik/https/tls/#client-authentication-mtls), [Caddy](https://caddyserver.com/docs/json/apps/http/servers/tls_connection_policies/client_authentication/mode/).
 
-<details>
-<summary>Apache example</summary>
-<div>
+{{<details header="Apache example">}}
 
 For this example, you would have saved the certificate `/path/to/origin-pull-ca.pem`.
 
@@ -20,12 +18,9 @@ SSLVerifyDepth 1
 SSLCACertificateFile /path/to/origin-pull-ca.pem
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>NGINX example</summary>
-<div>
+{{<details header="NGINX example">}}
 
 For this example, you would have saved your certificate to `/etc/nginx/certs/cloudflare.crt`.
 
@@ -33,8 +28,6 @@ For this example, you would have saved your certificate to `/etc/nginx/certs/clo
 ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
 ```
 
-</div>
-
-</details>
+{{</details>}}
 
 At this point, you may also want to enable logging on your origin so that you can verify the configuration is working.
