@@ -43,11 +43,11 @@ The API values are the following: `low`, `medium`, and `high`.
 
 ## Sensitivity level
 
-The sensitivity level of the Advanced DNS Protection system for the DNS queries considered non-legitimate.
+The profile sensitivity level of the Advanced DNS Protection system for the DNS queries considered non-legitimate.
 
 * A `low` sensitivity level will only subject packets to the token bucket algorithm that are most probably part of an attack.
 * A `medium` sensitivity level will subject packets to the token bucket algorithm for which the system is less confident that they are part of an attack. This means that some legitimate DNS queries may be dropped.
 
-The default sensitivity level is `low`.
+The default profile sensitivity level is `low`.
 
 The API values are the following: `low`, `medium`, `high`, and `very_high`.
