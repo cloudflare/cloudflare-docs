@@ -7,7 +7,7 @@ title: Momento
 
 [Momento](https://gomomento.com/) is a truly serverless caching service. It automatically optimizes, scales, and manages your cache for you.
 
-This integration allows you to connect to Momento from your Worker by getting Momento cache configuration and adding it as [secrets](https://1d791deb.cloudflare-docs-7ou.pages.dev/workers/configuration/environment-variables/) to your Worker.
+This integration allows you to connect to Momento from your Worker by getting Momento cache configuration and adding it as [secrets](/workers/configuration/environment-variables/) to your Worker.
 
 ## Momento Cache
 
