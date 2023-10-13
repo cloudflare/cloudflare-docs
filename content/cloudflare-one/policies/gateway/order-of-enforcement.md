@@ -43,7 +43,7 @@ flowchart TB
     %% HTTP policies
     subgraph HTTP
     http1{{"Do Not Inspect policies"}}
-    http1--Inspect-->http2["Isolate policies"]
+    http1-."Inspect </br>(with Browser Isolation add-on only)".->http2["Isolate policies"]
     http2-->http3["Allow, Block, Do Not Scan policies"]
     end
 
