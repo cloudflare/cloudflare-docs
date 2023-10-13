@@ -91,8 +91,8 @@ Use one or more of the following characteristics:
       </td>
       <td>
         <ul>
-          <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
           <li><a href="#recommended-configurations-when-using-cookie-value-of">Recommended configurations</a></li>
+          <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
         </ul>
       </td>
     </tr>
