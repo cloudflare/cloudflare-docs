@@ -30,5 +30,33 @@ jobs:
             xargs -I {} sh -c 'echo "\"{}\""' | tr '\n' ' ')
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
-      - name: Output Changed Files
-        run: echo ${{ env.CHANGED_FILES }}
+      - name: Comment or Update Comment on PR if there are changed files
+        if: env.CHANGED_FILES != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          comment_body="This PR changes current filenames or deletes current files. Make sure you have redirects set up to cover the following paths:\n"
+          for path in $CHANGED_FILES; do
+            comment_body="${comment_body}- [ ] ${path}\n"
+          done
+
+          existing_comment_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
+            jq '.[] | select(.user.id == 41898282) | select(.body | contains("This PR changes current filenames or deletes current files")) | .id')
+
+          comment_payload=$(echo '{}' | jq --arg body "$comment_body" '.body = $body')
+
+          if [ -z "$existing_comment_id" ]; then
+            # Post a new comment
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -X POST -d "$comment_payload" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+          else
+            # Update the existing comment
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -X PATCH -d "$comment_payload" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/comments/$existing_comment_id"
+          fi
