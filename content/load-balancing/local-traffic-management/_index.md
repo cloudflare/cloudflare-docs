@@ -13,9 +13,21 @@ In order to support not only public IPs but also virtual IPs and private IPs as 
 
 ---
 
+## On-ramps
+
+LTM on-ramps refer to the path between the end-user request and the Cloudflare network.
+
+While WARP allows you to control exactly what clients will be able to reach a load balancer pointing to a private application, Spectrum extends the LTM load balancing capabilities to applciations running TCP or UDP protocols - such as gaming, video streaming or video conferences, for example.
+
+### WARP
+
+### Spectrum
+
+---
+
 ## Off-ramps
 
-Off-ramps create a direct and secure way to connect into your networks that are not publicly available.
+Off-ramps, on the other hand, create a direct and secure way for Cloudflare to connect into your networks that are not publicly available.
 
 Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you are able to better leverage existing health monitoring.
 
@@ -25,7 +37,7 @@ Cloudflare Load Balancing currently supports using Cloudflare Tunnel as off-ramp
 
 Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/).
 
-Once the origin and [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
+Once the origin and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
 Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
 
