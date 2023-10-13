@@ -84,7 +84,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       $ cd /var/lib/cloudflare-warp
       $ sudo vim mdm.xml
       ```
-    2. Add the following text to the file. Make sure to fill in your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}, the Client ID and Client Secret of your [service token](#1-create-a-service-token), and the WARP connector token value (shown in the dashboard).
+    2. Add the following text to the file. Make sure to fill in your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}, the Client ID and Client Secret of your [service token](#1-create-a-service-token), and the WARP connector token value (shown in the dashboard). As soon as you save this file the WARP client will attempt to register with the provided credentials.
 
       ```txt
       ---
