@@ -328,7 +328,7 @@ You should not use the `cf.colo.id` characteristic (data center ID) as a field i
 
 ### Use a lowercased header name (for API users)
 
-If you use the **Header value of** characteristic in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names on the Cloudflare global network.
+If you use the **Header value of** characteristic in an API request (with `http.request.headers["<header_name>"]`), you must enter the header name in lower case, since Cloudflare normalizes header names on the Cloudflare global network.
 
 ### Missing field versus empty value
 
