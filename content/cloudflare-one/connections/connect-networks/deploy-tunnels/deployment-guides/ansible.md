@@ -215,7 +215,7 @@ The following configuration defines the specifications for the GCP virtual machi
 
 ### Export variables to Ansible
 
-The following Terraform resource exports the tunnel ID and other variables to `tf_ansible_vars_file.yml`. Ansible will use this data to configure and run `cloudlared` on the server.
+The following Terraform resource exports the tunnel ID and other variables to `tf_ansible_vars_file.yml`. Ansible will use this data to configure and run `cloudflared` on the server.
 
 1. In your configuration directory, create a new `tf` file:
 
