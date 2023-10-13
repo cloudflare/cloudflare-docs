@@ -99,7 +99,6 @@ run('@cf/meta/llama-2-7b-chat-int8', 'Tell me a story').then((response) => {
 ```
 
 {{</tab>}}
-
 {{<tab label="Python">}}
 
 ```py
