@@ -108,7 +108,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
 
       If the registration did not go through, [restart the WARP service](#restart-warp).
 {{<Aside type="warning" header="Warning">}}
-If you are managing the deployment remotely over SSH, your connection may drop when you register the WARP connector. Because the connector immediately starts forwarding traffic to Cloudflare, your SSH client will see a Cloudflare IP instead of the server's public IP and terminate the connection. You can work around this issue by temporarily adding your home IP to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+If you are managing the deployment remotely over SSH, your connection may drop when you register the WARP connector. Because the connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will be routed to Cloudflare instead of via the server's public IP and will timeout your existing connection. You can work around this issue by temporarily adding your home IP to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 {{</Aside>}}
 9. Select **Next**.
