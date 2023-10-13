@@ -14,8 +14,40 @@ Llama 2 is a family of generative text models and can be adapted for a variety o
 * [Terms + Information](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
 
 ## Examples - chat style with system prompt (preferred)
-{{<tabs labels="worker | node | python | curl">}}
-{{<tab label="worker" default="true">}}
+{{<tabs labels="Streaming Worker | Worker | Node | Python | curl">}}
+{{<tab label="Streaming Worker" default="true">}}
+
+```ts
+import { Ai } from '@cloudflare/ai'
+
+export interface Env {
+  AI: any;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const ai = new Ai(env.AI);
+
+    const messages = [
+      { role: 'system', content: 'You are a friendly assistant' },
+      { role: 'user', content: 'What is the origin of the phrase Hello, World' }
+    ];
+
+    const stream = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+      messages,
+      stream: true
+    });
+
+    return new Response(
+      stream, 
+      { headers: { "content-type": "text/event-stream" } }
+    );
+  },
+};
+```
+
+{{</tab>}}
+{{<tab label="worker"}}
 
 ```ts
 import { Ai } from '@cloudflare/ai'
@@ -40,7 +72,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="node">}}
+{{<tab label="Node">}}
 
 ```js
 async function run(model, prompt) {
@@ -68,7 +100,7 @@ run('@cf/meta/llama-2-7b-chat-int8', 'Tell me a story').then((response) => {
 
 {{</tab>}}
 
-{{<tab label="python">}}
+{{<tab label="Python">}}
 
 ```py
 import requests
