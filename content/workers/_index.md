@@ -20,7 +20,7 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in over 300 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
 
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
  
 ---
 
@@ -34,7 +34,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
@@ -50,19 +50,31 @@ The Playground is a sandbox which gives you an instant way to preview and test a
  
 {{<related header="R2" href="/r2/" product="r2">}}
 
-Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 {{</related>}}
 
 {{<related header="D1" href="/d1/" product="d1">}}
 
-D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+Create new serverless SQL databases to query from your Workers and Pages projects.
 
 {{</related>}}
 
 {{<related header="Queues" href="/queues/" product="queues">}}
 
-Cloudflare Queues integrates with Cloudflare Workers to allow developers to send and receive messages with guaranteed delivery, offering at-least once delivery, message batching, and no charge for egress bandwidth.
+Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
+
+{{</related>}}
+
+{{<related header="Durable Objects" href="/durable-objects/" product="durable-objects">}}
+
+A globally distributed coordination API with strongly consistent storage.
+
+{{</related>}}
+
+{{<related header="KV" href="/kv/" product="kv">}}
+
+Create a global, low-latency, key-value data storage.
 
 {{</related>}}
 

@@ -1,10 +1,10 @@
 ---
 pcx_content_type: navigation
-title: Edit images
+title: Transform images
 weight: 5
 ---
 
-# Edit images
+# Transform images
 
 Refer to the following edit features for Cloudflare Images.
 

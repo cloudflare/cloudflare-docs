@@ -105,6 +105,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 2           | Adult Themes           | 133            | Pornography                                |
 | 3           | Business & Economy     | 75             | Business                                   |
 | 3           | Business & Economy     | 89             | Economy & Finance                          |
+| 3           | Business & Economy     | 183            | Cryptocurrency                             | 
 | 6           | Education              | 90             | Education                                  |
 | 6           | Education              | 91             | Educational Institutions                   |
 | 6           | Education              | 144            | Science                                    |
@@ -167,7 +168,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 21          | Security threats       | 153            | Spyware                                    |
 | 21          | Security threats       | 175            | DNS Tunneling                              |
 | 21          | Security threats       | 176            | Domain Generation Algorithm                |
-| 21          | Security threats       | 178            | Typosquatting & Impersonation              |
+| 21          | Security threats       | 178            | Brand Embedding                            |
 | 22          | Shopping & Auctions    | 73             | Auctions & Marketplaces                    |
 | 22          | Shopping & Auctions    | 82             | Coupons                                    |
 | 22          | Shopping & Auctions    | 88             | Ecommerce                                  |

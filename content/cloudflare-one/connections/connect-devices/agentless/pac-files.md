@@ -12,7 +12,11 @@ This feature is only available to Enterprise customers.
 
 {{</Aside>}}
 
-You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file. The PAC file contains a JavaScript function which instructs a browser to forward traffic to a proxy server instead of directly to the destination server. When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway.
+You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
+
+{{<glossary-definition term_id="PAC file" prepend="A PAC file is ">}}
+
+When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway.
 
 ## Prerequisites
 

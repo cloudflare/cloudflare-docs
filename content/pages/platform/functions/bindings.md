@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
@@ -16,7 +16,7 @@ Local development uses local storage. It cannot access data stored on Cloudflare
 
 ## KV namespaces
 
-[Workers KV](/workers/wrangler/workers-kv/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
+[Workers KV](/kv/learning/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -98,6 +98,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
+### Interact with your Durable Object namespaces locally
+
+While developing locally, to interact with a Durable Object namespace, run the Worker exporting the Durable object via `wrangler dev` and in parallel, run `wrangler pages dev` with `--do <BINDING_NAME>=<CLASS_NAME>@<SCRIPT_NAME>` where `CLASS_NAME` indicates the Durable Object class name and `SCRIPT_NAME` the name of your Worker. For example, if your Worker is called `do-worker` and it declares a Durable Object class called `DurableObjectExample`, access this Durable Object by running your `do-worker` via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --do MY_DO=DurableObjectExample@do-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_DO`).
 
 ## R2 buckets
 
@@ -192,19 +195,77 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ### Interact with your D1 databases locally
 
 While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command.
-  
+
 {{<Aside type="note">}}
-By default, data in local development is not persisted. This means if you create a schema and/or insert data into a D1 table, the next time you start local development, it will no longer exist.
-  
-You can enable persistence with the `--persist` flag.
+By default, `wrangler dev` automatically persists data.
 {{</Aside>}}
-  
+
 Specifically:
-  
+
 * If your database is bound to `NORTHWIND_DB`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
 Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API methods available on your D1 binding.
+
+## Workers AI
+[Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
+
+{{<Aside type="warning">}}
+While pages currently supports Wokers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
+{{</Aside>}}
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Pages project > **Settings** > **Functions** > **Workers AI bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+7. Redeploy your project for the binding to take effect.
+
+Install the Workers AI client library
+
+
+Below is an example of how to use Workers AI in your Function. Your Workers AI binding is `AI`:
+
+```sh
+$ npm install @cloudflare/ai
+```
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+import { Ai } from '@cloudflare/ai'
+
+export async function onRequest(context) {
+  const ai = new Ai(context.env.AI);
+
+  const input = { prompt: "What is the origin of the phrase Hello, World" }
+
+  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input);
+
+  return Response.json(answer);
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+import { Ai } from '@cloudflare/ai'
+
+interface Env {
+  AI: any;
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  const ai = new Ai(context.env.AI);
+
+  const input = { prompt: "What is the origin of the phrase Hello, World" }
+
+  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input)
+
+  return Response.json(answer);
+}
+```
+{{</tab>}}
+{{</tabs>}}
 
 ## Service bindings
 

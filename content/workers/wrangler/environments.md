@@ -18,7 +18,7 @@ Review the following environments flow:
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
 
-Environments are used with the `--env` or `-e` flag on `wrangler dev`, `wrangler deploy`, and `wrangler secret`.
+Environments are used with the `--env` or `-e` flag on `wrangler dev`, `npx wrangler deploy`, and `wrangler secret`.
 
 ## Configuration
 
@@ -78,7 +78,7 @@ kv_namespaces = [
 ]
 ```
 
-You may assign environment-specific [secrets](/workers/configuration/environment-variables/#add-secrets-to-your-project) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3). 
+You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3).
 
 ---
 

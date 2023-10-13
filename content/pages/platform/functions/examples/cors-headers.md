@@ -11,9 +11,9 @@ layout: example
 
 This example is a snippet from our Cloudflare Pages Template repo. 
 
-```js
+```ts
 ---
-filename: /functions/_middleware.js
+filename: /functions/_middleware.ts
 ---
 
 // Respond to OPTIONS method

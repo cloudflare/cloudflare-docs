@@ -14,8 +14,6 @@ Use import and export to have more control over your DNS records and make proces
 
 Create a [BIND zone file](https://en.wikipedia.org/wiki/Zone_file) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
 
-Make sure to remove all comments from your import file that start with a semicolon (;).
-
 If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `NS`, `PTR`, or `SRV` records — make sure that the **content** of those records contains fully qualified domain names (which end in a trailing period like `example.com.`). For more details, refer to [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035#section-5.1) or this [post on Stack Exchange](https://superuser.com/questions/348282/fqdn-format-in-bind-zone#348284).
 
 ### Import zone file to Cloudflare
@@ -26,7 +24,7 @@ To import a zone file using the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS** > **Records**.
-3.  Click **Import and Export**.
+3.  Select **Import and Export**.
 4.  For **Import DNS records**, select your [formatted file](#format-your-zone-file).
 5.  If you do not want [applicable records](/dns/manage-dns-records/reference/proxied-dns-records/) proxied, unselect **Proxy imported DNS records**.
 
@@ -46,8 +44,8 @@ To export records using the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS** > **Records**.
-3.  Click **Import and Export**.
-4.  Click **Export**.
+3.  Select **Import and Export**.
+4.  Select **Export**.
 
 ### Using the API
 
@@ -79,7 +77,7 @@ c.example.com.  60  IN  A   1.1.1.1 ; just a comment without tags
 d.example.com.  60  IN  A   1.1.1.1 ; this comment contains cf_tags= as text cf_tags=
 
 ; Comments and tags
-e.example.com.  60  IN  A   1.1.1.1 ; simple example cf_tags=important,ticket:RM-12308
+e.example.com.  60  IN  A   1.1.1.1 ; simple example cf_tags=important,ticket:THIS-12345
 f.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,tag2:value2,tag-without-value,another-tag-without-value,tag-with-quoted-value:"because of the comma, quotes are needed"
 
 ; Neither attribute

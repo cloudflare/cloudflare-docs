@@ -35,6 +35,17 @@ header: DASH
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 ```
 
+{{<heading-pill heading="h4" style="beta">}}LL-HLS playback{{</heading-pill>}}
+
+If a Live Inputs is enabled for the Low-Latency HLS beta, add the query string `?protocol=llhls` to the HLS manifest URL to test the low latency manifest in a custom player. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.
+
+```text
+---
+header: HLS
+---
+https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8?protocol=llhls
+```
+
 ### Dashboard
 
 1. Log into the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
@@ -86,7 +97,3 @@ We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cr
 
 * [RTMPS Playback with ffplay](/stream/examples/rtmps_playback/)
 * [SRT playback with ffplay](/stream/examples/srt_playback/)
-
-## Limitations
-
-[Client-side Analytics](/stream/getting-analytics/fetching-bulk-analytics/#client-side-analytics) are not available if you use your own player.

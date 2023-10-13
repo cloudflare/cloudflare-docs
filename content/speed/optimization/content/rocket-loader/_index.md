@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Rocket Loader
-weight: 4
+weight: 7
 ---
 
 # Rocket Loader
@@ -32,3 +32,4 @@ Some of Cloudflare's optional features, including Rocket Loader and Email Obfusc
 If you observe JavaScript or jQuery issues for your website, [disable Rocket Loader](/speed/optimization/content/rocket-loader/enable/) and retest your website.
 
 {{<render file="_rocket-loader-csp.md">}}
+<br/>

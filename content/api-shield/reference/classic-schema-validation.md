@@ -13,10 +13,10 @@ Use the **API Shield** interface to configure [API Schema Validation](/api-shiel
 
 Before you can configure Schema Validation for an API, you must obtain an API Schema file matching our [specifications](/api-shield/security/schema-validation/#specifications).
 
+If you are in the Schema Validation 2.0 beta, you can make changes to your settings but you cannot add any new Classic Schema Validation schemas.
+
 {{<Aside type="note">}}
-
 This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
-
 {{</Aside>}}
 
 ## Create an API Shield with Schema Validation
@@ -30,17 +30,15 @@ To configure Schema Validation in the Cloudflare dashboard:
 
     For example, if your API is available at `http://api.example.com/v1`, include a check for the _Hostname_ field — equal to `api.example.com` — and a check for the _URI Path_ field using a regular expression — matching the regex `^/v1`.
 
-    {{<Aside type="warning" note="Important">}}
-
+    {{<Aside type="warning" header="Important">}}
 To validate the hostname, you must include the _Hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
-
      {{</Aside>}}
 
 5.  Select **Next**.
 6.  Upload your schema file.
 7.  Select **Save** to validate the content of the schema file and deploy the Schema Validation rule.
 
-    If you get a validation error, ensure that you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a [unique Operation ID](/api-shield/security/schema-validation/#operation-ids).
+    If you get a validation error, ensure that you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a unique operation ID.
 
 After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 

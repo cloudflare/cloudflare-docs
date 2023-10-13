@@ -27,7 +27,7 @@ You can use R2 for multiple scenarios, including but not limited to:
 
 ## Features
 
-{{<feature header="Location Hints" href="/r2/buckets/data-location/#location-hints">}}
+{{<feature header="Location Hints" href="/r2/reference/data-location/#location-hints">}}
 
 Location Hints are optional parameters you can provide during bucket creation to indicate the primary geographical location you expect data will be accessed from.
 
@@ -42,6 +42,12 @@ Configure CORS to interact with objects in your bucket and configure policies on
 {{<feature header="Public buckets" href="/r2/buckets/public-buckets/">}}
 
 Public buckets expose the contents of your R2 bucket directly to the Internet. 
+
+{{</feature>}}
+
+{{<feature header="Bucket scoped tokens" href="/r2/api/s3/tokens/">}}
+
+Create bucket scoped tokens for granular control over who can access your data.
 
 {{</feature>}}
 

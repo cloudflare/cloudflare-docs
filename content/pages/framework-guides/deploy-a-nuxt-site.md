@@ -11,15 +11,17 @@ In this guide, you will create a new Nuxt application and deploy it using Cloudf
 
 ## Create a new project
 
-Create a new project by running the following commands in your terminal:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Nuxt's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Nuxt project, run the following command:
 
 ```sh
-$ npx nuxi init my-nuxt-app
-$ cd my-nuxt-app
-$ npm install
+$ npm create cloudflare@latest my-nuxt-app -- --framework=nuxt
 ```
 
-Next, run the application using the command:
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI, and ask you setup questions.
+
+After you have installed your project dependencies, start your application:
 
 ```sh
 $ npm run dev
@@ -29,9 +31,11 @@ $ npm run dev
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Nuxt">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
@@ -60,7 +64,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ## Use bindings in your Nuxt application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.com/docs/guide/directory-structure/server#server-directory). The `defineEventHandler()` method is used to define your API endpoints in which you can access Cloudflare's context via the provided `context` field. The `context` field allows you to access any bindings set for your application.
 

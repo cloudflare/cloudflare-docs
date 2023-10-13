@@ -7,7 +7,7 @@ meta:
   title: Constellation
 ---
 
-{{<beta>}}Constellation{{</beta>}}
+{{<heading-pill style="beta">}}Constellation{{</heading-pill>}}
 
 {{<description>}}
 Run machine learning models with Cloudflare Workers.
@@ -19,20 +19,15 @@ Cloudflare provides a curated list of verified models, or you can train and uplo
 
 Functionality you can deploy to your application with Constellation:
 
+* Content generation, summarization, or similarity analysis
+* Question answering
+* Audio transcription
 * Image or audio classification
 * Object detection
 * Anomaly detection
-* Text translation, summarization, or similarity analysis
-* Natural language processing (NLP)
 * Sentiment analysis
-* Speech recognition (or text to speech)
-* Question answering
 
 ---
-
-{{<feature header="Make your first Constellation Worker" href="/constellation/get-started/first-constellation-worker/" cta="Make your first Constellation Worker">}}
-Use Constellation from a Cloudflare Worker.
-{{</feature>}}
 
 ## More resources
  

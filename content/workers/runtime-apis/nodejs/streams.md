@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Streams
+meta:
+  title: Streams - Node.js APIs
 ---
 
 # Streams

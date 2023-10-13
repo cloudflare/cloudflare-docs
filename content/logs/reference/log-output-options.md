@@ -10,6 +10,8 @@ Jobs in Logpush now have a new key **output_options** which replaces **logpull_o
 
 Edge Logstream jobs do not support this yet.
 
+You can modify log output options via the Cloudflare dashboard when creating or editing a Logpush job, or via the API as shown below.
+
 ## Replace logpull_options
 
 Previously, Logpush jobs could be customized by specifying the list of fields, sampling rate, and timestamp format in **logpull_options** as [URL-encoded parameters](/logs/get-started/api-configuration/#options). For example:
@@ -50,7 +52,7 @@ With **output_options** you can switch to CSV or single JSON object, further cus
 
 The **output_options** object has the following settings:
 
-- **field_names**: array of strings.
+- **field_names**: array of strings. For the moment, there is no option to add all fields at once, you need to specify the fields names.
 - **output_type**: string to specify output type, such as `ndjson` or `csv` (default `ndjson`). This sets default values for the rest of the settings depending on the chosen output type. Some formatting rules (like string quoting) are different between output types.
 - **batch_prefix**: string to be prepended before each batch.
 - **batch_suffix**: string to be appended after each batch.

@@ -14,21 +14,71 @@ The values that populate the lookup tables of the Rules language are drawn from 
 - **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
 - **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
 
+Besides these values, expressions may also contain literal values. These are static, known values that you incorporate into expressions to compare them with values from request/response fields with or without any transformations.
+
 When working with values in rule expressions, keep in mind the information in the following sections.
 
-## Escape characters in values
+## String values
 
-You must manually escape the backslash (`\`) and double quote (`"`) characters with a backslash when using them as part of a literal value in an expression.
+Strings are sequences of bytes enclosed by specific delimiters.
 
-Note in this example that the first and last `"` characters in `"token-type=\"JWT\""` are not part of the literal value, so they do not need escaping:
+Cloudflare rules support two formats for specifying literal strings: [quoted literal strings](#quoted-string-syntax) and [raw strings](#raw-string-syntax). These formats have different delimiters and escaping mechanisms.
 
-```sql
-(http.request.uri.query contains "token-type=\"JWT\"")
+While you can use either of the two string formats to specify regular expressions in an expression, Cloudflare recommends that you use the raw string syntax, since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
+
+### Quoted string syntax
+
+When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively. If you use a string literal as a function argument you must use double escaping for the `\` (backslash) character.
+
+The quoted string syntax has additional escaping requirements. When used to specify a regular expression on the right-hand side of the regex operator (`matches` or `~`), the string is parsed using regex escaping rules. On the other hand, when used on the right hand-side of expressions with other operators, or in function parameters, the string is parsed using basic escaping rules.
+
+```txt
+---
+header: Examples
+---
+# Test if URI path contains 'a"b'
+http.request.uri.path matches "a\"b"
+
+# Test if URI path contains 'a"#b'
+http.request.uri.path matches "a\"#b"
+
+# Replace '\' (backslash) with 'a'
+# String literals in function arguments require double escaping in quoted strings
+regex_replace(http.host, "\\\\", "a")
 ```
 
-## Case sensitivity and regular expressions in values
+### Raw string syntax
 
-Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
+To specify a string using the raw string syntax you use special delimiters:
+* The initial delimiter is composed of an `r` character, optionally followed by one or more `#` characters (up to 255), followed by a `"` (double quote) character.
+* The ending delimiter is a `"` (double quote) character followed by the same number of `#` characters as in the initial delimiter (from 0 to 255).
+
+In a raw string there are no special characters, so all characters up to the ending delimiter are interpreted as is (there are no escape sequences).
+
+Unlike the quoted string syntax, the raw string syntax is always the same, regardless of the context where it is being used (for example, as a regular expression with a regex operator or as a parameter of a function call).
+
+```txt
+---
+header: Examples
+---
+# Test if URI path contains 'a"b'
+http.request.uri.path matches r#"a"b"#
+
+# Test if URI path contains 'a"#b'
+http.request.uri.path matches r##"a"#b"##
+
+# Replace '\' (backslash) with 'a'
+# You must still escape the '\' character in the following raw string because it has a special meaning in regular expressions
+regex_replace(http.host, r"\\", "a")
+
+# Test if URI path ends with '/api/login.aspx'
+# You must still escape the '.' character in the following raw string because it has a special meaning in regular expressions ("any character")
+http.request.uri.path matches r"/api/login\.aspx$"
+```
+
+### Case sensitivity and regular expressions in values
+
+Since the evaluation of string literal values in expressions is case-sensitive, consider writing more than one simple expression to capture variants.
 
 Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
 
@@ -92,18 +142,18 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 ## Lists
 
-Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/fundamentals/global-configurations/lists/#list-types).
+Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
 
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
-The following example expression filters requests from IP addresses that are in an [IP List](/fundamentals/global-configurations/lists/ip-lists/) named `office_network`:
+The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
-List names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Lists](/fundamentals/global-configurations/lists/).
+List names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Lists](/waf/tools/lists/).
 
 ### Inline lists
 

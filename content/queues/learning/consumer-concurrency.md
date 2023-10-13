@@ -26,6 +26,12 @@ The number of consumers concurrently invoked for a queue will autoscale based on
 
 Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
 
+{{<Aside type="warning" header="Consumer concurrency and retried messages">}}
+
+Retrying messages with `retry()` or calling `retryAll()` on a batch will count as a failed invocation and cause the consumer to cease any increase in autoscaling. Continued `retry()` / `retryAll()` invocations will cause the consumers autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+
+{{</Aside>}}
+
 ### Example
 
 If you are writing 100 messages/second to a queue with a single concurrent consumer that takes 5 seconds to process a batch of 100 messages, the number of messages in-flight will continue to grow at a rate faster than your consumer can keep up.
@@ -73,7 +79,7 @@ filename: wrangler.toml
   max_concurrency = 1
 ```
 
-To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `wrangler deploy` to push your configuration update. 
+To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update. 
 
 <!-- Not yet available but will be very soon 
 ### wrangler CLI
@@ -97,8 +103,8 @@ When multiple consumer Workers are invoked, each Worker invocation incurs [durat
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
 
-Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#usage-models) meaning a developer is billed for the request and the duration of the request. 
+Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#unbound-usage-model) meaning a developer is billed for the request and the duration of the request. 
 
 ### Example
 
-A consumer Worker that takes 2 seconds ([256 GB-seconds](/workers/platform/pricing/#workers-unbound-billing-examples)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).
+A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/workers/platform/pricing/#example-pricing-1)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

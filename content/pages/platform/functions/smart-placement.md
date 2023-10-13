@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Smart Placement (beta)
 ---
 
-{{<beta>}}Smart Placement{{</beta>}}
+{{<heading-pill style="beta">}}Smart Placement{{</heading-pill>}}
 
 By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Pages Function, it may be more performant to run that Pages Function closer to your back-end infrastructure rather than the end user. Smart Placement (beta) automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
 

@@ -8,6 +8,8 @@ weight: 5
 
 Simulcasting lets you forward your live stream to third-party platforms such as Twitch, YouTube, Facebook, Twitter, and more. You can simulcast to up to 50 concurrent destinations from each live input. To begin simulcasting, select an input and add one or more Outputs.
 
+{{<render file="_chromecast_limitations.md">}}
+
 ## Add an Output using the API
 
 Add an Output to start retransmitting live video. You can add or remove Outputs at any time during a broadcast to start and stop retransmitting.

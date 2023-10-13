@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Get Origin CA keys
-weight: 12
+weight: 5
 ---
 
 

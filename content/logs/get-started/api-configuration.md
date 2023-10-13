@@ -10,7 +10,7 @@ weight: 42
 
 The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/<account_identifier>` and Zone-scoped use `/zone/<zone_identifier>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `<zone_identifier>` argument is the zone id (hexadecimal string). The `<account_identifier>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+The `<zone_identifier>` argument is the zone id (hexadecimal string). The `<account_identifier>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
 The `<job_identifier>` argument is the numeric job id. The `<dataset>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
 {{<table-wrap>}}

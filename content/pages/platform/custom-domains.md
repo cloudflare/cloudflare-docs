@@ -27,7 +27,7 @@ To add a custom domain:
 
 ### Add a custom apex domain
 
-If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers). 
+If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers).
 
 #### Configure nameservers
 
@@ -43,7 +43,7 @@ If the zone is on the Enterprise plan, make sure that the you [release the zone 
 
 {{</Aside>}}
 
-#### Add a custom CNAME record 
+#### Add a custom CNAME record
 
 If you do not want to point your nameservers to Cloudflare, you must create a custom CNAME record to use a subdomain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain, for example, `shop.example.com`. This record should point to your custom Pages subdomain, for example, `<YOUR_SITE>.pages.dev`.
 
@@ -78,6 +78,14 @@ Next, in Account Home, go to **Workers & Pages**:
 3.  Select the **three dot icon** next to your custom domain > **Remove domain**.
 
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
+
+## Disable access to `*.pages.dev` subdomain
+
+To disable access to your project's provided `*.pages.dev` subdomain:
+
+1. Use Cloudflare Access over your previews (`*.{project}.pages.dev`). Refer to [Customize preview deployments access](/pages/platform/preview-deployments/#customize-preview-deployments-access).
+
+2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
 
 ## Known issues
 

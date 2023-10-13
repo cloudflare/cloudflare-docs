@@ -9,8 +9,6 @@ weight: 6
 layout: example
 ---
 
-[Run and edit this code in your browser on StackBlitz.](https://workers.new/stream/video-js) 
-
 ```html
 <html>
 	<head>

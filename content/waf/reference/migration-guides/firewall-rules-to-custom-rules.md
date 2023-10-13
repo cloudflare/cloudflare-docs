@@ -121,7 +121,7 @@ If you are using Terraform, the preferred way of configuring WAF custom rules is
 
 If you are currently using firewall rules, your rules will be displayed as WAF custom rules in the Cloudflare dashboard, available at **Security** > **WAF** > **Custom rules**.
 
-![The Custom rules tab, available in the Cloudflare dashboard under Security > WAF.](/images/waf/reference/custom-rules-tab.png)
+![The Custom rules tab, available in the Cloudflare dashboard under Security > WAF.](/images/waf/custom-rules/custom-rules-tab.png)
 
 Most customers will have access to the **Custom rules** tab instead of the **Firewall rules** tab in the Cloudflare dashboard, which will display the rules that Cloudflare automatically converted from existing firewall rules.
 

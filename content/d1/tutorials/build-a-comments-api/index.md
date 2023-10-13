@@ -33,8 +33,8 @@ $ npm install hono
 ## 2. Initialize your Hono application
 
 In `src/worker.js`, initialize a new Hono application, and define the following endpoints:
-- `GET /API/posts/:slug/comments`.
-- `POST /get/api/:slug/comments`.
+- `GET /api/posts/:slug/comments`.
+- `POST /api/posts/:slug/comments`.
 
 ```js
 ---

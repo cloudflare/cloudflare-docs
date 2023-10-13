@@ -32,9 +32,7 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
 ### Configure operating system for DoH
 
-<details>
-<summary>Windows 11</summary>
-<div>
+{{<details header="Windows 11">}}
 
 1. Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
 
@@ -47,7 +45,7 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
    2. Obtain your `AAAA` record values.
 
    ```bash
-   nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+   nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
    ```
 
    3. Copy the resulting IP addresses.
@@ -74,8 +72,7 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 8. Enable **IPv6**.
 9. In **Preferred DNS** and **Alternate DNS**, enter the IPv6 addresses from your `AAAA` record command. Set **DNS over HTTPS** to _On (automatic template)_.
 
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>Windows Server 2022</summary>

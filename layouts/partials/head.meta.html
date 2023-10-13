@@ -3,6 +3,7 @@
   {{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
   {{- $metaTruncateLength := 150 -}}
   {{- $title := "" -}}
+  {{- $rellink := .Context.RelPermalink -}}
 
   <!-- Evaluate content type against standards -->
 
@@ -18,6 +19,22 @@
   {{- $productGroup := "" -}}
   {{- with $DATA.product.group -}}
   {{- $productGroup = . -}}
+  {{- else -}}
+  <!-- Special behavior for learning paths -->
+  {{- if or (eq .Context.Params.pcx_content_type "learning-path") (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
+  {{- $learningPathArray := index .Context.Site.Data "learning-paths" -}}
+  {{- range $index, $item := $learningPathArray -}}
+  {{- if eq (printf "%T" $item) "map[string]interface {}" -}}
+  {{- with $item.path -}}
+  {{- if (in $rellink .) -}}
+  {{- with $item.product_group -}}
+  {{- $productGroup = . -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
   {{- end -}}
 
   <!-- Choose the preview image based on the product group -->
@@ -39,9 +56,14 @@
 
   {{- $pt := default .Context.Title .Context.Params.meta.title -}}
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
-  {{- $title = print .Context.Title " | Training" -}}
-
-  {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
+  {{- $titleAddition := "" -}}
+  {{- if eq (len .Context.Ancestors) 4 -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 1).Title -}}
+  {{- else -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
+  {{- end -}}
+  
+  {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
   {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
@@ -53,10 +75,6 @@
   {{- $contentPath := replaceRE `\/$` "" .Context.RelPermalink -}}
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
-
-  {{- if or (in $.Context.RelPermalink "/learning-paths/modules/") (eq $.Context.Params.no_index true ) -}}
-  <meta name="robots" content="noindex">
-  {{- end -}}
 
   <meta charset="utf-8">
   <title>{{ $title }}</title>
@@ -85,6 +103,12 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Add metadata for reporting -->
+  {{- $product := "" -}}
+  {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
+  {{- $product = replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
+  <meta name="pcx_product" content="{{- $product -}}">
+  {{- end -}}
+
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
   {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
   {{- $diffMod := now.Sub $lastMod -}}
@@ -96,7 +120,7 @@
   {{- $diffReview := now.Sub $lastReview -}}
   <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
   {{- else -}}
-  <meta name="pcx_last_reviewed" content="Not set" />
+  <meta name="pcx_last_reviewed" content="500" />
   {{- end -}}
 
   {{- with .Context.Params.pcx_content_type -}}
@@ -113,7 +137,22 @@
   <meta name="pcx_content_group" content="{{$productGroup}}" />
   {{- end -}}
 
-    <!--Add rss feed links if specified-->
+  <!--Add rss feed if specified via output -->
+  {{ with $.Context.OutputFormats.Get "rss" }}
+  
+  {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
+
+  {{- if ne $product "" -}}
+  {{ printf `
+    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - %s - RSS Feed" />` $rssFeedURL $pt ($product | title) | safeHTML }}
+
+  {{- else -}}
+  {{ printf `
+    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeedURL $pt | safeHTML }}
+  {{- end -}}
+  {{- end -}}
+
+  <!--Add rss feed links if specified via Param -->
   {{ with $.Context.Params.rss -}}
   {{ if eq . "folder" }}
 
@@ -135,7 +174,6 @@
 
   {{ printf `
   <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
-
   {{ end }}
 
 

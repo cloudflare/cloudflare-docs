@@ -11,7 +11,7 @@ meta:
 {{<render file="_random-prefix-attack-definition.md">}}
 <br/>
 
-## Attack charactertistics
+## Attack characteristics
 
 ### Queries for nonexistent domains
 

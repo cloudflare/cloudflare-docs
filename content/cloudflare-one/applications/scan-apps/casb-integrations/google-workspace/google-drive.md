@@ -34,7 +34,7 @@ weight: 1
 
 ### Data Loss Prevention (optional)
 
-These findings will only appear if you [added DLP profiles](/cloudflare-one/applications/scan-apps/casb-dlp/) to your CASB integration.
+{{<render file="casb/_data-loss-prevention.md">}}
 
 | Finding                                                           | Severity | Description                                                                                           |
 | ----------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
