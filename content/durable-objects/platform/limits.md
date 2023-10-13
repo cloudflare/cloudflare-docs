@@ -21,11 +21,7 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 |  WebSocket message size                    | 1 MiB (only for received messages)                |
 |  CPU per request                           | 30s (including WebSocket messages) <sup>2</sup> |
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps. Not all limits can be increased directly.
-
-{{</Aside>}}
+{{<render file="_limits_increase.md" productFolder="workers">}}
 
 <sup>1</sup> Durable Objects both bills and measures storage based on a gigabyte (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB).
 <sup>2</sup> Each incoming HTTP request or WebSocket _message_ resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset.

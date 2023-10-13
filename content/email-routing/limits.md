@@ -25,4 +25,4 @@ Feature | Limit
 [Rules](/email-routing/setup/email-routing-addresses/) | 200
 [Addresses](/email-routing/setup/email-routing-addresses/#destination-addresses) | 200
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+{{<render file="_limits_increase.md" productFolder="workers">}}
