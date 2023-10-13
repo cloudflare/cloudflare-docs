@@ -272,7 +272,7 @@ You can now test the connection between the two subnets. For example, on the `10
 ```
 
 {{<Aside type="note">}}
-If you are testing with curl, make sure to add the `--ipv4` to your curl commands.
+If you are testing with curl using private hostnames, make sure to add the `--ipv4` to your curl commands.
 {{</Aside>}}
 
 ## Troubleshooting
