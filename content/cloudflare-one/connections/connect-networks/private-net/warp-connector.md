@@ -94,7 +94,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       <key>organization</key>
       <string><TEAM-NAME></string>
       <key>auth_client_id</key>
-      <string><CLIENT__ID></string>
+      <string><CLIENT-ID></string>
       <key>auth_client_secret</key>
       <string><CLIENT-SECRET></string>
       <key>warp_connector_token</key>
