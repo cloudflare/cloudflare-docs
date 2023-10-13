@@ -31,7 +31,7 @@ By default, Advanced DNS Protection will be enabled in monitoring mode.
 
 After getting Advanced DNS Protection enabled, you can create rules to configure the protection system.
 
-Currently, you must configure the Cloudflare API to create and manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
+Currently, you must use the Cloudflare API to create and manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
 
 For more information on the configuration settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
 
