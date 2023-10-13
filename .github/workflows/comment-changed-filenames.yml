@@ -1,6 +1,6 @@
 name: Flag changed filenames
 
-# **What it does**: Adds a comment if a PR renames or deletes a file.
+# **What it does**: Adds a comment if a PR renames or removes a file.
 # **Why we have it**: Highlights when we need redirects covering certain file paths.
 # **Who does it impact**: PCX team, other Cloudflare contributors
 
@@ -17,16 +17,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Get Renamed or Deleted Files from Pull Request
+      - name: Get Renamed or Removed Files from Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Use GitHub API to get list of files in the PR and filter only renamed or deleted .md files
+          # Use GitHub API to get list of files in the PR and filter only renamed or removed .md files
           files=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" | \
             jq -r '.[] | select(.status=="renamed" or .status=="removed") | select(.filename | endswith(".md")) | .filename' | \
-            xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ' ')
+            sed -e 's|./content||' -e 's|\.md$||' -e 's|/_index$|/|' | \
+            xargs -I {} sh -c 'echo "\"{}\""' | tr '\n' ' ')
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
       - name: Output Changed Files
