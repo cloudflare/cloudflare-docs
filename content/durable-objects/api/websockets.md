@@ -196,7 +196,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 {{<definitions>}}
 
-- {{<code>}}webSocketClose(ws{{<param-type>}}WebSocket{{</param-type>}}, message{{<param-type>}}String | ArrayBuffer{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}webSocketMessage(ws{{<param-type>}}WebSocket{{</param-type>}}, message{{<param-type>}}String | ArrayBuffer{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Called by the system when an accepted WebSocket receives a message.
 
@@ -222,7 +222,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 {{<definitions>}}
 
-- {{<code>}}webSocketClose(ws{{<param-type>}}WebSocket{{</param-type>}}, error{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}webSocketError(ws{{<param-type>}}WebSocket{{</param-type>}}, error{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Called by the system when any non-disconnection related errors occur.
   
