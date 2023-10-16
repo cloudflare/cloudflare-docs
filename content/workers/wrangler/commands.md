@@ -11,7 +11,7 @@ meta:
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -153,7 +153,7 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-Create a skeleton Wrangler project, including the `wrangler.toml` file.
+Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
 wrangler init [<NAME>] [OPTIONS]
@@ -163,8 +163,6 @@ wrangler init [<NAME>] [OPTIONS]
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
@@ -174,7 +172,13 @@ wrangler init [<NAME>] [OPTIONS]
 
 ## `generate`
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+{{<Aside type="note">}}
+
+This command has been deprecated as of v3 and will be removed in a future version.
+
+{{</Aside>}}
+
+Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```txt
 wrangler generate [<NAME>] [TEMPLATE]
