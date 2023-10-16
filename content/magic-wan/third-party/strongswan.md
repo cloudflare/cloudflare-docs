@@ -181,7 +181,7 @@ cloudflare-ipsec{4}:   0.0.0.0/0 === 0.0.0.0/0
 After you finish configuring StrongSwan with Magic WAN, you can use tcpdump to investigate the status of health checks originated from Cloudflare.
 
 ```sh
-$ sudo tcpdump -i <outgoing_interface> esp and host <tunnel_cloudflare_enpoint_ip>
+$ sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP>
 ```
 
 In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare’s health check probes (both the request and response) are going through the IPsec tunnel we configured.
