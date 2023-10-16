@@ -102,7 +102,7 @@ header: Response
 
 After sending a request to your Source Endpoint, you should see the contents of the back-end service as if you called the Target Endpoint directly. 
 
-If you see unexpected results, double check your Source Endpoint host, method, and path and verify the Route to ensure the Target Endpoint value is correct. 
+If you see unexpected results, check your Source Endpoint host, method, and path and [verify the Route](/api-shield/management-and-monitoring/api-routing/#verify-a-route) to ensure the Target Endpoint value is correct. 
 
 {{<Aside type="note">}}
 You may need to wait up to five minutes for Route changes to synchronize across the Cloudflare network.
