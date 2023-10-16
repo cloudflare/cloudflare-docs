@@ -12,6 +12,8 @@ You need [Magic WAN](/magic-wan/get-started/) to be able to use the Magic WAN Co
 
 Refer to the following steps to configure your Magic WAN Connector.
 
+---
+
 ## 1. Purchase a Magic WAN Connector device
 
 Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard. 
@@ -107,6 +109,8 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 {{</Aside>}}
 
+--- 
+
 ## IP sec tunnels and static routes
 
 Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) and [static routes](/magic-wan/get-started/configure-static-routes/) for you. You cannot configure these manually.
@@ -117,6 +121,8 @@ To check the IPsec tunnels and static routes created by your Magic Wan Connector
 2. Go to **Magic WAN** > **Sites**.
 3. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
 4. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+
+---
 
 ## Maintenance
 
