@@ -33,6 +33,17 @@ If a brand phrase or search term has less than five characters, you can only cho
 
 In the section **Monitored queries**, you can check all the queries that you selected to monitor. You can delete, clone, or create notifications for a query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
 
+## Logo queries
+
+To set up a new logo query:
+
+1. Navigate to **Security Center** > **Monitor Images** and select on **Add logo**:
+2. Add a name for your query and upload your logo. Only `png`, `jpeg`, and `jpg` formats are supported.
+3. Select **Save logo**.
+
+You will be returned to the **Monitor Images** overview page, where you can access your query and configure notifications.
+
+
 ## Investigate a query
 
 To investigate a query:
