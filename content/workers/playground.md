@@ -1,16 +1,16 @@
 ---
 pcx_content_type: concept
 title: Playground
+weight: 5
 ---
 
 # Playground
 
 The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). It does not require any setup or authentication. The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser.
 
-The Playground uses the same editor as the authenticated experience, and provides the ability to share the code you write as well as deploy it instantly to Cloudflare's global network. This way, you can quickly try new things out and deploy them when you are ready.
+The Playground uses the same editor as the authenticated experience. The Playground provides the ability to [share](#share) the code you write as well as [deploy](#deploy) it instantly to Cloudflare's global network. This way, you can try new things out and deploy them when you are ready.
 
-<p>{{<button type="primary" href="https://workers.cloudflare.com/playground">}}Launch playground{{</button>}}</p>
-
+<p>{{<button type="primary" href="https://workers.cloudflare.com/playground">}}Launch the Playground{{</button>}}</p>
 
 ## Hello Cloudflare Workers
 
@@ -44,15 +44,13 @@ export default {
 
 This is an example of a multi-module Worker that is receiving a [request](/workers/runtime-apis/request/), logging a message to the console, and then returning a [response](/workers/runtime-apis/response/) body containing the content from `welcome.html`.
 
-Refer to the documentation for [`Fetch Handler`](/workers/runtime-apis/handlers/fetch/) to learn more.
+Refer to the [Fetch handler documentation](/workers/runtime-apis/handlers/fetch/) to learn more.
 
-## Using the Playground
+## Use the Playground
 
-As you edit the default code, the Worker will auto-update such that the preview on the right shows your worker running just as it would in a browser. If your Worker uses URL paths, you can enter those in the input field on the right to navigate to them. The editor provides type-checking via JSDoc comments and `workers-types` and also provides pretty error pages in the event of app errors.
+As you edit the default code, the Worker will auto-update such that the preview on the right shows your Worker running just as it would in a browser. If your Worker uses URL paths, you can enter those in the input field on the right to navigate to them. The Playground provides type-checking via JSDoc comments and [`workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types). The Playground also provides pretty error pages in the event of application errors.
 
-To test a raw HTTP request (for example, to test a `POST` request) go to the **HTTP** tab and select **Send**. You can add and edit headers via this panel, as well as edit the body of a request.
-
----
+To test a raw HTTP request (for example, to test a `POST` request), go to the **HTTP** tab and select **Send**. You can add and edit headers via this panel, as well as edit the body of a request.
 
 ## DevTools
 
@@ -60,7 +58,7 @@ For debugging Workers inside the Playground, use the developer tools at the bott
 
 ### Network tab
 
-**Network** shows the outgoing requests from your Workers script — that is, any calls to `fetch` inside your script.
+**Network** shows the outgoing requests from your Worker — that is, any calls to `fetch` inside your Worker code.
 
 ### Console Logs
 
@@ -68,7 +66,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ### Sources
 
-**Sources** displays the sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
+**Sources** displays the sources that make up your Worker. Note that KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use [`wrangler dev`](/workers/wrangler/commands/#dev) with your account credentials.
 
 ## Share
 
