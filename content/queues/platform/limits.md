@@ -29,8 +29,6 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 
 {{</table-wrap>}}
 
-{{<render file="_limits_increase.md" productFolder="workers">}}
-
 <sup>beta</sup> This limit is beta only and is expected to increase over time.
 
 <sup>1</sup> 1 KB is measured as 1000 bytes. Messages can include up to ~100 bytes of internal metadata that counts towards total message limits.
@@ -43,4 +41,6 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 
 <sup>5</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 
-<sup>6</sup> Refer to [Worker limits](/workers/platform/limits/#cpu-time).
+<sup>6</sup> Refer to [Workers limits](/workers/platform/limits/#cpu-time).
+
+{{<render file="_limits_increase.md" productFolder="workers">}}

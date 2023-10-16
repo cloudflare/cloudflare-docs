@@ -5,8 +5,6 @@ title: Limits
 
 # Limits
 
-{{<render file="_limits_increase.md" productFolder="workers">}}
-
 ## Script limits
 
 Cloudflare provides an unlimited number of scripts for Workers for Platforms customers.
@@ -20,3 +18,5 @@ Bindings for your dynamic dispatch Worker or any user Workers can be defined on 
 ## ​Tags
 
 You can set a maximum of eight tags per script. Avoid special characters like `,` and `&` when naming your tag.
+
+{{<render file="_limits_increase.md" productFolder="workers">}}
