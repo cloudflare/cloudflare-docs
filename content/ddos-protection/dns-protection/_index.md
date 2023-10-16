@@ -17,7 +17,7 @@ The [Network Analytics v2 dashboard](/analytics/network-analytics/) will display
 
 ## Availability
 
-Advanced DNS Protection is available in beta to all [Magic Transit](/magic-transit/) customers.
+Advanced DNS Protection is currently available in beta to all [Magic Transit](/magic-transit/) customers.
 
 Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
