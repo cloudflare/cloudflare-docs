@@ -17,20 +17,15 @@ List all prefixes and the ASNs where they should originate. When specifying pref
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
 - Prefixes using BGP-controlled advertisements cannot be used in conjunction with dynamic advertisement (via dashboard/API). Please specify your preferred on-demand advertisement method during the prefix onboarding.
 
-<details>
-<summary>
-  Prefix configuration example
-</summary>
-<div class="special-class" markdown="1">
+{{<details header="Prefix configuration example">}}
 
-| Prefix          | Originating AS |
-| --------------- | -------------- |
+| Prefix            | Originating AS |
+| ----------------- | -------------- |
 | `103.21.244.0/23` | AS209242       |
 | `131.0.72.0/22`   | AS395747       |
 | `103.21.245.0/24` | AS395747       |
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note" header="Note">}}
 
@@ -44,7 +39,7 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Magic Transit** > **Configuration**.
-3. From the **IP Prefixes** tab, select **Create**. 
+3. From the **IP Prefixes** tab, select **Create**.
 4. Fill out the information for your prefix and select **Add IP Prefix**.
 
 After you add the prefix, you can edit its status.
@@ -92,7 +87,6 @@ Magic Transit requires static routing to steer traffic from Cloudflare’s netwo
 ## Example router configurations
 
 Below you can find example peering configurations for [Cisco IOS](https://www.cisco.com/c/en/us/td/docs/ios/fundamentals/command/reference/cf_book.html) and [Juniper Junos OS](https://www.juniper.net/documentation/us/en/software/junos/cli/index.html) for on-demand deployments leveraging BGP Control. The IP addresses used are from Cloudflare's route reflectors and should be left as is.
-
 
 #### Cisco IOS
 

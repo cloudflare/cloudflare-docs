@@ -21,6 +21,7 @@ Overrides can have a ruleset, tag, or rule scope. Tag and rule configurations ha
 You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be applied for that zone.
 
 {{<Aside type="warning" header="Important">}}
+
 * The HTTP DDoS Attack Protection managed ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
 * Currently, account-level overrides for the HTTP DDoS Attack Protection managed ruleset are only available via API.
@@ -86,9 +87,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/ddos_l7/ent
 
 The response returns the created (or updated) phase entry point ruleset.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -135,8 +134,7 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information on defining overrides for managed rulesets using the Rulesets API, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation.
 
@@ -183,9 +181,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/ddos_
 
 The response returns the created (or updated) phase entry point ruleset.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -225,7 +221,6 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information on defining overrides for managed rulesets using the Rulesets API, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation.

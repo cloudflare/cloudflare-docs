@@ -96,31 +96,23 @@ By default, some browsers block all third-party cookies in private browsing mode
 
 To enable third-party cookies for an Access application:
 
-<details>
-<summary>Chrome</summary>
-<div>
+{{<details header="Chrome">}}
 
 1. Go to **Settings** > **Privacy and security** > **Cookies and other site data**.
 2. Under **Sites that can always use cookies**, add the following URLs:
     - Hostname of your Access application (for example, `https://jira.site.com`)
     - `https://<your-team-name>.cloudflareaccess.com`
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Safari</summary>
-<div>
+{{<details header="Safari">}}
 
 1. Go to **Safari** > **Settings** > **Privacy**.
 2. Deselect **Block all cookies**.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Firefox</summary>
-<div>
+{{<details header="Firefox">}}
 
 1. Go to **Settings** > **Privacy & Security**.
 2. Scroll down to **Cookies and Site Data**.
@@ -129,17 +121,13 @@ To enable third-party cookies for an Access application:
 5. Enter `https://<your-team-name>.cloudflareaccess.com` and select **Allow**.
 6. Select **Save Changes**.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Brave</summary>
-<div>
+{{<details header="Brave">}}
 
 1. Go to `brave://settings/cookies`.
 2. Under **Sites that can always use cookies**, add the following URLs:
     - Hostname of your Access application (for example, `https://jira.site.com`)
     - `https://<your-team-name>.cloudflareaccess.com`
 
-</div>
-</details>
+{{</details>}}

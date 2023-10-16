@@ -22,9 +22,7 @@ To configure Customer Metadata Boundary in the dashboard:
 
 You can also configure Customer Metadata Boundary via API. These are some examples of API requests.
 
-<details>
-<summary>Get current regions</summary>
-<div>
+{{<details header="Get current regions">}}
 
 Here is an example request using cURL to get current regions (if any):
 
@@ -35,12 +33,9 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 | jq '.'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Setting regions</summary>
-<div>
+{{<details header="Setting regions">}}
 
 Here is an example request using cURL to set regions:
 
@@ -59,12 +54,9 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 This will overwrite any previous regions.
 Change will be in effect after several minutes.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Delete regions</summary>
-<div>
+{{<details header="Delete regions">}}
 
 Here is an example request using cURL to delete regions:
 
@@ -75,13 +67,12 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 | jq '.'
 ```
 
-</div>
-</details>
+{{</details>}}
   
 ## View or change settings
 
 To view or change your Customer Metadata Boundary setting:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2.  Go to **Manage Account** > **Configurations** > **Preferences**.
-3.  Locate the **Customer Metadata Boundary** section.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Manage Account** > **Configurations** > **Preferences**.
+3. Locate the **Customer Metadata Boundary** section.

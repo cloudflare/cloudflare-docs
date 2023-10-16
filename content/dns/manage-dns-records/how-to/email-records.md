@@ -20,16 +20,14 @@ If you are using [Email Routing](/email-routing/), you cannot modify the MX reco
 
 To route emails to your mail server, you need to [create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/) within Cloudflare:
 
-1.  An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
+1. An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
 
      | **Type** | **Name** | **IPv4 address** | **Proxy status** |
      | -------- | -------- | ---------------- | ---------------- |
      | A        | `mail`   | `192.0.2.1`      | DNS only         |
 
-     <details>
-      <summary>API example</summary>
-      <div>
-      
+     {{<details header="API example">}}
+
       ```json
       ---
       header: Request
@@ -80,19 +78,16 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       }
       ```
 
-      </div>
-      </details>
+      {{</details>}}
 
-2.  An **MX** record that points to that subdomain.
+2. An **MX** record that points to that subdomain.
 
       | **Type** | **Name** | **Mail server**    | **TTL** |
       | -------- | -------- | ------------------ | ------- |
       | MX       | `@`      | `mail.example.com` | Auto    |
 
-      <details>
-      <summary>API example</summary>
-      <div>
-      
+      {{<details header="API example">}}
+
       ```bash
       ---
       header: Request
@@ -143,8 +138,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       }
       ```
 
-      </div>
-      </details>
+      {{</details>}}
 
 ---
 

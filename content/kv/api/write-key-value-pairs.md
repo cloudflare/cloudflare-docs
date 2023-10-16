@@ -11,7 +11,7 @@ To create a new key-value pair, or to update the value for a particular key, cal
 The basic form of the method  `put()` looks like this:
 
 ```js
-await NAMESPACE.put(key, value);
+await env.NAMESPACE.put(key, value);
 ```
 
 ## Parameters
@@ -92,7 +92,7 @@ To associate some {{<glossary-tooltip term_id="metadata">}}metadata{{</glossary-
 To do this in your Worker script:
 
 ```js
-await NAMESPACE.put(key, value, {
+await env.NAMESPACE.put(key, value, {
   metadata: { someMetadataKey: "someMetadataValue" },
 });
 ```
