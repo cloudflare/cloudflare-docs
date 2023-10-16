@@ -103,7 +103,7 @@ If you have not yet created a DNS record covering your child domain in the paren
 {{<tab label="child is full or secondary" no-code="true">}}
  
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) in the same or a new account.
-2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
+2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup, adding the Cloudflare nameservers as `NS` records at your external DNS provider.
 3. Within a short period of time, the child domain should be active.
  
 {{</tab>}}
@@ -134,8 +134,9 @@ If you have already created a DNS record covering your child domain in the paren
 
 3. In the parent domain, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains.
-5. Within a short period of time, the child domain should be active.
-6. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the child domain or any of its deeper subdomains.
+5. Get the Cloudflare nameservers for the child domain and add them as `NS` records at your external DNS provider.
+6. Within a short period of time, the child domain should be active.
+7. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the child domain or any of its deeper subdomains.
  
 {{</tab>}}
 {{<tab label="child is partial" no-code="true">}} 
