@@ -10,7 +10,7 @@ weight: 1
 
 You need [Magic WAN](/magic-wan/get-started/) to be able to use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
-Refer to the following steps to configure your Magic WAN Connector.
+Refer to the steps below to configure your Magic WAN Connector.
 
 ---
 
