@@ -21,11 +21,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          files=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          files=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" | \
             jq -r '.[] | select(.status=="renamed" or .status=="removed") | select(.filename | endswith(".md")) | if .status == "renamed" then .previous_filename else .filename end' | \
-            sed -e 's|^content||' -e 's|/_index\.md$|/|' -e 's|\.md$|/|')
+            sed -e 's|^content||' -e 's|/_index\.md$|/|' -e 's|/index\.md$|/|' -e 's|\.md$|/|')
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
       - name: Comment or Update Comment on PR based on changed files
@@ -35,14 +35,14 @@ jobs:
           # If there are no changed files
           if [ -z "$CHANGED_FILES" ]; then
             # Fetch the ID of the existing comment, if it exists
-            existing_comment_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
               "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
               jq '.[] | select(.user.id == 41898282) | select(.body | contains("This PR changes current filenames or deletes current files")) | .id')
 
             # If the comment exists, delete it
             if [ ! -z "$existing_comment_id" ]; then
-              curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
                 -H "Accept: application/vnd.github.v3+json" \
                 -X DELETE \
                 "https://api.github.com/repos/${{ github.repository }}/issues/comments/$existing_comment_id"
@@ -57,7 +57,7 @@ jobs:
             done
 
             # Check if a comment already exists
-            existing_comment_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
               "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
               jq '.[] | select(.user.id == 41898282) | select(.body | contains("This PR changes current filenames or deletes current files")) | .id')
@@ -66,12 +66,12 @@ jobs:
 
             # If a comment exists, update it. Otherwise, post a new comment.
             if [ ! -z "$existing_comment_id" ]; then
-              curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
                 -H "Accept: application/vnd.github.v3+json" \
                 -X PATCH -d "$comment_payload" \
                 "https://api.github.com/repos/${{ github.repository }}/issues/comments/$existing_comment_id"
             else
-              curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
                 -H "Accept: application/vnd.github.v3+json" \
                 -X POST -d "$comment_payload" \
                 "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
