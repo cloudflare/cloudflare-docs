@@ -47,7 +47,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="worker"}}
+{{<tab label="worker">}}
 
 ```ts
 import { Ai } from '@cloudflare/ai'
