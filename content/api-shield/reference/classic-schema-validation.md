@@ -38,7 +38,7 @@ To validate the hostname, you must include the _Hostname_ field explicitly in th
 6.  Upload your schema file.
 7.  Select **Save** to validate the content of the schema file and deploy the Schema Validation rule.
 
-    If you get a validation error, ensure that you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a [unique Operation ID](/api-shield/security/schema-validation/#operation-ids).
+    If you get a validation error, ensure that you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a unique operation ID.
 
 After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 

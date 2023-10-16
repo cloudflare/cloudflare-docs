@@ -35,12 +35,10 @@ Workers AI includes the following built-in text embedding models:
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
-```js
+```ts
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "AI" with the variable name you defined.
   AI: any;
 }
 

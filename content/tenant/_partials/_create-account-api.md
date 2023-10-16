@@ -4,7 +4,6 @@ _build:
   render: never
   list: never
 ---
-
 {{<definitions>}}
 
 To create an account using the API, make a `POST` request to the `/accounts` endpoint and include the following values:

@@ -13,9 +13,10 @@
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
 
 # AI
-/content/ai-gateway/ @bjesus @cloudflare/pcx-technical-writing
-/content/workers-ai/ @irvinebroque @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
-/content/vectorize/ @irvinebroque @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
+/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
+/content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
@@ -25,6 +26,9 @@
 # API & Zones
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
+
+# Browser Rendering API
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
 
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
@@ -77,7 +81,7 @@
 /data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
 
 # Support
-/content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
+/content/support/ @JamieEE14 @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
 /content/turnstile/ @migueldemoura @punkeel @worenga @cloudflare/pcx-technical-writing

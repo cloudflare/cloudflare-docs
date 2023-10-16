@@ -40,6 +40,12 @@ Custom Tiered cache allows you to work with Cloudflare’s support team to set a
 
 {{<feature-table id="cache.tiered_cache">}}
 
+{{<Aside type="note">}}
+
+Tiered Cache currently is not compatible with responses from [R2](/r2). These responses will act as if Tiered Cache is not configured. 
+
+{{</Aside>}}
+
 ## Bandwidth Alliance
 
 Enterprise customers can override Bandwidth Alliance configuration with Tiered Cache. For all other users, the Bandwidth Alliance takes precedence. Tiered Cache is still a valuable option to enable because the Bandwidth Alliance may not always be an available option, and in those instances, the Tiered Cache configuration will be used.

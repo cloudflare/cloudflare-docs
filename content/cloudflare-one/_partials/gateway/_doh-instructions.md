@@ -5,9 +5,7 @@ _build:
   list: never
 ---
 
-<details>
-<summary>Mozilla Firefox</summary>
-<div>
+{{<details header="Mozilla Firefox">}}
 
 1. In Firefox, go to **Settings**.
 2. In **Privacy & Security**, go to **DNS over HTTPS**.
@@ -21,8 +19,7 @@ Firefox is now configured to use your DoH endpoint. For more information on conf
 If you want to enforce DNS policies through WARP instead of over DoH, you can disable DoH for your organization by blocking the [Firefox DoH canary domain](https://support.mozilla.org/kb/canary-domain-use-application-dnsnet).
 {{</Aside>}}
 
-</div>
-</details>
+{{</details>}}
 
 <details>
 <summary>Google Chrome</summary>

@@ -118,7 +118,7 @@ This error will appear if a certificate has not been generated for the Access ap
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
-These mobile applications may use [certificate pinning](/cloudflare-one/glossary/#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
+These mobile applications may use {{<glossary-tooltip term_id="certificate pinning">}}certificate pinning{{</glossary-tooltip>}} Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
 ## My tunnel fails to authenticate.

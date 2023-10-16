@@ -1,5 +1,6 @@
 # homepage
 /docs/ /products/ 301
+/zero-trust/ /products/?product-group=Cloudflare+One 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
@@ -138,8 +139,6 @@
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
-/bots/bot-management-enterprise/ /learning-paths/bot-management/ 301
-/bots/get-started/bm-subscription/ /learning-paths/bot-management/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /support/other-languages/español-españa/productos-de-detección-de-bots-de-cloudflare-preguntas-frecuentes/ /bots/troubleshooting/ 301
@@ -274,6 +273,10 @@
 /support/dns/troubleshooting/my-dns-doesnt-work/ /dns/troubleshooting/dns-issues/ 301
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
+# durable-objects
+/durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
+/durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
+
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
 /email-routing/email-routing-options/ /email-routing/setup/ 301
@@ -287,9 +290,9 @@
 /firewall/api/cf-lists/json-object/ /waf/tools/lists/lists-api/json-object/ 301
 /firewall/cf-dashboard/edit-expressions/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
 /firewall/cf-dashboard/expression-preview-editor/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
-/firewall/cf-dashboard/rules-lists/ /waf/tools/lists/ip-lists/ 301
-/firewall/cf-dashboard/rules-lists/manage-items/ /rules/url-forwarding/bulk-redirects/create-dashboard/#add-items-to-a-list 301
-/firewall/cf-dashboard/rules-lists/manage-lists/ /rules/url-forwarding/bulk-redirects/create-dashboard/ 301
+/firewall/cf-dashboard/rules-lists/ /waf/tools/lists/custom-lists/ 301
+/firewall/cf-dashboard/rules-lists/manage-items/ /waf/tools/lists/create-dashboard/#add-items-to-a-list 301
+/firewall/cf-dashboard/rules-lists/manage-lists/ /waf/tools/lists/create-dashboard/ 301
 /firewall/cf-dashboard/rules-lists/use-lists-in-expressions/ /waf/tools/lists/use-in-expressions/ 301
 /firewall/cf-firewall-language/ /ruleset-engine/rules-language/ 301
 /firewall/cf-firewall-language/fields/ /ruleset-engine/rules-language/fields/ 301
@@ -298,7 +301,7 @@
 /firewall/cf-firewall-language/values/ /ruleset-engine/rules-language/values/ 301
 /firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
 /firewall/cf-firewall-rules/fields-and-expressions/ /ruleset-engine/rules-language/expressions/ 301
-/firewall/cf-firewall-rules/rules-lists/ /waf/tools/lists/ip-lists/ 301
+/firewall/cf-firewall-rules/rules-lists/ /waf/tools/lists/custom-lists/ 301
 /firewall/cf-rulesets/ /ruleset-engine/about/ 301
 /firewall/cf-rulesets/add-rule-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
 /firewall/cf-rulesets/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
@@ -354,6 +357,7 @@
 /fundamentals/get-started/reference/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
+/fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
@@ -383,7 +387,6 @@
 /support/firewall/settings/using-privacy-pass-with-cloudflare/ /waf/tools/privacy-pass/ 301
 
 # fundamentals revamp
-/fundamentals/global-configurations/lists /waf/tools/lists/ 301
 /fundamentals/global-configurations/lists/link-bulk-redirect-lists/ /rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists 301
 /fundamentals/global-configurations/lists/ /waf/tools/lists/ 301
 /fundamentals/global-configurations/ /fundamentals/ 301
@@ -471,9 +474,6 @@
 /fundamentals/get-started/reference/network-ports/ /fundamentals/reference/network-ports/ 301
 /fundamentals/get-started/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ /fundamentals/setup/allow-cloudflare-ip-addresses/ 301
-/fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/ip-lists/ 301
-
-
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -529,6 +529,7 @@
 /load-balancing/understand-basics/pools/ /load-balancing/pools/ 301
 /load-balancing/understand-basics/monitors/ /load-balancing/monitors/ 301
 /load-balancing/understand-basics/load-balancers/ /load-balancing/load-balancers/ 301
+/load-balancing/understand-basics/traffic-management/ /load-balancing/local-traffic-management/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
@@ -617,6 +618,7 @@
 /fundamentals/notifications/create-notifications/ /notifications/create-notifications/ 301
 /fundamentals/notifications/create-notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
 /fundamentals/notifications/create-notifications/configure-webhooks/ /notifications/create-notifications/configure-webhooks/ 301
+/fundamentals/notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
 /fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
 
 # pages
@@ -1120,7 +1122,7 @@
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
 /workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
-/workers/runtime-apis/email-event/ /email-routing/email-workers/ 301
+/workers/runtime-apis/email-event/ /email-routing/email-workers/runtime-api/ 301
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
@@ -1128,6 +1130,9 @@
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
+/workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
+/workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
+/workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
@@ -1247,6 +1252,7 @@
 /cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/gateway/global-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/gateway/dns-policies/ 301
 /cloudflare-one/policies/browser-isolation/configuration/ /cloudflare-one/policies/browser-isolation/setup/ 301
+/cloudflare-one/cloudflare-teams-roles-permissions/ /cloudflare-one/roles-permissions/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
@@ -1351,9 +1357,10 @@
 /learning-paths/modules/performance/load-balancing-concepts/* /learning-paths/load-balancing/concepts/:splat 301
 /learning-paths/modules/performance/load-balancing-planning/* /learning-paths/load-balancing/planning/:splat 301
 /learning-paths/modules/performance/load-balancing-setup/* /learning-paths/load-balancing/setup/:splat 301
-/learning-paths/modules/security/bot-management-concepts/* /learning-paths/bot-management/concepts/:splat 301
-/learning-paths/modules/security/bot-management-planning/* /learning-paths/bot-management/planning/:splat 301
-/learning-paths/modules/security/bot-management-setup/* /learning-paths/bot-management/setup/:splat 301
+/learning-paths/modules/security/bot-management-concepts/* /bots/get-started/bm-subscription/ 301
+/learning-paths/modules/security/bot-management-planning/* /bots/get-started/bm-subscription/ 301
+/learning-paths/modules/security/bot-management-setup/* /bots/get-started/bm-subscription/ 301
+/learning-paths/bot-management/* /bots/get-started/bm-subscription/ 301
 /learning-paths/modules/security/ddos-advanced/* /learning-paths/prevent-ddos-attacks/advanced/:splat 301
 /learning-paths/modules/security/ddos-baseline/* /learning-paths/prevent-ddos-attacks/baseline/:splat 301
 /learning-paths/modules/security/ddos-concepts/* /learning-paths/prevent-ddos-attacks/concepts/:splat 301

@@ -17,7 +17,7 @@ DistilBERT-SST-2 is a distilled BERT model that was finetuned on SST-2 for senti
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
-```js
+```ts
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {

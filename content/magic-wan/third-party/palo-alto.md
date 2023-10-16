@@ -1,6 +1,6 @@
 ---
 pcx_content_type: integration-guide
-title: Palo Alto
+title: Palo Alto Networks NGFW
 meta:
   title: Palo Alto Networks Next-Generation Firewall
 ---

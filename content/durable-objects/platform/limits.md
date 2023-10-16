@@ -28,6 +28,7 @@ You can request adjustments to limits that conflict with your project goals by c
 {{</Aside>}}
 
 <sup>1</sup> Durable Objects both bills and measures storage based on a gigabyte (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB).
+
 <sup>2</sup> Each incoming HTTP request or WebSocket _message_ resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset.
 
 ## How much work can a single Durable Object do?

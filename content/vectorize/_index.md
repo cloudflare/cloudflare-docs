@@ -50,7 +50,7 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 {{<resource-group>}}
 
-{{<resource header="Limits" href="/d1/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the open beta and how to work within them.{{</resource>}}
+{{<resource header="Limits" href="/vectorize/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the open beta and how to work within them.{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 

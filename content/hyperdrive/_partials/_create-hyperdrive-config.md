@@ -46,7 +46,7 @@ node_compat = true # required for database drivers to function
 
 # Pasted from the output of `wrangler hyperdrive create $NAME --connection-string=[...]` above.
 [[hyperdrive]]
-name = "HYPERDRIVE"
+binding = "HYPERDRIVE"
 id = ""
 ```
 
