@@ -1027,6 +1027,7 @@
 /workers/tooling/api/bindings/ /workers/platform/bindings/ 301
 /workers/tooling/api/scripts/ /api/operations/worker-script-list-workers 301
 /workers/tooling/playground/ /workers/learning/playground/ 301
+/workers/learning/playground/ /workers/playground/ 301
 /workers/tooling/serverless/ /workers/learning/integrations/ 301
 /workers/tooling/terraform/ /workers/learning/integrations/ 301
 /workers/tooling/wrangler/ /workers/wrangler/ 301
