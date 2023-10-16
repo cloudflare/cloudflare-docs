@@ -93,7 +93,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{</definitions>}}
 
-### serializeAttachments {{<inline-pill style="beta">}}
+{{<heading-pill style="beta" heading="h3">}}serializeAttachment{{</heading-pill>}}
 
 {{<definitions>}}
 
@@ -106,18 +106,18 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{</definitions>}}
 
-### deserializeAttachment {{<inline-pill style="beta">}}
+{{<heading-pill style="beta" heading="h3">}}deserializeAttachment{{</heading-pill>}}
 
 {{<definitions>}}
 
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
   - This method is part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
 
-  - Retrieves the most recent value passed to `serializeAttachment`, or `null` if none exists.
+  - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
 
 {{</definitions>}}
 
-## State Methods {{<inline-pill style="beta">}}
+{{<heading-pill style="beta" heading="h2">}}State Methods{{</heading-pill>}}
 
 These methods are part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
 
@@ -129,7 +129,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
   - Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
   
-  - After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
+  - After calling `state.acceptWebSocket(ws)`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
   
   - `tags` are optional string tags used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   
@@ -166,6 +166,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
   - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Setting `state.setWebSocketAutoResponse()` without any argument will stop a Durable Object from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
 
 {{</definitions>}}
+
 ### getWebSocketAutoResponse
 
 {{<definitions>}}
@@ -188,7 +189,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 {{</definitions>}}
 
-## Handler Methods {{<inline-pill style="beta">}}
+{{<heading-pill style="beta" heading="h2">}}Handler Methods{{</heading-pill>}}
 
 These methods are part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
 
