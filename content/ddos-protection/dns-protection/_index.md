@@ -42,7 +42,7 @@ After getting Advanced DNS Protection enabled, you can create rules to configure
 
 Currently, you must use the Cloudflare API to create and manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
 
-For more information on the configuration settings, refer to [Rule settings](/ddos-protection/dns-protection/settings/).
+For more information on the configuration settings, refer to [Rule settings](/ddos-protection/dns-protection/rule-settings/).
 
 ---
 

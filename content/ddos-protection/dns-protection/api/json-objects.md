@@ -32,4 +32,4 @@ The `profile_sensitivity` field value must be one of `low` (default), `medium`, 
 
 The `rate_sensitivity` and `burst_sensitivity` field values must be one of `low`, `medium`, or `high`.
 
-For more information on the rule settings, refer to [Available settings](/ddos-protection/dns-protection/settings/).
+For more information on the rule settings, refer to [Rule settings](/ddos-protection/dns-protection/rule-settings/).
