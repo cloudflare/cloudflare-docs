@@ -83,6 +83,6 @@ Once `binding_status` changes to `active`, Gateway will sign your traffic using 
 
 {{<Aside type="note" header="Troubleshooting">}}
 
-If Gateway presents an **HTTP Response Code: 526** after deploying a custom certificate, you can [troubleshoot errors with our FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website).
+If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, you can [troubleshoot errors with our FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website).
 
 {{</Aside>}}
