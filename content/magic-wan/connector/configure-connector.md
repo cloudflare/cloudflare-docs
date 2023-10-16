@@ -77,7 +77,7 @@ The Magic WAN Connector is shipped to you deactivated, and will only establish a
 There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local set up and have static IP addresses assigned to it.
 
 {{<Aside type="warning">}}
-If there is a firewall deployed upstream of the Magic WAN Connector, configure it to allow traffic on ports `443` and `4500`. This is needed to allow Magic WAN Connector's initiation traffic with Cloudflare.
+If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow traffic on ports `443` and `4500`. This is needed to allow Magic WAN Connector's initiation traffic with Cloudflare.
 {{</Aside>}}
 
 LAN to LAN communication in Magic WAN Connector is not yet supported. If you have a LAN set up on port one of Magic WAN Connector and need to communicate with the LAN set up behind LAN port two, packets will be routed through Cloudflare first before reaching their destination.
@@ -86,7 +86,7 @@ LAN to LAN communication in Magic WAN Connector is not yet supported. If you hav
 
 When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#2-define-a-site-configuration) step.
 
-{{<Aside type="warning">}}You need to use a route that supports DCHP for the first time Magic WAN Connector tries to connect to the Internet and Cloudflare. If you fail to use a DHCP route, Connector will not work.{{</Aside>}}
+{{<Aside type="warning">}}Remember to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, Connector will not work.{{</Aside>}}
 
 When you are ready to connect your Magic WAN Connector to the Cloudflare network:
 
