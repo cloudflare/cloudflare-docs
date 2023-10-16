@@ -24,7 +24,7 @@ To deploy a custom root certificate:
 
 1. Verify that the certificate is installed on your devices.
 
-2. {{<render file="_upload-mtls-cert.md">}}
+2. {{<render file="_upload-mtls-cert.md" withParameters=" ">}}
 
 3. Enable the certificate in Gateway with its UUID.
 
