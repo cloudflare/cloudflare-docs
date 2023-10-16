@@ -42,21 +42,16 @@ The result does not include the list of rules in the ruleset. Refer to [View a s
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -77,8 +72,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific ruleset
 
@@ -111,21 +105,16 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -156,8 +145,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## List all versions of a ruleset
 
@@ -183,21 +171,16 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -227,8 +210,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific version of a ruleset
 
@@ -252,21 +234,16 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -297,8 +274,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note" header="Note">}}
 
@@ -318,21 +294,16 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -381,5 +352,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 }
 ```
 
-</div>
-</details>
+{{</details>}}

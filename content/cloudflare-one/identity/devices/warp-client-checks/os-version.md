@@ -6,16 +6,13 @@ weight: 8
 
 # OS version
 
-<details>
-<summary>Feature availability</summary>
-<div>
+{{<details header="Feature availability">}}
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems               | WARP with Gateway                                                                         | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than the configured value.
 
@@ -52,7 +49,7 @@ Example: `(a)`
 In **Distro name** and **Distro revision**, enter the Linux distribution you want devices to match. The distro version always matches with an equal-to operator (==), regardless of the **Operator** setting.
 
 Example: `ubuntu 22.04`
- 
+
 {{</tab>}}
 {{</tabs>}}
 

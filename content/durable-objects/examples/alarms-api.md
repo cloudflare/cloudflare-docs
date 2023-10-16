@@ -6,7 +6,7 @@ tags:
   - Alarms
   - API
 pcx_content_type: configuration
-title: Using the Alarms API
+title: Use the Alarms API
 weight: 3
 layout: example
 ---

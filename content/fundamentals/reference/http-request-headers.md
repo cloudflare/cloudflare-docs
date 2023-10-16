@@ -9,7 +9,10 @@ Cloudflare passes all HTTP request headers to your origin web server and adds ad
 
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+
+[^1]: Brotli support between Cloudflare and the origin will be available across all plans by the end of Q4 2023.
+
 
 ## CF-Connecting-IP
 
@@ -139,3 +142,4 @@ When using Spectrum with a TCP application, these headers are not visible at the
 
 - Use an HTTP or HTTPS Spectrum app instead of TCP
 - Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
+
