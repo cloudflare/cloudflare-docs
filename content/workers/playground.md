@@ -10,7 +10,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 The Playground uses the same editor as the authenticated experience. The Playground provides the ability to [share](#share) the code you write as well as [deploy](#deploy) it instantly to Cloudflare's global network. This way, you can try new things out and deploy them when you are ready.
 
-<p>{{<button type="primary" href="https://workers.cloudflare.com/playground">}}Launch Playground{{</button>}}</p>
+<p>{{<button type="primary" href="https://workers.cloudflare.com/playground">}}Launch the Playground{{</button>}}</p>
 
 ## Hello Cloudflare Workers
 
