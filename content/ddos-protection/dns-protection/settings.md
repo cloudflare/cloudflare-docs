@@ -1,14 +1,14 @@
 ---
-title: Settings
+title: Rule settings
 pcx_content_type: reference
 weight: 5
 meta:
-  title: Advanced DNS Protection settings
+  title: Advanced DNS Protection rule settings
 ---
 
-# Available settings
+# Rule settings
 
-Advanced DNS Protection has the following configuration settings: mode, rate, burst, and sensitivity level.
+Advanced DNS Protection rules have the following configuration settings: mode, rate, burst, and sensitivity level.
 
 You may need to adjust these settings in case of false positives or due to specific DNS traffic patterns.
 
