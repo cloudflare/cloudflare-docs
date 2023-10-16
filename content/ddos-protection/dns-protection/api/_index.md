@@ -1,5 +1,5 @@
 ---
-title: Configure via API
+title: API configuration
 pcx_content_type: how-to
 weight: 2
 meta:
