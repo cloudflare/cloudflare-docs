@@ -20,7 +20,7 @@
       appId: '8MU1G3QO9P',
       apiKey,
       container: '#algolia',
-      maxResultsPerGroup: 8,
+      maxResultsPerGroup: 10,
       insights: true,
       searchParameters: {
         optionalFilters: facetFilters
