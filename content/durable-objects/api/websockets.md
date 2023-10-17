@@ -93,6 +93,8 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{</definitions>}}
 
+{{<heading-pill style="beta" heading="h3">}}serializeAttachments{{</heading-pill>}}
+
 ### serializeAttachments {{<inline-pill style="beta">}}
 
 {{<definitions>}}
