@@ -39,7 +39,7 @@ To create a Relying Party Trust:
 
 1. Select **Next**.
 
-1. Enter a **Display name**. We suggest you use an easily recognizable name. Include any information regarding this connection in the **Notes** field.
+1. Enter a **Display name**. We suggest you use a recognizable name. Include any information regarding this connection in the **Notes** field.
 
 1. Select **Next**. The **Choose Profile** step displays.
 

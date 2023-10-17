@@ -49,7 +49,7 @@ To set up JumpCloud SAML as your identity provider:
 
 1. Enter an application name in **Display Label**.
 
-1. Enter an IdP entity in the **IDP IDENTITY ID** field.The IdP entity can be anything, but must be unique. We suggest you reference something easily identified, such as your Cloudflare team domain, for example `https://<your-team-name>.cloudflareaccess.com/`.
+1. Enter an IdP entity in the **IDP IDENTITY ID** field.The IdP entity can be anything, but must be unique. We suggest you reference something identifiable, such as your Cloudflare team domain (`https://<your-team-name>.cloudflareaccess.com/`).
 
 1. At the prompt, enter the IdP private key and IdP certificate you previously generated.
 
