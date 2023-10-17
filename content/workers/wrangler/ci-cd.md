@@ -7,7 +7,6 @@ title: Run in CI/CD
 
 Wrangler can be run in a [continuous integration/continuous deployment (CI/CD) environment](/workers/learning/continuous-integration/). It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment. Deploying Workers from within a CI/CD environment also makes it easier to control access to production credentials.
 
-
 ## Authentication
 
 When running Wrangler locally, authentication to the Cloudflare API happens via the [`wrangler login`](/workers/wrangler/commands/#login) command, which initiates an interactive authentication flow. Since CI/CD environments are non-interactive, Wrangler requires a [Cloudflare API token](/fundamentals/api/get-started/create-token/) and [account ID](/fundamentals/setup/find-account-and-zone-ids/) to authenticate with the Cloudflare API.
@@ -16,12 +15,9 @@ Make sure you are already logged in and generate an API token that will allow Wr
 
 <p>{{<button type="primary" href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[{%22key%22:%22workers_kv_storage%22,%22type%22:%22edit%22},{%22key%22:%22workers_scripts%22,%22type%22:%22edit%22},{%22key%22:%22workers_routes%22,%22type%22:%22edit%22},{%22key%22:%22account_settings%22,%22type%22:%22read%22},{%22key%22:%22user_details%22,%22type%22:%22read%22},{%22key%22:%22workers_tail%22,%22type%22:%22read%22},{%22key%22:%22workers_r2%22,%22type%22:%22edit%22},{%22key%22:%22page%22,%22type%22:%22edit%22},{%22key%22:%22memberships%22,%22type%22:%22read%22}]&name=Wrangler">}}Generate API Token{{</button>}}</p>
 
+</br>
+
 You will need to choose the Account and Zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
-
-
-
-
-
 
 ## Deploy your Worker
 

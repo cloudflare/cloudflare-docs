@@ -28,3 +28,7 @@ Integrate Workers to your existing services and platforms to optimize your conti
 The Serverless Framework does not currently support `*.workers.dev` subdomains. Track support progress on [this GitHub issue](https://github.com/cloudflare/serverless-cloudflare-workers/issues/36).
 
     {{</Aside>}}
+
+## Related resources
+
+* [Run Wrangler in CI/CD](/workers/wrangler/ci-cd/) - Set up Wrangler, the Cloudflare developer platform CLI, in your CI/CD workflow.
