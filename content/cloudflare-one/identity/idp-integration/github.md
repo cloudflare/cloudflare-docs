@@ -22,11 +22,11 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 1. Enter an **Application name**. Your users will see this name on the login page.
 
-1. Enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} in the **Homepage URL** field.
+1. Enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} in the **Homepage URL** field.
 
     For example, `https://<your-team-name>.cloudflareaccess.com`
 
-1. In the GitHub **Authorization callback URL** field, enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} and add this to the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the GitHub **Authorization callback URL** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} and add this to the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

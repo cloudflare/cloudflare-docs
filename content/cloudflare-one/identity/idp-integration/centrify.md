@@ -34,7 +34,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 11. Under **Authorized Redirect URIs**, select **Add**.
 
-12. Under **Authorized Redirect URIs** enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. Under **Authorized Redirect URIs** enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

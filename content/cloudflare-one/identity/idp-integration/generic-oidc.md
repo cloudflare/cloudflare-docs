@@ -12,7 +12,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 1. Visit your identity provider and create a client/app.
 
-2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

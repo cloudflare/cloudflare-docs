@@ -53,7 +53,7 @@ To set up JumpCloud SAML as your identity provider:
 
 1. At the prompt, enter the IdP private key and IdP certificate you previously generated.
 
-1. Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `<your-team-name>` is your Cloudflare {{<glossary-tooltip term_id="team-name">}}team name{{</glossary-tooltip>}}:
+1. Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `<your-team-name>` is your Cloudflare {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}:
 
     ```text
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

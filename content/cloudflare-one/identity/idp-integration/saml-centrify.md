@@ -32,7 +32,7 @@ To set up SAML with Centrify as your identity provider:
 
 1. Choose the **Manual Configuration** option.
 
-1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -84,7 +84,7 @@ To get your Cloudflare metadata file:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace `<your-team-name>` with your {{<glossary-tooltip term_id="team-name">}}team name{{</glossary-tooltip>}}.
+    Replace `<your-team-name>` with your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 
 1. Save the file in XML format.
 

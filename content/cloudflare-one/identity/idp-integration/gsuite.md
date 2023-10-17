@@ -49,7 +49,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 10. Choose _Web application_ as the Application type.
 
-11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}}.
+11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}.
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com

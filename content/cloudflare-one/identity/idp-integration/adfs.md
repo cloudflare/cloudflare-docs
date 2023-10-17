@@ -6,7 +6,7 @@ weight: 6
 
 # SAML | Active Directory®
 
-Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language ({{<glossary-tooltip term_id="saml">}}SAML{{</glossary-tooltip>}}).
+Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language ({{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}}).
 
 ## Before you start
 
@@ -53,7 +53,7 @@ To create a Relying Party Trust:
 
 1. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
 
-1. In the **Relying party SAML 2.0 SSO service URL** field, enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the **Relying party SAML 2.0 SSO service URL** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -177,7 +177,7 @@ To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD
 
     This is the default location. You can find your federation service identifier in ADFS.
 
-1. In the **IdP Entity ID or Issuer URL** field, enter your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}}, and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the **IdP Entity ID or Issuer URL** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}, and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
