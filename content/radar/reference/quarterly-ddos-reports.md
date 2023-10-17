@@ -43,7 +43,7 @@ For both source and target insights, Cloudflare looks at the total volume of att
 
 To calculate the attack size, duration, attack vectors, and emerging threats, we bucket attacks and then provide the share of each bucket out of the total amount for each dimension.
 
-On the **Security & Attacks** Radar page, which covers [application-layer attacks](/radar/investigate/application-layer-attacks/) and [network-layer attacks](/radar/investigate/network-layer-attacks/), these trends are calculated by number of bytes instead. Since attacks may vary greatly in number of bytes from one another, this could lead to trends differing between the quarterly reports and the **Security & Attacks** Radar page.
+On the [**Security & Attacks**](https://radar.cloudflare.com/security-and-attacks) Radar page, which covers [application-layer attacks](/radar/investigate/application-layer-attacks/) and [network-layer attacks](/radar/investigate/network-layer-attacks/), these trends are calculated by number of bytes instead. Since attacks may vary greatly in number of bytes from one another, this could lead to trends differing between the quarterly reports and the **Security & Attacks** page.
 
 ---
 
