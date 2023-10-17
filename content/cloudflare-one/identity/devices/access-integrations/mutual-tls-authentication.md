@@ -6,16 +6,13 @@ weight: 3
 
 # Mutual TLS
 
-<details>
-<summary>Feature availability</summary>
-<div>
+{{<details header="Feature availability">}}
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems       | WARP not required                                                                         | Enterprise plans                                              |
 
-</div>
-</details>
+{{</details>}}
 
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
@@ -247,5 +244,6 @@ You will need to add the CRL to your server or enforce the revocation in a Cloud
 ## Known limitations
 
 mTLS does not currently work for:
+
 - HTTP/3 traffic
 - Cloudflare Pages site served on a [custom domain](/pages/platform/custom-domains/)

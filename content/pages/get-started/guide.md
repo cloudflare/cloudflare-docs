@@ -79,9 +79,7 @@ Cloudflare Pages begins by working from your repository's root directory. The en
 
 ![Root directory field to be filled in](/images/pages/get-started/root-directory.png)
 
-<details>
-<summary>Understanding your build configuration</summary>
-<div>
+{{<details header="Understanding your build configuration">}}
 
 The build command is provided by your framework. For example, the Gatsby framework uses `gatsby build` as its build command. When you are working without a framework, leave the **Build command** field blank.
 
@@ -91,8 +89,7 @@ The root directory is where your site’s content lives. If not specified, Cloud
 
 Refer to [Build configuration](/pages/platform/build-configuration/) for more information.
 
-</div>
-</details>
+{{</details>}}
 
 ### Environment variables
 
@@ -126,9 +123,9 @@ After your first deploy, select **Continue to project** to see your project's co
 
 To delete your Pages project:
 
-1.  Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
-2.  Select **Workers & Pages**.
-3.  Select your Pages project > **Settings** > **Delete project**.
+1. Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
+2. Select **Workers & Pages**.
+3. Select your Pages project > **Settings** > **Delete project**.
 
 {{<Aside type="warning">}}
 

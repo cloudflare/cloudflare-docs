@@ -105,9 +105,7 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer
 
 Both queries should return both ZSKs (identified with tag `256`).
 
-<details>
-<summary>Example</summary>
-<div>
+{{<details header="Example">}}
 
 ```bash
 $ dig multisigner.info dnskey @dns1.p01.nsone.net. +noall +answer
@@ -120,8 +118,8 @@ multisigner.info.    3600    IN    DNSKEY    257 3 13 mdss<bla_bla_bla>eKGQ==
 multisigner.info.    3600    IN    DNSKEY    256 3 13 oJM<bla_bla_bla>XhSA==
 multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
 ```
-</div>
-</details>
+
+{{</details>}}
 
 {{</Aside>}}
 
@@ -144,8 +142,8 @@ You can find out the TTL of your previous provider DS record by running a `dig` 
 
 ```bash
 $ dig multisigner.info ds +noall +answer
-multisigner.info.	3600	IN	DS	2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
-multisigner.info.	3600	IN	DS	48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE
+multisigner.info. 3600 IN DS 2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
+multisigner.info. 3600 IN DS 48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE
 ```
 
 In this example, both DS records have a TTL of `3600` seconds. Cloudflare's DS record always has the key tag set to `2371`, so the second line of the response is the DS record of the other provider.

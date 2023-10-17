@@ -14,9 +14,9 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP response he
 
 When creating an HTTP response header modification rule via API, make sure you:
 
-*   Set the rule action to `rewrite`.
-*   Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set, add, or remove header).
-*   Deploy the rule to the `http_response_headers_transform` phase at the zone level.
+* Set the rule action to `rewrite`.
+* Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set, add, or remove header).
+* Deploy the rule to the `http_response_headers_transform` phase at the zone level.
 
 ## Procedure
 
@@ -26,9 +26,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 ## Example requests
 
-<details>
-<summary>Example: Set an HTTP response header to a static value</summary>
-<div>
+{{<details header="Example: Set an HTTP response header to a static value">}}
 
 The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -100,12 +98,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Set an HTTP response header to a dynamic value</summary>
-<div>
+{{<details header="Example: Set an HTTP response header to a dynamic value">}}
 
 The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a dynamic value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -177,12 +172,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Add a <code>set-cookie</code> HTTP response header with a static value</summary>
-<div>
+{{<details header="Example: Add a `set-cookie` HTTP response header with a static value">}}
 
 The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — adding a `set-cookie` HTTP response header with a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response.
 
@@ -254,13 +246,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-
-<details>
-<summary>Example: Remove an HTTP response header</summary>
-<div>
+{{<details header="Example: Remove an HTTP response header">}}
 
 The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP response header modification rule — removing an HTTP response header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -330,8 +318,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

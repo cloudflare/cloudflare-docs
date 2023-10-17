@@ -17,9 +17,7 @@ You should provide a build command to tell Cloudflare Pages how to build your ap
 
 Build directories indicates where your project's build command outputs the built version of your Cloudflare Pages site. Often, this defaults to the industry-standard `public`, but you may find that you need to customize it.
 
-<details>
-<summary>Understanding your build configuration</summary>
-<div>
+{{<details header="Understanding your build configuration">}}
 
 The build command is provided by your framework. For example, the Gatsby framework uses `gatsby build` as its build command. When you are working without a framework, leave the **Build command** field blank.
 
@@ -27,8 +25,7 @@ The build directory is generated from the build command. Each framework has its 
 
 The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
-</div>
-</details>
+{{</details>}}
 
 ## Framework presets
 
