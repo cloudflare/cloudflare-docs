@@ -18,7 +18,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 
-5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

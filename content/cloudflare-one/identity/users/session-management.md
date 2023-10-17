@@ -14,7 +14,7 @@ When users log in to an application protected by Access, Access generates two se
 
 | Token                    | Description                                                        | Storage                                                              |
 | ------------------------ | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| **Global session token** | Establishes the maximum amount of time for a user’s Access session | Your Cloudflare [team domain](/cloudflare-one/glossary/#team-domain) |
+| **Global session token** | Establishes the maximum amount of time for a user’s Access session | Your Cloudflare {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} |
 | **Application token**    | Establishes a session for a specific application                   | The hostname of the application protected                            |
 
 {{</table-wrap>}}

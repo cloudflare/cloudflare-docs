@@ -12,7 +12,7 @@ Location-based policies require that you send DNS requests to a [location-specif
 
 ## Filter DoH requests by location
 
-Location-based policies require that you send DNS requests to a unique [DoH endpoint](/cloudflare-one/glossary/#doh-subdomain) assigned to the location:
+Location-based policies require that you send DNS requests to a unique {{<glossary-tooltip term_id="doh-subdomain">}}DoH endpoint{{</glossary-tooltip>}} assigned to the location:
 
 ```txt
 https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query
@@ -20,7 +20,7 @@ https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query
 
 ### Prerequisites
 
-Obtain your location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
+Obtain your location's {{<glossary-tooltip term_id="doh-subdomain">}}DoH subdomain{{</glossary-tooltip>}}.
 
 ### Configure browser for DoH
 
@@ -230,7 +230,7 @@ Steps 1-3 above only need to be completed once, while Steps 4-5 below would occu
 
 ### 4. Generate a DoH token for the user
 
-Request a DoH token for the user, using your service token to authenticate into your [team domain](/cloudflare-one/glossary/#team-domain).
+Request a DoH token for the user, using your service token to authenticate into your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}}.
 
 ```bash
 curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \

@@ -15,7 +15,7 @@ The `CF_Authorization` cookie contains the user's identity in the form of a JSON
 
 Two tokens are generated:
 
-- **Global session token**: a token generated when a user logs in to Access. This token is stored as a cookie at your [team domain](/cloudflare-one/glossary/#team-domain) (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
+- **Global session token**: a token generated when a user logs in to Access. This token is stored as a cookie at your {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
 
 - [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): a token generated for each application that a user reaches. This token is stored as a cookie on the protected domain (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/authorization-cookie/validating-json) on your origin.
 
@@ -92,7 +92,7 @@ The Cookie Path Attribute adds the application's path URL to the `CF_Authorizati
 
 ## Allow third-party cookies in the browser
 
-By default, some browsers block all third-party cookies in private browsing mode, including the `CF_Authorization` cookie. For XHR requests to work in private windows, you will need to exempt your application and [team domain](/cloudflare-one/glossary/#team-domain) from the browser's tracking protection system.
+By default, some browsers block all third-party cookies in private browsing mode, including the `CF_Authorization` cookie. For XHR requests to work in private windows, you will need to exempt your application and {{<glossary-tooltip term_id="team-domain">}}team domain{{</glossary-tooltip>}} from the browser's tracking protection system.
 
 To enable third-party cookies for an Access application:
 

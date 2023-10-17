@@ -36,7 +36,7 @@ Instructs the client to direct all DNS queries to a specific [Gateway DNS locati
 
 **Value Type:** `string`
 
-**Value:** Your [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
+**Value:** Your {{<glossary-tooltip term_id="doh-subdomain">}}DoH subdomain{{</glossary-tooltip>}}.
 
 ## Optional fields
 
@@ -48,8 +48,8 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-* `1dot1` — Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh-subdomain). All other traffic is handled by your device's default mechanisms.
-* `warp` — (default) All traffic sent through [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
+* `1dot1` — Gateway enforcement of DNS policies only through {{<glossary-tooltip term_id="doh-subdomain">}}DoH{{</glossary-tooltip>}}. All other traffic is handled by your device's default mechanisms.
+* `warp` — (default) All traffic sent through {{<glossary-tooltip term_id="cloudflare-gateway">}}Cloudflare Gateway{{</glossary-tooltip>}} via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
 
 New service modes such as **Proxy only** are not supported as a value and must be configured in Zero Trust.
 
