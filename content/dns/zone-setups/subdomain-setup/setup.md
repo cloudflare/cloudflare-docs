@@ -109,8 +109,9 @@ If you have not yet created a DNS record covering your child domain in the paren
 {{<tab label="child is full or secondary" no-code="true">}}
  
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain’s Cloudflare account or another account.
-2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup, adding the Cloudflare nameservers as `NS` records at your external DNS provider.
-3. Within a short period of time, the child domain should be active.
+2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
+3. After creating the DNS records on the child zone, add the Cloudflare nameservers as `NS` records at your external DNS provider.
+4. Within a short period of time, the child domain should be active.
  
 {{</tab>}}
 {{<tab label="child is partial" no-code="true">}}
