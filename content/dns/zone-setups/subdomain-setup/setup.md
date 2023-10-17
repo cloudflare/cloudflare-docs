@@ -42,17 +42,23 @@ When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to 
 
 If the parent domain is using a [full setup](/dns/zone-setups/full-setup/)[^1], your child domain setup depends on whether the child domain already exists.
 
+{{<Aside type="note">}}
+
+The following steps are similar if your Cloudflare parent zone is in a secondary setup, with the only difference that you will use your external primary DNS provider to make any necessary adjustments to DNS records.
+
+{{</Aside>}}
+
 ### Subdomain does not exist in the parent domain
 
-If you have not yet created a DNS record covering your child domain in the parent domain:
+If you have not yet created a DNS record covering your child domain in the parent zone:
 
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
-3. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records in the parent zone for the subdomain you want to delegate.
+3. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records for the subdomain you want to delegate.
 
     For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
 
-    | **Type** | **Name** | **Content** | 
+    | **Type** | **Name** | **Content** |
     | --- | --- | --- |
     | `NS` | www | john.ns.cloudflare.com |
     | `NS` | www | melinda.ns.cloudflare.com |
@@ -63,7 +69,7 @@ If you have not yet created a DNS record covering your child domain in the paren
 
 ### Subdomain already exists in the parent domain
 
-If you have already created a DNS record covering your child domain in the parent domain:
+If you have already created a DNS record covering your child domain in the parent zone:
 
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. In your child domain, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your child domain. This includes all DNS records deeper than the delegated subdomain, meaning that if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
@@ -71,12 +77,12 @@ If you have already created a DNS record covering your child domain in the paren
     {{<Aside type="note">}}Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
     {{</Aside>}}
 
-3. In the parent domain, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
-4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
+3. If the parent zone is in Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
+4. In the child domain zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 5. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
 6. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records).
 7. Within the **DNS** > **Records** of the parent zone, leave one address record and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
-8. Using the Cloudflare API, [send a `PATCH` request](/api/operations/dns-records-for-a-zone-patch-dns-record) to change the type of the last address record to `NS` and its content to one of the child domain's nameserver names.
+8. Change the type of the last address record to `NS` and its content to one of the child domain's nameserver names. If the parent domain is in Cloudflare, use [a `PATCH` request](/api/operations/dns-records-for-a-zone-patch-dns-record) to achieve this.
 7. Within the **DNS** > **Records** of the parent zone, [create](/dns/manage-dns-records/how-to/create-dns-records/) the second `NS` record in the parent zone for the subdomain you want to delegate.
 
     For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
