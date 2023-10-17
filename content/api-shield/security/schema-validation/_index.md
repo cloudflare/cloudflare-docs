@@ -156,4 +156,4 @@ The supported content-type format is `application/json`. The code must validate 
 
 ## Availability
 
-Schema Validation is only available for Enterprise customers. If you are interested in using this feature, contact your account team.
+Schema Validation is only available for Enterprise customers.
