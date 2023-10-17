@@ -7,7 +7,7 @@ layout: single
 
 {{<heading-pill style="beta">}} Cloudflare Advanced DNS Protection {{</heading-pill>}}
 
-Cloudflare Advanced DNS Protection (beta), powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), provides stateful protection against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/).
+Cloudflare Advanced DNS Protection {{<inline-pill style="beta">}}, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), provides stateful protection against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/).
 
 ## How it works
 
