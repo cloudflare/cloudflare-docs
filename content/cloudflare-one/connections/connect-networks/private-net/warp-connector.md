@@ -21,14 +21,17 @@ Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables
       subgraph subnet1[Subnet 10.0.0.0/24]
         router1["Device running 
         WARP connector
-        10.0.0.1"]<-->device1["Device
+        10.0.0.1"]<-->device1a["SIP server
         10.0.0.2"]
+
       end
       subgraph subnet2[Subnet 192.168.1.0/24]
         router2["Device running 
         WARP connector
-        192.168.1.97"]<-->device2["Device
+        192.168.1.97"]<-->device2a["SIP phone
         192.168.1.100"]
+        router2<-->device2b["SIP phone
+        192.168.1.101"]
       end
       router1<--->C((Cloudflare))<--->router2
 
@@ -84,7 +87,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       $ cd /var/lib/cloudflare-warp
       $ sudo vim mdm.xml
       ```
-    2. Add the following text to the file. Make sure to fill in your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}, the Client ID and Client Secret of your [service token](#1-create-a-service-token), and the WARP connector token value (shown in the dashboard). As soon as you save this file the WARP client will attempt to register with the provided credentials.
+    2. Add the following text to the file. Make sure to fill in your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}, the Client ID and Client Secret of your [service token](#1-create-a-service-token), and the WARP connector token value (shown in the dashboard). As soon as you save this file, WARP will automatically register with the provided credentials.
 
       ```txt
       ---
@@ -104,15 +107,28 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
     3. To verify the registration:
       ```sh
       $ warp-cli account
+      Account type: Team
+      Device ID: f174e90a-fafe-4643-bbbc-4a0ed4fc8415
+      Public key: 4w5uugfh0q03nrmcn95ltfzeghfzuhl75o7pruyd0h7z9ar9x6doxwq50aszar5kd
+      Account ID: 699d98642c564d2e855e9661899b7252
+      Organization: <TEAM-NAME>
       ```
+      If the registration did not go through, run `sudo systemctl restart warp-svc.service`.
 
-      If the registration did not go through, [restart the WARP service](#restart-warp).
+    4. Verify that WARP is connected to Cloudflare:
+      ```sh
+      $ warp-cli status
+      Status update: Connected
+      Success
+      ```
+      If WARP is disconnected, run `warp-cli connect`.
+
 {{<Aside type="warning" header="Warning">}}
 If you are managing the deployment remotely over SSH, your connection may drop when you register the WARP connector. Because the connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will be routed to Cloudflare instead of via the server's public IP and will timeout your existing connection. You can work around this issue by temporarily adding your home IP to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
-
 {{</Aside>}}
+
 9. Select **Next**.
-10. In **CIDR**, enter the private IPv4 address range that you wish to route through this WARP connector (for example, `10.0.0.0/24`). IPv6 is not supported at this time.
+10. In **CIDR**, enter the private IPv4 address range that you wish to route through this WARP connector (for example, `10.0.0.0/24`). WARP connector does not currently support IPv6 routes.
 
 {{<Aside type="note">}}
 If you do not already have a private network range, you can choose a subnet from one of these [pre-defined CIDRs](https://datatracker.ietf.org/doc/html/rfc1918#section-3).
@@ -122,7 +138,7 @@ If you do not already have a private network range, you can choose a subnet from
 
 12. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that your CIDR is routing through the WARP tunnel. For instructions on how to do this, refer to [Route private network IPs through WARP](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp).
 
-13. Repeat these steps for subnet `192.168.1.0/24`.
+13. Repeat these steps to install an additional WARP connector on subnet `192.168.1.0/24`.
 
 ## 5. Configure the host
 
@@ -187,15 +203,17 @@ If you installed WARP connector on another machine, you will need to manually co
         device--alternate gateway-->warp["Device running
         WARP connector
         10.0.0.100"]
+        -->router2(["Router
+        10.0.0.1"])
 
       end
       router--->I{Internet}
-      warp--->C((Cloudflare))
+      router2-->C((Cloudflare))
 ```
 
 #### Route all traffic
 
-You can configure all traffic on a device to egress through the WARP connector. All traffic will be filtered by your Gateway network policies.
+You can configure all traffic on a device to egress through the WARP connector with its local source IP. All traffic will be filtered by your Gateway network policies.
 
 {{<tabs labels="Linux | macOS | Windows ">}}
 {{<tab label="linux" no-code="true">}}
@@ -228,7 +246,7 @@ You can configure only certain routes to egress through WARP connector. For exam
 {{<tab label="linux" no-code="true">}}
 
 ```sh
-$ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
+$ sudo ip route add <DESTINATION-IP> via <WARP-CONNECTOR-IP> dev eth0
 ```
 
 {{</tab>}}
