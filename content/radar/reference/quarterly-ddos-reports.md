@@ -9,6 +9,8 @@ Quarterly DDoS threat reports provide a comprehensive overview of {{<glossary-to
 
 Thanks to our vast network, Cloudflare provides insights on the evolving threat landscape, including variations in attack sizes, techniques, top source countries, top targeted countries and targeted industries. Each report presents a global outlook, dives into significant attacks and campaigns, and explores shifts in DDoS tactics, offering a blend of data analysis and insights to better understand the cyber threat environment.
 
+You can find the latest quarterly DDoS threats reports in the [**Reports**](https://radar.cloudflare.com/reports) section of Cloudflare Radar.
+
 ---
 
 ## Methodologies
