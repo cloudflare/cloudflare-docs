@@ -95,13 +95,13 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       ---
       <dict>
       <key>organization</key>
-      <string><TEAM-NAME></string>
+      <string>myteam</string>
       <key>auth_client_id</key>
-      <string><CLIENT-ID></string>
+      <string>b33d5a65a6e801cd875scefff5908457f29.access</string>
       <key>auth_client_secret</key>
-      <string><CLIENT-SECRET></string>
+      <string>cdb5fa2721018c39cfaf8ec7fca9b5f62860ff5c584a89121241c6d0c83878124591cce23</string>
       <key>warp_connector_token</key>
-      <string><WARP-CONNECTOR-TOKEN></string>
+      <string>fVTLilTWgMiF3TMxTIMM3nMU2NsixOYTTDHW1IamOMyORL0Y0jUcMWAoZDZhVhLVdn2pTDhy0VFRWZdE22rQCFNN6jQUoOx0eIV0ehcj5RyTZl5PYRwU25wMMi0kDGUS2XZn5W0eJS3mZXS9DkUTJatMNiMZDtNb1TmtmMptENJ20WY0NmdYmIBLoVhtToFichIjtiMnTZIMMOYOGZmpATzzEm2MjhnC6tWMHwNwFGhoIN==</string>
       </dict>
       ```
     3. To verify the registration:
@@ -111,7 +111,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       Device ID: f174e90a-fafe-4643-bbbc-4a0ed4fc8415
       Public key: 4w5uugfh0q03nrmcn95ltfzeghfzuhl75o7pruyd0h7z9ar9x6doxwq50aszar5kd
       Account ID: 699d98642c564d2e855e9661899b7252
-      Organization: <TEAM-NAME>
+      Organization: myteam
       ```
       If the registration did not go through, run `sudo systemctl restart warp-svc.service`.
 
@@ -124,7 +124,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       If WARP is disconnected, run `warp-cli connect`.
 
 {{<Aside type="warning" header="Warning">}}
-If you are managing the deployment remotely over SSH, your connection may drop when you register the WARP connector. Because the connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will be routed to Cloudflare instead of via the server's public IP and will timeout your existing connection. You can work around this issue by temporarily adding your home IP to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+If you are managing the deployment remotely over SSH, your connection may drop when you register the WARP connector. Because the connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will be routed to Cloudflare instead of via the server's public IP and will timeout your existing connection. You can work around this issue by temporarily adding the public IP of your local machine to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 {{</Aside>}}
 
 9. Select **Next**.
