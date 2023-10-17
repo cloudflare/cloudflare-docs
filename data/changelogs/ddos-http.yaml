@@ -7,7 +7,7 @@ entries:
 - publish_date: '2023-10-17'
   individual_page: true
   scheduled: true
-  link: '/ddos-protection/change-log/scheduled-changes/'
+  link: '/ddos-protection/change-log/http/scheduled-changes/'
 - publish_date: '2023-10-11'
   individual_page: true
   link: '/ddos-protection/change-log/http/2023-10-11/'
