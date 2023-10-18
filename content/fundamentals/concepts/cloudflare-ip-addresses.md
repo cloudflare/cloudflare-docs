@@ -8,7 +8,7 @@ weight: 3
 
 Cloudflare has several [IP address ranges](https://www.cloudflare.com/ips/) which are shared by all proxied hostnames.
 
-Together, these IP addresses form the backbone of our [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), helping distribute traffic amongst various edge network servers.
+Together, these IP addresses form the backbone of our [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), helping distribute traffic amongst various edge network servers. The IP addresses listed are those which you may receive requests to your origin server from. Cloudflare has other IP ranges not listed here for other products and services, these other IP addresses will not make connections from Cloudflare to your origin.
 
 ## Allow Cloudflare IP addresses
 
