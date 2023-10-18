@@ -5,7 +5,7 @@ title: Continuous integration
 
 # Continuous integration
 
-Integrate Workers to your existing services and platforms to optimize your continuous integration and continuous deployment flow. On this page, review some of the integrations supported for Cloudflare Workers.
+Integrate Workers to your existing services and platforms to optimize your continuous integration and continuous deployment flow. On this page, review some of the supported integrations for Cloudflare Workers.
 
 ## GitHub
 
