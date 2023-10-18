@@ -33,7 +33,7 @@ $ npx wrangler dev
 
 {{<Aside type="note">}}
 
-Developing against remote resources will count towards billable usage.
+Developing against remote resources will count towards billable usage. `wrangler dev --remote` will leverage remote production resources specified in your `wrangler.toml`. These resources will use production data, and will count towards account usage for billing purposes.
 
 {{</Aside>}}
 
