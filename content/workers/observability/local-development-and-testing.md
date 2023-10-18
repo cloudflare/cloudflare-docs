@@ -53,7 +53,7 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 {{</Aside>}}
 
-## Testing Workers
+## Test Workers
 
 ### Integration testing
 
