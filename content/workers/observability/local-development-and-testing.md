@@ -58,3 +58,7 @@ There is a bug associated with how outgoing requests are handled when using `wra
 ### Integration testing
 
 Wrangler offers an experimental API, `unstable_dev`, that will allow you to start a server for integration testing. For more information and examples, read the [`unstable_dev` guide](/workers/wrangler/api/#unstable_dev).
+
+## Related resources
+
+* [Log from Workers](/workers/observability/log-from-workers/) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
