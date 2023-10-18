@@ -8,7 +8,7 @@ pcx_content_type: concept
 
 Cloudflare Workers can be fully developed and tested locally - providing confidence that the applications you develop locally work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to test against remote resources. Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
-In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/api/), [D1](/d1/), and [Durable Objects](/durable-objects/).
+In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
 
 
 ## Starting a local development server
