@@ -16,7 +16,7 @@ These are the only steering policies available to non-Enterprise customers who h
 
 Failover steering uses the pool order to determine failover priority (the failover order).
 
-Failover directs traffic from unhealthy pools — determined by [health monitors](/load-balancing/understand-basics/monitors/) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/load-balancing/reference/common-configurations/#active---passive-failover).
+Failover directs traffic from unhealthy pools — determined by [health monitors](/load-balancing/monitors/) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/load-balancing/reference/common-configurations/#active---passive-failover).
 
 If all pools are marked unhealthy, Load Balancing will direct traffic to the fallback pool. The default fallback pool is the last pool listed in the Load Balancing configuration.
 

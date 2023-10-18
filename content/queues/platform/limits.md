@@ -41,6 +41,6 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 
 <sup>5</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 
-<sup>6</sup> Refer to [Worker limits](/workers/platform/limits/#cpu-time).  
+<sup>6</sup> Refer to [Workers limits](/workers/platform/limits/#cpu-time).
 
-Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+{{<render file="_limits_increase.md" productFolder="workers">}}

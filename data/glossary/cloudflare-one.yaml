@@ -162,9 +162,7 @@ entries:
 
 - term: team name
   general_definition: |-
-    the customizable portion of your team domain, allowing you to personalize your Cloudflare Zero Trust configuration.
-
-    You can view your team name in Cloudflare Zero Trust under **Settings** > **Account**.
+    the customizable portion of your team domain, allowing you to personalize your Cloudflare Zero Trust configuration. You can view your team name in Zero Trust under **Settings** > **Custom Pages**.
 
     | team domain                             | team name        |
     | --------------------------------------- | ---------------- |

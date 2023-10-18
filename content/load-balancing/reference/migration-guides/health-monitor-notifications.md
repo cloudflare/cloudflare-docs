@@ -6,7 +6,7 @@ weight: 2
 
 # Health monitor notifications
 
-Cloudflare is migrating the notifications used by load balancing [health monitors](/load-balancing/understand-basics/monitors/) to use Cloudflare's centralized [Notifications Service](/notifications/).
+Cloudflare is migrating the notifications used by load balancing [health monitors](/load-balancing/monitors/) to use Cloudflare's centralized [Notifications Service](/notifications/).
 
 ## What is changing and why?
 

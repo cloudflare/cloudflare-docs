@@ -8,19 +8,15 @@ weight: 5
 
 An API schema defines which API requests are valid based on several request properties like target endpoint, path or query variable format, and HTTP method.
 
-Schema Validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
+Schema Validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema or select from a list of learned schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
-We are currently running a private beta for Schema Validation 2.0. For help configuring the previous version of Schema Validation for one or more hosts using the dashboard, refer to [Configure Classic Schema Validation](/api-shield/reference/classic-schema-validation/).
-
-{{<Aside type="note">}}
-If you are in the Schema Validation 2.0 beta, you can make changes to your settings but you cannot add any new Classic Schema Validation schemas. 
+Cloudflare has recently launched Schema Validation 2.0. For help configuring the previous version of Schema Validation for one or more hosts using the dashboard, refer to [Configure Classic Schema Validation](/api-shield/reference/classic-schema-validation/). You can make changes to your Classic Schema Validation settings but you cannot add any new schemas.
 
 You can migrate to Schema Validation 2.0 manually by uploading your schemas to the new system, or you can wait for a future release where we will add an easy migrate option per-schema.
-{{</Aside>}}
 
 ## Process
 
-Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. You can add endpoints while uploading a schema, or you can add them from [API Discovery](/api-shield/security/api-discovery/).
+Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. Uploading a schema will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
 
 ### Add validation by uploading a schema
 
@@ -36,13 +32,40 @@ Endpoints must be added to [Endpoint Management](/api-shield/management-and-moni
 Changes may take a few minutes to process depending on the number of added endpoints.
 {{</Aside>}}
 
-### Add validation by applying a learned schema
+### Add validation by applying a learned schema to a single endpoint
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
 3. Go to **Schema Validation** and filter by the learned schema available.
 4. Select **Apply learned schema**.
 5. Choose an action and select **Apply schema**.
+
+### Add validation by applying a learned schema to an entire hostname
+
+At this time, learned schemas will not overwrite customer-uploaded schemas. If an endpoint is covered by a customer-uploaded schema and also appears in a learned schema, the **Changes** field is set to `Unaffected`.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Go to **Schema Validation** and select **Add Validation**.
+4. Select **Apply learned schema**.
+5. Choose a hostname and review the endpoints that will be protected by the learned schema. 
+6. (Optional) Change the action if a request does not match the schema.
+7. Select **Apply schema**.
+   
+{{<Aside type="note">}}
+If an endpoint is currently protected by a learned schema, the date of the last applied learned schema will be shown in the current schema field.
+{{</Aside>}}
+
+### Change the action of an entire schema
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Go to **Schema Validation** and select the schema in the Schema list.
+4. Check the multi-select box to select the endpoints shown on the current page.
+5. Choose **Select all endpoints**.
+6. Select **Change Action**.
+7. Choose an action from the dropdown menu.
+8. Select **Set action**.
 
 ### Change the global default action of Schema Validation
 
@@ -133,4 +156,6 @@ The supported content-type format is `application/json`. The code must validate 
 
 ## Availability
 
-Schema Validation is only available for Enterprise customers. If you are interested in using this feature, contact your account team.
+Schema Validation is available for all API Shield customers. 
+
+Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.

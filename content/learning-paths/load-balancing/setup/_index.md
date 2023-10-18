@@ -21,5 +21,5 @@ By the end of this module, you will be able to:
 ## Prerequisites
 
 - Multiple origin servers, either physical or cloud-based.
-- Access to Load Balancing, available as an [add-on](/load-balancing/how-to/enable-load-balancing/) for any type of account.
+- Access to Load Balancing, available as an [add-on](/load-balancing/get-started/enable-load-balancing/) for any type of account.
 - Two hostnames, one for test traffic and the other for production traffic.

@@ -11,7 +11,7 @@ meta:
 
 {{<glossary-definition term_id="origin pool">}}
 
-For more background information on pools, refer to [Origin pools](/load-balancing/understand-basics/pools/).
+For more background information on pools, refer to [Origin pools](/load-balancing/pools/).
 
 ---
 

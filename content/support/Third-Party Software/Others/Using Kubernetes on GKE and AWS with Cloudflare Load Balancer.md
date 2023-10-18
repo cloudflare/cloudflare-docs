@@ -324,13 +324,13 @@ For creating Cloudflare Load Balancer we will use the following IP addresses whi
 
 ### Step 1: Create Hostname
 
-[Create a load balancer](/load-balancing/how-to/create-load-balancer/) and give it a public hostname. If you are Load Balancing non-HTTP(S) services set it to non-proxied mode by clicking on the cloud icon (orange -> grey).
+[Create a load balancer](/load-balancing/load-balancers/create-load-balancer/) and give it a public hostname. If you are Load Balancing non-HTTP(S) services set it to non-proxied mode by clicking on the cloud icon (orange -> grey).
 
 For my Load Balancer I used hostname _cloudflarelb.usualwebsite.com_
 
 ### Step 2: Create Origin Pools
 
-Let’s [create two origin pools](/load-balancing/how-to/create-pool/):
+Let’s [create two origin pools](/load-balancing/pools/create-pool/):
 
 -   GKE:
     -   Pool Name: gke-us-west1
@@ -345,7 +345,7 @@ My primary pool is gke-us-west1 with failover to aws-us-east-1. All my traffic g
 
 ### Step 3: Create Health Checks
 
-We’ll also [create a health check](/load-balancing/how-to/create-monitor/) here to check the health of the service running on our nodes. The default settings should be OK to begin with, but more complex health checks can also be customized under “Advanced Monitoring Settings”.
+We’ll also [create a health check](/load-balancing/monitors/create-monitor/) here to check the health of the service running on our nodes. The default settings should be OK to begin with, but more complex health checks can also be customized under “Advanced Monitoring Settings”.
 
 Save the pool and wait a few moments for the health check to detect the pool as healthy. If it does not confirm that the checks are being run against the correct endpoint and are reachable by the public Internet.
 
