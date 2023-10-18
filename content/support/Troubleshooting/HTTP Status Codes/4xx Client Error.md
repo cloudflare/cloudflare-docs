@@ -178,7 +178,7 @@ At this point, both Cloudflare and the origin server have received an acknowledg
 
 So, depending on the timeout value on the client-side, there will be 3 different scenarios along with each own status code generated :
 
-* If the client has a shorter timeout (less than 30s), they will give up the connection, and thus Cloudflare returns the 499 error.
+* If the client has a shorter timeout (less than 30s), they will give up the connection, and thus Cloudflare logs the 499 error.
 * If the client has a higher timeout (more than 30s), once the TCP connection has been successfully established, the HTTP transaction will be continued as per normal. In this case, Cloudflare returns a normal status code (HTTP 200).
 * If the client has a higher timeout and Cloudflare was unable to establish the TCP handshake with the Origin server, we will return HTTP 522.
 
