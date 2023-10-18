@@ -17,7 +17,7 @@ Make sure you are already logged in and generate an API token that will allow Wr
 
 </br>
 
-You will need to choose the Account and Zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
+You will need to choose the account and zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
 
 ## Deploy your Worker
 
