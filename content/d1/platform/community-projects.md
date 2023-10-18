@@ -72,7 +72,7 @@ Instead of running the `wrangler d1 execute` command in your terminal every time
 `L1` is a package that brings some Cloudflare Worker ecosystem bindings into PHP and Laravel via the Cloudflare API. It provides interaction with D1 via PDO, KV and Queues, with more services to add in the future, making PHP integration with Cloudflare a real breeze.
 
 * [Github: renoki-co/l1](https://github.com/renoki-co/l1)
-* [Packagist: renoki-co/l1](https://packagist.org/packages/renoki-co/l1)
+* [Packagist](https://packagist.org/packages/renoki-co/l1)
 
 ## Feedback
 
