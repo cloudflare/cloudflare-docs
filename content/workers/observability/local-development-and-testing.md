@@ -11,7 +11,7 @@ Cloudflare Workers can be fully developed and tested locally - providing confide
 In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
 
 
-## Starting a local development server
+## Start a local development server
 
 {{<Aside type="note">}}
 
