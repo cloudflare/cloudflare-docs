@@ -6,7 +6,7 @@ weight: 5
 
 # Query Vectors
 
-Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/learning/insert-vectors/#distance-metrics).
+Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/learning/create-indexes/#distance-metrics).
 
 ## Example query
 

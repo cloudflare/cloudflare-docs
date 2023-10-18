@@ -111,7 +111,7 @@ export default {
     const answer = await ai.run(
       '@cf/meta/llama-2-7b-chat-int8',
       {
-        inputs: [
+        messages: [
           { role: 'user', content: `What is the square root of 9?` }
         ]
       }
@@ -214,7 +214,7 @@ app.get('/', async (c) => {
   const answer = await ai.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
-      inputs: [
+      messages: [
         { role: 'user', content: `What is the square root of 9?` }
       ]
     }
@@ -297,7 +297,7 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
@@ -334,7 +334,7 @@ app.get('/', async (c) => {
   const { response: answer } = await ai.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
-      inputs: [
+      messages: [
         ...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
         { role: 'system', content: systemPrompt },
         { role: 'user', content: question }

@@ -39,7 +39,7 @@ A full Turnstile Challenge Token Flow consists of a few things:
 * A challenge is solved on the front end and a token is harvested (solved).
 * The token is passed to siteverify, and it is consumed (siteverified).
 
-Visitor Solve Rate is the percentage of tokens that were issued but have not necessarily been siteverified compared to issued challenges.
+Visitor Solve Rate is the percentage of tokens that were solved but have not necessarily been siteverified compared to issued challenges.
 
 {{</faq-answer>}}
 {{</faq-item>}}

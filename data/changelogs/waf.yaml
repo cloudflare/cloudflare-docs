@@ -2,6 +2,9 @@
 link: "/waf/change-log/"
 productName: WAF
 entries:
+- publish_date: '2023-10-11'
+  individual_page: true
+  link: '/waf/change-log/2023-10-11---emergency-release/'
 - publish_date: '2023-10-03'
   individual_page: true
   link: '/waf/change-log/2023-10-04---emergency-release/'
@@ -11,7 +14,7 @@ entries:
 - publish_date: '2023-09-22'
   individual_page: true
   link: '/waf/change-log/2023-09-22---emergency-release/'
-- publish_date: '2023-09-18'
+- publish_date: '2023-10-10'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'

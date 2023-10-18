@@ -15,7 +15,7 @@ To use proximity steering on a load balancer, you first need to add GPS coordina
 ## When to add proximity steering
 
 - For new pools, add GPS coordinates when you create a pool.
-- For existing pools, add GPS coordinates when [managing pools](/load-balancing/how-to/create-pool/#edit-a-pool) or in the **Add Traffic steering** step of [creating a load balancer](/load-balancing/how-to/create-load-balancer/).
+- For existing pools, add GPS coordinates when [managing pools](/load-balancing/pools/create-pool/#edit-a-pool) or in the **Add Traffic steering** step of [creating a load balancer](/load-balancing/load-balancers/create-load-balancer/).
 
 ## How to add proximity steering
 

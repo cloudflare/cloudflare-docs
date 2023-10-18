@@ -5,7 +5,9 @@ _build:
   list: never
 ---
 
-DNS locations are usually physical entities like schools offices, homes, retail stores, movie theatres, or data centers. The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router.
+{{<glossary-definition term_id="DNS location">}}
+
+The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router.
 
 To add a DNS location to Gateway:
 

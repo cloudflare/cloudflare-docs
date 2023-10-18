@@ -21,9 +21,7 @@ This guide will instruct you through:
 
 {{<Aside type="note" header="Workers Paid plan required">}}
 
-Hyperdrive will be automatically available to all [Workers paid plans](/workers/platform/pricing/#workers).
-
-During the public beta, your account will need to be explicitly enabled by the Cloudflare team.
+Hyperdrive is available to all users on the [Workers paid plan](/workers/platform/pricing/#workers).
 
 {{</Aside>}}
 

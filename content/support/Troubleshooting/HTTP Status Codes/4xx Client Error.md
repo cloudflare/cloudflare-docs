@@ -157,13 +157,28 @@ Typically search engines (e.g. Google) and ISP (e.g. ATT) are the ones affected 
 
 ### **499 Client Close Request**
 
-Nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making server unable to send a status code back.
+nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making server unable to send a status code back.
 
 -   This will be shown in [Cloudflare Logs](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-REST-API) and status code analytics for Enterprise customers.
 
 {{<Aside type="tip">}}
-Since Cloudflare was built on NGINX, we also have a 499 HTTP code in ELS
+Since Cloudflare was built on nginx, we also have a 499 HTTP code in Cloudflare Logs
 and analytics for connections which go away before we have finished
 processing the request. It is expected behavior to see these at your
 logs intermittently as clients close connections.
 {{</Aside>}}
+
+To provide more context, a TCP connection must be established between Cloudflare and the website's Origin server before any higher protocol (in this case is HTTP) started the "conversation". In order to establish a connection, TCP uses a three-way handshake :
+
+* SYN: Cloudflare sends three SYN packets to the origin server.
+* SYN+ACK: In response, the origin server replies with an SYN+ACK.
+* ACK: Finally, Cloudflare sends an ACK back to the origin server.
+
+At this point, both Cloudflare and the origin server have received an acknowledgment of the connection, and communication is established. However, if the origin server does not send an SYN+ACK back to Cloudflare **within 15 seconds, Cloudflare will retry one more time (another 15 seconds timeout)**.
+
+So, depending on the timeout value on the client-side, there will be 3 different scenarios along with each own status code generated :
+
+* If the client has a shorter timeout (less than 30s), they will give up the connection, and thus Cloudflare logs the 499 error.
+* If the client has a higher timeout (more than 30s), once the TCP connection has been successfully established, the HTTP transaction will be continued as per normal. In this case, Cloudflare returns a normal status code (HTTP 200).
+* If the client has a higher timeout and Cloudflare was unable to establish the TCP handshake with the Origin server, we will return HTTP 522.
+

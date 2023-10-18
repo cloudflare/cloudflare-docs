@@ -11,8 +11,6 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 
 {{</Aside>}}
 
-
-
 | Feature                                            | Limit                                        |
 | -------------------------------------------------- | -------------------------------------------- | 
 | Databases                                          | 50,000 (Workers Paid) <sup>beta</sup> / 10 (Free) |
@@ -42,4 +40,4 @@ Refer to the [Storage options guide](/workers/learning/storage-options/) to revi
 
 <sup>1</sup> A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, environmental variable or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to ~5,000 D1 databases to a single Worker script.
 
-Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Not all limits can be increased.
+{{<render file="_limits_increase.md" productFolder="workers">}}

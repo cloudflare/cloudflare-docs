@@ -14,7 +14,7 @@ This page covers examples for the following scenarios:
 
 - Serve images from custom paths
 - Modify existing URLs to be compatible with Image Resizing
-- Add parameters to every image that passes through Image Resizing
+- Pass every image requested on your zone through Image Resizing
 
 To create a rule, log in to the Cloudflare dashboard and select your account and website. Then, select **Rules** > **Transform Rules**.
 
@@ -32,7 +32,7 @@ To direct the request to the origin server, you can check for the string `image-
 
 By default, requests to transform images through Image Resizing are served from the `/cdn-cgi/image/` path.
 
-This example lets you rewrite a request to `example.com/cdn-cgi/image/` to `example.com/images`:
+This example lets you rewrite a request from `example.com/images` to `example.com/cdn-cgi/image/`:
 
 ```txt
 ---
@@ -72,9 +72,9 @@ regex_replace(
 
 Leave the **Query** > **Rewrite to...** > *Static* field empty.
 
-## Add parameters to every image that passes through Image Resizing
+## Pass every image requested on your zone through Image Resizing
 
-This example lets you add `format=auto` to every image that passes through Image Resizing on your zone:
+This example lets you pass every image that is requested on your zone through Image Resizing with the `format=auto` option:
 
 ```
 ---

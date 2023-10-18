@@ -11,7 +11,7 @@ weight: 5
 Available as an add-on to Zero Trust Enterprise plans.
 {{</Aside>}}
 
-Cloudflare Data Loss Prevention (DLP) allows you to scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers and credit card numbers.
+{{<glossary-definition term_id="Cloudflare Data Loss Prevention (DLP)">}}
 
 ## Data-in-transit
 

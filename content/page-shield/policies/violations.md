@@ -3,12 +3,14 @@ title: Policy violations
 pcx_content_type: concept
 weight: 4
 meta:
-  description: Page Shield reports any policy violations to your custom Page Shield policies.
+  description: Page Shield reports any violations to your custom Page Shield policies.
 ---
 
 # Policy violations
 
-Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_). The same information is also available via [GraphQL API](/analytics/graphql-api/).
+Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_).
+
+Information about policy violations is also available via [GraphQL API](/analytics/graphql-api/) and [Logpush](/logs/about/).
 
 ## Review policy violations in the dashboard
 
@@ -64,9 +66,7 @@ query PageShieldReports($zoneTag: string, $datetimeStart: string, $datetimeEnd: 
 }
 ```
 
-<details>
-<summary>Example curl request</summary>
-<div>
+{{<details header="Example curl request">}}
 
 ```bash
 echo '{ "query":
@@ -110,5 +110,12 @@ echo '{ "query":
 --data @-
 ```
 
-</div>
-</details>
+{{</details>}}
+
+## Get policy violations via Logpush
+
+[Cloudflare Logpush](/logs/about/) supports pushing logs to storage services, SIEMs, and log management providers.
+
+Information about Page Shield policy violations is available in the [`page_shield_events` dataset](/logs/reference/log-fields/zone/page_shield_events/).
+
+For more information on configuring Logpush jobs, refer to [Logs: Get started](/logs/get-started/).
