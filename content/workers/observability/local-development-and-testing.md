@@ -21,7 +21,7 @@ Users new to Wrangler CLI and Cloudflare Workers should visit the [Wrangler Inst
 
 {{</Aside>}}
 
-Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts a local server for developing your Worker. Run the following in the folder containing your Worker application:
+Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts a local server for developing your Worker. Make sure you have `npm` installed and run the following in the folder containing your Worker application:
 
 ```sh
 $ npx wrangler dev
