@@ -187,6 +187,10 @@ Presigned URLs can be generated for any S3 operation. After a presigned URL is g
 
 Choosing between presigned URLs and public buckets is dependent on your specific use case. You can also use both if your architecture should use public buckets in one situation and presigned URLs in another. It is useful to note that presigned URLs will expose your account ID and bucket name to whoever gets a copy of the URL. Public bucket URLs do not contain the account ID or bucket name. Typically, you will not share presigned URLs directly with end users or browsers, as presigned URLs are used more for internal applications.
 
+## Limitations
+
+Presigned URLs cannot be used with Custom Domains, they must be used with the `<accountid>.r2.cloudflarestorage.com` S3 API domain.
+
 ## Related resources
 
 - [Create a public bucket](/r2/buckets/public-buckets/)
