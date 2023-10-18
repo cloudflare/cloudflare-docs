@@ -15,18 +15,18 @@ The following in-line DLP policies are commonly used to secure data in uploaded 
 
 The **Allow** action functions as an implicit logger, providing visibility into where your sensitive data is going without impacting the end user experience. The following example scans for your enabled Financial Information profile entries when users upload or download data to file sharing apps.
 
-| Policy name |
-| ---- |
-| Log Financial Information file sharing|
+| Policy name                            |
+| -------------------------------------- |
+| Log Financial Information file sharing |
 
-| Selector | Operator | Value |
-| - | - | - |
-| DLP Profile | in | `Financial Information` |
-| Content Category  | in | `File Sharing` |
+| Selector         | Operator | Value                   |
+| ---------------- | -------- | ----------------------- |
+| DLP Profile      | in       | `Financial Information` |
+| Content Category | in       | `File Sharing`          |
 
-|Action|
-|------|
-|Allow |
+| Action |
+| ------ |
+| Allow  |
 
 {{<render file="gateway/_block-file-types.md">}}
 
