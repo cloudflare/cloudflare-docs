@@ -27,7 +27,7 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. This uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to also test your Worker against additional products like: KV, Durable Objects, WebSockets, and more.
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
 
 ### Developing locally using remote resources and bindings
 
