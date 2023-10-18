@@ -39,7 +39,7 @@ Off-ramps create a direct and secure way to connect into your networks that are 
 
 [Origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) customizes how each pool distributes requests to its associated origins.
 
-You can leverage origin steering policies such as [Least Outstanding Requests](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-outstanding-requests-pools/) and Least Connections to load balance traffic between your servers within a data center. Thi helps you prevent your origin servers from being overwhelmed by a spike in concurrent requests, for example.
+You can leverage origin steering policies such as [least outstanding requests](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-outstanding-requests-pools/) and [least connections](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-connections-origin/) to load balance traffic between your servers within a data center. This helps you prevent your origin servers from being overwhelmed by a spike in concurrent requests, for example.
 
 ---
 

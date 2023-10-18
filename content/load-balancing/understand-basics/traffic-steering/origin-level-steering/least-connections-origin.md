@@ -14,10 +14,6 @@ This steering policy selects an origin by taking into consideration origin weigh
 
 Least connections steering is best to use if your origins are easily overwhelmed by a spike in concurrent requests. It supports [adaptive routing](/load-balancing/understand-basics/adaptive-routing/) and [session affinity](/load-balancing/understand-basics/session-affinity/).
 
-{{<Aside type="note">}}
-Least connections steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-connections/), taking into account connection counts and `random_steering` weights for pools on the load balancer.
-{{</Aside>}}
-
 ## Configure via the API
 
 ```json
@@ -32,6 +28,10 @@ header: Pools
 ```
 
 Refer to the [API documentation](/api/operations/load-balancer-pools-update-pool) for more information on the pool configuration.
+    
+{{<Aside type="note">}}
+Least connections steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-connections/), taking into account connection counts and `random_steering` weights for pools on the load balancer.
+{{</Aside>}}
 
 ## Limitations
 
