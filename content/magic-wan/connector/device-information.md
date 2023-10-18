@@ -43,7 +43,7 @@ To check for Connector metrics:
 
 ### Query metrics with GraphQL
 
-Customers can query Cloudfare’s GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
+Customers can query Cloudflare’s GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
 
 For example:
 
@@ -80,4 +80,4 @@ The metric `average CPU load` is unique and distinctly different from `CPU utili
 
 CPU load is a measure of the number of processes that are currently running and that are waiting to be run on the CPU. Cloudflare collects the one minute load average from the device and converts that into a percentage based on the total number of cores in the CPU. If the Magic WAN Connector CPU has eight cores, and a one minute load average of two, then the average CPU load is 25%. If the average CPU load is above 100%, then there are processes in the queue that are waiting to be executed on the CPU.
 
-Cloudflare is still evaluating the typical CPU load operating range on the MWAN Connector. In general, a healthy range for average CPU load on any device is between 30% and 70%. Customers may experience decreased MWAN Connector performance if the average CPU load is consistently above 100%. 
+Cloudflare is still evaluating the typical CPU load operating range on the MWAN Connector. In general, a healthy range for average CPU load on any device is between 30% and 70%. Customers may experience decreased MWAN Connector performance if the average CPU load is consistently above 100%.
