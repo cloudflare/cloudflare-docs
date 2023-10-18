@@ -26,6 +26,12 @@ Once you have configured a Gateway in the AI Gateway dashboard, click on “API 
 {{<render file="_openai.md">}}
 
 ---
+
+## Azure OpenAI
+
+{{<render file="_azureopenai.md">}}
+
+---
 ## HuggingFace
 
 {{<render file="_huggingface.md">}}
