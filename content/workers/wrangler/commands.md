@@ -41,8 +41,6 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 The following global flags work on every command.
 
-Flags:
-
 {{<definitions>}}
 
 - `--config` {{<type>}}string{{</type>}}
@@ -65,7 +63,7 @@ Flags:
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-$ wrangler docs [COMMAND]
+wrangler docs [COMMAND]
 ```
 
 {{<definitions>}}
@@ -80,7 +78,7 @@ $ wrangler docs [COMMAND]
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-$ wrangler init [NAME] [-y / --yes] [--from-dash]
+wrangler init [NAME] [-y / --yes] [--from-dash]
 ```
 
 {{<definitions>}}
