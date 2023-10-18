@@ -493,6 +493,7 @@
           "title": "Custom lists (IPs, hostnames, ASNs)",
           "link": "/waf/tools/lists/custom-lists/",
           "free": 1,
+          "lite": 2,
           "pro": 2,
           "biz": 5,
           "ent": 10
