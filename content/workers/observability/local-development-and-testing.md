@@ -43,7 +43,7 @@ Developing against remote resources will count towards billable usage.
 $ wrangler dev --remote
 ```
 
-### Customizing `wrangler dev`
+### Customize `wrangler dev`
 
 You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.
 
