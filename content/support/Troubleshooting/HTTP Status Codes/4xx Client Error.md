@@ -157,12 +157,12 @@ Typically search engines (e.g. Google) and ISP (e.g. ATT) are the ones affected 
 
 ### **499 Client Close Request**
 
-Nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making server unable to send a status code back.
+nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making server unable to send a status code back.
 
 -   This will be shown in [Cloudflare Logs](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-REST-API) and status code analytics for Enterprise customers.
 
 {{<Aside type="tip">}}
-Since Cloudflare was built on NGINX, we also have a 499 HTTP code in Cloudflare Logs
+Since Cloudflare was built on nginx, we also have a 499 HTTP code in Cloudflare Logs
 and analytics for connections which go away before we have finished
 processing the request. It is expected behavior to see these at your
 logs intermittently as clients close connections.
