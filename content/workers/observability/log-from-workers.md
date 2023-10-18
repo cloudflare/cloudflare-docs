@@ -80,7 +80,7 @@ $ wrangler tail --format=pretty
  | [Info] Request came from city: Pacifica in country: US
 ```
 
-## Using `wrangler tail`
+## Use `wrangler tail`
 
 With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
