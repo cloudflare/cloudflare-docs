@@ -8,9 +8,9 @@ meta:
 
 # Least connections steering
 
-**Least connections steering** allows you to route traffic to origins that currently have the fewest number of idle or active connections.
+**Least connections steering** allows you to route traffic to origins that currently have the fewest number of open (including idle or active) connections.
 
-This steering policy selects an origin by taking into consideration origin weights, as well as each origin's number of connections. Origins with more connections are weighted proportionately less in relation to others.
+This steering policy selects an origin by taking into consideration origin weights, as well as each origin's number of open connections. Origins with more connections are weighted proportionately less in relation to others.
 
 Least connections steering is best to use if your origins are easily overwhelmed by a spike in concurrent requests. It supports [adaptive routing](/load-balancing/understand-basics/adaptive-routing/) and [session affinity](/load-balancing/understand-basics/session-affinity/).
 
