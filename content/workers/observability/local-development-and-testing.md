@@ -29,7 +29,7 @@ $ npx wrangler dev
 
 `wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
 
-### Developing locally using remote resources and bindings
+### Develop locally using remote resources and bindings
 
 {{<Aside type="note">}}
 
@@ -53,11 +53,62 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 {{</Aside>}}
 
+## Use DevTools
+
+Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. With `wrangler dev` running, press the <kbd>d</kbd> key in your terminal to open a DevTools session connected to your Worker from any Chromium-based browser.
+
+## Debug via breakpoints
+
+As of Wrangler 3.9.0, you can debug via breakpoints in your Worker. Breakpoints provide the ability to see exactly what is happening at a given point in the execution of your Worker. This functionality exists in both DevTools and VSCode.
+
+For more information on breakpoint debugging via Chrome's DevTools read [this article](https://developer.chrome.com/docs/devtools/javascript/breakpoints/).
+
+### Setup VSCode to use breakpoints
+
+To setup VSCode for breakpoint debigging Workers, you'll need to:
+
+1. Create a `.vscode` folder in your project's root folder if one does not exist.
+2. Within that folder create a `launch.json` file with the following contents:
+
+```json
+{
+  "configurations": [
+      {
+          "name": "Wrangler",
+          "type": "node",
+          "request": "attach",
+          "port": 9229,
+          "cwd": "/",
+          "resolveSourceMapLocations": null,
+          "attachExistingChildren": false,
+          "autoAttachChildProcesses": false,
+          "sourceMaps": true // works with or without this line
+      }
+  ]
+}
+```
+
+3. Open your project in VSCode, open a new terminal window from VSCode, and run `npx wrangler dev` to start the local dev server.
+
+4. At the top of the " Run & Debug" panel you should see an option to select a configuration. Choose "Wrangler", and click the play icon. You should see "Wrangler: Remote Process [0]" show up in the Call Stack panel on the left.
+
+5. Go back to a `.js` or `.ts` file in your project and add at least one breakpoint.
+
+5. Open your browser and navigate to the Worker's local URL (default http://127.0.0.1:8787). The breakpoint should be hit, and your should see details about your code at the specified line.
+
 ## Test Workers
 
 ### Integration testing
 
-Wrangler offers an experimental API, `unstable_dev`, that will allow you to start a server for integration testing. For more information and examples, read the [`unstable_dev` guide](/workers/wrangler/api/#unstable_dev).
+Wrangler offers an experimental API, `unstable_dev`, that will allow you to start a server for integration testing.
+
+For more information and examples, read the [`unstable_dev` guide](/workers/wrangler/api/#unstable_dev).
+
+### Advanced local testing via Miniflare
+
+[Miniflare](https://github.com/cloudflare/miniflare/blob/v3.20231016.0/packages/miniflare/README.md) is a simulator for developing and testing Workers. It supports simulating and mocking resources like: KV, Durable Objects, R2, D1, and Queues.
+
+Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`](https://github.com/cloudflare/workerd) to ensure that local behavior accurately reflects production. All of this makes it a great tool for writing tests or advanced use-cases.
 
 ## Related resources
 
