@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-weight: 5
+weight: 1
 title: Enable
 meta:
     title: Enable Load Balancing
