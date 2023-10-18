@@ -37,7 +37,7 @@ Developing against remote resources will count towards billable usage.
 
 {{</Aside>}}
 
-`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To do this, you'll want to add the `--remote` flag to `wrangler dev` like this:
+`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote flag`:
 
 ```sh
 $ wrangler dev --remote
