@@ -20,6 +20,14 @@ The offboarding for advanced certificate renewals has been postponed from Octobe
 
 Refer to [CAs and certificates FAQ](/ssl/edge-certificates/troubleshooting/ca-faq/) for commonly asked questions that you may have.
 
+{{<Aside type="warning">}}
+
+This migration only affects [Cloudflare Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) Certificates where the certificate has been provisionned by Cloudflare using DigiCert as Certificate Authority.
+
+Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudlfare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [Custom certificates](/ssl/edge-certificates/custom-certificates/) are not in the scope and thus not affected by this migration.
+
+{{</Aside>}}
+
 ## Dates reference
 
 {{<table-wrap>}}
