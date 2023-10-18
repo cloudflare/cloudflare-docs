@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-To customize weights when you [create or edit a pool](/load-balancing/how-to/create-pool/), set the **Weight** to a number between 0 and 1 (expressed in increments of .01). Cloudflare will then send traffic to that pool based on a combination of your origin steering policy and the following formula.
+To customize weights when you [create or edit a pool](/load-balancing/pools/create-pool/), set the **Weight** to a number between 0 and 1 (expressed in increments of .01). Cloudflare will then send traffic to that pool based on a combination of your origin steering policy and the following formula.
 
 ```txt
 % of traffic to origin = origin weight ÷ sum of all weights in the pool

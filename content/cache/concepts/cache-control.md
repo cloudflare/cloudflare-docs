@@ -269,7 +269,7 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
 
 Review the examples below to learn which directives to use with the Cache-Control header to control specific caching behavior.
 
-{{<details header="Cache a static asse">}}
+{{<details header="Cache a static asset">}}
 
 `Cache-Control: public, max-age=86400`
 

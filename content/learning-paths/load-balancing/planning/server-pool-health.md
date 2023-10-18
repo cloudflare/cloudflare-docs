@@ -37,7 +37,7 @@ Based on the characteristics of your server pools, you have several customizatio
 
 ### Monitor-level settings
 
-When you [create a monitor](/load-balancing/how-to/create-monitor/), there are several configuration settings you can adjust based on the characteristics of the attached pools:
+When you [create a monitor](/load-balancing/monitors/create-monitor/), there are several configuration settings you can adjust based on the characteristics of the attached pools:
 
 {{<details header="Basic settings">}}
 

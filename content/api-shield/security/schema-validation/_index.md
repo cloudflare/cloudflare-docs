@@ -156,4 +156,6 @@ The supported content-type format is `application/json`. The code must validate 
 
 ## Availability
 
-Schema Validation is only available for Enterprise customers. If you are interested in using this feature, contact your account team.
+Schema Validation is available for all API Shield customers. 
+
+Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
