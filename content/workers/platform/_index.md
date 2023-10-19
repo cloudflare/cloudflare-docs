@@ -8,4 +8,4 @@ weight: 10
 
 Pricing, limits and other information about the Workers platform.
 
-{{<directory-listing showDescriptions=true >}}
+{{<directory-listing showDescriptions="true">}}

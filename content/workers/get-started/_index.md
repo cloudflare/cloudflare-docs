@@ -8,4 +8,4 @@ weight: 2
 
 Build your first Worker.
 
-{{<directory-listing showDescriptions=true >}}
+{{<directory-listing showDescriptions="true">}}

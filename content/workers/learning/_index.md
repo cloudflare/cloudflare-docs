@@ -8,4 +8,4 @@ weight: 6
 
 Conceptual knowledge about how Workers works.
 
-{{<directory-listing showDescriptions=true >}}
+{{<directory-listing showDescriptions="true">}}
