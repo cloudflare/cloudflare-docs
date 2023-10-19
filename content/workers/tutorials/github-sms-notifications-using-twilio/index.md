@@ -143,7 +143,7 @@ import { Buffer } from 'node:buffer';
 
 function checkSignature(text, headers, githubSecretToken) {
   const hmac = createHmac('sha256', githubSecretToken);
-  hmac.update(text, 'utf-8');
+  hmac.update(text);
   const expectedSignature = hmac.digest('hex');
   const actualSignature = headers.get('x-hub-signature-256');
 
