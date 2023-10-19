@@ -94,7 +94,7 @@ To setup VSCode for breakpoint debugging Workers:
 
 5. Go back to a `.js` or `.ts` file in your project and add at least one breakpoint.
 
-5. Open your browser and navigate to the Worker's local URL (default http://127.0.0.1:8787). The breakpoint should be hit, and your should see details about your code at the specified line.
+5. Open your browser and go to the Worker's local URL (default `http://127.0.0.1:8787`). The breakpoint should be hit, and you should see details about your code at the specified line.
 
 ## Test Workers
 
