@@ -61,7 +61,7 @@ Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/
 
 As of Wrangler 3.9.0, you can debug via breakpoints in your Worker. Breakpoints provide the ability to see exactly what is happening at a given point in the execution of your Worker. This functionality exists in both DevTools and VSCode.
 
-For more information on breakpoint debugging via Chrome's DevTools read [this article](https://developer.chrome.com/docs/devtools/javascript/breakpoints/).
+For more information on breakpoint debugging via Chrome's DevTools, refer to [Chrome's article on breakpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints/).
 
 ### Setup VSCode to use breakpoints
 
