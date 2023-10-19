@@ -9,7 +9,7 @@ Debugging is a critical part of developing a new application — whether running
 
 {{<youtube id="8iPmy7ePYDE">}}
 
-You can access logs and exceptions for your Workers by logging into [the dashboard]((#view-logs-from-the-dashboard)) or using [`wrangler tail`](#view-logs-using-wrangler-tail).
+You can access logs and exceptions for your Workers by logging into [the dashboard](/workers/observability/log-from-workers/#view-logs-from-the-dashboard) or using [`wrangler tail`](/workers/observability/log-from-workers/#use-wrangler-tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 

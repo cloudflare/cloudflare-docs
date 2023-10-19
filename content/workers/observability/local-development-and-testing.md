@@ -17,7 +17,7 @@ In addition to testing Workers locally with `wrangler dev`, the use of Miniflare
 
 This guide assumes you are using [Wrangler v3.0](https://blog.cloudflare.com/wrangler3/) or later.
 
-Users new to Wrangler CLI and Cloudflare Workers should visit the [Wrangler Install/Update guide](/wrangler/install-and-update) to install `wrangler`.
+Users new to Wrangler CLI and Cloudflare Workers should visit the [Wrangler Install/Update guide](/workers/wrangler/install-and-update) to install `wrangler`.
 
 {{</Aside>}}
 
