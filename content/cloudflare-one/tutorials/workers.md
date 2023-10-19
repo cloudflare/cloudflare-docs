@@ -3,18 +3,22 @@ updated: 2023-10-19
 category: 🔐 Access
 difficulty: Intermediate
 pcx_content_type: tutorial
-title: Custom Headers for Cloudflare Access-protected Origins using Cloudflare Workers
+title: Create custom headers for Cloudflare Access-protected origins with Workers
 ---
 
-# Custom Headers for Cloudflare Access-protected Origins using Cloudflare Workers
+# Create custom headers for Cloudflare Access-protected origins with Workers
+
+{{<tutorial>}}
+
+{{<markdown>}}
 
 This tutorial covers how to add custom headers to send down to your origin services protected by Cloudflare Access. This can be valuable when applications or some networking implementations require specific, custom headers passed to the origin, which can sometimes be difficult to replicate when moving the traffic to a Zero Trust proxy of any kind.
 
-When Cloudflare sends a request to your origin, the request will include an application token as a Cf-Access-Jwt-Assertion request header and as a CF_Authorization cookie.
+When Cloudflare sends a request to your origin, the request will include an application token as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
 
 Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that the request came from Access and not a malicious third party.
 
-Along with the JWT header, CF_Authorization cookie, and other Cloudflare specific headers, also sent is a header called ‘cf-access-authenticated-user-email’ containing the authenticated user's email address.
+Along with the JWT header, `CF_Authorization` cookie, and other Cloudflare specific headers, also sent is a header called `cf-access-authenticated-user-email` containing the authenticated user's email address.
 
 To send the authenticated user's email address as a different header or to include other Cloudflare or custom headers you can use a Worker.
 
@@ -22,11 +26,15 @@ To send the authenticated user's email address as a different header or to inclu
 
 30 minutes
 
-## Prerequisites
+{{</markdown>}}
+
+{{<tutorial-prereqs>}}
 
 - ???
 
-## 1. Create the Worker
+{{</tutorial-prereqs>}}
+
+{{<tutorial-step title="Create the Worker">}}
 
 1. Sign in Cloudflare account and Navigate to “Workers & Pages”
 2. Select “Create Application”
@@ -51,7 +59,9 @@ To send the authenticated user's email address as a different header or to inclu
    }
    ```
 
-## 2. Apply Worker to hostname
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Apply Worker to hostname">}}
 
 1. Navigate back to the Worker you just created Select “Triggers”
 2. Select “Add route”
@@ -69,3 +79,7 @@ To send the authenticated user's email address as a different header or to inclu
        "Company-User-Id": "user@example.com", 
        "Connection": "keep-alive"
    ```
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}
