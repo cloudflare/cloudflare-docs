@@ -102,7 +102,7 @@ To setup VSCode for breakpoint debugging Workers:
 
 Wrangler offers an experimental API, `unstable_dev`, that will allow you to start a server for integration testing.
 
-For more information and examples, read the [`unstable_dev` guide](/workers/wrangler/api/#unstable_dev).
+For more information and examples, refer to the [`unstable_dev` guide](/workers/wrangler/api/#unstable_dev).
 
 ### Advanced local testing via Miniflare
 
