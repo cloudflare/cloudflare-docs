@@ -123,7 +123,7 @@ async fetch(request, env, ctx) {
   try {
     const rawBody = await request.text();
 
-    if (await checkSignature(rawBody, request.headers, env.GITHUB_SECRET_TOKEN) === false) {
+    if (!checkSignature(rawBody, request.headers, env.GITHUB_SECRET_TOKEN)) {
       return new Response("Wrong password, try again", {status: 403});
     }
   } catch (e) {
@@ -141,7 +141,7 @@ filename: worker.js - checkSignature()
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 
-async function checkSignature(text, headers, githubSecretToken) {
+function checkSignature(text, headers, githubSecretToken) {
   const hmac = createHmac('sha1', githubSecretToken);
   hmac.update(text, 'utf-8');
   const expectedSignature = hmac.digest('hex');
@@ -228,7 +228,7 @@ async fetch(request, env, ctx) {
   }
   try {
     const rawBody = await request.text();
-    if (await checkSignature(rawBody, request.headers) === false) {
+    if (!checkSignature(rawBody, request.headers)) {
       return new Response("Wrong password, try again", {status: 403});
     }
 
