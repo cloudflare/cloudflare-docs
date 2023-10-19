@@ -121,10 +121,9 @@ async fetch(request, env, ctx) {
     return new Response('Please send a POST request!');
   }
   try {
-    const formData = await request.json();
-    const headers = request.headers;
+    const rawBody = await request.text();
 
-    if (await checkSignature(formData, headers, env.GITHUB_SECRET_TOKEN) === false) {
+    if (await checkSignature(rawBody, request.headers, env.GITHUB_SECRET_TOKEN) === false) {
       return new Response("Wrong password, try again", {status: 403});
     }
   } catch (e) {
@@ -142,9 +141,9 @@ filename: worker.js - checkSignature()
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 
-async function checkSignature(formData, headers, githubSecretToken) {
+async function checkSignature(text, headers, githubSecretToken) {
   const hmac = createHmac('sha1', githubSecretToken);
-  hmac.update(formData, 'utf-8');
+  hmac.update(text, 'utf-8');
   const expectedSignature = hmac.digest('hex');
 
   const actualSignature = headers.get('X-Hub-Signature');
@@ -228,15 +227,15 @@ async fetch(request, env, ctx) {
     return new Response('Please send a POST request!');
   }
   try {
-    const formData = await request.json();
-    const headers = request.headers;
-    const action = headers.get('X-GitHub-Event');
-    const repoName = formData.repository.full_name;
-    const senderName = formData.sender.login;
-
-    if (await checkSignature(formData, headers) === false) {
+    const rawBody = await request.text();
+    if (await checkSignature(rawBody, request.headers) === false) {
       return new Response("Wrong password, try again", {status: 403});
     }
+
+    const action = request.headers.get('X-GitHub-Event');
+    const json = JSON.parse(rawBody);
+    const repoName = json.repository.full_name;
+    const senderName = json.sender.login;
 
     return await sendText(
       env.TWILIO_ACCOUNT_SID,
