@@ -17,7 +17,7 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## Heartbeat
 
-Magic WAN Connector communicates periodically with Cloudflare. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable. There are three symbols for the heartbeat signal that allow you to quickly check the status of Magic WAN connector:
+Magic WAN Connector communicates periodically with Cloudflare. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable. There are three symbols for the heartbeat signal that allow you to quickly check the status of Magic WAN Connector:
 
 - **Blue `i`**: Magic WAN Connector is contacting Cloudflare as expected.
 - **Yellow triangle**: Magic WAN Connector has not yet connected to Cloudflare.
