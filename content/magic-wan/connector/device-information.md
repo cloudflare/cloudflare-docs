@@ -27,7 +27,7 @@ Magic WAN Connector communicates periodically with Cloudflare. This is also know
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Find your Connector. Move your mouse over the icons right after the **Status** column to check the timestamp with the last time that specific Connector successfully contacted Cloudflare.
+3. Find your Connector. Move your mouse over the icons right after the **Status** column to check the timestamp with the last time Connector successfully contacted Cloudflare.
 
 ## Device metrics
 
