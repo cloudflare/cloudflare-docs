@@ -126,7 +126,7 @@ D1 is currently in open beta. Report D1 bugs in [GitHub](https://github.com/clou
 Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
 
 ```sh
-$ wrangler d1 create <DATABASE_NAME>
+wrangler d1 create <DATABASE_NAME>
 ```
 
 {{<definitions>}}
