@@ -53,7 +53,7 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 {{</Aside>}}
 
-## Use DevTools
+## DevTools
 
 Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. With `wrangler dev` running, press the <kbd>d</kbd> key in your terminal to open a DevTools session connected to your Worker from any Chromium-based browser.
 
