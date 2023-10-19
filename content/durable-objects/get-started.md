@@ -195,7 +195,7 @@ To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/comm
 $ npx wrangler dev
 ```
 
-In your console you should see: `Hello world` which is bring returned by the Durable Objects.
+In your console, you should see a`Hello world` string returned by the Durable Object.
 
 
 ## 8. Deploy your Durable Object Worker
