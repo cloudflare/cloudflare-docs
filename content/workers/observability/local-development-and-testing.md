@@ -108,7 +108,7 @@ For more information and examples, refer to the [`unstable_dev` guide](/workers/
 
 [Miniflare](https://github.com/cloudflare/miniflare/blob/v3.20231016.0/packages/miniflare/README.md) is a simulator for developing and testing Workers. It supports simulating and mocking resources like: KV, Durable Objects, R2, D1, and Queues.
 
-Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`](https://github.com/cloudflare/workerd) to ensure that local behavior accurately reflects production. All of this makes it a great tool for writing tests or advanced use-cases.
+Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`](https://github.com/cloudflare/workerd) to ensure that local behavior accurately reflects production. All of this makes it a great tool for writing tests or advanced use cases.
 
 ## Related resources
 
