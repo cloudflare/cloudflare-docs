@@ -15,27 +15,7 @@ Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables
 - Filter and log traffic server-initiated traffic, such as VoIP and SIP traffic.
 - Apply Zero Trust security policies based on the source IP of the request.
 
-```mermaid
-    flowchart LR
-      accTitle: WARP connector as a subnet router
-      subgraph subnet1[Subnet 10.0.0.0/24]
-        router1["Device running 
-        WARP connector
-        10.0.0.1"]<-->device1a["SIP server
-        10.0.0.2"]
-
-      end
-      subgraph subnet2[Subnet 192.168.1.0/24]
-        router2["Device running 
-        WARP connector
-        192.168.1.97"]<-->device2a["SIP phone
-        192.168.1.100"]
-        router2<-->device2b["SIP phone
-        192.168.1.101"]
-      end
-      router1<--->C((Cloudflare))<--->router2
-
-```
+![Two subnets connected with WARP connector](/images/cloudflare-one/connections/connect-apps/warp-connector/overview.png)
 
 As shown in the diagram, WARP connector acts as a router for a subnet within the private network to on-ramp and off-ramp traffic through Cloudflare. All devices on the subnet can access any services connected to Cloudflare, and all devices connected to Cloudflare can access any services on the subnet. Each subnet runs a WARP connector on a designated Linux machine (typically the default gateway router), but other devices on the network do not need to install software.
 
@@ -144,13 +124,7 @@ If you do not already have a private network range, you can choose a subnet from
 
 Run the following commands on the machine where you installed WARP connector. You will need to configure the host machine on each subnet.
 
-1. Ensure that IP forwarding is enabled:
-
-  ```sh
-  $ sudo sysctl -w net.ipv4.ip_forward=1
-  ```
-
-  To set this up more permanently (persist between reboots):
+1. Enable IP forwarding:
 
   ```sh
   $ echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-warp-svc.conf
@@ -169,51 +143,33 @@ If you are setting up WARP connector on a [virtual private cloud (VPC)](/learnin
 
   ```
 
-## 6. Configure other devices on the subnet
+## 6. Route traffic through WARP connector
 
-Depending on where you installed the WARP connector, you may need to configure other devices on the private network to route traffic through the WARP connector.
+Depending on where you installed the WARP connector, you may need to configure other devices on the subnet to route traffic through the WARP connector.
 
-### Default gateway
+### Option 1: Default gateway
 
-If you installed WARP connector on your router, no additional configuration is necessary. All traffic on the device will use the router as the default gateway.
+If you installed WARP connector on your router, no additional configuration is necessary. All traffic will use the router as the default gateway.
 
-```mermaid
-    flowchart LR
-      accTitle: Default gateway configuration
-      subgraph subnet[Subnet 10.0.0.0/24]
-        device["Device
-        10.0.0.2"]--default gateway-->router(["Router running 
-        WARP connector
-        10.0.0.1"])
-      end
-      router--->C((Cloudflare))
-```
+![Default gateway routing configuration](/images/cloudflare-one/connections/connect-apps/warp-connector/default-gateway.png)
 
-### Alternate gateway
+### Option 2: Alternate gateway
 
-If you installed WARP connector on another machine, you will need to manually configure each device on the subnet to egress through WARP connector's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) instead of the default gateway.
+If you have access to the router but installed WARP connector on another machine, you can configure the router to forward traffic to the WARP connector. This typically involves adding a static route for the destination IPs that you want to connect to through Cloudflare. Refer to your router's documentation for specific instructions on how to add an IP route.
 
-```mermaid
-    flowchart LR
-      accTitle: Alternate gateway configuration
-      subgraph subnet[Subnet 10.0.0.0/24]
-        device["Device
-        10.0.0.2"]--default gateway-->router(["Router
-        10.0.0.1"])
-        device--alternate gateway-->warp["Device running
-        WARP connector
-        10.0.0.100"]
-        -->router2(["Router
-        10.0.0.1"])
+For example, if you are on subnet `10.0.0.0/24` and want to reach applications behind subnet `192.168.1.0/24`, add a rule that routes `192.168.1.0/24` to the WARP connector IP (`10.0.0.100` in the diagram below). When a device sends a request to `192.168.1.0/24`, the router will first redirect the traffic to the WARP connector machine. WARP connector encrypts the traffic, changes its destination IP to the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip), and sends it back to the router. The router will now forward this encrypted traffic to Cloudflare.
 
-      end
-      router--->I{Internet}
-      router2-->C((Cloudflare))
-```
+![Alternate gateway routing configuration](/images/cloudflare-one/connections/connect-apps/warp-connector/alternate-gateway.png)
+
+### Option 3: Intermediate gateway
+
+If you do not have access to the router, you will need to configure each device on the subnet to egress through the WARP connector machine instead of the default gateway.
+
+![Intermediate gateway routing configuration](/images/cloudflare-one/connections/connect-apps/warp-connector/intermediate-gateway.png)
 
 #### Route all traffic
 
-You can configure all traffic on a device to egress through the WARP connector with its local source IP. All traffic will be filtered by your Gateway network policies.
+You can configure all traffic on a device to egress through WARP connector with its local source IP. All traffic will be filtered by your Gateway network policies.
 
 {{<tabs labels="Linux | macOS | Windows ">}}
 {{<tab label="linux" no-code="true">}}
