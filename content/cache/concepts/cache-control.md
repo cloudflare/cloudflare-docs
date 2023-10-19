@@ -78,7 +78,7 @@ Additional directives that influence cache behavior are listed below.
 
 ## Origin Cache-Control behavior
 
-In the following section, we list the directives and behavioral conditions associated with the enabling or disabling of Origin Cache-Control.
+The following section covers the directives and behavioral conditions associated with enabling or disabling Origin Cache-Control.
 
 ### Directives
 
