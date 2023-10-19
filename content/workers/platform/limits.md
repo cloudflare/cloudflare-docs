@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Limits
+meta:
+  description: Cloudflare Workers plan and platform limits.
 ---
 
 # Limits

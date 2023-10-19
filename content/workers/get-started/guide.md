@@ -4,6 +4,7 @@ pcx_content_type: get-started
 weight: 1
 meta:
   title: Get started guide
+  description: Set up and deploy your first Worker with Wrangler, the Cloudflare Developer Platform CLI.
 ---
 
 # Get started guide
