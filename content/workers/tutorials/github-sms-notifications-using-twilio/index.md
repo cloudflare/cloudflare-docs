@@ -166,7 +166,7 @@ Add the nodejs_compat flag to your `wrangler.toml` file:
 ---
 filename: "wrangler.toml"
 ---
-compatability_flags = ["nodejs_compat"]
+compatibility_flags = ["nodejs_compat"]
 ```
 
 ---
