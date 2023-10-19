@@ -192,8 +192,11 @@ Refer to [Durable Objects migrations](/durable-objects/learning/durable-objects-
 To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
+
+In your console, you should see a`Hello world` string returned by the Durable Object.
+
 
 ## 8. Deploy your Durable Object Worker
 
