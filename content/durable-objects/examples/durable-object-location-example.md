@@ -4,7 +4,7 @@ summary: Create a Durable Object that keeps track of the location of Durable Obj
 tags:
   - Durable Objects
 pcx_content_type: configuration
-title: Durable Object Location example
+title: Durable Object location example
 weight: 3
 layout: example
 ---
