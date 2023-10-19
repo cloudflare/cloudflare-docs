@@ -122,7 +122,7 @@ async fetch(request, env, ctx) {
   }
   try {
     const formData = await request.json();
-    const headers = await request.headers;
+    const headers = request.headers;
 
     if (await checkSignature(formData, headers, env.GITHUB_SECRET_TOKEN) === false) {
       return new Response("Wrong password, try again", {status: 403});
@@ -229,7 +229,7 @@ async fetch(request, env, ctx) {
   }
   try {
     const formData = await request.json();
-    const headers = await request.headers;
+    const headers = request.headers;
     const action = headers.get('X-GitHub-Event');
     const repoName = formData.repository.full_name;
     const senderName = formData.sender.login;
