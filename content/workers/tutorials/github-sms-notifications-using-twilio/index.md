@@ -142,16 +142,16 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 
 function checkSignature(text, headers, githubSecretToken) {
-  const hmac = createHmac('sha1', githubSecretToken);
+  const hmac = createHmac('sha256', githubSecretToken);
   hmac.update(text, 'utf-8');
   const expectedSignature = hmac.digest('hex');
+  const actualSignature = headers.get('x-hub-signature-256');
 
-  const actualSignature = headers.get('X-Hub-Signature');
+  const trusted = Buffer.from(`sha256=${expectedSignature}`, 'ascii');
+  const untrusted =  Buffer.from(actualSignature, 'ascii');
 
-  const expectedBuffer = Buffer.from(expectedSignature, 'hex');
-  const actualBuffer = Buffer.from(actualSignature, 'hex');
-  return expectedBuffer.byteLength == actualBuffer.byteLength
-    && crypto.timingSafeEqual(expectedBuffer, actualBuffer);
+  return trusted.byteLength == untrusted.byteLength
+    && crypto.timingSafeEqual(trusted, untrusted);
 };
 ```
 
