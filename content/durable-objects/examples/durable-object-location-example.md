@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Create a Durable Object that keeps track of the location of the durable objects
+summary: Create a Durable Object that keeps track of the location of Durable Objects.
 tags:
   - Durable Objects
 pcx_content_type: configuration
