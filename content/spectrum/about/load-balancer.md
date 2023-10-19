@@ -60,12 +60,7 @@ Weight configured within a load balancer pool will be honored with load balancin
 
 ## Traffic steering policies
 
-All pool steering modes are available for transport load balancing through Spectrum:
-
-- [Standard failover](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#off---failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
-- [Dynamic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/): Traffic goes to the fastest pool for a given user.
-- [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
-- [Proximity steering](/load-balancing/understand-basics/traffic-steering/steering-policies/proximity-steering/): Traffic goes to the closest physical data center.
+All traffic steering policies are available for transport load balancing through Spectrum. Refer to the [Load Balancing documentation](/load-balancing/understand-basics/traffic-steering/steering-policies/) for an updated list.
 
 ## Requirements and limitations
 
