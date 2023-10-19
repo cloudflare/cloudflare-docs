@@ -1141,6 +1141,7 @@
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
 /constellation/platform/ /constellation/ 301
+/constellation/ /workers-ai/ 301
 
 # zaraz
 
