@@ -22,7 +22,7 @@ When you set up a load balancer, Cloudflare automatically creates an [LB DNS rec
 
 ## Pools
 
-Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool, if this is what best responds to your use case.
+Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool, if this is what best suits your use case.
 
 For example, if you are only using Cloudflare to globally distribute traffic across regions ([traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/)), each pool could represent one region and, within each region, you could have one origin that represents the entry point to your data center.
 
