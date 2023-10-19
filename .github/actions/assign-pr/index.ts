@@ -55,7 +55,16 @@ async function list(
  * @note code runs in posix environment ("/" not "\\")
  */
 function parse(filename: string): string | void {
-  return (/^data[/](.*).ya?ml$/.exec(filename) ||
+  let changelogEntry = /^data[/]changelogs[/](.*)\.ya?ml$/.exec(filename);
+
+  if (changelogEntry) {
+    // handle special cases of changelog filenames
+    return changelogEntry[1]
+      .replace("ddos-http", "ddos-protection")
+      .replace("ddos-network", "ddos-protection");
+  }
+
+  return (/^data[/]([^\/]+)\.ya?ml$/.exec(filename) ||
     /^content[/]([^\/]+)[/]/.exec(filename) ||
     [])[1];
 }

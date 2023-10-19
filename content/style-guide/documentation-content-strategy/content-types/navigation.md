@@ -1,6 +1,6 @@
 ---
 title: Navigation
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Navigation
@@ -37,4 +37,4 @@ pcx_content_type: navigation
 
 [Logs: Enable destinations](/logs/get-started/enable-destinations/)
 
-[Cloudflare Tunnel: Get Started](/cloudflare-one/connections/connect-networks/install-and-setup/)
+[Cloudflare Tunnel: Get Started](/cloudflare-one/connections/connect-networks/get-started/)

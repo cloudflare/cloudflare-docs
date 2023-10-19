@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Service bindings
+meta:
+  title: Service bindings - Configuration
 ---
 
 # Service bindings

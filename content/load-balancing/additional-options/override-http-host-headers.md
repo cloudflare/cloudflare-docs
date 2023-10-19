@@ -12,7 +12,7 @@ When your application needs specialized routing (`CNAME` setup or custom hosts l
 
 If you set a header override on an individual origin, it will take precedence over a header override set on a monitor.
 
-Also, if you configure an [Origin Rule](/rules/origin-rules/) that overrides the hostname and set up a header override in your Load Balancer configuration, the Origin Rule will take precedence over the Load Balancer configuration.
+Also, if you configure an [Origin Rule](/rules/origin-rules/) that overrides the hostname and set up a header override in your Load Balancer configuration, the Load Balancer configuration will take precedence over the Origin Rule hostname override.
 
 {{</Aside>}}
 
@@ -24,7 +24,7 @@ For example, you might have a pool with origins hosted in multiple AppEngine pro
 
 Since these examples require specific hostnames per origin, your load balancer will not properly route traffic _without_ a `Host` header override.
 
-If you need an origin `Host` header override, add it when [creating](/load-balancing/how-to/create-pool/) or editing a pool. For security reasons, this header must meet one of the following criteria:
+If you need an origin `Host` header override, add it when [creating](/load-balancing/pools/create-pool/) or editing a pool. For security reasons, this header must meet one of the following criteria:
 
 - Is a subdomain of a zone associated with this account
 - Matches the origin address

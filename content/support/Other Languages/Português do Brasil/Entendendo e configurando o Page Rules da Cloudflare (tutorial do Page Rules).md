@@ -764,7 +764,7 @@ Observe que `example.com/some-path/cloudflare.com` será salvo _sem_ a barra no 
 
 No campo **Se o URL corresponder** de uma regra de página, somente as portas a seguir podem ser especificadas:
 
--   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
 -   Uma porta personalizada de um aplicativo HTTPS do [Cloudflare Spectrum](/spectrum/).
 
 ### Como usar Page Rules com o Workers

@@ -17,7 +17,6 @@ Try the deploy button below to deploy a GraphQL server:
   </a> 
 </p>
 
-
 Refer to [deploy.workers.cloudflare.com](https://deploy.workers.cloudflare.com/) for additional projects to deploy.
 
 ## Create a deploy button for your project
@@ -40,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build & Deploy Worker
-        uses: cloudflare/wrangler-action@2.0.0
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}

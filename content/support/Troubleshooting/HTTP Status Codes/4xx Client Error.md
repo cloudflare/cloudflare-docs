@@ -33,19 +33,18 @@ Not yet implemented by RFC standards but reserved for future use.
 
 If you're seeing a 403 error without Cloudflare branding, this is always returned directly from the origin web server, not Cloudflare, and is generally related to permission rules on your server. The top reasons for this error are:
 
-1. Permission rules you have set or an error in the .htaccess rules you have set
-2. Mod\_security rules.
-3. IP Deny rules Since Cloudflare can not access your server directly, please contact your hosting provider for assistance with resolving 403 errors and fixing rules. You should make sure that [Cloudflare's IPs](https://www.cloudflare.com/ips) aren't being blocked. 
+1. Permission rules you have set on the origin web server (in the Apache .htaccess for example)
+2. Mod\_security rules
+3. IP deny rules. You need to make sure that [Cloudflare's IP ranges](https://www.cloudflare.com/ips) aren't being blocked
 
-Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/). Cloudflare will also serve a 403 Forbidden response for SSL connections to sub/domains that aren't covered by any Cloudflare or uploaded SSL certificate.
+Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/).
 
 If you're seeing a 403 response that contains Cloudflare branding in the response body, this is the HTTP response code returned along with many of our security features:
 
--   WAF Managed Rules/firewall rules challenge and block pages
--   Basic Protection level challenges
--   Most 1xxx Cloudflare error codes
--   The Browser Integrity Check
--   If you're attempting to access a second level of subdomains (eg-`*.*.example.com`) through Cloudflare using the Cloudflare-issued certificate, a HTTP 403 error will be seen in the browser as these hostnames are not present on the certificate.
+-   [WAF Custom or Managed Rules](/waf/) with the challenge or block action
+-   [Security Level](/waf/tools/security-level/), that is set to Medium by default
+-   Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
+-   The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
 
 ### **404 Not Found (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
@@ -158,13 +157,28 @@ Typically search engines (e.g. Google) and ISP (e.g. ATT) are the ones affected 
 
 ### **499 Client Close Request**
 
-Nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making server unable to send a status code back.
+nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making server unable to send a status code back.
 
 -   This will be shown in [Cloudflare Logs](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-REST-API) and status code analytics for Enterprise customers.
 
 {{<Aside type="tip">}}
-Since Cloudflare was built on NGINX, we also have a 499 HTTP code in ELS
+Since Cloudflare was built on nginx, we also have a 499 HTTP code in Cloudflare Logs
 and analytics for connections which go away before we have finished
 processing the request. It is expected behavior to see these at your
 logs intermittently as clients close connections.
 {{</Aside>}}
+
+To provide more context, a TCP connection must be established between Cloudflare and the website's Origin server before any higher protocol (in this case is HTTP) started the "conversation". In order to establish a connection, TCP uses a three-way handshake :
+
+* SYN: Cloudflare sends three SYN packets to the origin server.
+* SYN+ACK: In response, the origin server replies with an SYN+ACK.
+* ACK: Finally, Cloudflare sends an ACK back to the origin server.
+
+At this point, both Cloudflare and the origin server have received an acknowledgment of the connection, and communication is established. However, if the origin server does not send an SYN+ACK back to Cloudflare **within 15 seconds, Cloudflare will retry one more time (another 15 seconds timeout)**.
+
+So, depending on the timeout value on the client-side, there will be 3 different scenarios along with each own status code generated :
+
+* If the client has a shorter timeout (less than 30s), they will give up the connection, and thus Cloudflare logs the 499 error.
+* If the client has a higher timeout (more than 30s), once the TCP connection has been successfully established, the HTTP transaction will be continued as per normal. In this case, Cloudflare returns a normal status code (HTTP 200).
+* If the client has a higher timeout and Cloudflare was unable to establish the TCP handshake with the Origin server, we will return HTTP 522.
+

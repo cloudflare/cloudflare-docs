@@ -6,8 +6,8 @@ weight: 1
 
 # S3 API compatibility
 
-R2 implements the S3 API to allow users and their applications to migrate easily. When comparing to AWS S3, Cloudflare has removed some API operations' features and added others. The S3 API operations are listed below with their current implementation status. Feature implementation is currently in progress. Refer back to this page for updates.
-The API is available via the `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` endpoint. Find your [account ID in the Cloudflare dashboard](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+R2 implements the S3 API to allow users and their applications to migrate with ease. When comparing to AWS S3, Cloudflare has removed some API operations' features and added others. The S3 API operations are listed below with their current implementation status. Feature implementation is currently in progress. Refer back to this page for updates.
+The API is available via the `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` endpoint. Find your [account ID in the Cloudflare dashboard](/fundamentals/setup/find-account-and-zone-ids/).
 
 ## How to read this page
 
@@ -55,8 +55,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 ### Unimplemented bucket-level operations
 
-<details>
-<summary> Click to expand a list of unimplemented bucket-level operations. </summary>
+{{<details header="Unimplemented bucket-level operations">}}
 
 {{<table-wrap style="width:110%">}}
 
@@ -108,7 +107,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | ❌ [PutPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
-</details>
+{{</details>}}
 
 ## Object-level operations
 
@@ -129,7 +128,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 | ✅ [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> &emsp;  ✅ Content-Type <br> &emsp;  ✅ Cache-Control <br> &emsp;  ✅ Content-Disposition <br> &emsp;  ✅ Content-Encoding <br> &emsp;  ✅ Content-Language <br> &emsp;  ✅ Expires <br> &emsp;  ✅ Content-MD5 <br> ❌ Object Lifecycle <br> ❌ Website: <br> &emsp;  ❌ x-amz-website-redirect-location <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> &emsp;  ❌ x-amz-server-side-encryption-aws-kms-key-id <br> &emsp;  ❌ x-amz-server-side-encryption-context <br> &emsp;  ❌ x-amz-server-side-encryption-bucket-key-enabled <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Tagging: <br> &emsp;  ❌ x-amz-tagging <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-object-lock-mode <br> &emsp;  ❌ x-amz-object-lock-retain-until-date <br> &emsp;  ❌ x-amz-object-lock-legal-hold <br> ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [DeleteObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html)| ❌ Multi-factor authentication: <br> &emsp;  ❌ x-amz-mfa <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bypass-governance-retention <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [DeleteObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjects.html) | ❌ Multi-factor authentication: <br> &emsp;  ❌ x-amz-mfa <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bypass-governance-retention <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
-| 🚧 [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | 🚧 Query Parameters: <br> &emsp;  🚧 delimiter <br> &emsp;  ✅ encoding-type <br> &emsp;  ✅ key-marker <br> &emsp;  ✅️ max-uploads <br> &emsp;  ✅ prefix <br> &emsp;  🚧 upload-id-marker |
+| ✅ [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ✅ Query Parameters: <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp;  ✅ key-marker <br> &emsp;  ✅️ max-uploads <br> &emsp;  ✅ prefix <br> &emsp;  ✅ upload-id-marker |
 | ✅ [CreateMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html) | ✅ System Metadata: <br> &emsp;  ✅ Content-Type <br> &emsp;  ✅ Cache-Control <br> &emsp;  ✅ Content-Disposition <br> &emsp;  ✅ Content-Encoding <br> &emsp;  ✅ Content-Language <br> &emsp;  ✅ Expires <br> &emsp;  ✅ Content-MD5 <br> ❌ Website: <br> &emsp;  ❌ x-amz-website-redirect-location <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> &emsp;  ❌ x-amz-server-side-encryption-aws-kms-key-id <br> &emsp;  ❌ x-amz-server-side-encryption-context <br> &emsp;  ❌ x-amz-server-side-encryption-bucket-key-enabled <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Tagging: <br> &emsp;  ❌ x-amz-tagging <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-object-lock-mode <br> &emsp;  ❌ x-amz-object-lock-retain-until-date <br> &emsp;  ❌ x-amz-object-lock-legal-hold <br> ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Storage class: <br> &emsp;  ❌ x-amz-storage-class <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [CompleteMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html)| ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer |
 | ✅ [AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)| ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer |
@@ -145,3 +144,18 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
 
 {{</Aside>}}
+
+### Unimplemented object-level operations
+
+{{<details header="Unimplemented object-level operations">}}
+
+{{<table-wrap style="width:110%">}}
+
+| API Name       | Feature                           |
+| ---------------| --------------------------------- |
+| ❌ [GetObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer |
+| ❌ [PutObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer <br> ❌ Checksums: <br> &emsp; ❌  x-amz-sdk-checksum-algorithm |
+| ❌ [DeleteObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+
+{{</table-wrap>}}
+{{</details>}}

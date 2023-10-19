@@ -40,7 +40,12 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
     -   _head_ tags: `<head></head>`
 -   Any page that does not have a MIME type of "text/html" or "application/xhtml+xml"
 
-**Please Note** that Email Obfuscation will **not take affect** if you're using the `Cache-Control: no-transform` header.
+{{<Aside type="warning" header="Warnings">}}
+Please note that Email Obfuscation will **not apply** in the following cases:
+* if you're using the `Cache-Control: no-transform` header.
+* if the HTML/JS code is specifically added by a Worker. This code will be respected as is, without change and without applying the obfuscation.
+{{</Aside>}}
+
 
 ___
 

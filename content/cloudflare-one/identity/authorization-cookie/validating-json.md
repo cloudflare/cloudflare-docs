@@ -8,13 +8,13 @@ weight: 1
 
 When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
 
-Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that that the request came from Access and not a malicious third party.
+Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that the request came from Access and not a malicious third party.
 
 ## Access signing keys
 
 The public key for the signing key pair is located at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
 
-By default, the Access rotates the signing key every 6 weeks. This means you will need to programmatically or manually update your keys as they rotate. Previous keys remain valid for 7 days after rotation to allow time for you to make the update.
+By default, Access rotates the signing key every 6 weeks. This means you will need to programmatically or manually update your keys as they rotate. Previous keys remain valid for 7 days after rotation to allow time for you to make the update.
 
 You can also manually rotate the key using the [API](/api/operations/access-key-configuration-rotate-access-keys). This can be done for testing or security purposes.
 
@@ -248,7 +248,7 @@ def hello_world():
 if __name__ == '__main__':
     app.run()
 ```
-### Javascript example
+### JavaScript example
 
 ```javascript
 const express = require('express');

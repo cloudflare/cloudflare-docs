@@ -29,7 +29,7 @@ console.log(new Uint8Array(myDigest));
 Some common uses include [signing requests](/workers/examples/signing-requests/).
 
 {{<Aside type="warning">}}
-The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
+The Web Crypto API differs significantly from the [Node.js Crypto API](/workers/runtime-apis/nodejs/crypto/). If you are working with code that relies on the Node.js Crypto API, you can use it by enabling the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/).
 {{</Aside>}}
 
 ---
@@ -514,9 +514,9 @@ If a feature only implements the operation partially, details are listed.
 | RSA OAEP                                           |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | ECDSA                                              | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
 | ECDH                                               |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
-| Ed25519<sup><a href="#footnote 1">1</a></sup>      | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
-| X25519<sup><a href="#footnote 1">1</a></sup>       |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
-| NODE ED25519<sup><a href="#footnote 2">2</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| Ed25519<sup><a href="#footnote-1">1</a></sup>      | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| X25519<sup><a href="#footnote-1">1</a></sup>       |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
+| NODE ED25519<sup><a href="#footnote-2">2</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
 | AES CTR                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | AES CBC                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | AES GCM                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
@@ -526,7 +526,7 @@ If a feature only implements the operation partially, details are listed.
 | SHA 256                                            |                     |                         | ✓        |                              |               |                           |             |             |
 | SHA 384                                            |                     |                         | ✓        |                              |               |                           |             |             |
 | SHA 512                                            |                     |                         | ✓        |                              |               |                           |             |             |
-| MD5<sup><a href="#footnote 3">3</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
+| MD5<sup><a href="#footnote-3">3</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
 | HKDF                                               |                     |                         |          | ✓                            |               |                           |             | ✓           |
 | PBKDF2                                             |                     |                         |          | ✓                            |               |                           |             | ✓           |
 

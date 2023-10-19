@@ -23,8 +23,8 @@ Most identity providers allow users to create an **Application**. In this contex
 The typical setup requirements are:
 
 1. Create a new integration in the identity provider with the type set as **SAML**.
-2. Set the **Entity/Issuer ID** to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
-3. Set the **Single sign-on URL** (or similarly named) to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+2. Set the **Entity/Issuer ID** to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
+3. Set the **Single sign-on URL** (or similarly named) to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 4. Set the **Name ID/Email format** to `emailAddress`.
 5. (Optional) Set the signature policy to _Always Sign_.
 
@@ -38,20 +38,20 @@ If your identity provider supports metadata file configuration, use the endpoint
 2. Select **Add new** and select **SAML**.
 3. Choose a descriptive name for your identity provider.
 4. Enter the **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing certificate** obtained from your identity provider.
-5. (Optional) Enter [additional SAML configurations](#additional-saml-configurations).
+5. (Optional) Enter [optional configurations](#optional-configurations).
 6. Select **Save**.
 
 ## 3. Test the connection
 
 You can now [test the IdP integration](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
 
-## Additional SAML configurations
+## Optional configurations
 
-SAML integrations allow users to include additional headers or claims that can be passed to applications.
+SAML integrations allow you to pass additional headers or claims to applications.
 
 ### Sign SAML authentication request
 
-This optional configuration signs the Access JWT with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
+This optional configuration signs the [Access JWT](/cloudflare-one/identity/authorization-cookie/) with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
 
 ### Email attribute name
 
@@ -62,9 +62,17 @@ Example in Okta:
 ![Preview the SAML assertion from the Okta dashboard](/images/cloudflare-one/identity/saml-assertion.png)
 ![Determine the email attribute name from the SAML assertion](/images/cloudflare-one/identity/saml-attributes.png)
 
-### SAML attributes
+### SAML headers and attributes
 
-SAML attributes can be added to the Access JWT. These can then be consumed by self-hosted or SaaS applications connected to Access. Any SAML attribute configured in the SAML integration must also be sent from the IdP.
+Cloudflare Access supports SAML (Security Assertion Markup Language) attributes and SAML headers for all SAML IdP integrations.
+
+[**SAML attributes**](#saml-attributes) refer to specific data points or characteristics that the IdP shares about the authenticated user. These attributes often include details like email address, name, or role, and are passed along to the service provider upon successful authentication.
+
+[**SAML headers**](#saml-headers) are metadata in the SAML protocol communication which convey information about the sender, recipient, and the message itself. These headers can be leveraged to provide extra context or control over the communication.
+
+#### SAML attributes
+
+SAML attributes are added to the [Access JWT](/cloudflare-one/identity/authorization-cookie/). These attributes can then be consumed by self-hosted or SaaS applications connected to Access. Any SAML attribute configured in the SAML integration must also be sent from the IdP.
 
 Example in Okta:
 
@@ -74,6 +82,12 @@ How to receive these SAML attributes in Cloudflare:
 
 ![Configure Cloudflare to receive SAML attributes](/images/cloudflare-one/identity/attributes-cloudflare.png)
 
-### SAML header attributes
+#### SAML headers
 
-If an application only requires specific SAML attributes on sign-in, then the attributes can be passed as headers. The **Attribute name** should be the values coming from the IdP. The **Header name** is what will appear in the initial authorization header from Access.
+If an application specifically requires SAML attributes upon sign-in, then the attributes can be passed as headers. The **Attribute name** should be the value coming from your IdP (for example, `department`). You can assign any **Header name** to the attribute. The header name will appear in the response headers when Access makes the initial authorization request to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
+
+#### Multi-record SAML attributes
+
+Cloudflare Access extends support for multi-record SAML attributes such as groups. These attributes are parsed out and can be individually referenced in policies. This feature enables granular access control and precise user authorization in applications.
+
+Cloudflare Access does not currently support partial attribute value references.

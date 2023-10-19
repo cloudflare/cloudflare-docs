@@ -58,6 +58,7 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
     - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
     - **Gateway address**: Enter your Cloudflare Anycast IP address provided by Cloudflare.
+    - **Local ID type**: Add the [IKE ID](/magic-wan/reference/tunnels/#supported-ike-id-formats) provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](/images/magic-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
 
@@ -184,11 +185,11 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic WAN** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
 
 ### Make Cloudflare health checks work
 
-1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
+1. The ICMP probe packet from Cloudflare must be the type ICMP request, with Anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
 ```bash
 curl --request PUT \

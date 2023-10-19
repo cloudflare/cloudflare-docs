@@ -4,7 +4,7 @@ title: BGP anomalies (beta)
 weight: 3
 ---
 
-{{<beta>}}BGP anomalies{{</beta>}}
+{{<heading-pill style="beta">}}BGP anomalies{{</heading-pill>}}
 
 To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `User:User Details` permission. All the following examples should work with a free-tier Cloudflare account.
 
@@ -334,7 +334,7 @@ Peer Count: *${event.peer_ip_count}*
 
 Note that the webhook is considered secret and should be set to the environment via `wrangler secret put WEBHOOK_URL` command.
 
-The last step is to deploy the application with command `npxwrangler deploy` and the app should be up and running on your Cloudflare account, and will be triggered to execute every five minutes.
+The last step is to deploy the application with command `npx wrangler deploy` and the app should be up and running on your Cloudflare account, and will be triggered to execute every five minutes.
 
 ### Send email alerts from Workers
 

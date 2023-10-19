@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: spanish
 source: https://support.cloudflare.com/hc/es-es/articles/360029779472-C%C3%B3mo-solucionar-errores-1XXX-de-Clouflare
-title: Cómo solucionar errores 1XXX de Clouflare
+title: Cómo solucionar errores 1XXX de Cloudflare
 ---
 
-# Cómo solucionar errores 1XXX de Clouflare
+# Cómo solucionar errores 1XXX de Cloudflare
 
 
 
@@ -230,7 +230,7 @@ ___
 
 ### Causas habituales
 
-El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
+El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
 
 ### Solución
 

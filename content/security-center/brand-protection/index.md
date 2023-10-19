@@ -4,7 +4,7 @@ title: Brand Protection (beta)
 weight: 7
 ---
 
-{{<beta>}} Brand Protection {{</beta>}}
+{{<heading-pill style="beta">}} Brand Protection {{</heading-pill>}}
 
 {{<Aside type="note">}}
 
@@ -55,7 +55,7 @@ To set a Brand Protection Alert:
 3. You will be taken to the **Notifications** section in the sidebar, to configure your Brand Protection Alert.
 
     {{<Aside type="note">}}
-You can also set up the alerts from your [Notifications](/fundamentals/notifications/) menu.
+You can also set up the alerts from your [Notifications](/notifications/) menu.
     {{</Aside>}}
 
 4. Create a notification name, add a description (optional), add a Webhook, and enter a notification email. You can add multiple email addresses.

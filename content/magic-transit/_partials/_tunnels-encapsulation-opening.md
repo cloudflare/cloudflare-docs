@@ -76,7 +76,7 @@ end
 
 a --> 1== Cloudflare Anycast GRE <br> single endpoint ==>i --> j
 
-1== Cloudflare Anycast IPSec <br> single endpoint ==>x --> z
+1== Cloudflare Anycast IPsec <br> single endpoint ==>x --> z
 ```
 
 ## IPsec tunnels
@@ -140,7 +140,7 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
 - The IKE version must be IKEv2.
 - The IKE authentication method must be Pre-Shared Key (PSK).
-- [Anti-replay protection]($3) must be disabled.
+- (Optional) Disable [anti-replay protection]($3).
 - If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 

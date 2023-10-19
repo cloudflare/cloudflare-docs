@@ -9,7 +9,7 @@ layout: single
 
 # Rust WebAssembly guide
 
-By following this guide, you will learn how to build a Worker entirely in the Rust programming language. You will accomplish this using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/workers/learning/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+By following this guide, you will learn how to build a Worker entirely in the Rust programming language. You will accomplish this using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/kv/learning/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 
 ## Prerequisites
 
@@ -109,14 +109,14 @@ Provides access to Worker [bindings](https://developers.cloudflare.com/workers/c
 
 * [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
 * [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
-* [`KvStore`](https://docs.rs/worker-kv/latest/worker_kv/struct.KvStore.html) - Workers [KV](/workers/runtime-apis/kv/) namespace binding.
+* [`KvStore`](https://docs.rs/worker-kv/latest/worker_kv/struct.KvStore.html) - Workers [KV](/kv/api/) namespace binding.
 * [`ObjectNamespace`](https://docs.rs/worker/latest/worker/durable/struct.ObjectNamespace.html) - [Durable Object](/durable-objects/) binding.
 * [`Fetcher`](https://docs.rs/worker/latest/worker/struct.Fetcher.html) - [Service binding](/workers/runtime-apis/service-bindings/) to another Worker.
 * [`Bucket`](https://docs.rs/worker/latest/worker/struct.Bucket.html) - [R2](/r2/) Bucket binding.
 
 3. **[`Context`](https://docs.rs/worker/latest/worker/struct.Context.html)**
 
-Provides access to [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) (deferred asynchronous tasks) and [`passThroughOnException`](/workers/runtime-apis/fetch-event/#passthroughonexception) (fail open) functionality.
+Provides access to [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) (deferred asynchronous tasks) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) (fail open) functionality.
 
 #### [`Response`](https://docs.rs/worker/latest/worker/struct.Response.html)
 

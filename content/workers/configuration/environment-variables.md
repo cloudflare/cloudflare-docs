@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: configuration
 title: Environment variables
 ---
 
@@ -7,9 +7,7 @@ title: Environment variables
 
 ## Background
 
-Attach secrets, text strings, and JSON values as environment variables to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker).
-
-Secrets are environment variables that are encrypted and not visible once set. They are used for storing sensitive information like API keys and auth tokens.
+Attach text strings and JSON values as environment variables to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 Text strings and JSON values are not encrypted and are useful for storing application configuration.
 
@@ -49,60 +47,43 @@ export default {
 }
 ```
 
+`vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
+
+To define environment variables for different environments, refer to the example below:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+
+[env.staging.vars]
+API_HOST = "staging.example.com"
+API_ACCOUNT_ID = "staging_example_user"
+SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
+
+[env.production.vars]
+API_HOST = "production.example.com"
+API_ACCOUNT_ID = "production_example_user"
+SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
+```
+
 ## Add environment variables via the dashboard
 
 To add environment variables via the dashboard:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
+2. Select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings**.
 4. Under **Environment Variables**, select **Add variable**.
 5. Input a **Variable name** and its **value**, which will be made available to your Worker.
-6. If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
-7. (Optional) To add multiple environment variables, select **Add variable**.
-8. Select **Save** to implement your changes.
+6. (Optional) To add multiple environment variables, select **Add variable**.
+7. Select **Save** to implement your changes.
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
-Only select **Encrypt** if your environment variable is a secret. Otherwise, skip this step.
+Only select **Encrypt** if your environment variable is a [secret](/workers/configuration/secrets/).
 
 {{</Aside>}}
 
-## Add secrets to your project
-
-### Secrets in development
-
-When developing your Worker locally, create a `.dev.vars` file in the root of your project to define secrets that will be available to your Worker when running `wrangler dev`.
-
-The `.dev.vars` file should be formatted like a `dotenv` file.
-
-```bash
----
-header: .dev.vars
----
-SECRET_KEY=value
-API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-```
-
-### Secrets on deployed Workers
-
-To add a secret to a Worker, run the [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) in your terminal, where `<KEY>` is the name of your secret:
-
-```sh
----
-filename: wrangler secret put
----
-$ wrangler secret put <KEY>
-```
-
-To add a secret to a Worker using the Cloudflare dashboard, follow the [environment variables setup instructions](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) and make sure to encrypt your secret.
-
-{{<Aside type="warning" header="Use secrets for sensitive information">}}
-
-Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) instead.
-
-{{</Aside>}}
-
-## Compare secrets and environment variables
-
-Secrets are environment variables. The difference is secret values are not visible within Wrangler or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.
+{{<render file="_env_and_secrets.md">}}

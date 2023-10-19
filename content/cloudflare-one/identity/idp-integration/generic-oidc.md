@@ -12,7 +12,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 1. Visit your identity provider and create a client/app.
 
-2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -38,11 +38,27 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter custom OIDC claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
 10. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
+
+## Optional configurations
+
+### OIDC claims
+
+OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes. Custom OIDC claims are not currently supported in Gateway policies.
+
+#### Email claim
+
+You can specify a custom **Email claim** name that Access will use to identify user emails. This is useful if your IdP does not return the standard `email` claim in the OIDC ID token. For example, you may wish to identify Azure AD users based on their `upn` instead of `email`.
+
+#### Multi-record OIDC claims
+
+Cloudflare Access extends support for multi-record OIDC claims. These claims are parsed out and can be individually referenced in policies. This feature enables granular access control and precise user authorization in applications.
+
+Cloudflare Access does not support partial OIDC claim value references or OIDC scopes.
 
 ## Example API Configuration
 

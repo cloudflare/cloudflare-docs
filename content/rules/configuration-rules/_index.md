@@ -7,7 +7,7 @@ meta:
   title: Configuration Rules (beta)
 ---
 
-{{<beta>}} Configuration Rules {{</beta>}}
+{{<heading-pill style="beta">}} Configuration Rules {{</heading-pill>}}
 
 Configuration Rules allow you to customize certain Cloudflare [configuration settings](/rules/configuration-rules/settings/) for matching incoming requests.
 

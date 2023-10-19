@@ -9,9 +9,9 @@ This tutorial explains how to set up strongSwan along with Magic WAN. You will l
 
 ## 1. Health checks configuration
 
-Start by configuring the symmetric health checks target for Magic WAN as explained in [tunnel health checks](/magic-wan/how-to/run-tunnel-health-checks/). For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
+Start by configuring the [bidirectional health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) target for Magic WAN. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
 
-This can be set up [with the API](/api/operations/magic-i-psec-tunnels-update-i-psec-tunnel). For example:
+This can be set up [with the API](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel). For example:
 
 ```bash
 $ curl --request PUT \
@@ -83,7 +83,7 @@ conn cloudflare-ipsec
     # Tunnel ID from dashboard, in this example FQDN is used
     leftid=<YOUR_TUNNEL_ID>.<YOUR_ACCOUNT_ID>.ipsec.cloudflare.com
     leftsubnet=0.0.0.0/0
-    # Cloudflare anycast IP
+    # Cloudflare Anycast IP
     right=<YOUR_CLOUDFLARE_ANYCAST_IP>
     rightid=<YOUR_CLOUDFLARE_ANYCAST_IP>
     rightsubnet=0.0.0.0/0
@@ -181,7 +181,7 @@ cloudflare-ipsec{4}:   0.0.0.0/0 === 0.0.0.0/0
 After you finish configuring StrongSwan with Magic WAN, you can use tcpdump to investigate the status of health checks originated from Cloudflare.
 
 ```sh
-$ sudo tcpdump -i eth0 src 173.245.48.0/20 and dst <your-server-ip> and tcp port 80
+$ sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP>
 ```
 
 In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare’s health check probes (both the request and response) are going through the IPsec tunnel we configured.
@@ -189,5 +189,9 @@ In this example, the outgoing Internet interface shows that the IPsec encrypted 
 ![tcpdump shows the IPsec encrypted packets from Cloudflare's health probbes](/images/magic-wan/third-party/strongswan/ipsec.png)
 
 You can also run tcpdump on `vti0` to check the decrypted packets.
+
+```sh
+$ sudo tcpdump -i vti0 host 172.64.240.252
+```
 
 ![If you run tcpdump on vti0 you can check for decrypted packets](/images/magic-wan/third-party/strongswan/tcpdump.png)

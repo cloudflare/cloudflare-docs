@@ -7,7 +7,7 @@ layout: single
 
 # Downloads
 
-Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/), you can simply copy-paste the installation command shown in the dashboard.
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), you can simply copy-paste the installation command shown in the dashboard.
 
 To download and install `cloudflared` manually, use one of the following links.
 
@@ -49,6 +49,14 @@ Alternatively, download the [latest Darwin amd64 release](https://github.com/clo
 
 ### Windows
 
+Download and install `cloudflared` via [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
+
+```bash
+winget install --id Cloudflare.cloudflared
+```
+
+Alternatively, download the latest release directly:
+
 | Type       | 32-bit                                                                                                     | 64-bit                                                                                                       |
 | ---------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
@@ -65,6 +73,6 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 ## Deprecated releases
 
-Cloudflare supports the previous year of `cloudflared` releases. For example, if the [latest version](https://github.com/cloudflare/cloudflared/releases) is `2023.5.1`, version `2022.5.1` and later are supported. Deprecated versions may be impacted by breaking changes unrelated to feature availability.
+Cloudflare supports versions of `cloudflared` that are within one year of the most recent release. Breaking changes unrelated to feature availability may be introduced that will impact versions released more than one year ago. For example, as of January 2023 Cloudflare will support `cloudflared` version 2023.1.1 to cloudflared 2022.1.1.
 
 To update `cloudflared`, refer to [these instructions](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/).

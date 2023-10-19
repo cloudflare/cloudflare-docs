@@ -12,7 +12,7 @@ A false negative is a lack of identification. In the case of DDoS protection, th
 
 To address a false negative:
 
-- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating rate limiting rules and firewall rules as needed.
+- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating rate limiting rules and WAF custom rules as needed.
 
 - If you are a Magic Transit customer, [use Magic Firewall rules](/magic-firewall/how-to/add-rules/) to help mitigate the attack.
 
@@ -31,23 +31,23 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 2. Go to the analytics dashboard and apply filters to the displayed data.
 
-    <details><summary>For WAF/CDN customers</summary><div>
+    {{<details header="For WAF/CDN customers">}}
 
-    1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
+    1. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
-    2\. Go to **Security** > **Events**.
+    2. Go to **Security** > **Events**.
 
-    3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
-    </div></details>
+    {{</details>}}
 
-    <details><summary>For Magic Transit and Spectrum customers</summary><div>
+    {{<details header="For Magic Transit and Spectrum customers">}}
 
-    1\. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
-    2\. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+    2. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
-    </div></details>
+    {{</details>}}
 
 3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
 

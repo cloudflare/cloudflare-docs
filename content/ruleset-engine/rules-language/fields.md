@@ -375,7 +375,8 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
+         <p>In the WAF, the <code>ip.geoip.country</code> field (which is still available) is equivalent to <code>ip.src.country</code>.</p>
+         <p><code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
       </td>
    </tr>
    <tr id="field-ip-src-subdivision-1-iso-code">
@@ -490,6 +491,15 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.client.bot</code>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-verified_bot_categories">
+        <td><p><code>cf.verified_bot_category</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+          <p>Provides the type and purpose of a verified bot.</p>
+          <p>For more details, refer to <a href="/bots/reference/verified-bot-categories/">Verified Bot Categories</a>.
           </p>
         </td>
     </tr>
@@ -789,7 +799,9 @@ The Cloudflare Rules language supports these dynamic fields:
   </tbody>
 </table>
 
-## Magic Firewall Fields
+## Magic Firewall fields
+
+{{<Aside type="note">}}Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.{{</Aside>}}
 
 <table>
   <thead>
@@ -875,7 +887,8 @@ The Cloudflare Rules language supports these dynamic fields:
             <code>GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
+         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will match on either source or destination address.</p>
+         <p> <code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">

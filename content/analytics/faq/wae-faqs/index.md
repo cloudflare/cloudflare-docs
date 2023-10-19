@@ -5,7 +5,7 @@ layout: single
 weight: 6
 ---
 
-# Wokers Analytics Engine FAQ
+# Workers Analytics Engine FAQ
 
 Below you will find answers to our most commonly asked questions.
 
@@ -31,7 +31,7 @@ Thanks to sampling, the cost of writing data multiple times can be relatively lo
 
 You can use the `_sample_interval` field — again, note that this does not tell you if the results are accurate.
 
-You can tell when data is sampled at read time because sample intervals will be powers of 10, for example `20` or `700`. There is no hard and fast rule for when sampling starts at read time, but in practice reading longer periods (or more index values) will result in a higher sample interval.
+You can tell when data is sampled at read time because sample intervals will be multiples of powers of 10, for example `20` or `700`. There is no hard and fast rule for when sampling starts at read time, but in practice reading longer periods (or more index values) will result in a higher sample interval.
 
 ### Why is data missing?
 

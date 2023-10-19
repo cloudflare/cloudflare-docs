@@ -7,11 +7,7 @@ title: Limits
 
 Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
-
-{{</Aside>}}
+{{<render file="_limits_increase.md" productFolder="workers">}}
 
 ## Builds
 
@@ -21,11 +17,13 @@ Builds will timeout after 20 minutes.
 
 ## Custom domains
 
-A Cloudflare Pages project can be attached to a certain number of domains per plan.
+Based on your Cloudflare plan type, a Pages project is limited to a specific number of custom domains. This limit is on a per-project basis.
 
 | Free | Pro | Business | Enterprise |
 | ---- | --- | -------- | ---------- |
-| 100  | 250 | 500      | 500        |
+| 100  | 250 | 500      | 500[^1]    |
+
+[^1]: If you need more custom domains, contact your account team.
 
 ## Files
 

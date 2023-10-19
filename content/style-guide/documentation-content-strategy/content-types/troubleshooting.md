@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Troubleshooting

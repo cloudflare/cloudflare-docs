@@ -22,7 +22,7 @@ To set up SAML with Okta as your identity provider:
 
    ![Entering your Zero Trust callback URL into Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-1.png)
 
-5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -94,9 +94,11 @@ SAML attributes are only refreshed during authentications with the Okta identity
         "attributes": [
             "email",
             "group",
-            "email_attribute_name": "",
-            "sign_request": false,
-            "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+        ],
+        "email_attribute_name": "",
+        "sign_request": false,
+        "idp_public_certs": [
+            "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
         ]
     },
     "type": "saml",

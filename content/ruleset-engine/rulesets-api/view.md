@@ -38,25 +38,20 @@ Not all zone-level phases support all types of rulesets, even if they are presen
 
 {{</Aside>}}
 
-The result does not include the list of rules in the ruleset. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
+The result does not include the list of rules in the ruleset. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -77,8 +72,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific ruleset
 
@@ -111,21 +105,16 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -156,8 +145,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## List all versions of a ruleset
 
@@ -177,27 +165,22 @@ Use one of the following API endpoints:
 [lev-account]: /api/operations/listAccountEntrypointRulesetVersions
 [lev-zone]: /api/operations/listZoneEntrypointRulesetVersions
 
-The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
+The result contains the ruleset properties of each version, but it does not include the list of rules. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) for instructions on obtaining this information.
 
 When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -227,8 +210,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific version of a ruleset
 
@@ -252,21 +234,16 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -297,8 +274,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note" header="Note">}}
 
@@ -318,21 +294,16 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -355,7 +326,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
           "drupal",
           "wordpress"
         ],
-        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+        "description": "Drupal, WordPress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2023-03-19T16:54:32.942986Z",
         "ref": "<RULE_REF_1>",
         "enabled": true
@@ -365,7 +336,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
         "version": "3",
         "action": "block",
         "categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
-        "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+        "description": "WordPress - Broken Access Control - CVE:CVE-2018-12895",
         "last_updated": "2023-03-19T16:54:32.942986Z",
         "ref": "<RULE_REF_2>",
         "enabled": true
@@ -381,5 +352,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 }
 ```
 
-</div>
-</details>
+{{</details>}}

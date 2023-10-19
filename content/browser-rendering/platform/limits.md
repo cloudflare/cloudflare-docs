@@ -6,8 +6,10 @@ weight: 30
 
 # Limits
 
-{{<Aside>}}
-Workers Browser Rendering API is now in open Beta. During this period, Browser Rendering is available on all [Workers plans](/workers/platform/pricing/).
+{{<Aside type="warning" header="Join the waitlist">}}
+
+The Workers Browser Rendering API is currently in beta. [Add yourself to the waitlist](https://www.cloudflare.com/lp/workers-browser-rendering-api/) to reserve your spot, and as we expand availability, we will reach out to you and grant access.
+
 {{</Aside>}}
 
 These are the limits during the open Beta period:

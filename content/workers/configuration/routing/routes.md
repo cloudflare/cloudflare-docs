@@ -96,6 +96,8 @@ workers_dev = false
 
 When you redeploy your Worker with this change, the `workers.dev` route will be disabled.
 
+If you do not specify `workers_dev = false` but add a `routes` component to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
+
 {{<Aside type="warning">}}
 If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
 {{</Aside>}}
@@ -127,7 +129,11 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
-- Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
+- The path component of route patterns is case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
+
+- For routes created before October 15th, 2023, the host component of route patterns is case sensitive, for example, `example.com/*` and `Example.com/*` are two distinct routes.
+
+- For routes created on or after October 15th, 2023, the host component of route patterns is not case sensitive, for example, `example.com/*` and `Example.com/*` are equivalent routes.
 
 A route can be specified without being associated with a Worker. This will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 

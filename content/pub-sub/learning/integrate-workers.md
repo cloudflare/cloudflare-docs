@@ -10,7 +10,7 @@ Once of the most powerful features of Pub/Sub is the ability to connect [Cloudfl
 
 There are three ways to integrate a Worker with Pub/Sub:
 
-1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/workers/learning/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
+1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/kv/learning/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
 2. (Not yet available in beta) **Publishing directly to a Pub/Sub topic from a Worker.** You can publish telemetry and events to Pub/Sub topics from your Worker code.
 3. (Not yet available in beta) **Subscribing to a Pub/Sub topic (or topics) from within a Worker**. This allows the Worker to act as any other subscriber and consume messages published either from external clients (over MQTT) or from other Workers.
 
@@ -202,7 +202,7 @@ const worker = {
 export default worker;
 ```
 
-Once you have deployed your Worker using `wrangler deploy`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
+Once you have deployed your Worker using `npx wrangler deploy`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```sh
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --on-publish-url="https://your.worker.workers.dev"
@@ -293,8 +293,7 @@ Some common failure modes can result in messages not being sent to subscribed cl
 - Failing to correctly validate incoming requests. This can happen if you are not using the correct public keys (keys are unique to each of your Brokers), if the keys are malformed, and/or if you have not populated the keys in the Worker via environmental variables.
 - Not returning a HTTP 200 response. Any other HTTP status code is interpreted as an error and the message is dropped.
 - Not returning a valid Content-Type. The Content-Type in the HTTP response header must be `application/octet-stream`
-- Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) if you need to write messages to other destinations after returning the message to the broker.
+- Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) if you need to write messages to other destinations after returning the message to the broker.
 - Returning an invalid or unstructured body, a body or payload that exceeds size limits, or returning no body at all.
 
 Because the Worker is acting as the "server" in the HTTP request-response lifecycle, invalid responses from your Worker can fail silently, as the Broker can no longer return an error response.
-

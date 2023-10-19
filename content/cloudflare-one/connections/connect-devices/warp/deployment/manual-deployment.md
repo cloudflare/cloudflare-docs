@@ -10,25 +10,24 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ## Prerequisites
 
-- [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/) on user devices.
-- [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
+[Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
 
 ## Enroll a device manually
 
 ### Windows and macOS
 
-{{<render file="_enroll-windows-mac.md">}}
+{{<render file="warp/_enroll-windows-mac.md">}}
 
 The device is now protected by your organization's Zero Trust policies.
 
 ### Linux
 
-{{<render file="_enroll-linux.md">}}
+{{<render file="warp/_enroll-linux.md">}}
 
-The device is now protected by your organization's Zero Trust policies. For more information on all available Linux commands, run `warp-cli --help`.
+The device is now protected by your organization's Zero Trust policies. For more information on all available commands, run `warp-cli --help`.
 
 ### iOS, Android, and ChromeOS
 
-{{<render file="_enroll-ios-android.md">}}
+{{<render file="warp/_enroll-ios-android.md">}}
 
 The device is now protected by your organization's Zero Trust policies.

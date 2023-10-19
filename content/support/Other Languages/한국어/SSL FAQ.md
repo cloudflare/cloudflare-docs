@@ -23,7 +23,7 @@ _Cloudflare **SSL/TLS** 앱과 관련된 일반적인 질문에 대한 답을 �
 -   [다른 곳에서 구매한 SSL 인증서를 Cloudflare가 사용하게 하고 싶습니다.](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_406415940571548960012266)
 -   [어떻게 사이트가 HTTPS/SSL만 사용하게 합니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_999722138611548960019807)
 -   [갈릴레오 프로젝트에 SSL 지원이 포함됩니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_745887958641548960026645)
--   [Cloudflar를 사용하면 PayPal의 TLS 1.2 요건에 영향을 줍니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_100356045661548960034406) 
+-   [Cloudflare를 사용하면 PayPal의 TLS 1.2 요건에 영향을 줍니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_100356045661548960034406) 
 -   [Cloudflare 중국 데이터 센터의 SSL 인증서를 어떻게 사용합니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_853db670-78aa-4c98-99d4-3aa3d38f8d59)
 -   [Cloudflare가 TLS 클라이언트 인증을 지원합니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_db0bcd71-24f9-4b0c-8cfc-7a5ed0f27649)
 -   [Github를 포함한 Universal SSL을 어떻게 활성화합니까?](https://support.cloudflare.com/hc/ko/articles/204144518-SSL-FAQ#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
@@ -138,7 +138,7 @@ ___
 
 ___
 
-### Cloudflar를 사용하면 PayPal의 TLS 1.2 요건에 영향을 줍니까?
+### Cloudflare를 사용하면 PayPal의 TLS 1.2 요건에 영향을 줍니까?
 
 아닙니다. Cloudflare는 paypal.com과 직접 연결을 프록시 설정하지 않기 때문에  도메인에 Cloudflare를 사용해도 TLS 연결 방식에 영향을 주지 않습니다.
 

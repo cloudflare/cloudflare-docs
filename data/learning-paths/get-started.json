@@ -10,7 +10,8 @@
       "WAF",
       "Cache"
     ],
-    "category": ["Security", "Performance", "Reliability"],
+    "product_group": "Cloudflare essentials",
+    "additional_groups": ["Application security", "Application performance"],
     "elements": [
       {
         "type": "module",
@@ -23,23 +24,23 @@
             "link_title": "What is a Content Delivery Network (CDN)?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/",
+            "url_path": "/fundamentals/concepts/what-is-cloudflare/",
             "link_title": "What is Cloudflare?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/",
+            "url_path": "/fundamentals/concepts/how-cloudflare-works/",
             "link_title": "How does Cloudflare work?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
+            "url_path": "/fundamentals/concepts/cloudflare-ip-addresses/",
             "link_title": "Cloudflare IP addresses"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",
+            "url_path": "/firewall/cf-firewall-rules/cloudflare-challenges/",
             "link_title": "Cloudflare challenges"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/network-layers/",
+            "url_path": "/fundamentals/concepts/network-layers/",
             "link_title": "How Cloudflare protects different layers of your network"
           }
         ]
@@ -51,7 +52,7 @@
         "estimated_time": 10,
         "pages": [
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/create-account/",
+            "url_path": "/fundamentals/setup/account-setup/create-account/",
             "link_title": "Create an account"
           },
           {
@@ -65,11 +66,11 @@
             "link_title": "Add billing information"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/customize-account/",
+            "url_path": "/fundamentals/setup/account-setup/customize-account/",
             "link_title": "Customize your account"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/members/manage/",
+            "url_path": "/fundamentals/setup/manage-members/manage/",
             "link_title": "Add other account members"
           },
           {
@@ -208,16 +209,16 @@
             "postpone_evaluation": true
           }
         ],
-        "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a target='_blank' href='/fundamentals/get-started/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
+        "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a target='_blank' href='/fundamentals/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
         "estimated_time": 5,
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/setup/minimize-downtime/",
+            "url_path": "/fundamentals/basic-tasks/minimize-downtime/",
             "link_title": "(For some) Minimize downtime",
             "additional_description": "If your domain is particularly sensitive to downtime, you may want to do a bit of pre-work before adding it to Cloudflare."
           },
           {
-            "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
+            "url_path": "/fundamentals/setup/allow-cloudflare-ip-addresses/",
             "link_title": "Allow Cloudflare IP addresses",
             "additional_description": "If you control your <a href='https://www.cloudflare.com/learning/cdn/glossary/origin-server/'>origin server</a> and plan on using <a href='/dns/manage-dns-records/reference/proxied-dns-records/'>Cloudflare’s proxy</a>, review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
@@ -227,12 +228,12 @@
             "additional_description": "Make sure DNSSEC is disabled at your registrar (where you purchased your domain name). Otherwise, your domain will experience connectivity errors when you change your nameservers."
           },
           {
-            "url_path": "/fundamentals/get-started/setup/add-site/",
+            "url_path": "/fundamentals/setup/account-setup/add-site/",
             "link_title": "Add a site",
             "additional_description": "<strong>Note</strong>: If do not already have a domain name, start with <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a> instead."
           },
           {
-            "url_path": "/fundamentals/get-started/setup/add-site/#step-2--update-nameservers",
+            "url_path": "/fundamentals/setup/account-setup/add-site/#step-2--update-nameservers",
             "link_title": "Update your nameservers",
             "additional_description": "Before your domain can begin using Cloudflare for DNS resolution, you need to update your nameservers at your registrar."
           }
@@ -267,7 +268,7 @@
             "additional_description": "Beyond having a domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
-            "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
+            "url_path": "/fundamentals/setup/manage-domains/redirect-domain/",
             "link_title": "Redirect one domain to another"
           },
           {
@@ -363,7 +364,7 @@
             "link_title": "Optimize site speed (Learning Path)"
           },
           {
-            "url_path": "/fundamentals/get-started/task-guides/origin-health/",
+            "url_path": "/fundamentals/basic-tasks/protect-your-origin-server/",
             "link_title": "Secure your origin server"
           },
           {
@@ -384,7 +385,7 @@
         ],
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
+            "url_path": "/fundamentals/setup/manage-domains/redirect-domain/",
             "link_title": "Redirect one domain to another"
           },
           {
@@ -392,15 +393,15 @@
             "link_title": "Create a custom email address"
           },
           {
-            "url_path": "/fundamentals/get-started/reference/",
+            "url_path": "/fundamentals/reference/",
             "link_title": "Review Cloudflare-wide reference information"
           },
           {
-            "url_path": "/fundamentals/get-started/basic-tasks/access-cloudflare-resources/",
+            "url_path": "/fundamentals/",
             "link_title": "What resources does Cloudflare offer?"
           },
           {
-            "url_path": "/fundamentals/get-started/basic-tasks/interact-with-cloudflare/",
+            "url_path": "/fundamentals/basic-tasks/interact-with-cloudflare/",
             "link_title": "How can I interact with Cloudflare?"
           }
         ]
