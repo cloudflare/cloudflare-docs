@@ -111,7 +111,6 @@ You may have configured [HTTP Response Header Modification Rules](/rules/transfo
 
 ___
 
-
 ## Other errors
 
 ### Symptom
@@ -120,8 +119,8 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
 
 ### Resolution
 
-- Make sure that you are using a [Supported Browser](https://developers.cloudflare.com/ssl/reference/browser-compatibility/)
-- Ensure that the hostname you are accessing is set to [Proxied (orange cloud)](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records/) in the DNS tab of your Cloudflare Dashboard
+- Make sure that you are using a [supported browser](/ssl/reference/browser-compatibility/).
+- Ensure that the hostname you are accessing is set to [proxied (orange cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) in the DNS tab of your Cloudflare Dashboard.
 - If the hostname you are accessing is a second level subdomain (such as `dev.www.example.com`), you'll need to either:
   - Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers `dev.www.example.com`.
   - Upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers `dev.www.example.com`.
@@ -129,16 +128,17 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
 
 {{<Aside type="note">}}
 
-The following [`openssl`](https://www.openssl.org/) command might help troubleshooting TLS handshake between the client and the Cloudflare Edge:
+The following [`openssl`](https://www.openssl.org/) command might help troubleshooting TLS handshake between the client and the Cloudflare network edge:
 
-`openssl s_client -connect example.com:443 -servername example.com version`
+```txt
+
+$ openssl s_client -connect example.com:443 -servername example.com version
+
+```
 
 {{</Aside>}}
 
 ___
-
-
-
 
 ## Kaspersky Antivirus
 
