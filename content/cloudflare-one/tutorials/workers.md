@@ -30,23 +30,25 @@ To send the authenticated user's email address as a different header or to inclu
 
 {{<tutorial-prereqs>}}
 
-- ???
+- Secure your origin server with [Access](/cloudflare-one/policies/access/)
 
 {{</tutorial-prereqs>}}
 
 {{<tutorial-step title="Create the Worker">}}
 
-1. Sign in Cloudflare account and Navigate to “Workers & Pages”
-2. Select “Create Application”
-3. Select “Create Worker”
-4. provide a name for the Worker and select “Deploy”
-5. Remove the predefined code and paste the below code and “save and deploy”:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Workers & Pages**.
+2. If this is your first Worker, select **Create Worker**. Otherwise, select **Create application**, then select **Create Worker**.
+3. Enter an identifiable name for the Worker, then select **Deploy**.
+4. Select **Edit code**.
+5. Replace the default code with the following script:
 
    ```javascript
+   ---
+   header: Worker custom HTTP header script
+   ---
    addEventListener("fetch", event => {
    event.respondWith(handleRequest(event.request))
    })
-
 
    async function handleRequest(request) {
    const { headers } = request;
@@ -54,23 +56,28 @@ To send the authenticated user's email address as a different header or to inclu
    const requestWithID = new Request(request);
    requestWithID.headers.set('company-user-id', cfaccessemail);
 
-
    return await fetch(requestWithID);
    }
+   
    ```
+
+6. Select **Save and deploy**.
+
+Your Worker is now ready to send custom headers to your Access-protected origin services.
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Apply Worker to hostname">}}
+{{<tutorial-step title="Apply the Worker to your hostname">}}
 
-1. Navigate back to the Worker you just created Select “Triggers”
-2. Select “Add route”
-3. create the route and choose “Add route”.
-4. The header configured in the Worker will now be inserted into requests that match the defined route similar to below.
+1. Go to the Worker you created > **Triggers**.
+2. In **Routes**, select **Add route**.
+3. Enter the hostname and zone for your origin, then select **Add route**.
+
+The Worker will now insert a custom header into requests that match the defined route. For example:
 
    ```http
    ---
-   highlight: [4,5]
+   header: Example custom header
    ---
    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7", 
        "Accept-Encoding": "gzip", 
