@@ -258,7 +258,7 @@
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
 # durable objects
-/durable-object-example/ /durable-object-location-example/ 301
+/durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-location-example/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
