@@ -186,8 +186,8 @@ async function sendText(accountSid, authToken, message) {
   const endpoint = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
 
   const encoded = new URLSearchParams({
-    'To': "%YOUR_PHONE_NUMBER%",
-    'From': "%YOUR_TWILIO_NUMBER%",
+    'To': '%YOUR_PHONE_NUMBER%',
+    'From': '%YOUR_TWILIO_NUMBER%',
     'Body': message
   });
 
@@ -229,7 +229,7 @@ async fetch(request, env, ctx) {
   try {
     const rawBody = await request.text();
     if (!checkSignature(rawBody, request.headers)) {
-      return new Response("Wrong password, try again", {status: 403});
+      return new Response('Wrong password, try again', {status: 403});
     }
 
     const action = request.headers.get('X-GitHub-Event');
