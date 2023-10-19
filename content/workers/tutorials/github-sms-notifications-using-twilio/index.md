@@ -132,7 +132,7 @@ async fetch(request, env, ctx) {
 },
 ```
 
-The `checkSignature` function will use the node crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the SHA1 format. You will place this function at the top of your `index.js` file, before your export.
+The `checkSignature` function will use the Node.js crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the SHA-256 format. You will place this function at the top of your `index.js` file, before your export.
 
 ```js
 ---
@@ -151,7 +151,7 @@ function checkSignature(text, headers, githubSecretToken) {
   const untrusted =  Buffer.from(actualSignature, 'ascii');
 
   return trusted.byteLength == untrusted.byteLength
-    && crypto.timingSafeEqual(trusted, untrusted);
+    && timingSafeEqual(trusted, untrusted);
 };
 ```
 
@@ -228,7 +228,7 @@ async fetch(request, env, ctx) {
   }
   try {
     const rawBody = await request.text();
-    if (!checkSignature(rawBody, request.headers)) {
+    if (!checkSignature(rawBody, request.headers, env.GITHUB_SECRET_TOKEN)) {
       return new Response('Wrong password, try again', {status: 403});
     }
 
