@@ -45,7 +45,7 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/zones/<ZONE
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name":"<public domain>",
-    "destination_conf": "https://<public domain>:<public port>?header_<secret_header>=<secret_value>",
+    "destination_conf": "https://<public domain>:<public port>?header_Content-Type=application/json&header_<secret_header>=<secret_value>",
     "dataset": "http_requests",
     "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339"
 }'
