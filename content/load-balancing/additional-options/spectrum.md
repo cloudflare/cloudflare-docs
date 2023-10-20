@@ -20,6 +20,35 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ### 1. Configure your load balancer
 
+1. Go to **Traffic** > **Load Balancing**.
+
+2. Select **Create Load Balancer**.
+
+3.  On the **Hostname** page, define the settings presented and select **Next**.
+    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
+    {{<Aside type="note">}}
+  To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname you intend to define for your Spectrum application.
+    {{</Aside>}}
+    *   Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
+    *   Keep **Session Affinity** disabled as this feature is not supported with Spectrum.
+
+4.  On the **Add an Origin Pool** page, define the settings presented and select **Next**.
+    *   Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool).
+    *   If needed, update the [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools) [^1].
+
+5.  On the **Monitors** page, define the settings presented and select **Next**.
+    *   Review the monitors attached to your pools.
+    *   If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/monitors/create-monitor/#create-a-monitor).
+
+6.  On the **Traffic Steering** page, choose an option for [Traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and select **Next**.
+
+7. Keep **Custom Rules** page empty as this feature is not supported with Spectrum.
+
+8. On the **Review** page:
+    *   Review your configuration and make any changes.
+        * If you set traffic steering to Off, re-order the pools in your load balancer to adjust the fallback order.
+        * If you chose to set traffic steering to Random, you can [set weights to your pools](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the API) to determine the percentage of traffic sent to each pool.
+    *   Choose whether to **Save as Draft** or **Save and Deploy**.
 
 ### 2. Configure your Spectrum application
 
@@ -40,6 +69,8 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ## Limitations
 
-* Load Balancing [custom rules](/load-balancing/additional-options/load-balancing-rules/) are not supported by Spectrum.
+* Load Balancing [session affinity](/load-balancing/understand-basics/session-affinity/) and [custom rules](/load-balancing/additional-options/load-balancing-rules/) are not supported by Spectrum.
 
 * UDP health checks are only available with public monitoring. TCP can be used with both public and private montoring.
+
+[^1]: A fallback pool is the pool of last resort. When all pools are disabled or unhealthy, this is where the load balancer will send traffic.
