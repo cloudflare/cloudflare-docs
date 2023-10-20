@@ -50,7 +50,7 @@ Use the following troubleshooting strategies if you are running into issues whil
 
 - Ensure that `cloudflared` is connected to Cloudflare by visiting **Access** > **Tunnels** in Zero Trust.
 
-- Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
+- Ensure that `cloudflared` is running with the `quic` protocol (search for `Initial protocol quic` in its logs).
 
 - Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
 
