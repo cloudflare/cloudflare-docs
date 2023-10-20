@@ -125,7 +125,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to <code>no-cache</code>,<code>private</code>, or <code>max-age=0</code> even though
         Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling <a href="/cache/concepts/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
-        your origin web server sends cookies in the response header. If the Request to your origin includes an `Authorization` header, its response will be also BYPASS.
+        your origin web server sends cookies in the response header. If the Request to your origin includes an <code>Authorization</code> header, in some cases the response will also be BYPASS. Refer to <a href="/cache/concepts/cache-control/#conditions">Conditions</a> in the Origin Cache-Control behavior section for more details.
       </td>
     </tr>
     <tr>

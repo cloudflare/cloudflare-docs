@@ -6,7 +6,7 @@ weight: 10
 
 # Configure block page
 
-Gateway responds to any domain blocked at the DNS level with 0.0.0.0, and does not return that blocked domain's IP address. As a result, the browser will show a default error page, and users will not be able to reach that website. This may cause confusion and lead some users to think that their Internet connection is not working.
+Gateway responds to any domain blocked at the DNS level with `0.0.0.0` (for IPv4) or `::` (for IPv6), and does not return that blocked domain's IP address. As a result, the browser will show a default error page, and users will not be able to reach that website. This may cause confusion and lead some users to think that their Internet connection is not working.
 
 Configuring a custom block page in Zero Trust helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway and providing any points of contact for support within the organization.
 

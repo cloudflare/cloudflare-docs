@@ -4,7 +4,10 @@ productName: Queues
 entries:
 - publish_date: '2023-10-07'
   title: More queues per account - up to 10,000
-  description: Developers building on Queues can now create up to 10,000 queues per account, enabling easier per-user, per-job and sharding use-cases. Refer to [Limits](/queues/platform/limits) to review other limits.
+  description: |-
+    Developers building on Queues can now create up to 10,000 queues per account, enabling easier per-user, per-job and sharding use-cases.
+  
+    Refer to [Limits](/queues/platform/limits) to learn more about Queues' current limits.
 - publish_date: '2023-10-05'
   title: Higher consumer concurrency limits
   description: |-

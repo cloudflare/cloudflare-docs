@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Betas
+meta:
+  description: Cloudflare developer platform and Workers features beta status.
 ---
 
 # Beta Status
@@ -17,6 +19,5 @@ These are the current alphas and betas relevant to the Cloudflare Workers platfo
 | Green Compute                 |              | ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
 | Pub/Sub                       | ✅           |             |[Docs](/pub-sub)                                                            |
 | Queues                        |              | ✅          |[Docs](/queues)                                                             |
-| [TCP Sockets](/workers/runtime-apis/tcp-sockets/)           | ✅          |[Docs](/workers/runtime-apis/tcp-sockets) |
+| [TCP Sockets](/workers/runtime-apis/tcp-sockets/)           | ✅          |             |[Docs](/workers/runtime-apis/tcp-sockets) |
 | Workers Analytics Engine      |              | ✅          |[Docs](/analytics/analytics-engine/)               |
-| Workers Deployments           |             | ✅           |[Docs](/workers/configuration/deployments)               |

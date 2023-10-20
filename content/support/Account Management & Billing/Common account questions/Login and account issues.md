@@ -37,7 +37,7 @@ ___
 
 If you forget your account password:
 
-1\. Go to [](http://dash.cloudflare.com/forgot-email)[Password Reset](https://dash.cloudflare.com/password-reset).
+1\. Go to [](http://dash.cloudflare.com/forgot-email)[Password Reset](https://dash.cloudflare.com/forgot-password).
 
 2\. Enter your email address.
 

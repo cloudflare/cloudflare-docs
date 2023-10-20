@@ -10,7 +10,7 @@ Once of the most powerful features of Pub/Sub is the ability to connect [Cloudfl
 
 There are three ways to integrate a Worker with Pub/Sub:
 
-1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/workers/learning/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
+1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/kv/learning/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
 2. (Not yet available in beta) **Publishing directly to a Pub/Sub topic from a Worker.** You can publish telemetry and events to Pub/Sub topics from your Worker code.
 3. (Not yet available in beta) **Subscribing to a Pub/Sub topic (or topics) from within a Worker**. This allows the Worker to act as any other subscriber and consume messages published either from external clients (over MQTT) or from other Workers.
 

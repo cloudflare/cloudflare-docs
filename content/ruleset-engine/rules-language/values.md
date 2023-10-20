@@ -18,19 +18,24 @@ Besides these values, expressions may also contain literal values. These are sta
 
 When working with values in rule expressions, keep in mind the information in the following sections.
 
-## String values
+## String values and regular expressions
 
 Strings are sequences of bytes enclosed by specific delimiters.
 
 Cloudflare rules support two formats for specifying literal strings: [quoted literal strings](#quoted-string-syntax) and [raw strings](#raw-string-syntax). These formats have different delimiters and escaping mechanisms.
 
-While you can use either of the two string formats to specify regular expressions in an expression, Cloudflare recommends that you use the raw string syntax, since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
+While you can use either of the two string formats to specify regular expressions in an expression, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax), since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
+
+Regular expression matching is performed using the Rust regular expression engine.
 
 ### Quoted string syntax
 
-When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively. If you use a string literal as a function argument you must use double escaping for the `\` (backslash) character.
+When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively. Additionally, if you use a string literal as a function argument you must use double escaping for the `\` (backslash) character.
 
-The quoted string syntax has additional escaping requirements. When used to specify a regular expression on the right-hand side of the regex operator (`matches` or `~`), the string is parsed using regex escaping rules. On the other hand, when used on the right hand-side of expressions with other operators, or in function parameters, the string is parsed using basic escaping rules.
+The quoted string syntax has the following additional escaping requirements:
+
+* When used to specify a regular expression on the right-hand side of the [regex operator](/ruleset-engine/rules-language/operators/#comparison-operators) (`matches` or `~`), the string is parsed using regex escaping rules.
+* When used on the right hand-side of expressions with other operators, or in [function parameters](/ruleset-engine/rules-language/functions/), the string is parsed using basic escaping rules.
 
 ```txt
 ---
@@ -49,13 +54,13 @@ regex_replace(http.host, "\\\\", "a")
 
 ### Raw string syntax
 
-To specify a string using the raw string syntax you use special delimiters:
+To specify a string (or regular expression) using the raw string syntax you use special delimiters:
 * The initial delimiter is composed of an `r` character, optionally followed by one or more `#` characters (up to 255), followed by a `"` (double quote) character.
 * The ending delimiter is a `"` (double quote) character followed by the same number of `#` characters as in the initial delimiter (from 0 to 255).
 
 In a raw string there are no special characters, so all characters up to the ending delimiter are interpreted as is (there are no escape sequences).
 
-Unlike the quoted string syntax, the raw string syntax is always the same, regardless of the context where it is being used (for example, as a regular expression with a regex operator or as a parameter of a function call).
+Unlike the quoted string syntax, the raw string syntax is always the same, regardless of the context where it is being used (for example, as a regular expression with a [regex operator](/ruleset-engine/rules-language/operators/#comparison-operators) or as a parameter of a [function call](/ruleset-engine/rules-language/functions/)).
 
 ```txt
 ---
@@ -142,7 +147,7 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 ## Lists
 
-Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#list-types).
+Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
 
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.

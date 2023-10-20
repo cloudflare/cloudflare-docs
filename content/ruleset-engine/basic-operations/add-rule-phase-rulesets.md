@@ -8,7 +8,7 @@ layout: list
 
 # Add rules to phase entry point rulesets
 
-A [phase entry point ruleset](/ruleset-engine/about/rulesets/#phase-entry-point-ruleset) contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
+A [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
 
 To add one or more rules to a phase entry point ruleset, use one of the [ruleset update operations](/ruleset-engine/rulesets-api/update/) of the [Rulesets API](/ruleset-engine/rulesets-api/). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
 
@@ -20,9 +20,7 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 
 {{</Aside>}}
 
-<details>
-<summary>Example: Set the rules of a phase entry point ruleset at the zone level</summary>
-<div>
+{{<details header="Example: Set the rules of a phase entry point ruleset at the zone level">}}
 
 The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation.
 
@@ -96,12 +94,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
-<div>
+{{<details header="Example: Add a single rule to a phase entry point ruleset at the zone level">}}
 
 The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset_id}`) at the zone level using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
@@ -163,5 +158,4 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}

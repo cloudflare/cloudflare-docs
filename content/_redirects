@@ -1,5 +1,6 @@
 # homepage
 /docs/ /products/ 301
+/zero-trust/ /products/?product-group=Cloudflare+One 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
@@ -272,6 +273,11 @@
 /support/dns/troubleshooting/my-dns-doesnt-work/ /dns/troubleshooting/dns-issues/ 301
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
+/durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-location-example/ 301
+/durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
+/durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
+
+
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
 /email-routing/email-routing-options/ /email-routing/setup/ 301
@@ -514,9 +520,17 @@
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
-/load-balancing/create-load-balancer-ui/ /load-balancing/how-to/create-load-balancer/ 301
+/load-balancing/create-load-balancer-ui/ /load-balancing/load-balancers/create-load-balancer/ 301
+/load-balancing/how-to/create-pool/ /load-balancing/pools/create-pool/ 301
+/load-balancing/how-to/create-monitor/ /load-balancing/monitors/create-monitor/ 301
+/load-balancing/how-to/create-load-balancer/ /load-balancing/load-balancers/create-load-balancer/ 301
+/load-balancing/how-to/enable-load-balancing/ /load-balancing/get-started/enable-load-balancing/ 301
 /load-balancing/load-balancing-analytics/ /load-balancing/reference/load-balancing-analytics/ 301
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
+/load-balancing/understand-basics/pools/ /load-balancing/pools/ 301
+/load-balancing/understand-basics/monitors/ /load-balancing/monitors/ 301
+/load-balancing/understand-basics/load-balancers/ /load-balancing/load-balancers/ 301
+/load-balancing/understand-basics/traffic-management/ /load-balancing/local-traffic-management/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
@@ -916,7 +930,8 @@
 /workers/about/pricing/ /workers/platform/pricing/ 301
 /workers/about/routes/ /workers/configuration/routing/routes/ 301
 /workers/platform/routes/ /workers/configuration/routing/ 301
-/workers/about/tips/debugging/ /workers/observability/debug-workers/ 301
+/workers/about/tips/debugging/ /workers/observability/ 301
+/workers/observability/debug-workers/ /workers/observability/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
@@ -1021,6 +1036,7 @@
 /workers/tooling/api/bindings/ /workers/platform/bindings/ 301
 /workers/tooling/api/scripts/ /api/operations/worker-script-list-workers 301
 /workers/tooling/playground/ /workers/learning/playground/ 301
+/workers/learning/playground/ /workers/playground/ 301
 /workers/tooling/serverless/ /workers/learning/integrations/ 301
 /workers/tooling/terraform/ /workers/learning/integrations/ 301
 /workers/tooling/wrangler/ /workers/wrangler/ 301
@@ -1071,7 +1087,8 @@
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
-/workers/learning/debugging-workers/ /workers/observability/debug-workers/ 301
+/workers/learning/debugging-workers/ /workers/observability/ 301
+/workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
 /workers/platform/logpush/ /workers/observability/logpush/ 301
 /workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
@@ -1118,10 +1135,13 @@
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
+/workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
+/workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
 /constellation/platform/ /constellation/ 301
+/constellation/ /workers-ai/ 301
 
 # zaraz
 
