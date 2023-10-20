@@ -12,7 +12,7 @@ Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
-- Filter and log traffic server-initiated traffic, such as VoIP and SIP traffic.
+- Filter and log server-initiated traffic, such as VoIP and SIP traffic.
 - Apply Zero Trust security policies based on the source IP of the request.
 
 ![Two subnets connected with WARP connector](/images/cloudflare-one/connections/connect-apps/warp-connector/overview.png)
@@ -31,7 +31,7 @@ This guide will cover how to connect two independent subnets, for example `10.0.
   - `iptables`
   - `iptables-persistent`
   - `lsb-core`
-- [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) for the host is set to  **Gateway with WARP** or **Secure Web Gateway without DNS Filtering**.
+- [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) for the host is set to  **Gateway with WARP** (default) or **Secure Web Gateway without DNS Filtering**. To check your WARP mode, go to your [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings).
 
 ## 1. Create a service token
 
@@ -61,7 +61,7 @@ All WARP connector and WARP client devices in your Zero Trust organization have 
 3. Next, go to **Settings** > **WARP Client**.
 4. Enable **Override local interface IP**.
 
-Each device is randomly assigned an IP address from the `100.96.0.0/12` range.
+Each device is randomly assigned an IP address from the `100.96.0.0/12` range. You can view the CGNAT IP address for a device on its **My Team** > **Devices** page.
 
 ## 4. Install a WARP connector
 
