@@ -54,7 +54,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims):
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
     2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
-    3. Under **Optional configurations**, enter the claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+    3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity)
 
 16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
