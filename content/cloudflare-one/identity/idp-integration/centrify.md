@@ -61,7 +61,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 19. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 
-20. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+20. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
 21. Select **Save**.
 
