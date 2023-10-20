@@ -20,7 +20,7 @@ By default, the WARP client sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudfla
 
 {{<Aside type="note">}}
 
-Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#3-route-private-network-ips-through-warp).
+Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp).
 
 {{</Aside>}}
 

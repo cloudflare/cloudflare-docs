@@ -10,7 +10,7 @@ Local Traffic Management enables you to load balance traffic within a data cente
 
 ## Set up
 
-To be able to connect to private IP origins, Cloudflare Load Balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). These virtual networks should then be assigned to the private IP origins.
+To be able to connect to private IP origins, Cloudflare Load Balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). These virtual networks should then be assigned to the private IP origins.
 
 {{<Aside type="note">}}
 
