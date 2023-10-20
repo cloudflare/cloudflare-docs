@@ -5,8 +5,6 @@ weight: 1
 layout: learning-unit
 ---
 
-# Create a Cloudflare account
-
 {{<render file="_create-account.md" productFolder="fundamentals">}}
 
 ## Best practices

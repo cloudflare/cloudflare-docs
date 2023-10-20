@@ -5,8 +5,6 @@ weight: 4
 layout: learning-unit
 ---
 
-# Cloudflare IP addresses
-
 {{<render file="_cloudflare-ips.md" productFolder="fundamentals">}}
 
 ## Allow Cloudflare IP addresses

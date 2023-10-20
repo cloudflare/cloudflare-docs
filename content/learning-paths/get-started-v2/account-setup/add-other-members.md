@@ -5,8 +5,6 @@ weight: 5
 layout: learning-unit
 ---
 
-# Manage account members
-
 Learn how to add new account members, edit or revoke their permissions and access, and resend verifications emails.
 
 {{<Aside type="note">}}

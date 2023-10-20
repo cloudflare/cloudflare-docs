@@ -5,8 +5,6 @@ weight: 2
 layout: learning-unit
 ---
 
-# How Cloudflare works
-
 {{<render file="_how-cloudflare-works.md" productFolder="fundamentals">}}
 
 ## Life of a request
