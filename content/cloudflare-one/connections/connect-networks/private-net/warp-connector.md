@@ -21,6 +21,18 @@ As shown in the diagram, WARP connector acts as a router for a subnet within the
 
 This guide will cover how to connect two independent subnets, for example `10.0.0.0/24` and `192.168.1.0/24`.
 
+## Prerequisites
+
+- A Linux host on each subnet that meets [system requirements for WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux).
+- Package dependencies:
+  - `sudo`
+  - `curl`
+  - `gpg`
+  - `iptables`
+  - `iptables-persistent`
+  - `lsb-core`
+- [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) for the host is set to  **Gateway with WARP** or **Secure Web Gateway without DNS Filtering**.
+
 ## 1. Create a service token
 
 [Create a new service token](/cloudflare-one/identity/service-tokens/#create-a-service-token) and copy its **Client ID** and **Client Secret**. WARP connector will use this service token to authenticate with your Zero Trust organization.
@@ -40,16 +52,20 @@ Next, create a device enrollment rule that allows the WARP connector to authenti
 
 5. Select **Save**.
 
-## 3. Turn on WARP-to-WARP
+## 3. Turn on CGNAT IP assignment
 
-To allow a WARP connector to connect to services behind another WARP connector:
+All WARP connector and WARP client devices in your Zero Trust organization have the same IP address by default. To route traffic between various WARP devices, you must allow Cloudflare to assign a unique IP to each device.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Warp-to-Warp**.
+3. Next, go to **Settings** > **WARP Client**.
+4. Enable **Override local interface IP**.
+
+Each device is randomly assigned an IP address from the `100.96.0.0/12` range.
 
 ## 4. Install a WARP connector
 
-Each subnet must run its own WARP connector on a Linux host.  Installing on your router is the simplest setup, but if you do not have access to the router, you may choose any other machine on the subnet. For system requirements, refer to the [WARP downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux).
+Each subnet must run its own WARP connector on a Linux host.  Installing on your router is the simplest setup, but if you do not have access to the router, you may choose any other machine on the subnet.
 
 In this example, we will create a WARP connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`. We will then create a second WARP connector for subnet `192.168.1.0/24` and install it on `192.168.1.97`.
 
@@ -84,7 +100,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       <string>fVTLilTWgMiF3TMxTIMM3nMU2NsixOYTTDHW1IamOMyORL0Y0jUcMWAoZDZhVhLVdn2pTDhy0VFRWZdE22rQCFNN6jQUoOx0eIV0ehcj5RyTZl5PYRwU25wMMi0kDGUS2XZn5W0eJS3mZXS9DkUTJatMNiMZDtNb1TmtmMptENJ20WY0NmdYmIBLoVhtToFichIjtiMnTZIMMOYOGZmpATzzEm2MjhnC6tWMHwNwFGhoIN==</string>
       </dict>
       ```
-    3. To verify the registration:
+    3. Verify the registration:
       ```sh
       $ warp-cli account
       Account type: Team
@@ -95,10 +111,12 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       ```
 
       <details>
-      <summary>Missing registration</summary>
+      <summary>Troubleshoot missing registration</summary>
       <div>
-      If the registration did not go through, try the following:
+      If the registration did not go through, try the following troubleshooting strategies:
 
+      - Ensure that `mdm.xml` is formatted correctly and stored in `/var/lib/cloudflare-warp`.
+      - Ensure that you have a [device enrollment rule](/cloudflare-one/connections/connect-networks/private-net/warp-connector/#2-add-a-device-enrollment-rule) for the service token.
       - Restart the WARP systemd service:
         ```sh
         $ sudo systemctl restart warp-svc.service
@@ -107,6 +125,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
         ```sh
         $ sudo warp-cli delete
         ```
+      - Review your [WARP daemon logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for information about why the registration is failing.
       </div>
       </details>
 
@@ -118,14 +137,12 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       ```
 
       <details>
-      <summary>Unable to connect</summary>
+      <summary>Troubleshoot connection</summary>
       <div>
 
       If WARP is disconnected, try the following troubleshooting strategies:
 
       - Run `warp-cli connect`.
-
-      - In your [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), ensure that **Service mode** is set to **Gateway with WARP** or **Secure Web Gateway without DNS Filtering**.
 
       - If your private network uses a firewall to restrict Internet traffic, ensure that it allows the [WARP ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
@@ -269,6 +286,10 @@ For example, if you are on subnet `10.0.0.0/24` and want to reach applications b
 
 ![Alternate gateway routing configuration](/images/cloudflare-one/connections/connect-apps/warp-connector/alternate-gateway.png)
 
+{{<Aside type="note">}}
+Ensure that your routing rules do not forward the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) back to the WARP connector.
+{{</Aside>}}
+
 ### Option 3: Intermediate gateway
 
 If you do not have access to the router, you will need to configure each device on the subnet to egress through the WARP connector machine instead of the default gateway.
@@ -279,7 +300,7 @@ If you do not have access to the router, you will need to configure each device 
 
 You can configure all traffic on a device to egress through WARP connector with its local source IP. All traffic will be filtered by your Gateway network policies.
 
-{{<tabs labels="Linux | macOS | Windows ">}}
+{{<tabs labels="Linux | macOS | Windows">}}
 {{<tab label="linux" no-code="true">}}
 
 ```sh
@@ -299,6 +320,9 @@ $ sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
 
 {{<tab label="windows" no-code="true">}}
 
+```bash
+route /p add 0.0.0.0 mask 0.0.0.0 <WARP-CONNECTOR-IP> metric 101
+```
 {{</tab>}}
 {{</tabs>}}
 
@@ -306,7 +330,7 @@ $ sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
 
 You can configure only certain routes to egress through WARP connector. For example, you may only want to filter traffic destined to internal applications and devices, but allow public Internet traffic to bypass Cloudflare.
 
-{{<tabs labels="Linux | macOS | Windows ">}}
+{{<tabs labels="Linux | macOS | Windows">}}
 {{<tab label="linux" no-code="true">}}
 
 ```sh
@@ -324,11 +348,15 @@ $ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
 
 {{<tab label="windows" no-code="true">}}
 
+```bash
+route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
+```
+
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note" header="WARP client IPs">}}
-`100.96.0.0/12` is the default CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). Setting `<DESTINATION-IP>` to `100.96.0.0/12` configures the server to connect to user devices through Cloudflare.
+{{<Aside type="note" header="WARP device IPs">}}
+`100.96.0.0/12` is the default CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). Setting `<DESTINATION-IP>` to `100.96.0.0/12` configures the local machine to connect to user devices through Cloudflare.
 {{</Aside>}}
 
 #### Verify routes
