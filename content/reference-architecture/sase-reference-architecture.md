@@ -494,7 +494,7 @@ Cloudflare integrates with identity providers that manage secure access to resou
 
 Multiple IdPs can be integrated, allowing organizations to apply policies to a wide range of both internal and external users. When a user attempts to access a Cloudflare secured application or service, they are redirected to authenticate via one of the integrated IdPs. When using the device agent, users must also authenticate to one of their organization’s configured IdPs.
 
-![Users are presented with a list of integrated identity provider's before accessing protected applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-18.svg)
+![Users are presented with a list of integrated identity providers before accessing protected applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-18.svg)
 
 Once a user is authenticated, Cloudflare receives that user’s information, such as username, group membership, authentication method (password, whether MFA was involved and what type), and other associated attributes (i.e., the user’s  role, department, or office location). This information from the IdP is then made available to the policy engine.
 
