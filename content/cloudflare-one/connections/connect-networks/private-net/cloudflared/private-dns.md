@@ -50,11 +50,11 @@ Use the following troubleshooting strategies if you are running into issues whil
 
 - Ensure that `cloudflared` is connected to Cloudflare by visiting **Access** > **Tunnels** in Zero Trust.
 
-- Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
+- Ensure that `cloudflared` is running with the `quic` protocol (search for `Initial protocol quic` in its logs).
 
 - Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
 
-- Ensure that end-user devices are enrolled into WARP by visiting <https://help.teams.cloudflare.com>
+- Ensure that end-user devices are enrolled into WARP by visiting <https://help.teams.cloudflare.com>.
 
 - Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
 
