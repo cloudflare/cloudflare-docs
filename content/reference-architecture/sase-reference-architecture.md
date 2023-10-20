@@ -40,7 +40,7 @@ Those who read this reference architecture will learn:
 While this document examines Cloudflare One at a technical level, it does not offer fine detail about every product in the platform. Instead, it looks at how all the services in Cloudflare One enable networking and network security to be consolidated on one architecture. Visit the [developer documentation](https://developers.cloudflare.com/) for further information specific to a product area or use case.
 
 ## Disintegration of the traditional network perimeter
-Traditionally, most employees worked in an office and connected locally to the company network via Ethernet or WiFi. Most business systems (e.g. file servers, printers, applications) were located on and accessible only from this internal network. Once connected, users would typically have broad access to local resources. A security perimeter was created around the network to protect against outsider threats, most of which came from the public Internet. The majority of business workloads were hosted on-premises and only accessible inside the network, with very little or no company data or applications existing on the Internet.
+Traditionally, most employees worked in an office and connected locally to the company network via Ethernet or Wi-Fi. Most business systems (e.g. file servers, printers, applications) were located on and accessible only from this internal network. Once connected, users would typically have broad access to local resources. A security perimeter was created around the network to protect against outsider threats, most of which came from the public Internet. The majority of business workloads were hosted on-premises and only accessible inside the network, with very little or no company data or applications existing on the Internet.
 
 However, three important trends created problems for this “castle and moat” approach to IT security:
 
@@ -52,7 +52,7 @@ Traditional perimeter-based security has struggled to adapt to these changes. In
 
 ![With many different methods to connect networks and filter/block traffic, managing access to company applications is costly and time consuming.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-1.svg)
 
-The diagram above shows an example of this adapted perimeter-based approach, in which a mix of firewalls, WAN routers, and VPN concentrators are connected with dedicated WAN on-ramps consisting of MPLS circuits and/or leased lines. The diagram also demonstrates common problem areas. In an effort to centralize policy, organizations sometimes force all employee Internet traffic through their VPN infrastructure, which results in slow browsing and user complaints. Employees then seek workarounds — such as using non-approved devices — which increases their exposure to Internet-borne attacks when they work from home or on public WiFi. In addition, IT teams are unable to respond quickly to changing business needs due to the complexity of their network infrastructure. 
+The diagram above shows an example of this adapted perimeter-based approach, in which a mix of firewalls, WAN routers, and VPN concentrators are connected with dedicated WAN on-ramps consisting of MPLS circuits and/or leased lines. The diagram also demonstrates common problem areas. In an effort to centralize policy, organizations sometimes force all employee Internet traffic through their VPN infrastructure, which results in slow browsing and user complaints. Employees then seek workarounds — such as using non-approved devices — which increases their exposure to Internet-borne attacks when they work from home or on public Wi-Fi. In addition, IT teams are unable to respond quickly to changing business needs due to the complexity of their network infrastructure. 
 
 Such challenges are driving many organizations to prioritize goals like:
 
@@ -567,7 +567,7 @@ Additionally, Cloudflare’s SWG offers the flexibility to create and maintain c
 
 - URLs
 - Hostnames
-- Serial numbers (MacOS, Windows, Linux)
+- Serial numbers (macOS, Windows, Linux)
 - Emails
 - IP addresses
 - Device IDs (iOS, Android)
