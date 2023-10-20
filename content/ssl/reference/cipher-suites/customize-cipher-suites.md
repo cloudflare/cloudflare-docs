@@ -28,6 +28,8 @@ Currently, you can only customize cipher suites when using the API:
 
 When you customize cipher suites for a [zone](/fundamentals/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
+If you need to use a [Per-Hostname](https://developers.cloudflare.com/api/operations/per-hostname-tls-settings-put) cipher suite customization, please ensure that the [Advanced Certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/) **includes the hostname**, as it is not possible to restrict ciphers on a hostname if you only have a wildcard certificate.
+
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
 ## Cipher suite values
