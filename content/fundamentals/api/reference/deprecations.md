@@ -12,17 +12,17 @@ Cloudflare occasionally makes updates to our APIs that result in behavior change
 ## Privacy Pass API Removal
 **End of life date: December 31st, 2023**
 
-In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for the fledgling draft of Privacy Pass. The initial use-case was to
+In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for the fledgling draft of Privacy Pass. The initial use case was to
 
-provide untraceable tokens to sites to vouch for users who might otherwise have presented with a CAPTCHA challenge. In the time
+provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time
 
-since this release Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. Privacy Pass tokens are no 
+since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. Privacy Pass tokens are no 
 
 longer treated as a way to bypass CAPTCHA challenges but instead as one of many signals that contribute to the classification of a user. The Privacy Pass zone setting
 
-is no longer meaningful to Cloudflare customers as the handling of Privacy Pass tokens is fully-automated as Cloudflare support stays up-to-date with the evolving standard.
+is no longer meaningful to Cloudflare customers as the handling of Privacy Pass tokens is fully automated as Cloudflare support stays up-to-date with the evolving standard.
 
-From September 2023 support for Privacy Pass tokens as a bypass signal was removed and by the end of the 2023 the current public-facing API will be removed as well.
+In September 2023 support for Privacy Pass tokens as a bypass signal was removed and by the end of 2023 the current public-facing API will be removed as well.
 
 Deprecated API:
  - GET zones/:zone_identifier/settings/privacy_pass
