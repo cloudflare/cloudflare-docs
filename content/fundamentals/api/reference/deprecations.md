@@ -25,7 +25,7 @@ Deprecated API:
 
 
 ## ChaCha20 TLS Cipher Removal
-**End of life date: July 1st, 2023**
+**End of life Date: July 1st, 2023**
 
 Back in 2016, Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2.
 
@@ -44,7 +44,7 @@ In addition, unlike the standard variants, these legacy cipher suites are not ex
 The `ChaCha20-Poly1305` ciphers will be removed from Cloudflare on July 1st, 2023. If you have clients that use these ciphers you are advised to upgrade them to newer ciphers.
 
 ## Argo Tunnel
-**End of life date: February 4, 2024**
+**End of life Date: February 4, 2024**
 
 This endpoint and its related APIs are deprecated in favor of the Cloudflare Tunnels equivalent APIs.
 
