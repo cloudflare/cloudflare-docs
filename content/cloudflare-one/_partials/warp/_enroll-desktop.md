@@ -5,6 +5,8 @@ _build:
   list: never
 ---
 
+To enroll your device using the WARP GUI:
+
 1. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/) and install the WARP client.
 2. Launch the WARP client.
 3. Select the Cloudflare logo in the menu bar.
