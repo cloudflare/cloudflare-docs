@@ -20,6 +20,8 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ### 1. Configure your load balancer
 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain where Load Balancing is [enabled](/load-balancing/get-started/enable-load-balancing/).
+
 1. Go to **Traffic** > **Load Balancing**.
 
 2. Select **Create Load Balancer**.
@@ -33,8 +35,8 @@ The exact settings will vary depending on your use case. Refer to the following 
     *   Keep **Session Affinity** disabled as this feature is not supported with Spectrum.
 
 4.  On the **Add an Origin Pool** page, define the settings presented and select **Next**.
-    *   Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool).
-    *   If needed, update the [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools) [^1].
+    *   Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool) [^1].
+    *   If needed, update the [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools) [^2].
 
 5.  On the **Monitors** page, define the settings presented and select **Next**.
     *   Review the monitors attached to your pools.
@@ -51,19 +53,8 @@ The exact settings will vary depending on your use case. Refer to the following 
     *   Choose whether to **Save as Draft** or **Save and Deploy**.
 
 ### 2. Configure your Spectrum application
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
  
 {{<render file="_spectrum-with-load-balancer-dash.md" productFolder="spectrum">}}
- 
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
- 
-{{<render file="_spectrum-with-load-balancer-api.md" productFolder="spectrum">}}
- 
-{{</tab>}}
-{{</tabs>}}
 
 ---
 
@@ -73,4 +64,5 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 * UDP health checks are only available with public monitoring. TCP can be used with both public and private montoring.
 
-[^1]: A fallback pool is the pool of last resort. When all pools are disabled or unhealthy, this is where the load balancer will send traffic.
+[^1]: Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool.
+[^2]: A fallback pool is the pool of last resort. When all pools are disabled or unhealthy, this is where the load balancer will send traffic.
