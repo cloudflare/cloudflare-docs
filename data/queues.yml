@@ -5,6 +5,7 @@ product:
   title: Queues
   url: /queues/
   group: Developer platform
+  additional_groups: [Storage]
 
 meta:
   title: Cloudflare Queues

@@ -13,14 +13,14 @@ entries:
 
 - term: DNS over HTTPS
   general_definition: |-
-    DNS over HTTPS (DoH) is a standard for encrypting DNS traffic, preventing tracking and spoofing of DNS queries.
+    DNS over HTTPS (DoH) is a standard for encrypting DNS traffic via the HTTPS protocol, preventing tracking and spoofing of DNS queries.
   associated_products: 
     - 1.1.1.1
     - Cloudflare One
 
 - term: DNS over TLS
   general_definition: |-
-    DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (853) and TLS encryption.
+    DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (`853`) and TLS encryption.
   associated_products: 
     - 1.1.1.1
     - Cloudflare One

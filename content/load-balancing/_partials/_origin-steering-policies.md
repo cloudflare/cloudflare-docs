@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-When you [create a pool](/load-balancing/how-to/create-pool/), you have to choose an option for **Origin Steering**.
+When you [create a pool](/load-balancing/pools/create-pool/), you have to choose an option for **Origin Steering**.

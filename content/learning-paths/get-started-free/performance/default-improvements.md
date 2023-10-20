@@ -17,9 +17,7 @@ When your site is using Cloudflare, your site always benefits from Cloudflare's 
 
 When your DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare, Cloudflare caches [certain types of resources](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) automatically (which improves application performance).
 
-<details>
-<summary>How does caching improve performance?</summary>
-<div>
+{{<details header="How does caching improve performance?">}}
 
 Caching is the process of storing copies of files in a cache, or temporary storage location, so that they can be accessed more quickly.
 
@@ -30,5 +28,4 @@ When Cloudflare stores content in its cache, the request never needs to go to yo
 
 For more details, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
-</div>
-</details>
+{{</details>}}

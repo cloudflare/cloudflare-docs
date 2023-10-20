@@ -2,6 +2,15 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-10-20'
+  title:
+  description: |-
+    * **Bing Managed Component**: Fixed an issue where some events were not being sent to bing even after being triggered.
+- publish_date: '2023-10-03'
+  title:
+  description: |-
+    * **Bugfix**: Fixed an issue that prevented some server-side requests from arriving to their destination
+    * **Google Analytics 4 Managed Component**: Add support for `dbg` and `ir` fields.
 - publish_date: '2023-09-13'
   title:
   description: |-

@@ -55,8 +55,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 ### Unimplemented bucket-level operations
 
-<details>
-<summary> Click to expand a list of unimplemented bucket-level operations. </summary>
+{{<details header="Unimplemented bucket-level operations">}}
 
 {{<table-wrap style="width:110%">}}
 
@@ -108,7 +107,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | ❌ [PutPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
-</details>
+{{</details>}}
 
 ## Object-level operations
 
@@ -148,8 +147,7 @@ Even though `ListObjects` is a supported operation, it is recommended that you u
 
 ### Unimplemented object-level operations
 
-<details>
-<summary> Click to expand a list of unimplemented object-level operations. </summary>
+{{<details header="Unimplemented object-level operations">}}
 
 {{<table-wrap style="width:110%">}}
 
@@ -160,4 +158,4 @@ Even though `ListObjects` is a supported operation, it is recommended that you u
 | ❌ [DeleteObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
-</details>
+{{</details>}}

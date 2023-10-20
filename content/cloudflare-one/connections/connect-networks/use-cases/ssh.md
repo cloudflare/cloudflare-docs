@@ -22,6 +22,7 @@ This example walks through how to set up an SSH server on a Google Cloud Platfor
 Before creating your VM instance you will need to create an SSH key pair.
 
 1. Open a terminal and type the following command:
+
    ```sh
    $ ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <username in GCP>
    ```
@@ -31,6 +32,7 @@ Before creating your VM instance you will need to create an SSH key pair.
    Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_ssh.pub` which contains the public key.
 
 3. In the command line, enter:
+
    ```sh
    $ cat ~/.ssh/gcp_ssh.pub
    ```
@@ -60,19 +62,19 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 ## Connect to SSH server with WARP to Tunnel
 
-{{<render file="_warp-to-tunnel-intro.md">}}
+{{<render file="tunnel/_warp-to-tunnel-intro.md">}}
 
 ### 1. Connect the server to Cloudflare
 
-{{<render file="_warp-to-tunnel-server.md">}}
+{{<render file="tunnel/_warp-to-tunnel-server.md">}}
 
 ### 2. Set up the client
 
-{{<render file="_warp-to-tunnel-client.md">}}
+{{<render file="tunnel/_warp-to-tunnel-client.md">}}
 
 ### 3. Route private network IPs through WARP
 
-{{<render file="_warp-to-tunnel-route-ips.md">}}
+{{<render file="tunnel/_warp-to-tunnel-route-ips.md">}}
 
 ### 4. Connect as a user
 
@@ -84,7 +86,7 @@ $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 
 ## Connect to SSH server with `cloudflared access`
 
-{{<render file="_tunnel-cloudflared-access.md">}}
+{{<render file="tunnel/_cloudflared-access.md">}}
 
 ### 1. Connect the server to Cloudflare
 
@@ -107,11 +109,13 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 1. [Install `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/) on the client machine.
 
 2. Make a one-time change to your SSH configuration file:
+
    ```sh
    $ vim ~/.ssh/config
    ```
 
 3. Input the following values; replacing `ssh.example.com` with the hostname you created.
+
    ```txt
    Host ssh.example.com
    ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h

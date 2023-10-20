@@ -34,47 +34,35 @@ If the [UDP proxy](#enable-http3-inspection) is enabled in Zero Trust, Gateway w
 
 To prevent HTTP/3 traffic from bypassing inspection, disable QUIC in your users' browsers.
 
-<details>
-<summary>Google Chrome</summary>
-<div>
+{{<details header="Google Chrome">}}
 
 1. Go to `chrome://flags`
 2. Disable **Experimental QUIC protocol**.
 3. Relaunch Chrome.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Safari</summary>
-<div>
+{{<details header="Safari">}}
 
 1. Go to **Safari** > **Settings** > **Advanced** and enable **Show Develop menu in menu bar**, then relaunch Safari.
 2. Go to **Develop** > **Experimental Features** and disable **HTTP/3**.
 3. Relaunch Safari.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Firefox</summary>
-<div>
+{{<details header="Firefox">}}
 
 1. Go to `about:config`.
 2. If you receive a warning, select **Accept the Risk and Continue**.
 3. Disable **network.http.http3.enable**.
 4. Relaunch Firefox.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Microsoft Edge</summary>
-<div>
+{{<details header="Microsoft Edge">}}
 
 1. Go to `edge://flags`
 2. Disable **Experimental QUIC protocol**.
 3. Relaunch Edge.
 
-</div>
-</details>
+{{</details>}}

@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 1
 meta:
   title: Storage options guide
+  description: Storage options available on Cloudflare's developer platform that can be used with Workers.
 ---
 
 # Storage options guide
@@ -34,7 +35,7 @@ It is ideal for projects that require:
 
 To get started with KV:
 
-* Read how [KV works](/workers/learning/how-kv-works/).
+* Read how [KV works](/kv/learning/how-kv-works/).
 * Create a [KV namespace](/kv/learning/kv-namespaces/).
 * Review the [KV Runtime API](/kv/api/).
 * Learn about KV [Limits](/kv/platform/limits/).
@@ -134,7 +135,7 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
 | Cached                                        | Always       | Programmatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
-| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms-in-durable-objects/) |
+| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms/) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 500 - 1500 requests/second per Durable Object<sup>3</sup> |
 
 {{</table-wrap>}}

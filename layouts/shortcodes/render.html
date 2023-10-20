@@ -35,7 +35,6 @@
 {{ $elem_val := ((default "" $elem_val) | markdownify) }}
 {{ $elem_index := add $elem_index 1 | string}}
 {{ $regexPlaceholder = print "\\$" $elem_index }}
-{{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
 {{- $replaceArray = $replaceArray | append (dict "elem_value" $elem_val "index" $elem_index "placeholder" $regexPlaceholder) -}}
 {{- end -}}
 

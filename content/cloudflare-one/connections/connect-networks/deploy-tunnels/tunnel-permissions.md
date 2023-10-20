@@ -12,7 +12,7 @@ Tunnel permissions determine who can run and manage a Cloudflare Tunnel.
 
 A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel. You can get a tunnel's token from the dashboard or via the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
 
-Account members with Cloudflare Access and DNS [permissions](/cloudflare-one/cloudflare-teams-roles-permissions/) will be able to create, delete, and configure all tunnels for the account.
+Account members with Cloudflare Access and DNS [permissions](/cloudflare-one/roles-permissions/) will be able to create, delete, and configure all tunnels for the account.
 
 ## Locally-managed tunnels
 

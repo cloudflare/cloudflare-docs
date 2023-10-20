@@ -12,23 +12,20 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 | Feature                                    | Limit                                             |
 | ------------------------------------------ | --------------------------------------------------|
 |  Number of Objects                         | Unlimited (within an account or of a given class) |
-|  Maximum Durable Object namespaces         | 500 (identical to the [script limit](/workers/platform/limits/) |
+|  Maximum Durable Object namespaces         | 500 (identical to the [script limit](/workers/platform/limits/)) |
 |  Storage per account                       | 50 GB (can be raised by contacting Cloudflare) <sup>1</sup>   |
 |  Storage per class                         | unlimited                                         |
 |  Storage per Object                        | unlimited                                         |
 |  Key size                                  | 2 KiB(2048 bytes)                                 |
 |  Value size                                | 128 KiB (131072 bytes)                            |
 |  WebSocket message size                    | 1 MiB (only for received messages)                |
-|  CPU per request                           | 30s (including WebSocket messages) <sup>2</sup> |
+|  CPU per request                           | 30s (including WebSocket messages) <sup>2</sup>   |
 
-{{<Aside type="note">}}
+<sup>1</sup> Durable Objects both bills and measures storage based on a gigabyte </br> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). </br>
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps. Not all limits can be increased directly.
-
-{{</Aside>}}
-
-<sup>1</sup> Durable Objects both bills and measures storage based on a gigabyte (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB).
 <sup>2</sup> Each incoming HTTP request or WebSocket _message_ resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset.
+
+{{<render file="_limits_increase.md" productFolder="workers">}}
 
 ## How much work can a single Durable Object do?
 
