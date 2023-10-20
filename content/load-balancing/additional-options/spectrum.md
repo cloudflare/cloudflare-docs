@@ -23,6 +23,19 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ### 2. Configure your Spectrum application
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_spectrum-with-load-balancer-dash.md" productFolder="spectrum">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_spectrum-with-load-balancer-api.md" productFolder="spectrum">}}
+ 
+{{</tab>}}
+{{</tabs>}}
+
 ---
 
 ## Limitations

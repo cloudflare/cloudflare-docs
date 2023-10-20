@@ -142,51 +142,13 @@ To prevent issues with DNS resolution for a Spectrum application, do not use the
 
 {{<details header="Add your application via Dashboard">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Spectrum**.
-3. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
-4. Select your **Application Type**.
-5. Under **Domain**, enter the domain that will use Spectrum.
-6. Under **Edge Port**, enter the port Cloudflare should use for your application.
-7. Under **Origin**, select **Load Balancer**.
-8. Select the load balancer you want to use from the dropdown. Disabled load balancers will not show on the **Load Balancer** menu.
-9. Select **Add**.
+{{<render file="_spectrum-with-load-balancer-dash.md">}}
 
 {{</details>}}
 
 {{<details header="Add your application via API">}}
 
-Below is a curl example and the associated data being posted to the API.
-
-**API example:**
-
-```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
--H "Content-Type: application/json" \
--H "X-Auth-Email: email" \
--H "X-Auth-Key: key" \
---data '{"dns":{"type":"CNAME","name":"spectrum-cname.example.com"},"ip_firewall":false,"protocol":"tcp/22","proxy_protocol":false,"tls":"off","origin_dns": {"name": "cname-to-origin.example.com", "ttl": 1200}, "origin_port": 22}'
-```
-
-**Example data:**
-
-```json
-{
-  "dns": {
-    "type": "CNAME",
-    "name": "spectrum-cname.example.com"
-  },
-  "ip_firewall": false,
-  "protocol": "tcp/22",
-  "proxy_protocol": false,
-  "tls": "off",
-  "origin_dns": {
-    "name": "cname-to-origin.example.com",
-    "ttl": 1200
-  },
-  "origin_port": 22
-}
-```
+{{<render file="_spectrum-with-load-balancer-api.md">}}
 
 {{</details>}}
 
