@@ -50,7 +50,7 @@ However, three important trends created problems for this “castle and moat” 
 
 Traditional perimeter-based security has struggled to adapt to these changes. In particular, extending the "moat" outwards has introduced operational complexity for administrators, poor experiences for users, and inconsistency in how security controls are applied across users and applications. 
 
-![Dedicated WAN on-ramps connect to a variety of security solutions. These connections may result in end-user issues and lead to security vulnerabilities for IT teams.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-1.svg)
+![With many different methods to connect networks and filter/block traffic, managing access to company applications is costly and time consuming.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-1.svg)
 
 The diagram above shows an example of this adapted perimeter-based approach, in which a mix of firewalls, WAN routers, and VPN concentrators are connected with dedicated WAN on-ramps consisting of MPLS circuits and/or leased lines. The diagram also demonstrates common problem areas. In an effort to centralize policy, organizations sometimes force all employee Internet traffic through their VPN infrastructure, which results in slow browsing and user complaints. Employees then seek workarounds — such as using non-approved devices — which increases their exposure to Internet-borne attacks when they work from home or on public WiFi. In addition, IT teams are unable to respond quickly to changing business needs due to the complexity of their network infrastructure. 
 
@@ -90,12 +90,12 @@ Using Anycast ensures the Cloudflare network is well balanced. If there is a sud
 
 By contrast, many other SASE providers use Unicast routing in which a single IP address is associated with a single server and/or data center. In many such architectures, a single IP address is then associated with a specific application, which means requests to access that application may have very different network routing experiences depending on how far that traffic needs to travel. For example, performance may be excellent for employees working in the office next to the application’s servers, but poor for remote employees or those working overseas. Unicast also complicates scaling traffic loads —  that single service location must ramp up resources when load increases, whereas Anycast networks can share traffic across many data centers and geographies.
 
-![Cloudflare's Anycast network offers the flexibility to route traffic across multiple data centers, whereas Unicast routing often sends all traffic to a single IP address, resulting in slower connections.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-5.svg)
+![Cloudflare's Anycast network ensures fast and reliable connectivity, whereas Unicast routing often sends all traffic to a single IP address, resulting in slower and failure prone connections.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-5.svg)
 
 # Deploying a SASE architecture with Cloudflare
 To understand how SASE fits into an organization's IT infrastructure, see the diagram below, which maps out all the common components of said infrastructure. Subsequent sections of this guide will add to the diagram, showing where each part of Cloudflare’s SASE platform fits in.
 
-![Typical enterprise IT infrastructure may consist of different physical locations, devices and data centers that are connected to multiple websites and cloud-hosted applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-6.svg)
+![Typical enterprise IT infrastructure may consist of different physical locations, devices and data centers that require connectivity to multiple cloud and on-premises applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-6.svg)
 
 In the diagram’s top half there are a variety of Internet resources (e.g. Facebook), SaaS applications (e.g. ServiceNow), and applications running in an [infrastructure-as-a-service (IaaS)](https://www.cloudflare.com/learning/cloud/what-is-iaas/) platform (e.g. AWS). This example organization has already deployed cloud based [identity providers](https://www.cloudflare.com/learning/access-management/what-is-an-identity-provider/) (IdP), [unified endpoint management](https://www.cloudflare.com/learning/security/glossary/what-is-endpoint/) (UEM) and endpoint protection platforms (EPP) as part of a Zero Trust initiative. 
 
@@ -130,7 +130,7 @@ Connectivity to self-hosted applications is facilitated through tunnels that are
 
 For more control over the traffic routed through each tunnel connection, users can integrate with the Cloudflare [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) service. To ensure reliable local connectivity, organizations should deploy more than one instance of *cloudflared* across their application infrastructure. For example, with ten front-end web servers running in a Kubernetes cluster, you might deploy three kubernetes services [running *cloudflared* replicas](/cloudflare-one/tutorials/many-cfd-one-tunnel/). 
 
-![Using cloudflared, multiple outbound connections can be routed back to Cloudflare across multiple servers to improve overall reliability.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-7.svg)
+![Using cloudflared, multiple outbound connections are created back to Cloudflare across multiple data centers to improve overall performance and reliability.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-7.svg)
 
 Once tunnels have been established, there are two methods for how user traffic is forwarded to your application or service. Each method below is protected by policies managed by the ZTNA service that enforces authentication and access (which will be explored in further depth [later in this document](#secure-access-to-self-hosted-apps-and-services)).
 
@@ -180,7 +180,7 @@ Key capabilities:
 
 When Cloudflare acts as the SSO service to an application, user authentication is still handled by an organization’s existing identity provider, but is proxied via Cloudflare, where additional access restrictions can be applied. The diagram below is a high-level example of a typical request flow:
 
-![The flow of SSO requests between a user, applications and IdPs varies depending on the direction and origin of the request, all of which can be proxied through Cloudflare.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-8.svg)
+![The flow of SSO requests is proxied through Cloudflare, where the IdP is still used to authenticate, but Cloudflare provides additional access controls.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-8.svg)
 
 The last method of connecting SaaS applications to Cloudflare’s SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/scan-apps/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
 
@@ -197,7 +197,7 @@ Now, this is what the architecture of a typical organization might look like onc
 - SaaS application traffic is filtered and secured via the Cloudflare SWG
 - SaaS services are scanned via the Cloudflare CASB to check for configuration and permissions of data at rest
 
-![Connections to applications like Salesforce, Microsoft and ServiceNow are more secure when scanned by CASB.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-9.svg)
+![Access to all applications is now only available via Cloudflare.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-9.svg)
 
 ## Connecting networks
 Once an organization’s applications and services have been integrated, it is time to connect Cloudflare to their existing networks. Regional offices, corporate headquarters, retail locations, data centers, and cloud-hosted infrastructure all need to forward traffic to the new corporate SASE network.
@@ -239,7 +239,7 @@ This provides a lightweight solution to support services such as Microsoft’s S
 
 The WARP Connector can proxy both user-to-network and network-to-network connectivity, or can be used to establish an overlay network of Carrier Grade NAT ([CGNAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)) addressed endpoints to provide secure, direct connectivity to established resources using CGNAT IP ranges. This helps address overlapping network IP range challenges, point-solution access problems, or the process of shifting network design without impacting a greater underlying system.
 
-![In an example scenario, a developer might push code to a git repository, which ends up in a Kubernetes cluster in a staging network. From staging, it is accessed by a QA tester. All of this traffic is protected via WARP Connector.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-11.svg)
+![In an example scenario, a developer might push code to a git repository, which ends up in a Kubernetes cluster in a staging network. From staging, it is accessed by a QA tester. All of this traffic is routed and protected via WARP Connector.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-11.svg)
 
 Cloudflare Tunnel via *cloudflared* is the primary method for connecting users to applications and services on private networks because it is a simpler, more granular and agile solution for many application owners (vs. IP tunnel based connectivity technology, like [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) and [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/)). Cloudflare Tunnel via WARP Connector is the preferred method for mesh or other software-defined networking — most of which require bidirectional connectivity — when organizations do not want to make changes to the underlying network routing or edge infrastructure.
 
@@ -254,7 +254,7 @@ As previously described, Cloudflare uses a routing technique called [Anycast](ht
 
 With [Anycast IPsec](https://blog.cloudflare.com/anycast-ipsec/) or Anycast GRE tunnels, each tunnel configured from an organization's network device (e.g. edge router, firewall appliance, etc.) connects to hundreds of global Cloudflare data centers. Traffic sourced from an organization’s network location is sent directly over these tunnels and always routes to the closest active Cloudflare data center. If the closest Cloudflare data center is unavailable, the traffic is automatically rerouted to the next-closest data center.
 
-![In an example scenario, traffic from an office network's router would be sent to the closest Cloudflare data center via a secure tunnel.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-13.svg)
+![In an example scenario, IPsec traffic from an office network's router would be sent to the closest Cloudflare data center.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-13.svg)
 
 To further network resiliency, Magic WAN also supports Equal Cost Multi-Path (ECMP) routing between the Cloudflare network and an organization’s network location(s). With ECMP, traffic can be load-balanced across multiple Anycast IP tunnels, which helps increase throughput and maximize network reliability. In the event of network path failure of one or more tunnels, traffic can be automatically failed over to the remaining healthy tunnels.
 
@@ -293,7 +293,7 @@ Note the following traffic flows:
   - An employee’s laptop running the device agent creates its own secure connection to Cloudflare that is routed over the IPsec tunnel
 - The application owner of the reporting system maintains a connection to Cloudflare using *cloudflared* and doesn’t require any networking help to expose their application to employees
 
-![Each method of connecting and routing traffic can be protected through various layers of security such as Cloudflare Network Interconnect, IPSEC tunnels, WARP connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
+![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
 
 <sub>*Note: All of the endpoints connected via the WARP connector or device agent are automatically assigned IP addresses from the 100.96.0.0/12 address range, while endpoints connected to Magic WAN retain their assigned RFC1918 private IP addresses. Cloudflared can be deployed in any of the locations by an application owner to provide hostname-based connectivity to the application.*</sub>
 
@@ -302,7 +302,7 @@ Once the networks, applications, and user devices are connected to Cloudflare �
 ### Checkpoint: Connecting networks to Cloudflare
 Now this is what a SASE architecture looks like where corporate network traffic from everywhere is forwarded to and processed by Cloudflare. In this architecture, it is possible to make a network connection from any remote location, office location or data center and connect to applications and services living in SaaS infrastructure, cloud-hosted infrastructure or an organization’s own on-premise data centers.
 
-![Connecting networks to Cloudflare](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-15.svg)
+![Traffic from all networks, North and South, as well as East and West, is now flowing through and secured by Cloudflare.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-15.svg)
 
 ## Forwarding device traffic
 The previous sections explain using ZTNA to secure access to self-hosted applications and using an SWG to inspect and filter traffic destined for the Internet. When a user is working on a device in any of the company networks that is connected to Cloudflare's connectivity cloud, all that traffic is inspected and policies applied without disrupting the user’s workflow. Yet, users are not always (or ever) in the office; they work from home, on the road, or from other public networks. How do you ensure they have reliable access to your internal applications? How do you ensure their Internet browsing is secure no matter their work location? 
@@ -327,7 +327,7 @@ For example, organizations might have an office that continues to use an existin
 
 The agent can also be configured with flexible routing controls that allow for scenarios in which traffic destined for office printers is not sent to the Cloudflare network but, instead, routed to the local network. These [split tunnel configurations](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) can be made specific to groups of users, types of device operating system, or networks and by default, traffic destined to all private [IPv4 and IPv6 ranges](https://datatracker.ietf.org/doc/html/rfc1918) is sent to the device’s default gateway. If the application the user is attempting to reach is not in public DNS, you can configure the hostname and domain to be resolved with [local DNS services](/cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/), so that the device agent does not attempt to resolve these using Cloudflare DNS. 
 
-![Connecting to Cloudflare with a device agent](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-16.svg)
+![Using the device agent allows Internet and company application bound traffic to be secured by Cloudflare's SWG and ZTNA services.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-16.svg)
 
 The agent is more than just a network proxy; it is able to examine the device’s security posture, such as if the operating system is fully up-to-date or if the hard disk is encrypted. Cloudflare’s integrations with [CrowdStrike](https://www.cloudflare.com/partners/technology-partners/crowdstrike/endpoint-partners/), [SentinelOne](https://www.cloudflare.com/partners/technology-partners/sentinelone/), and other third-party services also provide additional data about the security posture of the device. All of this information is associated with each request and, therefore, available for use in company policies — as explained in the “Unified Management” section.
 
@@ -480,7 +480,7 @@ By connecting entire networks or individual devices, organizations can now route
 
 Once traffic from all user devices is forwarded to the Cloudflare network, it is time for organizations to revisit their high-level SASE architecture:
 
-![Forwarding device traffic to Cloudflare](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-17.svg)
+![With all devices and networks connected, any traffic destined for company applications and services all flows through Cloudflare, where policies are applied to determine access.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-17.svg)
 
 ## Verifying users and devices
 At this point in implementing SASE architecture, organizations have the ability to route and secure traffic beginning from the point a request is made from a browser on a user’s device, all the way through Cloudflare’s network to either a company-hosted private application/service or to the public Internet. 
@@ -494,7 +494,7 @@ Cloudflare integrates with identity providers that manage secure access to resou
 
 Multiple IdPs can be integrated, allowing organizations to apply policies to a wide range of both internal and external users. When a user attempts to access a Cloudflare secured application or service, they are redirected to authenticate via one of the integrated IdPs. When using the device agent, users must also authenticate to one of their organization’s configured IdPs.
 
-![Identity provider selection prior to Cloudflare One access](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-18.svg)
+![Users are presented with a list of integrated identity provider's before accessing protected applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-18.svg)
 
 Once a user is authenticated, Cloudflare receives that user’s information, such as username, group membership, authentication method (password, whether MFA was involved and what type), and other associated attributes (i.e., the user’s  role, department, or office location). This information from the IdP is then made available to the policy engine.
 
@@ -534,16 +534,16 @@ Instead of deploying tunnels to manage and control traffic to email servers, Clo
 
 Modifying MX records (inline deployment) forces all inbound email traffic through our cloud email security service where it is scanned, and — if found to be malicious — blocked from reaching a user’s inbox. Because the service works at the MX record level, it is possible to use the email security service with any [SMTP-compliant](https://www.cloudflare.com/learning/email-security/what-is-smtp/) email service.
 
-![Protecting email with Cloudflare using MX records](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-19.svg)
+![Protecting email with Cloudflare using MX records ensures all emails are scanned and categorized.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-19.svg)
 
 Organizations can also opt to integrate email security directly with their email service via APIs. Note that this approach has two drawbacks: there are fewer integrations Cloudflare supports and there is always a small delay between the email being delivered to the service and Cloudflare detecting it via the API.
 
-![Protecting email with Cloudflare using APIs](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-20.svg)
+![Protecting email with Cloudflare using APIs avoids the need to change DNS policy, but introduces delays into email detection and limits the types of email services that can be protected.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-20.svg)
 
 ### Checkpoint: A complete SASE architecture with Cloudflare
 The steps above provide a complete view of evolving to SASE architecture using Cloudflare One. As the diagram below shows, secure access to all private applications, services, and networks — as well as ensuring the security of users’ general Internet access — is now applied to all users in the organization, internal or external. 
 
-![A complete SASE architecture with Cloudflare](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-21.svg)
+![A fully deployed SASE solution with Cloudflare protects every aspect of your business. Ensuring all access to applications is secured and all threats from the Internet mitigated.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-21.svg)
 
 For ease of use, the entire Cloudflare One platform can be configured via [API](/api/); and with Cloudflare’s [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs), organizations can manage the Cloudflare global network using the same tools they use to automate the rest of their infrastructure. This allows IT teams to fully manage their Cloudflare One infrastructure, including all the policies detailed in the next section, using code. There are also (as of Oct 2023) more than 500 [GitHub](https://github.com/cloudflare) repositories, many of which allow IT teams to use and build tools to manage their Cloudflare deployment.
 
@@ -554,7 +554,7 @@ Before we go into the details of how policies can be written to manage access to
 
 The following diagram illustrates the flow of a request through these services, including the application of  policies and the source of  data for these policies. In the diagram below, the user request can either enter through the SWG or ZTNA depending on the type of service requested. It’s also possible to combine both services, such as implementing a SWG HTTP policy that uses DLP service to inspect traffic related to a privately hosted application behind a ZTNA Cloudflare Tunnel. This configuration enables organizations to block downloads of sensitive data from internal applications that organizations have authorized for external access. 
 
-![Request flows for SWG and ZTNA in Cloudflare One](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-23.svg)
+![User requests to the Internet or self hosted applications go through our SWG and/or ZTNA service. Administrators have a single dashboard to manage policies across both.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-23.svg)
 
 In the following sections, we introduce examples of how different policies can be configured to satisfy specific use cases. While these examples are not exhaustive, the goal is to demonstrate common ways Cloudflare One can be configured to address the challenges organizations encounter in its transition to a SASE architecture.
 
@@ -594,7 +594,7 @@ Consider an Access Group designed to manage access to critical server infrastruc
 
 Below is a diagram featuring an Access Group named “Secure Administrators,” which uses a range of attributes to define the characteristics of secure administrators. The diagram shows the addition of two other Access Groups within “Secure Administrators”. The groups include devices running on either the latest Windows or macOS, along with the requirement that the device must have either File Vault or Bitlocker enabled. 
 
-![An example Access Group in Cloudflare One](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-24.svg)
+![An example of using Access Groups can be for grouping up many device, network or user attributes into a single policy that can be reused across applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-24.svg)
 
 Consistent with Cloudflare’s overarching flexibility, Access Groups can be created, updated, and applied to policies through Cloudflare API or using Terraform. This allows a seamless integration with existing IT systems and processes, ensuring a cohesive approach to access management.
 
@@ -606,7 +606,7 @@ One common driver for moving to a SASE architecture is replacing existing VPN co
 
 In this example, consider two services: a database administration application ([pgadmin](https://www.pgadmin.org/) for example) and an SSH daemon running on the database server. The diagram below illustrates the flow of traffic and highlights the ZTNA service. It’s important to note that all other services still retain the ability to inspect the request. For instance, the contractor using their personal cell phone in Germany should only have access to the db admin tool, while the employee on a managed device can access both the db admin tool and SSH into the database server.
 
-![An example Access Group in Cloudflare One](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-25.svg)
+![An employee working on a managed device at home can access both the db admin tool as well as the SSH service. However a contractor in Germany only has access to the db admin tool.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-25.svg)
 
 The policies that enable access rely on two Access Groups.
 
@@ -636,11 +636,11 @@ Both user groups will connect to Cloudflare through the closest and fastest acce
 ### Threat defense for distributed offices and remote workers
 Another reason for using a SASE solution is to apply company security policies consistently across all users (whether they are employees or contractors) in the organization, regardless of where they work. The Cloudflare One SASE architecture shows that all user traffic, whether routed directly on the device or through the connected network, will go through Cloudflare. Cloudflare’s SWG then handles inspection of this traffic. Depending on the connection method, policies can be applied either to the HTTP or DNS request. For example:
 
-![Block high risk websites policy](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-26.svg)
+![Blocking high risk websites is as simple as selecting a few options in the SWG policy](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-26.svg)
 
 This can then be applied to secure and protect all users in one simple policy. Cloudflare can write another policy allowing access to social media websites while isolating all sessions in a remote browser hosted on Cloudflare’s network.
 
-![Isolate all social media websites policy](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-27.svg)
+![Isolating all social media websites can be done by identifying the application or website name and selecting what actions the user can take, such as stopping them from copy and pasting or printing.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-27.svg)
 
 With this setup, every request to a social media website ensures the following security measures:
 - Any content on the social media website that contains harmful code is prevented from executing on the local device
@@ -650,13 +650,13 @@ With this setup, every request to a social media website ensures the following s
 ### Data protection for regulatory compliance
 Because Cloudflare One has visibility over every network request, Cloudflare can create policies that apply to the data in the request. This means that the DLP services can be used to detect the download of content from an application and block it for specific user demographics. Let’s look at the following policy.
 
-![Isolate all social media websites policy](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-28.svg)
+![Our DLP policies allow for the inspection of content in a request and blocking it.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-28.svg)
 
 This policy would prevent contractors from downloading a file containing customer accounts information. Furthermore, Cloudflare can configure an additional policy to block the same download if the user’s device does not meet specific security posture requirements. This ensures the consistent enforcement of a common rule: no sensitive customer data can be downloaded onto a device that does not meet the required security standards.
 
 DLP policies can also be applied in the other direction, ensuring that company sensitive documents are not uploaded to non approved cloud storage or social media.
 
-![Prevent upload of sensitive company data policy](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-29.svg)
+![A DLP policy can also examine if a HTTP PUT, i.e. a file upload, is taking place to a non approved application where the request contains sensitive data.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-29.svg)
 
 ## Visibility across the deployment
 At this point in the SASE journey, users have re-architectured the IT network and security infrastructure to fully leverage all the capabilities of the Cloudflare One SASE platform. A critical element in long term deployment involves establishing complete visibility into the organization and the ability to diagnose and quickly resolve issues. 
