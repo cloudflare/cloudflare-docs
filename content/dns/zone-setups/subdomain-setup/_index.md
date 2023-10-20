@@ -21,7 +21,12 @@ Subdomain setups are also useful when different subdomains require entirely diff
 
 ## Availability
 
+The parent zone should be Enterprise:
+
 {{<feature-table id="dns.subdomain_setup">}}
+
+However, the child domain can be used with any available plan. However, make sure that you have the expected functionalites [in that plan](https://www.cloudflare.com/en-gb/plans/).
+
 
 ## Notes
 
