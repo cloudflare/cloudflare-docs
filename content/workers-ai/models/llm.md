@@ -134,13 +134,31 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
 {{</tab>}}
 {{</tabs>}}
 
-**Example Workers AI response**
+## Responses
+
+### Non-streaming response
 
 ```json
 {
   "response":
     "The origin of the phrase \"Hello, World\" is not well-documented, but it is believed to have originated in the early days of computing. In the 1970s, when personal computers were first becoming popular, many programming languages, including C, had a simple \"Hello, World\" program that was used to demonstrate the basics of programming.\nThe idea behind the program was to print the words \"Hello, World\" on the screen, and it was often used as a first program for beginners to learn the basics of programming. Over time, the phrase \"Hello, World\" became a common greeting among programmers and computer enthusiasts, and it is now widely recognized as a symbol of the computing industry.\nIt's worth noting that the phrase \"Hello, World\" is not a specific phrase that was coined by any one person or organization, but rather a catchphrase that evolved over time as a result of its widespread use in the computing industry."
   }
+```
+
+### Handling streaming responses in the client
+
+A streaming response will be returned in the [server-side events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events), or SSE format. Below is an example showing how to parse this response in JavaScript:
+
+```js
+const source = new EventSource("/"); // Workers AI streaming endpoint
+source.onmessage = (event) => {
+  if (event.data == "[DONE]") {
+    source.close();
+    return;
+  }
+  const data = JSON.parse(event.data);
+  el.innerHTML += data.response;
+}
 ```
 
 ## API schema
