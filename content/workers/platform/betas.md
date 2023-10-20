@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Betas
+meta:
+  description: Cloudflare developer platform and Workers features beta status.
 ---
 
 # Beta Status
