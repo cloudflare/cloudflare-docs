@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Secrets
+meta:
+  description: 
 ---
 
 # Secrets

@@ -6,4 +6,4 @@ weight: 7
 
 # Configuration
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true">}}

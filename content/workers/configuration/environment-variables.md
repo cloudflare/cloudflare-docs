@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Environment variables
+meta:
+  description: 
 ---
 
 # Environment variables

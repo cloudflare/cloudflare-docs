@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Page Rules
+meta:
+  description: 
 ---
 
 # Page Rules

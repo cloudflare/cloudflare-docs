@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Smart Placement (beta)
+meta:
+  description: 
 ---
 
 {{<heading-pill style="beta">}}Smart Placement{{</heading-pill>}}
