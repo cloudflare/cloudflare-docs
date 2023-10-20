@@ -67,16 +67,34 @@ This certificate is **not** the same as the Cloudflare Origin CA certificate and
 
 {{<render file="_aop-configure-origin.md">}}
 
-## 3. Configure Cloudflare to use client certificate
+## 3. Enable zone-level Authenticated Origin Pulls
 
-{{<render file="_aop-enable-feature.md">}}
+Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone.
 
-##  4. Enable Authenticated Origin Pulls for all hostnames in a zone
+This step sets the TLS Client Auth to require Cloudflare to use a client certificate when connecting to your origin server.
 
-Use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To enable **Authenticated Origin Pulls** in the dashboard:
+
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2.  Go to **SSL/TLS** > **Origin Server**.
+3.  For **Authenticated Origin Pulls**, switch the toggle to **On**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To enable or disable **Authenticated Origin Pulls** with the API
+
+1. Send a [`PATCH`](/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`) - This step means Authenticated Origin Pulls will be available, but you still have to go through the following step to complete the configuration.
+2. Send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
+
+{{</tab>}}
+{{</tabs>}}
 
 If you had set up logging on your origin during [step 2](#2-configure-origin-to-accept-client-certificates), test and confirm that Authenticated Origin Pulls is working.
 
-##  5. Enforce validation check on your origin
+##  4. Enforce validation check on your origin
 
 {{<render file="_aop-enforce-validation.md">}}
