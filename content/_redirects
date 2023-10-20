@@ -1386,7 +1386,7 @@
 /workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
 
 # Old WAF changelog entries
-/waf/change-log/historical/2019-* /waf/change-log/historical-2019/ 301
+/waf/change-log/2019-* /waf/change-log/historical-2019/ 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
