@@ -9,6 +9,8 @@ weight: 6
 
 Cloudflare Zero Trust applies a set of global policies to all accounts.
 
+Zero Trust logs prepend an identifier to global policy names. For example, matches for the global policy **Allow Zero Trust Services** will appear in your logs with the name **Global Policy - Allow Zero Trust Services**.
+
 ## DNS policies
 
 {{<table-wrap>}}
@@ -17,7 +19,7 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 | --------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------------------------- |
 | Allow CF Network Error Logging L4 | `00000001-e4af-4b82-8f8c-c79c1d5d212e` | Hostname | `*.nel.cloudflare.com`                                                                                                                                                                            | allow  | Allows SNI domains for WARP registration. |
 | Allow CF Client                   | `00000001-8c3d-4e27-a01b-af8418000077` | Hostname | `*.cloudflareclient.com`                                                                                                                                                                          | allow  | Allows Zero Trust client.                 |
-| Allow Gatewy Proxy PAC            | `00000001-776e-438d-9856-987d7053762b` | Hostname | `*.cloudflare-gateway.com`                                                                                                                                                                        | allow  | Allows Gateway proxy with PAC files.      |
+| Allow Gateway Proxy PAC            | `00000001-776e-438d-9856-987d7053762b` | Hostname | `*.cloudflare-gateway.com`                                                                                                                                                                        | allow  | Allows Gateway proxy with PAC files.      |
 | Allow Zero Trust Services         | `00000001-e1e8-421b-a0fe-895397489f28` | Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows Cloudflare Zero Trust services.    |
 | Allow Access Apps L4              | `00000001-daa2-41e2-8a88-698af4066951` | Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows Cloudflare Access applications.    |
 
