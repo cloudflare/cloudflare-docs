@@ -8,8 +8,29 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+
+## Privacy Pass API Removal
+**End of life date: December 31st, 2023**
+
+In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for the fledgling draft of Privacy Pass. The initial use-case was to
+
+provide untraceable tokens to sites to vouch for users who might otherwise have presented with a CAPTCHA challenge. In the time
+
+since this release Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. Privacy Pass tokens are no 
+
+longer treated as a way to bypass CAPTCHA challenges but instead as one of many signals that contribute to the classification of a user. The Privacy Pass zone setting
+
+is no longer meaningful to Cloudflare customers as the handling of Privacy Pass tokens is fully-automated as Cloudflare support stays up-to-date with the evolving standard.
+
+From September 2023 support for Privacy Pass tokens as a bypass signal was removed and by the end of the 2023 the current public-facing API will be removed as well.
+
+Deprecated API:
+ - GET zones/:zone_identifier/settings/privacy_pass
+ - POST zones/:zone_identifier/settings/privacy_pass
+
+
 ## ChaCha20 TLS Cipher Removal
-**End of life Date: July 1st, 2023**
+**End of life date: July 1st, 2023**
 
 Back in 2016, Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2.
 
@@ -28,7 +49,7 @@ In addition, unlike the standard variants, these legacy cipher suites are not ex
 The `ChaCha20-Poly1305` ciphers will be removed from Cloudflare on July 1st, 2023. If you have clients that use these ciphers you are advised to upgrade them to newer ciphers.
 
 ## Argo Tunnel
-**End of life Date: February 4, 2024**
+**End of life date: February 4, 2024**
 
 This endpoint and its related APIs are deprecated in favor of the Cloudflare Tunnels equivalent APIs.
 
