@@ -10,7 +10,7 @@ meta:
 
 {{<glossary-definition term_id="monitor">}}
 
-For more details about monitors, refer to [Monitors](/load-balancing/understand-basics/monitors/).
+For more details about monitors, refer to [Monitors](/load-balancing/monitors/).
 
 ---
 
@@ -40,7 +40,7 @@ Once your monitor is created, you need to attach it to an origin pool:
 4.  Update the following information:
 
     - **Monitor**: Select your monitor.
-    - **Health Monitor Regions:** Specifies geographic regions from which Cloudflare should send health monitor requests. Because of [how monitors check pool health](/load-balancing/understand-basics/monitors/#health-monitor-regions), selecting multiple regions could increase the load on your servers.
+    - **Health Monitor Regions:** Specifies geographic regions from which Cloudflare should send health monitor requests. Because of [how monitors check pool health](/load-balancing/monitors/#health-monitor-regions), selecting multiple regions could increase the load on your servers.
     - **Notification E-mail:** Contains email addresses that receive notifications (individual, mailing list address, PagerDuty address).
 
 5.  Select **Save**. The status of your health monitor will be _unknown_ until the results of the first check are available.
@@ -59,7 +59,7 @@ Once your monitor is created, you need to attach it to an origin pool:
 
 **Attach the monitor to a pool**
 
-Once your monitor is created, save its `id` property. Include this value in the `monitor` parameter when [creating your pool](/load-balancing/how-to/create-pool/#create-a-pool).
+Once your monitor is created, save its `id` property. Include this value in the `monitor` parameter when [creating your pool](/load-balancing/pools/create-pool/#create-a-pool).
 
 {{</tab>}}
 {{</tabs>}}

@@ -88,17 +88,20 @@ You cannot change your queue name after you have set it. After you create your q
 
 ## 4. Set up your producer worker
 
-In order to expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/configuration/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
+To expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/configuration/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
 
 To create a binding, open your newly generated `wrangler.toml` configuration file and add the following:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[queues.producers]]
  queue = "YOUR_QUEUE_NAME"
  binding = "MY_QUEUE"
 ```
 
-Replace `YOUR_QUEUE_NAME` with the name of the queue you created in step 3. Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
+Replace `YOUR_QUEUE_NAME` with the name of the queue you created in [step 3](/queues/get-started/#3-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
 ### Write your producer Worker
 
@@ -144,7 +147,7 @@ export interface Env {
 
 If this write fails, your Worker will return an error (raise an exception). If this write works, it will return `Success` back with a HTTP `200` status code to the browser.
 
-In a production application, you would likely use a [`try-catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement to catch the exception and handle it directly (for example, return a custom error or even retry).
+In a production application, you would likely use a [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement to catch the exception and handle it directly (for example, return a custom error or even retry).
 
 ### Publish your producer Worker
 
@@ -213,6 +216,9 @@ Each queue can only have one consumer Worker connected to it. If you try to conn
 To connect your queue to your consumer Worker, open your `wrangler.toml` file and add this to the bottom:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[queues.consumers]]
  queue = "<YOUR_QUEUE_NAME>"
  # Required: this should match the name of the queue you created in step 3.
@@ -221,7 +227,7 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
  max_batch_timeout = 5 # optional: defaults to 5 seconds
 ```
 
-Replace `YOUR_QUEUE_NAME` with the queue you created in step 3.
+Replace `YOUR_QUEUE_NAME` with the queue you created in [step 3](/queues/get-started/#3-create-a-queue).
 
 In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first. 
 
@@ -247,7 +253,7 @@ Run `wrangler tail` to start waiting for our consumer to log the messages it rec
 $ wrangler tail
 ```
 
-With `wrangler tail` running, open the Worker URL you opened in step 4. 
+With `wrangler tail` running, open the Worker URL you opened in [step 4](/queues/get-started/#4-set-up-your-producer-worker). 
 
 You should receive a `Success` message in your browser window.
 
@@ -257,7 +263,7 @@ With `wrangler tail` running, your consumer Worker will start logging the reques
 
 If you refresh less than 10 times, it may take a few seconds for the messages to appear because batch timeout is configured for 10 seconds. After 10 seconds, messages should arrive in your terminal.
 
-If you get errors when you refresh, check that the queue name you created in step 3 and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
+If you get errors when you refresh, check that the queue name you created in [step 3](/queues/get-started/#3-create-a-queue) and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
 
 By completing this guide, you have now created a queue, a producer Worker that publishes messages to that queue, and a consumer Worker that consumes those messages from it.
 

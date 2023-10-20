@@ -493,6 +493,7 @@
           "title": "Custom lists (IPs, hostnames, ASNs)",
           "link": "/waf/tools/lists/custom-lists/",
           "free": 1,
+          "lite": 2,
           "pro": 2,
           "biz": 5,
           "ent": 10
@@ -2673,7 +2674,7 @@
         },
         "origin_servers": {
           "title": "Origin servers",
-          "link": "/load-balancing/understand-basics/pools/",
+          "link": "/load-balancing/pools/",
           "free": "Up to 20",
           "pro": "Up to 20",
           "biz": "Up to 20",

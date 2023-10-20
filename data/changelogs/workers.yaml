@@ -2,6 +2,10 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-10-18'
+  description: |-
+    - The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+      Cron Triggers across all Workers still apply.
 - publish_date: '2023-10-12'
   description: |-
     - A Socket's WritableStream now ensures the connection has opened before resolving the promise returned by `close`.

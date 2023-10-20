@@ -1,7 +1,8 @@
 ---
 pcx_content_type: concept
 title: Pools
-weight: 1
+weight: 4
+layout: single
 ---
 
 # Pools
@@ -24,7 +25,7 @@ For an up-to-date list of pool properties, refer to [Pool properties](/api/opera
 
 ## Create pools
 
-For step-by-step guidance, refer to [Create pools](/load-balancing/how-to/create-pool/).
+For step-by-step guidance, refer to [Create pools](/load-balancing/pools/create-pool/).
 
 ---
 

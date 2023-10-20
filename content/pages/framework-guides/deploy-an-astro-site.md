@@ -29,11 +29,11 @@ Astro will ask:
 
 ### Astro configuration
 
-You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
+You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
 {{<render file="_c3-adapter.md">}}
 
-Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
 $ npm run astro add cloudflare
@@ -80,7 +80,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ### Modes
 
-There are currently two modes supported when using Pages Functions with the [`@astrojs/cloudflare`](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) adapter.
+There are currently two modes supported when using Pages Functions with the [`@astrojs/cloudflare`](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) adapter.
 
 1. [**Advanced**](/pages/platform/functions/advanced-mode/) mode: This mode is used when you want to run your Function in `advanced` mode. This mode picks up the `_worker.js` in `dist`, or a directory mode where Pages will compile the Worker out of a Functions folder in the project root.
 

@@ -11,7 +11,7 @@ meta:
 {{<render file="_load-balancer-definition.md">}}
 <br/>
 
-For more details about load balancers, refer to [Load balancers](/load-balancing/understand-basics/load-balancers/).
+For more details about load balancers, refer to [Load balancers](/load-balancing/load-balancers/).
 
 
 ## Create a load balancer
