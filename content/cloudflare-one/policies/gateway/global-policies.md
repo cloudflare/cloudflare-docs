@@ -11,6 +11,8 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 
 ## DNS policies
 
+{{<table-wrap>}}
+
 | Name                              | ID                                     | Criteria | Value                                                                                                                                                                                             | Action | Description                               |
 | --------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------------------------- |
 | Allow CF Network Error Logging L4 | `00000001-e4af-4b82-8f8c-c79c1d5d212e` | Hostname | `*.nel.cloudflare.com`                                                                                                                                                                            | allow  | Allows SNI domains for WARP registration. |
@@ -19,7 +21,11 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 | Allow Zero Trust Services         | `00000001-e1e8-421b-a0fe-895397489f28` | Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows Cloudflare Zero Trust services.    |
 | Allow Access Apps L4              | `00000001-daa2-41e2-8a88-698af4066951` | Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows Cloudflare Access applications.    |
 
+{{</table-wrap>}}
+
 ## Network proxy policies
+
+{{<table-wrap>}}
 
 | Name                      | ID                                     | Criteria         | Value                       | Action | Description                                                                                                                                    |
 | ------------------------- | -------------------------------------- | ---------------- | --------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,7 +33,11 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 | Allow Gateway Help Page   | `00000001-8e9a-4429-b3c2-d267d0ce6114` | Hostname         | `help.teams.cloudflare.com` | allow  | Used by the WARP client to check if Gateway is on by inspecting the certificate and checking if it is properly installed on the client device. |
 | Always Blocked Categories | `00000001-bed5-462e-b0f1-2e2c3555e9f7` | Content Category | Child Abuse                 | block  | Blocks child abuse materials.                                                                                                                  |
 
+{{</table-wrap>}}
+
 ## HTTP inspection policies
+
+{{<table-wrap>}}
 
 | Name                            | ID                                     | Criteria    | Value                                                        | Action    | Description                                                                                                     |
 | ------------------------------- | -------------------------------------- | ----------- | ------------------------------------------------------------ | --------- | --------------------------------------------------------------------------------------------------------------- |
@@ -44,3 +54,5 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 | Inspect RBI Urls                | `00000001-3faa-4f59-98d4-0f6d6af4b6d0` | Hostname    | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | bypass    | Required for RBI.                                                                                               |
 | Don't AV Scan CF Speed          | `00000001-c194-408f-87dd-9a366ce76e12` | Hostname    | `speed.cloudflare.com`                                       | noscan    | Allows files transferred by the Cloudflare speed test.                                                          |
 | Bypass OCSP                     | `00000001-34ce-47c7-ad0f-199f46eba194` | Application | Online Certificate Status Protocol                           | bypass    | Enables OCSP stapling.                                                                                          |
+
+{{</table-wrap>}}
