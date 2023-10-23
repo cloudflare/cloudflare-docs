@@ -123,7 +123,7 @@ The following configuration will modify settings in your Cloudflare account.
    # Using `random_password` means the result is treated as sensitive and, thus,
    # not displayed in console output. See: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
    resource "random_password" "tunnel_secret" {
-     byte_length = 64
+     length = 64
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
