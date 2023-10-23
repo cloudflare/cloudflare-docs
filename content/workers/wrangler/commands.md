@@ -99,7 +99,7 @@ wrangler init [NAME] [-y / --yes] [--from-dash]
 Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```sh
-$ wrangler generate [name] [template]
+wrangler generate [name] [template]
 ```
 
 {{<definitions>}}
@@ -133,9 +133,9 @@ wrangler d1 create <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
-- `--experimental-backend` {{<type>}}boolean{{</type>}}
+- `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the new experimental storage backend for this database.
-- `--location` {{<type>}}string{{</type>}}
+- `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Provide an optional [location hint](/d1/learning/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
@@ -145,7 +145,7 @@ wrangler d1 create <DATABASE_NAME>
 List all D1 databases in your account.
 
 ```sh
-$ wrangler d1 list
+wrangler d1 list
 ```
 
 ### `delete`
@@ -153,7 +153,7 @@ $ wrangler d1 list
 Delete a D1 database.
 
 ```sh
-$ wrangler d1 delete <DATABASE_NAME>
+wrangler d1 delete <DATABASE_NAME>
 ```
 
 {{<definitions>}}
@@ -168,16 +168,16 @@ $ wrangler d1 delete <DATABASE_NAME>
 Execute a query on a D1 database.
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
-- `--command` {{<type>}}string{{</type>}}
+- `--command` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The SQL query you wish to execute.
-- `--file` {{<type>}}string{{</type>}}
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to the SQL file you wish to execute.
 - Note that you must provide either `--command` or `--file` for this command to run successfully.
   {{</definitions>}}
@@ -187,16 +187,16 @@ $ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
 ```sh
-$ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
+wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
-- `--bookmark` {{<type>}}string{{</type>}}
+- `--bookmark` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A D1 bookmark representing the state of a database at a specific point in time.
-- `--timestamp` {{<type>}}string{{</type>}}
+- `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
     {{</definitions>}}
 
@@ -205,14 +205,14 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
 ```sh
-$ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
+wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
-- `--timestamp` {{<type>}}string{{</type>}}
+- `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
     {{</definitions>}}
 
@@ -221,7 +221,7 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 Initiate a D1 backup.
 
 ```sh
-$ wrangler d1 backup create <DATABASE_NAME>
+wrangler d1 backup create <DATABASE_NAME>
 ```
 
 {{<definitions>}}
@@ -235,7 +235,7 @@ $ wrangler d1 backup create <DATABASE_NAME>
 List all available backups.
 
 ```sh
-$ wrangler d1 backup list <DATABASE_NAME>
+wrangler d1 backup list <DATABASE_NAME>
 ```
 
 {{<definitions>}}
@@ -249,7 +249,7 @@ $ wrangler d1 backup list <DATABASE_NAME>
 Restore a backup into a D1 database.
 
 ```sh
-$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -265,7 +265,7 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 Download existing data to your local machine.
 
 ```sh
-$ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
+wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -287,7 +287,7 @@ This will generate a new versioned file inside the `migrations` folder. Name you
 The filename will include a version number and the migration name you specify below.
 
 ```sh
-$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
+wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
 ```
 
 {{<definitions>}}
@@ -303,14 +303,14 @@ $ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
 View a list of unapplied migration files.
 
 ```sh
-$ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to list unapplied migrations for.
-- `--local` {{<type>}}boolean{{</type>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
     {{</definitions>}}
 
@@ -327,14 +327,14 @@ When running the apply command in a CI/CD environment or another non-interactive
 If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
 
 ```sh
-$ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
-- `--local` {{<type>}}boolean{{</type>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
     {{</definitions>}}
 
@@ -349,7 +349,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 Create a new Hyperdrive configuration.
 
 ```sh
-$ wrangler hyperdrive create <ID> [OPTIONS]
+wrangler hyperdrive create <ID> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -366,7 +366,7 @@ $ wrangler hyperdrive create <ID> [OPTIONS]
 Update an existing Hyperdrive configuration.
 
 ```sh
-$ wrangler hyperdrive update <ID> [OPTIONS]
+wrangler hyperdrive update <ID> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -391,7 +391,7 @@ $ wrangler hyperdrive update <ID> [OPTIONS]
 List all Hyperdrive configurations.
 
 ```sh
-$ wrangler hyperdrive list [OPTIONS]
+wrangler hyperdrive list
 ```
 
 ### `delete`
@@ -399,7 +399,7 @@ $ wrangler hyperdrive list [OPTIONS]
 Delete an existing Hyperdrive configuration.
 
 ```sh
-$ wrangler hyperdrive delete <ID> [OPTIONS]
+wrangler hyperdrive delete <ID>
 ```
 
 {{<definitions>}}
@@ -414,7 +414,7 @@ $ wrangler hyperdrive delete <ID> [OPTIONS]
 Get an existing Hyperdrive configuration.
 
 ```sh
-$ wrangler hyperdrive get <ID> [OPTIONS]
+wrangler hyperdrive get <ID>
 ```
 
 {{<definitions>}}
@@ -435,16 +435,16 @@ Interact with a [Vectorize](/vectorize/) vector database.
 Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
 
 ```sh
-$ wrangler vectorize create <index-name> --dimensions=NUM_DIMENSIONS --metric=DISTANCE_METRIC
+wrangler vectorize create <INDEX_NAME> --dimensions=<NUM_DIMENSIONS> --metric=<DISTANCE_METRIC>
 ```
 
 {{<definitions>}}
 
 - `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new index to create. Cannot be changed.
-- `--dimensions` {{<type>}}number{{</type>}}
+- `--dimensions` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` {{<type>}}string{{</type>}}
+- `--metric` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
 
 {{</definitions>}}
@@ -454,7 +454,7 @@ $ wrangler vectorize create <index-name> --dimensions=NUM_DIMENSIONS --metric=DI
 Get details about an individual index, including its configuration.
 
 ```sh
-$ wrangler vectorize get <index-name>
+wrangler vectorize get <index-name>
 ```
 
 {{<definitions>}}
@@ -468,7 +468,7 @@ $ wrangler vectorize get <index-name>
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
 
 ```sh
-$ wrangler vectorize list
+wrangler vectorize list
 ```
 
 ### `delete`
@@ -476,14 +476,14 @@ $ wrangler vectorize list
 Delete a Vectorize index.
 
 ```sh
-$ wrangler vectorize delete <index-name>
+wrangler vectorize delete <INDEX_NAME>
 ```
 
 {{<definitions>}}
 
 - `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Vectorize index to delete.
-- `--force` {{<type>}}boolean{{</type>}}
+- `--force` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Skip confirmation when deleting the index (note: this is not a recoverable operation)
 
 {{</definitions>}}
@@ -493,7 +493,7 @@ $ wrangler vectorize delete <index-name>
 Insert vectors into an index.
 
 ```sh
-$ wrangler vectorize insert <index-name>
+wrangler vectorize insert <INDEX_NAME>
 ```
 
 {{<definitions>}}
@@ -502,8 +502,8 @@ $ wrangler vectorize insert <index-name>
   - The name of the Vectorize index to delete.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` {{<type>}}number{{</type>}}
-  - The number of vectors to insert at a time (default: 5000)
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The number of vectors to insert at a time (default: `5000`).
 
 {{</definitions>}}
 
@@ -514,7 +514,7 @@ $ wrangler vectorize insert <index-name>
 Start a local server for developing your Worker.
 
 ```sh
-$ wrangler dev [SCRIPT] [OPTIONS]
+wrangler dev [SCRIPT] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -596,14 +596,6 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 {{</definitions>}}
 
-```sh
-~/my-worker $ wrangler dev
-⬣ Listening at http://localhost:8787
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open DevTools, [l] turn on local mode, [c] clear console, [x] to exit                        │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-```
-
 `wrangler dev` is a way to locally test your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
@@ -613,7 +605,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 Deploy your Worker to Cloudflare.
 
 ```sh
-$ npx wrangler deploy [SCRIPT] [OPTIONS]
+wrangler deploy [SCRIPT] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -626,7 +618,7 @@ None of the options for this command are required. Also, many can be set in your
 
 - `SCRIPT` {{<type>}}string{{</type>}}
   - The path to an entry point for your Worker.
-- `--name` {{<type>}}string{{</type>}}
+- `--name` {{<type>}}string{{</type>}} 
   - Name of the Worker.
 - `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Skip Wrangler's build steps and directly deploy script without modification. Particularly useful when using custom builds.
