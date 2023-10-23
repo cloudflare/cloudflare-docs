@@ -58,6 +58,10 @@ Not all operators are available for every selected field.
 
 When you select eligible for cache, you can change the configuration settings described below.
 
+{{<Aside type="note">}}
+Currently, Cache Rules are not compatible with Image Resizing. Cache Rules will not be applied to Image Resizing requests. Page Rules are supported.
+{{</Aside>}}
+
 ### Edge TTL 
 
 Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests.
@@ -168,7 +172,7 @@ Enterprise customers have these additional options for custom cache keys:
 
 API configuration object name: `"cache_key"`.
 
-API values: `"ignore_query_strings_order"`, `"cache_deception_armo"`, `"cache_by_device_type"`, `"custom_key"` (`"header"`, `"cookie"`, `"host"`, `"query_string"`, `"user"`).
+API values: `"ignore_query_strings_order"`, `"cache_deception_armor"`, `"cache_by_device_type"`, `"custom_key"` (`"header"`, `"cookie"`, `"host"`, `"query_string"`, `"user"`).
 
 ```json
 ---
