@@ -47,6 +47,12 @@ For more details about timing and certificate recommendations, refer to [Certifi
 
 {{</tutorial-step>}}
 
+{{<tutorial-step title="Update proxy status" >}}
+
+Once you have verified that your SSL/TLS edge certificate is active and you have allowed Cloudflare IP addresses, change the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of appropriate DNS records to **Proxied**.
+
+{{</tutorial-step>}}
+
 {{<tutorial-step title="Test configuration" optional=true >}}
 
 You may want to test your configuration using your local machine or proxying traffic from a development domain or subdomain.
@@ -54,11 +60,4 @@ You may want to test your configuration using your local machine or proxying tra
 If you experience issues, you should make sure that you have [allowed Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin server.
 
 {{</tutorial-step>}}
-
-{{<tutorial-step title="Update proxy status" >}}
-
-Once you have verified that your SSL/TLS edge certificate is active and you have allowed Cloudflare IP addresses, change the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of appropriate DNS records to **Proxied**.
-
-{{</tutorial-step>}}
-
 {{</tutorial>}}
