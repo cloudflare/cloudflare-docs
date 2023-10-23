@@ -4,7 +4,7 @@ productName: Workers
 entries:
 - publish_date: '2023-10-20'
   description: |-
-    - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#crypto-preserve-public-exponent)
+    - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field)
       compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
       the WebCrypto API.
 - publish_date: '2023-10-18'
