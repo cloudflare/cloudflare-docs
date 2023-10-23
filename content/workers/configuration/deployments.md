@@ -5,12 +5,6 @@ title: Deployments
 
 # Deployments
 
-{{<Aside type="note">}}
-
-Deployments are currently in Public Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
-
-{{</Aside>}}
-
 Deployments are a log of static historical versions of your Worker. Deployments track changes to the [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#workers) associated with a Worker over time.
 
 Deployments also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.

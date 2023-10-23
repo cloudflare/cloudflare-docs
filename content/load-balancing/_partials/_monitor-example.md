@@ -5,9 +5,7 @@ _build:
   list: never
 ---
 
-<details>
-<summary>Example monitor configuration</summary>
-<div>
+{{<details header="Example monitor configuration">}}
     <table style='table-layout:fixed; width:70%'>
       <thead>
       <tr>
@@ -50,5 +48,4 @@ _build:
         </tr>
       </tbody>
     </table>
-</div>
-</details>
+{{</details>}}

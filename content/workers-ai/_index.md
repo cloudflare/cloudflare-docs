@@ -39,7 +39,7 @@ const output = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
 
 Workers AI comes with a curated set of popular open-source models that *just work*.
 
-Supporting mutiple classes of models, here are some AI tasks you can unlock with Workers AI:
+Supporting multiple classes of models, here are some AI tasks you can unlock with Workers AI:
 
 * **Natural language processing** - text generation + summarization + classification + translation, similarity analysis, question answering
 * **Computer Vision** - image classification, object detection

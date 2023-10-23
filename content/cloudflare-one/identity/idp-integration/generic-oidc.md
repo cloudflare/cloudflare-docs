@@ -12,7 +12,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 1. Visit your identity provider and create a client/app.
 
-2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -38,7 +38,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
 10. Select **Save**.
 

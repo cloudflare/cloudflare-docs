@@ -5,9 +5,7 @@ _build:
   list: never
 ---
 
-<details>
-<summary>Provider-specific instructions</summary>
-<div>
+{{<details header="Provider-specific instructions">}}
 
 This is not an exhaustive list of how to update DS records in other providers, but the following links may be helpful:
 
@@ -31,5 +29,4 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [registro.br](https://registro.br/tecnologia/dnssec.html?secao=tutoriais-dns)
 - [Porkbun](https://kb.porkbun.com/article/93-how-to-install-dnssec) (do not fill out **keyData**).
 
-</div>
-</details>
+{{</details>}}

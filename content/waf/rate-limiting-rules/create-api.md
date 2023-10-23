@@ -13,7 +13,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting 
 
 A rate limiting rule is similar to a regular rule handled by the Ruleset Engine, but contains an additional `ratelimit` object with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on this field and its parameters.
 
-You must deploy rate limiting rules to the `http_ratelimit` [phase entry point ruleset](/ruleset-engine/about/rulesets/#phase-entry-point-ruleset).
+You must deploy rate limiting rules to the `http_ratelimit` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
 Rate limiting rules must appear at the end of the rules list.
 

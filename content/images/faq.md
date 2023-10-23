@@ -18,60 +18,45 @@ Below you will find answers to our most commonly asked questions regarding Cloud
 
 Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization, and delivery; Image Resizing only offers resizing and optimization:
 
-<details>
-<summary>Storage</summary>
-<div>
+{{<details header="Storage">}}
 
 **Cloudflare Images** - Images are stored at Cloudflare.
 
 **Image Resizing** - Images can be stored anywhere on the Internet as long as they have public access.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Billing</summary>
-<div>
+{{<details header="Billing">}}
 
 **Cloudflare Images** - Cloudflare charges by images served (regardless of them being cached or not), and images stored.
 
 **Image Resizing** - Cloudflare charges when there are cache misses, and for some [request errors](#are-image-resizing-errors-billed).
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Delivery</summary>
-<div>
+{{<details header="Delivery">}}
 
 **Cloudflare Images** - Images are served from `imagedelivery.net`.
 
 **Image Resizing** - Images are served from one of your domains on Cloudflare.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Available optimizations</summary>
-<div>
+{{<details header="Available optimizations">}}
 
 **Cloudflare Images** - For more information on Cloudflare Images optimizations refer to [Edit images](/images/cloudflare-images/transform/).
 
 **Image Resizing** - For more information on Image Resizing optimizations refer to [URL format options](/images/image-resizing/url-format/#options).
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Plan availability</summary>
-<div>
+{{<details header="Plan availability">}}
 
 **Cloudflare Images** - Available to any plan.
 
 **Image Resizing** - Available with Pro, Business, and Enterprise plans.
 
-</div>
-</details>
+{{</details>}}
 
 ### How much does Cloudflare Images cost?
 
@@ -117,10 +102,10 @@ Refer to [Troubleshoot Image Resizing problems](/images/image-resizing/troublesh
 
 Cloudflare considers some Image Resizing request errors for billing. Below is a list of `cf-resized` headers that are billed:
 
-* `9401`: Invalid resize options.
-* `9412`: Origin file type invalid.
-* `9413`: Image too big.
-* `9511`: Unsupported image format.
+- `9401`: Invalid resize options.
+- `9412`: Origin file type invalid.
+- `9413`: Image too big.
+- `9511`: Unsupported image format.
 
 Refer to [Troubleshoot Image Resizing problems](/images/image-resizing/troubleshooting/) for more information about these error codes.
 

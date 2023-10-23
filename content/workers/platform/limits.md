@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Limits
+meta:
+  description: Cloudflare Workers plan and platform limits.
 ---
 
 # Limits
@@ -18,16 +20,11 @@ title: Limits
 | [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 400 ms    | 400 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per Worker | 3         | 3         |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
-
-{{</Aside>}}
+{{<render file="_limits_increase.md">}}
 
 ---
 
@@ -218,13 +215,17 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts.
+
+{{<render file="_limits_increase.md">}}
 
 ---
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
+
+{{<render file="_limits_increase.md">}}
 
 ---
 
@@ -242,11 +243,15 @@ App Workers do not count towards this limit.
 
 ## Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+
+{{<render file="_limits_increase.md">}}
 
 ## Number of routed zones per Worker
 
-When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+
+{{<render file="_limits_increase.md">}}
 
 ---
 

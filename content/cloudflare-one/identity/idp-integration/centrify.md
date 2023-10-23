@@ -34,7 +34,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 11. Under **Authorized Redirect URIs**, select **Add**.
 
-12. Under **Authorized Redirect URIs** enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. Under **Authorized Redirect URIs** enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -45,10 +45,11 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 13. Select **Save**.
 
 14. Copy the following values:
-  - **Client ID**
-  - **Client Secret**
-  - **OpenID Connect Issuer URL**
-  - **Application ID** from the **Settings** tab
+
+- **Client ID**
+- **Client Secret**
+- **OpenID Connect Issuer URL**
+- **Application ID** from the **Settings** tab
 
 15. Go to the **User Access** tab.
 
@@ -60,7 +61,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 19. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 
-20. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+20. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
 21. Select **Save**.
 

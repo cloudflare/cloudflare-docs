@@ -103,7 +103,7 @@ If any of the requirements to validate are breached, a service will be removed f
 
 ## Online application
 
-To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link). The waiting time is up to several weeks for verified bot requests to be evaluated.
+To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard for the fastest possible results. Bot operators who perfer not to create a free Cloudflare account can do so using our [old form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link), but the waiting time is up to several weeks for verified bot requests to be evaluated. 
 
 ## Transient false negatives
 

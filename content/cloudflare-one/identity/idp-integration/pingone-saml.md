@@ -24,7 +24,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
    ```
 
-   where `<your-team-name>` is your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-domain).
+   where `<your-team-name>` is your Cloudflare Zero Trust {{<glossary-tooltip term_id="team domain">}}team name{{</glossary-tooltip>}}.
 
    3. Select **Import**.
    4. **Save** the configuration.

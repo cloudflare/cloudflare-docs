@@ -24,16 +24,11 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 
 {{</Aside>}}
 
-<details>
-<summary>
-    Wireshark example of health check packets
-</summary>
-  <div class="special-class" markdown="1">
+{{<details header="Wireshark example of health check packets">}}
 
 ![Wireshark example for tunnel health checks with ICMP reply packet](/images/magic-transit/tunnel-health-check-packets.png)
 
-</div>
-</details>
+{{</details>}}
 
 ## Health state and prioritization
 
@@ -132,8 +127,8 @@ Tunnel health check results are exposed [via API](/analytics/graphql-api/tutoria
 
 #### Bidirectional health checks
 
-To check for tunnel health, Cloudflare sends packets in the form of ICMP echo replies. These packets are destined for the Cloudflare side of the interface address field set on the IPsec tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`. 
+To check for tunnel health, Cloudflare sends packets in the form of ICMP echo replies. These packets are destined for the Cloudflare side of the interface address field set on the IPsec tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`.
 
-Note that the interface address field is always a `/30` or `/31` CIDR range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side. 
+Note that the interface address field is always a `/30` or `/31` CIDR range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side.
 
 These packets will flow to and from Cloudflare over the IPsec tunnels you have configured to provide full visibility into the traffic path between our network and your sites. You will need to configure traffic selectors to accept the health check packets.

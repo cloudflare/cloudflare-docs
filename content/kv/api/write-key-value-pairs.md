@@ -11,7 +11,7 @@ To create a new key-value pair, or to update the value for a particular key, cal
 The basic form of the method  `put()` looks like this:
 
 ```js
-await NAMESPACE.put(key, value);
+await env.NAMESPACE.put(key, value);
 ```
 
 ## Parameters
@@ -77,7 +77,7 @@ To use `expiration` or `expirationTTL`, run one of the two commands below to set
 
 - `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
 
-- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTTL: secondsFromNow})` {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 
@@ -87,12 +87,12 @@ You can also [write with an expiration on the command line via Wrangler](/kv/lea
 
 ## Metadata
 
-To associate some metadata with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
+To associate some {{<glossary-tooltip term_id="metadata">}}metadata{{</glossary-tooltip>}} with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
 
 To do this in your Worker script:
 
 ```js
-await NAMESPACE.put(key, value, {
+await env.NAMESPACE.put(key, value, {
   metadata: { someMetadataKey: "someMetadataValue" },
 });
 ```

@@ -46,11 +46,10 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 | Driver               | Docs                                 | Minimum Version Required |
 | -------------------- | ------------------------------------ | ------------------------ |
 | node-postgres - `pg` | https://node-postgres.com/           | `pg@8.11.0`              |
-| Postgres.js          | https://github.com/porsager/postgres | `3.4.0`                  |
 | Drizzle              | https://orm.drizzle.team/            | `0.26.2`^                |
 | Kysely               | https://kysely.dev/                  | `0.26.3`^                |
 
-^ _The marked libraries use `node-postgres` or `Postgres.js` as a dependency._
+^ _The marked libraries use `node-postgres` as a dependency._
 
 Other drivers and ORMs not listed may also be supported: this list is not exhaustive.
 
@@ -74,21 +73,13 @@ Hyperdrive does not currently support uploading client CA certificates. In the f
 
 ## Driver examples
 
-The following Workers code shows examples for both `node-postgres` and Postgres.js:
+The following Workers code shows examples for `node-postgres`:
 
-{{<tabs labels="node-postgres | postgres-js">}}
+{{<tabs labels="node-postgres">}}
 {{<tab label="node-postgres" default="true">}}
 
 ```sh
 $ npm install pg
-```
-
-{{</tab>}}
-
-{{<tab label="postgres-js">}}
-
-```sh
-$ npm install postgres
 ```
 
 {{</tab>}}
@@ -100,7 +91,7 @@ The following Workers examples show you how to:
 2. Pass the Hyperdrive connection string and connect to the database.
 3. Write a query.
 
-{{<tabs labels="node-postgres | postgres-js">}}
+{{<tabs labels="node-postgres">}}
 {{<tab label="node-postgres" default="true">}}
 
 ```ts
@@ -121,29 +112,6 @@ export default async fetch(req: Request, env: Env, ctx: ExecutionContext) {
     await client.connect()
 
     const results = await client.query("SELECT * FROM users LIMIT 10")
-
-    return Response.json(results)
-}
-```
-
-{{</tab>}}
-{{<tab label="postgres-js">}}
-
-```ts
----
-filename: src/worker.ts
----
-import postgres from 'postgres'
-
-interface Env {
-    HYPERDRIVE: Hyperdrive;
-}
-
-export default async fetch(req: Request, env: Env, ctx: ExecutionContext) {
-    // The Postgres.js library accepts a connection string directly
-    const sql = postgres(env.HYPERDRIVE.connectionString)
-
-    const results = await sql`SELECT * FROM users LIMIT 10`
 
     return Response.json(results)
 }
