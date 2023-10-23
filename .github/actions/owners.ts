@@ -79,15 +79,17 @@ export const OWNERS: Record<string, string[]> = {
   "warp-client": ["haleycode"],
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
-  "vectorize": ["elithrar", "pdwittig", "Maddy-Cloudflare"],
+  "vectorize": ["Maddy-Cloudflare"],
   "workers-ai": ["irvinebroque", "pdwittig"],
   zaraz: ["haleycode"],
 };
 
 export const REVIEWERS: Record<string, string[]> = {
   analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit", "soheiokamoto", "tlozoot"],
-  d1: ["elithrar", "rozenmd"],
+  d1: ["elithrar", "rozenmd", "joshthoward", "vy-ton"],
+  "durable-objects": ["elithrar", "joshthoward", "vy-ton"],
   "data-localization": ["soheiokamoto", "tlozoot"],
+  "hyperdrive": ["elithrar", "a-robinson"],
   radar: ["meddulla", "G4brym"],
   logs: ["jherre", "bharatnc", "victor-perov", "soheiokamoto", "tlozoot"],
   pages: ["WalshyDev"],
@@ -95,5 +97,6 @@ export const REVIEWERS: Record<string, string[]> = {
   queues: ["CharlieBurnett", "elithrar"],
   support: ["shanecloudflare", "zeinjaber", "rprice74", "ngayerie"],
   turnstile: ["migueldemoura", "punkeel", "worenga"],
+  vectorize: ["elithrar", "pdwittig"],
   "waiting-room": ["aolache"],
 };

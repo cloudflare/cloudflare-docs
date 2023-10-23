@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Migrate from Service Workers to ES Modules
+meta:
+  description: Write your Worker code in ES modules syntax for an optimized experience.
 ---
 
 # Migrate from Service Workers to ES Modules

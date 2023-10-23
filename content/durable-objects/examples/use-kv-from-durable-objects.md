@@ -36,7 +36,7 @@ bindings = [
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
@@ -90,7 +90,6 @@ export class YourDurableObject implements Durable Object {
 
     return Response.json(val)
   }
-}
 ```
 
 

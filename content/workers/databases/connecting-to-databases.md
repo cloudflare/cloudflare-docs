@@ -27,6 +27,7 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 | [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/databases/native-integrations/neon/) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
 | [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No | API | GraphQL API via fetch() |
 | [Upstash Redis](https://blog.cloudflare.com/cloudflare-workers-database-integration-with-upstash/) | [Yes](/workers/databases/native-integrations/upstash/) | [@upstash/redis](https://github.com/upstash/upstash-redis) | API via client library |
+| [TiDB Cloud](https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare)                      | No                                                       | [@tidbcloud/serverless](https://github.com/tidbcloud/serverless-js)               | API via client library                       |
 
 {{</table-wrap>}}
 
