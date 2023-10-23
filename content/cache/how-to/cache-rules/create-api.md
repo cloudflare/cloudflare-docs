@@ -13,7 +13,7 @@ Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets
 
 ## Basic rule settings
 
-When creating a configuration rule via API, make sure you:
+When creating a cache rule via API, make sure you:
 
 * Set the rule action to `set_cache_settings`.
 * Define the parameters in the `action_parameters` field according to the [settings](/cache/how-to/cache-rules/settings/) you wish to override for matching requests.
