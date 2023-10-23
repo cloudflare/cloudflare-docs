@@ -120,15 +120,15 @@ The following configuration will modify settings in your Cloudflare account.
    filename: Cloudflare-config.tf
    ---
    # Generates a 35-character secret for the tunnel.
-   resource "random_id" "tunnel_secret" {
-     byte_length = 35
+   resource "random_password" "tunnel_secret" {
+     byte_length = 64
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
-   resource "cloudflare_argo_tunnel" "auto_tunnel" {
+   resource "cloudflare_tunnel" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Ansible GCP tunnel"
-     secret     = random_id.tunnel_secret.b64_std
+     secret     = base64sha256(random_password.tunnel_secret.result)
    }
 
    # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
