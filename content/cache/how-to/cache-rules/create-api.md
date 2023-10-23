@@ -9,7 +9,7 @@ meta:
 
 # Create a cache rule via API
 
-Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/) to create a Cache Rule via API. To configure Cloudflare’s API refer to the [API documentation](/fundamentals/api/get-started/).
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/) to create a cache rule via API. To configure Cloudflare’s API refer to the [API documentation](/fundamentals/api/get-started/).
 
 ## Basic rule settings
 
@@ -21,11 +21,11 @@ When creating a configuration rule via API, make sure you:
 
 ## Procedure
 
-1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method to obtain the list of rules already present in the `http_request_cache_settings` phase entry point ruleset.
-2. If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
+1. Use the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rules already present in the `http_request_cache_settings` phase entry point ruleset.
+2. If the phase ruleset does not exist, create it using the [Create a zone ruleset](/api/operations/createZoneRuleset) operation. In the new ruleset properties, set the following values:
     * kind: `zone`
     * phase: `http_request_cache_settings`
-3. Alternatively, you can also use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add a Cache Rule to the list of ruleset rules.
+3. Use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation to add a cache rule to the list of ruleset rules. Alternatively, include the rule in the [Create a zone ruleset](/api/operations/createZoneRuleset) request mentioned in the previous step.
 
 ## Example requests
 
@@ -70,7 +70,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --data '{
   "rules": [
     {
-      "expression": "(http.user_agent contains "Android")",
+      "expression": "(http.user_agent contains \"Android\")",
       "description": "extend read timeout for android clients",
       "action": "set_cache_settings",
       "action_parameters": {
@@ -97,14 +97,14 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --data '{
   "rules": [
     {
-      "expression": "(starts_with(http.request.uri, "/feed/"))",
+      "expression": "(starts_with(http.request.uri, \"/feed/\"))",
       "description": "disable cache reserve for frequently updated assets",
       "action": "set_cache_settings",
       "action_parameters": {
         "cache": true,
         "cache_reserve": {
-          “enabled”: false
-        },
+          "enabled": false
+        }
       }
     }
   ]
@@ -132,8 +132,8 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
       "action_parameters": {
         "cache": true,
         "edge_ttl": {
-          “mode”: “bypass_by_default”
-        },
+          "mode": "bypass_by_default"
+        }
       }
     }
   ]
