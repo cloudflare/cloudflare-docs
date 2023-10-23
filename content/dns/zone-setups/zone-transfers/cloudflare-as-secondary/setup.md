@@ -15,6 +15,7 @@ With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-sec
 ## Before you begin
 
 Make sure you have completed the following tasks before setting up incoming zone transfers.
+Also, that you have a registered domain to proceed with this setup.
 
 ### At your primary DNS provider
 
