@@ -30,7 +30,7 @@ The fields available for Cache Rule matching expressions in the Expression Build
 For a list of all available fields refer to [Fields](/ruleset-engine/rules-language/fields/).
 
 {{<Aside type="note">}}
-Not all fields are available as a trigger for Cache Rules due to incompatibility with Purge.
+Not all fields are available as a trigger for Cache Rules due to incompatibility with [Purge](/cache/how-to/purge-cache/).
 {{</Aside>}}
 
 ## Operators
@@ -83,14 +83,37 @@ API values | Configuration
 header: API configuration example
 ---
 "action_parameters": {
-  "cache": true,
-  "edge_ttl" : {
-    "mode": "bypass_by_default"
-  }
+    "cache": true,
+    "edge_ttl": {
+        "status_code_ttl": [
+            {
+                "status_code_range": {
+                    "to": 299
+                },
+                "value": 86400
+            },
+            {
+                "status_code_range": {
+                    "from": 300,
+                    "to": 499
+                },
+                "value": 0  // no-cache
+            },
+            {
+                "status_code_range": {
+                    "from": 500
+                },
+                "value": -1  // no-store
+            }
+        ],
+        "mode": "respect_origin"
+    }
 }
+
+
 ```
 
-Refer to [Create a configuration rule via API](/cache/how-to/cache-rules/create-api/#example-requests) for complete API examples.
+Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#example-requests) for complete API examples.
 
 {{</details>}}
 
@@ -105,6 +128,9 @@ Select if you want to **Bypass cache**, **Respect origin**, or **Override origin
 API configuration object name: `"browser_ttl"`.
 
 API values for the `"mode"` property: `"respect_origin"`, `"override_origin"`, `"bypass_by_default"`.
+<br>
+
+API values for the `"default"` property (integer): value range that you can enter.
 
 ```json
 ---
@@ -119,7 +145,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/cache/how-to/cache-rules/create-api/#example-requests) for complete API examples.
+Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#example-requests) for complete API examples.
 
 {{</details>}}
 
