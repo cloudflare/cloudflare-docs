@@ -9,24 +9,8 @@ layout: learning-unit
 
 ---
 
-## Setup
+## Disable DNSSEC
 
-Your DNSSEC setup can be different depending on where you registered your domain name:
+{{<render file="_disable_dnssec.md" productFolder="dns">}}
 
-### Cloudflare Registrar
-
-{{<render file="_enable-dnssec.md" productFolder="registrar">}}
-
-### Other registrars
-
-First, activate DNSSEC in the Cloudflare dashboard:
-
-{{<render file="_dnssec-cloudflare-steps.md" productFolder="dns">}}
-
-{{<render file="_dnssec-registrar-steps.md" productFolder="dns">}}
-
----
-
-## Verify DNSSEC
-
-{{<render file="_verify-dnssec.md" productFolder="registrar">}}
+{{<render file="_dnssec-enabled-migration.md" productFolder="dns">}}

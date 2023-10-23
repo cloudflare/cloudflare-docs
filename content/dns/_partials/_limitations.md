@@ -28,6 +28,9 @@ If this warning is still present after 24 hours, refer to our [troubleshooting g
 
 For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
 
+
+{{<Aside type="warning">}}
 #### Windows authentication
 
 Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records.
+{{</Aside>}}

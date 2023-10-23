@@ -7,12 +7,11 @@ layout: learning-module
 
 # Domain Resolution
 
-Make sure your zone is set up correctly, so you can fully take advantage of Cloudflare’s performance and security benefits.
+Ensure all your traffic is proxying through Cloudflare successfully. 
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Confirm your zone is set up correctly on Cloudflare.
-- Recognize and troubleshoot issues in your DNS records.
-- Recognize and troubleshoot issues in your SSL/TLS certificate.
+- Confirm your zone is set up correctly on Cloudflare
+- Recognize and troubleshoot issues with your DNS records and SSL/TLS certificates
