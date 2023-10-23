@@ -262,7 +262,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
     </tr>
         <tr>
       <td>
-        <strong>Cache Rules</strong><br />
+        <strong>Set Cache Settings</strong><br />
         <br />
         API value:<br />
         <code>set_cache_settings</code>
