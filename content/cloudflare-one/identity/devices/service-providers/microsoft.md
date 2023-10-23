@@ -6,8 +6,6 @@ weight: 4
 
 # Microsoft Endpoint Manager
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 Cloudflare Zero Trust can integrate with Microsoft Endpoint Manager and Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
 ## Prerequisites

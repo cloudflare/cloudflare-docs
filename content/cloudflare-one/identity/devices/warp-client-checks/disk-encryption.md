@@ -8,8 +8,6 @@ meta:
 
 # Disk encryption
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 The Disk Encryption device posture attribute ensures that disks are encrypted on a device.
 
 ## Enable the disk encryption check

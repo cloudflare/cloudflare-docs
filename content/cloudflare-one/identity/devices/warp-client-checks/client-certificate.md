@@ -6,8 +6,6 @@ weight: 3
 
 # Client certificate
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 The Client Certificate device posture attribute checks if the device has a valid certificate signed by a trusted certificate authority (CA). The posture check can be used in Gateway and Access policies to ensure that the user is connecting from a managed device.
 
 ## Prerequisites

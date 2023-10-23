@@ -6,8 +6,6 @@ weight: 4
 
 # Workspace ONE
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 Device posture with Workspace ONE requires the Workspace ONE agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the posture check.
 
 ## 1. Obtain Workspace ONE Settings

@@ -8,13 +8,14 @@ meta:
 
 # Tanium
 
-{{<details header="Feature availability">}}
+{{<Aside type="note">}}
 
-| Operating Systems          | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems          | [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | -------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Any OS supported by Tanium | WARP with Gateway                                                                                 | All plans                                                     |
 
-{{</details>}}
+{{</Aside>}}
+
 
 Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource. When users attempt to connect to a resource protected by Access with a Tanium rule, Cloudflare Access will validate the user's identity, and the browser will connect to the Tanium agent before making a decision to grant access.
 

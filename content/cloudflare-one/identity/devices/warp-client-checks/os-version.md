@@ -6,14 +6,6 @@ weight: 8
 
 # OS version
 
-{{<details header="Feature availability">}}
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems               | WARP with Gateway                                                                         | All plans                                                     |
-
-{{</details>}}
-
 The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than the configured value.
 
 ## Enable the OS version check
