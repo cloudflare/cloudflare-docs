@@ -77,7 +77,7 @@ To use `expiration` or `expirationTTL`, run one of the two commands below to set
 
 - `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
 
-- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTTL: secondsFromNow})` {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 
