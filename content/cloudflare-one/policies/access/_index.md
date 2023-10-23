@@ -66,7 +66,7 @@ The Bypass action disables any Access enforcement for traffic that meets the def
 |--------| ------- | --------- | ----------------- |
 | Bypass  | Include | Everyone | `Everyone` |
 
-As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/) and have users connect through WARP.
+As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) and have users connect through WARP.
 
 {{<Aside type="note">}}
 
