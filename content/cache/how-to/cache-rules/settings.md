@@ -168,7 +168,7 @@ Enterprise customers have these additional options for custom cache keys:
 
 API configuration object name: `"cache_key"`.
 
-API values: `"ignore_query_strings_order"`, `"cache_deception_armo"`, `"cache_by_device_type"`, , , `"custom_key"` (`"header"`, `"cookie"`, `"host"`, `"query_string"`, `"user"`).
+API values: `"ignore_query_strings_order"`, `"cache_deception_armo"`, `"cache_by_device_type"`, `"custom_key"` (`"header"`, `"cookie"`, `"host"`, `"query_string"`, `"user"`).
 
 ```json
 ---
