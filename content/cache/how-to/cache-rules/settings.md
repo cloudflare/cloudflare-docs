@@ -130,7 +130,7 @@ API configuration object name: `"browser_ttl"`.
 API values for the `"mode"` property: `"respect_origin"`, `"override_origin"`, `"bypass_by_default"`.
 <br>
 
-API values for the `"default"` property (integer): value range that you can enter.
+API values for the `"default"` property (integer): values available depend on your plan. Refer to [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl).
 
 ```json
 ---
@@ -233,7 +233,7 @@ Cloudflare will still enforce the plan-based [cacheable file limits](/cache/conc
 
 API configuration object name: `"cache_reserve"`.
 
-API roperty name for enabling Cache Reserve: `"enabled"` (boolean).
+API property name for enabling Cache Reserve: `"enabled"` (boolean).
 
 ```json
 ---
