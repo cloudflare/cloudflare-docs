@@ -69,4 +69,4 @@ Quick tunnels, when run, will generate a URL that consists of a random subdomain
 
 ## Virtual networks
 
-A [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network.  Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
+A [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network.  Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.

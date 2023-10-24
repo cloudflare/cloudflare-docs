@@ -9,7 +9,7 @@ _build:
 2. Copy the token's **Client ID** and **Client Secret**.
 3. In your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions), create the following policy:
 
-    | Action       | Rule type | Selector      | Value          |
+    | Rule Action  | Rule type | Selector      | Value          |
     | ------------ | --------- | ------------- | -------------- |
     | Service Auth | Include   | Service Token | `<TOKEN-NAME>` |
 

@@ -1,10 +1,10 @@
 ---
 type: example
-summary: Create a simple Durable Object.
+summary: Create a Durable Object that keeps track of the location of Durable Objects.
 tags:
   - Durable Objects
 pcx_content_type: configuration
-title: Durable Object example
+title: Durable Object location example
 weight: 3
 layout: example
 ---

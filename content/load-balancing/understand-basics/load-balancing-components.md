@@ -8,10 +8,6 @@ weight: 3
 
 This page provides a simplified overview of the three main components of the Cloudflare Load Balancing solution and how they relate to one another.
 
-* [Load balancers](/load-balancing/load-balancers/)
-* [Pools](/load-balancing/pools/)
-* [Monitors](/load-balancing/monitors/)
-
 ## Load balancers
 
 For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) must return an IP address, where the website or application is hosted (origin).

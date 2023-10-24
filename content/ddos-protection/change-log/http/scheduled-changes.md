@@ -24,13 +24,13 @@ meta:
   </thead>
   <tbody>
     <tr>
-      <td>2023-10-17</td>
-      <td>2023-10-19</td>
-      <td>...61bc58d5</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #55).</td>
       <td>N/A</td>
-      <td>ddos_dynamic</td>
-      <td>This rule will stay in observe mode for a smaller window than usual.</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

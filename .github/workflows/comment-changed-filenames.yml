@@ -10,7 +10,7 @@ on:
       - production
 
 jobs:
-  
+
   flag_changed_filenames:
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +26,11 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" | \
             jq -r '.[] | select(.status=="renamed" or .status=="removed") | select(.filename | endswith(".md")) | if .status == "renamed" then .previous_filename else .filename end' | \
             sed -e 's|^content||' -e 's|/_index\.md$|/|' -e 's|/index\.md$|/|' -e 's|\.md$|/|')
-          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
+          # Use random delimiter for security reasons
+          delimiter="$(openssl rand -hex 8)"
+          echo "CHANGED_FILES<<${delimiter}" >> "$GITHUB_ENV"
+          echo "${files}" >> "$GITHUB_ENV"
+          echo "${delimiter}" >> "$GITHUB_ENV"
 
       - name: Comment or Update Comment on PR based on changed files
         env:

@@ -2,6 +2,11 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-10-20'
+  title:
+  description: |-
+    * **Bing Managed Component**: Fixed an issue where some events were not being sent to bing even after being triggered.
+    * **Dashboard: Improved welcome screen for new Zaraz users".
 - publish_date: '2023-10-03'
   title:
   description: |-
