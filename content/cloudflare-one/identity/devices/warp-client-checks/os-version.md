@@ -24,7 +24,7 @@ The OS Version device posture attribute checks whether the version of a deviceâ€
 4. Configure the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
 
 {{<Aside type="note">}}
-The OS version must be specified as a valid Semver. For example, if your device is running OS version `1.2`, you must enter `1.2.0`.
+The OS version must be specified as a valid [Semver](https://semver.org/). For example, if your device is running OS version `1.2`, you must enter `1.2.0`.
 {{</Aside>}}
 5. (Optional) Configure additional OS-specific fields:
 
