@@ -35,15 +35,10 @@ Your custom DNS resolver will resolve requests to the specified hostname.
     | -------- | -------- | ---------------------- | ------ |
     | Host     | in       | `internal.example.com` | Allow  |
 
-4. In **Select a DNS resolver**, choose _Custom DNS resolver_.
-5. Enter the primary IP addresses of your custom DNS resolver. Optionally, you can include secondary IP addresses. For example:
-
-    | IPv4 addresses | IPv6 addresses         |
-    | -------------- | ---------------------- |
-    | `1.1.1.1`      | `2606:4700:4700::1111` |
-    | `1.0.0.1`      | `2606:4700:4700::1001` |
-
-6. Select **Create policy**.
+4. In **Select DNS resolver**, choose _Configure custom DNS resolvers_.
+5. Enter the IP addresses of your custom DNS resolver.
+6. (Optional) Enter a custom port for each IP address.
+7. Select **Create policy**.
 
 Gateway will send a query to all resolvers listed, returning the first response. Custom resolvers are saved to your account for future use.
 
