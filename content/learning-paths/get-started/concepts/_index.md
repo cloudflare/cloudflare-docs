@@ -7,7 +7,7 @@ layout: learning-module
 
 # Cloudflare concepts
 
-Make sure your zone is set up correctly, so you can fully take advantage of Cloudflare’s performance and security benefits.
+Learn how Cloudflare works, so you can understand more about how Cloudflare can benefit and affect your domain.
 
 ## Objectives
 

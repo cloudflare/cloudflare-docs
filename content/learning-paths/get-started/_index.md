@@ -1,5 +1,5 @@
 ---
-title: Getting started v2
+title: Getting started
 type: developers-site
 layout: home
 new_learning_path: true
@@ -9,4 +9,4 @@ meta:
     description: Set up your application to benefit from Cloudflare's speed, security, and reliability.
 ---
 
-{{<learning-path file="get-started-v2.json">}}
+{{<learning-path file="get-started.json">}}

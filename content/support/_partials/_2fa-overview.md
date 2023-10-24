@@ -11,7 +11,7 @@ Cloudflare offers the option to use either a phishing-resistant security key, li
 
 To ensure that you can securely access your account even without your mobile device, or security keys, Cloudflare also provides backup codes for download.
 
-{{<Aside type="tip">}}
+{{<Aside type="note" header="Tip">}}
 After downloading your backup codes, we recommend saving them in a
 secure location.
 {{</Aside>}}

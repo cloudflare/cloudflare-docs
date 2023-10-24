@@ -6,6 +6,7 @@ layout: learning-unit
 ---
 
 {{<render file="_description-of-ref-architectures.md" productFolder="reference-architecture">}}
+<br/>
 
 - [Content Delivery Network](/reference-architecture/cdn-reference-architecture/)
 - [Magic Transit](/reference-architecture/magic-transit-reference-architecture/)

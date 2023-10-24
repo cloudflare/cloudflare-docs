@@ -5,13 +5,11 @@ weight: 6
 layout: learning-unit
 ---
 
-# Protect your origin server
-
-{{<render file="_origin-health-overview.md">}}
+{{<render file="_origin-health-overview.md" productFolder="fundamentals">}}
 
 ## Secure origin connections
 
-{{<render file="_origin-secure-dns.md">}}
+{{<render file="_origin-secure-dns.md" productFolder="fundamentals">}}
 
 ### Application layer
 

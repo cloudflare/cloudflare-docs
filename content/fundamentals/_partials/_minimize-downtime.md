@@ -55,7 +55,7 @@ If you experience issues, you should make sure that you have [allowed Cloudflare
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="sadfsdUpdate proxy status." >}}
+{{<tutorial-step title="Update proxy status." >}}
 
 Once you have verified that your SSL/TLS edge certificate is active and you have allowed Cloudflare IP addresses, change the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of appropriate DNS records to **Proxied**.
 
