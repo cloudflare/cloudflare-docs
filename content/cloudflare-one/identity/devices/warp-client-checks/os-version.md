@@ -61,7 +61,7 @@ Next, go to **Logs** > **Posture** and verify that the OS version check is retur
 
 Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS version posture check expects.
 
-### On macOS
+### macOS
 
 1. Open a terminal window.
 1. Use the `defaults` command to check for the value of `SystemVersionStampAsString`.
@@ -70,7 +70,7 @@ Operating systems display version numbers in different ways. This section covers
    $ defaults read loginwindow SystemVersionStampAsString
    ```
 
-### On Windows
+### Windows
 
 1. Open a PowerShell window.
 1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
@@ -79,7 +79,7 @@ Operating systems display version numbers in different ways. This section covers
    (Get-CimInstance Win32_OperatingSystem).version
    ```
 
-### On Linux
+### Linux
 
 #### OS version
 
@@ -109,8 +109,17 @@ To determine the Linux distro version on your device:
 
 3. If the output of the above command contained `ID=ubuntu` and `VERSION_ID=22.04`, **Distro name** would be `ubuntu` and **Distro revision** would be `22.04`. The WARP client will check these strings for an exact match.
 
-### On ChromeOS
+### ChromeOS
 
-On Chromebooks, the WARP client runs as an Android application inside an Android VM. For the OS version check, WARP version 6.16 and below reports the Android VM version and not the ChromeOS version. Version 6.17 and above returns the actual ChromeOS version.
+ChromeOS version numbers consist of [four parts](https://www.chromium.org/developers/version-numbers/): `MAJOR.MINOR.BUILD.PATCH`. The OS version posture check returns `MAJOR.MINOR.BUILD`.
 
-To determine the ChromeOS version on your device, select the time and go to **Settings** > **About ChromeOS**.
+To determine the ChromeOS version on your device:
+
+1. Open Chrome browser and go to `chrome://system`.
+2. Find the following values:
+   | Property | OS verson component |
+   | -------- | --------- |
+   | `CHROMEOS_RELEASE_CHROME_MILESTONE` | `MAJOR` |
+   | `CHROMEOS_RELEASE_BUILD_NUMBER` | `MINOR` |
+   | `CHROMEOS_RELEASE_BRANCH_NUMBER` | `BUILD` |
+3. The OS version in Semver format is `MAJOR.MINOR.BUILD` (for example, `103.14816.131`).
