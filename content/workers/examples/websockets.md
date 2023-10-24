@@ -17,7 +17,7 @@ WebSockets are open connections sustained between the client and the origin serv
 
 {{<Aside type="note">}}
 
-WebSockets utilize an event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.
+WebSockets utilize an event-based system for receiving and sending messages, much like the Workers runtime model of responding to events.
 
 {{</Aside>}}
 
