@@ -36,6 +36,8 @@ flowchart TB
     end
     dns2["1.1.1.1"]----->internet
     dns4----->internet
+    dns4-.->cloudflare["Private network services <br />(Cloudflare Tunnel, Magic WAN, etc.)"]
+
 
     %% Proxied by Gateway
     subgraph Proxy
