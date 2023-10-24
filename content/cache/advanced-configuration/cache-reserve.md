@@ -163,7 +163,7 @@ In the **Overview** section, under **Cache Reserve**, you have access to the fol
 - **Egress savings (bandwidth)** - is an estimation based on response bytes served from Cache Reserve that did not need to be served from your origin server. These are represented as cache hits.
 - **Requests served by Cache Reserve** - is the number of requests served by Cache Reserve (total).
 - **Data storage summary** - is based on a representative sample of requests. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details about how Cloudflare samples data.
-    - **Current data stored** - is shown in graph of the data stored (currently) over time.
+    - **Current data stored** - is the data stored (currently) over time.
     - **Aggregate storage usage** - is the total of storage used for the selected timestamp.
 - **Operations** - [Class A](/cache/advanced-configuration/cache-reserve/#class-a-operations-writes) (writes) and [Class B](/cache/advanced-configuration/cache-reserve/#class-b-operations-reads) (reads) operations over time.
 
