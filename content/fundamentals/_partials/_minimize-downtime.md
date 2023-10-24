@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-When you [add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, it may experience a brief period of downtime due to certificate issuance, misconfigured Cloudflare settings, or limitations at your origin server.
+When making any change to the routing of an Internet application, there is always a possibility of downtime due to certificate issuance, misconfigured settings, or limitations at your origin server. To avoid downtime when going live, it's important to review the most common configurations. 
 
 {{<tutorial>}}
 {{<tutorial-step title="Update and review DNS records.">}}
