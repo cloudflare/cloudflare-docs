@@ -76,6 +76,16 @@ If you use a `dig` command to test, you should be able see the placed tokens onl
 $ dig TXT +noadditional +noquestion +nocomments +nocmd +nostats _acme-challenge.example.com. @1.1.1.1_acme-challenge.example.com. 3600    IN    CNAME    example.com.<COPIED_VALIDATION_URL>
 ```
 
+### Renewal
+
+Currently, at certificate renewal, Cloudflare attempts to automatically perform DCV via HTTP if your certificate matches certain criteria:
+
+* Hostnames are proxied.
+* Hostnames on the certificate resolve to the IPs assigned to the zone.
+* The certificate does not contain wildcards.
+
+Note that settings that interfere with the validation URLs can cause issues in this case. Refer to [Troubleshooting](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) for guidance.
+
 ### Moved domains
 
 If you [move your zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record at your authoritative DNS provider with a new validation URL.
