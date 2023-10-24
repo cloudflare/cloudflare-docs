@@ -3,12 +3,20 @@ pcx_content_type: how-to
 title: Per-hostname
 weight: 2
 meta:
-    title: Per-hostname authenticated origin pulls
+    title: Per-hostname Authenticated Origin Pulls
 ---
 
-# Per-hostname authenticated origin pulls
+# Per-hostname Authenticated Origin Pulls
 
 When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+
+{{<Aside type="warning">}}
+Per-hostname Authenticated Origin Pulls can only be configured via API. The Authenticated Origin Pulls setting in **SSL/TLS** > **Origin Server** is only for enabling the zone-level configuration.
+{{</Aside>}}
+
+## Before you begin
+
+Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
 
 ## 1. Upload custom certificate
 
@@ -22,7 +30,15 @@ In the API response, save the certificate `id` since it will be required in step
 
 ## 3. Enable Authenticated Origin Pulls (globally)
 
-{{<render file="_aop-enable-feature.md">}}
+Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone, by sending a [`PATCH`](/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to `"on"`.
+
+This step sets the TLS Client Auth to require Cloudflare to use a client certificate when connecting to your origin server.
+
+{{<Aside type="warning">}}
+
+Note that this step means Authenticated Origin Pulls will be available, but you still have to go through the following steps to complete the configuration.
+
+{{</Aside>}}
 
 ## 4. Enable Authenticated Origin Pulls for the hostname
 

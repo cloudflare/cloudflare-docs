@@ -3,10 +3,10 @@ pcx_content_type: how-to
 title: Zone-level
 weight: 1
 meta:
-    title: Zone-level authenticated origin pulls
+    title: Zone-level Authenticated Origin Pulls
 ---
 
-# Zone-level authenticated origin pulls
+# Zone-level Authenticated Origin Pulls
 
 When you enable Authenticated Origin Pulls for a zone, all proxied traffic to your zone is authenticated at the origin web server.
 
