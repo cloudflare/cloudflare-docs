@@ -1,10 +1,10 @@
 ---
-title: Reply emails from Workers
+title: Reply to emails from Workers
 pcx_content_type: how-to
 weight: 3
 ---
 
-# Reply emails from Workers
+# Reply to emails from Workers
 
 {{<render file="_reply-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings):">}}
 
