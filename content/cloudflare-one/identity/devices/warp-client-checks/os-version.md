@@ -117,7 +117,7 @@ To determine the ChromeOS version on your device:
 
 1. Open Chrome browser and go to `chrome://system`.
 2. Find the following values:
-   | Property | OS verson component |
+   | Property | OS version component |
    | -------- | --------- |
    | `CHROMEOS_RELEASE_CHROME_MILESTONE` | `MAJOR` |
    | `CHROMEOS_RELEASE_BUILD_NUMBER` | `MINOR` |
