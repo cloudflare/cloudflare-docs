@@ -52,6 +52,8 @@ header: Response
 }
 ```
 
+You can reorder path variables if they are present. For example, you can route `/api/{var1}/users/{var2}` to `/{var2}/users/{var1}` if need be. Segments of the path that are not variables may be added or omitted entirely.
+
 ### Verify a Route
 
 ```bash
@@ -110,10 +112,12 @@ You may need to wait up to five minutes for Route changes to synchronize across 
 
 ## Availability
 
-API Shield Routing is currently in a closed beta and is only available for Enterprise customers. If you would like to be included in the beta, contact your account team.
+API Shield Routing is currently in an open beta and is only available for Enterprise customers subscribed to API Shield. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
 
 ## Limitations
 
 The Target Endpoint cannot be routed to a Worker if the Route is to the same zone.
 
 You cannot change the method of a request. For example, a `GET` Source Endpoint will always send a `GET` request to the Target Endpoint.
+
+You must use all of the variables in the Target Endpoint that appear in the Source Endpoint. For example, routing `/api/{var1}/users/{var2}` to `/api/users/{var2}` is not allowed and will result in an error since `{var1}` is present in the Source Endpoint but not in the Target Endpoint.
