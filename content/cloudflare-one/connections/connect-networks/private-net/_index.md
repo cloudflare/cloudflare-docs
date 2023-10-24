@@ -7,9 +7,17 @@ layout: single
 
 # Private networks
 
-With Cloudflare Tunnel, you can connect private networks and the services running in those networks to Cloudflare's edge. There are two main differences between private network and [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) routes:
+With Cloudflare Zero Trust, you can connect private networks and the services running in those networks to Cloudflare's global network. This involves installing a [connector](#connectors) on the private network, and then [setting up routes](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#3-connect-a-network) which define the IP addresses available in that environment. Unlike [public hostname routes](/cloudflare-one/connections/connect-networks/routing-to-tunnel/), private network routes can expose both HTTP and non-HTTP resources.
 
-* Private network routes can expose both HTTP and non-HTTP resources.
-* To connect to private network resources, end users must have the [WARP client](/cloudflare-one/connections/connect-devices/warp/) installed on their device or onboard traffic via a [Magic WAN on-ramp](/magic-wan/zero-trust/cloudflare-tunnel/).
+To reach private network IPs, end users must connect their device to Cloudflare and enroll in your Zero Trust organization. The most common method is to install the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device, or you can onboard their network traffic to Cloudflare using our [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or [Magic WAN](/magic-wan/zero-trust/cloudflare-tunnel/).
 
-Cloudflare Tunnel relies on a piece of software, `cloudflared`, to connect your private network to Cloudflare. Administrators define the IPs available in that environment and associate them with the tunnel. Users in your organization can then reach the service by installing the WARP client and [enrolling](/cloudflare-one/connections/connect-devices/warp/deployment/) into your organization's Cloudflare Zero Trust account. When users connect to an IP made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare's network to the corresponding tunnel.
+Administrators can optionally set [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) to control access to services based on user identity and device posture.
+
+## Connectors
+
+Here are the different ways you can connect your private network to Cloudflare:
+
+- [**cloudflared**](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) installs on a server in your private network to create a secure, outbound tunnel to Cloudflare. Cloudflare Tunnel using `cloudflared` only proxies traffic initiated from a user to a server. Any service or application running behind the tunnel will use the server’s default routing table for server-initiated connectivity.
+- [**WARP-to-WARP**](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) uses the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) to establish peer-to-peer connectivity between two or more devices. Each device running WARP can access services on any other device running WARP via an assigned virtual IP address.
+- [**WARP connector**](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) installs on a Linux server in your private network to establish site-to-site, bidirectional, and mesh networking connectivity. The WARP connector acts as a subnet router to relay client-initiated and server-initiated traffic between all devices on a private network and Cloudflare.
+- [**Magic WAN**](/magic-wan/) relies on configuring legacy networking equipment to establish Anycast GRE or IPsec tunnels between an entire network location and Cloudflare.

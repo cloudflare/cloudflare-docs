@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: How the Cache works
+meta:
+  description: How Workers interacts with the Cloudflare cache.
 ---
 # How the Cache works
 

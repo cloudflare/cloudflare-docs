@@ -29,6 +29,20 @@ SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
 
 Refer to the following example on how to access the `API_HOST` environment variable in your Worker code:
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response(`API host: ${env.API_HOST}`);
+  }
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
 ```ts
 ---
 filename: index.ts
@@ -36,16 +50,15 @@ filename: index.ts
 export interface Env {
   API_HOST: string;
 }
+
 export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<Response> {
-    console.log(env.API_HOST)
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    return new Response(`API host: ${env.API_HOST}`);
   }
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 `vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 

@@ -9,7 +9,15 @@ layout: single
 
 {{<render file="posture/_available-for-warp-with-gateway.md">}}
 
-Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. Our service-to-service posture check identifies devices based on their serial numbers.
+Cloudflare Zero Trust can integrate with Crowdstrike to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
+
+## Prerequisites
+
+Device posture with Crowdstrike requires:
+
+- Falcon Enterprise plan or above
+- Crowdstrike agent deployed on the device
+- Cloudflare WARP client deployed on the device
 
 ## Set up CrowdStrike as a service provider
 

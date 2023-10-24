@@ -99,7 +99,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Protocol**               | Protocol over which the packet was sent.                                                                                                                   |
 | **Detected Protocol**      | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                        |
 | **SNI**                    | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                                        |
-| **Virtual Network**        | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) that the client is connected to.                      |
+| **Virtual Network**        | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to.                      |
 | **Categories**             | Category or categories associated with the packet.                                                                                                         |
 | **Policy Name**            | Name of the matched policy (if there is one).                                                                                                              |
 | **Policy ID**              | ID of the policy enforcing the decision Gateway made.                                                                                                      |

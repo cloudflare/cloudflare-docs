@@ -1,19 +1,19 @@
 ---
 pcx_content_type: concept
-title: TailEvent
+title: Tail Handler
 ---
 
-# `TailEvent`
+# `tail()`
 
 ## Background
 
-A `TailEvent` is the event type used by a [Tail Worker](/workers/observability/tail-workers/) to automatically capture data from another Worker (known as a producer Worker). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+
+The `tail()` handler is called once each time the connected producer Worker is invoked.
 
 To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/tail-workers/).
 
-## Syntax: ES modules
-
-For Workers using the [ES modules format](/workers/learning/migrate-to-module-workers/), handle `TailEvent` in Workers functions by adding a `tail()` function to your module’s exported handlers:
+## Syntax
 
 ```js
 ---
@@ -34,7 +34,7 @@ export default {
 
 - `events` {{<type>}}array{{</type>}}
 
-  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the User Worker.
+  - An array of [`TailItems`](/workers/runtime-apis/handlers/tail/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the User Worker.
 
 - `env` {{<type>}}object{{</type>}}
 
@@ -46,22 +46,6 @@ export default {
 
 {{</definitions>}}
 
-## Syntax: Service Worker
-
-Written using the Service Worker syntax, handle `TailEvent` in Workers functions by attaching the `tail` event with `addEventListener`:
-
-```js
----
-filename: index.js
----
-addEventListener('tail', event =>
-  fetch("<YOUR_ENDPOINT>", {
-    method: "POST",
-    body: JSON.stringify(event.traces),
-  })
-);
-```
-
 ### Properties
 
 {{<definitions>}}
@@ -72,7 +56,7 @@ addEventListener('tail', event =>
 
 - `event.traces` {{<type>}}array{{</type>}}
 
-  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the user Worker.
+  - An array of [`TailItems`](/workers/runtime-apis/handlers/tail/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the user Worker.
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -92,7 +76,7 @@ addEventListener('tail', event =>
 - `event` {{<type>}}object{{</type>}}
 
   - Contains information about the Worker’s triggering event.
-    - For fetch events: a [`FetchEventInfo` object](/workers/runtime-apis/tail-event/#fetcheventinfo)
+    - For fetch events: a [`FetchEventInfo` object](/workers/runtime-apis/handlers/tail/#fetcheventinfo)
     - For other event types: `null`, currently.
 
 - `eventTimestamp` {{<type>}}number{{</type>}}
@@ -101,11 +85,11 @@ addEventListener('tail', event =>
 
 - `logs` {{<type>}}array{{</type>}}
 
-  - An array of [TailLogs](/workers/runtime-apis/tail-event/#taillog).
+  - An array of [TailLogs](/workers/runtime-apis/handlers/tail/#taillog).
 
 - `exceptions` {{<type>}}array{{</type>}}
 
-  - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexception). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
+  - An array of [`TailExceptions`](/workers/runtime-apis/handlers/tail/#tailexception). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
 
 - `outcome` {{<type>}}string{{</type>}}
 
@@ -136,11 +120,11 @@ Outcome is equivalent to the exit status of a script and an indicator of whether
 
 - `request` {{<type>}}object{{</type>}}
 
-  - A [`TailRequest` object](/workers/runtime-apis/tail-event/#tailrequest).
+  - A [`TailRequest` object](/workers/runtime-apis/handlers/tail/#tailrequest).
 
 - `response` {{<type>}}object{{</type>}}
 
-  - A [`TailResponse` object](/workers/runtime-apis/tail-event/#tailresponse).
+  - A [`TailResponse` object](/workers/runtime-apis/handlers/tail/#tailresponse).
 {{</definitions>}}
 
 ### `TailRequest`
