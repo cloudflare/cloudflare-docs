@@ -55,7 +55,8 @@ filename: .github/workflows/push.yml
 name: Deploy Worker
 on:
   push:
-    main
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
