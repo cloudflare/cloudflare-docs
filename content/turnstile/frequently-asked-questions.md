@@ -240,7 +240,7 @@ Yes, Turnstile is WCAG 2.1 Level AA compliant.
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Can I use Turnstile on URI schemes such as file://?" >}}
+{{<faq-question level=2 text="Can I use Turnstile on URI schemes such as `file://`?" >}}
 {{<faq-answer>}}
 
 No, Turnstile only works on `http://` and `https://` URI schemes. Other protocols such as `file://` as not supported.
