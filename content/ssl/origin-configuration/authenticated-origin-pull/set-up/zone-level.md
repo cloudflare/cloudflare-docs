@@ -28,8 +28,10 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 {{<tabs labels="Custom certificate | Cloudflare certificate">}}
 {{<tab label="custom certificate" no-code="true">}}
- 
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+
+To use a custom certificate:
+
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your domain.
 
 2. Go to **SSL/TLS** > **Origin Server**.
 
@@ -38,7 +40,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 4. Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or select **Paste from file**).
 
 {{<Aside type="note">}}
-If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
+If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---`, as shown on the placeholder text.
 {{</Aside>}}
 
 5. Select **Upload Custom Certificate**. If you upload multiple certificates, the most recently uploaded is the one that will be used.
@@ -51,10 +53,11 @@ To upload a custom certificate via API, follow the API instructions to [upload a
 
 {{</tab>}}
 {{<tab label="cloudflare certificate" no-code="true">}}
- 
-To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin.
 
-This certificate is available by default and will be used if you do not upload a certificate.
+To use a Cloudflare certificate:
+
+1. [Download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem). This certificate is available by default on Cloudflare and will be used if you do not upload a custom certificate.
+2. Upload the certificate to your origin.
 
 {{<Aside type="warning">}}
 This certificate is **not** the same as the Cloudflare Origin CA certificate and will not appear on your Dashboard.
@@ -78,7 +81,7 @@ This step sets the TLS Client Auth to require Cloudflare to use a client certifi
 
 To enable **Authenticated Origin Pulls** in the dashboard:
 
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your domain.
 2.  Go to **SSL/TLS** > **Origin Server**.
 3.  For **Authenticated Origin Pulls**, switch the toggle to **On**.
 
