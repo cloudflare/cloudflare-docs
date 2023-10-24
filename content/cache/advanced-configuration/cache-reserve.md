@@ -156,7 +156,7 @@ Cache Reserve should be used with [Tiered Cache](/cache/how-to/tiered-cache/) en
 
 ## Cache Reserve Analytics
 
-Cache Reserve Analytics provides insights regarding your Cache Reserve usage, for instance it allows you to see what content is stored in Cache Reserve, how often it is being accessed, how long it has been there and how much egress from your origin it is saving you.
+Cache Reserve Analytics provides insights regarding your Cache Reserve usage. It allows you to check what content is stored in Cache Reserve, how often it is being accessed, how long it has been there and how much egress from your origin it is saving you.
 
 In the **Overview** section, under **Cache Reserve**, you have access to the following metrics:
 
@@ -175,8 +175,6 @@ You can remove all data stored in Cache Reserve through the dashboard or via API
 
 Be aware that the deletion may take up to 24 hours to complete.
 
-
-
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
@@ -193,8 +191,7 @@ To delete Cache Reserve data via API use the following example request.
 ---
 header: Request
 ---
-curl --request \
- https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve/ \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve/ \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer <API_TOKEN>"
 ```
