@@ -18,3 +18,13 @@ To use a list in a rule expression, refer to [Values: Lists](/ruleset-engine/rul
 ## Get started
 
 To get started, review the Lists [JSON object](/waf/tools/lists/lists-api/json-object/) and [Endpoints](/waf/tools/lists/lists-api/endpoints/).
+
+---
+
+## Rate limiting for Lists API requests
+
+Cloudflare may apply rate limiting to Lists API requests creating or updating custom lists and Bulk Redirect Lists.
+
+API requests that create or update items in a list include one or more changes, which are internally queued and then processed. You can have approximately 1,000 pending list changes before your requests are rate limited.
+
+Once the system has processed enough changes so that they are under the threshold mentioned above, you can make additional API requests with more changes.
