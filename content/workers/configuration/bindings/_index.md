@@ -2,11 +2,13 @@
 pcx_content_type: concept
 title: Bindings
 layout: single
+meta:
+  description: Interact with storage and other resources on the Cloudflare Developer Platform.
 ---
 
 # Bindings
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform.
+Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
 There are multiple types of bindings available today.
 

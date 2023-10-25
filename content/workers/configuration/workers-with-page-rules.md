@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Page Rules
 meta:
-  description: 
+  description: Review the interaction between various Page Rules and Workers.
 ---
 
 # Page Rules

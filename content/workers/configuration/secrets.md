@@ -2,7 +2,7 @@
 pcx_content_type: configuration
 title: Secrets
 meta:
-  description: 
+  description: Store sensitive information, like API keys and auth tokens, in your Worker.
 ---
 
 # Secrets

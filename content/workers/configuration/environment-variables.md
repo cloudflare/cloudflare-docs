@@ -2,7 +2,7 @@
 pcx_content_type: configuration
 title: Environment variables
 meta:
-  description: 
+  description: Attach text strings and JSON values as environment variables to your Worker.
 ---
 
 # Environment variables

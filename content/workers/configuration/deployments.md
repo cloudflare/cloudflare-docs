@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Deployments
 meta:
-  description: 
+  description: View a log of and rollback to past versions of your Worker.
 ---
 
 # Deployments
