@@ -19,7 +19,7 @@ LTM on-ramps refer to the path between the end-user request and the Cloudflare n
 
 ### WARP
 
-Using [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/) as on-ramps allows you to control exactly what clients will be able to reach a load balancer pointing to a private application.
+Using [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/) as on-ramp allows you to control exactly what clients will be able to reach a load balancer pointing to a private application.
 
 ### Spectrum
 
