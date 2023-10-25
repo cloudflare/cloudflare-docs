@@ -303,7 +303,7 @@ This will generate a new versioned file inside the `migrations` folder. Name you
 The filename will include a version number and the migration name you specify below.
 
 ```sh
-wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
+wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
 ```
 
 {{<definitions>}}
@@ -887,9 +887,9 @@ This command requires a `--binding` or `--namespace-id` flag.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with locally persisted data
+  - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for locally persisted data
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -1398,8 +1398,7 @@ wrangler secret list [OPTIONS]
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-Below is an example of listing the secrets for the current Worker.
+The following is an example of listing the secrets for the current Worker.
 
 ```sh
 $ wrangler secret list
@@ -1410,8 +1409,6 @@ $ wrangler secret list
   }
 ]
 ```
-
-{{</Aside>}}
 
 ---
 
@@ -1467,13 +1464,13 @@ Finished processing secrets JSON file:
 Start a session to livestream logs from a deployed Worker.
 
 ```sh
-wrangler tail <NAME> [OPTIONS]
+wrangler tail <WORKER> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - 
+- `WORKER` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of your Worker or the route the Worker is running on.
 - `--format` {{<type>}}"json"|"pretty"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The format of the log entries.
 - `--status` {{<type>}}"ok"|"error"|"canceled"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2046,8 +2043,6 @@ Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,
 Created on: 1/01/2023
 Expires: 1/01/2025
 ```
-
-{{</Aside>}}
 
 ### `delete`
 
