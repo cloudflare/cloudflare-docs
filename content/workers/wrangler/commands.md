@@ -66,8 +66,6 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-All parameters have been classified as required or optional. Required parameters are written in the reference code block of each command. All values that need to be provided by the user (such as, database name or project name) are written in angle brackets (`<>`).
-
 All commands can be run with your choice of package manager. For example, to run the `wrangler deploy` command with npm, run:
 
 ```sh
@@ -81,12 +79,12 @@ $ npx wrangler deploy
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-wrangler docs [OPTIONS]
+wrangler docs [<COMMAND>]
 ```
 
 {{<definitions>}}
 
-- `<COMMAND>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
 
 {{</definitions>}}
@@ -96,12 +94,12 @@ wrangler docs [OPTIONS]
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-wrangler init [OPTIONS]
+wrangler init [<NAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `<NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
@@ -117,14 +115,14 @@ wrangler init [OPTIONS]
 Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```sh
-wrangler generate [OPTIONS]
+wrangler generate [<NAME>] [<TEMPLATE>]
 ```
 
 {{<definitions>}}
 
-- `<NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `<TEMPLATE>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `TEMPLATE` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
 {{</definitions>}}
@@ -149,7 +147,7 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
 - `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the new experimental storage backend for this database.
@@ -176,7 +174,7 @@ wrangler d1 delete <DATABASE_NAME>
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to delete.
 
 {{</definitions>}}
@@ -191,7 +189,7 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--command` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The SQL query you wish to execute.
@@ -210,7 +208,7 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--bookmark` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A D1 bookmark representing the state of a database at a specific point in time.
@@ -228,7 +226,7 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
@@ -244,7 +242,7 @@ wrangler d1 backup create <DATABASE_NAME>
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to backup.
     {{</definitions>}}
 
@@ -258,7 +256,7 @@ wrangler d1 backup list <DATABASE_NAME>
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to list the backups of.
     {{</definitions>}}
 
@@ -272,9 +270,9 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to restore the backup into.
-- `<BACKUP_ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to restore.
     {{</definitions>}}
 
@@ -288,9 +286,9 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to download the backup of.
-- `<BACKUP_ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
     {{</definitions>}}
 
@@ -310,9 +308,9 @@ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to create a migration for.
-- `<MIGRATION_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A descriptive name for the migration you wish to create.
     {{</definitions>}}
 
@@ -326,7 +324,7 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
@@ -350,7 +348,7 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
@@ -372,7 +370,7 @@ wrangler hyperdrive create <ID> [OPTIONS]
 
 {{<definitions>}}
 
-- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
@@ -389,7 +387,7 @@ wrangler hyperdrive update <ID> [OPTIONS]
 
 {{<definitions>}}
 
-- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to update.
 - `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new database hostname or IP address Hyperdrive should connect to.
@@ -422,7 +420,7 @@ wrangler hyperdrive delete <ID>
 
 {{<definitions>}}
 
-- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Hyperdrive configuration to delete.
 
 {{</definitions>}}
@@ -437,7 +435,7 @@ wrangler hyperdrive get <ID>
 
 {{<definitions>}}
 
-- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Hyperdrive configuration to get.
 
 {{</definitions>}}
@@ -453,7 +451,7 @@ Interact with a [Vectorize](/vectorize/) vector database.
 Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
 
 ```sh
-wrangler vectorize create <INDEX_NAME> --dimensions=<NUM_DIMENSIONS> --metric=<DISTANCE_METRIC>
+wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>]
 ```
 
 {{<definitions>}}
@@ -477,7 +475,7 @@ wrangler vectorize get <INDEX_NAME>
 
 {{<definitions>}}
 
-- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `INDEX_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the index to fetch details for.
 
 {{</definitions>}}
@@ -494,12 +492,12 @@ wrangler vectorize list
 Delete a Vectorize index.
 
 ```sh
-wrangler vectorize delete <INDEX_NAME>
+wrangler vectorize delete <INDEX_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `INDEX_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Vectorize index to delete.
 - `--force` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
@@ -511,12 +509,12 @@ wrangler vectorize delete <INDEX_NAME>
 Insert vectors into an index.
 
 ```sh
-wrangler vectorize insert <INDEX_NAME>
+wrangler vectorize insert <INDEX_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `INDEX_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Vectorize index to delete.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
@@ -532,7 +530,7 @@ wrangler vectorize insert <INDEX_NAME>
 Start a local server for developing your Worker.
 
 ```sh
-wrangler dev [OPTIONS]
+wrangler dev [<SCRIPT>] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -549,7 +547,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 {{<definitions>}}
 
-- `<SCRIPT>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}/{{<prop-meta>}}optional{{</prop-meta>}}
+- `SCRIPT` {{<type>}}string{{</type>}}
   - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
@@ -623,7 +621,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 Deploy your Worker to Cloudflare.
 
 ```sh
-wrangler deploy [OPTIONS]
+wrangler deploy [<SCRIPT>] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -634,7 +632,7 @@ None of the options for this command are required. Also, many can be set in your
 
 {{<definitions>}}
 
-- `<SCRIPT>` {{<type>}}string{{</type>}}
+- `SCRIPT` {{<type>}}string{{</type>}}
   - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
@@ -693,7 +691,7 @@ None of the options for this command are required. Also, many can be set in your
 Publish your Worker to Cloudflare.
 
 ```sh
-$ wrangler publish [OPTIONS]
+wrangler publish [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -709,12 +707,12 @@ This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deplo
 Delete your Worker and all associated Cloudflare developer platform resources.
 
 ```sh
-$ wrangler delete [OPTIONS]
+wrangler delete [<SCRIPT>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `<SCRIPT>` {{<type>}}string{{</type>}}
+- `SCRIPT` {{<type>}}string{{</type>}}
   - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
@@ -738,12 +736,12 @@ The `kv:...` commands allow you to manage application data in the Cloudflare net
 Create a new namespace.
 
 ```sh
-$ wrangler kv:namespace create <NAMESPACE> [OPTIONS]
+wrangler kv:namespace create <NAMESPACE> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `<NAMESPACE>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `NAMESPACE` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new namespace.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
@@ -781,7 +779,7 @@ kv_namespaces = [
 List all KV namespaces associated with the current account ID.
 
 ```sh
-$ wrangler kv:namespace list
+wrangler kv:namespace list
 ```
 
 Below is an example that passes the Wrangler command through the `jq` command:
@@ -805,11 +803,11 @@ $ wrangler kv:namespace list | jq "."
 Delete a given namespace.
 
 ```sh
-$ wrangler kv:namespace delete <KEY> [OPTIONS]
+wrangler kv:namespace delete {--bindings=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
-{{<Aside type="warning" header="Required parameters">}}
-This command requires either a `--binding` or `--namespace-id` flag.
+{{<Aside type="warning">}}
+This command requires `--binding` or `--namespace-id`.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -858,13 +856,12 @@ The `kv:...` commands allow you to manage application data in the Cloudflare net
 Write a single key-value pair to a particular namespace.
 
 ```sh
-$ wrangler kv:key put <KEY> [VALUE] [OPTIONS]
+wrangler kv:key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
+This command requires a `VALUE` or `--path`.</br>
 This command requires a `--binding` or `--namespace-id` flag.
-
-This command requires a `VALUE` or `--path`.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -896,7 +893,6 @@ This command requires a `VALUE` or `--path`.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
 Below is an example that puts a key-value into the namespace with binding name of `MY_KV`.
 
 ```sh
@@ -904,9 +900,6 @@ $ wrangler kv:key put --binding=MY_KV "my-key" "some-value"
 Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-{{</Aside>}}
-
-{{<Aside type="note">}}
 Below is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
 
 ```sh
@@ -914,9 +907,6 @@ $ wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
 Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
 ```
 
-{{</Aside>}}
-
-{{<Aside type="note">}}
 Below is an example that puts a key-value into a namespace, with a time-to-live value of `10000` seconds.
 
 ```sh
@@ -924,9 +914,6 @@ $ wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
 Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-{{</Aside>}}
-
-{{<Aside type="note">}}
 Below is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
 
 ```sh
@@ -934,18 +921,16 @@ $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
 Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-{{</Aside>}}
-
 ### list
 
 Output a list of all keys in a given namespace.
 
 ```sh
-$ wrangler kv:key list [OPTIONS]
+wrangler kv:key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
+This command requires `--binding` or `--namespace-id`.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -967,7 +952,6 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
 Below is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
@@ -983,14 +967,12 @@ $ wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
 ]
 ```
 
-{{</Aside>}}
-
 ### `get`
 
 Read a single value by key from the given namespace.
 
 ```sh
-$ wrangler kv:key get <KEY> [OPTIONS]
+wrangler kv:key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1018,22 +1000,19 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-Here is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
+The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
 
 ```sh
 $ wrangler kv:key get --binding=MY_KV "my-key"
 value
 ```
 
-{{</Aside>}}
-
 ### `delete`
 
 Remove a single key value pair from the given namespace.
 
 ```sh
-$ wrangler kv:key delete <KEY> [OPTIONS]
+wrangler kv:key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1059,15 +1038,12 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-Below is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
+The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
 
 ```sh
 $ wrangler kv:key delete --binding=MY_KV "my-key"
 Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
-
-{{</Aside>}}
 
 ## `kv:bulk`
 
@@ -1082,11 +1058,11 @@ The `kv:...` commands allow you to manage application data in the Cloudflare net
 Write a JSON file containing an array of key-value pairs to the given namespace.
 
 ```sh
-$ wrangler kv:bulk put <FILENAME> [OPTIONS]
+wrangler kv:bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
+This command requires `--binding` or `--namespace-id`.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -1132,7 +1108,7 @@ KV namespace values can only store strings. In order to save complex a value, st
 ]
 ```
 
-Here is the full schema for key-value entries uploaded via the bulk API:
+Refer to the full schema for key-value entries uploaded via the bulk API:
 
 {{<definitions>}}
 
@@ -1155,26 +1131,23 @@ Here is the full schema for key-value entries uploaded via the bulk API:
 If both `expiration` and `expiration_ttl` are specified for a given key, the API will prefer `expiration_ttl`.
 {{</Aside>}}
 
-{{<Aside type="note">}}
-Here is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
+The following is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
 
 ```sh
 $ wrangler kv:bulk put --binding=MY_KV allthethingsupload.json
 Success!
 ```
 
-{{</Aside>}}
-
 ### `delete`
 
 Delete all keys read from a JSON file within a given namespace.
 
 ```sh
-$ wrangler kv:bulk delete <FILENAME> [OPTIONS]
+wrangler kv:bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
+This command requires `--binding` or `--namespace-id`.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -1197,22 +1170,19 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{</definitions>}}
 
 This command takes a JSON file as an argument containing an array of keys to delete.
-Here is an example of the JSON input:
+The following is an example of the JSON input:
 
 ```json
 ["test_key_1", "test_key_2"]
 ```
 
-{{<Aside type="note">}}
-Below is an example of deleting all the keys found in the `allthethingsdelete.json` file.
+The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.
 
 ```sh
 $ wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
 ? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
 Success!
 ```
-
-{{</Aside>}}
 
 ---
 
@@ -1229,7 +1199,7 @@ The `r2 bucket` commands allow you to manage application data in the Cloudflare 
 Create a new R2 bucket.
 
 ```sh
-$ wrangler r2 bucket create <NAME>
+wrangler r2 bucket create <NAME>
 ```
 
 {{<definitions>}}
@@ -1244,7 +1214,7 @@ $ wrangler r2 bucket create <NAME>
 Delete an R2 bucket.
 
 ```sh
-$ wrangler r2 bucket delete <NAME>
+wrangler r2 bucket delete <NAME>
 ```
 
 {{<definitions>}}
@@ -1259,7 +1229,7 @@ $ wrangler r2 bucket delete <NAME>
 List R2 bucket in the current account.
 
 ```sh
-$ wrangler r2 bucket list
+wrangler r2 bucket list
 ```
 
 ---
@@ -1277,17 +1247,17 @@ The `r2 object` commands allow you to manage application data in the Cloudflare 
 Fetch an object from an R2 bucket.
 
 ```sh
-$ wrangler r2 object get <OBJECTPATH>
+wrangler r2 object get <OBJECT_PATH> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `OBJECT_PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The source object path in the form of `{bucket}/{key}`.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with locally persisted data
+  - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for locally persisted data
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -1296,7 +1266,7 @@ $ wrangler r2 object get <OBJECTPATH>
 Create an object in an R2 bucket.
 
 ```sh
-$ wrangler r2 object put <OBJECTPATH> [OPTIONS]
+wrangler r2 object put <OBJECTPATH> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1306,31 +1276,31 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
 - `--pipe` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Enables the file to be piped in, rather than specified with the --file option. Note you must provide either `--file` or `--pipe`.
+  - Enables the file to be piped in, rather than specified with the `--file` option. Note you must provide either `--file` or `--pipe`.
 - `--content-type` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A standard MIME type describing the format of the object data.
 - `--content-disposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specifies presentational information for the object.
 - `--content-encoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the `Content-Type` header field.
 - `--content-language` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The language the content is in.
 - `--cache-control` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specifies caching behavior along the request/reply chain.
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
-    {{</definitions>}}
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with locally persisted data
+  - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for locally persisted data
+  - Specify directory for locally persisted data.
+ {{</definitions>}}
 
 ### `delete`
 
-Delete an object in an R2 bucket
+Delete an object in an R2 bucket.
 
 ```sh
-$ wrangler r2 object delete <OBJECTPATH>
+wrangler r2 object delete <OBJECTPATH> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1338,9 +1308,9 @@ $ wrangler r2 object delete <OBJECTPATH>
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The destination object path in the form of `{bucket}/{key}`.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with locally persisted data
+  - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for locally persisted data
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -1355,7 +1325,7 @@ Manage the secret variables for a Worker.
 Create or replace a secret for a Worker.
 
 ```sh
-$ wrangler secret put <KEY> [OPTIONS]
+wrangler secret put <KEY> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1373,8 +1343,7 @@ $ wrangler secret put <KEY> [OPTIONS]
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-You will be prompted to input the secret's value. For example:
+When running this command, you will be prompted to input the secret's value:
 
 ```sh
 $ wrangler secret put FOO
@@ -1383,23 +1352,18 @@ $ wrangler secret put FOO
 ✨ Success! Uploaded secret FOO
 ```
 
-{{</Aside>}}
-
-{{<Aside type="note">}}
 The `put` command can also receive piped input. For example:
 
 ```sh
 $ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
 ```
 
-{{</Aside>}}
-
 ### delete
 
 Delete a secret for a Worker.
 
 ```sh
-$ wrangler secret delete <KEY> [OPTIONS]
+wrangler secret delete <KEY> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1420,7 +1384,7 @@ $ wrangler secret delete <KEY> [OPTIONS]
 List the names of all the secrets for a Worker.
 
 ```sh
-$ wrangler secret list [OPTIONS]
+wrangler secret list [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1456,64 +1420,60 @@ $ wrangler secret list
 Upload multiple secrets for a Worker at once.
 
 ```sh
-$ wrangler secret:bulk [<FILENAME>] [OPTIONS]
+wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+  
+{{</definitions>}}
 
-  - Perform on a specific environment
-    {{</definitions>}}
+The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
-  {{<Aside type="note">}}
-  Below is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
+```json
+---
+filename: secrets.json
+---
+{
+  "secret-name-1": "secret-value-1",
+  "secret-name-2": "secret-value-2"
+}
+```
 
-  ```json
-  ---
-  filename: secrets.json
-  ---
-  {
-    "secret-name-1": "secret-value-1",
-    "secret-name-2": "secret-value-2"
-  }
-  ```
+```sh
+$ wrangler secret:bulk < secrets.json
+🌀 Creating the secrets for the Worker "script-name"
+✨ Successfully created secret for key: secret-name-1
+...
+🚨 Error uploading secret for key: secret-name-1
+✨ Successfully created secret for key: secret-name-2
 
-  ```sh
-  $ wrangler secret:bulk < secrets.json
-  🌀 Creating the secrets for the Worker "script-name"
-  ✨ Successfully created secret for key: secret-name-1
-  ...
-  🚨 Error uploading secret for key: secret-name-1
-  ✨ Successfully created secret for key: secret-name-2
-
-  Finished processing secrets JSON file:
-  ✨ 1 secrets successfully uploaded
-  🚨 1 secrets failed to upload
-  ```
-
-  {{</Aside>}}
+Finished processing secrets JSON file:
+✨ 1 secrets successfully uploaded
+🚨 1 secrets failed to upload
+```
 
 ## tail
 
 Start a session to livestream logs from a deployed Worker.
 
 ```sh
-$ wrangler tail <NAME> [OPTIONS]
+wrangler tail <NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - 
 - `--format` {{<type>}}"json"|"pretty"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The format of the log entries.
 - `--status` {{<type>}}"ok"|"error"|"canceled"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1552,38 +1512,38 @@ Configure Cloudflare Pages.
 Develop your full stack Pages application locally.
 
 ```sh
-$ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
+wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
 ```
 
 {{<definitions>}}
 
-- `DIRECTORY` {{<type>}}string{{</type>}}
+- `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The directory of static assets to serve.
-- `COMMAND..` {{<type>}}string{{</type>}}
+- `COMMAND...` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The proxy command(s) to run.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Run on your local machine.
-- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
+- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
-- `--proxy` {{<type>}}number{{</type>}}
+- `--proxy` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The port to proxy (where the static assets are served).
-- `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
+- `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
   - The location of the single Worker script if not using functions.
-- `--binding` {{<type>}}string[]{{</type>}}
+- `--binding` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Bind variable/secret (KEY=VALUE).
-- `--kv` {{<type>}}string[]{{</type>}}
+- `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - KV namespace to bind.
-- `--r2` {{<type>}}string[]{{</type>}}
+- `--r2` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind.
-- `--d1` {{<type>}}string[]{{</type>}}
+- `--d1` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind.
-- `--do` {{<type>}}string[]{{</type>}}
+- `--do` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Durable Object to bind (NAME=CLASS).
-- `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Auto reload HTML pages when change is detected.
-- `--compatibility-flag` {{<type>}}string[]{{</type>}}
+- `--compatibility-flag` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility flags to apply.
-- `--compatibility-date` {{<type>}}string{{</type>}}
+- `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
 
 {{</definitions>}}
@@ -1593,7 +1553,7 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
 List your Pages projects.
 
 ```sh
-$ wrangler pages project list
+wrangler pages project list
 ```
 
 ### `project create`
@@ -1601,14 +1561,14 @@ $ wrangler pages project list
 Create a new Cloudflare Pages project.
 
 ```sh
-$ wrangler pages project create [PROJECT-NAME] [OPTIONS]
+wrangler pages project create [<PROJECT_NAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `PROJECT-NAME` {{<type>}}string{{</type>}}
+- `PROJECT_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of your Pages project.
-- `--production-branch` {{<type>}}string{{</type>}}
+- `--production-branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the production branch of your project.
 
 {{</definitions>}}
@@ -1618,15 +1578,15 @@ $ wrangler pages project create [PROJECT-NAME] [OPTIONS]
 Delete a Cloudflare Pages project.
 
 ```sh
-$ wrangler pages project delete <PROJECT-NAME> [-y / --yes]
+wrangler pages project delete <PROJECT_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `PROJECT-NAME` {{<type>}}string{{</type>}}
+- `PROJECT_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Pages project to delete.
-- `--yes` {{<type>}}boolean{{</type>}}
-  - Answer "yes" to confirmation prompt.
+- `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
   
@@ -1635,7 +1595,7 @@ $ wrangler pages project delete <PROJECT-NAME> [-y / --yes]
 List deployments in your Cloudflare Pages project.
 
 ```sh
-$ wrangler pages deployment list [OPTIONS]
+wrangler pages deployment list [--project-name <PROJECT_NAME>]
 ```
 
 {{<definitions>}}
@@ -1650,7 +1610,7 @@ $ wrangler pages deployment list [OPTIONS]
 Start a session to livestream logs from your deployed Pages Functions.
 
 ```sh
-$ wrangler pages deployment tail [DEPLOYMENT] [OPTIONS]
+wrangler pages deployment tail [<DEPLOYMENT>] [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1689,7 +1649,7 @@ After starting `wrangler pages deployment tail`, you will receive a live stream 
 Deploy a directory of static assets as a Pages deployment.
 
 ```sh
-$ wrangler pages deploy [DIRECTORY] [OPTIONS]
+wrangler pages deploy [<DIRECTORY>] [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1711,7 +1671,7 @@ $ wrangler pages deploy [DIRECTORY] [OPTIONS]
 
 {{<Aside type="note">}}
 
-Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter <PROJECT_NAME> in your terminal after you run the command.
+Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
 
 {{</Aside>}}
 
@@ -1720,7 +1680,7 @@ Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `
 Publish a directory of static assets as a Pages deployment.
 
 ```sh
-$ wrangler pages publish [DIRECTORY] [OPTIONS]
+wrangler pages publish [<DIRECTORY>] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -1738,7 +1698,7 @@ Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attem
 If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
 
 ```sh
-$ wrangler login [OPTIONS]
+wrangler login [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1756,8 +1716,6 @@ $ wrangler login [OPTIONS]
 {{</Aside>}}
 
 If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
-
-{{<Aside type="note">}}
 
 ### Using `wrangler login` on a remote machine
 
@@ -1781,8 +1739,6 @@ Leave the login flow active. Open a second terminal session. In that second term
 $ curl <LOCALHOST_URL>
 ```
 
-{{</Aside>}}
-
 ---
 
 ## logout
@@ -1790,13 +1746,13 @@ $ curl <LOCALHOST_URL>
 Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
 
 ```sh
-$ wrangler logout
+wrangler logout
 ```
 
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Go to **Overview** > **Get your API token** in the right-side menu.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **My Profile** > **API Tokens**.
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
 
@@ -1807,7 +1763,7 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 Retrieve your user information and test your authentication configuration.
 
 ```sh
-$ wrangler whoami
+wrangler whoami
 ```
 
 ---
@@ -1825,7 +1781,7 @@ For more information about deployments and how they work, refer to [Deployments]
 Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
 
 ```sh
-$ wrangler deployments list
+wrangler deployments list
 ```
 
 {{<definitions>}}
@@ -1872,7 +1828,7 @@ Source:         Wrangler
 Retrieve details for the specified deployment, or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
 
 ```sh
-$ wrangler deployments view [DEPLOYMENT_ID]
+wrangler deployments view [<DEPLOYMENT_ID>]
 ```
 
 {{<definitions>}}
@@ -1916,7 +1872,7 @@ A rollback will immediately replace the current deployment and become the active
 {{</Aside>}}
 
 ```sh
-$ wrangler rollback [DEPLOYMENT_ID]
+wrangler rollback [<DEPLOYMENT_ID>]
 ```
 
 {{<definitions>}}
@@ -1944,7 +1900,7 @@ Current Deployment ID: 04d22369-6e55-49ff-944a-d21e216d9f3e
 List all dispatch namespaces.
 
 ```sh
-$ wrangler dispatch-namespace list
+wrangler dispatch-namespace list
 ```
 
 ### get
@@ -1952,7 +1908,7 @@ $ wrangler dispatch-namespace list
 Get information about a dispatch namespace.
 
 ```sh
-$ wrangler dispatch-namespace get <NAME>
+wrangler dispatch-namespace get <NAME>
 ```
 
 {{<definitions>}}
@@ -1968,7 +1924,7 @@ $ wrangler dispatch-namespace get <NAME>
 Create a dispatch namespace.
 
 ```sh
-$ wrangler dispatch-namespace create <NAME>
+wrangler dispatch-namespace create <NAME>
 ```
 
 {{<definitions>}}
@@ -1984,7 +1940,7 @@ $ wrangler dispatch-namespace create <NAME>
 Delete a dispatch namespace.
 
 ```sh
-$ wrangler dispatch-namespace get <NAME>
+wrangler dispatch-namespace get <NAME>
 ```
 
 {{<Aside type="note">}}
@@ -2004,16 +1960,16 @@ You must delete all user Workers in the dispatch namespace before it can be dele
 Rename a dispatch namespace.
 
 ```sh
-$ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
+wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 ```
 
 {{<definitions>}}
 
-- `OLD NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `OLD_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The previous name of the dispatch namespace.
 
-- `NEW NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `NEW_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The new name of the dispatch namespace.
 
@@ -2032,21 +1988,21 @@ These certificates can be used in [`mtls_certificate` bindings](/workers/runtime
 Upload a client certificate.
 
 ```sh
-$ wrangler mtls-certificate upload [OPTIONS]
+wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `--cert` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - A path to the TLS certificate to upload. Certificate chains are supported
+  - A path to the TLS certificate to upload. Certificate chains are supported.
 - `--key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A path to the private key to upload.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The name assigned to the mTLS certificate at upload.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-Below is an example of using the `upload` command to upload an mTLS certificate.
+The following is an example of using the `upload` command to upload an mTLS certificate.
 
 ```sh
 $ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-origin-cert
@@ -2057,7 +2013,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a binding in your `wrangler.toml`:
+You can then add this certificate as a [binding](/workers/configuration/bindings/) in your `wrangler.toml`:
 
 ```toml
 mtls_certificates = [
@@ -2066,18 +2022,16 @@ mtls_certificates = [
 ```
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
-{{</Aside>}}
 
 ### `list`
 
 List mTLS certificates associated with the current account ID.
 
 ```sh
-$ wrangler mtls-certificate list
+wrangler mtls-certificate list
 ```
 
-{{<Aside type="note">}}
-Below is an example of using the `list` command to upload an mTLS certificate.
+The following is an example of using the `list` command to upload an mTLS certificate.
 
 ```sh
 $ wrangler mtls-certificate list
@@ -2097,8 +2051,10 @@ Expires: 1/01/2025
 
 ### `delete`
 
+Delete a client certificate.
+
 ```sh
-$ wrangler mtls-certificate delete [OPTIONS]
+$ wrangler mtls-certificate delete {--id <ID|--name <NAME>}
 ```
 
 {{<definitions>}}
@@ -2107,12 +2063,10 @@ $ wrangler mtls-certificate delete [OPTIONS]
   - The ID of the mTLS certificate.
 - `--name` {{<type>}}string{{</type>}}
   - The name assigned to the mTLS certificate at upload.
-- Note that you must provide either `--id` or `--name` for this command to run successfully.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-Below is an example of using the `delete` command to delete an mTLS certificate.
+The following is an example of using the `delete` command to delete an mTLS certificate.
 
 ```sh
 $ wrangler mtls-certificate delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
@@ -2122,8 +2076,6 @@ Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
 Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 ```
 
-{{</Aside>}}
-
 ---
 
 ## types
@@ -2131,7 +2083,7 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 Generate types from bindings and module rules in configuration.
 
 ```sh
-$ wrangler types
+wrangler types
 ```
 
 <!--TODO Add examples of DTS generated output -->
