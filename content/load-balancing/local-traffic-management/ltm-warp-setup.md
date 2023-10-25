@@ -14,14 +14,10 @@ Currently, to be able to connect to private IP origins, Cloudflare load balancer
 
 Start from [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) if you have not yet configured tunnels as your off-ramp.
 
-<!--- Once you create a load balancer that points to private origins, the load balancer itself will be assigned a private IP address.--->
-
 ## 2. Configure WARP device profiles
 
 1. [Create](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#create-a-new-profile) or [edit](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings) your WARP device profile(s).
 2. [Route the virtual network IPs through WARP](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp).
-
-<!--- Does this step involve the LB private IP? Or the network’s IP/CIDR? --->
 
 Once connected, WARP considers the configuration of the virtual network and installs routes on the end user devices. These routes inform the end user devices how to reach the Cloudflare private load balancer.
 
