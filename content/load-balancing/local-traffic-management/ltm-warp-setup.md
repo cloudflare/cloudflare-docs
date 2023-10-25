@@ -18,6 +18,13 @@ Start from [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-tra
 
 ## 2. Configure WARP device profiles
 
+1. [Create](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#create-a-new-profile) or [edit](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings) your WARP device profile(s).
+2. [Route the virtual network IPs through WARP](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp).
 
+<!--- Does this step involve the LB private IP? Or the network’s IP/CIDR? --->
+
+Once connected, WARP considers the configuration of the virtual network and installs routes on the end user devices. These routes inform the end user devices how to reach the Cloudflare private load balancer.
 
 ## 3. (Optional) Create DNS records locally
+
+Finally, you can create local DNS records that point to the load balancer private IP address, making it easier for your end users to access the private or internal service.
