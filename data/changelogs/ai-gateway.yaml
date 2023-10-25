@@ -2,10 +2,10 @@
 link: "/ai-gateway/changelog/"
 productName: AI Gateway
 entries:
-- publish_date: '2023-10-17'
+- publish_date: '2023-10-26'
   title: 
   description: |-
-    * **Real-time Logs**: Logs are now real-time, showing logs for the last hour. If you have a need for persistent logs, please let the team know on Discord. We are building out a persistent logs feature for those who want to store logs for longer.
+    * **Real-time Logs**: Logs are now real-time, showing logs for the last hour. If you have a need for persistent logs, please let the team know on Discord. We are building out a persistent logs feature for those who want to store their logs for longer.
     * **Providers**: Azure OpenAI is now supported as a provider!
     * **Docs**: Added Azure OpenAI example.
     * **Bug Fixes**: Errors with costs and tokens should be fixed.

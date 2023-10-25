@@ -7,12 +7,19 @@ _build:
 
 `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/azure-openai/RESOURCE_NAME/MODEL_NAME`
 
-When making requests to Azure OpenAI, specify the Azure OpenAI resource name and Azure OpenAI deployment name in your AI Gateway endpoint. Then replace your Azure OpenAI request URL with your AI Gateway endpoint. 
+When making requests to Azure OpenAI, you will need:
+- AI Gateway account tag
+- AI Gateway gateway name
+- Azure OpenAI API key
+- Azure OpenAI resource name
+- Azure OpenAI deployment name (aka model name)
+
+Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/azure-openai/RESOURCE_NAME/MODEL_NAME`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
 
 
 ```bash
 ---
-header: Request
+header: Example fetch request
 ---
 
 curl --request POST \
@@ -27,7 +34,7 @@ curl --request POST \
     },
     {
       "role": "user",
-      "content": "Does Azure OpenAI support customer managed keys?"
+      "content": "What is Cloudflare?"
     }
   ]
 }'
