@@ -58,67 +58,85 @@ The following global flags work on every command.
 
 ---
 
-## docs
+## Background
+
+This page provides a reference for Wrangler commands.
+
+```sh
+wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+All parameters have been classified as required or optional. Required parameters are written in the reference code block of each command. All values that need to be provided by the user (such as, database name or project name) are written in angle brackets (`<>`).
+
+All commands can be run with your choice of package manager. For example, to run the `wrangler deploy` command with npm, run:
+
+```sh
+$ npx wrangler deploy
+```
+
+---
+
+## `docs`
 
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-wrangler docs [COMMAND]
+wrangler docs [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `<COMMAND>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
 
 {{</definitions>}}
 
-## init
+## `init`
 
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-wrangler init [NAME] [-y / --yes] [--from-dash]
+wrangler init [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+- `<NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
     {{</definitions>}}
 
 ---
 
-## generate
+## `generate`
 
 Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```sh
-wrangler generate [name] [template]
+wrangler generate [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+- `<NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `<TEMPLATE>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
 {{</definitions>}}
 
 ---
 
-## d1
+## `d1`
 
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-D1 is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+[D1](/d1/) is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -126,12 +144,12 @@ D1 is currently in open beta. Report D1 bugs in [GitHub](https://github.com/clou
 Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
 
 ```sh
-wrangler d1 create <DATABASE_NAME>
+wrangler d1 create <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
 - `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the new experimental storage backend for this database.
@@ -158,7 +176,7 @@ wrangler d1 delete <DATABASE_NAME>
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to delete.
 
 {{</definitions>}}
@@ -173,7 +191,7 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--command` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The SQL query you wish to execute.
@@ -192,7 +210,7 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--bookmark` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A D1 bookmark representing the state of a database at a specific point in time.
@@ -210,7 +228,7 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
@@ -226,7 +244,7 @@ wrangler d1 backup create <DATABASE_NAME>
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to backup.
     {{</definitions>}}
 
@@ -240,7 +258,7 @@ wrangler d1 backup list <DATABASE_NAME>
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to list the backups of.
     {{</definitions>}}
 
@@ -254,9 +272,9 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to restore the backup into.
-- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<BACKUP_ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to restore.
     {{</definitions>}}
 
@@ -270,9 +288,9 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to download the backup of.
-- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<BACKUP_ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
     {{</definitions>}}
 
@@ -292,9 +310,9 @@ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to create a migration for.
-- `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<MIGRATION_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A descriptive name for the migration you wish to create.
     {{</definitions>}}
 
@@ -308,7 +326,7 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
@@ -332,7 +350,7 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 {{<definitions>}}
 
-- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<DATABASE_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
@@ -354,7 +372,7 @@ wrangler hyperdrive create <ID> [OPTIONS]
 
 {{<definitions>}}
 
-- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
@@ -371,7 +389,7 @@ wrangler hyperdrive update <ID> [OPTIONS]
 
 {{<definitions>}}
 
-- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to update.
 - `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new database hostname or IP address Hyperdrive should connect to.
@@ -404,7 +422,7 @@ wrangler hyperdrive delete <ID>
 
 {{<definitions>}}
 
-- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Hyperdrive configuration to delete.
 
 {{</definitions>}}
@@ -419,7 +437,7 @@ wrangler hyperdrive get <ID>
 
 {{<definitions>}}
 
-- `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<ID>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Hyperdrive configuration to get.
 
 {{</definitions>}}
@@ -440,7 +458,7 @@ wrangler vectorize create <INDEX_NAME> --dimensions=<NUM_DIMENSIONS> --metric=<D
 
 {{<definitions>}}
 
-- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new index to create. Cannot be changed.
 - `--dimensions` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The vector dimension width to configure the index for. Cannot be changed after creation.
@@ -454,12 +472,12 @@ wrangler vectorize create <INDEX_NAME> --dimensions=<NUM_DIMENSIONS> --metric=<D
 Get details about an individual index, including its configuration.
 
 ```sh
-wrangler vectorize get <index-name>
+wrangler vectorize get <INDEX_NAME>
 ```
 
 {{<definitions>}}
 
-- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the index to fetch details for.
 
 {{</definitions>}}
@@ -481,10 +499,10 @@ wrangler vectorize delete <INDEX_NAME>
 
 {{<definitions>}}
 
-- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Vectorize index to delete.
 - `--force` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Skip confirmation when deleting the index (note: this is not a recoverable operation)
+  - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
 
 {{</definitions>}}
 
@@ -498,7 +516,7 @@ wrangler vectorize insert <INDEX_NAME>
 
 {{<definitions>}}
 
-- `index-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<INDEX_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Vectorize index to delete.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
@@ -514,7 +532,7 @@ wrangler vectorize insert <INDEX_NAME>
 Start a local server for developing your Worker.
 
 ```sh
-wrangler dev [SCRIPT] [OPTIONS]
+wrangler dev [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -531,81 +549,81 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 {{<definitions>}}
 
-- `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker.
-- `--name` {{<type>}}string{{</type>}}
+- `<SCRIPT>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}/{{<prop-meta>}}optional{{</prop-meta>}}
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
-- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
-- `--env` {{<type>}}string{{</type>}}
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-- `--compatibility-date` {{<type>}}string{{</type>}}
+- `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
+- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Flags to use for compatibility checks.
-- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
-- `--ip` {{<type>}}string{{</type>}}
+- `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - IP address to listen on, defaults to `localhost`.
-- `--port` {{<type>}}number{{</type>}}
+- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port to listen on.
-- `--inspector-port` {{<type>}}number{{</type>}}
+- `--inspector-port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port for devtools to connect to.
-- `--routes`, `--route` {{<type>}}string[]{{</type>}}
+- `--routes`, `--route` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Routes to upload.
   - For example: `--route example.com/*`.
-- `--host` {{<type>}}string{{</type>}}
+- `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to forward requests to, defaults to the zone of project.
-- `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
+- `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to listen to requests on.
-- `--local-upstream` {{<type>}}string{{</type>}}
+- `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--assets` {{<type>}}string{{</type>}}
+- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
-- `--site` {{<type>}}string{{</type>}}
+- `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
-- `--site-include` {{<type>}}string[]{{</type>}}
+- `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` {{<type>}}string[]{{</type>}}
+- `--site-exclude` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
-- `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}}
+- `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to forward requests to host on.
-- `--var` {{<type>}}key:value[]{{</type>}}
+- `--var` {{<type>}}key:value[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--define` {{<type>}}key:value[]{{</type>}}
+- `--define` {{<type>}}key:value[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--tsconfig` {{<type>}}string{{</type>}}
+- `--tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to a custom `tsconfig.json` file.
-- `--minify` {{<type>}}boolean{{</type>}}
+- `--minify` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Minify the script.
-- `--node-compat` {{<type>}}boolean{{</type>}}
-  - Enable node.js compatibility.
-- `--persist-to` {{<type>}}string{{</type>}}
+- `--node-compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Enable Node.js compatibility.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory to use for local persistence.
-- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Develop against remote resources and data stored on Cloudflare's network.
-- `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
-- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
+- `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify Wrangler's logging level.
 
 {{</definitions>}}
 
-`wrangler dev` is a way to locally test your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/observability/local-development-and-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
-## deploy
+## `deploy`
 
 Deploy your Worker to Cloudflare.
 
 ```sh
-wrangler deploy [SCRIPT] [OPTIONS]
+wrangler deploy [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -616,53 +634,53 @@ None of the options for this command are required. Also, many can be set in your
 
 {{<definitions>}}
 
-- `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker.
-- `--name` {{<type>}}string{{</type>}} 
+- `<SCRIPT>` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
-- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Skip Wrangler's build steps and directly deploy script without modification. Particularly useful when using custom builds.
-- `--env` {{<type>}}string{{</type>}}
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-- `--outdir` {{<type>}}string{{</type>}}
+- `--outdir` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to directory where Wrangler will write the bundled Worker files.
-- `--compatibility-date` {{<type>}}string{{</type>}}
+- `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
+- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Flags to use for compatibility checks.
-- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
-- `--assets` {{<type>}}string{{</type>}}
+- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
-- `--site` {{<type>}}string{{</type>}}
+- `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
-- `--site-include` {{<type>}}string[]{{</type>}}
+- `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` {{<type>}}string[]{{</type>}}
+- `--site-exclude` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
-- `--var` {{<type>}}key:value[]{{</type>}}
+- `--var` {{<type>}}key:value[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--define` {{<type>}}key:value[]{{</type>}}
+- `--define` {{<type>}}key:value[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
+- `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
-- `--routes`, `--route` {{<type>}}string[]{{</type>}}
+- `--routes`, `--route` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Routes where this Worker will be deployed.
   - For example: `--route example.com/*`.
-- `--tsconfig` {{<type>}}string{{</type>}}
+- `--tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to a custom `tsconfig.json` file.
-- `--minify` {{<type>}}boolean{{</type>}}
+- `--minify` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Minify the bundled script before deploying.
-- `--node-compat` {{<type>}}boolean{{</type>}}
+- `--node-compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Enable node.js compatibility.
-- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
-- `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 
@@ -675,12 +693,12 @@ None of the options for this command are required. Also, many can be set in your
 Publish your Worker to Cloudflare.
 
 ```sh
-$ wrangler publish [SCRIPT] [OPTIONS]
+$ wrangler publish [OPTIONS]
 ```
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 in favor of [`npx wrangler deploy`](#deploy). It will be removed in v4.
+This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
 
 {{</Aside>}}
 
@@ -691,18 +709,18 @@ This command has been deprecated as of v3 in favor of [`npx wrangler deploy`](#d
 Delete your Worker and all associated Cloudflare developer platform resources.
 
 ```sh
-$ wrangler delete [SCRIPT] [OPTIONS]
+$ wrangler delete [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker.
-- `--name` {{<type>}}string{{</type>}}
+- `<SCRIPT>` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
-- `--env` {{<type>}}string{{</type>}}
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 {{</definitions>}}
@@ -725,7 +743,7 @@ $ wrangler kv:namespace create <NAMESPACE> [OPTIONS]
 
 {{<definitions>}}
 
-- `NAMESPACE` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `<NAMESPACE>` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new namespace.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
@@ -734,7 +752,6 @@ $ wrangler kv:namespace create <NAMESPACE> [OPTIONS]
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
 Below is an example of using the `create` command to create a KV namespace called `MY_KV`.
 
 ```sh
@@ -747,9 +764,6 @@ kv_namespaces = [
 ]
 ```
 
-{{</Aside>}}
-
-{{<Aside type="note">}}
 Below is an example of using the `create` command to create a preview KV namespace called `MY_KV`.
 
 ```sh
@@ -762,9 +776,7 @@ kv_namespaces = [
 ]
 ```
 
-{{</Aside>}}
-
-### list
+### `list`
 
 List all KV namespaces associated with the current account ID.
 
@@ -772,7 +784,6 @@ List all KV namespaces associated with the current account ID.
 $ wrangler kv:namespace list
 ```
 
-{{<Aside type="note">}}
 Below is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
@@ -789,18 +800,16 @@ $ wrangler kv:namespace list | jq "."
 ]
 ```
 
-{{</Aside>}}
-
-### delete
+### `delete`
 
 Delete a given namespace.
 
 ```sh
-$ wrangler kv:namespace delete [OPTIONS]
+$ wrangler kv:namespace delete <KEY> [OPTIONS]
 ```
 
-{{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
+{{<Aside type="warning" header="Required parameters">}}
+This command requires either a `--binding` or `--namespace-id` flag.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -816,8 +825,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-{{<Aside type="note">}}
-Below is an example of deleting a KV namespace called MY_KV.
+Below is an example of deleting a KV namespace called `MY_KV.`
 
 ```sh
 $ wrangler kv:namespace delete --binding=MY_KV
@@ -827,9 +835,6 @@ Deleting namespace f7b02e7fc70443149ac906dd81ec1791
 Deleted namespace f7b02e7fc70443149ac906dd81ec1791
 ```
 
-{{</Aside>}}
-
-{{<Aside type="note">}}
 Below is an example of deleting a preview KV namespace called MY_KV.
 
 ```sh
@@ -839,8 +844,6 @@ yes
 Deleting namespace 15137f8edf6c09742227e99b08aaf273
 Deleted namespace 15137f8edf6c09742227e99b08aaf273
 ```
-
-{{</Aside>}}
 
 ## `kv:key`
 
@@ -859,9 +862,9 @@ $ wrangler kv:key put <KEY> [VALUE] [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
+This command requires a `--binding` or `--namespace-id` flag.
 
-Exactly one of `VALUE` or `--path` is required.
+This command requires a `VALUE` or `--path`.
 {{</Aside>}}
 
 {{<definitions>}}
