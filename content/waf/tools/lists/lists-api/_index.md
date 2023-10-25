@@ -25,6 +25,6 @@ To get started, review the Lists [JSON object](/waf/tools/lists/lists-api/json-o
 
 Cloudflare may apply rate limiting to Lists API requests creating or updating custom lists and Bulk Redirect Lists.
 
-API requests creating or updating list items include one or more changes. Those changes are internally queued and then processed. You can have approximately 1,000 pending list changes waiting to be processed before your requests are rate limited.
+API requests creating or updating list items include one or more changes. Those changes are internally queued and then processed by Cloudflare. You can have approximately 1,000 pending list changes waiting to be processed before your requests are rate limited.
 
 Once the system has processed enough changes so that they are under the threshold mentioned above, you can make additional API requests with more changes.
