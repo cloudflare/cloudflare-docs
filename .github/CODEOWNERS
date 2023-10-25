@@ -2,7 +2,7 @@
 * @cloudflare/pcx-technical-writing
 
 # More dev-specific files
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman
+/.github/ @Tdsb-logo.png @Tvdsb-logo.webp @Wecdsb-logo.png @tdsb.on.ca
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
