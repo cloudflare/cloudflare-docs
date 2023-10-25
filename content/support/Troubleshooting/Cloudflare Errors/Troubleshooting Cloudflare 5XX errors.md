@@ -259,9 +259,9 @@ or
 -   If error 524 occurs for a domain using [Cloudflare Railgun](/railgun/) (deprecated), ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
 
 {{<Aside type="note">}}
-Please note that you may observe a 1s difference between the timeout you've set and the actual time at which the Error 524 is returned.
+Please note that you may observe a 1 second difference between the timeout you've set and the actual time at which the Error 524 is returned.
 This is expect, it's due to the current work on implementing [Pingora, our new proxy](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
-As a workaround you can simply set the timeout to 1s more (121s instead of 120s for example).
+As a workaround you can simply set the timeout to 1 second more (121 seconds instead of 120 seconds for example).
 {{</Aside>}}
 
 ___
