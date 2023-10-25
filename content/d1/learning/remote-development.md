@@ -6,7 +6,7 @@ pcx_content_type: concept
 
 # Develop remotely
 
-D1 supports remote development using the [dashboard playground](/workers/learning/playground/#using-the-playground). The dashboard playground uses a browser version of Visual Studio Code, allowing you to rapidly iterate on your Worker entirely in your browser.
+D1 supports remote development using the [dashboard playground](/workers/playground/#using-the-playground). The dashboard playground uses a browser version of Visual Studio Code, allowing you to rapidly iterate on your Worker entirely in your browser.
 
 ## 1. Bind a D1 database to a Worker
 

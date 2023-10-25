@@ -8,7 +8,7 @@ meta:
   title: Durable Objects - Use KV within Durable Objects
 ---
 
-The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/workers/learning/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/websockets/).
+The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/kv/learning/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/websockets/).
 
 Prerequisites:
 
@@ -36,7 +36,7 @@ bindings = [
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
@@ -90,7 +90,6 @@ export class YourDurableObject implements Durable Object {
 
     return Response.json(val)
   }
-}
 ```
 
 

@@ -6,7 +6,7 @@ weight: 49
 
 # Additional configuration
 
-Beyond [creating a simple load balancer](/load-balancing/how-to/create-load-balancer/), you may want to further customize how your load balancer routes traffic or integrate your load balancer with other Cloudflare products.
+Beyond [creating a simple load balancer](/load-balancing/load-balancers/create-load-balancer/), you may want to further customize how your load balancer routes traffic or integrate your load balancer with other Cloudflare products.
 
 ## Customize load balancer behavior
 

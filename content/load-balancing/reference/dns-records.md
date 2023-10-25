@@ -8,7 +8,7 @@ meta:
 
 # DNS records for load balancing
 
-When you [create a load balancer](/load-balancing/how-to/create-load-balancer/), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record.
+When you [create a load balancer](/load-balancing/load-balancers/create-load-balancer/), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record.
 
 ## Supported records
 

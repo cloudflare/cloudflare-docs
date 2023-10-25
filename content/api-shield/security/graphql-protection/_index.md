@@ -12,7 +12,7 @@ GraphQL malicious query protection scans your GraphQL traffic for queries that c
 
 ## Availability
 
-GraphQL malicious query protection is available for all API Shield customers. Enterprise customers who have not purchased API Shield can get started by [enabling the API Shield trial](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or contacting your account manager.
+GraphQL malicious query protection is available for all API Shield customers. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
 
 ## Limitations
 

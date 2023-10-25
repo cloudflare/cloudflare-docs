@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Observability
-weight: 9
+weight: 10
 ---
 
 # Observability

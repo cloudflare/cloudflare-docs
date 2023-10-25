@@ -47,7 +47,7 @@ When setting up your `d1-tutorial` Worker, answering the questions as below:
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
 
-* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts` 
+* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts` 
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -149,13 +149,13 @@ $ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers
 
 After you have set up your database, you will run an SQL query from within your Worker.
 
-First, go to your `d1-tutorial` Worker and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
+First, go to your `d1-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
 
 ```typescript
 ---
-filename: "src/worker.ts"
+filename: "src/index.ts"
 ---
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
@@ -250,4 +250,3 @@ If you have any feature requests or notice any bugs, share your feedback directl
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
 - Learn how to use the [D1 client API](/d1/platform/client-api/) within your Worker.
 - Explore [community projects built on D1](/d1/platform/community-projects/).
-

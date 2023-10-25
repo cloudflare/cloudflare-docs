@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 1
 meta:
   title: Storage options guide
+  description: Storage options available on Cloudflare's developer platform that can be used with Workers.
 ---
 
 # Storage options guide
@@ -34,7 +35,7 @@ It is ideal for projects that require:
 
 To get started with KV:
 
-* Read how [KV works](/workers/learning/how-kv-works/).
+* Read how [KV works](/kv/learning/how-kv-works/).
 * Create a [KV namespace](/kv/learning/kv-namespaces/).
 * Review the [KV Runtime API](/kv/api/).
 * Learn about KV [Limits](/kv/platform/limits/).

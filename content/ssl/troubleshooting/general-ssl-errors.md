@@ -43,7 +43,8 @@ ___
 
 -   Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers `dev.www.example.com`.
 -   Upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers `dev.www.example.com`.
--   If you have a valid certificate for the second level subdomains at your origin web server, change the DNS record for `dev.www` to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/).
+-   Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls).
+-   If you have a valid certificate for the second level subdomains at your origin web server, change the DNS record for `dev.www` to [DNS Only (grey cloud)](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 ___
 
@@ -107,6 +108,35 @@ You may have configured [HTTP Response Header Modification Rules](/rules/transfo
 2.  Under **HTTP Response Header Modification**, check the existing rules for a rule that is setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
 3.  Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
 4.  Repeat this procedure for the other HSTS header.
+
+___
+
+## Other errors
+
+### Symptom
+
+You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
+
+### Resolution
+
+- Make sure that you are using a [supported browser](/ssl/reference/browser-compatibility/).
+- Ensure that the hostname you are accessing is set to [proxied (orange cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) in the DNS tab of your Cloudflare Dashboard.
+- If the hostname you are accessing is a second level subdomain (such as `dev.www.example.com`), you'll need to either:
+  - Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers `dev.www.example.com`.
+  - Upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers `dev.www.example.com`.
+  - Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls)
+
+{{<Aside type="note">}}
+
+The following [`openssl`](https://www.openssl.org/) command might help troubleshooting TLS handshake between the client and the Cloudflare network edge:
+
+```txt
+
+$ openssl s_client -connect example.com:443 -servername example.com version
+
+```
+
+{{</Aside>}}
 
 ___
 

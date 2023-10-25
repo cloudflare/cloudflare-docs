@@ -10,42 +10,42 @@ The PingFederate® offering from PingIdentity provides SSO identity management. 
 
 ## Set up PingFederate as an identity provider
 
-1.  Log in to your **Ping** dashboard and go to **Applications**.
+1. Log in to your **Ping** dashboard and go to **Applications**.
 
-2.  Select **Add Application**.
+2. Select **Add Application**.
 
-3.  Select **New SAML Application**.
+3. Select **New SAML Application**.
 
-4.  Complete the fields for name, description, and category.
+4. Complete the fields for name, description, and category.
 
     These can be any value. A prompt displays to select a signing certificate to use.
 
-5.  In the **SAML attribute configuration** dialog select **Email attribute** > **urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress**.
+5. In the **SAML attribute configuration** dialog select **Email attribute** > **urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress**.
 
          {{<Aside>}}
 
     There is an additional setting for PingFederate prior to 9.0.
     {{</Aside>}}
 
-6.  In the **Signature Policy** tab, disable the option to **Always Sign Assertion**.
+6. In the **Signature Policy** tab, disable the option to **Always Sign Assertion**.
 
-7.  Leave the option enabled for **Sign Response As Required**.
+7. Leave the option enabled for **Sign Response As Required**.
 
     This ensures that SAML destination headers are sent during the integration.
 
     In versions 9.0 above, you can leave both of these options enabled.
 
-8.  A prompt displays to download the SAML metadata from Ping.
+8. A prompt displays to download the SAML metadata from Ping.
 
     This file shares several fields with Cloudflare Access so you do not have to input this data.
 
-9.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+9. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 10. Under **Login methods**, select **Add new**.
 
 11. Select SAML.
 
-12. In the **IdP Entity ID** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. In the **IdP Entity ID** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

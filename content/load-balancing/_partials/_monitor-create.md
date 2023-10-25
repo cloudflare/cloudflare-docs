@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You can create a monitor within the [load balancer workflow](/load-balancing/how-to/create-load-balancer/) or in the **Monitors** section of the dashboard:
+You can create a monitor within the [load balancer workflow](/load-balancing/load-balancers/create-load-balancer/) or in the **Monitors** section of the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 

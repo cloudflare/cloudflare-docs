@@ -73,8 +73,11 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 For matched configurations in trace results, each step corresponds to one of the following:
 
 * Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
-* [Workers](/workers/) (execution of one or more scripts)
 * [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) (execution of one or more rules)
+
+The following steps are planned for future additions:
+
+* [Workers](/workers/) (execution of one or more scripts)
 
 ---
 

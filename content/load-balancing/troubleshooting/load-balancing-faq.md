@@ -22,7 +22,7 @@ This issue may be caused by a combination of two issues.
 
 ### Multiple Health Monitor Regions
 
-When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can specify the **Health Monitor Regions** that Cloudflare uses to monitor your origin health.
+When you [attach a monitor to a pool](/load-balancing/monitors/create-monitor/#create-a-monitor), you can specify the **Health Monitor Regions** that Cloudflare uses to monitor your origin health.
 
 If you select multiple regions or choose **All Data Centers (Enterprise Only)**, you may [dramatically increase traffic](/load-balancing/understand-basics/health-details#how-an-origin-becomes-unhealthy) to that pool and its associated origins. Each region sends individual health monitor requests from 3 data centers. Using **All Data Centers** sends individual health monitor requests from all existing Cloudflare data centers (and that number of data centers is growing all the time).
 
@@ -38,7 +38,7 @@ ___
 
 To learn more about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details).
 
-If you know that your origin server is healthy but load balancing is reporting it as unhealthy, check the following settings on the [origin's monitor](/load-balancing/understand-basics/monitors):
+If you know that your origin server is healthy but load balancing is reporting it as unhealthy, check the following settings on the [origin's monitor](/load-balancing/monitors):
 
 -   Perform a `curl` request against the configured endpoint. Make sure the response you are seeing matches your settings for the monitor.
 -   Ensure your firewall or web server does not block or rate limit [our health monitors](/fundamentals/reference/cloudflare-site-crawling/#specific-products) and accepts requests from [Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/).
@@ -89,5 +89,5 @@ ___
 ## Related resources
 
 -   [Origin and pool health](/load-balancing/understand-basics/health-details)
--   [Monitors](/load-balancing/understand-basics/monitors)
+-   [Monitors](/load-balancing/monitors)
 -   [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/)

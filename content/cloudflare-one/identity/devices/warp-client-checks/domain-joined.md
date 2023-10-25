@@ -8,16 +8,13 @@ meta:
 
 # Domain joined
 
-<details>
-<summary>Feature availability</summary>
-<div>
+{{<details header="Feature availability">}}
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Windows           | WARP with Gateway                                                                         | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 The Domain Joined device posture attribute ensures that a user is a member of a specific Windows Active Directory domain.
 
