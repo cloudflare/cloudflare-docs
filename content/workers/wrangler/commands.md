@@ -552,7 +552,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
+  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -577,7 +577,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Root folder of static assets to be served.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
@@ -637,7 +637,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Skip Wrangler's build steps and directly deploy script without modification. Particularly useful when using custom builds.
+  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--outdir` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -649,7 +649,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Root folder of static assets to be served.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
@@ -673,7 +673,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Minify the bundled script before deploying.
+  - Minify the bundled Worker before deploying.
 - `--node-compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1336,7 +1336,7 @@ wrangler secret put <KEY> [OPTIONS]
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
@@ -1372,7 +1372,7 @@ wrangler secret delete <KEY> [OPTIONS]
   - The variable name for this secret to be accessed in the Worker.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
@@ -1391,7 +1391,7 @@ wrangler secret list [OPTIONS]
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment
@@ -1427,7 +1427,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
@@ -1525,7 +1525,7 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
 - `--proxy` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The port to proxy (where the static assets are served).
 - `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
-  - The location of the single Worker script if not using functions.
+  - The location of the single Worker file if not using functions.
 - `--binding` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Bind variable/secret (KEY=VALUE).
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1784,7 +1784,7 @@ wrangler deployments list
 {{<definitions>}}
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
     {{</definitions>}}
 
 Example output:
@@ -1833,7 +1833,7 @@ wrangler deployments view [<DEPLOYMENT_ID>]
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the deployment you wish to view.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
     {{</definitions>}}
 
 Example output:
