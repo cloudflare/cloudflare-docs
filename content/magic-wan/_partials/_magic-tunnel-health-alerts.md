@@ -25,12 +25,27 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 - Alert SLO
 - Timestamp
 
-## API configuration
+## Set up Magic Tunnel health alerts
 
-At this time, Magic Tunnel health alerts can only be configured via API. Customers cannot currently configure the alerts via the Cloudflare dashboard. This functionality will be released in the near future. An example of the API configuration for Magic tunnel health alerts is provided below:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Notifications** > **Add**.
+3. Locate **Magic Transit** > **Magic Tunnel Health Check Alert**, and choose **Select** to add a notification.
+4. Enter a name and description for the notification.
+5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
+6. Choose the tunnels you want to receive alerts for.
+7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_.
+8. Select **Create** when you are done.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+An example of the API configuration for Magic tunnel health alerts is provided below:
 
 ```js
-curl https://api.cloudflare.com/client/v4/accounts/IDENTIFIER/alerting/v3/policies \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/policies \
 --header 'Authorization: Bearer undefined' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -49,6 +64,11 @@ curl https://api.cloudflare.com/client/v4/accounts/IDENTIFIER/alerting/v3/polici
     }
 }'
 ```
+
+Refer to the [API documentation](/api/operations/notification-policies-list-notification-policies) for more details.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Recommended SLO thresholds
 
