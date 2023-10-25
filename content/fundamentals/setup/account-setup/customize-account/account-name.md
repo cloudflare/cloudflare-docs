@@ -5,4 +5,4 @@ pcx_content_type: how-to
 
 # Account name
 
-{{<render file="_customize-account-name_.md" productFolder="fundamentals">}}
+{{<render file="_customize-account-name.md" productFolder="fundamentals">}}
