@@ -185,7 +185,7 @@ Be aware that the deletion may take up to 24 hours to complete.
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To delete Cache Reserve data via API use the following example request.
+To delete Cache Reserve data via API use the following example request. For more information, refer to the [API documentation](/api/operations/zone-cache-settings-start-cache-reserve-clear).
 
 ```json
 ---
