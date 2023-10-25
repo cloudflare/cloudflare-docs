@@ -83,7 +83,7 @@ Cloudflare’s connectivity cloud also offers many other services that improve a
 
 ![Cloudflare's Anycast Network allows provides services on all connected servers to enable secure connections on public and home networks and at corporate offices.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-4.svg)
 
-## Cloudflare’s Anycast Network
+### Cloudflare’s Anycast Network
 Cloudflare’s SASE platform benefits from our use of [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) technology. Anycast allows Cloudflare to announce the IP addresses of our services from every data center worldwide, so traffic is always routed to the Cloudflare data center closest to the source. This means traffic inspection, authentication, and policy enforcement take place close to the end user, leading to consistently high-quality experiences.
 
 Using Anycast ensures the Cloudflare network is well balanced. If there is a sudden increase in traffic on the network, the load can be distributed across multiple data centers – which in turn, helps maintain consistent and reliable connectivity for users. Further, Cloudflare’s large [network capacity](https://www.cloudflare.com/network/) and [AI/ML-optimized smart routing](https://blog.cloudflare.com/meet-traffic-manager/) also help ensure that performance is constantly optimized.
