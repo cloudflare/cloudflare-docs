@@ -70,7 +70,9 @@ Because DCV happens regularly, do not remove the `CNAME` record(s) at your autho
 
 ### Testing
 
-If you use a `dig` command to test, you should be able see the placed tokens only if the certificate is up for issuance. This is because Cloudflare places the tokens when needed and then clean them up.
+If you use a `dig` command to test, you should only be able see the placed tokens if the certificate is up for issuance.
+
+This is because Cloudflare places the tokens when needed and then cleans them up.
 
 ```sh
 $ dig TXT +noadditional +noquestion +nocomments +nocmd +nostats _acme-challenge.example.com. @1.1.1.1_acme-challenge.example.com. 3600    IN    CNAME    example.com.<COPIED_VALIDATION_URL>
