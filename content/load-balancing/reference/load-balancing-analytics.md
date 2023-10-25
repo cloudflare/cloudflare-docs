@@ -11,9 +11,9 @@ meta:
 
 Using load balancing analytics, you can:
 
-*   Evaluate traffic flow.
-*   Assess the health status of origin servers in your pools.
-*   Review changes in pools and pool health over time.
+* Evaluate traffic flow.
+* Assess the health status of origin servers in your pools.
+* Review changes in pools and pool health over time.
 
 {{<Aside type="note">}}
 
@@ -29,9 +29,9 @@ To view **Overview** metrics for your load balancer, go to **Traffic** > **Load 
 
 These metrics show the number of requests routed to specific pools within a load balancer, helping you:
 
-*   Evaluate the effects of adding or removing a pool.
-*   Decide when to create new origin pools.
-*   Plan for peak traffic demands and future infrastructure needs.
+* Evaluate the effects of adding or removing a pool.
+* Decide when to create new origin pools.
+* Plan for peak traffic demands and future infrastructure needs.
 
 Add additional filters for specific pools, times, regions, and origins.
 
@@ -59,9 +59,7 @@ For more flexibility, get load balancing metrics directly from the [GraphQL Anal
 
 Get started with a sample query:
 
-<details>
-<summary>Requests per pool</summary>
-<div>
+{{<details header="Requests per pool">}}
 
 This query shows the number of requests each pool receives from each location in Cloudflare's global network.
 
@@ -120,13 +118,9 @@ header: Response (truncated)
 }
 ```
 
-</div>
+{{</details>}}
 
-</details>
-
-<details>
-<summary>Requests per data center</summary>
-<div>
+{{<details header="Requests per data center">}}
 
 This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
 
@@ -202,6 +196,4 @@ header: Response (truncated)
 }
 ```
 
-</div>
-
-</details>
+{{</details>}}

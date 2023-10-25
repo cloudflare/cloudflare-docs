@@ -21,9 +21,7 @@ This guide will instruct you through:
 
 {{<Aside type="note" header="Workers Paid plan required">}}
 
-Hyperdrive will be automatically available to all [Workers paid plans](/workers/platform/pricing/#workers).
-
-During the public beta, your account will need to be explicitly enabled by the Cloudflare team.
+Hyperdrive is available to all users on the [Workers paid plan](/workers/platform/pricing/#workers).
 
 {{</Aside>}}
 
@@ -111,7 +109,7 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
-$ wrangler hyperdrive database create $CONFIG_NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
+$ wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 If successful, the command will output your new Hyperdrive configuration:
@@ -228,7 +226,7 @@ In the code above, you have:
 
 1. Created a new database `Client` configured to connect to your database via Hyperdrive.
 2. Connected to the database via `await client.connect()`.
-3. Initiated a simple query via `await client.query()` that outputs all tables (user and system created) in the database.
+3. Initiated a query via `await client.query()` that outputs all tables (user and system created) in the database.
 4. Returned the response as JSON to the client.
 
 ## 5. Deploy your database

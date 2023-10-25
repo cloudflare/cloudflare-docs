@@ -192,7 +192,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers), and [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props). Then, access bindings set for your application by accessing them in your code via `process.env`.
 

@@ -34,11 +34,11 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
-{{<feature header="Playground" href="/workers/learning/playground/">}}
+{{<feature header="the Playground" href="/workers/playground/">}}
 
 The Playground is a sandbox which gives you an instant way to preview and test a Workers script directly in the browser against any site. No setup required.
 

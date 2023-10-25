@@ -12,6 +12,19 @@ M2M100 is a multilingual encoder-decoder (seq-to-seq) model trained for Many-to-
 * License type: MIT
 * [Terms + Information](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)
 
+## Supported languages
+The following languages are currently supported by the model: 
+*  english
+*  chinese
+*  french
+*  spanish
+*  arabic
+*  russian
+*  german
+*  japanese
+*  portuguese
+*  hindi
+
 ## Examples
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}

@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="note">}}
 
-Enterprise customers can preview this product as a [non-contract service](/fundamentals/account-and-billing/preview-services/), which provide full access, free of metered usage fees, limits, and certain other restrictions.
+Enterprise customers can preview this product as a [non-contract service](/fundamentals/account-and-billing/preview-services/), which provides full access, free of metered usage fees, limits, and certain other restrictions.
 
 {{</Aside>}}

@@ -2,6 +2,15 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-10-20'
+  description: |-
+    - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field)
+      compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
+      the WebCrypto API.
+- publish_date: '2023-10-18'
+  description: |-
+    - The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+      Cron Triggers across all Workers still apply.
 - publish_date: '2023-09-14'
   description: |-
     - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
@@ -32,7 +41,7 @@ entries:
     - Added the [`strict_compression_checks`](/workers/configuration/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
 - publish_date: '2023-05-26'
   description: |-
-    - A new [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/)
+    - A new [Hibernatable WebSockets API](/durable-objects/api/websockets/)
     (beta) has been added to [Durable Objects](/durable-objects/). The Hibernatable
     WebSockets API allows a Durable Object that is not currently running an event
     handler (for example, processing a WebSocket message or alarm) to be removed from

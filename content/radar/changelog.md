@@ -8,7 +8,7 @@ changelog_file_name: [radar]
 outputs:
     - html
     - rss
-weight: 7
+weight: 8
 ---
 
 # Changelog

@@ -55,11 +55,11 @@ Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_
 
 ### Define input variables
 
-{{<render file="_terraform_input_variables.md">}}
+{{<render file="terraform/_input-variables.md">}}
 
 ### Assign values to the variables
 
-{{<render file="_terraform_variable_values.md">}}
+{{<render file="terraform/_variable-values.md">}}
 
 ### Configure Terraform providers
 
@@ -215,7 +215,7 @@ The following configuration defines the specifications for the GCP virtual machi
 
 ### Export variables to Ansible
 
-The following Terraform resource exports the tunnel ID and other variables to `tf_ansible_vars_file.yml`. Ansible will use this data to configure and run `cloudlared` on the server.
+The following Terraform resource exports the tunnel ID and other variables to `tf_ansible_vars_file.yml`. Ansible will use this data to configure and run `cloudflared` on the server.
 
 1. In your configuration directory, create a new `tf` file:
 

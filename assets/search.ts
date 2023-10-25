@@ -20,7 +20,7 @@
       appId: '8MU1G3QO9P',
       apiKey,
       container: '#algolia',
-      maxResultsPerGroup: 20,
+      maxResultsPerGroup: 10,
       insights: true,
       searchParameters: {
         optionalFilters: facetFilters
@@ -30,7 +30,24 @@
           const url = new URL(item.url)
           return url.pathname.endsWith('/')
         })
-      }
+      },
+      resultsFooterComponent({ state }) {
+        return {
+          // The HTML `tag`
+          type: 'a',
+          ref: undefined,
+          constructor: undefined,
+          key: state.query,
+          // Its props
+          props: {
+            target: "_blank",
+            href: `/search/#q=${state.query}&t=Docs`,
+            // Raw text rendered in the HTML element
+            children: `View all results`,
+          },
+          __v: null,
+        };
+      },
     });
 
     // instantiate mobile search button

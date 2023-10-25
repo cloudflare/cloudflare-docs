@@ -4,6 +4,7 @@ pcx_content_type: get-started
 weight: 1
 meta:
   title: Get started guide
+  description: Set up and deploy your first Worker with Wrangler, the Cloudflare Developer Platform CLI.
 ---
 
 # Get started guide
@@ -12,7 +13,7 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 {{<Aside type="note" header="Try the Playground">}}
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser.
 
 {{</Aside>}}
 
@@ -198,5 +199,6 @@ To do more:
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
 * Understand how Workers works in [Learning](/workers/learning/).
 * Learn how to set up different Workers features in [Configuration](/workers/configuration/).
+* Set up a database to use within your Workers project in [Databases](/workers/databases/).
 * Learn about Workers limits, betas and pricing in [Platform](/workers/platform/).
 * Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

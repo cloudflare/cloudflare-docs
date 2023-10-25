@@ -16,7 +16,7 @@ Workers AI includes the following built-in text embedding models:
 
 | Model ID                        | Max Input Tokens <sup>1</sup> | Output Dimensions  |
 | ------------------------------- | ----------------------------- | ------------------ |
-| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 386                | 
+| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 384                | 
 | `@cf/baai/bge-base-en-v1.5`     | 512 tokens                    | 768                | 
 | `@cf/baai/bge-large-en-v1.5`    | 512 tokens                    | 1024               |
 
@@ -35,12 +35,10 @@ Workers AI includes the following built-in text embedding models:
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
-```js
+```ts
 import { Ai } from '@cloudflare/ai'
 
 export interface Env {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "AI" with the variable name you defined.
   AI: any;
 }
 

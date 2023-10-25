@@ -1620,6 +1620,23 @@ $ wrangler pages project create [PROJECT-NAME] [OPTIONS]
 
 {{</definitions>}}
 
+### `project delete`
+
+Delete a Cloudflare Pages project.
+
+```sh
+$ wrangler pages project delete <PROJECT-NAME> [-y / --yes]
+```
+
+{{<definitions>}}
+
+- `PROJECT-NAME` {{<type>}}string{{</type>}}
+  - The name of the Pages project to delete.
+- `--yes` {{<type>}}boolean{{</type>}}
+  - Answer "yes" to confirmation prompt.
+
+{{</definitions>}}
+  
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.

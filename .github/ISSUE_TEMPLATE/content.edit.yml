@@ -22,7 +22,6 @@ body:
         - China Network
         - Client IP Geolocation
         - Cloudflare for Platforms
-        - Constellation
         - D1
         - Data Localization
         - DDoS Protection
@@ -34,7 +33,8 @@ body:
         - Firewall
         - Fundamentals
         - Health Checks
-        - Image Optimization
+        - Hyperdrive
+        - Images
         - KV
         - Load Balancing
         - Logs
@@ -49,6 +49,7 @@ body:
         - Pages
         - Privacy Gateway
         - Pub/Sub
+        - Pulumi
         - Queues
         - R2
         - Radar
@@ -69,12 +70,14 @@ body:
         - Terraform
         - Time Services
         - Turnstile
+        - Vectorize
         - Version Management
         - WAF
         - Waiting Room
         - WARP Client
         - Web3
         - Workers
+        - Workers AI
         - Zaraz
         - Zero Trust
 

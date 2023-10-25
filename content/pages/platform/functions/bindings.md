@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
@@ -233,7 +233,7 @@ $ npm install @cloudflare/ai
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 export async function onRequest(context) {
   const ai = new Ai(context.env.AI);
@@ -248,7 +248,7 @@ export async function onRequest(context) {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-import { Ai } from '@cloudflare.com/ai'
+import { Ai } from '@cloudflare/ai'
 
 interface Env {
   AI: any;

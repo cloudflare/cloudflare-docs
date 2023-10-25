@@ -80,7 +80,7 @@ Deletes the vector IDs provided from the current index. Returns a count of the I
 ### Retrieve index details
 
 ```ts
-const details = await env.YOUR_INDEX.details();
+const details = await env.YOUR_INDEX.describe();
 ```
 
 Retrieves the configuration of a given index directly, including its configured `dimensions` and distance `metric`.

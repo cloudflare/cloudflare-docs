@@ -18,7 +18,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 
-5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -54,7 +54,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims):
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
     2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
-    3. Under **Optional configurations**, enter the claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+    3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity)
 
 16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
