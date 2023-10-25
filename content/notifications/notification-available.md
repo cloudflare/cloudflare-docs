@@ -498,7 +498,7 @@ If you do not have auto advertisement enabled, you need to advertise your IP pre
 
 **Who is it for?**
 
-Magic Transit and Magic WAN customers who wish to receive Magic Tunnel health alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
+Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
 
 **Other options / filters**
 
