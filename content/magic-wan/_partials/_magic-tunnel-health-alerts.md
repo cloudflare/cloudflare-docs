@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName
+inputParameters: productName;;workflow
 ---
 
 # Configure Magic Tunnel health alerts
@@ -29,6 +29,8 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
+
+$2
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
