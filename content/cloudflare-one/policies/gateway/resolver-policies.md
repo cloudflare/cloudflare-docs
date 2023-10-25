@@ -17,11 +17,11 @@ By default, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's pub
 
 You may use custom resolver policies if you require access to non-publicly routed domains, need to use a protected DNS service, or want to simplify DNS management for multiple locations.
 
-## Resolver connections
+## Custom resolver connections
 
-Resolver policies support TCP and UDP connections. Endpoints can be behind IPv4, IPv6, or a [Magic tunnel](/magic-transit/how-to/configure-tunnels/).
+Resolver policies support TCP and UDP connections. Custom resolvers can point to the Internet via IPv4 or IPv6, or to a private network service, such as a [Magic tunnel](/magic-transit/how-to/configure-tunnels/).
 
-Policies default to port `53`.
+Custom resolvers default to port `53`. You can change which port your resolver uses by customizing it in your policy.
 
 ## Create a resolver policy
 
