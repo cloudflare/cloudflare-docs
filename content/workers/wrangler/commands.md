@@ -1561,12 +1561,12 @@ wrangler pages project list
 Create a new Cloudflare Pages project.
 
 ```sh
-wrangler pages project create [<PROJECT_NAME>] [OPTIONS]
+wrangler pages project create <PROJECT_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `PROJECT_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `PROJECT_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of your Pages project.
 - `--production-branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the production branch of your project.
@@ -1649,7 +1649,7 @@ After starting `wrangler pages deployment tail`, you will receive a live stream 
 Deploy a directory of static assets as a Pages deployment.
 
 ```sh
-wrangler pages deploy [<DIRECTORY>] [OPTIONS]
+wrangler pages deploy <DIRECTORY> [OPTIONS]
 ```
 
 {{<definitions>}}
