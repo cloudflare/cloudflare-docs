@@ -34,7 +34,7 @@ $2
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
-3. Locate **Magic Transit** > **Magic Tunnel Health Check Alert**, and choose **Select** to add a notification.
+3. Select **Magic Transit** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
 4. Enter a name and description for the notification.
 5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
 6. Choose the tunnels you want to receive alerts for.
