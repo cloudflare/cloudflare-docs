@@ -186,11 +186,11 @@ export default {
 
 In the code above, you:
 
-1. Define a binding to our D1 database in our TypeScript code. This binding matches the `binding` value we set in `wrangler.toml` under `[[d1_databases]]`
-2. Query our database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
-3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, we would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against our application and deleting or otherwise modifying your database.
+1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`
+2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
+3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
 4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
-5. Return our query results, if any, in JSON format with `Response.json(results)`.
+5. Return your query results, if any, in JSON format with `Response.json(results)`.
 
 After configuring your Worker, you can test your project locally before you deploy globally.
 
