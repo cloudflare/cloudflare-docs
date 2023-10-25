@@ -944,8 +944,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
-2. {{<render file="_errors.md">}}
+Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
 
 {{</details>}}
 
