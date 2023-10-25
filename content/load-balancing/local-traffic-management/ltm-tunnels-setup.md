@@ -55,6 +55,8 @@ $ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 
 Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each origin when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP origins.
 
+The specific configuration will vary depending on your use case. Refer to the following steps to understand the workflow.
+
 1. [Create the Load Balancing monitor](/load-balancing/monitors/create-monitor/) according to your needs.
 2. [Create the origin pool](/load-balancing/pools/create-pool/) specifying your private origin IP addresses and corresponding virtual networks.
 

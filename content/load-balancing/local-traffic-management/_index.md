@@ -17,7 +17,7 @@ In order to support not only public IPs but also virtual IPs and private IPs as 
 
 LTM on-ramps refer to the path between the end-user request and the Cloudflare network.
 
-While WARP allows you to control exactly what clients will be able to reach a load balancer pointing to a private application, Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming or video conferences, for example.
+While WARP allows you to control exactly what clients will be able to reach a load balancer pointing to a private application, Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming, or video conferences, for example.
 
 ### WARP
 
