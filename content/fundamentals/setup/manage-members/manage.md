@@ -43,3 +43,9 @@ Learn how to add new account members, edit or revoke their permissions and acces
 {{<render file="_remove-account-members.md" productFolder="fundamentals">}}
 
 [^1]: {{<render file="_account-member-manage-limitation.md">}}
+
+## Super Administrator access
+
+If you are a Super Administrator for an account that has existing domains and you decide to leave the account, you can invite a new Super Administrator who will have access to the same account privileges.
+
+You can delete your user as a Super Administrator, but you cannot delete your account. Other Super Administrators will continue to have access to the appropriate privileges to manage the account, including billing information.
