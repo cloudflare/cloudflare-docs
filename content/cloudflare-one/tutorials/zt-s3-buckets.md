@@ -30,7 +30,12 @@ From the AWS dashboard, navigate to the **VPC dashboard** > **Virtual private cl
 6. Under Policy, select **Full access**
 7. Click **Create endpoint**
 
-After the VPC endpoint is created, there will be a new entry in the VPC route table with a 
+After the VPC endpoint is created, there will be a new entry in the VPC route table with the target being the VPC endpoint, in the format `vpce-xxxxxxxxxxxxxxxxx`.
+
+### 2. Set up a bucket policy on the S3 bucket so that the VPC can access the bucket
+
+From the AWS dashboard, navigate to the **S3 dashboard** > **Buckets** > `your-S3-bucket` > **Permissions**
+
 
 
 
