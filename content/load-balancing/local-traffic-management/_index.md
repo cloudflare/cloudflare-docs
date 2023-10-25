@@ -13,22 +13,6 @@ In order to support not only public IPs but also virtual IPs and private IPs as 
 
 ---
 
-## On-ramps
-
-LTM on-ramps refer to the path between the end-user request and the Cloudflare network.
-
-### WARP
-
-Using [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/) as on-ramp allows you to control exactly what clients will be able to reach a load balancer pointing to a private application.
-
-### Spectrum
-
-Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming, or video conferences, for example.
-
-Refer to [Add load balancing to Spectrum applications](/load-balancing/additional-options/spectrum/) for more details on how to set this up.
-
----
-
 ## Off-ramps
 
 Off-ramps, on the other hand, create a direct and secure way for Cloudflare to connect into your networks that are not publicly available.
@@ -44,6 +28,24 @@ Currently, to be able to connect to private IP origins, Cloudflare load balancer
 Once the origin and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
 Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
+
+---
+
+## On-ramps
+
+LTM on-ramps refer to the path between the end-user request and the Cloudflare network.
+
+### WARP
+
+Using [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/) as on-ramp allows you to control exactly what clients will be able to reach a load balancer pointing to a private application.
+
+Refer to [Reach private load balancers with WARP](/load-balancing/local-traffic-management/ltm-warp-setup/) for more guidance.
+
+### Spectrum
+
+Cloudflare Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming, or video conferences, for example.
+
+Refer to [Add load balancing to Spectrum applications](/load-balancing/additional-options/spectrum/) for more details on how to set this up.
 
 ---
 
