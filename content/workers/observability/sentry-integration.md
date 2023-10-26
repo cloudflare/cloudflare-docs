@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Sentry integration (beta)
+meta:
+  description: Connect to a Sentry project from your Worker to automatically send errors and uncaught exceptions to Sentry.
 ---
 
 {{<heading-pill style="beta">}}Sentry integration{{</heading-pill>}}
