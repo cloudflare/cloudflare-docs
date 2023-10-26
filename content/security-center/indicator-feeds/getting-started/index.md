@@ -8,11 +8,13 @@ meta:
 
 # Overview
 
-In the simplest terms, there are providers of threat intelligence data and subscribers of that data.
+In the simplest terms, there are providers and subscribers of our threat intelligence data.
 
-A provider is an organization that has a set of data that they are interested in sharing with other Cloudflare organizations. Any organization can become a provider. Examples of current providers are US Government Cyber Defense groups such as the NSA, CSS, CISA and JCDC. If you have interest in becoming a provider, please reach out to your account team. 
+A provider is an organization that has a set of data that they are interested in sharing with other Cloudflare organizations. Any organization can be a provider. Examples of current providers are US Government Cyber Defense groups. 
 
 Subscribers can be any Cloudflare customer that wants to secure their environment further by creating rules based on provider datasets. Subscribers must be authorized by a provider. Authorization is granted using the [Indicator Feeds permissions endpoint](/api/operations/custom-indicator-feeds-add-permission). 
+
+If your organization has interest in becoming a provider or a subscriber, please reach out to your account team, who will help faciliate the required authorization. 
 
 ## Get started
 
