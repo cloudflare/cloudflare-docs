@@ -8,15 +8,12 @@ meta:
 
 # Zone-level Authenticated Origin Pulls
 
-When you enable Authenticated Origin Pulls for a zone, all proxied traffic to your zone is authenticated at the origin web server.
+{{<render file="_aop-setup-intro.md" withParameters="zone-level;;your zone">}} <br />
 
 ## Before you begin
 
-Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
-
-## 1. Place the certificates
-
-First, upload a certificate to your origin and, if it is a custom certificate, also upload it to Cloudflare.
+* Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
+* Decide between using the Cloudflare certificate or a custom certificate (recommended).
 
 {{<Aside type="warning">}}
 
@@ -26,8 +23,13 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 {{</Aside>}}
 
-{{<tabs labels="Custom certificate | Cloudflare certificate">}}
-{{<tab label="custom certificate" no-code="true">}}
+## 1. Place the certificates
+
+First, upload a certificate to your origin and, if it is a custom certificate, also upload it to Cloudflare. This is the client certificate that Cloudflare will present when sending outbound requests to your origin server.
+
+
+{{<tabs labels="Custom certificate (recommended) | Cloudflare certificate">}}
+{{<tab label="custom certificate (recommended)" no-code="true">}}
 
 To use a custom certificate:
 

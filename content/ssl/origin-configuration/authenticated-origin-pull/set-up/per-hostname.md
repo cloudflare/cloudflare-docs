@@ -8,7 +8,9 @@ meta:
 
 # Per-hostname Authenticated Origin Pulls
 
-When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+{{<render file="_aop-setup-intro.md" withParameters="per-hostname;;the specified hostname">}} <br />
+
+You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
 
 {{<Aside type="warning">}}
 Per-hostname Authenticated Origin Pulls can only be configured via API. The Authenticated Origin Pulls setting in **SSL/TLS** > **Origin Server** is only for enabling the zone-level configuration.
