@@ -99,7 +99,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
-| BYOIP | ⚫️ | ✅ | ⚫️ |
+| BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
 | Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
@@ -155,4 +155,5 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="23">}}[US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing &amp; Inspection Boundary**.{{</fnentry>}}
 {{<fnentry num="24">}}Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).{{</fnentry>}}
 {{<fnentry num="25">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
+{{<fnentry num="26">}}BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
 {{</fnsection>}}
