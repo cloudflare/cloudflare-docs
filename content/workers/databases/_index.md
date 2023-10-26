@@ -6,6 +6,8 @@ weight: 9
 
 # Databases
 
-{{<directory-listing>}}
+Connect to a database for use within your Worker project.
+
+{{<directory-listing showDescriptions="true">}}
 
 
