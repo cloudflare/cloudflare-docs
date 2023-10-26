@@ -12,7 +12,8 @@ If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connecti
 
 You can modify the Cloudflare Tunnel service with one or more [general-purpose tunnel parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/).
 
-### Linux
+{{<tabs labels="Linux | macOS | Windows">}}
+{{<tab label="linux" no-code="true">}}
 
 On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudflared.service`. To configure your tunnel on Linux:
 
@@ -40,7 +41,8 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    RestartSec=5s
    ```
 
-### macOS
+{{</tab>}}
+{{<tab label="macos" no-code="true">}}
 
 On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on macOS:
 
@@ -92,7 +94,8 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
    $ sudo launchctl start com.cloudflare.cloudflared
    ```
 
-### Windows
+{{</tab>}}
+{{<tab label="windows" no-code="true">}}
 
 On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudflared`. To configure your tunnel on Windows:
 
@@ -110,6 +113,9 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 ![Modify cloudflared service in the Registry Editor](/images/cloudflare-one/connections/connect-apps/remote-management-windows.png)
 
+{{</tab>}}
+{{</tabs>}}
+
 ## Update origin configuration
 
 You can also configure how `cloudflared` sends requests to your [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) services.
@@ -122,3 +128,9 @@ You can also configure how `cloudflared` sends requests to your [public hostname
 6. Select **Save hostname**.
 
 The new configuration is now in effect.
+
+## Tunnel permissions
+
+A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel. You can get a tunnel's token from the dashboard or via the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
+
+Account members with Cloudflare Access and DNS [permissions](/cloudflare-one/roles-permissions/) will be able to create, delete, and configure all tunnels for the account.
