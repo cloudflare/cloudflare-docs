@@ -25,15 +25,13 @@ You can protect your authoritative nameservers from DDoS attacks by enabling [DN
 
 ## Create a resolver policy
 
-Your DNS resolver will resolve requests to the specified hostname.
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **DNS**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
 2. Select **Add a policy**.
-3. Create an Allow expression that resolves your desired hostname. For example:
+3. Create an expression for your desired traffic. For example, you can resolve a hostname for an internal service:
 
-    | Selector | Operator | Value                  | Action |
-    | -------- | -------- | ---------------------- | ------ |
-    | Host     | in       | `internal.example.com` | Allow  |
+    | Selector | Operator | Value                  |
+    | -------- | -------- | ---------------------- |
+    | Host     | in       | `internal.example.com` |
 
 4. In **Select DNS resolver**, choose _Configure custom DNS resolvers_.
 5. Enter the IP addresses of your custom DNS resolver.
