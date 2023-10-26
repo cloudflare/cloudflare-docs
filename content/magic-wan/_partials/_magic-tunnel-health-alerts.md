@@ -46,9 +46,9 @@ $2
  
 An example of the API configuration for Magic Tunnel health alerts is provided below:
 
-```js
+```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/policies \
---header 'Authorization: Bearer undefined' \
+--header 'Authorization: Bearer <API_TOKEN>' \
 --header 'Content-Type: application/json' \
 --data '{
     "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
