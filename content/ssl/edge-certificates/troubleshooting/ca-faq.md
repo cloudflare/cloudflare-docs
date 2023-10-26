@@ -44,6 +44,48 @@ You can find CAA records associated with every Cloudflare CA in the [certificate
 
 You can use Cloudflare [CFSSL trust store](https://github.com/cloudflare/cfssl_trust), which includes all of the CAs that are used by Cloudflare managed certificates.
 
+### How can I check which CAs are used for certificates in the different zones of my account?
+
+You can use [the certificate-packs-list-certificate-packs API endpoint](/api/operations/certificate-packs-list-certificate-packs) to get details on all the certificate pack for a zone.
+
+You'd need to use a script to get the CA details for all the cerificates from all the zones in your account.
+This example of shell script might be useful:
+
+```shell script
+#!/bin/bash
+
+#Define the variables for authentication
+API_KEY=XXXXX
+EMAIL=XXXXX
+
+# Define the Account ID on which the script will run
+ACCOUNT_ID=XXXXX
+
+# Get a list of all zones in the given account
+
+ZONES=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?account.id=$ACCOUNT_ID" \
+-H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $API_KEY" | jq -r '.result[].id')
+
+# For each zone, get the list of certificates
+
+while IFS= read -r zones; do
+
+        echo -e "\n========================="
+        echo Zone ID: $zones
+
+        # If you uncomment this part, the list will be exported to output.csv
+        # curl -s "https://api.cloudflare.com/client/v4/zones/$zones/ssl/certificate_packs" \
+        # -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $API_KEY" | jq -r '.result[] | .id,.type,.hosts,.certificate_authority' >> output.csv
+
+        CERT_PACKS=$(curl -s "https://api.cloudflare.com/client/v4/zones/$zones/ssl/certificate_packs" \
+        -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $API_KEY" | jq -r '.result[] | .id,.type,.hosts,.certificate_authority')
+        [ -z "$CERT_PACKS" ] && echo "No certificates" || echo -e "Certificates: \n$CERT_PACKS"
+        echo =========================
+
+done <<< "$ZONES"
+``` 
+
+
 ## Universal SSL
 
 ### I am using Universal SSL and I would like to use a different CA. How can I do that?  
