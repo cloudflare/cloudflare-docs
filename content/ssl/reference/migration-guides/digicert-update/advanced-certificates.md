@@ -15,11 +15,11 @@ On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 {{<Aside type="warning">}}
 
-The offboarding for advanced certificate renewals has been postponed from October 11, 2023 to October 23, 2023.
+The offboarding for advanced certificate renewals has been postponed and will start gradually rolling out on October 26, 2023.
 
 {{</Aside>}}
 
-On **October 23, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
+On **October 26, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
 {{<Aside type="warning">}}
 
@@ -50,13 +50,13 @@ If your system integrates with the Cloudflare API to [order advanced certificate
 - The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 - The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
 
-### Changes after October 23, 2023
+### Changes after October 26, 2023
 
-The following changes will automatically affect certificates that are renewed after October 23, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate.
+The following changes will automatically affect certificates that are renewed after October 26, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate.
 
 #### Certificate authorities
 
-DigiCert certificates renewed after October 23, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
+DigiCert certificates renewed after October 26, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
