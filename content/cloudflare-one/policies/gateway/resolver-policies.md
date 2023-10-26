@@ -15,19 +15,17 @@ Only available on Enterprise plans.
 
 By default, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's public DNS resolver, for resolution. Enterprise users can instead create Gateway policies to route DNS requests to custom resolvers.
 
-You may use custom resolver policies if you require access to non-publicly routed domains, need to use a protected DNS service, or want to simplify DNS management for multiple locations.
+You may use resolver policies if you require access to non-publicly routed domains, such as private network services or internal resources. You may also use resolver policies if you need to access a protected DNS service or want to simplify DNS management for multiple locations.
 
-## Custom resolver connections
+## Resolver connections
 
-Resolver policies support TCP and UDP connections. Custom resolvers can point to the Internet via IPv4 or IPv6, or to a private network service, such as a [Magic tunnel](/magic-transit/how-to/configure-tunnels/).
-
-Custom resolvers default to port `53`. You can change which port your resolver uses by customizing it in your policy.
+Resolver policies support TCP and UDP connections. Custom resolvers can point to the Internet via IPv4 or IPv6, or to a private network service, such as a [Magic tunnel](/magic-transit/how-to/configure-tunnels/). Policies default to port `53`. You can change which port your resolver uses by customizing it in your policy.
 
 You can protect your authoritative nameservers from DDoS attacks by enabling [DNS Firewall](/dns/dns-firewall/).
 
 ## Create a resolver policy
 
-Your custom DNS resolver will resolve requests to the specified hostname.
+Your DNS resolver will resolve requests to the specified hostname.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **DNS**.
 2. Select **Add a policy**.
