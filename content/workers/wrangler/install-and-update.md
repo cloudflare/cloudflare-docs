@@ -6,6 +6,8 @@ weight: 1
 
 # Install/Update Wrangler
 
+{{<render file="_wrangler_survey.md">}}
+
 Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler

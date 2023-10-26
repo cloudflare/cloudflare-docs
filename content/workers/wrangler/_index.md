@@ -8,4 +8,6 @@ meta:
 
 # Wrangler (command line)
 
+{{<render file="_wrangler_survey.md">}}
+
 {{<directory-listing>}}
