@@ -37,7 +37,7 @@ ___
 
 If you forget your account password:
 
-1\. Go to [](http://dash.cloudflare.com/forgot-email)[Password Reset](https://dash.cloudflare.com/password-reset).
+1\. Go to [](http://dash.cloudflare.com/forgot-email)[Password Reset](https://dash.cloudflare.com/forgot-password).
 
 2\. Enter your email address.
 
@@ -115,13 +115,13 @@ ___
 
 ## Cannot verify your email?
 
-For more help with email verification, refer to [Verify email address](/fundamentals/account-and-billing/account-setup/verify-email-address/).
+For more help with email verification, refer to [Verify email address](/fundamentals/setup/account-setup/verify-email-address/).
 
 ___
 
 ## Change your Cloudflare email address or password
 
-For more help, refer to [Change password or email address](/fundamentals/account-and-billing/account-maintenance/change-password-or-email/).
+For more help, refer to [Change password or email address](/fundamentals/account-and-billing/account-billing/change-password-or-email/).
 
 ___
 

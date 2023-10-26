@@ -4,7 +4,7 @@ pcx_content_type: how-to
 weight: 2
 ---
 
-{{<early-access>}}Protocol detection{{</early-access>}}
+{{<heading-pill style="early-access">}}Protocol detection{{</heading-pill>}}
 
 {{<Aside header="Availability">}}Protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
 

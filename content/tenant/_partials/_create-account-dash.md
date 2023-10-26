@@ -5,14 +5,11 @@ _build:
   list: never
 ---
 
-To create an account using the Cloudflare dashboard:
+To create an account under your tenant using the dashboard:
 
-1. Log into the [dashboard](https://dash.cloudflare.com).
-2. On the **Accounts** page, select **Add Account**.
-
-![Add a tenant account from the Accounts page](/images/tenant/add-tenant-account.png)
-
-3. Enter the **Account Name** and **Account Description**.
-4. Choose the **Tenant Unit**.
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **Tenants** > **Managed Accounts**.
+3. Select **Create Account**.
+4. Enter the **Account Name**, **Account Description**, and **Tenant Unit**.
 5. Choose the appropriate account subscription. 
 6. Select **Add Account**.

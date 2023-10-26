@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: Challenges
 weight: 4
-aliases:
-- /fundamentals/get-started/concepts/cloudflare-challenges/
 ---
 
 # Cloudflare challenges
@@ -12,7 +10,7 @@ When a website is protected by Cloudflare, there are several occasions when it w
 
 - The visitor's IP address has shown suspicious behavior online (as tracked by [Project Honeypot](http://www.projecthoneypot.org/search_ip.php)).
 - The website owner has blocked the country associated with the visitor's IP address.
-- The visitor's actions have activated a [firewall rule](/firewall/) enabled by the website owner.
+- The visitor's actions have activated a [WAF custom rule](/waf/custom-rules/) or a firewall rule enabled by the website owner.
 
 If the visitor passes the challenge, their request is allowed. If they fail, the request will be blocked.
 
@@ -24,7 +22,7 @@ If the visitor passes the challenge, their request is allowed. If they fail, the
 
 Managed challenges are where Cloudflare dynamically chooses the appropriate type of challenge based on the characteristics of a request. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
 
-Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various firewall rules.
+Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various custom rules.
 
 Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge, which may include but is not limited to:
 
@@ -36,15 +34,15 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 
 Currently, **Managed Challenge** actions are available in the following security products:
 
+- [WAF custom rules](/waf/custom-rules/)
+- [Rate limiting rules](/waf/rate-limiting-rules/)
+- [WAF Managed Rules](/waf/managed-rules/)
+- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](/bots/troubleshooting/#why-am-i-seeing-a-managed-challenge-action-for-waf-rules).
+- [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
 - [IP Access Rules](/waf/tools/ip-access-rules/)
 - [User Agent Blocking](/waf/tools/user-agent-blocking/)
-- [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)
-- [Custom rules](/waf/custom-rules/)
-- [WAF Managed Rules](/waf/managed-rules/)
-- [Rate limiting rules](/waf/rate-limiting-rules/)
-- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](/bots/troubleshooting/#why-am-i-seeing-a-managed-challenge-action-for-firewall-rules).
-- [Firewall rules](/firewall/)
-- [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
+- [Firewall rules](/firewall/) (deprecated)
+- [Rate Limiting (previous version, deprecated)](/waf/reference/legacy/old-rate-limiting/)
 
 ### JS challenge
 
@@ -93,7 +91,7 @@ When observing a Cloudflare Challenge page, a visitor could:
 
 ## Detecting a challenge page response
 
-When a request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated` header present and set to `challenge`. This header can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a simple and reliable way to identify whether a response is a challenge or not, enabling a web application to take appropriate action based on the result. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
+When a request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated` header present and set to `challenge`. This header can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a reliable way to identify whether a response is a challenge or not, enabling a web application to take appropriate action based on the result. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
 
 {{<Aside type="note">}}
 
@@ -118,9 +116,28 @@ fetch('/my-api-endpoint')
 
 For additional help, refer to [our FAQ for Challenges](/firewall/known-issues-and-faq#challenges).
 
+---
+
 ## Multi-language support
 
-Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser UI. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
+Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser user interface. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
+
+---
+
+## Favicon customization
+
+Cloudflare challenges take the favicon of your website using `GET /favicon.ico` and displays it on the challenge page.
+
+You can customize your favicon by using the snippet below.
+
+```html
+---
+header: HTML element
+---
+<link rel="shortcut icon" href=“<FAVICON_LINK>”/>
+```
+
+---
 
 ## Common issues
 
@@ -132,7 +149,7 @@ Challenges are not supported by Microsoft Internet Explorer. If you are currentl
 
 When a request is sent with a referer header, the user will receive a challenge page as a response. Upon solving the challenge page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
 
-You can add tracking scripts to challenge pages to capture the correct referer header on the initial request. 
+You can add tracking scripts to challenge pages to capture the correct referer header on the initial request.
 
 ### Cross-origin resource sharing (CORS) preflight requests
 

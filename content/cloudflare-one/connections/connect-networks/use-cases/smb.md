@@ -19,25 +19,25 @@ While SMB was developed for Microsoft Windows, Samba provides SMB connectivity f
 
 ## Connect to SMB server with WARP to Tunnel
 
-{{<render file="_warp-to-tunnel-intro.md">}}
+{{<render file="tunnel/_warp-to-tunnel-intro.md">}}
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/). You can skip the connect an application step and go straight to connecting a network.
+1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
 
 2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
 
-3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
+3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
 
 ### 2. Set up the client
 
 In order for devices to connect to your Zero Trust organization, you will need to:
 
-{{<render file="_warp-to-tunnel-client.md">}}
+{{<render file="tunnel/_warp-to-tunnel-client.md">}}
 
 ### 3. Route private network IPs through WARP
 
-{{<render file="_warp-to-tunnel-route-ips.md">}}
+{{<render file="tunnel/_warp-to-tunnel-route-ips.md">}}
 
 ### 4. Connect as a user
 
@@ -60,11 +60,11 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 ## Connect to SMB server with `cloudflared access`
 
-{{<render file="_tunnel-cloudflared-access.md">}}
+{{<render file="tunnel/_cloudflared-access.md">}}
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `smb.example.com`).
 

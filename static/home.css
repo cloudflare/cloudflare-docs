@@ -497,30 +497,6 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
-    .ZTHeroImage {
-        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-        background-repeat: no-repeat;
-        margin: 0 auto;
-        position: relative;
-        box-shadow: 0 0 0px .5px white inset;
-        margin-top: 3em;
-    }
-}
-
-@media (min-width:768px) {
-    [theme=dark] .ZTHeroImage {
-        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-        box-shadow: 0 0 0px .5px #1d1f20 inset;
-    }
-}
-
-@media (max-width:768px) {
-    .ZTHeroImage {
-        background-image: none;
-    }
-}
-
 .HeroBlockGrid {
     padding: 40px 0;
     background: #e2f5fa;
@@ -788,7 +764,6 @@ html[is-site-page] .DocsContent {
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-    margin-bottom: 80px;
     justify-content: space-between;
 }
 
@@ -887,6 +862,7 @@ html[is-site-page] .DocsContent {
 .SiteFooter {
     display: flex;
     align-items: stretch;
+    justify-content: center;
     width: 100%;
     flex-wrap: wrap;
     max-width: var(--docs-max-page-width);
@@ -894,6 +870,13 @@ html[is-site-page] .DocsContent {
     margin-right: auto;
     gap: 6em;
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
+}
+
+@media (max-width:1123px) {
+.SiteFooter {
+    justify-content: flex-start;
+}
+
 }
 
 .SiteFooterItem ul,
@@ -940,7 +923,7 @@ a {
 }
 
 .FeaturedContentBlock {
-    padding-top: 80px;
+    padding-top: 40px;
 }
 
 .FeatureContentWithImage {
@@ -997,9 +980,6 @@ a {
 }
 
 @media (max-width:768px) {
-    .FeaturedContentSection {
-        margin-top: 5em;
-    }
 
     .FeatureContentGrid {
         margin-bottom: .8em;
@@ -3753,11 +3733,11 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     padding-left: .5em
 }
 
-.viewMoreChangesContainer {
+.viewMoreContainer {
     width: 100%;
 }
 
-.viewMoreChangesButton {
+.viewMoreButton {
     margin: auto;
     width: 12em;
     height: 2em;
@@ -3766,7 +3746,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     cursor: pointer;
 }
 
-.viewMoreChangesButton:hover {
+.viewMoreButton:hover {
     text-decoration: underline;
     transition: text-decoration 0.5s ease-in-out;
 }

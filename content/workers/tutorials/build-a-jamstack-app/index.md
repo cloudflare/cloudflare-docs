@@ -15,7 +15,7 @@ layout: single
 
 ## Overview
 
-In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/workers/runtime-apis/kv/).
+In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
 ![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](/images/workers/tutorials/jamstack/finished.png)
 

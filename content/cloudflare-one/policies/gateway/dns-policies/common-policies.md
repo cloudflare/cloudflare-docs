@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Common policies
 weight: 1
+meta:
+    title: Common DNS policies
 ---
 
 # Common DNS policies
@@ -36,6 +38,10 @@ The following example includes two policies. The first policy allows the specifi
 ## Control IP version
 
 Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP address is used to egress to the origin server.
+
+{{<Aside type="note">}}
+To ensure traffic routes via your preferred IP version, disable **Display block page**.
+{{</Aside>}}
 
 ### Force IPv4
 

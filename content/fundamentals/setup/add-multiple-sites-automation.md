@@ -2,8 +2,6 @@
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add Multiple Sites via automation
-aliases:
-- /fundamentals/get-started/setup/add-multiple-sites-automation/
 ---
 
 # Add multiple sites via automation
@@ -25,7 +23,7 @@ ___
 
 To add multiple sites to Cloudflare via automation, you need:
 
-- An existing [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+- An existing [Cloudflare account](/fundamentals/setup/account-setup/create-account/).
 - Command line with `curl`
 - A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with one of the following permissions:
   - Zone-level `Administrator`

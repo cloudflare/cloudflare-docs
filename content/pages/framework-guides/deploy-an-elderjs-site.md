@@ -24,7 +24,7 @@ The Elder.js template includes a number of pages and examples showing how to bui
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 

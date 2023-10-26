@@ -38,7 +38,7 @@ To retrieve those values:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}} in Zero Trust under **Settings** > **Custom Pages**.
 
    ![Registering an application in Azure](/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -100,7 +100,9 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. (Optional) If you are using Azure AD groups, enable **Support Groups**.
 
-7. Select **Save**.
+7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+
+8. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 

@@ -54,7 +54,7 @@ Now that your Worker is published, you can select it in your Zaraz settings:
 
 Your Context Enricher will now run on all Zaraz requests in that given zone.
 
-## Example Worker Variables
+## Example Context Enricher
 
 ### Adding arbitrary information using an API
 

@@ -60,7 +60,7 @@ Optionally, you may use a theme with your new Jekyll site if you would like to s
 
 If you are migrating an existing Jekyll project to Pages, confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 

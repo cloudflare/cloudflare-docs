@@ -2,8 +2,6 @@
 title: Verify email address
 pcx_content_type: how-to
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-setup/verify-email-address/
 ---
 
 # Verify email address
@@ -12,7 +10,7 @@ For security reasons, Cloudflare attempts to verify the email address associated
 
 ## When creating your account
 
-When you first [create an account](/fundamentals/account-and-billing/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
+When you first [create an account](/fundamentals/setup/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
 
 To verify your email:
 
@@ -40,4 +38,14 @@ If you cannot find your verification email or your email has expired, request an
 
 ## Verification issues
 
-If you experience issues with your verification link, click the link in a different browser or an incognito window.
+If you experience issues with your verification link, you might have already verified your email address.
+
+To check:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **My Profile**.
+3. For **Email Address**, your email address will have `(verified)` added after it.
+
+If your email is still not verified, try clicking the verification link in a different browser or an incognito window. 
+
+If this still does not work, try [resending](#resend-verification-emails) the verification email to get a new verification link.

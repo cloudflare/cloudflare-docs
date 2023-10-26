@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: PUT examples
 weight: 5
+meta:
+  title: PUT examples - Firewall rules
 ---
 
 # PUT examples

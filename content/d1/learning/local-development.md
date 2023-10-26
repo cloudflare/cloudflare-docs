@@ -79,14 +79,14 @@ database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DAT
 preview_database_id = "DB" # Required for Pages local development
 ```
 
-You can then execute queries and/or run migrations against a local database as part of your local development process:
+You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to wrangler:
 
 ```sh
 $ wrangler d1 execute YOUR_DATABASE_NAME \
-  --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);" --local
+  --local --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);"
 ```
 
-The preceding command would execute queries the **local only** version of your D1 database.
+The preceding command would execute queries the **local only** version of your D1 database. Without the `--local` flag, the commands are executed against the remote version of your D1 database running on Cloudflare's network.   
 
 ## Persist data
 
@@ -148,7 +148,7 @@ describe("Test D1 Worker endpoint", () => {
       `NO_D1_WARNING=true wrangler d1 migrations apply db --local`
     );
     
-    worker = await unstable_dev("src/worker.ts", {
+    worker = await unstable_dev("src/index.ts", {
       experimental: { disableExperimentalWarning: true },
     });
   });

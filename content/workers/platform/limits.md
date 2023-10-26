@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Limits
+meta:
+  description: Cloudflare Workers plan and platform limits.
 ---
 
 # Limits
@@ -11,23 +13,20 @@ title: Limits
 
 | Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#unbound-usage-model), [Standard](/workers/platform/pricing/#standard-usage-model))|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
-| [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
+| [Worker startup time](#worker-startup-time)                                     | 400 ms    | 400 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
-| [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
-| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
 
-{{<Aside type="note">}}
+{{<render file="_limits_increase.md">}}
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
-
-{{</Aside>}}
+---
 
 ## Request limits
 
@@ -35,84 +34,58 @@ URLs have a limit of 16 KB.
 
 Request headers observe a total limit of 32 KB, but each header is limited to 16 KB.
 
-Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
+Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare account's plan, which is separate from your Workers plan. When the request body size of your `POST`/`PUT`/`PATCH` requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
 Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
-| Cloudflare Plan | Maximum body size |
-| --------------- | ----------------- |
-| Free            | 100MB             |
-| Pro             | 100MB             |
-| Business        | 200MB             |
-| Enterprise      | 500MB (by default)|
+| Cloudflare Plan | Maximum body size  |
+| --------------- | -------------------|
+| Free            | 100 MB             |
+| Pro             | 100 MB             |
+| Business        | 200 MB             |
+| Enterprise      | 500 MB (by default)|
 
 {{</table-wrap>}}
+
+---
 
 ## Response limits
 
 Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](/cache/concepts/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
+---
+
 ## Worker limits
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models)                         | [Unbound Usage Model](/workers/platform/pricing/#usage-models)                         |
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#unbound-usage-model)|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
 | [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/platform/javascript-apis/#consumer) |     |
-| [Duration](#duration)       |   none                                         |  none                                           | none                                  |
+| [Duration](#duration)       |   None                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
 
 ### Duration
 
-Duration is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker. There is no hard limit on the duration of a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
+Duration is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker. There is no hard limit on the duration of a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
 {{<Aside type="note">}}
 Cloudflare updates the Workers runtime a few times per week. When this happens, any in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated. While your application should follow the best practice of handling disconnects by retrying requests, this scenario is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
 {{</Aside>}}
 
----
 ### CPU time
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
-
-
 
 {{<Aside type="note">}}
 On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
 {{</Aside>}}
 
-
 ---
-
-## KV limits
-
-{{<table-wrap>}}
-
-| Feature                               | Free                  | Paid        |
-| ------------------------------------- | --------------------- | ----------  |
-| Reads                                 | 100,000 reads per day | unlimited   |
-| Writes to different keys              | 1,000 writes per day  | unlimited   |
-| Writes to same key                    | 1 per second          | 1 per second|
-| Operations/worker invocation          | 1000                  | 1000        |
-| Namespaces                            | 100                   | 100         |
-| Storage/account                       | 1 GB                  | unlimited   |
-| Storage/namespace                     | 1 GB                  | unlimited   |
-| Keys/namespace                        | unlimited             | unlimited   |
-| Key size                              | 512 bytes             | 512 bytes   |
-| Key metadata                          | 1024 bytes            | 1024 bytes  |
-| Value size                            | 25 MiB                | 25 MiB      |
-
-{{</table-wrap>}}
-
-{{<Aside type="note" header="Free versus Paid plan pricing">}}
-
-Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
-
-{{</Aside>}}
 
 ## Cache API limits
 
@@ -120,30 +93,21 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 | Feature                       | Free   | Bundled |
 | ----------------------------- | ------ | ------- |
-| [Max object size](#cache-api) | 512 MB | 512 MB  |
-| [Calls/request](#cache-api)   | 50     | 50      |
-| [Storage/request](#cache-api) | 5 GB   | 5 GB    |
+| [Max object size](#cache-api-limits) | 512 MB | 512 MB  |
+| [Calls/request](#cache-api-limits)   | 50     | 50      |
+| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    |
 
 {{</table-wrap>}}
 
-## Durable Objects limits
+- 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`.
 
-Durable Objects are only available on the Workers Paid plan.
+- 5 GB total `put()` per request.
 
-{{<table-wrap>}}
+{{<Aside type="note">}}
 
-| Feature                                    | Limit                                          |
-| ------------------------------------------ | ---------------------------------------------- |
-| [Number of objects](#durable-objects)      | unlimited                                      |
-| [Storage per account](#durable-objects)    | 50 GB (can be raised by contacting Cloudflare) |
-| [Storage per class](#durable-objects)      | unlimited                                      |
-| [Storage per object](#durable-objects)     | unlimited                                      |
-| [Key size](#durable-objects)               | 2048 bytes                                     |
-| [Value size](#durable-objects)             | 128 KiB                                        |
-| [WebSocket message size](#durable-objects) | 1 MiB                                          |
-| [CPU per request](#durable-objects)        | 30s                                            |
+The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
-{{</table-wrap>}}
+{{</Aside>}}
 
 ---
 
@@ -187,13 +151,13 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 ## Memory
 
-Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
+Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes. Note however, that nodes are occasionally evicted from memory.
 
-If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
+If a Worker processes a request that pushes the Worker over the 128 MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
-3. Find **Invocation Statuses** and examine _Exceeded Resources_.
+3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
@@ -205,15 +169,15 @@ A subrequest is any request that a Worker makes to another Internet resource usi
 
 ### How many subrequests can I make?
 
-The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
+The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request, regardless of usage model.
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of usage model.
 
 ### How long can a subrequest take?
 
 There is no set limit on the amount of real time a Worker may use. As long as the client which sent a request remains connected, the Worker may continue processing, making subrequests, and setting timeouts on behalf of that request.
 
-When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/workers/runtime-apis/fetch-event/), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
+When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
 
 ---
 
@@ -222,7 +186,7 @@ When the client disconnects, all tasks associated with that client’s request a
 While handling a request, each Worker is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
-- `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/workers/runtime-apis/kv/).
+- `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
 - `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
 - `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
@@ -247,13 +211,23 @@ There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
 
+---
+
 ## Worker size
 
-A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts.
+
+{{<render file="_limits_increase.md">}}
+
+---
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
+
+{{<render file="_limits_increase.md">}}
+
+---
 
 ## Number of Workers
 
@@ -265,27 +239,19 @@ App Workers do not count towards this limit.
 
 {{</Aside>}}
 
+---
+
 ## Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+
+{{<render file="_limits_increase.md">}}
 
 ## Number of routed zones per Worker
 
-When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
 
----
-
-## Cache API
-
-- 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`
-
-- 5 GBs total `put()` per-request
-
-{{<Aside type="note">}}
-
-The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
-
-{{</Aside>}}
+{{<render file="_limits_increase.md">}}
 
 ---
 
@@ -297,5 +263,14 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-- You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
-- Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
+
+Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+
+## Related resources
+
+Review other developer platform resource limits.
+
+- [KV limits](/kv/platform/limits/)
+- [Durable Object limits](/durable-objects/platform/limits/)
+- [Queues limits](/queues/platform/limits/)

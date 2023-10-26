@@ -1,7 +1,7 @@
 ---
 title: Exclude a prefix
 pcx_content_type: how-to
-weight: 5
+weight: 6
 ---
 
 # Exclude a prefix or a prefix subset

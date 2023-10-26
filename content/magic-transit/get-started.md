@@ -20,7 +20,7 @@ After your call with Cloudflare, complete the [prerequisites](/magic-transit/pre
 
 ## 3. Run pre-flight checks
 
-After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, Letter of Authorization (LOA), Internet Routing Registry (IRR), and maximum segment size (MSS) configurations.
+After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, Letter of Agency (LOA), Internet Routing Registry (IRR), and maximum segment size (MSS) configurations.
 
 ## 4. Advertise prefixes
 

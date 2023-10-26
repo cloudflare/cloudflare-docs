@@ -37,7 +37,7 @@ When resizing fails, the response body contains an error message explaining the 
 -  9420 — The origin server redirected to an invalid URL. Confirm settings at your origin and try again.
 -  9421 — The origin server redirected too many times. Confirm settings at your origin and try again.
 -  9504, 9505, & 9510 — The origin server could not be contacted because the origin server may be down or overloaded. Try again later.
--  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. Check your Workers and try again.
+-  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. Check your Workers and try again. This can also happen when using a `pages.dev` URL of a [Cloudflare Pages](/pages/) project. In that case, you can use a [Custom Domain](/pages/platform/custom-domains/) instead.
 -  9511 — The image format is not supported. Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) to learn about supported input and output formats.
 -  9522 — The image exceeded the processing limit. This may happen briefly after purging an entire zone or when files with very large dimensions are requested. If the problem persists, contact support.
 -  9424, 9516, 9517, 9518, 9522 & 9523 — Internal errors. Please contact support if you encounter these errors.

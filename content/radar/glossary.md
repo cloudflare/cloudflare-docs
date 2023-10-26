@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Glossary
-weight: 6
+weight: 7
 ---
 
 # Glossary
@@ -93,11 +93,13 @@ Countries contributing traffic to this AS, and their relative contribution as pe
 
 ## Internet Outages
 
-Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government direction. Outages may be sub-national or national in geographic scope, or may impact one or more ASNs.
+Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government directed shutdowns. Outages may be sub-national or national in geographic scope, or may impact one or more [ASNs](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). Some outages may be brief, lasting just a few minutes, while others can stretch on for months — the duration can be related, in part, to the underlying cause. Internet outages listed in the Cloudflare Radar Outage Center are notable drops in traffic that have generally been corroborated with third party-information, which may include a social media or status page post from a telecommunications provider, a news report, or industry/community mailing lists.
+
+An early warning signal that an Internet outage may be underway on a given network or in a given country is an anomalous drop in traffic as compared to historical traffic patterns and trends. Internet anomalies listed in the Cloudflare Radar Outage Center represent an algorithmically-observed anomalous drop in traffic for the listed entity. If a given entry is marked as verified, it means that we have manually corroborated the observed drop in traffic across multiple Cloudflare data sources and/or third-party sources such as [IODA](https://ioda.inetintel.cc.gatech.edu/), or third-party sources of information, such as those listed above. In the case of the latter, an associated Internet outage event will be opened, with the event listed in the Internet Outages table (and API).
 
 ## Internet traffic trends
 
-Trends observed in Internet traffic originating gloablly or within a given location or autonomous system within the selected time range, based on aggregated data from our network.
+Trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network.
 
 ## IP address geolocation
 
@@ -119,6 +121,9 @@ The Internet Quality Index estimates connection performance under average utiliz
 
 The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
 
+## Mobile Operating Systems
+
+The Mobile Operating Systems graph shows the distribution of mobile device requests by operating system, representing trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network. "Mobile device" includes phones and tablets only, and does not include other types of devices, such as those classified as desktops/laptops, smart TVs, or gaming consoles.
 
 ## Network-level DDoS Attacks
 
@@ -141,7 +146,7 @@ On Cloudflare Radar's Security & Attacks page, you can view connection tampering
 * **Immediately post-handshake (Post-ACK)**: Connections matching signatures for tampering after the receipt of a SYN packet and ACK packet, meaning the TCP connection was successfully established but the server did not receive any subsequent packets. These signatures can occur when the first packet from the client containing application-layer data gets dropped. Among these signatures, middleboxes may or may not inject RSTs to the server.
 * **After first data packet (Post-PSH)**: Connections matching signatures for tampering after the receipt of a packet with PSH flag set, following connection establishment. PSH packets typically contain data such as the Server Name Indication (SNI) in TLS or the HTTP Host that could trigger middlebox tampering.
 * **After multiple data packets (Later in Flow)**: Connections matching signatures for tampering later in the connection, after the transfer of multiple data packets. Tampering in these cases could be triggered by keywords later in a cleartext HTTP session, or by commercial devices that have visibility into encrypted traffic
-* **Normal** Connections that do not match any tampering signatures.
+* **None** Connections that do not match any tampering signatures.
 
 ## Traffic type filter
 
@@ -153,7 +158,7 @@ On Cloudflare Radar's Security & Attacks page, you can view connection tampering
 
 ## Trends
 
-Based on the aggregated HTTP/s metadata we see, we are able to to show trends about a diverse set of metrics, including the distribution of mobile device vs. desktop traffic, the percentage of traffic detected as coming from bots, and the distribution of user agents/browsers. We also provide insights into the usage of HTTPS and IPv6.
+Based on the aggregated HTTP/s metadata we see, we are able to show trends about a diverse set of metrics, including the distribution of mobile device vs. desktop traffic, the percentage of traffic detected as coming from bots, and the distribution of user agents/browsers. We also provide insights into the usage of HTTPS and IPv6.
 
 ## Verified bots
 

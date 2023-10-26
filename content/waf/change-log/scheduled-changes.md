@@ -4,7 +4,6 @@ pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
-rss: file
 ---
 
 # Scheduled changes
@@ -24,13 +23,13 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-09-11</td>
-      <td>2023-09-18</td>
-      <td>Disabled</td>
+      <td>2023-10-23</td>
+      <td>2023-10-30</td>
+      <td>Block</td>
+      <td>100609</td>
+      <td>...d59a59db</td>
+      <td>Keycloak - SSRF - CVE:CVE-2020-10770</td>
       <td>N/A</td>
-      <td>...e9245e46</td>
-      <td>SSRF - Cloud - Beta</td>
-      <td>This rule will replace ...25ba9d7c</td>
     </tr>
   </tbody>
 </table>

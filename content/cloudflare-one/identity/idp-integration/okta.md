@@ -18,7 +18,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 
-5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -44,16 +44,21 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 13. Fill in the following information:
 
-    - **Name**: Name your identity provider
-    - **App ID**: Enter your Okta Client ID.
-    - **Client secret**: Enter your Okta Client secret.
+    - **Name**: Name your identity provider.
+    - **App ID**: Enter your Okta client ID.
+    - **Client secret**: Enter your Okta client secret.
     - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
 
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims):
+    1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
+    2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
+    3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity)
 
-16. Select **Save**.
+16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+17. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 

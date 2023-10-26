@@ -35,7 +35,7 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.getElementById(hash);
+  let item = hash && document.getElementById(hash.toLowerCase());
   let timer =
     item &&
     setInterval(() => {

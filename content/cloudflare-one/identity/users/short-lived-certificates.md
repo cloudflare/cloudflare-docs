@@ -14,9 +14,10 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 ## 1. Secure the server behind Cloudflare Access
 
-Cloudflare Access short-lived certificates can work with any modern SSH server, whether it is behind Access or not. However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals. 
+Cloudflare Access short-lived certificates can work with any modern SSH server, whether it is behind Access or not. However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals.
 
 To secure your server behind Cloudflare Access:
+
 1. Connect the server to Cloudflare as a [public hostname route](/cloudflare-one/connections/connect-networks/use-cases/ssh/#1-connect-the-server-to-cloudflare-1).
 2. Create a [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) for the server.
 
@@ -28,7 +29,7 @@ If you do not wish to use Access, refer instead to our [SSH proxy instructions](
 
 Cloudflare Access will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure.
 
-{{<render file="_ssh-usernames.md">}}
+{{<render file="ssh/_usernames.md">}}
 
 ## 3. Generate a short-lived certificate public key
 
@@ -45,15 +46,15 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 1. Copy the public key generated from the dashboard in Step 2.
 
-{{<render file="_ssh-public-key.md">}}
+{{<render file="ssh/_public-key.md">}}
 
 ## 5. Modify your SSHD config
 
-{{<render file="_ssh-modify-sshd.md">}}
+{{<render file="ssh/_modify-sshd.md">}}
 
 ## 6. Restart your SSH server
 
-{{<render file="_ssh-restart-server.md">}}
+{{<render file="ssh/_restart-server.md">}}
 
 ## 7. Connect as a user
 

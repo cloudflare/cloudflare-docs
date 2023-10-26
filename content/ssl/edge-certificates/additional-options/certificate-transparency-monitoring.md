@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Certificate Transparency Monitoring
 weight: 3
+meta:
+  description: Certificate Transparency (CT) Monitoring is an opt-in feature in public beta that aims at improving security by allowing you to double-check any SSL/TLS certificates issued for your domain.
 ---
 
 # Certificate Transparency Monitoring

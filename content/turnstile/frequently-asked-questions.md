@@ -39,7 +39,7 @@ A full Turnstile Challenge Token Flow consists of a few things:
 * A challenge is solved on the front end and a token is harvested (solved).
 * The token is passed to siteverify, and it is consumed (siteverified).
 
-Visitor Solve Rate is the percentage of tokens that were issued but have not necessarily been siteverified compared to issued challenges.
+Visitor Solve Rate is the percentage of tokens that were solved but have not necessarily been siteverified compared to issued challenges.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -130,9 +130,11 @@ The siteverify API must not be called by the front end as this may reveal the se
 
 {{<faq-answer>}}
 
-The dummy sitekeys provided below can be used from any domain, including on `localhost`. 
+Dummy sitekeys can be used from any domain, including on `localhost`. 
 
 Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
+
+Refer to [Testing](/turnstile/reference/testing/) for more information. 
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -218,3 +220,31 @@ If you encounter an endless challenge loop, try disabling your browser extension
 
 {{</faq-answer>}}
 {{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="What languages does Turnstile support?" >}}
+{{<faq-answer>}}
+
+Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information. 
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Does Turnstile conform to WCAG 2.1 Level AA accessibility standard?" >}}
+{{<faq-answer>}}
+
+Yes, Turnstile is WCAG 2.1 Level AA compliant.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Can I use Turnstile on URI schemes such as `file://`?" >}}
+{{<faq-answer>}}
+
+No, Turnstile only works on `http://` and `https://` URI schemes. Other protocols such as `file://` are not supported.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
