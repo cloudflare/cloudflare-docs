@@ -2,6 +2,7 @@
 pcx_content_type: navigation
 title: DigiCert update
 weight: 2
+layout: single
 ---
 
 # DigiCert update
@@ -10,21 +11,23 @@ In the latter half of 2023, Cloudflare will begin deprecating DigiCert as a Cert
 
 {{<directory-listing>}}
 
-This change will not impact existing certificates issued from DigiCert that Cloudflare is currently serving, but it will impact new certificate orders and renewals.
-
 {{<Aside type="warning">}}
 
 The offboarding for advanced certificate renewals has been postponed from October 11, 2023 to October 23, 2023.
 
 {{</Aside>}}
 
-Refer to [CAs and certificates FAQ](/ssl/edge-certificates/troubleshooting/ca-faq/) for commonly asked questions that you may have.
+## Scope
 
-{{<Aside type="warning">}}
+This migration only affects [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) certificates where the certificate has been provisionned by Cloudflare using DigiCert as certificate authority.
 
-This migration only affects [Cloudflare Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) Certificates where the certificate has been provisionned by Cloudflare using DigiCert as Certificate Authority.
+Also, this change will not impact existing certificates issued from DigiCert that Cloudflare is currently serving, but it will impact new certificate orders and renewals.
 
-Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudlfare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [Custom certificates](/ssl/edge-certificates/custom-certificates/) are not in the scope and thus not affected by this migration.
+Consider each specific migration guide for actions you might have to take and refer to [CAs and certificates FAQ](/ssl/edge-certificates/troubleshooting/ca-faq/) for commonly asked questions about the Cloudflare offerings and CAs that are used.
+
+{{<Aside type="warning" header="Not affected">}}
+
+Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudlfare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
 
 {{</Aside>}}
 
