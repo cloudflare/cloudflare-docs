@@ -1,9 +1,9 @@
 ---
-type: table
-summary: Changes that were completed in 2020.
 pcx_content_type: changelog
 title: Historical (2020)
 weight: 10048
+meta:
+    description: Changes to WAF managed rulesets done in 2020.
 layout: list
 ---
 

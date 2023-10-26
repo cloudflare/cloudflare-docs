@@ -1,9 +1,9 @@
 ---
-type: table
-summary: Changes that were completed in 2018, before the changelog was made publicly available.
 pcx_content_type: changelog
 title: Historical (2018)
 weight: 10050
+meta:
+    description: Changes to WAF managed rulesets done in 2018, before the public changelog was available.
 layout: list
 ---
 

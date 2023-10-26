@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Historical (2021)
-weight: 10048
+weight: 10047
 meta:
   description: Changes to WAF managed rulesets done in 2021.
 layout: list
