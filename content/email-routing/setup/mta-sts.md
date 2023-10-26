@@ -49,6 +49,6 @@ max_age: 86400
 
 This says that you domain `example.com` enforces MTA-STS. Capable email clients will only deliver email to this domain over a secure connection to the specified MX servers. If no secure connection can be established the email will not be delivered.
 
-Email Routing also supports MTA-STS upstream, which greatly improves security when forwarding your Emails to service providers like Gmail or Microsoft, and others.
+Email Routing also supports MTA-STS upstream, which greatly improves security when forwarding your Emails to service providers like Gmail, Microsoft, and others.
 
 While enabling MTA-STS involves a few steps today, we aim to simplify things for you and automatically configure MTA-STS for your domains from the Email Routing dashboard as a future improvement.
