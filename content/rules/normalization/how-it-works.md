@@ -14,7 +14,7 @@ For example, consider a WAF custom rule that blocks requests whose URLs match `w
 
 The two available types of URL normalization are:
 
-* [RFC 3986 normalization](rfc-3986-normalization)
+* [RFC 3986 normalization](#rfc-3986-normalization)
 * [Cloudflare normalization](#cloudflare-normalization)
 
 The location where URL normalization will occur depends on the [configured settings](/rules/normalization/settings/).
@@ -36,8 +36,8 @@ The URL normalization performed according to [RFC 3986](https://www.ietf.org/rfc
 
 ## Cloudflare normalization
 
-When using the Cloudflare URL normalization, some extra normalization techniques will be applied to URLs of incoming requests, in the following execution order:
+When using the Cloudflare URL normalization, some extra normalization techniques will be applied to URLs of incoming requests, in the following order:
 
 1. Normalize back slashes (`\`) into forward slashes (`/`).
 2. Merge successive forward slashes (for example, `//` will be normalized to `/`).
-3. Perform the URL normalization according to RFC 3986 (described in the previous section).
+3. Perform [RFC 3986 normalization](#rfc-3986-normalization) of the resulting URL.
