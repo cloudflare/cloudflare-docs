@@ -6,7 +6,9 @@ weight: 3
 
 # Reply to emails from Workers
 
-{{<render file="_reply-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings):">}}
+You can reply to incoming emails with another new message and implement smart auto-responders programmatically, adding any content and context in the main body of the message. Think of a customer support email automatically generating a ticket and returning the link to the sender, an out-of-office reply with instructions when you are on vacation, or a detailed explanation of why you rejected an email.
+
+Reply to emails is a new method of the [`EmailMessage` object](/email-routing/email-workers/runtime-api/#emailmessage-definition) in the Runtime API. Here is how it works:
 
 ```js
 import { EmailMessage } from "cloudflare:email";
