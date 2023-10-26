@@ -31,9 +31,9 @@ async function handleRequest(request, env) {
 export class Location {
   constructor(state, env) {
     this.state = state;
-    // Upon construction, we do not have a location to provide.
+    // Upon construction, you do not have a location to provide.
     // This value will be updated as people access the Durable Object.
-    // When the Durable Object is evicted from memory, this will be reset./**
+    // When the Durable Object is evicted from memory, this will be reset.
     this.location = null
   }
 
@@ -43,8 +43,8 @@ export class Location {
 
     if (this.location == null) {
       response = new String(`
-This is the first request, we called the constructor, so this.location was null.
-We will set this.location to be your city: (${request.cf.city}). Try reloading the page.`);
+This is the first request, you called the constructor, so this.location was null.
+You will set this.location to be your city: (${request.cf.city}). Try reloading the page.`);
     } else {
       response = new String(`
 The Durable Object was already loaded and running because it recently handled a request.
@@ -53,7 +53,7 @@ Previous Location: ${this.location}
 New Location: ${request.cf.city}`);
     }
 
-    // We set the new location to be the new city.
+    // You set the new location to be the new city.
     this.location = request.cf.city;
     console.log(response);
     return new Response(response);
