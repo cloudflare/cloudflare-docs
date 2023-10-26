@@ -10,5 +10,5 @@ https://:project.pages.dev/*
   Link: <https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css>; rel=preload; as=style
 
 /
-  !Link: <https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js>; rel=preload; as=script
-  !Link: <https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css>; rel=preload; as=style
+  ! Link: <https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js>; rel=preload; as=script
+  ! Link: <https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css>; rel=preload; as=style
