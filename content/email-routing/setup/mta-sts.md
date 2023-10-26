@@ -33,7 +33,7 @@ To do this you need to deploy a simple Worker that allows Email clients to pull 
 
 ![MTA-STS Worker](/images/email-routing/mta-sts-worker.png)
 
-This Worker simply proxies https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt to your own domain. After deploying it, go to the Worker configuration, then **Triggers** > **Custom Domains** and **Add Custom Domain**. Type the subdomain `mta-sts.example.com`.
+2. This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain. After deploying it, go to the Worker configuration, then **Triggers** > **Custom Domains** and **Add Custom Domain**. Type the subdomain `mta-sts.example.com`.
 
 ![MTA-STS Worker Custom Domain](/images/email-routing/mta-sts-domain.png)
 
