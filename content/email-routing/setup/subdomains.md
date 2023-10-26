@@ -11,7 +11,7 @@ Email Routing is a [zone-level](/fundamentals/concepts/accounts-and-zones/#zones
 You can use Email Routing with any subdomain of any zone in your account. Follow these steps to add Email Routing features to a new subdomain:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and zone.
-2. Go to **Email** > **Email Routing** > **Settings** and click **Add subdomain**.
+2. Go to **Email** > **Email Routing** > **Settings**, and select **Add subdomain**.
 
 Once the subdomain is added and the DNS records are configured, you can see it in the **Settings** list under the **Subdomains** section.
 
