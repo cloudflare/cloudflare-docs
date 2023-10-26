@@ -78,7 +78,11 @@ Additional directives that influence cache behavior are listed below.
 
 ## Origin Cache-Control behavior
 
-The table below lists directives and their behaviors when Origin Cache-Control is disabled and when it's enabled.
+The following section covers the directives and behavioral conditions associated with enabling or disabling Origin Cache-Control.
+
+### Directives
+
+The table below lists directives and their behaviors when Origin Cache-Control is disabled and when it is enabled.
 
 <table>
   <tbody>
@@ -205,6 +209,8 @@ The table below lists directives and their behaviors when Origin Cache-Control i
   </tbody>
 </table>
 
+### Conditions
+
 Certain scenarios also affect Origin Cache-Control behavior when it is enabled or disabled.
 
 <table>
@@ -269,93 +275,71 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
 
 Review the examples below to learn which directives to use with the Cache-Control header to control specific caching behavior.
 
-<details>
-  <summary>Cache a static asset</summary>
-  <div>
-    <code>Cache-Control: public, max-age=86400</code>
-  </div>
-</details>
+{{<details header="Cache a static asset">}}
 
-<details>
-  <summary>Ensure a secret asset is never cached</summary>
-  <div>
-    <code>Cache-Control: no-store</code>
-  </div>
-</details>
+`Cache-Control: public, max-age=86400`
 
-<details>
-  <summary>Cache assets on browsers but not on proxy caches</summary>
-  <div>
-    <code>Cache-Control: private, max-age=3600</code>
-  </div>
-</details>
+{{</details>}}
 
-<details>
-  <summary>Cache assets in client and proxy caches, but prefer revalidation when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache</code>
-  </div>
-</details>
+{{<details header="Ensure a secret asset is never cache">}}
 
-<details>
-  <summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or
-    <code>Cache-Control: public, s-maxage=0</code>
-  </div>
-</details>
+`Cache-Control: no-store`
+  
+{{</details>}}
 
-<details>
-  <summary>Cache assets in proxy caches, but REQUIRE revalidation by any cache when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache, must-revalidate</code>
-  </div>
-</details>
+{{<details header="Cache assets on browsers but not on proxy cache">}}
 
-<details>
-  <summary>
-    Cache assets, but ensure the proxy does not modify it
-  </summary>
-  <div>
-    <code>Cache-Control: public, no-transform</code>
+`Cache-Control: private, max-age=3600`
+
+{{</details>}}
+
+{{<details header="Cache assets in client and proxy caches, but prefer revalidation when serve">}}
+
+`Cache-Control: public, no-cache`
+
+{{</details>}}
+
+{{<details header="Cache assets in proxy caches but REQUIRE revalidation by the proxy when serve">}}
+
+`Cache-Control: public, no-cache, proxy-revalidate` or `Cache-Control: public, s-maxage=0`  
+
+{{</details>}}
+
+{{<details header="Cache assets in proxy caches, but REQUIRE revalidation by any cache when serve">}}
+
+`Cache-Control: public, no-cache, must-revalidate`
+
+{{</details>}}
+
+{{<details header="Cache assets, but ensure the proxy does not modify it">}}
+
+`Cache-Control: public, no-transform`
 
 This configuration also disables transformation like gzip or brotli compression from our edge to your visitors if the original payload was served uncompressed.
 
-  </div>
-</details>
+{{</details>}}
 
-<details>
-  <summary>
-    Cache assets with revalidation, but allow stale responses if origin server is unreachable
-  </summary>
-  <div>
-    <code>Cache-Control: public, max-age=3600, stale-if-error=60</code>
+{{<details header="Cache assets with revalidation, but allow stale responses if origin server is unreachable">}}
+
+`Cache-Control: public, max-age=3600, stale-if-error=60`
 
 With this configuration, Cloudflare attempts to revalidate the content with the origin server after it has been in cache for 3600 seconds (one hour). If the server returns an error instead of proper revalidation responses, Cloudflare continues serving the stale resource for a total of one minute beyond the expiration of the resource.
 
-  </div>
-</details>
+{{</details>}}
 
-<details>
-  <summary>
-    Cache assets for different amounts of time on Cloudflare and in visitor browsers
-  </summary>
-  <div>
-    <code>Cache-Control: public, max-age=7200, s-maxage=3600</code>
-  </div>
-</details>
+{{<details header="Cache assets for different amounts of time on Cloudflare and in visitor browsers">}}
 
-<details>
-  <summary>
-    Cache an asset and serve while asset is being revalidated
-  </summary>
-  <div>
-    <code>Cache-Control: max-age=600, stale-while-revalidate=30</code>
+`Cache-Control: public, max-age=7200, s-maxage=3600`
+
+{{</details>}}
+
+{{<details header="Cache an asset and serve while asset is being revalidated">}}
+
+`Cache-Control: max-age=600, stale-while-revalidate=30`
 
 This configuration indicates the asset is fresh for 600 seconds. The asset can be served stale for up to an additional 30 seconds to parallel requests for the same resource while the initial synchronous revalidation is attempted.
 
-  </div>
-</details>
+{{</details>}}
 
 ## Interaction with other Cloudflare features
 

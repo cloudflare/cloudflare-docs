@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Known issues
+meta:
+  description: Known issues and bugs to be aware of when using Workers.
 ---
 
 # Known issues

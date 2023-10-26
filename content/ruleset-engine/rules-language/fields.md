@@ -592,6 +592,13 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-ray_id">
+      <td><code>cf.ray_id</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The Ray ID of the current request. A <a href="/fundamentals/reference/cloudflare-ray-id/">Ray ID</a> is an identifier given to every request that goes through Cloudflare.
+        </p>
+      </td>
+    </tr>
     <tr id="field-cf-threat_score">
         <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>

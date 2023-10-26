@@ -71,7 +71,7 @@ $ cat /etc/ssh/sshd_config
 
 3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) for your origin server.
 
-   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/).
+   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
 
 4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
 

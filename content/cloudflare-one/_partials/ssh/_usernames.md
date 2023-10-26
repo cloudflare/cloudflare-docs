@@ -13,9 +13,7 @@ For testing purposes, you can run the following command to generate a Unix user 
 $ sudo adduser jdoe
 ```
 
-<details>
-<summary>Advanced setup: Differing usernames</summary>
-<div>
+{{<details header="Advanced setup: Differing usernames">}}
 
 SSH certificates include one or more `principals` in their signature which indicate the Unix usernames the certificate is allowed to log in as. Cloudflare Access will always set the principal to the user's email address prefix. For example, when `jdoe@example.com` tries to connect, Access issues a short-lived certificate authorized for the principal `jdoe`.
 
@@ -81,5 +79,4 @@ AuthorizedPrincipalsCommandUser nobody
 
 Since this will put the security of your server entirely dependent on your Access configuration, make sure your [Access policies](/cloudflare-one/policies/access/policy-management/) are correctly configured.
 
-</div>
-</details>
+{{</details>}}

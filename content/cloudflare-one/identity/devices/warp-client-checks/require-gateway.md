@@ -8,16 +8,13 @@ meta:
 
 # Require Gateway
 
-<details>
-<summary>Feature availability</summary>
-<div>
+{{<details header="Feature availability">}}
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems       | WARP with Gateway                                                                                 | All plans                                                     |
 
-</div>
-</details>
+{{</details>}}
 
 With Require Gateway, you can allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/cloudflare-one/identity/devices/warp-client-checks/require-warp/), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 

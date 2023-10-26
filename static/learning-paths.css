@@ -113,7 +113,7 @@ html {
     margin-top: 3em;
     display: flex;
     flex-direction: column;
-    counter-reset: stepCounter;
+    counter-reset: lpstepCounter;
 }
 
 .learningPathModule:first-of-type {
@@ -339,7 +339,7 @@ label {
     padding-left: 1.5em;
   }
 
-  .stepCounter {
+  .lpstepCounter {
     padding-right: .35em;
     padding-left: .35em;
     margin-right: .5em;
@@ -348,7 +348,7 @@ label {
     font-weight: bold;
   }
   
-  .stepCounter::before {
-    content: counter(stepCounter);
-    counter-increment: stepCounter;
+  .lpstepCounter::before {
+    content: counter(lpstepCounter);
+    counter-increment: lpstepCounter;
   }

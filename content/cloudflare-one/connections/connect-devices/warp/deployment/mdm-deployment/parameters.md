@@ -28,7 +28,7 @@ Instructs the client to register the device with your organization. Registration
 
 ## Required for DNS-only policy enforcement
 
-This field is used to enforce DNS policies when deploying the client in DoH-only mode. 
+This field is used to enforce DNS policies when deploying the client in DoH-only mode.
 
 ### `gateway_unique_id`
 
@@ -36,7 +36,7 @@ Instructs the client to direct all DNS queries to a specific [Gateway DNS locati
 
 **Value Type:** `string`
 
-**Value:** Your [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
+**Value:** Your {{<glossary-tooltip term_id="DoH subdomain">}}DoH subdomain{{</glossary-tooltip>}}.
 
 ## Optional fields
 
@@ -48,8 +48,8 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-- `1dot1` &mdash; Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh-subdomain). All other traffic is handled by your device's default mechanisms.
-- `warp` &mdash; (default) All traffic sent through [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
+* `1dot1` — Gateway enforcement of DNS policies only through {{<glossary-tooltip term_id="DoH subdomain">}}DoH{{</glossary-tooltip>}}. All other traffic is handled by your device's default mechanisms.
+* `warp` — (default) All traffic sent through {{<glossary-tooltip term_id="Cloudflare Gateway">}}Cloudflare Gateway{{</glossary-tooltip>}} via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
 
 New service modes such as **Proxy only** are not supported as a value and must be configured in Zero Trust.
 
@@ -61,8 +61,8 @@ Controls the visibility of the onboarding screens that ask the user to review th
 
 **Value:**
 
-- `false` &mdash; Screens hidden.
-- `true` &mdash; (default) Screens visible.
+* `false` — Screens hidden.
+* `true` — (default) Screens visible.
 
 ### `switch_locked`
 
@@ -72,8 +72,8 @@ Allows the user to turn off the WARP switch and disconnect the client.
 
 **Value:**
 
-- `false` &mdash; (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-- `true` &mdash; The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
+* `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+* `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
@@ -85,14 +85,14 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
 **Value Type:** `integer`
 
 **Value:**
 
-- `0` &mdash; Allow the switch to stay in the off position indefinitely until the user turns it back on.
-- `1` to `1440` &mdash; Turn switch back on automatically after the specified number of minutes.
+* `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
+* `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
 
 {{<Aside>}}
 This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
@@ -106,8 +106,8 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 
 **Value:**
 
-- `https://<support.example.com>` &mdash; Use an `https://` link to open your company's internal help site.
-- `mailto:<yoursupport@example.com>` &mdash; Use a `mailto:` link to open your default mail client.
+* `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
+* `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
 
 ### `override_api_endpoint`
 
@@ -117,7 +117,7 @@ This functionality is intended for use with a Cloudflare China local network par
 
 **Value Type:** `string`
 
-**Value:** `1.2.3.4` &mdash; Redirect all client orchestration API calls to `1.2.3.4`.
+**Value:** `1.2.3.4` — Redirect all client orchestration API calls to `1.2.3.4`.
 
 The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
@@ -129,7 +129,7 @@ This functionality is intended for use with a Cloudflare China local network par
 
 **Value Type:** `string`
 
-**Value:** `1.2.3.4` &mdash; Redirect all DNS over HTTPS lookups to `1.2.3.4`.
+**Value:** `1.2.3.4` — Redirect all DNS over HTTPS lookups to `1.2.3.4`.
 
 The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
@@ -141,7 +141,7 @@ This functionality is intended for use with a Cloudflare China local network par
 
 **Value Type:** `string`
 
-**Value:** `1.2.3.4:500` &mdash; Redirect all WARP traffic to `1.2.3.4` on port `500`.
+**Value:** `1.2.3.4:500` — Redirect all WARP traffic to `1.2.3.4` on port `500`.
 
 The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
 

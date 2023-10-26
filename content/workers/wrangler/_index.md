@@ -1,7 +1,7 @@
 ---
 title: Wrangler
 pcx_content_type: navigation
-weight: 10
+weight: 12
 meta:
   title: Wrangler (command line)
 ---

@@ -5,7 +5,6 @@
   "repository": "cloudflare/cloudflare-docs",
   "description": "Cloudflare Developer Docs",
   "scripts": {
-    "algolia-crawl": "node bin/algolia-crawl.js",
     "crawl-api-links": "node bin/crawl-api-links.js",
     "dev:hugo": "hugo --environment development -D -w",
     "dev:wrangler": "wrangler pages dev -- vite",

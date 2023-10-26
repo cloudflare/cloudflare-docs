@@ -17,7 +17,7 @@ If you are on the Pro, Business, or Enterprise plan you can customize and brand 
 avoid breaking specific API endpoints and other web applications.
 {{</Aside>}}
 
-Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
+Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard.
 
 {{<Aside type="note">}}
 Enable Origin Error Pages excludes errors 520 to 527.
@@ -91,7 +91,6 @@ Only one page-specific custom error token can be used per page.
 | ::IM\_UNDER\_ATTACK\_BOX:: | JS Challenge |
 | ::CLOUDFLARE\_ERROR\_500S\_BOX:: | 5XX Errors |
 | ::CLOUDFLARE\_ERROR\_1000S\_BOX:: | 1XXX Errors |
-| ::ALWAYS\_ONLINE\_NO\_COPY\_BOX:: | Always Online |
 
 ___
 

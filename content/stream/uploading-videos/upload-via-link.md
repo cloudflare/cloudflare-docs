@@ -87,7 +87,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
       frame-border="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
       allow-full-screen
-    />
+    ></iframe>
   </div>
 </figure>
 
