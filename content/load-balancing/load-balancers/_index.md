@@ -19,11 +19,11 @@ For more background information on what load balancers are and how they work, ch
 
 ## Common configurations
 
-For suggestions, refer to [Common load balancer configurations](/load-balancing/reference/common-configurations/).
+For suggestions, refer to [Common load balancer configurations](/load-balancing/load-balancers/common-configurations/).
 
 ## Load balancing and existing DNS records
 
-For details about DNS records, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
+For details about DNS records, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
 
 ## HTTP keep-alive (persistent HTTP connection)
 

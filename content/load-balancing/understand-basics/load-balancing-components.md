@@ -12,7 +12,7 @@ This page provides a simplified overview of the three main components of the Clo
 
 For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) must return an IP address, where the website or application is hosted (origin).
 
-When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/reference/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/reference/dns-records/#priority-order), instead of simply returning an origin IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
+When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/load-balancers/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/load-balancers/dns-records/#priority-order), instead of simply returning an origin IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
 
 {{<render file="_load-balancing-diagram.md">}}
 

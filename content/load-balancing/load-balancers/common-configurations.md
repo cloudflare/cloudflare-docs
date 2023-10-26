@@ -1,6 +1,7 @@
 ---
 pcx_content_type: configuration
-title: Common load balancer configurations
+title: Common configurations
+weight: 6
 ---
 
 # Common load balancer configurations
