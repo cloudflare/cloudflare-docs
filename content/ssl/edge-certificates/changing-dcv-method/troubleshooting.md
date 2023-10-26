@@ -24,3 +24,10 @@ If these issues occur while HTTP DCV is in place, review the following settings:
   - Your [CAA records](/ssl/edge-certificates/caa-records/) allow Cloudflare's partner Certificate Authorities to issue certificates on your behalf.
 
 - The HTTP verification process is done preferably over **IPv6**, so if any `AAAA` record exists and does not point to the same dual-stack location as the `A` record, the validation will fail.
+
+-  **Let's Encrypt Rate Limiting:** Let’s Encrypt provides rate limits to ensure fair usage, and because of that you need to prevent to reach the most common rate limiting trigger, that is all issuance requests are subject to a Duplicate Certificate limit of 5 per week. You should receive an error message like the following from your ACME client when you’ve exceeded the Duplicate Certificate limit:
+
+_too many certificates (5) already issued for this exact set of domains in the
+last 168 hours: example.com login.example.com: see https://letsencrypt.org/docs/duplicate-certificate-limit_
+
+A certificate is considered a renewal (or a duplicate) of an earlier certificate if it contains the exact same set of hostnames. More details, check the [Let's Encrypt documentation](https://letsencrypt.org/docs/rate-limits/).
