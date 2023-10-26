@@ -5,6 +5,7 @@ weight: 6
 layout: list
 meta:
   title: URL normalization examples
+  description: Examples of the impact of different URL normalization settings in the URLs of incoming requests.
 ---
 
 # URL normalization examples

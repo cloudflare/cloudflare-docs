@@ -4,7 +4,6 @@ pcx_content_type: concept
 weight: 3
 meta:
   title: How URL normalization works
-  description: Examples of the impact of different URL normalization settings in the URLs of incoming requests.
 ---
 
 # How URL normalization works
