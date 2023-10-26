@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Logpush
 meta:
-  description: Send Workers Trace Event Logs to a supported third party, such as a storage or logging providers.
+  description: Send Workers Trace Event Logs to a supported third party, such as a storage or logging provider.
 ---
 
 # Workers Trace Events Logpush

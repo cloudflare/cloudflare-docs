@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Metrics and analytics
 meta:
-  description: Diagnose issues for individual Worker projects with Workers metrics and review request data for all Workers assigned to a zone with Workers analytics.
+  description: Diagnose issues for individual Worker projects with Workers metrics, and review request data for all Workers assigned to a zone with Workers analytics.
 ---
 
 # Metrics and analytics
