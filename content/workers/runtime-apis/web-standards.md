@@ -171,3 +171,22 @@ addEventListener('rejectionhandled', (event) => {
   console.log(event.reason);  // The value or Error with which the promise was rejected.
 });
 ```
+
+---
+
+## `navigator.sendBeacon(url[, data])`
+
+When the `[`global.navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP POST request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or simple diagnostics information asynchronously on a best-effort basis.
+
+For example, using `navigator.sendBeacon(...)`, you can replace:
+
+```js
+const promise = fetch('https://example.com', { method: 'POST', body: 'hello world' });
+ctx.waitUntil(promise);
+```
+
+With
+
+```js
+navigator.sendBeacon('https://example.com', 'hello world');
+```
