@@ -41,7 +41,7 @@ export default {
 To mitigate security risks and abuse, replying to incoming emails has a few requirements:
 
 * The incoming email has to have valid [DMARC](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/).
-* The email can only be replied to once in the same EmailMessage event.
+* The email can only be replied to once in the same `EmailMessage` event.
 * The `In-Reply-To` header of the reply message must be set to the `Message-ID` of the incoming message.
 * The recipient the reply must match the incoming sender.
 * The outgoing sender domain must match the same domain that received the email.
