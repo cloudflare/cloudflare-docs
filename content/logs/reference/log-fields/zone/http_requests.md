@@ -74,7 +74,7 @@ The descriptions below detail the fields available for `http_requests`.
 | OriginResponseHTTPExpires | Value of the origin 'expires' header in RFC1123 format. | string |
 | OriginResponseHTTPLastModified | Value of the origin 'last-modified' header in RFC1123 format. | string |
 | OriginResponseHeaderReceiveDurationMs | Time taken for origin to return response headers after Cloudflare finishes sending request headers. Available in Logpush v2 only. | int |
-| OriginResponseStatus | Status returned by the origin server. The value 0 means that there was no request made to the origin server and the response was served by Cloudflare's Edge. | int |
+| OriginResponseStatus | Status returned by the upstream server. The value 0 means that there was no request made to the origin server and the response was served by Cloudflare's Edge. However, if the zone has a Worker running on it, the value 0 could be the result of a Workers subrequest made to the origin. | int |
 | OriginResponseTime (deprecated) | Number of nanoseconds it took the origin to return the response to edge. | int |
 | OriginSSLProtocol | SSL (TLS) protocol used to connect to the origin. | string |
 | OriginTCPHandshakeDurationMs | Time taken to complete TCP handshake with origin. This will be 0 if an origin connection is reused. Available in Logpush v2 only. | int |
