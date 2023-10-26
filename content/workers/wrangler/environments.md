@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Environments
+meta:
+  description: Deploy the same Worker application with different configuration for each environment.
 ---
 
 # Environments

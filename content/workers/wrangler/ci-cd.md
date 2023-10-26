@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Run in CI/CD
+meta:
+  description: Deploy your Workers within a CI/CD environment.
 ---
 
 # Run Wrangler in CI/CD
