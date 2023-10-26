@@ -283,25 +283,50 @@ export function toggleSidebar() {
 
 export function zarazTrackDocEvents() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
+  const dropdowns = document.getElementsByTagName("details")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
         if (link.hostname !== "developers.cloudflare.com") {
           if (link.hostname.includes("cloudflare.com")) {
             link.addEventListener("click", () => {
-              $zarazEvent('Cross Domain Click', link);
+              $zarazLinkEvent('Cross Domain Click', link);
             });
           } else {
             link.addEventListener("click", () => {
-              $zarazEvent('external link click', link);
+              $zarazLinkEvent('external link click', link);
             });
           }
         }
       }
     }
+    if (dropdowns.length > 0) {
+      for (const dropdown of dropdowns as any) { 
+        dropdown.addEventListener("click", () => {
+          $zarazDropdownEvent(dropdown.getElementsByTagName("summary")[0]);
+        });
+    }
+  }
   });
 }
 
-function $zarazEvent(type: string, link: Element) {
+function $zarazLinkEvent(type: string, link: Element) {
   zaraz.track(type, {href: link.href, hostname: link.hostname})
+}
+
+function $zarazDropdownEvent(summary: string) {
+  zaraz.track('dropdown click', {text: summary.innerText})
+}
+
+export function zarazTrackHomepageLinks() {
+  const links = document.getElementsByClassName("DocsMarkdown--link");
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links as any) {  // Type cast to any for iteration
+        link.addEventListener("click", () => {
+          zaraz.track('homepage link click', {href: link.href})
+        });
+      } 
+    }
+  });
 }
