@@ -37,7 +37,7 @@ This Worker simply proxies https://mta-sts.mx.cloudflare.net/.well-known/mta-sts
 
 ![MTA-STS Worker Custom Domain](/images/email-routing/mta-sts-domain.png)
 
-You can then confirm that your policy file is working:
+You can then confirm that your policy file is working with the following:
 
 ```bash
 $ curl https://mta-sts.example.com/.well-known/mta-sts.txt
