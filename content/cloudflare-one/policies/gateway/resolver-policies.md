@@ -23,6 +23,8 @@ Resolver policies support TCP and UDP connections. Custom resolvers can point to
 
 Custom resolvers default to port `53`. You can change which port your resolver uses by customizing it in your policy.
 
+You can protect your authoritative nameservers from DDoS attacks by enabling [DNS Firewall](/dns/dns-firewall/).
+
 ## Create a resolver policy
 
 Your custom DNS resolver will resolve requests to the specified hostname.
