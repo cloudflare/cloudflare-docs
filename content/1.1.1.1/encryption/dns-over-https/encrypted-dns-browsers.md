@@ -12,7 +12,7 @@ Some browsers might already have this setting enabled.
 ## Mozilla Firefox
 
 1. Select the menu button > **Settings**.
-2. In the **Privacy & Security** menu, scroll down to the **Enable secure DNS** section.
+2. In the **Privacy & Security** menu, scroll down to the **Enable secure DNS using:** section.
 3. Select **Increased Protection** or **Max Protection**. By default, it will use the **Cloudflare** provider.
 4. If this is not the case for you, select **Cloudflare** in the **Choose Provider** dropdown.
 
