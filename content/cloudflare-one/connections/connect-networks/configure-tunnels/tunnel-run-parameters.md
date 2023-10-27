@@ -116,7 +116,7 @@ Writes the application's process identifier (PID) to this file after the first s
 
 | Syntax     | Default | Environment Variable        |
 | ---------- | ------- | --------------------------- |
-| `cloudflared tunnel --protocol <VALUE> run <UUID or NAME>` | `auto`  | `TUNNEL_TRANSPORT_PROTOCOL` |
+| `cloudflared tunnel --protocol <VALUE> run <UUID or NAME>` | `quic`  | `TUNNEL_TRANSPORT_PROTOCOL` |
 
 Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, `h2mux`, and `quic`.
 
