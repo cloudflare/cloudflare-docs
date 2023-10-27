@@ -10,7 +10,7 @@ Cloudflare measures the Magic Transit prefix count based on the number of prefix
 
 List all prefixes and the ASNs where they should originate. When specifying prefixes, observe these guidelines:
 
-- Prefixes must support at least 256 hosts (`/24` in classless inter-domain routing CIDR notation).
+- Prefixes must support at least 256 hosts (`/24` in classless inter-domain routing CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `24` prefix length requirement.
 - Internet Routing Registry entries and Letters of Authorization must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
