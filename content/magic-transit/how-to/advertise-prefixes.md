@@ -6,11 +6,11 @@ weight: 3
 
 # Advertise prefixes
 
-Cloudflare measures the Magic Transit prefix count based on the number of prefixes a customer announces through Cloudflare. The size of the prefix does not matter; there is no commercial or technical restriction. However, prefixes can only be announced exactly as they were provisioned. For example, a `/20` prefix onboarded to Magic Transit can only be announced as a `/20`. Smaller subnets that constitute the `/20` cannot be announced individually. To announce the 16x `/24s` within the `/20`, for example, requires onboarding all 16 prefixes individually. If this disaggregated setup is desired, the total Magic Transit prefix count will increase.
+Cloudflare measures the Magic Transit prefix count based on the number of prefixes a customer announces through Cloudflare. The size of the prefix does not matter; there is no commercial or technical restriction. However, prefixes can only be announced exactly as they were provisioned. For example, a `/20` prefix onboarded to Magic Transit can only be announced as a `/20`. Smaller subnets that constitute the `/20` cannot be announced individually. To announce 16 individual `/24s` subnets within the `/20` subnet mask, for example, requires onboarding all 16 subnets individually. If this disaggregated setup is desired, the total Magic Transit prefix count will increase.
 
 List all prefixes and the ASNs where they should originate. When specifying prefixes, observe these guidelines:
 
-- Prefixes must support at least 256 hosts (`/24` in classless inter-domain routing CIDR notation).
+- Prefixes must support at least 256 hosts (`/24` in classless inter-domain routing CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
 - Internet Routing Registry entries and Letters of Authorization must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
