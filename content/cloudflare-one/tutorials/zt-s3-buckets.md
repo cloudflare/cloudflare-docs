@@ -15,7 +15,7 @@ TO DO: INSERT IMAGE HERE
 
 ### Prerequisites
 
-- AWS VPC with one EC2 virtual machine hosting the Cloudflare tunnel daemon
+- AWS VPC with one EC2 virtual machine hosting the [Cloudflare tunnel daemon](/cloudflare-one/connections/connect-networks/)
 - S3 bucket to be protected by Cloudflare Zero Trust
 - S3 bucket and AWS VPC configured in the same AWS region
 
@@ -85,6 +85,16 @@ From the Cloudflare Zero Trust dashboard, navigate to **Access** > **Application
 1. Select **Self-hosted** as the application type
 2. Provide a name to the **Application**, for example, `s3-bucket`
 3. Define the **Application Domain** as the **Public hostname** added to the Cloudflare tunnel, for example, `s3-bucket.your-domain.com`
-4. Configure the rest of the Application settings as per your organization requirements. For more details, please refer to the [Access Policies](/cloudflare-one/policies/access/) documentation.
+4. Configure the rest of the Application settings as per your organization requirements. For more details, please refer to the [Access Policies](/cloudflare-one/policies/access/) documentation. For automated systems, to access the bucket, [Service Tokens](/cloudflare-one/identity/service-tokens/) can be used.
 
+The S3 bucket is now available at `https://s3-bucket.your-domain.com` but only for users/applications that successfully authenticate via Cloudflare Access.
 
+## Method 2: using Cloudflare Gateway and Egress policies
+
+TO DO: INSERT IMAGE HERE
+
+### Prerequisites
+
+- S3 bucket to be protected by Cloudflare Zero Trust
+
+### 1. 
