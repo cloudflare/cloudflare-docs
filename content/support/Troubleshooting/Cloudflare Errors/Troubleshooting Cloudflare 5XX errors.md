@@ -230,7 +230,7 @@ ___
 Error 524 indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second connection timed out. This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
 
 {{<Aside type="note">}}
-A 522 occurs if the origin web server
+A 524 occurs if the origin web server
 acknowledges (*ACK*) the resource request after the connection has been
 established, but does not send a timely response.
 {{</Aside>}}
