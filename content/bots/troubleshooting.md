@@ -200,7 +200,7 @@ For an additional layer of security against Credential Stuffing, you could use [
 
 ___
 
-### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
+### Does the `challengeFailed` action accurately represent challenges that users did not pass?
 
 No. The `challengeFailed` and `jschallengeFailed` firewall rule actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a firewall rule. Additionally, Cloudflare Firewall Rules may not have a record of every request with a failed challenge.
 
@@ -208,7 +208,7 @@ Therefore, consider these actions with caution. A reliable indicator is the [Cha
 
 ___
 
-### Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
+### Why would I not find any failed challenges? Why is `ChallengeIssued` not equal to `ChallengeSolved` plus `ChallengeFailed`?
 
 Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
 
