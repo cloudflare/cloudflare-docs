@@ -7,6 +7,8 @@ meta:
 
 # Custom builds
 
+{{<render file="_wrangler_survey.md">}}
+
 Custom builds are a way for you to customize how your code is compiled, before being processed by Wrangler.
 
 {{<Aside type="note">}}

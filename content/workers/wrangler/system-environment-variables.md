@@ -5,7 +5,9 @@ meta:
   description: Local environment variables that can change Wrangler's behavior.
 ---
 
-# System Environment Variables
+# System environment variables
+
+{{<render file="_wrangler_survey.md">}}
 
 System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set system environment variables:
 

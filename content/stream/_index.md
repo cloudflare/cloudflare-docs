@@ -21,6 +21,16 @@ You can use Stream to build your own video features in websites and native apps,
 
 Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.cloudflare.com/network/) in over 270 cities around the world.
 
+{{<Aside type="note" header="Help us improve our user experience">}}
+
+The Cloudflare Stream team is conducting research to understand the experience of different users with the Stream dashboard in order to identify where and how the dashboard can be improved.
+
+Complete the [survey](https://docs.google.com/forms/d/e/1FAIpQLSf4Xz7MNvgbra5MbTP51cNcHNpmJZi2hNpjTyTvLhoF4Xt6Lg/viewform?usp=sf_link) to contribute. 
+
+Thank you for your support.
+
+{{</Aside>}}
+
 {{<button-group>}}
 {{<button type="primary" href="/stream/get-started/">}}Get started{{</button>}}
 {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream dashboard{{</button>}}

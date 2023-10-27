@@ -8,6 +8,8 @@ meta:
 
 # Configure `wrangler.toml`
 
+{{<render file="_wrangler_survey.md">}}
+  
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deployment setup for a Worker.
 
 {{<Aside type="warning">}}
