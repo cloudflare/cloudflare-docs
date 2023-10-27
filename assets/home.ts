@@ -8,4 +8,5 @@ import * as filterResults from './learning-paths';
   events.mobile();
   events.load();
   filterResults.filterResults();
+  events.zarazTrackHomepageLinks();
 })();

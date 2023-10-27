@@ -30,7 +30,7 @@ from a HAR file via a text editor before providing to Cloudflare
 Support.
 {{</Aside>}}
 
-Currently, only Chrome and Firefox can access the HAR feature by default. Other browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
+Some browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
 
 ### In Chrome
 

@@ -11,7 +11,7 @@ layout: single
 <br/>
 {{<Aside type="note">}}
 
-For more background information on what load balancers are and how they work, check out our [Learning Center](https://www.cloudflare.com/learning/performance/what-is-load-balancing/).
+For an overview of how the Cloudflare Load Balancing solution works, refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For more background information on what load balancers are, refer to the Cloudflare [Learning Center](https://www.cloudflare.com/learning/performance/what-is-load-balancing/).
 
 {{</Aside>}}
 
@@ -19,11 +19,11 @@ For more background information on what load balancers are and how they work, ch
 
 ## Common configurations
 
-For suggestions, refer to [Common load balancer configurations](/load-balancing/reference/common-configurations/).
+For suggestions, refer to [Common load balancer configurations](/load-balancing/load-balancers/common-configurations/).
 
 ## Load balancing and existing DNS records
 
-For details about DNS records, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
+For details about DNS records, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
 
 ## HTTP keep-alive (persistent HTTP connection)
 

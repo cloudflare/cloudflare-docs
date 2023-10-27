@@ -1,7 +1,7 @@
 ---
 title: DNS records
 pcx_content_type: reference
-weight: 0
+weight: 5
 meta:
   title: DNS records for load balancing
 ---

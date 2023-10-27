@@ -3,9 +3,12 @@ pcx_content_type: reference
 title: Commands
 meta:
   title: Commands - Wrangler
+  description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
 # Wrangler commands
+
+{{<render file="_wrangler_survey.md">}}
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
