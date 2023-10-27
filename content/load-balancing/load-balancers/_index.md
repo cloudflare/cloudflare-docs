@@ -11,7 +11,7 @@ layout: single
 <br/>
 {{<Aside type="note">}}
 
-For an overview of how the Cloudflare Load Balancing solution works, check out [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For more background information on what load balancers are, refer to the Cloudflare [Learning Center](https://www.cloudflare.com/learning/performance/what-is-load-balancing/).
+For an overview of how the Cloudflare Load Balancing solution works, refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For more background information on what load balancers are, refer to the Cloudflare [Learning Center](https://www.cloudflare.com/learning/performance/what-is-load-balancing/).
 
 {{</Aside>}}
 
