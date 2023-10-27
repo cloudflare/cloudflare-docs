@@ -28,7 +28,7 @@ Magic Transit steers traffic along tunnel routes based on priorities you define 
 {{</feature>}}
 
 {{<feature header="Cloudflare IPs" href="/magic-transit/cloudflare-ips/">}}
-If you want to protect a smaller network and do not meet the `/24` prefix length requirements, you can use Magic Transit with a Cloudflare-managed IP address.
+Use Cloudflare-managed IP addresses if you want to protect a smaller network and do not meet Magic Transit's `/24` prefix length requirements.
 {{</feature>}}
 
 ---
