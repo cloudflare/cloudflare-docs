@@ -74,7 +74,7 @@ Domain registrars may be able to **suspend** potentially malicious domains. If, 
 
 ### Option 3: Improvise
 
-There are other ways to combat malicious certificates. You can warn your visitors with an on-site notification, ask browser makers (Google for Chrome, etc.) to block these domains, or you can [contact us to help combat malicious certificates](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+There are other ways to combat malicious certificates. You can warn your visitors with an on-site notification or ask browser makers (Google for Chrome, etc.) to block these domains.
 
 If someone is attempting to impersonate you online, you should absolutely take action. This is usually difficult to recognize, so exercise caution. **Remember: the vast majority of certificates are not malicious. Only take action if you believe something is wrong.**
 
