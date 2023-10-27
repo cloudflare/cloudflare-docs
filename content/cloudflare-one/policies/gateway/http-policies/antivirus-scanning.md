@@ -16,13 +16,11 @@ AV scanning of files requires organizations to go to **Settings** > **Network** 
 
 To enable AV scanning:
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 
-1.  In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
+1. In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 
-When a file is blocked due to the presence of malware, it is logged as a Block decision:
-
-![Example of a blocked action in the Gateway Activity Logs tab.](/images/cloudflare-one/policies/blocked-decision.png)
+When a file is blocked due to the presence of malware, Gateway will log the match as a Block decision.
 
 ## How Gateway determines if a file should be scanned
 
