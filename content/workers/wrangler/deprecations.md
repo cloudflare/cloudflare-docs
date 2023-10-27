@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Deprecations
+meta:
+  description: The differences between Wrangler versions, specifically deprecations and breaking changes.
 ---
 
 # Deprecations

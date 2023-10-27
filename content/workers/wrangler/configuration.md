@@ -3,13 +3,14 @@ pcx_content_type: configuration
 title: Configuration
 meta:
   title: Configuration - Wrangler
+  description: Use a `wrangler.toml` configuration file to customize the development and deployment setup for your Worker project and other Developer Platform products.
 ---
 
 # Configure `wrangler.toml`
 
 {{<render file="_wrangler_survey.md">}}
-
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deploying setup for a Worker.
+  
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deployment setup for a Worker.
 
 {{<Aside type="warning">}}
 Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.

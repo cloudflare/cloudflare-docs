@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Bundling
+meta:
+  description: Review Wrangler's default bundling.
 ---
 
 # Bundling

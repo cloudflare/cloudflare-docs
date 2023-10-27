@@ -10,4 +10,6 @@ meta:
 
 {{<render file="_wrangler_survey.md">}}
 
-{{<directory-listing>}}
+Wrangler, the Cloudflare Developer Platform command-line interface (CLI), allows you to manage Worker projects.
+
+{{<directory-listing showDescriptions="true">}}
