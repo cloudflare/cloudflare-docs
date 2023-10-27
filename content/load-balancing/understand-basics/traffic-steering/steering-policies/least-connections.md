@@ -8,7 +8,9 @@ meta:
 
 # Least connections steering
 
-**Least connections steering** allows you to route traffic to pools that currently have the fewest number of open (including idle or active) connections.
+**Least connections steering** allows you to route traffic to pools that currently have the lowest number of open (including idle or active) connections.
+
+{{<render file="_lcs-http2-callout.md">}}
 
 This steering policy selects a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more connections are weighted proportionately less in relation to others.
 

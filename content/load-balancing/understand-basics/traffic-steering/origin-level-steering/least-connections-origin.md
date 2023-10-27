@@ -8,7 +8,9 @@ meta:
 
 # Least connections steering
 
-**Least connections steering** allows you to route traffic to origins that currently have the fewest number of open (including idle or active) connections.
+**Least connections steering** allows you to route traffic to origins that currently have the lowest number of open (including idle or active) connections.
+
+{{<render file="_lcs-http2-callout.md">}}
 
 This steering policy selects an origin by taking into consideration origin weights, as well as each origin's number of open connections. Origins with more connections are weighted proportionately less in relation to others.
 

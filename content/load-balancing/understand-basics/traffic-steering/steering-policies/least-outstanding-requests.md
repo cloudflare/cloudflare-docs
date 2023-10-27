@@ -8,7 +8,7 @@ meta:
 
 # Least Outstanding Requests steering
 
-**Least Outstanding Requests steering** allows you to route traffic to pools that currently have the fewest number of outstanding requests.
+**Least Outstanding Requests steering** allows you to route traffic to pools that currently have the lowest number of outstanding requests.
 
 This steering policy selects a pool by taking into consideration `random_steering` weights, as well as each pool's number of in-flight requests. Pools with more pending requests are weighted proportionately less in relation to others.
 
