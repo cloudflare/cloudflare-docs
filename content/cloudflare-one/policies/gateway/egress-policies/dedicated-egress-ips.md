@@ -80,3 +80,23 @@ For example, assume you have a primary dedicated egress IP in Los Angeles and a 
 #### IPv6
 
 Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected data center but logically egress with one of your dedicated IP geolocations. In the example above, the Las Vegas user would egress from Las Vegas but IP geolocate from Los Angeles.
+
+## FAQ
+
+Can customer have 1 pair of egress IP and have users egress via that IP via a colo that is closer to them?
+No, the traffic will egress only via the colo where the IP is provisioned. If the customer has global presence then it is recommend to have multiple IP and provision those to colo where they have most of the users /per region
+
+Does Geo-egress (localization) work with Static Egress IP? ETC521
+No, this is for normal egress IP, for localisation to work you need to request for Ip geo-location
+
+Static Egress IP in China
+Warp in China (when it is ready in Q4), if they provision a Static Egress IP in HKG colo , their users from Mainland China can egress using the static egress IP in HKG
+
+Can a customer use Egress IP if they are on-ramped via PAC file or MWAN?
+Yes, this should work and the customer must egress via their provision gateway egress IP
+
+What happens when I enabled Egress IP and is also using RBI
+The results will be similar to when you are not using RBI, the eyeball get connected to the nearest Colo where the browser session will be loaded. The remote browser will then egress via the Colo where Egress IP has been hosted
+
+Can you allocate the same IP you've purchased to multiple colo's?
+Nope
