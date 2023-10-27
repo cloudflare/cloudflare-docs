@@ -259,7 +259,7 @@ Create a file called `index.js `, making sure that:
 
 Your `BROKER_TOKEN` is sensitive, and should be kept secret to avoid unintended access to your Pub/Sub broker. Avoid committing it to source code.
 
-{{</Aside>
+{{</Aside>}}
 
 ```js
 const mqtt = require('mqtt')
