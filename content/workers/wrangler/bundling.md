@@ -5,6 +5,8 @@ title: Bundling
 
 # Bundling
 
+{{<render file="_wrangler_survey.md">}}
+
 By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `npx wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
 {{<Aside type="note">}}

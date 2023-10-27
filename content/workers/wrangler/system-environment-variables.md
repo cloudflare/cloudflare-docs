@@ -1,9 +1,11 @@
 ---
 pcx_content_type: configuration
-title: System Environment Variables
+title: System environment variables
 ---
 
-# System Environment Variables
+# System environment variables
+
+{{<render file="_wrangler_survey.md">}}
 
 System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set System Environment Variables:
 
