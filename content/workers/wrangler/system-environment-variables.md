@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: System Environment Variables
+title: System environment variables
 meta:
   description: Local environment variables that can change Wrangler's behavior.
 ---
