@@ -6,7 +6,7 @@ weight: 13
 
 # Lists
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Plan limitations">}}
 Your lists can include up to 1,000 entries for Standard plans and 5,000 for Enterprise plans. An uploaded CSV file must be smaller than 2 MB.
 {{</Aside>}}
 

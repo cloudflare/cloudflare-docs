@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="warning">}}
-Gateway treats URLs with a trailing forward slash (`/`) the same as those without. For example, `https://example.com` and `https://example.com/` will match the same URL.
+Gateway ignores trailing forward slashes (`/`) in URLs. For example, `https://example.com` and `https://example.com/` will count as the same URL and may return a duplicate error.
 {{</Aside>}}
