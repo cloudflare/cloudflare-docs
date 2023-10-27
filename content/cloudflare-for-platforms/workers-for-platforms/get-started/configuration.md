@@ -28,15 +28,7 @@ Workers for Platforms requires a Wrangler version of `2.0.28` or higher.
 
 To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
-```sh
-$ npm install -g wrangler
-```
-
-or install with `yarn`:
-
-```sh
-$ yarn global add wrangler
-```
+{{<render file="_install_wrangler.md" productFolder="workers" >}}
 
 Refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/) for more information.
 

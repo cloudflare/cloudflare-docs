@@ -18,22 +18,7 @@ Wrangler is installed locally into each of your projects. This allows you and yo
 
 To install Wrangler within your Worker project, run:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm install wrangler --save-dev
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn add --dev wrangler
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_install_wrangler.md" >}}
 
 ## Check your Wrangler version
 
