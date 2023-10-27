@@ -11,7 +11,7 @@ This tutorial demonstrates how to secure access to S3 buckets in AWS via Cloudfl
 
 ## Method 1: using Cloudflare Access and VPC endpoints
 
-INSERT IMAGE HERE
+TO DO: INSERT IMAGE HERE
 
 ### Prerequisites
 
@@ -35,8 +35,56 @@ After the VPC endpoint is created, there will be a new entry in the VPC route ta
 ### 2. Set up a bucket policy on the S3 bucket so that the VPC can access the bucket
 
 From the AWS dashboard, navigate to the **S3 dashboard** > **Buckets** > `your-S3-bucket` > **Permissions**
+1. Uncheck **Block all public access**
+2. Edit the **Bucket policy** and add this policy
+```
+{
+    "Version": "2012-10-17",
+    "Id": "VPCe",
+    "Statement": [
+        {
+            "Sid": "VPCe",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::<your-bucket-name>",
+                "arn:aws:s3:::<your-bucket-name>/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceVpce": "<your-vpc-endpoint>"
+                }
+            }
+        }
+    ]
+}
+   ```
+
+### 3. Enable Static website hosting on the S3 bucket
+
+From the AWS dashboard, navigate to the **S3 dashboard** > **Buckets** > `your-S3-bucket` > **Properties**
+1. Under **Static website hosting** click **Edit**
+2. Choose **Enable** for **Static website hosting**
+3. Specify the **Index** and **Error** documents for the S3 bucket
+4. Click **Save changes**
+
+A bucket website endpoint will be available at `http://<your-bucket-name>.<aws-region>.amazonaws.com` . Due to the bucket policy, this website endpoint will only accessible from the VPC with the VPC endpoint configured.
+
+### 4. Add a new public hostname to the Cloudflare tunnel terminating in the AWS VPC
+
+From the Cloudflare Zero Trust dashboard, navigate to **Access** > **Tunnels** > `your-cloudflare-tunnel` > **Configure**
+1. Go to **Public hostnames** > **Add a public hostname**
+2. Under **Subdomain**, choose a subdomain name that will be used by your organization to access the S3 bucket, for example, `s3-bucket.your-domain.com`
+3. Under **Service**, choose `Type = HTTP` and `URL = http://<your-bucket-name>.<aws-region>.amazonaws.com`
+4. Expand the **Additional application settings** > **HTTP Settings** > and configure the **HTTP Host Header** as `<your-bucket-name>.<aws-region>.amazonaws.com` 
+5. Click **Save hostname**
+
+### 5. Add a new Access Policy to restrict access to the S3 bucket
+From the Cloudflare Zero Trust dashboard, navigate to **Access** > **Applications** > **Add an application**
+1. Select **Self-hosted** as the application type
+2. Provide a name to the **Application**, for example, `s3-bucket`
+3. Define the **Application Domain** as the **Public hostname** added to the Cloudflare tunnel, for example, `s3-bucket.your-domain.com`
+4. Configure the rest of the Application settings as per your organization requirements. For more details, please refer to the [Access Policies](/cloudflare-one/policies/access/) documentation.
 
 
-
-
-On the VPC hosting the EC2 VM running Cloudflare tunnel, go to VPC
