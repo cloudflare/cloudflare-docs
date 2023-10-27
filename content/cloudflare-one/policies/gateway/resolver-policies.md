@@ -35,8 +35,9 @@ You can protect your authoritative nameservers from DDoS attacks by enabling [DN
 
 4. In **Select DNS resolver**, choose _Configure custom DNS resolvers_.
 5. Enter the IP addresses of your custom DNS resolver.
-6. (Optional) Enter a custom port for each IP address.
-7. Select **Create policy**.
+6. In **Network**, choose whether to route queries publicly (to the Internet) or privately (to a private network service).
+7. (Optional) Enter a custom port for each IP address.
+8. Select **Create policy**.
 
 Gateway will send a query to all resolvers listed, returning the first response. Custom resolvers are saved to your account for future use.
 
