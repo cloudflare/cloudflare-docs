@@ -1,15 +1,20 @@
 ---
 pcx_content_type: configuration
-title: Common load balancer configurations
+title: Common configurations
+weight: 6
 ---
 
 # Common load balancer configurations
+
+Consider the following sections to understand how to achieve some commonly used load balancer configurations.
+
+This page assumes you understand the Cloudflare [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/) and how to create and edit each of them.
 
 ## Active - Passive Failover
 
 An **active-passive failover** sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, your load balancer then redirects traffic to the passive pool.
 
-This setup ensures uninterrupted service and helps with planned outtages, but it might lead to slower traffic overall.
+This setup ensures uninterrupted service and helps with planned outages, but it might lead to slower traffic overall.
 
 To set up a load balancer with **active-passive failover**:
 
@@ -27,7 +32,7 @@ In the event that all pools are marked down, Cloudflare uses the **fallback pool
 
 An **active-active failover** distributes traffic to servers in the same pool until the pool reaches its failure threshold (configurable). At the point of failure, your load balancer would then re-direct traffic to the **fallback pool**.
 
-This setup speeds up overall requests, but is more vulnerable to planned or unplanned outtages.
+This setup speeds up overall requests, but is more vulnerable to planned or unplanned outages.
 
 To set up a load balancer with **active-active failover**, either:
 
