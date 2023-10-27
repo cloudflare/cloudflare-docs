@@ -1154,6 +1154,7 @@
 /zaraz/properties-reference/ /zaraz/reference/properties-reference/ 301
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
 /zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
+/zaraz/pricing/ /zaraz/ 301
 
 # cloudflare-one / zero-trust
 /access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
