@@ -2,6 +2,9 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-10-26'
+  description: |-
+    - The Workers runtime [now logs more readable output](https://github.com/cloudflare/workerd/pull/1294) in local development, using the [`util.inspect()`](https://nodejs.org/api/util.html#utilinspectobject-options) API from Node.js to format logs.
 - publish_date: '2023-10-20'
   description: |-
     - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field)
