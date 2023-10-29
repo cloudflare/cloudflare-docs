@@ -146,6 +146,6 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 The API token used in API requests to manage Cache Rules must have the following permissions:
 
-* _Zone_ > _Config Rules_ > _Edit_
+* _Zone_ > _Cache Rules_ > _Edit_
 * _Account Rulesets_ > _Edit_
 * _Account Filter Lists_ > _Edit_
