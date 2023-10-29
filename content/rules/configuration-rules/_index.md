@@ -1,3 +1,5 @@
+[cloudflare_us_tia_dls_on_2021.pdf](https://github.com/cloudflare/cloudflare-docs/files/13198314/cloudflare_us_tia_dls_on_2021.pdf)
+[cloudflare_iso_27001_27018_27701_certificate_2023.pdf](https://github.com/cloudflare/cloudflare-docs/files/13198313/cloudflare_iso_27001_27018_27701_certificate_2023.pdf)
 ---
 pcx_content_type: concept
 title: Configuration Rules
