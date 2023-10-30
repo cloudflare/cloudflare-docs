@@ -3781,3 +3781,14 @@ td>code,
 .changelogDate {
     width: 8em;
 }
+
+.DocSearch-Help a {
+    text-decoration: underline;
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
