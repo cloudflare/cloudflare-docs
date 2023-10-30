@@ -7,7 +7,7 @@ meta:
 layout: list
 ---
 
-# Historical — 2021
+# Historical - 2021
 
 {{<table-wrap>}}
 <table style="width: 100%">
