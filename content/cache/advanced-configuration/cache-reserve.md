@@ -42,7 +42,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
