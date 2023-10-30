@@ -23,12 +23,21 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-10-23</td>
       <td>2023-10-30</td>
+      <td>2023-11-06</td>
       <td>Block</td>
-      <td>100609</td>
-      <td>...d59a59db</td>
-      <td>Keycloak - SSRF - CVE:CVE-2020-10770</td>
+      <td>100593BETA</td>
+      <td>...24af2540</td>
+      <td>Adobe ColdFusion - Auth Bypass, Remote Code Execution - CVE:CVE-2023-29298, CVE:CVE-2023-38203, CVE:CVE-2023-26360</td>
+      <td>This rule will replace ...c3b6a372 on New WAF and 100593 on legacy WAF</td>
+    </tr>
+    <tr>
+      <td>2023-10-30</td>
+      <td>2023-11-06</td>
+      <td>Block</td>
+      <td>100611</td>
+      <td>...8ed2b1d9</td>
+      <td>WordPress:Plugin:WooCommerce - Unauthorized Administrator Access - CVE:CVE-2023-28121</td>
       <td>N/A</td>
     </tr>
   </tbody>
