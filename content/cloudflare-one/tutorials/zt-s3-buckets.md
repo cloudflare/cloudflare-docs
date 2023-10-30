@@ -77,7 +77,7 @@ From the Cloudflare Zero Trust dashboard, navigate to **Access** > **Tunnels** >
 1. Go to **Public hostnames** > **Add a public hostname**
 2. Under **Subdomain**, choose a subdomain name that will be used by your organization to access the S3 bucket, for example, `s3-bucket.your-domain.com`
 3. Under **Service**, choose `Type = HTTP` and `URL = <your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`
-4. Expand the **Additional application settings** > **HTTP Settings** > and configure the **HTTP Host Header** as `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com` 
+4. Expand the **Additional application settings** > **HTTP Settings** and configure the **HTTP Host Header** as `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com` 
 5. Click **Save hostname**
 
 ### 5. Add a new Access Policy to restrict access to the S3 bucket
