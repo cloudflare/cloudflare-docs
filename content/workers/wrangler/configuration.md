@@ -140,6 +140,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
 
+- `limits` {{<type-link href="#limits">}}Limits{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
+
 {{</definitions>}}
 
 ## Non-inheritable keys
@@ -333,6 +337,28 @@ header: wrangler.toml
 command = "npm run build"
 cwd = "build_cwd"
 watch_dir = "build_watch_dir"
+```
+
+## Limits
+
+You can impose limits on your Worker's behavior at runtime. Only supported for the [Standard Usage Model](/workers/platform/pricing/#standard-usage-model). Limits are only enforced when deployed to Cloudflare's Network, not in local development.
+
+{{<definitions>}}
+
+- `cpu_ms` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum CPU time allowed per invocation, in milliseconds.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[limits]
+cpu_ms = 100
 ```
 
 ## Bindings
