@@ -48,9 +48,9 @@ You will be returned to the **Monitor Images** overview page, where you can acce
 
 To investigate a query:
 
-1. Go to the **Monitored queries** section to view all your queries.
+1. Go to the **Monitored strings** or **Monitor Logos** section to view all your queries.
 2. Select a monitored query to inspect all the domains that matched your query.
-3. Next to the domain, select **Investigate**. This will take you to the **Investigate** section in the sidebar.
+3. Next to the domain, select **Domain** or **URL**. This will trigger a search on the [**Investigate**](/security-center/investigate/) section in a separate tab. 
 4. In this section, you have the **Domain overview**, the **WHOIS** section that provides details about the date the domain was created, registrant and nameservers, and the **Domain history** that provides information on the domain category and when it was last changed. Refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/#security-risk-subcategories) for more details.
 
 ## Brand Protection Alerts
