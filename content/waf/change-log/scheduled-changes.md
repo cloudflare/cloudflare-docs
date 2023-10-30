@@ -37,7 +37,7 @@ layout: list
       <td>Block</td>
       <td>100611</td>
       <td>...8ed2b1d9</td>
-      <td>Wordpress:Plugin:WooCommerce - Unauthorized Administrator Access - CVE:CVE-2023-28121</td>
+      <td>WordPress:Plugin:WooCommerce - Unauthorized Administrator Access - CVE:CVE-2023-28121</td>
       <td>N/A</td>
     </tr>
   </tbody>
