@@ -24,13 +24,24 @@ meta:
   </thead>
   <tbody>
     <tr>
+      <td>2023-10-30</td>
+      <td>2023-11-06</td>
+      <td>...e269dfd6</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #56).</td>
       <td>N/A</td>
+      <td>block</td>
+      <td>This rule might cause false positives in case the requests go through a
+third party proxy before reaching the Cloudflare network.</td>
+    </tr>
+<tr>
+      <td>2023-10-30</td>
+      <td>2023-11-06</td>
+      <td>...f35a42a0</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #57).</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>block</td>
+      <td>This rule might cause false positives in case the requests go through a
+third party proxy before reaching the Cloudflare network.</td>
     </tr>
   </tbody>
 </table>
