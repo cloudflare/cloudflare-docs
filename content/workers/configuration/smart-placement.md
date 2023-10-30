@@ -32,6 +32,8 @@ Smart Placement is only active for Workers that **make more than one roundtrip**
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
 
+Workers with a [D1](/d1/) binding will always be placed in a data center near the location of the D1 database they are bound to. Subrequests to other back-end services are ignored by Smart Placement in this case.
+
 ### Unsupported back-end services
 
 There are some back-end services that are not considered by the Smart Placement algorithm:
