@@ -16,7 +16,7 @@ layout: list
       <th>Ruleset</th>
       <th>Rule ID</th>
       <th>Description</th>
-      <th>Change Date</th>
+      <th>Change date</th>
       <th>Old action</th>
       <th>New action</th>
     </tr>
