@@ -902,7 +902,7 @@ Enterprise plans.
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing.
 2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
-3. {{<render file="_errors.md">}}
+3. {{<render file="_traffic-alerts.md">}}
 
 {{</details>}}
 
@@ -931,6 +931,7 @@ Enterprise plans.
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
 2. {{<render file="_errors.md">}}
+3. {{<render file="_traffic-alerts.md">}}
 
 {{</details>}}
 
@@ -974,7 +975,8 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
+1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
+2. Refer to [HTTP Error Alerts](/notifications/reference/traffic-alerts/#traffic-anomalies) for more information.
 
 {{</details>}}
 
