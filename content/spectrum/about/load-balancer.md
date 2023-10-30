@@ -20,7 +20,18 @@ The example below shows a TCP health check configuration for an application runn
 
 {{<details header="TCP health check - Dashboard example">}}
 
-![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/images/spectrum/spectrum-tcp-check.png)
+| Field            | Value     |
+|------------------|-----------|
+| Type             | TCP       |
+| Port             | 2408      |
+
+Under **Advanced health check settings**:
+
+| Field            | Value     |
+|------------------|-----------|
+| Interval         | 30        |
+| Timeout          | 5 seconds |
+| Retries          | 2         |
 
 {{</details>}}
 
