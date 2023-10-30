@@ -79,7 +79,7 @@ If you would like to streamline the project creation and asset deployment steps,
 
 #### Other useful commands
 
-If you would like to use Wrangler to obtain a list of all available projects for direct upload, use:
+If you would like to use Wrangler to obtain a list of all available projects for Direct Upload, use:
 
 ```sh
 $ wrangler pages project list
