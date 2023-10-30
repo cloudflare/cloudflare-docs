@@ -15,11 +15,11 @@ layout: list
     <tr>
       <th>Ruleset</th>
       <th>Rule ID</th>
-      <th>Legacy rule ID</th>
+      <th>Legacy Rule ID</th>
       <th>Description</th>
-      <th>Change date</th>
-      <th>Old action</th>
-      <th>New action</th>
+      <th>Change Date</th>
+      <th>Old Action</th>
+      <th>New Action</th>
     </tr>
   </thead>
   <tbody>
