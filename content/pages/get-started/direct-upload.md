@@ -114,8 +114,6 @@ After you have your project created, select **Create a new deployment** to begin
 
 ### Limits
 
-Regarding file count:
-
 {{<table-wrap>}}
 
 | Upload method | File limit   | File size |
