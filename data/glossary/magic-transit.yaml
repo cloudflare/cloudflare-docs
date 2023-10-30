@@ -1,0 +1,16 @@
+---
+productName: Magic Transit
+entries:
+- term: letter of agency
+  general_definition: |-
+    sometimes referred to as a Letter of Authorization. A document that authorizes Cloudflare to advertise your prefixes. This is required to transit providers can accept the routes Cloudflare advertises on your behalf.
+  associated_products:    
+    - Magic Transit
+
+- term: prefix
+  general_definition: |-
+    refers to a number that identifies the network portion of an IP address, and tells devices how many bits are used for a network. For example, `/31`.
+  associated_products:
+    - Magic WAN
+    - Magic Transit
+

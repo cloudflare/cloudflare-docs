@@ -2,6 +2,15 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-10-20'
+  description: |-
+    - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field)
+      compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
+      the WebCrypto API.
+- publish_date: '2023-10-18'
+  description: |-
+    - The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+      Cron Triggers across all Workers still apply.
 - publish_date: '2023-09-14'
   description: |-
     - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)

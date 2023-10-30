@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Limits
+meta:
+  description: Cloudflare Workers plan and platform limits.
 ---
 
 # Limits
@@ -18,7 +20,6 @@ title: Limits
 | [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 400 ms    | 400 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per Worker | 3         | 3         |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}

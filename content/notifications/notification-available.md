@@ -366,7 +366,7 @@ Multiple filters available:
 
 **Included with**
 
-All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/get-started/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
@@ -397,7 +397,7 @@ Multiple filters available:
 
 **Included with**
 
-All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/get-started/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
@@ -438,7 +438,7 @@ In the email for the notification, you can find the destination name for the fai
 
 **Who is it for?**
 
-Magic Transit on-demand customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
+[Magic Transit on-demand](/magic-transit/on-demand/) customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
 
 **Other options / filters**
 
@@ -491,6 +491,36 @@ Purchase of Magic Transit.
 **What should you do if you receive one?**
 
 If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, refer to [Dynamic advertisement](/byoip/concepts/dynamic-advertisement/).
+
+{{</details>}}
+
+{{<details header="Magic Tunnel Health Check Alert">}}
+
+**Who is it for?**
+
+Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
+
+**Other options / filters**
+
+- Notification Name
+  - Custom name for this notification
+- Description (optional)
+  - Custom description for this notification
+- Notification Email (can be multiple emails)
+  - Email address of recipient for this notification
+- Webhooks
+- Tunnels
+  - Choose one or more tunnels to monitor
+- SLO
+  - Define SLO threshold for Magic Tunnel health alerts. Available options are _High_, _Medium_, and _Low_.
+
+**Included with**
+
+Purchase of Magic Transit and Magic WAN.
+
+**What should you do if you receive one?**
+
+Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/how-to/check-tunnel-health-dashboard/) for more information on what the issue might be.
 
 {{</details>}}
 
@@ -944,8 +974,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
-2. {{<render file="_errors.md">}}
+Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
 
 {{</details>}}
 

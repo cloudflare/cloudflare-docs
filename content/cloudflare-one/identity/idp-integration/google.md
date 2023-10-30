@@ -29,7 +29,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 
    ![Location of OAuth client ID settings on Google Cloud Platform credentials page.](/images/cloudflare-one/identity/google/create-oauth.png)
 
-7. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
+7. Under **Authorized JavaScript origins**, in the **URIs** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}.
 
 8. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 

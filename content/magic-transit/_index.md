@@ -27,6 +27,10 @@ Magic Transit sends health check probes to monitor network status and the health
 Magic Transit steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 
+{{<feature header="Cloudflare IPs" href="/magic-transit/cloudflare-ips/">}}
+Use Cloudflare-managed IP addresses if you want to protect a smaller network and do not meet Magic Transit's `/24` prefix length requirements.
+{{</feature>}}
+
 ---
 
 ## Related products
