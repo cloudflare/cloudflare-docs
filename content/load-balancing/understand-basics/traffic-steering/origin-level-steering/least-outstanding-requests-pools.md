@@ -30,7 +30,7 @@ header: Pools
 Refer to the [API documentation](/api/operations/load-balancer-pools-update-pool) for more information on the pool configuration.
 
 {{<Aside type="note">}}
-Least Outstanding Requests steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-outstanding-requests/), taking into account outstanding request counts and `random_steering` weights for pools on the load balancer.
+Least Outstanding Requests steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-outstanding-requests/), taking into account outstanding request counts and [`random_steering` weights](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) for pools on the load balancer.
 {{</Aside>}}
 
 ## Limitations

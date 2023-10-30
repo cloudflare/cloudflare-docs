@@ -32,7 +32,7 @@ header: Pools
 Refer to the [API documentation](/api/operations/load-balancer-pools-update-pool) for more information on the pool configuration.
     
 {{<Aside type="note">}}
-Least connections steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-connections/), taking into account connection counts and `random_steering` weights for pools on the load balancer.
+Least connections steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-connections/), taking into account connection counts and [`random_steering` weights](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) for pools on the load balancer.
 {{</Aside>}}
 
 ## Limitations
