@@ -10,7 +10,7 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ## Prerequisites
 
-[Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
+- [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
 
 ## Windows, macOS, and Linux
 
@@ -74,3 +74,7 @@ The device is now protected by your organization's Zero Trust policies. For more
 {{<render file="warp/_enroll-ios-android.md">}}
 
 The device is now protected by your organization's Zero Trust policies.
+
+## Virtual machines
+
+By default, virtual machines (VMs) are subject to the WARP client settings of the host. If you want to deploy a separate instance of WARP in a VM, you must configure the VM to operate in bridged networking mode.
