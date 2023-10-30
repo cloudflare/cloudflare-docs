@@ -8,11 +8,7 @@ weight: 0
 
 You can configure Spectrum with Cloudflare [Load Balancing](/load-balancing/) to provide TCP healthchecks, failover, and traffic steering, bringing resiliency to your Spectrum applications.
 
-{{<Aside type="note">}}
-
-To prevent issues with DNS resolution, when creating [Spectrum applications with load balancers](/spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer), do not use the same Spectrum hostname as a current load balancer hostname.
-
-{{</Aside>}}
+For an overview of how Cloudflare Load Balancing works refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For setup guidance refer to [Add load balancing to Spectrum applications](/load-balancing/additional-options/spectrum/).
 
 ## TCP health checks
 
@@ -52,18 +48,18 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 
 {{</details>}}
 
+## Traffic steering
+
+All traffic steering policies are available for transport load balancing through Spectrum. Refer to the Load Balancing documentation to learn more about the available [traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) options.
+
 ## Weights
 
-[Origin Weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have origins with different capacity or to split traffic amongst hosts for any other reason.
+[Origin weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have origins with different capacity or to split traffic amongst hosts for any other reason.
 
-Weight configured within a load balancer pool will be honored with load balancing through Spectrum. If configured, Cloudflare will distribute traffic amongst the available origins within a pool according to the relative weights assigned to each origin.
-
-## Traffic steering policies
-
-All traffic steering policies are available for transport load balancing through Spectrum. Refer to the [Load Balancing documentation](/load-balancing/understand-basics/traffic-steering/steering-policies/) for an updated list.
+Weight configured within a load balancer pool will be honored with load balancing through Spectrum.
 
 ## Requirements and limitations
 
-This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
-
-Currently, you cannot use [load balancing custom rules](/load-balancing/additional-options/load-balancing-rules/) with Cloudflare Spectrum.
+* This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
+* Currently, [session affinity](/load-balancing/understand-basics/session-affinity/) and [custom rules](/load-balancing/additional-options/load-balancing-rules/) are not supported by Spectrum.
+* UDP health checks are only available with public monitoring. TCP can be used with both public and private montoring.

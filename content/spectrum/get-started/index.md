@@ -132,7 +132,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 ## Create a Spectrum application using a load balancer
 
-To create a Spectrum application using a load balancer, you will need to generate a load balancer from the dashboard or via the API. Refer to the [Create a load balancer](/load-balancing/load-balancers/create-load-balancer/) workflow for help.
+To create a Spectrum application using a load balancer, you will need to generate a load balancer from the dashboard or via the API. Refer to the [Load Balancing documentation](/load-balancing/additional-options/spectrum/#1-configure-your-load-balancer) for more details.
 
 {{<Aside>}}
 
