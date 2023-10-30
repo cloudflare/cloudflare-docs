@@ -5,18 +5,18 @@ title: Direct Upload
 
 # Direct Upload
 
-Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
+Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the drag and drop method.
 
 ## Upload methods
 
 After you have your prebuilt assets ready, there are two ways to begin uploading: 
 
 * [Wrangler](/pages/get-started/direct-upload/#wrangler-cli).
-* [Drag and Drop](/pages/get-started/direct-upload/#drag-and-drop).
+* [Drag and drop](/pages/get-started/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
   
-Within a Direct Upload project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with Direct Upload on a project that you created through Git integration on the dashboard. Only projects created with Direct Upload can be updated with Direct Upload.
+Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. However, you cannot create deployments with Direct Upload on a project that you created through Git integration on the dashboard. Only projects created with Direct Upload can be updated with Direct Upload.
 
 {{</Aside>}}
 
@@ -24,7 +24,7 @@ Within a Direct Upload project, you can switch between creating deployments with
 
 Below is the supported file types for each Direct Upload options:
 * Wrangler: A single folder of assets. (Zip files are not supported.)
-* Drag and Drop: A zip file or single folder of assets.
+* Drag and drop: A zip file or single folder of assets.
 
 ## Wrangler CLI 
 
@@ -116,17 +116,20 @@ After you have your project created, select **Create a new deployment** to begin
 
 Regarding file count:
 
-* For Wrangler uploads, there is a 20,000 file limit.
-* For Drag and Drop uploads, there is a 1,000 file limit.
+{{<table-wrap>}}
 
-On both upload methods, there is a 25 MiB limit in place for individual file size. 
+| Upload method | File limit   | File size |
+| ------------- | ------------ | --------- |
+| Wrangler      | 20,000 files | 25 MiB    |
+| Drag and drop | 1,000 files  | 25 MiB    |
 
+{{</table-wrap>}}
 
-If using the Drag and Drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
+If using the Drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
-### Using Functions
+### Functions
 
-Drag and drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of Pages Functions. To deploy a `functions` folder, you must use Wrangler. When deploying a project using Wrangler, if a `functions` folder exists where the command is run, that `functions` folder will be uploaded with the project.
+Drag and drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of [Pages Functions](/pages/platform/functions/). To deploy a `functions` folder, you must use Wrangler. When deploying a project using Wrangler, if a `functions` folder exists where the command is run, that `functions` folder will be uploaded with the project.
 
 However, note that a `_worker.js` file is supported by both Wrangler and drag-and-drop deployments made from the dashboard.
 
