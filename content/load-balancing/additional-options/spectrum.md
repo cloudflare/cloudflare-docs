@@ -8,9 +8,9 @@ meta:
 
 # Add load balancing to Spectrum applications
 
-You can configure [Spectrum](/spectrum/) with Load Balancing to bring resiliency to you TCP or UDP based applications.
+You can configure [Spectrum](/spectrum/) with Load Balancing to bring resiliency to your TCP or UDP based applications.
 
-Leverage TCP/UDP health monitors, failover, and traffic steering by selecting a load balancer as **Origin** when creating your Spectrum application.
+Leverage health monitors, failover, and traffic steering by selecting a load balancer as **Origin** when creating your Spectrum application.
 
 The exact settings will vary depending on your use case. Refer to the following steps to understand the workflow.
 
@@ -20,7 +20,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ### 1. Configure your load balancer
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain where Load Balancing is [enabled](/load-balancing/get-started/enable-load-balancing/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain where the Load Balancing add-on is [enabled](/load-balancing/get-started/enable-load-balancing/).
 
 1. Go to **Traffic** > **Load Balancing**.
 
@@ -28,10 +28,10 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 3.  On the **Hostname** page, define the settings presented and select **Next**.
     *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
-    {{<Aside type="note">}}
+    {{<Aside type="warning">}}
   To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname you intend to define for your Spectrum application.
     {{</Aside>}}
-    *   Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
+    *   Keep the orange cloud icon enabled, meaning the load balancer is proxied. This refers to the [proxy mode](/load-balancing/understand-basics/proxy-modes/) and, with Spectrum, traffic is always proxied.
     *   Keep **Session Affinity** disabled as this feature is not supported with Spectrum.
 
 4.  On the **Add an Origin Pool** page, define the settings presented and select **Next**.
@@ -49,7 +49,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 8. On the **Review** page:
     *   Review your configuration and make any changes.
         * If you set traffic steering to Off, re-order the pools in your load balancer to adjust the fallback order.
-        * If you chose to set traffic steering to Random, you can [set weights to your pools](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the API) to determine the percentage of traffic sent to each pool.
+        * If you chose to set traffic steering to Random, you can [set weights to your pools](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the [API](/api/operations/load-balancers-create-load-balancer)) to determine the percentage of traffic sent to each pool.
     *   Choose whether to **Save as Draft** or **Save and Deploy**.
 
 ### 2. Configure your Spectrum application
