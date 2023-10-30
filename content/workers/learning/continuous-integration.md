@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Continuous integration
+meta:
+  description: Optimize your continuous integration and continuous deployment flow with Workers.
 ---
 
 # Continuous integration

@@ -6,4 +6,6 @@ weight: 2
 
 # Get started
 
-{{<directory-listing>}}
+Build your first Worker.
+
+{{<directory-listing showDescriptions="true">}}

@@ -361,9 +361,9 @@
 /fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/other/amp-real-ulr/reference/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-url/enable-amp-real-url/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
 /fundamentals/signed-exchanges/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/signed-exchanges/enable-signed-exchange/ /speed/optimization/other/signed-exchanges/enable-signed-exchange/ 301
 /fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ /speed/optimization/other/signed-exchanges/signed-exchanges-caveats/ 301
@@ -526,13 +526,16 @@
 /load-balancing/how-to/create-load-balancer/ /load-balancing/load-balancers/create-load-balancer/ 301
 /load-balancing/how-to/enable-load-balancing/ /load-balancing/get-started/enable-load-balancing/ 301
 /load-balancing/load-balancing-analytics/ /load-balancing/reference/load-balancing-analytics/ 301
+/load-balancing/reference/common-configurations/ /load-balancing/load-balancers/common-configurations/ 301
+/load-balancing/reference/dns-records/ /load-balancing/load-balancers/dns-records/ 301
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/pools/ /load-balancing/pools/ 301
 /load-balancing/understand-basics/monitors/ /load-balancing/monitors/ 301
+/load-balancing/understand-basics/limitations/ /load-balancing/reference/limitations/ 301
 /load-balancing/understand-basics/load-balancers/ /load-balancing/load-balancers/ 301
 /load-balancing/understand-basics/traffic-management/ /load-balancing/local-traffic-management/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
-/load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
+/load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/load-balancers/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 /load-balancing/additional-options/railgun/ /railgun/ 301
@@ -730,6 +733,9 @@
 /support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/brotli/ 301
 /support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/auto-minify-not-working/ 301
 /support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
+/speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301 
+/speed/optimization/other/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-url/enable-amp-real-url/ 301
+/speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
 
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
@@ -930,7 +936,8 @@
 /workers/about/pricing/ /workers/platform/pricing/ 301
 /workers/about/routes/ /workers/configuration/routing/routes/ 301
 /workers/platform/routes/ /workers/configuration/routing/ 301
-/workers/about/tips/debugging/ /workers/observability/debug-workers/ 301
+/workers/about/tips/debugging/ /workers/observability/ 301
+/workers/observability/debug-workers/ /workers/observability/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
@@ -1086,7 +1093,8 @@
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
-/workers/learning/debugging-workers/ /workers/observability/debug-workers/ 301
+/workers/learning/debugging-workers/ /workers/observability/ 301
+/workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
 /workers/platform/logpush/ /workers/observability/logpush/ 301
 /workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
@@ -1128,6 +1136,7 @@
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
+/workers/runtime-apis/tail-event/ /workers/runtime-apis/handlers/tail/ 301
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
@@ -1139,6 +1148,7 @@
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
 /constellation/platform/ /constellation/ 301
+/constellation/ /workers-ai/ 301
 
 # zaraz
 
@@ -1147,6 +1157,7 @@
 /zaraz/properties-reference/ /zaraz/reference/properties-reference/ 301
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
 /zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
+/zaraz/pricing/ /zaraz/ 301
 
 # cloudflare-one / zero-trust
 /access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
@@ -1195,11 +1206,16 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/run-tunnel/ /cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/tunnel-useful-commands/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-useful-commands/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/ 301
-/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-permissions/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-permissions/ 301
+/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-permissions/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/ 301
+/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-permissions/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/ /cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/grafana/ /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ 301
+/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
+/cloudflare-one/connections/connect-networks/private-net/create-private-networks/ /cloudflare-one/connections/connect-networks/private-net/warp-to-warp/ 301
+/cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
+/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/connections/connect-browsers/configuration/ /cloudflare-one/policies/browser-isolation/setup/ 301
 /cloudflare-one/policies/browser-isolation/clientless-browser-isolation/ /cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/ 301
@@ -1291,7 +1307,7 @@
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 /cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/applications/app-launcher/ 301
 /cloudflare-one/tutorials/warp-to-tunnel/ /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ 301
-/cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ 301
+/cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
 /cloudflare-one/tutorials/zero-trust-network-access/ /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ 301
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 

@@ -144,8 +144,6 @@ Currently, API Shield cannot validate some features of API schemas, including th
 
 There is a limit of 1000 total operations for enabled schemas. We will raise this limit in the near future.
 
-Schema Validation 2.0 is available via the API for all customers. A private beta for the dashboard interface is now available. Contact your account team know if you would like to be added to the new beta.
-
 ## Body inspection
 
 API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.

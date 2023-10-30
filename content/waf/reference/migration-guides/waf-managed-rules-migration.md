@@ -12,6 +12,12 @@ You can start the update process for a zone in the Cloudflare dashboard or via A
 
 Once the migration finishes, the **Managed rules** tab in the Cloudflare dashboard (available in **Security** > **WAF** > **Managed rules**) will display a new interface, and the WAF managed rules APIs will stop working.
 
+{{<Aside type="warning" header="Deprecation notice">}}
+**The previous version of WAF managed rules is now deprecated.** The [APIs for managing the previous version of WAF managed rules](#api-changes) will stop working on 2024-05-01. The same applies to [Terraform resources](#terraform-changes) related to the previous version of WAF managed rules. You must migrate before this date to avoid any issues.
+
+Refer to [Possible migration errors](#possible-migration-errors) if you are having issues migrating.
+{{</Aside>}}
+
 ## Main benefits
 
 The new version of WAF Managed Rules provides the following benefits over the previous version:

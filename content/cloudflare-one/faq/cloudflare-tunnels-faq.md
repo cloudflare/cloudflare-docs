@@ -115,6 +115,16 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 {{</faq-item>}}
 
 {{<faq-item>}}
+{{<faq-question level=2 text="Is it possible to restore a deleted tunnel?">}}
+
+{{<faq-answer>}}
+
+No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`config.yaml` file](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#configuration-file) will still be present and you can create a new tunnel with the same configuration. If the tunnel was remotely-managed, both the tunnel and its configuration are permanently deleted.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
 {{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured from Zero Trust?" >}}
 
 {{<faq-answer>}}

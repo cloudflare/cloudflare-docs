@@ -14,6 +14,8 @@ Only available on Enterprise plans.
 
 Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) have the option to upload their own root certificate to Cloudflare. Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 
+To generate a custom root CA, refer to [IBM's documentation](https://www.ibm.com/docs/en/runbook-automation?topic=certificate-generate-root-ca-key).
+
 {{<Aside type="warning">}}
 Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use the Cloudflare certificate.
 {{</Aside>}}

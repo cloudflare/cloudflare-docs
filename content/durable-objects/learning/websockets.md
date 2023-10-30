@@ -7,11 +7,11 @@ title: Durable Objects with WebSockets
 
 [WebSockets](/durable-objects/api/websockets/) allow real time communication between a client and server. Both Cloudflare Durable Objects and Workers can act as WebSocket endpoints – either as a client or as a server.
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination on a server. 
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination on a server.
 
 Durable Objects provide a single-point-of-coordination for [Cloudflare Workers](/workers/), and are often used in parallel with WebSockets to persist state over multiple clients and connections.
 
-While there are other use cases for using Workers exclusively with WebSockets, WebSockets are most useful when combined with Durable Objects. 
+While there are other use cases for using Workers exclusively with WebSockets, WebSockets are most useful when combined with Durable Objects.
 
 When a client connects to your application using a WebSocket, you need a way for server-generated messages to be sent using the existing socket connection. Multiple clients can establish a WebSocket connection with a specific Durable Object addressed by its [unique ID](/durable-objects/how-to/access-durable-object-from-a-worker/#1-create-durable-object-ids). The Durable Object can then send messages to each client over the WebSocket connection.
 
@@ -45,6 +45,8 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 {{<Aside type="warning" header="Support for local development">}}
 
-WebSockets do not hibernate when using local development environments such as `wrangler dev` or Miniflare. Hibernatable WebSocket events such as `webSocketMessage()` will be delivered, but your Durable Object will never be evicted from memory. Hibernation will be fully supported in local development for General Availability (GA). Use `wrangler dev --remote` or deploy a test/staging Durable Object namespace to production when debugging state management issues.
+Prior to wrangler@3.13.2, and Miniflare `v3.20231016.0` WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
+
+If you are using older versions, note that while hibernatable WebSocket events such as `webSocketMessage()` will still be delivered, the Durable Object will never be evicted from memory.
 
 {{</Aside>}}

@@ -27,7 +27,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 2. Select **Create Load Balancer**.
 
 3.  On the **Hostname** page, define the settings presented and select **Next**.
-    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
+    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
     {{<Aside type="warning">}}
   To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname you intend to define for your Spectrum application.
     {{</Aside>}}
