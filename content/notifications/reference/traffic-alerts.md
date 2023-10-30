@@ -28,12 +28,12 @@ This approach does not work as well for low traffic zones. If there are not many
 
 SLOs determine the sensitivity of an alert.  For example, if you want to be alerted on all spikes in 5XX errors, you should select high sensitivity. If you want to be alerted on only large spikes, you should select a lower sensitivity. 
 
-Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5XX error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), Very High Sensitivity SLOs are recommended.
+Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5XX error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), High Sensitivity SLOs are recommended.
 
 ___
 
 ## Traffic Anomalies
 
-Traffic Anomalies alerts must have a z-score of more than 3.5 or less than -3.5, and a total of more than 200 requests. The mean and standard deviation is calculated by comparing the current five minutes to the past four hours. This is measured every five minutes.
+Traffic Anomalies alerts must have a z-score of more than 3.5 or less than -3.5, and a total of more than 200 requests. A z-score is the number of standard deviations the current value is to the mean. The mean and standard deviation is calculated by comparing the current five minutes to the past four hours. This is measured every five minutes.
 
 You can filter the alerts by domain, whether or not to include traffic already mitigated by the WAF and DoS, and specific status codes. You can also choose if you want to be alerted on drops and/or spikes in your traffic.
