@@ -10,7 +10,8 @@ Cloudflare Zero Trust can check if [Carbon Black](https://www.carbonblack.com/) 
 
 ## Prerequisites
 
-Before you start, make sure Carbon Black installed on your machine.
+- Carbon Black agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure the Carbon Black check
 

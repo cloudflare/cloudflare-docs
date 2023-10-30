@@ -8,6 +8,10 @@ weight: 3
 
 Cloudflare Zero Trust allows you to build Zero Trust rules based on device UUIDs supplied in an MDM file. You can create these rules so that access to applications is granted only to users connecting from company devices.
 
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
+
 ## 1. Assign UUIDs to devices
 
 You will need to use a [managed deployment tool](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to assign UUIDs. It is not possible to assign them manually.

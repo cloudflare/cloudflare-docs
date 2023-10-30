@@ -10,6 +10,10 @@ meta:
 
 The Firewall device posture attribute ensures that a firewall is running on a device.
 
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
+
 ## Enable the firewall check
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.

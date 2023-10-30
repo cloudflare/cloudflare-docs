@@ -8,6 +8,10 @@ weight: 8
 
 The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than the configured value.
 
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
+
 ## Enable the OS version check
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.

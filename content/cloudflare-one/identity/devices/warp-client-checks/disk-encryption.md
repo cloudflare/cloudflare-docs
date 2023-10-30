@@ -10,6 +10,10 @@ meta:
 
 The Disk Encryption device posture attribute ensures that disks are encrypted on a device.
 
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
+
 ## Enable the disk encryption check
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.

@@ -12,7 +12,8 @@ Cloudflare Zero Trust can check if [SentinelOne](https://www.sentinelone.com/) i
 
 ## Prerequisites
 
-Before you start, make sure SentinelOne is installed on your machine.
+- SentinelOne agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure the SentinelOne check
 
