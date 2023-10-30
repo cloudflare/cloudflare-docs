@@ -7,9 +7,12 @@ layout: single
 
 # Kolide
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
+{{<render file="posture/_service-provider-intro.md" withParameters="Kolide">}}
 
-Device posture with Kolide requires the Kolide agent and the Cloudflare WARP client to be deployed on your devices. Our service-to-service posture check identifies devices based on their serial numbers.
+## Prerequisites
+
+- Kolide agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## Set up Kolide as a service provider
 
