@@ -30,27 +30,26 @@ Below is the supported file types for each Direct Upload options:
 
 ### Set up Wrangler
 
-To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/).
+To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
 
 #### Create your project
 
-Log in to Wrangler with the `wrangler login` command then run the following command:
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then run the [`pages project create` command](/workers/wrangler/commands/#project-create):
 
 ```sh
-$ wrangler pages project create
+$ npx wrangler pages project create
 ```
 
 You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev` (or your project name plus a few random characters if your project name is already taken). You will also be prompted to specify your production branch. 
 
 Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
 
-
 #### Deploy your assets
 
 From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) command:
 
 ```sh
-$ wrangler pages deploy <OUTPUT_DIRECTORY>
+$ npx wrangler pages deploy <OUTPUT_DIRECTORY>
 ```
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
@@ -64,7 +63,7 @@ Before using the `wrangler pages deploy` command, you will need to make sure you
 To deploy assets to a preview environment, run: 
 
 ```sh
-$ wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
+$ npx wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
 ```
 
 For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`. 
@@ -79,16 +78,16 @@ If you would like to streamline the project creation and asset deployment steps,
 
 #### Other useful commands
 
-If you would like to use Wrangler to obtain a list of all available projects for Direct Upload, use:
+If you would like to use Wrangler to obtain a list of all available projects for Direct Upload, use [`pages project list`](/workers/wrangler/commands/#project-list):
 
 ```sh
-$ wrangler pages project list
+$ npx wrangler pages project list
 ```
 
-If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use:
+If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use [`pages deployment list`](/workers/wrangler/commands/#deployment-list):
 
 ```sh
-$ wrangler pages deployment list
+$ npx wrangler pages deployment list
 ```
 
 For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
