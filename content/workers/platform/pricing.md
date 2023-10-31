@@ -63,7 +63,7 @@ To prevent accidental runaway bills or denial-of-wallet attacks, you can configu
 
 Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of CPU time your Worker can use per invocation. 
 
-Starting October 31st, 2023, the Bundled and Unbound usage models are deprecated. Workers and Pages Functions using Bundled and Unbound will continue to be billed at the rates below
+Starting October 31, 2023, the Bundled and Unbound usage models are deprecated. Workers and Pages Functions using Bundled and Unbound will continue to be billed at the rates below until March 1, 2024. After March 1, 2024, all Workers and Pages Functions will be automatically migrated to Workers Standard.
 until March 1, 2024, after which all Workers and Pages Functions will be automatically migrated to Standard.
 
 
