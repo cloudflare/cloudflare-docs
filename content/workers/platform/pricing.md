@@ -25,7 +25,7 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 
 {{<Aside type="note" header="Workers Standard pricing is now available">}}
   
-New, simplified pricing is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today. 
+New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today. 
 
 {{</Aside>}}
 
