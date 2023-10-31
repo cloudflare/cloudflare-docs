@@ -206,7 +206,7 @@ Simultaneous Open Connections are measured from the top-level request, meaning a
 
 ## Environment variables
 
-The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Paid plan, and 64 variables on the Free plan.
+The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Workers Paid plan, and 64 variables on the Workers Free plan.
 There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
@@ -215,7 +215,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts.
+A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 1 MB on the Workers Free plan.
 
 {{<render file="_limits_increase.md">}}
 
