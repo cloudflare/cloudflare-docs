@@ -24,7 +24,8 @@ Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-
 If you add a pool to a region, you cannot [delete this pool](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.
 {{</Aside>}}
 
-#### Via the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}} 
 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
@@ -36,8 +37,10 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more regions if needed.
 
-#### Via the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
@@ -64,10 +67,14 @@ header: Request
 
 If you only define `WNAM`, then traffic from the East Coast will be routed to the `default_pools`. You can test this using a client in each of those locations.
 
+{{</tab>}}
+{{</tabs>}}
+
 ### Country steering
 
-#### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
 1. Follow the [create a load balancer procedure](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic steering** step.
@@ -78,13 +85,18 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more countries if needed.
 
-#### Via the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
 
 When creating a load balancer [via the API](/api/operations/load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
 
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ### PoP steering
 
