@@ -13,7 +13,7 @@ meta:
 ## Before you begin
 
 * Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
-* Decide between using the Cloudflare certificate or a custom certificate (recommended).
+* Decide between using the Cloudflare certificate or a certificate you upload (custom certificate).
 
 {{<Aside type="warning">}}
 
