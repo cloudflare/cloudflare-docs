@@ -3,13 +3,19 @@ pcx_content_type: concept
 title: Local traffic management (LTM)
 weight: 6
 layout: single
+meta:
+    description: Local traffic management (LTM) enables you to load balance traffic between servers within a data center as well as between private applications. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud, benefiting from elastic scalability and reliability.
 ---
 
 # Local traffic management (LTM)
 
-Local traffic management (LTM) enables you to load balance traffic between your servers within a data center and also between private applications. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud, benefiting from elastic scalability and reliability.
+Local traffic management (LTM) enables you to load balance traffic between servers within a data center ([origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/)) as well as between private applications. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud, benefiting from elastic scalability and reliability.
 
 In order to support not only public IPs but also virtual IPs and private IPs as origin values, Cloudflare LTM uses different on-ramps and off-ramps.
+
+{{<Aside type="note">}}
+This page assumes some familiarity with how the Cloudflare Load Balancing solution works. For an introductory overview refer to [Load Balacing components](/load-balancing/understand-basics/load-balancing-components/).
+{{</Aside>}}
 
 ---
 
@@ -19,7 +25,7 @@ Off-ramps create a direct and secure way for Cloudflare to connect into your net
 
 Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you can better leverage existing health monitoring.
 
-Cloudflare Load Balancing currently supports using Cloudflare Tunnel as off-ramps. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support will be added in the future.
+Cloudflare Load Balancing currently supports using Cloudflare Tunnel as an off-ramp. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support will be added in the future.
 
 ### Cloudflare Tunnel
 
@@ -43,7 +49,7 @@ Refer to [Reach private load balancers with WARP](/load-balancing/local-traffic-
 
 ### Spectrum
 
-Cloudflare Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming, or video conferences, for example.
+Cloudflare Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming, or video conferences.
 
 Refer to [Add load balancing to Spectrum applications](/load-balancing/additional-options/spectrum/) for more details on how to set this up.
 
