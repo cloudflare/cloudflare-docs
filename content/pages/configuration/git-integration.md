@@ -28,15 +28,15 @@ When authorizing Cloudflare Pages to access your GitHub account, you can also sp
 
 By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow all organizations on your GitLab account to be available for use.
 
-## Removing access to your GitHub account
+## Remove access to your GitHub account
 
 You can remove Cloudflare Pages' access to your GitHub account by viewing the [**Applications** page](https://github.com/settings/installations) on GitHub. Note that removing access to GitHub will also disable new builds, though the last build of your site will continue to be hosted via Cloudflare Pages.
 
-## Removing access to your GitLab account
+## Remove access to your GitLab account
 
 You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access.
 
-## Pausing Automatic Builds
+## Pause automatic builds
 
 By default, Cloudflare Pages automatically builds and deploys a project whenever its repository receives new commits. You can pause this behavior to keep your website at a particular version and manually deploy new versions when desired.
 

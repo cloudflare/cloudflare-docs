@@ -1,7 +1,8 @@
 ---
-pcx_content_type: concept
+pcx_content_type: navigation
 title: Functions 
 layout: single
+weight: 5
 ---
 
 # Functions 
