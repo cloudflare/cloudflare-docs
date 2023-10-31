@@ -24,8 +24,8 @@ The Verified Bot Categories field is not compatible with legacy Firewall rules.
 - **Page preview**: Facebook, Slack, Twitter, or Discord Link Preview tools
 - **Search engine crawler**: Googlebot, Bingbot, Yandexbot, Baidubot
 - **Search engine optimization**: Google Lighthouse, GT Metrix, Pingdom, AddThis
-- **Security**: Vulnerability Scanners, SSL DCV Check Tools
-- **Webhooks**: Payment processors, Wordpress Integration tools
+- **Security**: Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools
+- **Webhooks**: Payment processors, WordPress Integration tools
 - **Other**
 
 ## Availability
