@@ -8,7 +8,7 @@ meta:
 
 # Geo steering
 
-**Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers. 
+**Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers.
 
 This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
@@ -20,7 +20,9 @@ You can assign multiple pools to the same area and the load balancer will use th
 
 Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query.
 
-{{<Aside type="note">}}If you define region pools for a load balancer, you cannot delete these pools until you remove them from the load balancer configuration.{{</Aside>}}
+{{<Aside type="warning">}}
+If you add a pool to a region, you cannot delete this pool until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.
+{{</Aside>}}
 
 #### Via the dashboard
 
@@ -62,7 +64,7 @@ header: Request
 
 If you only define `WNAM`, then traffic from the East Coast will be routed to the `default_pools`. You can test this using a client in each of those locations.
 
-### Country steering 
+### Country steering
 
 #### Via the dashboard
 
@@ -84,7 +86,6 @@ To get a list of country codes, use the [Region API](/load-balancing/reference/r
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
 
-
 ### PoP steering
 
 When creating a load balancer [via the API](/api/operations/load-balancers-create-load-balancer), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
@@ -95,12 +96,10 @@ Any data center not explicitly defined will fall back to using the corresponding
 
 {{<Aside type="note">}}PoP steering is only available to Enterprise customers and only accessible via the API.{{</Aside>}}
 
-
 ### Failover behavior
 
 A fallback pool will be used if there is only one pool in the same region and it is unavailable.
 If there are multiple pools in the same region, the order of the pools will be respected. For example, if the first pool is unavailable, the second pool will be used.
-
 
 ### How to delete
 
