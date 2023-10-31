@@ -21,7 +21,7 @@ You can assign multiple pools to the same area and the load balancer will use th
 Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query.
 
 {{<Aside type="warning">}}
-If you add a pool to a region, you cannot delete this pool until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.
+If you add a pool to a region, you cannot [delete this pool](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.
 {{</Aside>}}
 
 #### Via the dashboard
@@ -38,7 +38,7 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 
 #### Via the API
 
-Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region. 
+Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
@@ -100,9 +100,3 @@ Any data center not explicitly defined will fall back to using the corresponding
 
 A fallback pool will be used if there is only one pool in the same region and it is unavailable.
 If there are multiple pools in the same region, the order of the pools will be respected. For example, if the first pool is unavailable, the second pool will be used.
-
-### How to delete
-
-You can [delete the pool](https://developers.cloudflare.com/load-balancing/how-to/create-pool/#delete-a-pool) using the Dashboard or API, but if you have defined region pools for a load balancer, you cannot delete these pools until you remove them from the load balancer configuration.
-
-Be aware that, even if you change the *Traffic Steering*  option, for example for `Off` the configuration under the `Geo Steering` will remain there, so you need to remove that pool previously, before try to delete. Otherwise will appear an error that pool is still being used by the load balancer.
