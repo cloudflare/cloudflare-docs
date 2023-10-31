@@ -1,3 +1,6 @@
+{{- $littlefootJS := "https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" -}}
+{{- $littlefootCSS := "https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" -}}
+
 <!doctype html>
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}}>
   <head>
@@ -13,6 +16,9 @@
     {{- end -}}
 
     
+    <link rel="preload" href="{{$littlefootJS}}" as="style" />
+    <link rel="preload" href="{{$littlefootCSS}}" as="script" />
+    
     {{- block "styles" . -}}{{- end -}} 
 
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
@@ -26,6 +32,6 @@
   </head>
   <body>
     {{- block "main" . -}}{{- end -}}
-    {{- partial "littlefoot" -}}
+    {{- partial "littlefoot" (dict "js" $littlefootJS "css" $littlefootCSS) -}}
   </body>
 </html>
