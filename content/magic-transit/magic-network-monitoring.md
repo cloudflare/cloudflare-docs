@@ -1,7 +1,7 @@
 ---
 title: Magic Network Monitoring
 pcx_content_type: concept
-weight: 8
+weight: 7
 ---
 
 # Magic Network Monitoring integration

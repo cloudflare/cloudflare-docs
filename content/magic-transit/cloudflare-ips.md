@@ -1,7 +1,7 @@
 ---
 title: Cloudflare IPs
 pcx_content_type: concept
-weight: 9
+weight: 8
 ---
 
 # Use a Cloudflare IP

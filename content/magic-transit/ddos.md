@@ -1,7 +1,7 @@
 ---
 title: DDoS
 pcx_content_type: concept
-weight: 7
+weight: 6
 meta:
     title: Cloudflare DDoS protection
 ---
