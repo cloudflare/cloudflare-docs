@@ -108,6 +108,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
 
+  {{<Aside type="note">}}
+  The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model). 
+  {{</Aside>}}
+
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
@@ -341,7 +345,10 @@ watch_dir = "build_watch_dir"
 
 ## Limits
 
-You can impose limits on your Worker's behavior at runtime. Only supported for the [Standard Usage Model](/workers/platform/pricing/#standard-usage-model). Limits are only enforced when deployed to Cloudflare's Network, not in local development.
+You can impose limits on your Worker's behavior at runtime. Only supported for the [Standard Usage Model](/workers/platform/pricing/#standard-usage-model). Limits are only enforced when deployed to Cloudflare's Network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
+
+Limits have some built in flexibility to allow for cases where your Worker infrequently runs over the configured limit. If your Worker starts hitting the limit consistently, it's execution will be terminated according to the limit configured. 
+
 
 {{<definitions>}}
 
