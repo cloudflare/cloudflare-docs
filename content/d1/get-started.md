@@ -47,7 +47,7 @@ When setting up your `d1-tutorial` Worker, answering the questions as below:
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
 
-* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts` 
+* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -70,8 +70,8 @@ $ cd d1-tutorial
 
 Run the following `wrangler d1` command and give your database a name. A good database name is:
 
-* Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces
-* Descriptive of the use-case and environment - for example, "staging-db-web" or "production-db-backend"
+* Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
+* Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
 * Only used for describing the database, and is not directly referenced in code.
 
 ```sh
@@ -80,7 +80,7 @@ $ wrangler d1 create <DATABASE_NAME>
 ✅ Successfully created DB '<DATABASE_NAME>'
 
 [[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
+binding = "DB" # available in your Worker on env.DB
 database_name = "<DATABASE_NAME>"
 database_id = "<unique-ID-for-your-database>"
 ```
@@ -99,7 +99,7 @@ filename: wrangler.toml
 ---
 
 [[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
+binding = "DB" # available in your Worker on env.DB
 database_name = "<DATABASE_NAME>"
 database_id = "<unique-ID-for-your-database>"
 ```
@@ -149,13 +149,13 @@ $ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers
 
 After you have set up your database, you will run an SQL query from within your Worker.
 
-First, go to your `d1-tutorial` Worker and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
+First, go to your `d1-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 
-Clear the content of `worker.ts`. Paste the following code snippet into your `worker.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
 
 ```typescript
 ---
-filename: "src/worker.ts"
+filename: src/index.ts
 ---
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
@@ -186,11 +186,11 @@ export default {
 
 In the code above, you:
 
-* Define a binding to our D1 database in our TypeScript code. This binding matches the `binding` value we set in `wrangler.toml` under `[[d1_databases]]`
-* Query our database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
-* Call `.bind()` to safely and securely bind a value to that placeholder. In a real application, we would allow a user to define the `CompanyName` they want to list results for. Using `.bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against our application and deleting or otherwise modifying your database.
-* Execute the query by calling `.all()` to return all rows (or none, if the query returns none)
-* Return our query results, if any, in JSON format with `Response.json(results)`
+1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`.
+2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
+3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
+4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
+5. Return your query results, if any, in JSON format with `Response.json(results)`.
 
 After configuring your Worker, you can test your project locally before you deploy globally.
 
@@ -247,7 +247,6 @@ By finishing this tutorial, you have created a D1 database, a Worker to access t
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
-- [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
+- [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1).
 - Learn how to use the [D1 client API](/d1/platform/client-api/) within your Worker.
 - Explore [community projects built on D1](/d1/platform/community-projects/).
-

@@ -1,9 +1,13 @@
 ---
 pcx_content_type: configuration
 title: Run in CI/CD
+meta:
+  description: Deploy your Workers within a CI/CD environment.
 ---
 
 # Run Wrangler in CI/CD
+
+{{<render file="_wrangler_survey.md">}}
 
 Wrangler can be run in a [continuous integration/continuous deployment (CI/CD) environment](/workers/learning/continuous-integration/). It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment. Deploying Workers from within a CI/CD environment also makes it easier to control access to production credentials.
 
@@ -14,6 +18,7 @@ When running Wrangler locally, authentication to the Cloudflare API happens via 
 ### Cloudflare account ID
 
 To find your Cloudflare account ID, refer to [Find account and zone IDs](/fundamentals/setup/find-account-and-zone-ids/).
+
 ### API token
 
 To create an API token to authenticate Wrangler in your CI job:
@@ -24,7 +29,7 @@ To create an API token to authenticate Wrangler in your CI job:
 4. Customize your token name.
 5. Scope your token.
 
-You will need to choose the Account and Zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
+You will need to choose the account and zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
 
 ## 2. Set up CI
 
@@ -45,7 +50,7 @@ It is important not to store the value of `CLOUDFLARE_API_TOKEN` in your reposit
 
 ### GitHub Action
 
-If you use GitHub Actions, we provide [an official action](https://github.com/cloudflare/wrangler-action) for deploying Workers. Refer to the following example workflow which deploys your Worker on push to the `main` branch.
+If you use GitHub Actions, Cloudflare provides [an official action](https://github.com/cloudflare/wrangler-action) for deploying Workers. Refer to the following example workflow which deploys your Worker on push to the `main` branch.
 
 ```yaml
 ---
@@ -54,7 +59,8 @@ filename: .github/workflows/push.yml
 name: Deploy Worker
 on:
   push:
-    main
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest

@@ -10,6 +10,14 @@ The Shadow IT Discovery page provides visibility into the SaaS applications and 
 
 Shadow IT Discovery is located in [Zero Trust](https://one.dash.cloudflare.com) under **Analytics** > **Access**.
 
+## Enable Shadow IT Discovery
+
+To allow Zero Trust to discover shadow IT in your traffic:
+
+- Enable the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for HTTP and network traffic.
+- Enable [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to inspect HTTPS traffic.
+- Ensure any network traffic you want to inspect is not routed around Gateway by a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+
 ## SaaS applications
 
 To see an overview of SaaS applications your users have visited, go to **Analytics** > **Access** > **SaaS**. This tab displays the following information:

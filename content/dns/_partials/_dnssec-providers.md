@@ -25,7 +25,7 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/9722/2232/managing-dnssec-for-domains-pointed-to-custom-dns)
 - [nameISP](https://support.nameisp.com/answers/dns)
 - [namesilo](https://www.namesilo.com/Support/DS-Records-%28DNSSEC%29)
-- [OVH](https://api.ovh.com/console/#/domain/%7BserviceName%7D/dsRecord#POST)
+- [OVH](https://help.ovhcloud.com/csm/en-dns-secure-domain-dnssec?id=kb_article_view&sysparm_article=KB0051637)
 - [registro.br](https://registro.br/tecnologia/dnssec.html?secao=tutoriais-dns)
 - [Porkbun](https://kb.porkbun.com/article/93-how-to-install-dnssec) (do not fill out **keyData**).
 

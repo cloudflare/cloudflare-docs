@@ -15,7 +15,7 @@ CT Monitoring alerts are triggered not only by Cloudflare processes - including 
 {{<Aside type="warning" header="Aspects to consider">}}
 
 * If you use other services that automatically issue certificates for your domain or subdomains, this may trigger CT Monitoring emails as well.
-* If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as [subject alternative names (SANs)](/fundamentals/reference/glossary/#subject-alternative-name-san) together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) to gather more information in such cases.
+* If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as {{<glossary-tooltip term_id="Subject Alternative Names (SANs)">}}subject alternative names (SANs){{</glossary-tooltip>}} together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) to gather more information in such cases.
 * CT Monitoring does not detect phishing attempts. For example, for `cloudflare.com`, an alert would not trigger if a certificate was issued for `cloudf1are.com` or `cloud-flare.com`.
 
 {{</Aside>}}

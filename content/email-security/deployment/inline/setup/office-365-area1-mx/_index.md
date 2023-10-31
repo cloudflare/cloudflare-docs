@@ -202,7 +202,7 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 
 Office 365 (O365) has various options, as well as limitations, as to how quarantine email messages. Refer to [Office 365 use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for more information.
 
-The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 example tutorials will cover:
+The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 [example tutorials](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) will cover:
 
 - **Use case 1**: Deliver emails to Office 365 junk email folder and Admin Quarantine in Area 1 (Recommended)
 - **Use case 2**: Deliver emails to junk email folder and user managed quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 dashboard)

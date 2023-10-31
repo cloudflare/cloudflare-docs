@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Smart Placement (beta)
+meta:
+  description: Speed up your Worker application by automatically placing your workloads in an optimal location that minimizes latency.
 ---
 
 {{<heading-pill style="beta">}}Smart Placement{{</heading-pill>}}

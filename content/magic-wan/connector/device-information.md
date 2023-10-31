@@ -17,13 +17,17 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## Heartbeat
 
-Magic WAN Connector communicates periodically with Cloudflare. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
+Magic WAN Connector communicates periodically with Cloudflare. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable. There are three symbols for the heartbeat signal that allow you to quickly check the status of Magic WAN Connector:
+
+- **Blue `i`**: Magic WAN Connector is contacting Cloudflare as expected.
+- **Yellow triangle**: Magic WAN Connector has not yet connected to Cloudflare.
+- **Red triangle**: There is a potential problem with Magic WAN Connector.
 
 ### Access Magic WAN Connector's heartbeat
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Find your Connector. Move your mouse over to the `i` icon right after the **Status** column. This will show a timestamp with the last time that specific Connector successfully contacted Cloudflare.
+3. Find your Connector. Move your mouse over the icons right after the **Status** column to check the timestamp with the last time Connector successfully contacted Cloudflare.
 
 ## Device metrics
 
@@ -43,7 +47,7 @@ To check for Connector metrics:
 
 ### Query metrics with GraphQL
 
-Customers can query Cloudfare’s GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
+Customers can query Cloudflare’s GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
 
 For example:
 
@@ -80,4 +84,4 @@ The metric `average CPU load` is unique and distinctly different from `CPU utili
 
 CPU load is a measure of the number of processes that are currently running and that are waiting to be run on the CPU. Cloudflare collects the one minute load average from the device and converts that into a percentage based on the total number of cores in the CPU. If the Magic WAN Connector CPU has eight cores, and a one minute load average of two, then the average CPU load is 25%. If the average CPU load is above 100%, then there are processes in the queue that are waiting to be executed on the CPU.
 
-Cloudflare is still evaluating the typical CPU load operating range on the MWAN Connector. In general, a healthy range for average CPU load on any device is between 30% and 70%. Customers may experience decreased MWAN Connector performance if the average CPU load is consistently above 100%. 
+Cloudflare is still evaluating the typical CPU load operating range on the MWAN Connector. In general, a healthy range for average CPU load on any device is between 30% and 70%. Customers may experience decreased MWAN Connector performance if the average CPU load is consistently above 100%.

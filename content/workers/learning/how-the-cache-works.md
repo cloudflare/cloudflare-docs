@@ -1,8 +1,9 @@
 ---
 pcx_content_type: concept
 title: How the Cache works
+meta:
+  description: How Workers interacts with the Cloudflare cache.
 ---
-
 # How the Cache works
 
 Workers was designed and built on top of Cloudflare's global network to allow developers to interact directly with the Cloudflare cache. The cache can provide ephemeral, data center-local storage, as a convenient way to frequently access static or dynamic content.
@@ -10,8 +11,6 @@ Workers was designed and built on top of Cloudflare's global network to allow de
 By allowing developers to write to the cache, Workers provide a way to customize cache behavior on Cloudflare’s CDN. To learn about the benefits of caching, refer to the Learning Center’s article on [What is Caching?](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
 Cloudflare Workers can run before and after the cache but can also be utilized to modify assets once they are returned from the cache. Modifying assets returned from cache allows for the ability to sign or personalize responses while also reducing load on an origin and reducing latency to the end user by serving assets from a nearby location.
-
----
 
 ## Interacting with the Cloudflare Cache
 
@@ -33,8 +32,6 @@ The Cache API is not compatible with tiered caching. To take advantage of tiered
 
 {{</Aside>}}
 
----
-
 ### Single file purge  assets cached by a worker
 
 When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
@@ -45,7 +42,7 @@ Purging the end user URL, `https://example.com/hello`, will not work because tha
 
 In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied ([orange-clouded](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records)) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
 
-To better understand the example, take a look at the following diagram:
+To better understand the example, review the following diagram:
 
 ```mermaid
 flowchart TD
@@ -75,8 +72,6 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
   - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/purge-by-tags/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
 
 - Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/cache-keys/#create-custom-cache-keys). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
-
----
 
 ## Edge versus browser caching
 
