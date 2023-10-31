@@ -31,7 +31,7 @@ The following examples show how to access a D1 database bound to `DB` from both 
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Hono } from 'hono'
 

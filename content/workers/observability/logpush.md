@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Logpush
+meta:
+  description: Send Workers Trace Event Logs to a supported third party, such as a storage or logging provider.
 ---
 
 # Workers Trace Events Logpush
@@ -9,7 +11,7 @@ title: Logpush
 
 ## Verify your Logpush access
 
-Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your version by running `wrangler version`. Update Wrangler by running `npm update -g wrangler`.
+Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
 
@@ -20,6 +22,19 @@ To configure a Logpush job, verify that your Cloudflare account role can use Log
 Alternatively, create a new [API token](/fundamentals/api/get-started/create-token/) scoped at the Account level with Logs Edit permissions. 
  
 ## Create a Logpush job
+
+### Via the Cloudflare dashboard
+
+To create a Logpush job in the the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
+2. Select **Analytics & Logs** > **Logs**.
+3. Select **Add Logpush job**.
+4. Select **Workers trace events** as the data set > **Next**.
+5. If needed, customize your data fields. Otherwise, select **Next**.
+6. Follow the instructions on the dashboard to verify ownership of your data's destination and complete job creation.
+
+### Via cURL
 
 The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/get-started/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
  

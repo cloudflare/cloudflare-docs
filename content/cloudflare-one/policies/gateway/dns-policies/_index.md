@@ -67,7 +67,7 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 #### Custom block page
 
-When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/configuring-block-page/).
+When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If the block page is disabled, Gateway will respond to blocked queries with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 
 ### Override
 

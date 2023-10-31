@@ -131,7 +131,13 @@ entries:
 
 - term: Server Name Indication (SNI)
   general_definition: |-
-    SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. Cloudflare uses SNI for all Universal SSL certificates.
+    SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. 
+    
+    Cloudflare uses SNI for all Universal SSL certificates.
+
+- term: Subject Alternative Names (SANs)
+  general_definition: |-
+    The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, apex domains, etc.) protected by a single SSL Certificate.
 
 - term: TLS (Transport Layer Security)
   general_definition: |-

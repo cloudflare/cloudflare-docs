@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Pricing
 weight: 12
+meta:
+  description: Workers plans and pricing information.
 ---
 
 # Pricing
@@ -96,6 +98,39 @@ Resulting in the following estimated costs:
 
 {{</table-wrap>}}
 
+### Standard Usage Model
+
+Starting October 31st, 2023, [new, simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero) will be available for Workers under a new Usage Model, called Workers Standard.
+
+{{<table-wrap>}}
+
+|             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
+| ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
+| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation                    |
+
+{{</table-wrap>}}
+
+#### Example pricing
+
+A Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
+| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $45.40             |                                                                                                          |
+
+{{</table-wrap>}}
+
+{{<Aside type="note" header="Custom limits">}}
+
+The Standard Usage Model is flexible, allowing for many diverse workflows, but some customers may want additional safety measures to prevent accidental runaway bills or denial-of-wallet attacks. You can configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard.
+
+{{</Aside>}}
+
 ### How to switch Usage Models
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. To change your default account-wide Usage Model:
@@ -170,6 +205,12 @@ For more information and [examples of Durable Objects billing](/durable-objects/
 ## Durable Objects Transactional Storage API
 
 {{<render file="_transactional_storage_api_pricing.md">}}
+
+## Vectorize
+
+Vectorize is currently only available on the Workers paid plan.
+
+{{<render file="_vectorize-pricing.md">}}
 
 ## Service bindings
 

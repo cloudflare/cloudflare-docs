@@ -12,7 +12,7 @@ Location-based policies require that you send DNS requests to a [location-specif
 
 ## Filter DoH requests by location
 
-Location-based policies require that you send DNS requests to a unique [DoH endpoint](/cloudflare-one/glossary/#doh-subdomain) assigned to the location:
+Location-based policies require that you send DNS requests to a unique {{<glossary-tooltip term_id="DoH subdomain">}}DoH endpoint{{</glossary-tooltip>}} assigned to the location:
 
 ```txt
 https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query
@@ -20,7 +20,7 @@ https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query
 
 ### Prerequisites
 
-Obtain your location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
+Obtain your location's {{<glossary-tooltip term_id="DoH subdomain">}}DoH subdomain{{</glossary-tooltip>}}.
 
 ### Configure browser for DoH
 
@@ -32,9 +32,7 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
 ### Configure operating system for DoH
 
-<details>
-<summary>Windows 11</summary>
-<div>
+{{<details header="Windows 11">}}
 
 1. Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
 
@@ -74,12 +72,9 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 8. Enable **IPv6**.
 9. In **Preferred DNS** and **Alternate DNS**, enter the IPv6 addresses from your `AAAA` record command. Set **DNS over HTTPS** to _On (automatic template)_.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Windows Server 2022</summary>
-<div>
+{{<details header="Windows Server 2022">}}
 
 Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
 
@@ -101,8 +96,7 @@ nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 
 For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
-</div>
-</details>
+{{</details>}}
 
 ## Filter DoH requests by user
 
@@ -122,9 +116,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/
 
 Save the service token's `client_id`, `client_secret`, and `id`.
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```bash
 ---
@@ -146,8 +138,7 @@ highlight: [3, 4, 7]
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### 2. Enable DoH functionality for the service token
 
@@ -160,9 +151,7 @@ curl --request PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/a
 
 If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```bash
 {
@@ -181,8 +170,7 @@ If you get an `access.api.error.service_token_not_found` error, check that `<SER
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### 3. Create a user
 
@@ -202,9 +190,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/
 
 Save the user's `id` returned in the response.
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```bash
 ---
@@ -234,8 +220,7 @@ highlight: [3]
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note">}}
 
@@ -245,7 +230,7 @@ Steps 1-3 above only need to be completed once, while Steps 4-5 below would occu
 
 ### 4. Generate a DoH token for the user
 
-Request a DoH token for the user, using your service token to authenticate into your [team domain](/cloudflare-one/glossary/#team-domain).
+Request a DoH token for the user, using your service token to authenticate into your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}.
 
 ```bash
 curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
@@ -256,16 +241,13 @@ curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-toke
 
 The response contains a unique DoH token associated with the user. This token expires in 24 hours. We recommend setting up a refresh flow for the DoH token instead of generating a new one for every DoH query.
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```bash
 {"token":"y2khbGciOiJSUzI1NiIsImtpZCI6ImJlZjVkYjg4ZTEwMjk3ZDEwNzhkMmEyYjE0MjMxZTljYTQwMjQ2NjAwOTQzNmJhOTQwOGJkODY3ZmI4OWFiOGQifQ.eyJ0eXBlIjoiZG9oIiwiYXVkIjoiY2xvdWRmbGFyZS1nYXRld2F5LmNvbSIsImlhdCI6MTY1NDc1MTg3NSwiZXhwIjoxNjU0ODM4Mjc1LCJhY2NvdW50LWlkIjoiMTA4MDM0OGIyZGYzYmQwN2QxZmI1MjM3Y2Q1ZDU5M2EiLCJ1c2VyLWlkIjoiNTRkNDI1ZGUtN2E3OC00MTg2LTk5NzUtZDQzYzg4ZWU3ODk5In0.I5p4WsH2dPhQ8vwy84zF05PsoBHCsUSXAaMpNhEH36oFZ3tXcs9ksLz7OzpZ_x3HxUfO3n57LlpAF1VehaBt2i94XCkvSgtHpYcwd_qZydLp-BGtcyfU1LbdXQC3m6zxKcIWu5VySi8I-J25UYlpyJhYgZ4DQUZIpqbSSt6WcVRKvA7OBa7xjkTux4OcqWAViO_ZS-GLwl-fqhvolmiwk37seBD3YuV1zG06VeWXfrMkZ5MbhooHD1DZDBHOZpTtmN8MbeKeI4tlY1mb_O3-jE-um6F9Hrl4NQm89MKFzsum-_Rywi5m4PTSlDza7fjdJs7RzFgJd3VWgzG-jgyQKw"}%
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### 5. Send an authenticated DoH query
 
@@ -279,9 +261,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
 
 If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/gateway/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```bash
 {
@@ -308,7 +288,6 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/gateway/identity-selectors/).

@@ -6,17 +6,16 @@ weight: 3
 
 # Client certificate
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 The Client Certificate device posture attribute checks if the device has a valid certificate signed by a trusted certificate authority (CA). The posture check can be used in Gateway and Access policies to ensure that the user is connecting from a managed device.
 
 ## Prerequisites
 
-You will need a root CA that issues client certificates for your devices. You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) to generate a sample root CA for testing.
+- A root CA that issues client certificates for your devices. You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) to generate a sample root CA for testing.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure the client certificate check
 
-1. {{<render file="_upload-mtls-cert.md">}}
+1. {{<render file="_upload-mtls-cert.md" withParameters="The private key is only required if you are using this custom certificate for [Gateway HTTPS inspection](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).">}}
 
 2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 

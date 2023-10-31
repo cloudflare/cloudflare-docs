@@ -13,7 +13,7 @@ Cloudflare WARP allows you to selectively apply WARP client settings if the devi
 
 A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, WARP detects the TLS endpoint and validates its certificate against an uploaded SHA-256 fingerprint.
 
-The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. Therefore, do not choose a [private network IP](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/) that is exposed to users over Cloudflare Tunnel. One option is to choose a host that is physically in the office which remote users do not need to access, such as a printer.
+The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. Therefore, do not choose a [private network IP](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) that is exposed to users over Cloudflare Tunnel. One option is to choose a host that is physically in the office which remote users do not need to access, such as a printer.
 
 ### Create a new TLS endpoint
 
@@ -33,9 +33,7 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 
 2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
 
-<details>
-<summary>Python</summary>
-<div>
+{{<details header="Python">}}
 
 To serve the TLS certificate using Python:
 
@@ -68,12 +66,9 @@ To serve the TLS certificate using Python:
    $ python3 myserver.py
    ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>nginx in Docker</summary>
-<div>
+{{<details header="nginx in Docker">}}
 
 To serve the TLS certificate from an nginx container in Docker:
 
@@ -126,8 +121,7 @@ If needed, replace `/certs/example.pem` and `/certs/example.key` with the locati
    $ docker-compose up -d
    ```
 
-</div>
-</details>
+{{</details>}}
 
 3. To test that the server is working, run a curl command from the end user's device:
 

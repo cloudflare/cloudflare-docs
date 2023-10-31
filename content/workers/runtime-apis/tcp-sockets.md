@@ -82,6 +82,7 @@ export default {
 
 - {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
+  - The `WritableStream` returned only accepts chunks of `Uint8Array` or its views.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
@@ -156,7 +157,7 @@ const reader = socket.readable.getReader(); // This fails
 ## Considerations
  
 - Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
-- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/handlers/scheduled/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/durable-objects/api/alarms-in-durable-objects/).
+- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/handlers/scheduled/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/durable-objects/api/alarms/).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
 - By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
 

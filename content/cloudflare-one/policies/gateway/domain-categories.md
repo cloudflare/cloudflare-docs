@@ -10,8 +10,8 @@ Cloudflare Gateway allows you to block known and potential security risks on the
 
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
-{{<Aside type="note" header="Subdomain Category">}}
-Subdomains that have not been assigned a category will inherit the category of their parent domain.{{</Aside>}}
+{{<Aside type="note" header="Subdomain category">}}
+Subdomains that have not been assigned a category will inherit the category of their parent domain. When Gateway categorizes a subdomain, the subdomain will carry only its own category. Categorized subdomains will not inherit their parent domain's categories.{{</Aside>}}
 
 ## Security categories
 
@@ -72,13 +72,13 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 {{<table-wrap>}}
 
-| Category      | Definition                                                             |
-| ------------- | ---------------------------------------------------------------------- |
-| Login Screens | Sites hosting login screens that are not included in other categories. |
-| Miscellaneous | Sites that do not belong to other content categories.                  |
-| No Content    | Sites that have no content.                                            |
-| Redirect      | Domains that redirect to other sites.                                  |
-| Unreachable   | Domains that resolve to unreachable IP addresses.                      |
+| Category      | Definition                                                                      |
+| ------------- | ------------------------------------------------------------------------------- |
+| Login Screens | Sites hosting login screens that might be included in other categories as well. |
+| Miscellaneous | Sites that do not belong to other content categories.                           |
+| No Content    | Sites that have no content.                                                     |
+| Redirect      | Domains that redirect to other sites.                                           |
+| Unreachable   | Domains that resolve to unreachable IP addresses.                               |
 
 {{</table-wrap>}}
 
@@ -168,7 +168,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 21          | Security threats       | 153            | Spyware                                    |
 | 21          | Security threats       | 175            | DNS Tunneling                              |
 | 21          | Security threats       | 176            | Domain Generation Algorithm                |
-| 21          | Security threats       | 178            | Typosquatting & Impersonation              |
+| 21          | Security threats       | 178            | Brand Embedding                            |
 | 22          | Shopping & Auctions    | 73             | Auctions & Marketplaces                    |
 | 22          | Shopping & Auctions    | 82             | Coupons                                    |
 | 22          | Shopping & Auctions    | 88             | Ecommerce                                  |

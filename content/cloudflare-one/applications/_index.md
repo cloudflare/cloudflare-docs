@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Applications
-weight: 7
+weight: 6
 ---
 
 # Applications

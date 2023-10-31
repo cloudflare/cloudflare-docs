@@ -489,29 +489,30 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "ip_lists": {
-          "title": "IP Lists",
-          "link": "/waf/tools/lists/ip-lists/",
+        "b_custom_lists": {
+          "title": "Custom lists (IPs, hostnames, ASNs)",
+          "link": "/waf/tools/lists/custom-lists/",
           "free": 1,
-          "pro": 10,
-          "biz": 10,
+          "lite": 2,
+          "pro": 2,
+          "biz": 5,
           "ent": 10
         },
-        "open_proxies_list": {
-          "title": "Cloudflare Open Proxies Managed IP List",
-          "link": "/waf/tools/lists/ip-lists/#managed-ip-lists",
+        "d_open_proxies_list": {
+          "title": "Managed IP List: Cloudflare Open Proxies",
+          "link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
         },
-        "z_all_managed_ip_lists": {
+        "e_all_managed_ip_lists": {
           "title": "All Managed IP Lists",
-          "link": "/waf/tools/lists/ip-lists/#managed-ip-lists",
+          "link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "With separate bundle"
+          "ent": "With separate add-on"
         }
       }
     }
@@ -1856,7 +1857,7 @@
     "title": "Speed",
     "amp": {
       "title": "AMP Real URL",
-      "link": "/speed/optimization/other/amp-real-ulr/",
+      "link": "/speed/optimization/other/amp-real-url/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2673,7 +2674,7 @@
         },
         "origin_servers": {
           "title": "Origin servers",
-          "link": "/load-balancing/understand-basics/pools/",
+          "link": "/load-balancing/pools/",
           "free": "Up to 20",
           "pro": "Up to 20",
           "biz": "Up to 20",

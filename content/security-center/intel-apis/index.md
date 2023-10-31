@@ -6,7 +6,7 @@ weight: 3
 
 # Threat Intelligence APIs
 
-Cloudflare provides a series of endpoints covering various areas of internet security and insights. 
+Cloudflare provides a series of endpoints covering various areas of internet security and insights.
 
 | Intelligence Endpoint | Definition |
 | --- | --- |
@@ -24,8 +24,8 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 Below you can find examples of Threat Intelligence API calls. Make sure you are using an [API Token](/fundamentals/api/get-started/create-token/) with the appropriate edit permissions. For comprehensive details, navigate to the respective API documentation using the links above.
 
 ### ASN Intelligence
-<details open>
-<summary>Get ASN Overview</summary>
+
+{{<details header="Get ASN Overview" open="true">}}
 
 ```bash
 
@@ -46,11 +46,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "messages": []
 }
 ```
-</details>
+
+{{</details>}}
 
 ### Domain Intelligence
-<details>
-<summary>Get Domain Details</summary>
+
+{{<details header="Get Domain Details">}}
 
 ```bash
 
@@ -101,11 +102,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "messages": []
 }
 ```
-</details>
+
+{{</details>}}
 
 ### Domain History
-<details>
-<summary>Get Domain History</summary>
+
+{{<details header="Get Domain History">}}
 
 ```bash
 
@@ -150,11 +152,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "messages": []
 }
 ```
-</details>
+
+{{</details>}}
 
 ### IP Intelligence
-<details>
-<summary>Get IP Overview</summary>
+
+{{<details header="Get IP Overview">}}
 
 ```bash
 
@@ -189,11 +192,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "messages": []
 }
 ```
-</details>
+
+{{</details>}}
 
 ### Passive DNS by IP
-<details>
-<summary>Get Passive DNS by IP</summary>
+
+{{<details header="Get Passive DNS by IP">}}
 
 ```bash
 
@@ -241,11 +245,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 }
 
 ```
-</details>
+
+{{</details>}}
 
 ### Phishing Intelligence
-<details>
-<summary>Get results for a URL scan</summary>
+
+{{<details header="Get results for a URL scan">}}
 
 ```bash
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/brand-protection/url-info?url=http://worcester-realistic-ellen-portland.trycloudflare.com/login.html \
@@ -283,11 +288,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/bra
     "success": true
 }
 ```
-</details>
+
+{{</details>}}
 
 ### Miscategorization Intelligence
-<details>
-<summary>Create Miscategorization</summary>
+
+{{<details header="Create Miscategorization">}}
 
 ```bash
 
@@ -321,11 +327,12 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "messages": []
 }
 ```
-</details>
+
+{{</details>}}
 
 ### WHOIS
-<details>
-<summary>Get WHOIS Record</summary>
+
+{{<details header="Get WHOIS Record">}}
 
 ```bash
 
@@ -357,4 +364,5 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "messages": []
 }
 ```
-</details>
+
+{{</details>}}

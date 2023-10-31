@@ -8,46 +8,13 @@ title: Securing user access with two-factor authentication (2FA)
 
 ## Overview
 
-Two-factor authentication (2FA) allows user account owners to add an additional layer of login security to Cloudflare accounts. This additional authentication step requires you to provide both something you know, such as a Cloudflare password, and something you have, such as an authentication code from a mobile device.
-
-{{<Aside type="note">}}
-Cloudflare user accounts configured to use single sign-on (SSO) cannot
-configure 2FA.
-{{</Aside>}}
-
-Cloudflare offers the option to use either a phishing-resistant security key, like a YubiKey, or a Time-Based One-Time password (TOTP) mobile app for authentication, like Google Authenticator, or both. If you add both of these authentication methods to your account, you are initially prompted to log in with the security key, but can opt-out and use TOTP instead.
-
-To ensure that you can securely access your account even without your mobile device, or security keys, Cloudflare also provides backup codes for download.
-
-{{<Aside type="tip">}}
-After downloading your backup codes, we recommend saving them in a
-secure location.
-{{</Aside>}}
-
-As the user account owner, you are automatically assigned the [Super Administrator](https://support.cloudflare.com/hc/en-us/articles/205065067#12345682) role. Once 2FA is enabled, all Cloudflare account members are required to configure 2FA on their mobile devices.
+{{<render file="_2fa-overview.md" productFolder="support">}}
 
 ___
 
 ## Enable two-factor authentication for your Cloudflare account
 
-We recommend that all Cloudflare user account holders enable 2FA to keep their accounts secure. 
-
-2FA can only be enabled successfully on an account with a [verified email address](/fundamentals/setup/account-setup/verify-email-address/). If you do not verify your email address first, you may lock yourself out of your account.
-
-{{<Aside type="warning">}}
-Super Administrators can turn on **2FA Enforcement** to require all
-members to enable 2FA. If you are not a Super Administrator, you will be
-forced to turn on 2FA prior to accepting the invitation to join a
-Cloudflare account as a member. 
-{{</Aside>}}
-
-To enable two-factor authentication for your Cloudflare login:
-
-1.  Log in to the Cloudflare dashboard.
-2.  Under the **My Profile** dropdown, select **My Profile**.
-3.  Select the **Authentication** tab. 
-4.  Select **Manage** in the Two-Factor Authentication card.
-5.  Configure either a TOTP mobile app or a security key to enable 2FA on your account.
+{{<render file="_2fa-enable.md" productFolder="support">}}
 
 ___
 

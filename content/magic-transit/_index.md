@@ -19,12 +19,16 @@ Magic Transit is a network security and performance solution that offers DDoS pr
 
 ## Features
 
-{{<feature header="Probes" href="/magic-transit/reference/probe-construction/">}}
+{{<feature header="Tunnel health checks" href="/magic-transit/reference/tunnel-health-checks/">}}
 Magic Transit sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
 {{<feature header="Traffic steering" href="/magic-transit/reference/traffic-steering/">}}
 Magic Transit steers traffic along tunnel routes based on priorities you define during the onboarding process.
+{{</feature>}}
+
+{{<feature header="Cloudflare IPs" href="/magic-transit/cloudflare-ips/">}}
+Use Cloudflare-managed IP addresses if you want to protect a smaller network and do not meet Magic Transit's `/24` prefix length requirements.
 {{</feature>}}
 
 ---

@@ -9,7 +9,7 @@ layout: single
 
 Attackers often try to impersonate executives within an organization when sending malicious emails (with requests about banking information, trade secrets, etc.).
 
-The **Business email compromise (BEC)** feature protects against these attacks by adding [an attribute](/email-security/reference/dispositions-and-attributes/#attributes) to any spoofed email messages matching these sensitive email addresses.
+The **Business email compromise (BEC)** feature protects against these attacks by adding [an attribute](/email-security/reference/dispositions-and-attributes/#attributes) to any spoofed email messages matching these sensitive email addresses. Information about key users you enter in the dashboard is used by Area 1 to run enhanced scan techniques and find these spoofed emails.
 
 ## Setup
 

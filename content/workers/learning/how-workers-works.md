@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: How Workers works
+meta:
+  description: The difference between the Workers runtime versus traditional browsers and Node.js.
 ---
 
 # How Workers works

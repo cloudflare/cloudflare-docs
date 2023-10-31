@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Tail Workers
+meta:
+  description: Track and log Workers on invocation by assigning a Tail Worker to your projects.
 ---
 
 {{<heading-pill style="beta">}}Tail Workers{{</heading-pill>}}
@@ -11,14 +13,14 @@ Tail Workers are available to all customers on the Workers Paid and Enterprise t
 
 ![Tail Worker diagram](/images/workers/platform/tail-workers.png)
 
-A Tail Worker is automatically invoked after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. You can filter, change the format of the data and send events to any HTTP endpoint. For quick debugging, Tail Workers can be used to send logs to [KV](/workers/runtime-apis/kv/) or any database.
+A Tail Worker is automatically invoked after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. You can filter, change the format of the data and send events to any HTTP endpoint. For quick debugging, Tail Workers can be used to send logs to [KV](/kv/api/) or any database.
 
 ## Configure Tail Workers
 
 To configure a Tail Worker:
 
 1. [Create a Worker](/workers/get-started/guide) to serve as the Tail Worker.
-2. Tail Workers use a [`TailEvent`](/workers/runtime-apis/tail-event) handler to capture events from the producer. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
+2. Add a [`tail()`](/workers/runtime-apis/handlers/tail/) handler to your Worker. The `tail()` handler is invoked every time the producer Worker a Tail Worker is connected to is invoked. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
 
 ```js
 ---
@@ -83,16 +85,16 @@ filename: index.js
 ]
 ```
 
-3. Add the following to the `wrangler.toml` file of the producing Worker:
+3. Add the following to the `wrangler.toml` file of the producer Worker:
 
 ```toml
 tail_consumers = [{service = "<TAIL_WORKER_NAME>", environment = "<ENVIRONMENT_NAME>"}]
 ```
 
 {{<Aside type="note">}}
-The Worker selected must have a `TailEvent` handler defined.
+The Worker that you add a `tail_consumers` binding to must have a `tail()` handler defined.
 {{</Aside>}}
 
 ## Related resources
 
-- [`TailEvent`](/workers/runtime-apis/tail-event/) - Learn how to set up a `TailEvent` handler in your Worker.
+- [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.

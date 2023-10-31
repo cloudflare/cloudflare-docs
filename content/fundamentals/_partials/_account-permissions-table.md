@@ -77,6 +77,8 @@ inputParameters: editWord
 | DNS Firewall $1                                            | Grants write access to [DNS Firewall](/dns/dns-firewall/).                                                                                               |
 | Email Routing Addresses Read                                 | Grants read access to [Email Routing Addresses](/email-routing/setup/email-routing-addresses/).                                                          |
 | Email Routing Addresses $1                                 | Grants write access to [Email Routing Addresses](/email-routing/setup/email-routing-addresses/).                                                         |
+| Hyperdrive Read | Grants read access to [Hyperdrive](/hyperdrive/). |
+| Hyperdrive $1 | Grants write access to [Hyperdrive](/hyperdrive/). |
 | Intel Read                                                   | Grants read access to [Intel](/security-center/intel-apis/).                                                                                             |
 | Intel $1                                                   | Grants write access to [Intel](/security-center/intel-apis/).                                                                                            |
 | IOT Read                                                     | Grants read access to [IOT](https://blog.cloudflare.com/rethinking-internet-of-things-security/).                                                        |
@@ -115,8 +117,11 @@ inputParameters: editWord
 | Turnstile $1                                               | Grants read access to [Turnstile](/turnstile/).                                                                                                          |
 | URL Scanner Read                                             | Grants read access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
 | URL Scanner $1                                             | Grants read access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
-| Workers KV Storage Read                                      | Grants read access to [Cloudflare Workers KV Storage](/workers/runtime-apis/kv/).                                                                        |
-| Workers KV Storage $1                                      | Grants write access to [Cloudflare Workers KV Storage](/workers/runtime-apis/kv/).                                                                       |
+| Vectorize Read | Grants read access to [Vectorize](/vectorize/). |
+| Vectorize $1 | Grants write access to [Vectorize](/vectorize/). |
+| Workers AI Read | Grants read access to [Workers AI](/workers-ai/). |
+| Workers KV Storage Read                                      | Grants read access to [Cloudflare Workers KV Storage](/kv/api/).                                                                        |
+| Workers KV Storage $1                                      | Grants write access to [Cloudflare Workers KV Storage](/kv/api/).                                                                       |
 | Workers R2 Storage Read                                      | Grants read access to [Cloudflare R2 Storage](/r2/).                                                                                                     |
 | Workers R2 Storage $1                                      | Grants write access to [Cloudflare R2 Storage](/r2/).                                                                                                    |
 | Workers Scripts Read                                         | Grants read access to [Cloudflare Workers scripts](/workers/).                                                                                           |

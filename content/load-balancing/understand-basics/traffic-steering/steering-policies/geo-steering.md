@@ -26,7 +26,7 @@ If you add a pool to a region, you cannot delete this pool until you remove it f
 
 #### Via the dashboard
 
-When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
+When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
 1. Go to the **Traffic steering** step.
 2. Select **Geo steering**.
@@ -68,9 +68,9 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 #### Via the dashboard
 
-When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
+When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
-1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic steering** step.
+1. Follow the [create a load balancer procedure](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic steering** step.
 2. Select **Geo steering**.
 3. For **Country**, select a country > **Add Region**.
 4. Select **Edit**.

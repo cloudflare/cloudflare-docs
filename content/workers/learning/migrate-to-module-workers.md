@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Migrate from Service Workers to ES Modules
+meta:
+  description: Write your Worker code in ES modules syntax for an optimized experience.
 ---
 
 # Migrate from Service Workers to ES Modules
@@ -72,7 +74,7 @@ In the following sections, you will use your binding in Service Worker and ES mo
 
 {{<Aside type="note" header="Reference KV from Durable Objects and Workers">}}
 
-To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/workers/runtime-apis/kv/#kv-bindings).
+To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/kv/learning/kv-bindings/).
 
 {{</Aside>}}
 
@@ -183,9 +185,6 @@ export default {
   },
 };
 ```
-
-
----
 
 ## Cron Triggers
 

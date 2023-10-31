@@ -55,7 +55,7 @@ In your terminal, you will be asked a series of questions related to your projec
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
 
-This will create a new directory, which will include both a `src/worker.js` file to write your code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, create a class to define a Durable Object.
+This will create a new directory, which will include both a `src/index.js` file to write your code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, create a class to define a Durable Object.
 
 ## 3. Write a class to define a Durable Object
 
@@ -71,7 +71,7 @@ Note that this means bindings are no longer global variables. For example, if yo
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export class DurableObjectExample {
   constructor(state, env) {}
@@ -79,11 +79,11 @@ export class DurableObjectExample {
 ```
 Workers communicate with a Durable Object via the fetch API. Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
 
-Your `worker.js` file should now look like:
+Your `index.js` file should now look like:
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export class DurableObjectExample {
   constructor(state, env) {}
@@ -111,11 +111,11 @@ Durable Objects do not receive requests directly from the Internet. Durable Obje
 This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 {{</Aside>}}
 
-To communicate with a Durable Object, add the following to your `worker.js` file's existing class and fetch handler :
+To communicate with a Durable Object, add the following to your `index.js` file's existing class and fetch handler :
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export default {
 
@@ -192,8 +192,11 @@ Refer to [Durable Objects migrations](/durable-objects/learning/durable-objects-
 To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
+
+In your console, you should see a`Hello world` string returned by the Durable Object.
+
 
 ## 8. Deploy your Durable Object Worker
 

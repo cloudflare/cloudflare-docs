@@ -1,15 +1,11 @@
 ---
 pcx_content_type: concept
 title: Deployments
+meta:
+  description: View a log of and rollback to past versions of your Worker.
 ---
 
 # Deployments
-
-{{<Aside type="note">}}
-
-Deployments are currently in Public Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
-
-{{</Aside>}}
 
 Deployments are a log of static historical versions of your Worker. Deployments track changes to the [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#workers) associated with a Worker over time.
 
@@ -19,7 +15,7 @@ The latest deployment for a Worker is considered the active deployment. You can 
 
 {{<Aside type="note">}}
 
-Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/durable-objects/) are not tracked with deployments.
+Associated resources for a Worker such as [KV](/kv/), [R2](/r2/), and [Durable Objects](/durable-objects/) are not tracked with deployments.
 
 {{</Aside>}}
 

@@ -107,8 +107,8 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
+1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#6-run-the-tunnel)).
 
 For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
@@ -118,7 +118,7 @@ This error will appear if a certificate has not been generated for the Access ap
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
-These mobile applications may use [certificate pinning](/cloudflare-one/glossary/#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
+These mobile applications may use {{<glossary-tooltip term_id="certificate pinning">}}certificate pinning{{</glossary-tooltip>}} Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
 ## My tunnel fails to authenticate.
@@ -186,40 +186,24 @@ $ sudo systemctl restart systemd-resolved.service
 
 ## Windows incorrectly shows `No Internet access` when WARP is enabled.
 
-Windows runs network connectivity checks that can sometimes fail due to how the WARP client configures the local DNS proxy on the device. This can result in a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. However, some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
+[NCSI](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-overview) is a Windows feature for determining network quality and connectivity. When WARP is enabled, NCSI checks can sometimes fail and cause a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. Some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
 
-There are two options to resolve the issue:
+To resolve the issue, you will need to edit two Windows registry keys:
 
-- **Option 1**: In Windows, configure the Network Connectivity Status Indicator (NCSI) to detect the WARP DNS server.
-  {{<tabs labels="Registry key | Group policy">}}
-  {{<tab label="registry key" no-code="true">}}
-
-To fix the issue with a registry key:
-
-```bash
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator" /v UseGlobalDNS /t REG_DWORD /d 1 /f
-```
-
-{{</tab>}}
-{{<tab label="group policy" no-code="true">}}
-
-To fix the issue with a local group policy:
-
-1. Open `gpedit.msc`.
-2. Go to **Computer Configuration** > **Administrative Templates** > **Network** > **Network Connectivity Status Indicator**.
-3. Enable **Specify Global DNS**.
-4. Update group policy settings on the device:
-
-```bash
-gpupdate /force
-```
-
-5. Reboot the device.
-
-{{</tab>}}
-{{</tabs>}}
-
-- **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.
+1. Configure NCSI to detect WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
+    ```txt
+    HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator
+    Type: DWORD
+    Value: UseGlobalDNS
+    Data: 1
+    ```
+2. Configure NCSI to use active probing mode, as WARP may be obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
+    ```txt
+    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet
+    Type: DWORD
+    Value: EnableActiveProbing
+    Data: 1
+    ```
 
 ## I see Storage Partitioned Error.
 

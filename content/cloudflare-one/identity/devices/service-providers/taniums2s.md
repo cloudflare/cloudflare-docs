@@ -10,9 +10,13 @@ meta:
 
 # Tanium
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
+{{<render file="posture/_service-provider-intro.md" withParameters="Tanium">}}
 
-Service-to-service device posture with Tanium requires the Tanium agent and the Cloudflare WARP client to be deployed on your devices. This integration reads Tanium endpoint data via the WARP client. You can use either Tanium Cloud or on-premise installations of Tanium.
+## Prerequisites
+
+- Either Tanium Cloud or on-premise installations of Tanium
+- Tanium agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## Set up Tanium as a service provider
 

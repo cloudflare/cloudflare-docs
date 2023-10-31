@@ -23,13 +23,13 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) for information on settings not mentioned here):
     - **Tunnel name**: `FITEL-tunnel-1`
     - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
-    - **Customer endpoint**: The global address for your first FITELnet router.
+    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/get-started/configure-tunnels/).
     - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
     - **Pre-shared key**: Create a pre-shared key for your first tunnel.
 5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
     - **Tunnel name**: `FITEL-tunnel-2`
     - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
-    - **Customer endpoint**: The global address for your second FITELnet router.
+    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/get-started/configure-tunnels/).
     - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
     - **Pre-shared key**: Create a pre-shared key for your second tunnel.
 
@@ -56,7 +56,10 @@ crypto ipsec policy IPsec_POLICY
  set mss 1350
  set ip df-bit 0
  set ip fragment post
+ ! if there is a NAT router between Cloudflare and FITELnet,
+ ! add the two udp-encapsulation options below
  set udp-encapsulation nat-t keepalive interval 30 always-send
+ set udp-encapsulation-force
 exit
 !
 crypto ipsec selector SELECTOR
@@ -78,25 +81,15 @@ crypto isakmp policy ISAKMP_POLICY
  group 14
  lifetime 14400
  hash sha sha-256
- initiate-mode main
-exit
-!
-crypto isakmp policy P1-POLICY
- authentication pre-share
- encryption aes
- encryption-keysize aes 256 256 256
- group 14
- lifetime 14400
- hash sha sha-256
- initiate-mode main
+ initiate-mode aggressive
 exit
 !
 crypto isakmp profile PROF1
- local-address <ROUTER1_ADDRESS>
- self-identity address <ROUTER1_ADDRESS>
+ ! set the value of FQDN ID for self-identify
+ self-identity fqdn <FQDN-ID-TUNNEL01>
  set isakmp-policy ISAKMP_POLICY
  set ipsec-policy IPsec_POLICY
- set peer anycast-address
+ set peer <CLOUDFLARE-ANYCAST-ADDRESS>
  ike-version 2
  local-key <PRE-SHARED-KEY-TUNNEL01>
 exit
@@ -129,7 +122,10 @@ crypto ipsec policy IPsec_POLICY
  set mss 1350
  set ip df-bit 0
  set ip fragment post
+ ! if there is a NAT router between Cloudflare and FITELnet,
+ ! add the two udp-encapsulation options below
  set udp-encapsulation nat-t keepalive interval 30 always-send
+ set udp-encapsulation-force
 exit
 !
 crypto ipsec selector SELECTOR
@@ -151,25 +147,15 @@ crypto isakmp policy ISAKMP_POLICY
  group 14
  lifetime 14400
  hash sha sha-256
- initiate-mode main
-exit
-!
-crypto isakmp policy P1-POLICY
- authentication pre-share
- encryption aes
- encryption-keysize aes 256 256 256
- group 14
- lifetime 14400
- hash sha sha-256
- initiate-mode main
+ initiate-mode aggressive
 exit
 !
 crypto isakmp profile PROF1
- local-address <ROUTER2_ADDRESS>
- self-identity address <ROUTER2_ADDRESS>
+ ! set the value of FQDN ID for self-identify
+ self-identity fqdn <FQDN-ID-TUNNEL02>
  set isakmp-policy ISAKMP_POLICY
  set ipsec-policy IPsec_POLICY
- set peer anycast-address
+ set peer <CLOUDFLARE-ANYCAST-ADDRESS>
  ike-version 2
  local-key <PRE-SHARED-KEY-TUNNEL02>
 exit

@@ -37,7 +37,7 @@ You can set up External Evaluation rules using any API service, but to get start
    $ cd my-worker
    ```
 
-3. Create a [Workers KV namespace](/workers/wrangler/workers-kv/) to store the key. The binding name should be `KV` if you want to run the example as written.
+3. Create a [Workers KV namespace](/kv/learning/kv-namespaces/) to store the key. The binding name should be `KV` if you want to run the example as written.
 
    ```sh
    $ wrangler kv:namespace create "KV"
@@ -49,7 +49,7 @@ You can set up External Evaluation rules using any API service, but to get start
 
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<KV_NAMESPACE_ID>`: the `id` of your KV namespace.
-   - `<TEAM_NAME>`: your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+   - `<TEAM_NAME>`: your Cloudflare Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 
    ```txt
    ---

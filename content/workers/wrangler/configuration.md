@@ -3,14 +3,17 @@ pcx_content_type: configuration
 title: Configuration
 meta:
   title: Configuration - Wrangler
+  description: Use a `wrangler.toml` configuration file to customize the development and deployment setup for your Worker project and other Developer Platform products.
 ---
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deploying setup for a Worker.
+{{<render file="_wrangler_survey.md">}}
+  
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deployment setup for a Worker.
 
 {{<Aside type="warning">}}
-Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
 {{</Aside>}}
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
@@ -137,6 +140,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
 
+- `limits` {{<type-link href="#limits">}}Limits{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
+
 {{</definitions>}}
 
 ## Non-inheritable keys
@@ -164,6 +171,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `r2_buckets` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
+
+- `vectorize` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of Vectorize indexes that your Worker should be bound to.. Refer to [Vectorize indexes](#vectorize-indexes).
 
 - `services` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -328,6 +339,28 @@ cwd = "build_cwd"
 watch_dir = "build_watch_dir"
 ```
 
+## Limits
+
+You can impose limits on your Worker's behavior at runtime. Only supported for the [Standard Usage Model](/workers/platform/pricing/#standard-usage-model). Limits are only enforced when deployed to Cloudflare's Network, not in local development.
+
+{{<definitions>}}
+
+- `cpu_ms` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum CPU time allowed per invocation, in milliseconds.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[limits]
+cpu_ms = 100
+```
+
 ## Bindings
 
 ### D1 databases
@@ -342,9 +375,9 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
 
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `database_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
+  - The name of the database. This is a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
 
 - `database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -440,7 +473,7 @@ deleted_classes = ["DeprecatedClass"]
 
 ### KV namespaces
 
-[Workers KV](/workers/runtime-apis/kv/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
+[Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
@@ -587,6 +620,37 @@ header: wrangler.toml
 ---
 r2_buckets  = [
   { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
+]
+```
+
+### Vectorize indexes
+
+A [Vectorize index](/vectorize/) allows you to insert and query vector embeddings for semantic search, classification and other vector search use-cases.
+
+To bind Vectorize indexes to your Worker, assign an array of the below object to the `vectorize` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the bound index from your Worker code.
+
+- `index_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the index to bind.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+
+[[vectorize]]
+vectorize = [
+  { binding = "<INDEX_NAME>", bucket_name = "<your-index>"}
 ]
 ```
 

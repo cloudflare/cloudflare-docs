@@ -51,12 +51,6 @@ $ npm run dev
 
 {{<pages-build-preset framework="remix">}}
 
-{{<Aside type="warning">}}
-
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version greater than `14.0.0` to build on Cloudflare Pages. To set the Node version, go to your Pages project > **Settings** > **Environment Variables** > **Production** and add `NODE_VERSION` environment variable with a value of `14` or greater in your Production option.
-
-{{</Aside>}}
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.
 
 {{<Aside type="note">}}
@@ -71,7 +65,7 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 ## Create and add a binding to your Remix application
 
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
 ### Binding resources to your Remix application
 
