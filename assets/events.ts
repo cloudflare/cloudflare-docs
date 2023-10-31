@@ -107,6 +107,7 @@ function $tab(ev: MouseEvent) {
     ?.getAttribute("data-link");
 
   document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
+  zaraz.track("tab click", {selected_option: ev.target.innerText})
 }
 
 export function tabs() {
@@ -168,6 +169,7 @@ export function dropdowns() {
   let attr = "data-expanded";
 
   document.querySelectorAll(".Dropdown").forEach((div) => {
+    
     let btn = div.querySelector("button");
     let links = div.querySelectorAll<HTMLAnchorElement>("li>a");
     let focused = 0; // index
@@ -277,4 +279,54 @@ export function toggleSidebar() {
       }
     });
   }
+}
+
+export function zarazTrackDocEvents() {
+  const links = document.getElementsByClassName("DocsMarkdown--link");
+  const dropdowns = document.getElementsByTagName("details")
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links as any) {  // Type cast to any for iteration
+        if (link.hostname !== "developers.cloudflare.com") {
+          if (link.hostname.includes("cloudflare.com")) {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('Cross Domain Click', link);
+            });
+          } else {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('external link click', link);
+            });
+          }
+        }
+      }
+    }
+    if (dropdowns.length > 0) {
+      for (const dropdown of dropdowns as any) { 
+        dropdown.addEventListener("click", () => {
+          $zarazDropdownEvent(dropdown.getElementsByTagName("summary")[0]);
+        });
+    }
+  }
+  });
+}
+
+function $zarazLinkEvent(type: string, link: Element) {
+  zaraz.track(type, {href: link.href, hostname: link.hostname})
+}
+
+function $zarazDropdownEvent(summary: string) {
+  zaraz.track('dropdown click', {text: summary.innerText})
+}
+
+export function zarazTrackHomepageLinks() {
+  const links = document.getElementsByClassName("DocsMarkdown--link");
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links as any) {  // Type cast to any for iteration
+        link.addEventListener("click", () => {
+          zaraz.track('homepage link click', {href: link.href})
+        });
+      } 
+    }
+  });
 }

@@ -1,9 +1,13 @@
 ---
 pcx_content_type: configuration
 title: Custom builds
+meta:
+  description: Customize how your code is compiled, before being processed by Wrangler.
 ---
 
 # Custom builds
+
+{{<render file="_wrangler_survey.md">}}
 
 Custom builds are a way for you to customize how your code is compiled, before being processed by Wrangler.
 

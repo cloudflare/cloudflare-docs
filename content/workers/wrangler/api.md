@@ -2,9 +2,13 @@
 pcx_content_type: configuration
 title: API
 weight: 2
+meta:
+  description: An experimental API to programmatically manage your Cloudflare Workers.
 ---
 
 # Wrangler API
+
+{{<render file="_wrangler_survey.md">}}
 
 Wrangler offers an experimental API to programmatically manage your Cloudflare Workers.
 

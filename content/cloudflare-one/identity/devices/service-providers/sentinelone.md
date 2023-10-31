@@ -9,9 +9,12 @@ meta:
 
 # SentinelOne
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
+Cloudflare Zero Trust can integrate with SentinelOne to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
-Device posture with SentinelOne requires the SentinelOne agent and the Cloudflare WARP client to be deployed on your devices. Our service-to-service posture check identifies devices based on their serial numbers.
+## Prerequisites
+
+- SentinelOne agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## Set up SentinelOne as a service provider
 

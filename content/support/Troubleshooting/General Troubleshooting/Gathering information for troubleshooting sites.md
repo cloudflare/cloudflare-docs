@@ -25,12 +25,16 @@ A HTTP Archive (HAR) records all web browser requests including the request and 
 
 {{<Aside type="warning">}}
 A HAR file can include sensitive details such as passwords, payment
-information, and private keys. Manually remove sensitive information
-from a HAR file via a text editor before providing to Cloudflare
-Support.
+information, and private keys.
+
+You can remove sensitive information from your HAR file by:
+
+- Using a [HAR Sanitizer](https://blog.cloudflare.com/introducing-har-sanitizer-secure-har-sharing/).
+- Manually removing sensitive information.
+
 {{</Aside>}}
 
-Currently, only Chrome and Firefox can access the HAR feature by default. Other browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
+Some browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
 
 ### In Chrome
 

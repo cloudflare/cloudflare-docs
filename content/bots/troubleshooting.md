@@ -7,25 +7,27 @@ weight: 11
 
 # Frequently Asked Questions
 
-## How does Cloudflare detect bots?
+## Bots
+
+### How does Cloudflare detect bots?
 
 Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Plans](/bots/plans).
 
 ___
 
-## How do I know what's included in my plan?
+### How do I know what's included in my plan?
 
 To know what's included in your plan, refer to our [Plans](/bots/plans).
 
 ___
 
-## How do I set up my bot product?
+### How do I set up my bot product?
 
 To learn how to set up your bot product, refer to [Get started](/bots/get-started).
 
 ___
 
-## Yandex bot unexpectedly blocked by the WAF managed rule with ID `...f6cbb163`
+### Yandex bot unexpectedly blocked by the WAF managed rule with ID `...f6cbb163`
 
 Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will occasionally be blocked by a Cloudflare WAF managed rule, as the IP list of Yandex bots has not yet synced with Yandex's most recent changes.
 
@@ -42,7 +44,7 @@ Once the new Yandex IP is propagated to our system, the requests will not be blo
 
 ___
 
-## How does machine learning work?
+### How does machine learning work?
 
 Supervised machine learning takes certain variables (X) like gender and age and predicts another variable (Y) like income.
 
@@ -52,7 +54,7 @@ Cloudflare uses data from millions of requests and re-train the system on a peri
 
 ___
 
-## Why am I seeing a Managed Challenge action for WAF rules?
+### Why am I seeing a Managed Challenge action for WAF rules?
 
 When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an **Action Taken** of **Managed Challenge**.
 
@@ -63,7 +65,7 @@ This does not mean that your traffic was blocked. It is the challenge sent to yo
 To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 ___
 
-## What is the difference between the threat score and bot management score?
+### What is the difference between the threat score and bot management score?
 
 The difference is significant:
 
@@ -74,7 +76,7 @@ These fields are available via [WAF custom rules](/waf/custom-rules/) and other 
 
 ___
 
-## What is cf.bot\_management.verified\_bot?
+### What is cf.bot\_management.verified\_bot?
 
 A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
 
@@ -86,7 +88,7 @@ To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-la
 
 ___
 
-## Why might the ja3hash be empty in HTTP logs?
+### Why might the ja3hash be empty in HTTP logs?
 
 The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
 
@@ -96,7 +98,7 @@ The JA3 Fingerprint can be null or empty in some cases. The most common case is 
 
 ___
 
-## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
+### I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
@@ -104,7 +106,7 @@ As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your b
 
 ___
 
-## What information do I need to troubleshoot my bot issues?
+### What information do I need to troubleshoot my bot issues?
 
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
@@ -130,7 +132,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 
 ___
 
-## What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
+### What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
 
 {{<Aside type="warning" header="Important considerations you need to be aware of before turning on BFM or SBFM">}}
 
@@ -154,7 +156,7 @@ If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can
 
 ___
 
-## Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?
+### Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?
 
 This is a known issue the Bots team is working to resolve in the near future. In the meantime, there is a workaround to resolve such issue. You will need to run the following API command to check and remove the SBFM ruleset:
 
@@ -179,3 +181,50 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rule
 ```
 
 Note that you need to replace <key> with your own [API key](/fundamentals/api/get-started/keys/).
+
+___
+
+## Challenges
+
+### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
+
+No. The Managed Challenge, Interactive Challenge, and JS Challenge actions only support requests that trigger a page refresh.
+
+Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), since visitors do not trigger a new page load.
+
+When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a `403` status code.
+
+Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
+
+For an additional layer of security against Credential Stuffing, you could use [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site (such as login or checkout forms).
+
+___
+
+### Does the `challengeFailed` action accurately represent challenges that users did not pass?
+
+No. The `challengeFailed` and `jschallengeFailed` firewall rule actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a firewall rule. Additionally, Cloudflare Firewall Rules may not have a record of every request with a failed challenge.
+
+Therefore, consider these actions with caution. A reliable indicator is the [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/) displayed in **Security** > **WAF** > **Firewall rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
+
+___
+
+### Why would I not find any failed challenges? Why is `ChallengeIssued` not equal to `ChallengeSolved` plus `ChallengeFailed`?
+
+Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
+
+There are multiple reasons for this:
+
+- Users give up on a challenge.
+- Users try to solve a challenge but cannot provide an answer.
+- Users keep refreshing the challenge, but never submit an answer.
+- Cloudflare receives a malformed challenge answer.
+
+___
+
+### Why do I have matches for a firewall rule that was not supposed to match the request?
+
+Make sure you are looking at the correct request.
+
+Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a challenge.
+
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Interactive Challenge_ or _JS Challenge_ and now that challenge was answered."

@@ -6,9 +6,11 @@ weight: 1
 
 # Application check
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 The Application Check device posture attribute checks that a specific application process is running on a device. You can create multiple application checks for each operating system you need to run it on, or if you need to check for multiple applications.
+
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure an application check
 

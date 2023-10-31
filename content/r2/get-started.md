@@ -31,22 +31,7 @@ Before you create your first bucket, you must purchase R2 from the Cloudflare da
 
 1. [Install Wrangler](/workers/wrangler/install-and-update/) within your project using npm and Node.js or Yarn.
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm install wrangler --save-dev
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn add --dev wrangler
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_install_wrangler.md" productFolder="workers" >}}
 
 2. [Authenticate Wrangler](/workers/wrangler/commands/#login) to enable deployments to Cloudflare. When Wrangler automatically opens your browser to display Cloudflare’s consent screen, select **Allow** to send the API Token to Wrangler.
 

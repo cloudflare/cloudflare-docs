@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Log from Workers
+meta:
+  description: Debug your Worker application by accessing logs and exceptions through the Cloudflare dashboard or `wrangler tail`.
 ---
 
 # Log from Workers
