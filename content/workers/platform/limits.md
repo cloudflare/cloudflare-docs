@@ -11,7 +11,7 @@ meta:
 
 {{<table-wrap>}}
 
-| Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
+| Feature                                                                         | Free      | Paid (Bundled](/workers/platform/pricing/#bundled-usage-model) and [Unbound](/workers/platform/pricing/#unbound-usage-model))      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#unbound-usage-model), [Standard](/workers/platform/pricing/#standard-usage-model))|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
@@ -117,11 +117,11 @@ Workers automatically scale onto thousands of Cloudflare global network servers 
 
 Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
 
-The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
+The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
 {{<Aside type="warning">}}
 
-If you are currently being rate limited, upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+If you are currently being rate limited, upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
 
 {{</Aside>}}
 
