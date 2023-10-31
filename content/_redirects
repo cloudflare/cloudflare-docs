@@ -900,6 +900,7 @@
 /support/firewall/tools/ /waf/ 301
 /support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
 /support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/troubleshooting/ 301
+/waf/change-log/historical/ /waf/change-log/historical-2019/ 301
 
 # waiting-room
 /waiting-room/about/plans/ /waiting-room/plans/ 301
@@ -1397,6 +1398,12 @@
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
 /firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
+
+# Old WAF changelog entries
+/waf/change-log/2019-* /waf/change-log/historical-2019/ 301
+/waf/change-log/2020-* /waf/change-log/historical-2020/ 301
+/waf/change-log/2021-* /waf/change-log/historical-2021/ 301
+/waf/change-log/2022-* /waf/change-log/historical-2022/ 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
