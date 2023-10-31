@@ -15,9 +15,9 @@ In order to support not only public IPs but also virtual IPs and private IPs as 
 
 ## Off-ramps
 
-Off-ramps, on the other hand, create a direct and secure way for Cloudflare to connect into your networks that are not publicly available.
+Off-ramps create a direct and secure way for Cloudflare to connect into your networks that are not publicly available.
 
-Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you are able to better leverage existing health monitoring.
+Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you can better leverage existing health monitoring.
 
 Cloudflare Load Balancing currently supports using Cloudflare Tunnel as off-ramps. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support will be added in the future.
 
@@ -33,7 +33,7 @@ Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traff
 
 ## On-ramps
 
-LTM on-ramps refer to the path between the end-user request and the Cloudflare network.
+LTM on-ramps, on the other hand, refer to the path between the end-user request and the Cloudflare network.
 
 ### WARP
 
