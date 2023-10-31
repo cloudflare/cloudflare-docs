@@ -55,7 +55,7 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 {{<Aside type="note" header="Custom limits">}}
 
-The Standard Usage Model is flexible, allowing for many diverse workflows, but some customers may want additional safety measures to prevent accidental runaway bills or denial-of-wallet attacks. You can configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard.
+To prevent accidental runaway bills or denial-of-wallet attacks, you can configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard.
 
 {{</Aside>}}
 
