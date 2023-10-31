@@ -54,7 +54,8 @@ ___
 
 ## Does Cloudflare SSL support Internationalized Domain Names (IDN)?
 
-Cloudflare supports double byte / IDN / punycode domains.  Domains with non-Latin characters receive SSL certificates just like any other domain added to Cloudflare. Only an exception when you select Google Trust Services as certificate authority. Check more details [here](https://developers.cloudflare.com/ssl/reference/certificate-authorities/#limitations-1).
+The double byte / IDN / punycode domains support for Cloudflare Edge certificates depends on the [Certificate Autority (CA)](/ssl/reference/certificate-authorities).
+Google Trust Services do not support punycode domains as mentionned [here](/ssl/reference/certificate-authorities/#limitations-1).
 
 ___
 
@@ -134,6 +135,8 @@ ___
 No. Multiple industry leaders — including [Digicert](https://www.digicert.com/blog/certificate-pinning-what-is-certificate-pinning) and [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning) — have discouraged certificate pinning because of security concerns.
 
 For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/).
+
+Please refer to our [Certificate pinning](/ssl/reference/certificate-pinning/) article for more details.
 
 ___
 
