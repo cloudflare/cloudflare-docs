@@ -69,7 +69,7 @@ To update specific settings without having to resubmit the entire configuration,
 
 ## Delete a load balancer
 
-If you delete or disable a load balancer, your origin's response to requests will depend on your [existing DNS records](/load-balancing/reference/dns-records/#disabling-a-load-balancer).
+If you delete or disable a load balancer, your origin's response to requests will depend on your [existing DNS records](/load-balancing/load-balancers/dns-records/#disabling-a-load-balancer).
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

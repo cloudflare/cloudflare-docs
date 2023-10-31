@@ -6,17 +6,15 @@ weight: 4
 
 # Microsoft Endpoint Manager
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
-Cloudflare Zero Trust can integrate with Microsoft Endpoint Manager and Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
+{{<render file="posture/_service-provider-intro.md" withParameters="Microsoft">}}
 
 ## Prerequisites
 
 Device posture with Microsoft Endpoint Manager requires:
 
 - An Intune license
-- Microsoft Endpoint Manager managing the device
-- Cloudflare WARP client deployed on the device
+- Microsoft Endpoint Manager is managing the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## 1. Obtain Microsoft Graph settings
 

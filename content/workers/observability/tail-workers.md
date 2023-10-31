@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Tail Workers
+meta:
+  description: Track and log Workers on invocation by assigning a Tail Worker to your projects.
 ---
 
 {{<heading-pill style="beta">}}Tail Workers{{</heading-pill>}}

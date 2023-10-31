@@ -38,7 +38,7 @@ export default {
     let id = env.COUNTER.idFromName(name);
 
     // Construct the stub for the Durable Object using the ID. 
-    //A stub is a client Object used to send messages to the Durable Object.
+    // A stub is a client Object used to send messages to the Durable Object.
     let obj = env.COUNTER.get(id);
 
     // Send a request to the Durable Object, then await its response.
@@ -121,7 +121,7 @@ export default {
     let id = env.COUNTER.idFromName(name);
 
     // Construct the stub for the Durable Object using the ID. 
-    //A stub is a client Object used to send messages to the Durable Object.
+    // A stub is a client Object used to send messages to the Durable Object.
     let obj = env.COUNTER.get(id);
 
     // Send a request to the Durable Object, then await its response.
@@ -196,4 +196,4 @@ new_classes = ["Counter"]
 ```
 ### Related resources
 
-- [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).

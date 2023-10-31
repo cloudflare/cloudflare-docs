@@ -1,17 +1,17 @@
 ---
 pcx_content_type: concept
-title: Pools
+title: Origin Pools
 weight: 4
 layout: single
 ---
 
-# Pools
+# Origin Pools
 
 {{<glossary-definition term_id="origin pool">}}
 
 {{<Aside type="note">}}
 
-For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details/).
+For an overview of how the Cloudflare Load Balancing solution works, refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details/).
 
 {{</Aside>}}
 

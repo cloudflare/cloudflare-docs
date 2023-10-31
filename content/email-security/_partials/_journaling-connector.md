@@ -7,6 +7,8 @@ _build:
 
 ### 1. Configure connector for delivery to Area 1 (if required)
 
+{{<Aside type="note">}}Area 1 only scans inbound emails.{{</Aside>}}
+
 If your email architecture does not include an outbound gateway, you can skip this step and [proceed to the next one](#2-configure-journal-rule).
 
 On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Area 1.

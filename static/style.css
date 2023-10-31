@@ -5654,3 +5654,14 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   transition: all 0.1s ease 0.1s;
   visibility: visible;
 }
+
+.DocSearch-Help a {
+  text-decoration: underline;
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}

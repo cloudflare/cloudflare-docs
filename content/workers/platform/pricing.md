@@ -125,6 +125,12 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 {{</table-wrap>}}
 
+{{<Aside type="note" header="Custom limits">}}
+
+The Standard Usage Model is flexible, allowing for many diverse workflows, but some customers may want additional safety measures to prevent accidental runaway bills or denial-of-wallet attacks. You can configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard.
+
+{{</Aside>}}
+
 ### How to switch Usage Models
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. To change your default account-wide Usage Model:

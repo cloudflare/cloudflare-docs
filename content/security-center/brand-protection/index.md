@@ -33,14 +33,25 @@ If a brand phrase or search term has less than five characters, you can only cho
 
 In the section **Monitored queries**, you can check all the queries that you selected to monitor. You can delete, clone, or create notifications for a query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
 
+## Logo queries
+
+To set up a new logo query:
+
+1. Go to **Security Center** > **Monitor Images** and select **Add logo**.
+2. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
+3. Select **Save logo**.
+
+The browser will return to the **Monitor Images** overview page, where you can access your query and configure notifications.
+
+
 ## Investigate a query
 
 To investigate a query:
 
-1. Go to the **Monitored queries** section to view all your queries.
+1. Go to the **Monitored strings** or **Monitor Logos** section to view all your queries.
 2. Select a monitored query to inspect all the domains that matched your query.
-3. Next to the domain, select **Investigate**. This will take you to the **Investigate** section in the sidebar.
-4. In this section, you have the **Domain overview**, the **WHOIS** section that provides details about the date the domain was created, registrant and nameservers, and the **Domain history** that provides information on the domain category and when it was last changed. Refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/#security-risk-subcategories) for more details.
+3. Next to the domain, select **Domain** or **URL**. This will trigger a search on the [**Investigate**](/security-center/investigate/) section in a separate tab. 
+4. In this section, you have the **Domain overview**, the **WHOIS** section that provides details about the date the domain was created, registrant and nameservers, and the **Domain history** that provides information on the domain category and when it was last changed. Refer to [Investigate threats](/security-center/investigate/investigate-threats/) for more details.
 
 ## Brand Protection Alerts
 

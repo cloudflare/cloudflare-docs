@@ -43,15 +43,7 @@ Installing `wrangler`, the Workers command-line interface (CLI), allows you to [
 
 To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
-```sh
-$ npm install -g wrangler
-```
-
-or install with `yarn`:
-
-```sh
-$ yarn global add wrangler
-```
+{{<render file="_install_wrangler.md" productFolder="workers" >}}
 
 Validate that you have a version of `wrangler` that supports Pub/Sub:
 

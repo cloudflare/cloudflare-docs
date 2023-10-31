@@ -38,13 +38,15 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 
 To cache additional content, refer to [Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) to create a rule to cache everything.
 
-## Customization options and limitations
+## Customization options and limits
 
 Cloudflare’s CDN provides several cache customization options:
 
 - Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
 - Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
+
+### Upload limits
 
 Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
@@ -53,6 +55,8 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 - 500MB Enterprise by default. Contact [Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to request a limit increase.
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+### Cacheable size limits
 
 Cloudflare cacheable file limits:
 
