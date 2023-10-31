@@ -1,5 +1,5 @@
 ---
-title: DDoS
+title: DDoS protection
 pcx_content_type: concept
 weight: 6
 meta:
