@@ -12,11 +12,11 @@ Shadow IT Discovery is located in [Zero Trust](https://one.dash.cloudflare.com) 
 
 ## Enable Shadow IT Discovery
 
-To enable Shadow IT Discovery:
+To allow Zero Trust to discover shadow IT in your traffic:
 
 - Enable the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for HTTP and network traffic.
 - Enable [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to inspect HTTPS traffic.
-- Ensure any traffic you want to inspect is not run through a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+- Ensure any network traffic you want to inspect is not routed around Gateway by a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 ## SaaS applications
 
