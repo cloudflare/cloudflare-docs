@@ -248,6 +248,10 @@
   <link rel="stylesheet preconnect" href="/learning-paths.css" />
   {{- end -}}
 
+  {{- if or (eq $.Context.RelPermalink "/learning-paths/") (eq $.Context.RelPermalink "/learning-paths") -}}
+  {{- partial "script" (dict "src" "learning-paths.ts" "defer" true) -}}
+  {{- end -}}
+
 
   {{ if eq $.Context.RelPermalink "/plans/" }}
   <link rel="stylesheet preconnect" href="/plans.css" />
