@@ -64,7 +64,7 @@ After you have set up your Function, deploy your Pages project. Deploy your proj
 * Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
 {{<Aside type="warning">}}
-[Direct Uploads](/pages/platform/direct-upload/) is currently not supported with Functions.
+[Direct Upload](/pages/get-started/direct-upload/) is currently not supported with Functions.
 {{</Aside>}}
 
 ## Related resources

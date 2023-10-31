@@ -1,22 +1,22 @@
 ---
 pcx_content_type: concept
-title: Direct Uploads
+title: Direct Upload
 ---
 
-# Direct Uploads
+# Direct Upload
 
-Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
+Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the drag and drop method.
 
 ## Upload methods
 
 After you have your prebuilt assets ready, there are two ways to begin uploading: 
 
-* [Wrangler](/pages/platform/direct-upload/#wrangler-cli).
-* [Drag and Drop](/pages/platform/direct-upload/#drag-and-drop).
+* [Wrangler](/pages/get-started/direct-upload/#wrangler-cli).
+* [Drag and drop](/pages/get-started/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
   
-Within a Direct Uploads project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with Direct Uploads on a project that you created through Git integration on the dashboard. Only projects created with Direct Uploads can be updated with Direct Uploads.
+Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. However, you cannot create deployments with Direct Upload on a project that you created through Git integration on the dashboard. Only projects created with Direct Upload can be updated with Direct Upload.
 
 {{</Aside>}}
 
@@ -24,33 +24,32 @@ Within a Direct Uploads project, you can switch between creating deployments wit
 
 Below is the supported file types for each Direct Upload options:
 * Wrangler: A single folder of assets. (Zip files are not supported.)
-* Drag and Drop: A zip file or single folder of assets.
+* Drag and drop: A zip file or single folder of assets.
 
 ## Wrangler CLI 
 
 ### Set up Wrangler
 
-To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/).
+To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
 
 #### Create your project
 
-Log in to Wrangler with the `wrangler login` command then run the following command:
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then run the [`pages project create` command](/workers/wrangler/commands/#project-create):
 
 ```sh
-$ wrangler pages project create
+$ npx wrangler pages project create
 ```
 
 You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev` (or your project name plus a few random characters if your project name is already taken). You will also be prompted to specify your production branch. 
 
 Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
 
-
 #### Deploy your assets
 
 From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) command:
 
 ```sh
-$ wrangler pages deploy <OUTPUT_DIRECTORY>
+$ npx wrangler pages deploy <OUTPUT_DIRECTORY>
 ```
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
@@ -64,7 +63,7 @@ Before using the `wrangler pages deploy` command, you will need to make sure you
 To deploy assets to a preview environment, run: 
 
 ```sh
-$ wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
+$ npx wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
 ```
 
 For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`. 
@@ -79,16 +78,16 @@ If you would like to streamline the project creation and asset deployment steps,
 
 #### Other useful commands
 
-If you would like to use Wrangler to obtain a list of all available projects for direct upload, use:
+If you would like to use Wrangler to obtain a list of all available projects for Direct Upload, use [`pages project list`](/workers/wrangler/commands/#project-list):
 
 ```sh
-$ wrangler pages project list
+$ npx wrangler pages project list
 ```
 
-If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use:
+If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use [`pages deployment list`](/workers/wrangler/commands/#deployment-list):
 
 ```sh
-$ wrangler pages deployment list
+$ npx wrangler pages deployment list
 ```
 
 For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
@@ -115,19 +114,20 @@ After you have your project created, select **Create a new deployment** to begin
 
 ### Limits
 
-Regarding file count:
+{{<table-wrap>}}
 
-* For Wrangler uploads, there is a 20,000 file limit.
-* For Drag and Drop uploads, there is a 1,000 file limit.
+| Upload method | File limit   | File size |
+| ------------- | ------------ | --------- |
+| Wrangler      | 20,000 files | 25 MiB    |
+| Drag and drop | 1,000 files  | 25 MiB    |
 
-On both upload methods, there is a 25 MiB limit in place for individual file size. 
+{{</table-wrap>}}
 
+If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
-If using the Drag and Drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
+### Functions
 
-### Using Functions
-
-Drag and drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of Pages Functions. To deploy a `functions` folder, you must use Wrangler. When deploying a project using Wrangler, if a `functions` folder exists where the command is run, that `functions` folder will be uploaded with the project.
+Drag and drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of [Pages Functions](/pages/platform/functions/). To deploy a `functions` folder, you must use Wrangler. When deploying a project using Wrangler, if a `functions` folder exists where the command is run, that `functions` folder will be uploaded with the project.
 
 However, note that a `_worker.js` file is supported by both Wrangler and drag-and-drop deployments made from the dashboard.
 

@@ -640,7 +640,8 @@
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
 /pages/framework-guides/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
-/pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
+/pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
+/pages/platform/direct-upload/ /pages/get-started/direct-upload/ 301
 /pages/platform/functions/billing/ /pages/platform/functions/pricing/ 301
 /pages/tutorials/build-an-api-with-workers/ /pages/tutorials/build-an-api-with-pages-functions/ 301
 
