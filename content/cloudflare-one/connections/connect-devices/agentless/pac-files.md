@@ -12,7 +12,7 @@ This feature is only available to Enterprise customers.
 
 {{</Aside>}}
 
-You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
+You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
 
 {{<glossary-definition term_id="PAC file" prepend="A PAC file is ">}}
 
@@ -170,10 +170,6 @@ The following example demonstrates the setup procedure for Firefox.
 ## 5. Test your HTTP policy
 
 You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
-
-{{<Aside type="note">}}
-When a browser is connected to Gateway by a proxy endpoint, the browser does not perform DNS lookups. Only HTTP policies will apply.
-{{</Aside>}}
 
 ## Limitations
 
