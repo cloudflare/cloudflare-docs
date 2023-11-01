@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Order of enforcement
-weight: 11
+weight: 12
 ---
 
 # Order of enforcement
