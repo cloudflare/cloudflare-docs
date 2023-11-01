@@ -4444,6 +4444,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   width: unset !important;
 }
 
+.DocSearch-Help a {
+  text-decoration: underline;
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}
+
 .DocsMobileHeader {
   position: absolute;
   display: flex;
@@ -5653,15 +5664,4 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   -webkit-transition: all 0.1s ease 0.1s;
   transition: all 0.1s ease 0.1s;
   visibility: visible;
-}
-
-.DocSearch-Help a {
-  text-decoration: underline;
-  color: var(--docsearch-highlight-color);
-  font-weight: 600;
-}
-
-.DocSearch-HitsFooter a {
-  color: var(--docsearch-highlight-color);
-  font-weight: 600;
 }
