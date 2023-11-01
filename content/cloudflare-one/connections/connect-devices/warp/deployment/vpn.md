@@ -8,10 +8,10 @@ weight: 10
 
 The Cloudflare WARP client can run alongside most legacy third-party VPNs. Because the WARP client and third-party VPN client both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over IP and DNS traffic. To ensure compatibility:
 
-- IP traffic is split tunneled between WARP and the VPN. All VPN traffic must bypass WARP (and vice versa).
+- IP traffic is split tunneled between WARP and the VPN. All VPN traffic must bypass WARP and vice versa.
 - DNS resolution is handled by either WARP or the VPN. You must disable DNS filtering in one of the two products.
 
-For the most stable and consistent connection, we recommend connecting your [private network or individual applications](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare.  However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
+For the most stable and consistent connection, we recommend connecting your [private network or individual applications](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare instead of using a legacy VPN. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
 
 ## Gateway with WARP
 
@@ -29,20 +29,7 @@ Perform these steps in your third-party VPN software. Refer to your VPN's docume
 
 ### 2. Configure WARP
 
-Perform these steps in [Zero Trust](https://one.dash.cloudflare.com/).
-
-1. Set your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) to **Exclude IPs and domains**.
-2. [Add the following entries](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to your Split Tunnel Exclude list:
-
-    - Private IP address range exposed by your third-party VPN client. For example,
-    | Selector | Value |
-    | -------- | ----- |
-    | IP Address   | `172.16.0.0/12` |
-    |
-    - Server that your third-party VPN client connects to. For example,
-    | Selector | Value |
-    | -------- | ----- |
-    | Domain   | `*.cvpn-endpoint-xxxxx.prod.clientvpn.us-west-2.amazonaws.com` |
+{{<render file="warp/_vpn-ip-traffic.md">}}
 
 3. (Optional) In [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/), add the domains that you want to resolve using your VPN's private DNS servers. For example,
     | Domain | DNS Servers |
@@ -61,14 +48,21 @@ Enable split tunneling in your third-party VPN software. Refer to your VPN's doc
 
 ### 2. Configure WARP
 
+{{<render file="warp/_vpn-ip-traffic.md">}}
+
+3. In your device profile, verify that **Service mode** is set to **Secure Web Gateway without DNS filtering**.
+
 ## Test the configuration
 
 We recommend enabling the WARP client before enabling your third-party VPN. Some third-party VPNs must be the last to edit a network's configuration or they will fail.
 
+1. Connect the WARP client.
+2. Connect the third-party VPN client.
+3. To test your Split Tunnel configuration, connect to a private IP address that is behind the VPN. For example, you can open a terminal and run `ping <SERVER-IP>`.
+4. To test your DNS configuration, connect to an internal domain that is behind the VPN. For example, you can open a browser and go to `internal.wiki.intranet`.
 
+{{<Aside type="warning" header="Test before updates">}}
 
-{{<Aside type="note" header="Test before updates">}}
-
-Once you have a configuration in place and working, we recommend thoroughly testing compatibility before updating your VPN software. Compatibility testing with what are essentially competing software will need to be done with each new version.
+Once you have a configuration in place and working, make sure to thoroughly test compatibility before updating your VPN software. Compatibility testing with what are essentially competing software will need to be done with each new version.
 
 {{</Aside>}}
