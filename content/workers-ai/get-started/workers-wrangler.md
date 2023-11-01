@@ -90,7 +90,7 @@ $ yarn add --dev @cloudflare/ai
 
 ## 4. Run an inference task in your Worker
 
-Now we are ready to run an inference task in our our worker. In this case, we will use an LLM, like Llama 2, to answer a questions.
+Now we are ready to run an inference task in our Worker. In this case, we will use an LLM, like Llama 2, to answer a question.
 
 Go to your `hello-ai` and update the `index.ts` with the following code:
 
