@@ -12,7 +12,22 @@ This tutorial demonstrates how to secure access to Amazon S3 buckets in AWS via 
 
 ## Method 1: using Cloudflare Access and VPC endpoints
 
-TO DO: INSERT IMAGE HERE
+```mermaid
+flowchart LR
+    cf1[Clientless and WARP users]--Access policy-->cf2(Cloudflare)
+    cf2--Cloudflare Tunnel-->vpc1
+    
+    subgraph VPC
+    vpc1[EC2 VM]-->vpc2(VPC endpoint)
+    end
+    vpc2-->s3_1
+
+    subgraph S3 Service
+    s3_1(S3 bucket)
+    end
+
+    Internet--denied-->s3_1
+```
 
 ### Prerequisites
 
@@ -97,7 +112,18 @@ The S3 bucket is now available at `https://s3-bucket.your-domain.com` but only f
 
 ## Method 2: using Cloudflare Gateway and Egress policies
 
-TO DO: INSERT IMAGE HERE
+```mermaid
+flowchart LR
+    cf1[WARP users]--Access policy-->cf2(Cloudflare)
+    cf2--Traffic egresses with dedicated IP-->i1[Internet]
+    i1-->s3_1
+    
+    subgraph S3 Service
+    s3_1(S3 bucket)
+    end
+
+    i2[Internet]--Any other IP is denied-->s3_1
+```
 
 ### Prerequisites
 
