@@ -25,7 +25,7 @@ You can create a pool within the [load balancer workflow](/load-balancing/load-b
 
 {{<Aside type="note" header="Note">}}
 
-If your origin is pointing to [Cloudflare Pages](/pages/), you will need to fill in the host header field with the project URL for it to resolve correctly.
+If your origin is pointing to [Cloudflare Pages](/pages/), you will need to fill in the host header field with the project domain for it to resolve correctly.
 
 {{</Aside>}}
 
