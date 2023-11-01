@@ -82,7 +82,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 ### 1. Enable SCIM in Zero Trust
 
-{{<render file="_enable-scim-on-dashboard.md" withParameters="**Enable SCIM**">}}
+{{<render file="access/_enable-scim-on-dashboard.md" withParameters="**Enable SCIM**">}}
 
 ### 2. Configure SCIM in Okta
 

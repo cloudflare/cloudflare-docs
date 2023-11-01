@@ -12,13 +12,13 @@ If your organization uses a firewall or other policies to restrict or intercept 
 
 The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
 
-{{<render file="_client-orchestration-ips.md">}}
+{{<render file="warp/_client-orchestration-ips.md">}}
 
 ## DoH IP
 
 All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). The following IP addresses must be reachable for DNS to work correctly.
 
-{{<render file="_doh-ips.md">}}
+{{<render file="warp/_doh-ips.md">}}
 
 ### Android devices
 

@@ -114,7 +114,7 @@ To synchronize users and groups between Access and Azure:
 
 ### 1. Enable SCIM in Zero Trust
 
-{{<render file="_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
+{{<render file="access/_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
 
 ### 2. Configure SCIM in Azure
 

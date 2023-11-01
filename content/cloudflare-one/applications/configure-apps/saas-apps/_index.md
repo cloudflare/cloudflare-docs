@@ -40,7 +40,7 @@ If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access 
 
 9. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-10. {{<render file="_access-block-page.md">}}
+10. {{<render file="access/_access-block-page.md">}}
 
 11. Next, choose the **Identity providers** you want to enable for your application.
 
