@@ -2,6 +2,10 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-10-31'
+  title:
+  description: |-
+    * **Bing Managed Component**: GA4: Remove debug_mode key if falsy or 'false'.
 - publish_date: '2023-10-20'
   title:
   description: |-
