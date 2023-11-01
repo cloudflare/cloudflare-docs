@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Analytics
-weight: 6
+weight: 11
 ---
 
 {{<render file="_network-analytics.md" productFolder="magic-wan" withParameters="Magic Transit">}}

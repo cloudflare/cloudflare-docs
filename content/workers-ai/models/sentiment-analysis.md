@@ -29,7 +29,7 @@ export default {
     const ai = new Ai(env.AI);
 
     const response = await ai.run('@cf/huggingface/distilbert-sst-2-int8', {
-        text: "This pizza is great!" 
+        text: "This pizza is great!"
       }
     );
 
@@ -71,7 +71,7 @@ headers = {"Authorization": "Bearer {API_KEY}"}
 def run(model, input):
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
-    
+
 output = run("@cf/huggingface/distilbert-sst-2-int8", { "text": "This pizza is great!" })
 print(output)
 ```
@@ -114,34 +114,35 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/hug
 ## API schema
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
+### Input
+
 ```json
 {
-    "task": "text-classification",
-    "tsClass": "AiTextClassification",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "properties": {
-                "text": {
-                    "type": "string"
-                }
-            },
-            "required": ["text"]
-        },
-        "output": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "score": {
-                        "type": "number"
-                    },
-                    "label": {
-                        "type": "string"
-                    }
-                }
-            }
-        }
-    }
+  type: "object",
+  properties: {
+    text: {
+      type: "string",
+    },
+  },
+  required: ["text"],
+}
+
+
+### Output
+
+```json
+{
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      score: {
+        type: "number",
+      },
+      label: {
+        type: "string",
+      },
+    },
+  },
 }
 ```

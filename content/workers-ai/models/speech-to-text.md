@@ -59,29 +59,36 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/ope
 ## API schema
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
+### Input
+
 ```json
 {
-    "task": "speech-recognition",
-    "tsClass": "AiSpeechRecognition",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "properties": {
-                "audio": {
-                    "type": "string",
-                    "format": "binary"
-                }
-            },
-            "required": ["audio"]
+  oneOf: [
+    { type: "string", format: "binary" },
+    {
+      type: "object",
+      properties: {
+        audio: {
+          type: "array",
+          items: {
+            type: "number",
+          },
         },
-        "output": {
-            "type": "object",
-            "properties": {
-                "text": {
-                    "type": "string"
-                }
-            }
-        }
-    }
+      },
+    },
+  ],
+}
+```
+
+### Output
+
+```json
+{
+  type: "object",
+  properties: {
+    text: {
+      type: "string",
+    },
+  },
 }
 ```

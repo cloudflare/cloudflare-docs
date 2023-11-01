@@ -8,9 +8,11 @@ meta:
 
 # Disk encryption
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 The Disk Encryption device posture attribute ensures that disks are encrypted on a device.
+
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Enable the disk encryption check
 
