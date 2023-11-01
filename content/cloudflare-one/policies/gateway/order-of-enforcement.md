@@ -24,8 +24,20 @@ flowchart TB
     subgraph DNS
     dns1["DNS policies"]
     style DNS text-align:left
+    dns1--Resolved by-->dns2["1.1.1.1"]
+    dns1-.->dns3
+
+        %% DNS resolution
+        subgraph Resolution
+        dns2["1.1.1.1"]
+        dns3["Resolver policies <br />(Enterprise users only)"]--Resolved by-->dns4["Custom resolver"]
+        end
+
     end
-    dns1--Resolved by-->dns2["1.1.1.1"]------>internet
+    dns2["1.1.1.1"]----->internet
+    dns4----->internet
+    dns4-.->cloudflare["Private network services <br />(Cloudflare Tunnel, Magic WAN, etc.)"]
+
 
     %% Proxied by Gateway
     subgraph Proxy
@@ -33,7 +45,7 @@ flowchart TB
     %% HTTP policies
     subgraph HTTP
     http1{{"Do Not Inspect policies"}}
-    http1--Inspect-->http2["Isolate policies"]
+    http1-."Inspect".->http2["Isolate policies  <br />(with add-on)"]
     http2-->http3["Allow, Block, Do Not Scan policies"]
     end
 
@@ -49,7 +61,7 @@ flowchart TB
 
     %% Egress
     subgraph Egress
-    network1-.Enterprise users only.->egress1[Egress policies]
+    network1-.->egress1["Egress policies <br />(Enterprise users only)"]
     end
 
     %% Finish
