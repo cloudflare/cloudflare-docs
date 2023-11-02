@@ -204,7 +204,6 @@
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 
 # data loss prevention (dlp)
-/cloudflare-one/policies/data-loss-prevention/predefined-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/custom-profile/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
@@ -1017,8 +1016,6 @@
 /cloudflare-one/analytics/access/ /cloudflare-one/insights/analytics/access/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
-/cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
-/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-networks/use-cases/rdp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/ 301
@@ -1075,11 +1072,9 @@
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/ 301
 /cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/deployment/macOS-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301
-/cloudflare-one/connections/connect-devices/warp/deployment/parameters/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
-/cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/use_cases/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
@@ -1091,7 +1086,6 @@
 /cloudflare-one/identity/devices/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
 /cloudflare-one/identity/devices/carbon-black/ /cloudflare-one/identity/devices/warp-client-checks/carbon-black/ 301
 /cloudflare-one/identity/devices/corp-device/ /cloudflare-one/identity/devices/warp-client-checks/corp-device/ 301
-/cloudflare-one/identity/devices/firewall/ /cloudflare-one/identity/devices/warp-client-checks/firewall/ 301
 /cloudflare-one/identity/devices/os-version/ /cloudflare-one/identity/devices/warp-client-checks/os-version/ 301
 /cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/identity/devices/warp-client-checks/require-gateway/ 301
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
@@ -1109,14 +1103,12 @@
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/identity/authorization-cookie/cors/  301
 /cloudflare-one/policies/zero-trust/temporary-auth/ /cloudflare-one/policies/access/temporary-auth/ 301
-/cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/policies/gateway/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/dns-categories/ /cloudflare-one/policies/gateway/domain-categories/ 301
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/gateway/domain-categories/ 301
 /cloudflare-one/policies/filtering/dns-policies/check-policy/ /cloudflare-one/policies/gateway/dns-policies/test-dns-filtering/ 301
 /cloudflare-one/policies/filtering/enforce-sessions/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/gateway/application-app-types/ 301
-/cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/gateway/global-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/gateway/dns-policies/ 301
 /cloudflare-one/policies/browser-isolation/configuration/ /cloudflare-one/policies/browser-isolation/setup/ 301
 /cloudflare-one/cloudflare-teams-roles-permissions/ /cloudflare-one/roles-permissions/ 301
