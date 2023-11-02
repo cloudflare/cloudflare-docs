@@ -36,7 +36,7 @@ if (string1.byteLength !== string2.byteLength) {
 const a = encoder.encode(string1);
 const b = encoder.encode(string2);
 
-let equal = crypto.timingSafeEqual(a, b)
+let equal = crypto.subtle.timingSafeEqual(a,b)
 
 if (equal) {
   // The values are equal
@@ -52,8 +52,8 @@ if (equal) {
 ```ts
 const encoder = new TextEncoder();
 
-const string1 = new TextEncoder().encode("foo")
-const string2 = new TextEncoder().encode("bar")
+const a = new TextEncoder().encode("foo")
+const b = new TextEncoder().encode("bar")
 
 if (string1.byteLength !== string2.byteLength) {
   // Strings must be the same length in order to compare
@@ -66,12 +66,13 @@ if (string1.byteLength !== string2.byteLength) {
 
 // You can replace it with `crypto.timingSafeEqual` by encoding the values
 // you need to compare
-const a = encoder.encode(string1);
-const b = encoder.encode(string2);
+const a = encoder.encode("foo");
+const b = encoder.encode("bar");
 
-let equal = crypto.timingSafeEqual(a, b)
+//let equal = crypto.timingSafeEqual(a, b)
+let isEqual = crypto.subtle.timingSafeEqual(a,b)
 
-if (equal) {
+if (isEqual) {
   // The values are equal
 } else {
   // The values are not equal
