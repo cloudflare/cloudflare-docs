@@ -5,7 +5,11 @@ _build:
   list: never
 ---
 
+## Receive email
+
 If you only need to **receive** emails, Cloudflare offers [Email Routing](/email-routing/) for free email forwarding to custom email addresses.
+
+## Send and receive email
 
 To **send and receive** emails from your domain, you need:
 

@@ -6,11 +6,13 @@ weight: 5
 
 # Set up email records
 
-There are two reasons to set up email records for your domain: to make sure email [reaches your mail server](#send-and-receive-email) and to prevent other email senders from [spoofing your domain](#prevent-domain-spoofing).
+There are three reasons to set up email records for your domain:
+
+- To make sure your domain can [receive email](#receive-email).
+- To make sure your domain can [send and receive email](#send-and-receive-email).
+- To prevent other email senders from [spoofing your domain](#prevent-domain-spoofing).
 
 ---
-
-## Send and receive email
 
 {{<render file="_add-mx-records.md" productFolder="DNS">}}
 
