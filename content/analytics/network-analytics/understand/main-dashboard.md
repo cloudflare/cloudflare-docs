@@ -3,7 +3,7 @@ title: Main dashboard
 pcx_content_type: concept
 weight: 3
 meta:
-  title: Network Analytics v2 main dashboard
+  title: Network Analytics main dashboard
 ---
 
 # Main dashboard
