@@ -7,7 +7,7 @@ _build:
 
 If you only need to **receive** emails, Cloudflare offers [Email Routing](/email-routing/) for free email forwarding to custom email addresses.
 
-If you need to **send** emails from your domain, you need:
+To **send and receive** emails from your domain, you need:
 
 - An SMTP provider.
 - To create two DNS records within Cloudflare.
@@ -15,7 +15,7 @@ If you need to **send** emails from your domain, you need:
 To route emails through Cloudflare and to your mail server:
 
 1. Get the IP address and MX record details from your SMTP provider ([vendor-specific guidelines](/dns/manage-dns-records/reference/vendor-specific-records/)).
-2. [Add](/dns/manage-dns-records/how-to/create-dns-records/) an `A` or `AAAA` record for your mail subdomain that points to the IP address of your mail server.
+2. [Add an `A` or `AAAA` record](/dns/manage-dns-records/how-to/create-dns-records/) for your mail subdomain that points to the IP address of your mail server.
 
      | **Type** | **Name** | **IPv4 address** | **Proxy status** |
      | -------- | -------- | ---------------- | ---------------- |
@@ -78,7 +78,7 @@ To route emails through Cloudflare and to your mail server:
       </div>
       </details>
 
-3.  [Add](/dns/manage-dns-records/how-to/create-dns-records/) an **MX** record that points to that subdomain.
+3.  [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
 
       | **Type** | **Name** | **Mail server**    | **TTL** |
       | -------- | -------- | ------------------ | ------- |
