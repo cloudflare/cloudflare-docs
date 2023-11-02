@@ -1,5 +1,5 @@
 ---
-title: Set up email records
+title: Send and receive email
 pcx_content_type: overview
 weight: 5
 layout: learning-unit
