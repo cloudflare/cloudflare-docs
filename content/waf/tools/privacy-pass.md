@@ -32,4 +32,4 @@ In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-su
 
 In September 2023 support for Privacy Pass v1 (legacy) tokens as an alternative to Cloudflare Managed Challenge was removed and by the end of 2023 the current public-facing API will be removed as well.
 
-Full deprecation notice for the first version of Privacy Pass is available on the [API deprecation page](https://developers.cloudflare.com/fundamentals/api/reference/deprecations/#privacy-pass-api-removal).
+Full deprecation notice for the first version of Privacy Pass is available on the [API deprecation page](/fundamentals/api/reference/deprecations/#privacy-pass-api-removal).
