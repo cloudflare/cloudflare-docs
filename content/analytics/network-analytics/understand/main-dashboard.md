@@ -20,10 +20,11 @@ The following table contains a summary of what is shown in each tab:
 
 Tab name | For Magic Transit users | For Spectrum users
 ---------|---------------------|---------------
-**Overview** | Traffic dropped by DDoS managed rules, Advanced TCP Protection, and Magic Firewall, and traffic passed to the origin server. | Traffic dropped and passed by DDoS managed rules.
-**DDoS Managed <br>Rules** | Traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/). | Traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/).
-**Advanced TCP <br>Protection** | Traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS managed rules. | N/A
-**Magic Firewall** | Traffic dropped by [Magic Firewall](/magic-firewall/) and traffic passed to the origin server. Does not include traffic dropped by DDoS managed rules or Advanced TCP Protection. | N/A
+**All traffic** | Traffic dropped by DDoS managed rules, Advanced TCP Protection, Advanced DNS Protection, and Magic Firewall, and traffic passed to the origin server. | Traffic dropped and passed by DDoS managed rules.
+**DDoS managed <br>rules** | Traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/). | Traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/).
+**TCP <br>Protection** | Traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS managed rules. | N/A
+**DNS <br>Protection** | Traffic dropped and passed by the [Advanced DNS Protection](/ddos-protection/dns-protection/) system. Does not include traffic dropped by DDoS managed rules. | N/A
+**Magic Firewall** | Traffic dropped by [Magic Firewall](/magic-firewall/) and traffic passed to the origin server. Does not include traffic dropped by DDoS managed rules, Advanced TCP Protection, or Advanced DNS Protection. | N/A
 
 {{</table-wrap>}}
 
