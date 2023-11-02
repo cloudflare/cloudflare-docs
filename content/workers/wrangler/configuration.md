@@ -621,7 +621,7 @@ header: wrangler.toml
 
 [[vectorize]]
 binding = "<INDEX_NAME>"
-index_name = "<your-index>"
+index_name = "<YOUR_INDEX>"
 ```
 
 ### Service bindings
