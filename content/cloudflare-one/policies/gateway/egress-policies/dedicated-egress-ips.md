@@ -83,7 +83,7 @@ Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected
 
 ## FAQ
 
-### Can you allocate the same egress IP address to multiple data centers?
+### Can I allocate the same egress IP address to multiple data centers?
 
 No, egress IPs are limited to a single data center.
 
@@ -91,11 +91,7 @@ No, egress IPs are limited to a single data center.
 
 No, traffic will only egress from the data center where the egress IP is provisioned. If you have users in locations far apart, we recommend reserving multiple egress IPs across different data centers and provisioning your users to their closest data centers.
 
-### Do dedicated egress IPs work with Geo-egress (localization)? ETC521
-
-No, this is for normal egress IP, for localisation to work you need to request for Ip geo-location. For more information, refer to the [Data Localization Suite documentation](/data-localization/how-to/zero-trust/).
-
-### Can you use dedicated egress IPs with traffic routed via [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) or [Magic WAN](/magic-wan/) on-ramps?
+### Can I use dedicated egress IPs for traffic routed with [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)?
 
 Yes, your users will egress via their provisioned IP address.
 
