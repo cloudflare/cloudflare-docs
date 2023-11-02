@@ -183,7 +183,7 @@ If your domain is not used to send email messages, learn more about creating rec
 A mail exchange (MX) record is required to deliver email to a mail server.
 
 - [MX record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)
-- [Create an MX record](/dns/manage-dns-records/how-to/email-records/#add-mx-records)
+- [Create an MX record](/dns/manage-dns-records/how-to/email-records/#send-and-receive-email)
 
 {{<render file="_api-field-definitions.md">}}
 
