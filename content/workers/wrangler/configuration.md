@@ -264,7 +264,7 @@ routes = [
 
 {{</definitions>}}
 
-Example: 
+Example:
 
 ```toml
 ---
@@ -656,9 +656,8 @@ header: wrangler.toml
 ---
 
 [[vectorize]]
-vectorize = [
-  { binding = "<INDEX_NAME>", bucket_name = "<your-index>"}
-]
+binding = "<INDEX_NAME>"
+index_name = "<YOUR_INDEX>"
 ```
 
 ### Service bindings
@@ -964,7 +963,7 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler. 
+We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
 
 If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
 
