@@ -76,4 +76,4 @@ Manage your notifications in the **All notifications** tab. You can disable, edi
 
 ## Limitations
 
-While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise Customers are entitled to one saved query per ENT Zone on their account.
+While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise customers are entitled to one saved query per Enterprise zone on their account.
