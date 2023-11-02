@@ -83,26 +83,26 @@ Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected
 
 ## FAQ
 
-### Can customer have 1 pair of egress IP and have users egress via that IP via a data center that is closer to them?
+### Can you allocate the same egress IP address to multiple data centers?
 
-No, the traffic will egress only via the data center where the IP is provisioned. If the customer has global presence then it is recommend to have multiple IP and provision those to data center where they have most of the users /per region
+No, egress IPs are limited to a single data center.
 
-### Does Geo-egress (localization) work with Static Egress IP? ETC521
+### Can different users egress from their closest data center via a single egress IP?
 
-No, this is for normal egress IP, for localisation to work you need to request for Ip geo-location
+No, traffic will only egress from the data center where the egress IP is provisioned. If you have users in locations far apart, we recommend reserving multiple egress IPs across different data centers and provisioning your users to their closest data centers.
 
-### Static Egress IP in China
+### Do dedicated egress IPs work with Geo-egress (localization)? ETC521
 
-Warp in China (when it is ready in Q4), if they provision a Static Egress IP in HKG data center , their users from Mainland China can egress using the static egress IP in HKG
+No, this is for normal egress IP, for localisation to work you need to request for Ip geo-location. For more information, refer to the [Data Localization Suite documentation](/data-localization/how-to/zero-trust/).
 
-### Can a customer use Egress IP if they are on-ramped via PAC file or MWAN?
+### Can you use dedicated egress IPs with traffic routed via [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) or [Magic WAN](/magic-wan/) on-ramps?
 
-Yes, this should work and the customer must egress via their provision gateway egress IP
+Yes, your users will egress via their provisioned IP address.
 
-### What happens when I enabled Egress IP and is also using RBI
+### What happens when I enable dedicated egress IPs with [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/)?
 
-The results will be similar to when you are not using RBI, the eyeball get connected to the nearest data center where the browser session will be loaded. The remote browser will then egress via the data center where Egress IP has been hosted
+Users will connect to the nearest data center, where the remote browser session will load. The remote browser will then egress via the data center with their provisioned egress IP.
 
-### Can you allocate the same IP you've purchased to multiple data center's?
+### Do dedicated egress IPs work on the [Cloudflare China Network](/china-network/)?
 
-Nope
+No, Gateway does not support dedicated egress IPs on the China Network.
