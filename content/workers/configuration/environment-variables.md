@@ -83,6 +83,17 @@ API_ACCOUNT_ID = "production_example_user"
 SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
 ```
 
+### Interact with environment variables locally
+
+When developing locally via `wrangler dev`, add environment variables by creating a `.dev.vars` file in the root directory of your project. Then add the following code snippet to `.dev.vars`:
+
+```
+---
+filename:  `.dev.vars`
+---
+ENVIRONMENT=development
+```
+
 ## Add environment variables via the dashboard
 
 To add environment variables via the dashboard:
