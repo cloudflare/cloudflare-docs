@@ -7,8 +7,6 @@ meta:
 
 # Deprecations
 
-{{<render file="_wrangler_survey.md">}}
-
 Review the difference between Wrangler versions, specifically deprecations and breaking changes.
 
 ## Wrangler v3
