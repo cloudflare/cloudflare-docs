@@ -35,11 +35,11 @@ To work around the issue, you can either:
 - Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.76.76/32` from WARP.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
-## Cox DNS Servers
+## Cox DNS servers
 
-Similar to the above [Comcast DNS servers](cloudflare-one/connections/connect-devices/warp/troubleshooting/known-limitations/#comcast-dns-servers) known issue, Cox DNS servers will not respond to the WARP Egress IPs (or any IP that isn't a Cox IP).  The workaround is nearly identical.  However, the Cox DNS servers may be specific to the individual end customer of theirs.  
+Similar to the [Comcast DNS servers](#comcast-dns-servers) limitation listed above, Cox DNS servers will not respond to traffic from the WARP egress IPs (or any IP that is not a Cox IP). The workaround is nearly identical, except that Cox DNS servers may be specific to the individual end user. You can either:
 
-- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes all Cox DNS servers.  For buisness users [refer to this COX public page](https://www.cox.com/business/support/cox-business-dns-and-mail-exchange-hosting-services.html), for residential customers please check the local DNS servers.  They seem to fall under the networks, `68.105.28.0/24` and `68.105.29.0/24`
+- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes all Cox DNS servers.  For business customers, refer to the [COX documentation](https://www.cox.com/business/support/cox-business-dns-and-mail-exchange-hosting-services.html) for the DNS server IPs. For residential customers, check your local DNS servers. The residential DNS servers typically fall under `68.105.28.0/24` and `68.105.29.0/24`.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
 ## HP Velocity
