@@ -12,7 +12,7 @@ The following sections are a guide on the different sections of the main Network
 
 ## Available tabs
 
-The **All traffic** tab displays global information about layer 3/4 traffic and DDoS attacks. The dashboard has additional tabs with specific information (and specific filters) for different layer 3/4 mitigation systems.
+The **All traffic** tab displays global information about layer 3/4 traffic, DNS traffic, and DDoS attacks. The dashboard has additional tabs with specific information (and specific filters) for different mitigation systems.
 
 The following table contains a summary of what is shown in each tab:
 
