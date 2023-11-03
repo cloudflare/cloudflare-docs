@@ -23,15 +23,10 @@ This guide will cover how to connect two independent subnets, for example `10.0.
 
 ## Prerequisites
 
-- A Linux host on each subnet that meets [system requirements for WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux).
-- Package dependencies:
-  - `sudo`
-  - `curl`
-  - `gpg`
-  - `iptables`
-  - `iptables-persistent`
-  - `lsb-core`
-- [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) for the host is set to  **Gateway with WARP** (default) or **Secure Web Gateway without DNS Filtering**. To check your WARP mode, go to your [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings).
+- A Linux host{{<fnref num="2">}} on each subnet.
+- A [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings) configured with one of the following WARP modes:
+  - **Gateway with WARP**
+  - **Secure Web Gateway without DNS Filtering**
 
 ## 1. Create a service token
 
@@ -391,5 +386,16 @@ If you are testing with curl using private hostnames, make sure to add the `--ip
 
 {{<fnsection>}}
 {{<fnentry num="1">}}WARP connector is an extension of the [WARP client](/cloudflare-one/connections/connect-devices/warp/).{{</fnentry>}}
+
+{{<fnentry num="2">}}
+- [System requirements](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux)
+- Package dependencies:
+  - `curl`
+  - `gpg`
+  - `iptables`
+  - `iptables-persistent`
+  - `lsb-core`
+  - `sudo`
+{{</fnentry>}}
 
 {{</fnsection>}}
