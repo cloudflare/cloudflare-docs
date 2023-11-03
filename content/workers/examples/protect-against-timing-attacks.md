@@ -69,7 +69,6 @@ if (string1.byteLength !== string2.byteLength) {
 const a = encoder.encode("foo");
 const b = encoder.encode("bar");
 
-//let equal = crypto.timingSafeEqual(a, b)
 let isEqual = crypto.subtle.timingSafeEqual(a,b)
 
 if (isEqual) {
