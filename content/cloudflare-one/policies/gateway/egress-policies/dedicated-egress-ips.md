@@ -83,21 +83,21 @@ Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected
 
 ## FAQ
 
-### Can I allocate the same egress IP address to multiple data centers?
+### Can I provision the same egress IP address to multiple data centers?
 
 No, egress IPs are limited to a single data center.
 
-### Can different users egress from their closest data center via a single egress IP?
+### Can my users in different locations egress from their closest data center via a single egress IP?
 
 No, traffic will only egress from the data center where the egress IP is provisioned. If you have users in locations far apart, we recommend reserving multiple egress IPs across different data centers and provisioning your users to their closest data centers.
 
-### Can I use dedicated egress IPs for traffic proxied with [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)?
+### Can I use dedicated egress IPs with traffic proxied via [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)?
 
 Yes, your users will egress via their provisioned IP address.
 
 ### What happens when I enable dedicated egress IPs with [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/)?
 
-Users will connect to the nearest data center, where the remote browser session will load. The remote browser will then egress via the data center with their provisioned egress IP.
+Your users will connect to the nearest data center, where the remote browser session will load. The remote browser will then egress via the data center with their provisioned egress IP.
 
 ### Do dedicated egress IPs work on the [Cloudflare China Network](/china-network/)?
 
