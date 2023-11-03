@@ -3,17 +3,17 @@ title: Network analytics
 pcx_content_type: overview
 weight: 3
 meta:
-  title: Cloudflare Network Analytics v2
+  title: Cloudflare Network Analytics
 layout: single
 ---
 
 # Cloudflare Network Analytics
 
-Cloudflare Network Analytics v2 provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the Network Analytics v2 dataset of the GraphQL Analytics API.
+Cloudflare Network Analytics (version 2) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the Network Analytics dataset of the GraphQL Analytics API.
 
 {{<render file="_network-analytics-requirements.md">}}
 
-For a technical deep-dive into Network Analytics v2, refer to our [blog post](https://blog.cloudflare.com/building-network-analytics-v2/).
+For a technical deep-dive into Network Analytics, refer to our [blog post](https://blog.cloudflare.com/building-network-analytics-v2/).
 
 ## Remarks
 
