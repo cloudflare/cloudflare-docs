@@ -89,7 +89,7 @@ $ sudo systemctl restart cloudflared.service
 {{</tab>}}
 {{<tab label="docker" no-code="true">}}
 
-1. In Zero Trust, go to **Access** > **Tunnels**.
+1. In Zero Trust, go to **Networks** > **Tunnels**.
 2. Select your tunnel and select **Configure**.
 3. Select **Docker** and copy the installation command shown in the dashboard.
 4. Paste this command into a terminal window.

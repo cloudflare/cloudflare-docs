@@ -323,7 +323,7 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-1. In **Access** > **Tunnels**, verify that your tunnel is active.
+1. In **Networks** > **Tunnels**, verify that your tunnel is active.
 2. In **Access** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
 3. From any device, open a browser and go to `http_app.<cloudflare_zone>` (for example, `http_app.example.com`).
 

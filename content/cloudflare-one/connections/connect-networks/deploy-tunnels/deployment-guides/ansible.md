@@ -328,7 +328,7 @@ Once you have created the configuration files, you can deploy them through Terra
    $ terraform apply
    ```
 
-It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in [Zero Trust](https://one.dash.cloudflare.com) under **Access** > **Tunnels**.
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in [Zero Trust](https://one.dash.cloudflare.com) under **Networks** > **Tunnels**.
 
 ## 7. Test the connection
 
