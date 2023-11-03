@@ -8,30 +8,30 @@ title: Protect access to Amazon S3 buckets with Cloudflare Zero Trust
 
 # Protect access to Amazon S3 buckets with Cloudflare Zero Trust
 
-This tutorial demonstrates how to secure access to Amazon S3 buckets in AWS via Cloudflare Zero Trust, so that data in these buckets is not exposed publicly in the Internet. With Cloudflare Zero Trust, we can do this in two different ways, providing more flexibility on how organizations can achieve this objective.
+This tutorial demonstrates how to secure access to AWS S3 buckets via Cloudflare Zero Trust, so that data in these buckets is not publicly exposed on the Internet. With Zero Trust, we can do this with either Cloudflare Access and VPC endpoints, or with Cloudflare Gateway egress policies.
 
-## Method 1: using Cloudflare Access and VPC endpoints
+## Method 1: Via Cloudflare Access and VPC endpoints
 
 ```mermaid
-flowchart LR
-    cf1[Clientless and WARP users]--Access policy-->cf2(Cloudflare)
+flowchart TB
+    cf1[/Agentless and WARP </br>Zero Trust users/]--Access policy-->cf2{{Cloudflare}}
     cf2--Cloudflare Tunnel-->vpc1
     
     subgraph VPC
-    vpc1[EC2 VM]-->vpc2(VPC endpoint)
+    vpc1[EC2 VM]-->vpc2[VPC endpoint]
     end
     vpc2-->s3_1
 
-    subgraph S3 Service
-    s3_1(S3 bucket)
+    subgraph S3 service
+    s3_1([S3 bucket])
     end
 
-    Internet--denied-->s3_1
+    i1([Internet])-. "S3 access denied" .->s3_1
 ```
 
 ### Prerequisites
 
-- AWS VPC with one EC2 virtual machine hosting the [Cloudflare Tunnel daemon](/cloudflare-one/connections/connect-networks/)
+- AWS VPC with one EC2 virtual machine (VM) hosting the [Cloudflare Tunnel daemon](/cloudflare-one/connections/connect-networks/)
 - S3 bucket to be protected by Cloudflare Zero Trust
 - S3 bucket and AWS VPC configured in the same AWS region
 
@@ -106,29 +106,33 @@ From the Cloudflare Zero Trust dashboard, go to **Access** > **Applications** > 
 1. Select **Self-hosted** as the application type.
 2. Provide a name to the **Application**, for example, `s3-bucket`.
 3. Define the **Application Domain** as the **Public hostname** added to the Cloudflare tunnel, for example, `s3-bucket.your-domain.com`.
-4. Configure the rest of the Application settings as per your organization requirements. For more details, please refer to the [Access Policies](/cloudflare-one/policies/access/) documentation. For automated systems, to access the bucket, [Service Tokens](/cloudflare-one/identity/service-tokens/) can be used.
+4. Configure the rest of the Application settings as per your organization requirements. For more details, refer to the [Access Policies](/cloudflare-one/policies/access/) documentation. For automated systems, to access the bucket, [Service Tokens](/cloudflare-one/identity/service-tokens/) can be used.
 
 The S3 bucket is now available at `https://s3-bucket.your-domain.com` but only for users/applications that successfully authenticate via Cloudflare Access.
 
-## Method 2: using Cloudflare Gateway and Egress policies
+## Method 2: Via Cloudflare Gateway egress policies
+
+{{<Aside type="note">}}
+This method is only available on Enterprise plans.
+{{</Aside>}}
 
 ```mermaid
-flowchart LR
-    cf1[WARP users]--Access policy-->cf2(Cloudflare)
-    cf2--Traffic egresses with dedicated IP-->i1[Internet]
+flowchart TB
+    cf1[/WARP users/]--Egress policy-->cf2{{Cloudflare}}
+    cf2--Egress with dedicated IP-->i1[Internet]
     i1-->s3_1
     
     subgraph S3 Service
-    s3_1(S3 bucket)
+    s3_1([S3 bucket])
     end
 
-    i2[Internet]--Any other IP is denied-->s3_1
+    i2([Other users])-. "IPs denied" .->s3_1
 ```
 
 ### Prerequisites
 
 - S3 bucket to be protected by Cloudflare Zero Trust
-- Cloudflare Zero Trust account with [Dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
+- Cloudflare Zero Trust account with [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
 
 ### 1. Set up a bucket policy on the S3 bucket to restrict access to a specific IP address
 
@@ -175,7 +179,7 @@ A bucket website endpoint will be available at `http://<your-S3-bucket02>.s3-web
 ### 3. Setup a dedicated egress IP policy
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies** > **Add a policy**.
-2. Define a policy that specifies what traffic proxied by Cloudflare Gateway should get a dedicated egress IP assigned to it. For more details, please refer to the [Dedicated egress IP documentation](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
+2. Define a policy that specifies what traffic proxied by Cloudflare Gateway should get a dedicated egress IP assigned to it. For more details, refer to the [Dedicated egress IP documentation](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 3. Under **Step 3**, choose **Use dedicated Cloudflare egress IPs** and select `your-dedicated-ip` (the same as defined in the S3 bucket policy).
 
 The S3 bucket is now available at `http://<your-S3-bucket02>.s3-website.<aws-region>.amazonaws.com` but only for traffic being proxied by Cloudflare Gateway and assigned the dedicated egress IP.
