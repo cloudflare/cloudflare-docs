@@ -27,7 +27,7 @@ To create a virtual network:
 
 To assign the virtual network to the tunnel:
 
-1. Go to **Access** > **Tunnels**.
+1. Go to **Networks** > **Tunnels**.
 2. Select the tunnel you created in the previous steps and select **Configure**.
 3. Under **Private Network**, select **Add a private network**.
 4. Specify an IP range under **CIDR** and select the virtual network under **Additional settings**.

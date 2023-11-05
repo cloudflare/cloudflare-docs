@@ -37,10 +37,10 @@ If required, you can reset risk scores for specific users. Once reset, users wil
 
 By default, all predefined behaviors are disabled. When a behavior is enabled, Zero Trust will continuously evaluate all users within the organization for the behavior. You can [change the risk level](#change-risk-behavior-risk-levels) for predefined behaviors if the default assignment does not suit your environment.
 
-| Risk behaviors                        | Requirements                                                                            | Description                                                                                                                |
-| ------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Impossible travel                     | [A configured Access application](/cloudflare-one/applications/)                        | User has a successful login from two different locations that they could not have traveled between in that period of time. |
-| High number of DLP policies triggered | [A configured DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) | User has created a high number of DLP policy matches within a narrow frame of time.                                        |
+| Risk behaviors                        | Requirements                                                                            | Description                                                                                                                                                                                                            |
+| ------------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Impossible travel                     | [A configured Access application](/cloudflare-one/applications/)                        | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/). |
+| High number of DLP policies triggered | [A configured DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) | User has created a high number of DLP policy matches within a narrow frame of time. Matches will appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).                                  |
 
 ## Manage risk behaviors
 

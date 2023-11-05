@@ -361,6 +361,10 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 ## `hyperdrive`
 
+{{<Aside type="note">}}
+Hyperdrive is currently in open beta. Report Hyperdrive bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
+
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 ### `create`
@@ -446,6 +450,10 @@ wrangler hyperdrive get <ID>
 ---
 
 ## `vectorize`
+
+{{<Aside type="note">}}
+Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
@@ -1772,7 +1780,7 @@ wrangler whoami
 ## `deployments`
 
 {{<Aside type="note">}}
-Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in open beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 For more information about deployments and how they work, refer to [Deployments](/workers/configuration/deployments).
@@ -1863,6 +1871,10 @@ binding = "MY_KV"
 ```
 
 ## `rollback`
+
+{{<Aside type="note">}}
+Rollback is currently in open beta. Report rollback bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
 

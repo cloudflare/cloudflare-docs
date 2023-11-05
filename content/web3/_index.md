@@ -53,7 +53,7 @@ Cloudflare's Web3 gateways provide HTTP-accessible interfaces to Web3 networks, 
 - **Security**: Get the protection benefits of Cloudflare's global Anycast network for [enhanced security](https://blog.cloudflare.com/cloudflare-thwarts-17-2m-rps-ddos-attack-the-largest-ever-reported/).
 - **Reduced maintenance**: Cloudflare — and not your developers — maintains and monitors security, reliability, and performance.
 - **Reliability**: Cloudflare's global Anycast network provides a high level of [reliability and availability](https://www.cloudflare.com/network/).
-- **Performance**: With Cloudflare's edge network of data centers in over 270 cities, content can be cached and served from data centers close to your end users.  
+- **Performance**: With Cloudflare's edge network of data centers in [hundreds of cities worldwide](https://www.cloudflare.com/network/), content can be cached and served from data centers close to your end users.  
 
 ---
 

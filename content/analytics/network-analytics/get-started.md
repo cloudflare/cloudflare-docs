@@ -3,8 +3,8 @@ title: Get started
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Get started with Network Analytics v2
-  description: Learn how to view and use data from Network Analytics v2.
+  title: Get started with Network Analytics
+  description: Learn how to view and use data from Network Analytics.
 ---
 
 # Get started with Network Analytics
@@ -21,7 +21,7 @@ meta:
 
 ## Get Network Analytics data via API
 
-Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the available [Network Analytics v2 nodes](/analytics/graphql-api/features/data-sets/).
+Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the available [Network Analytics nodes](/analytics/graphql-api/features/data-sets/).
 
 ## Send Network Analytics logs to a third-party service
 

@@ -3437,6 +3437,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     margin: 0 48px 0 16px;
 }
 
+.DocSearch-Help a {
+    text-decoration: underline;
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
+
 .DocsMobileHeader {
     position: absolute;
     display: flex;
@@ -3780,15 +3791,4 @@ td>code,
 
 .changelogDate {
     width: 8em;
-}
-
-.DocSearch-Help a {
-    text-decoration: underline;
-    color: var(--docsearch-highlight-color);
-    font-weight: 600;
-}
-
-.DocSearch-HitsFooter a {
-    color: var(--docsearch-highlight-color);
-    font-weight: 600;
 }

@@ -120,7 +120,7 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 You can also configure how `cloudflared` sends requests to your [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) services.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
 2. Choose a tunnel and select **Configure**.
 3. Select the **Public Hostname** tab.
 4. Choose a route and select **Edit**.
