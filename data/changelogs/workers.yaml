@@ -22,7 +22,7 @@ entries:
 - publish_date: '2023-10-09'
   description: |-
     - The Web Platform standard [`CustomEvent` class](https://dom.spec.whatwg.org/#interface-customevent) is now available in Workers.
-    - Fixed a bug in the WebCrypto API where the `publicExponent` field of the algorithm of RSA keys would have the wrong type. Use the `cryptoPreservePublicExponent` compatibility flag to enable the new behavior.
+    - Fixed a bug in the WebCrypto API where the `publicExponent` field of the algorithm of RSA keys would have the wrong type. Use the [`crypto_preserve_public_exponent` compatibility flag](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field) to enable the new behavior.
 - publish_date: '2023-09-14'
   description: |-
     - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
