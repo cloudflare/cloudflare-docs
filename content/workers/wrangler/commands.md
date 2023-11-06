@@ -281,6 +281,10 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 ### `backup download`
 
+{{<Aside type="note">}}
+This command only works on databases created during D1's alpha period. This command will not work on databases that are currently created during the beta period. Currently, there is no solution to download existing data to your local machine of a beta database. Refer to [Time Travel](/d1/learning/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
+{{</Aside>}}
+
 Download existing data to your local machine.
 
 ```txt
