@@ -61,6 +61,26 @@ The WARP client will now show **Disabled by Admin Override** and the time when t
 
 When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) your organization's root certificate on the device.
 
+{{<heading-pill style="beta" heading="h3">}}Override local interface IP{{</heading-pill>}}
+
+{{<details header="Feature availability">}}
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows, macOS, Linux | Gateway with WARP, Secure Web Gateway without DNS Filtering                                                        | All plans                                                     |
+
+{{</details>}}
+
+Overrides the default IP address of the [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) created by WARP.
+
+**Value:**
+
+- `Disabled`: (default) The interface IP is set to `172.16.0.2` on all devices.
+
+- `Enabled`: Each device in your organization is assigned a unique IP address in the `100.96.0.0/12` range. The new interface IP takes effect when the user reconnects or re-enrolls the WARP client.
+
+This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+
 ## Device settings
 
 ### Captive portal detection
