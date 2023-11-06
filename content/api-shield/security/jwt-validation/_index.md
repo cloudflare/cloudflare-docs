@@ -54,7 +54,6 @@ If you expect that two different JWTs should be present in a request and you wan
 
 If you expect to migrate between two different Identity Providers, you must create two different token configurations and two different validation rules, each corresponding to its own configuration. With this setup, you can change the action for different validation rules depending on the state of your migration.
 
-
 ## Availability
 
 JWT Validation is available for all API Shield customers. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team. 
