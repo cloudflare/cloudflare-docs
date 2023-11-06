@@ -132,3 +132,10 @@ To check for tunnel health, Cloudflare sends packets in the form of ICMP echo re
 Note that the interface address field is always a `/30` or `/31` CIDR range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side.
 
 These packets will flow to and from Cloudflare over the IPsec tunnels you have configured to provide full visibility into the traffic path between our network and your sites. You will need to configure traffic selectors to accept the health check packets.
+
+#### Legacy health checks system
+
+For customers using the legacy health check system with a public IP range, Cloudflare recommends that:
+
+1. You configure the IP address for your tunnel health check target to be one from within the prefix range `172.64.240.252/30`.
+2. Apply a policy-based route that matches packets with source IP address equal to the configured tunnel health check target (for example  `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
