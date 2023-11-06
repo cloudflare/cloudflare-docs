@@ -12,6 +12,10 @@ When an image is fetched from your origin, our systems automatically optimize it
 
 ![Example of Polish compression's quality.](/images/images/polish.png)
 
+## Comparison
+
+{{<render file="_comparison-mirage-polish.md" productFolder="images" withParameters="Polish;;Mirage;;/speed/optimization/images/mirage/" >}}
+
 ## Availability
 
 {{<feature-table id="speed.polish">}}
