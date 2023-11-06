@@ -29,7 +29,7 @@ A JWT Validation configuration consists of creating a Token Validation Configura
 Each JWT issuer typically publishes public keys for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.
 {{</Aside>}}
 
-To automatically keep your keys up to date when your Identity Provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys]() to learn more about setting up the Worker.
+To automatically keep your keys up to date when your Identity Provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 
 ## Add a JWT Validation Rule
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
