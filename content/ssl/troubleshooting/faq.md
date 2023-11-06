@@ -9,7 +9,7 @@ meta:
 
 The following provide answers to the most common questions associated with Cloudflare SSL/TLS certificates and settings.
 
-## I have multiple Cloudflare certificates, which one is used?
+## If I have multiple Cloudflare certificates, which one is used?
 
 Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type.
 
@@ -21,7 +21,7 @@ Occasionally, the Cloudflare dashboard displays a wildcard certificate with only
 
 This behavior occurs when all of the following conditions are true:
 - The zone is on a [subdomain setup](/dns/zone-setups/subdomain-setup/).
-- The certificate has a subject or SAN that is a wildcard for the zone's parent domain
+- The certificate has a subject or SAN that is a wildcard for the zone's parent domain.
 
 {{</Aside>}}
 
@@ -70,7 +70,7 @@ ___
 
 ## Does SSL work for hosting partners?
 
-A Free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner using both [full](/dns/zone-setups/full-setup/) and [partial setups](/dns/zone-setups/partial-setup/).
+A free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner using both [full](/dns/zone-setups/full-setup/) and [partial setups](/dns/zone-setups/partial-setup/).
 
 For more details, refer to [Enable Universal SSL certificates](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
@@ -90,13 +90,13 @@ No. Cloudflare SSL/TLS certificates are not shared across domains nor across cus
 
 ___
 
-## An SSL certificate is installed at my website, why do I see a Cloudflare certificate?
+## Why do I see a Cloudflare certificate when an SSL certificate is installed at my website?
 
 Cloudflare must decrypt traffic in order to cache and filter malicious traffic. Cloudflare either re-encrypts traffic or sends plain text traffic to the origin web server depending on your domain's [encryption mode](/ssl/origin-configuration/ssl-modes/).
 
 ___
 
-## I want Cloudflare to use an SSL certificate I've purchased elsewhere
+## I want Cloudflare to use an SSL certificate that I purchased elsewhere.
 
 Domains on Business and Enterprise plans can upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
 
@@ -145,11 +145,11 @@ To learn more about SSL, go to the [Cloudflare Learning Center](https://www.clou
 
 ___
 
-## Redsys doesn't seem to be working with my Let's Encrypt Certificate?
+## Redsys is not working with my Let's Encrypt Certificate.
 
 The Let's Encrypt Certificate Authority and SNI are not currently supported by Redsys.
 
 We recommend one of the following options:
 
--   Changing the Universal Certificate Certificate Authority to a different CA.
--   Adding an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) using a different CA.
+-   Change the Universal Certificate Certificate Authority to a different CA.
+-   Add an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) using a different CA.
