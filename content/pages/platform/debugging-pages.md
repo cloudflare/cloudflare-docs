@@ -138,7 +138,7 @@ example.com.	300	IN	CAA	0 issue "amazon.com"
 
 In the above example, there is only a single CAA record which is allowing Amazon to issue ceritficates.
 
-To resolve this, you will need to add the following CAA records which allows all of the Certificate Authorities (CAs) Cloudflare uses to issue ceritificates:
+To resolve this, you will need to add the following CAA records which allows all of the Certificate Authorities (CAs) Cloudflare uses to issue certificates:
 ```
 example.com.            300     IN      CAA     0 issue "comodoca.com"
 example.com.            300     IN      CAA     0 issue "digicert.com; cansignhttpexchanges=yes"
