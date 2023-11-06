@@ -2,7 +2,6 @@
 title: Troubleshooting
 pcx_content_type: navigation
 weight: 202
-hideChildren: true
 meta:
   title: Troubleshooting
 ---
