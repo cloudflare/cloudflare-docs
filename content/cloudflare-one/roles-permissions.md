@@ -13,7 +13,7 @@ To check the list of members in your account, or to manage roles and permissions
 ## Zero Trust roles
 
 
-Only Super Administrators of accounts will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
+Only Super Administrators will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 
 {{<table-wrap>}}
 
