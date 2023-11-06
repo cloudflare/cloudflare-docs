@@ -40,7 +40,7 @@ If an attacker is directly targeting your origin web server, refer to [Respond t
 
 ## Related resources
 
-- [SSL FAQ](/support/ssl-tls/faq-and-reference/ssl-faq/)
+- [SSL FAQ](/ssl/troubleshooting/faq/)
 - [DNS FAQ](/dns/troubleshooting/faq/)
 - [Understanding the Cloudflare dashboard](https://support.cloudflare.com/hc/articles/205075117)
 - [Gathering information to troubleshoot site issues](https://support.cloudflare.com/hc/articles/203118044)
