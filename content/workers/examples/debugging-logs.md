@@ -20,7 +20,7 @@ export default {
     const LOG_URL = "https://log-service.example.com/";
 
     async function postLog(data) {
-      return await fetch(LOG_URL, {
+      return fetch(LOG_URL, {
         method: "POST",
         body: data,
       });
@@ -66,7 +66,7 @@ const handler: ExportedHandler = {
     const LOG_URL = "https://log-service.example.com/";
 
     async function postLog(data) {
-      return await fetch(LOG_URL, {
+      return fetch(LOG_URL, {
         method: "POST",
         body: data,
       });
