@@ -807,7 +807,8 @@
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
 
 # support
-
+/support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/setup/troubleshooting/ 301
+/support/about-cloudflare/getting-started/ /fundamentals/setup/troubleshooting/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
