@@ -8,7 +8,7 @@ title: Protect access to Amazon S3 buckets with Cloudflare Zero Trust
 
 # Protect access to Amazon S3 buckets with Cloudflare Zero Trust
 
-This tutorial demonstrates how to secure access to AWS S3 buckets via Cloudflare Zero Trust, so that data in these buckets is not publicly exposed on the Internet. With Zero Trust, we can do this with either Cloudflare Access and VPC endpoints, or with Cloudflare Gateway egress policies.
+This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. With Zero Trust, you can use Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
 
 ## Method 1: Via Cloudflare Access and VPC endpoints
 
@@ -26,33 +26,33 @@ flowchart TB
     s3_1([S3 bucket])
     end
 
-    i1([Internet])-. "S3 access denied" .->s3_1
+    i1[/Users outside </br> Zero Trust/]-. "S3 access denied" .->s3_1
 ```
 
 ### Prerequisites
 
 - AWS VPC with one EC2 virtual machine (VM) hosting the [Cloudflare Tunnel daemon](/cloudflare-one/connections/connect-networks/)
 - S3 bucket to be protected by Cloudflare Zero Trust
-- S3 bucket and AWS VPC configured in the same AWS region
+- S3 bucket and AWS VPC configured in the same [AWS region](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
 
 ### 1. Create VPC endpoint on AWS
 
-1. From the AWS dashboard, go to the **VPC dashboard** > **Virtual private cloud** > **Endpoints** > **Create endpoint**.
-2. Name the endpoint, for example `vpc-endpoint`.
-3. Select **AWS services** as the Service category.
-4. Under **Services** search and select the S3 service in the same region of the VPC. For example, for **Europe (London) - eu-west-2**, the S3 service is **com.amazonaws.eu-west-2.s3**. This is a service of type **Gateway**.
+1. In the AWS dashboard, go to the **VPC dashboard** > **Virtual private cloud** > **Endpoints**.
+2. Select **Create endpoint** and name the endpoint.
+3. Choose _AWS services_ as the Service category.
+4. Under **Services**, search and select the S3 service in the same region of the VPC. For example, for **Europe (London) - eu-west-2**, the S3 service is `com.amazonaws.eu-west-2.s3`. This is a service of type **Gateway**.
 5. Under **VPC**, select the VPC that contains the EC2 VM hosting the Cloudflare tunnel daemon.
 6. Under **Route tables**, select the route table associated with the VPC.
 7. Under **Policy**, select **Full access**.
 8. Select **Create endpoint**.
 
-After the VPC endpoint is created, there will be a new entry in the VPC route table with the target being the VPC endpoint, in the format `vpce-xxxxxxxxxxxxxxxxx`.
+After the VPC endpoint is created, there will be a new entry in the VPC route table with the target being the VPC endpoint. The entry will have the format `vpce-xxxxxxxxxxxxxxxxx`.
 
 ### 2. Set up a bucket policy on the S3 bucket so that the VPC can access the bucket
 
-1. From the AWS dashboard, go to the **S3 dashboard** > **Buckets** > **`your-S3-bucket01`** > **Permissions**
-2. Uncheck **Block all public access**.
-3. Edit the **Bucket policy** and add this policy.
+1. In the AWS dashboard, go to the **S3 dashboard** > **Buckets** > **`<your-S3-bucket>`** > **Permissions**.
+2. Disable **Block all public access**.
+3. Edit the **Bucket policy** add this policy.
 
 ```json
 {
@@ -126,7 +126,7 @@ flowchart TB
     s3_1([S3 bucket])
     end
 
-    i2([Other users])-. "IPs denied" .->s3_1
+    i2[/Users outside </br> Zero Trust/]-. "IPs denied" .->s3_1
 ```
 
 ### Prerequisites
