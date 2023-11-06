@@ -194,8 +194,6 @@ A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptog
 - [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
 - [Create a DKIM record](/dmarc-management/security-records/#create-security-records)
 
-{{<render file="_api-field-definitions.md">}}
-
 ### SPF
 
 A Sender Policy Framework (SPF) record lists authorized IP addresses and domains that can send email on behalf of your domain.
@@ -203,16 +201,12 @@ A Sender Policy Framework (SPF) record lists authorized IP addresses and domains
 - [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
 - [Create an SPF record](/dmarc-management/security-records/#create-security-records)
 
-{{<render file="_api-field-definitions.md">}}
-
 ### DMARC
 
 A Domain-based Message Authentication Reporting and Conformance (DMARC) record helps generate aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
 - [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
 - [Create a DMARC record](/dmarc-management/security-records/#create-security-records)
-
-{{<render file="_api-field-definitions.md">}}
 
 ---
 
