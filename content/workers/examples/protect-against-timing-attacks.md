@@ -39,8 +39,6 @@ if (a.byteLength !== b.byteLength) {
 
 // You can replace it with `crypto.subtle.timingSafeEqual` by encoding the values
 // you need to compare
-const a = encoder.encode("foo");
-const b = encoder.encode("bar");
 
 let isEqual = crypto.subtle.timingSafeEqual(a,b)
 
