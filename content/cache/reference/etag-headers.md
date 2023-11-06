@@ -24,7 +24,7 @@ Strong ETag headers ensure the resource in browser cache and on the web server a
 
 When you enable **Respect Strong ETags** via Page Rules or Cache Rules, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-for-byte identical.
 
-However, in some situations Cloudflare will convert strong ETags to weak ETags. For example, in the following conditions:
+However, in some situations Cloudflare will convert strong ETags to weak ETags. For example, given the following conditions:
 
 - **Respect Strong ETags** is enabled
 - [Brotli compression](/speed/optimization/content/brotli/) is enabled
@@ -54,7 +54,7 @@ When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag 
 - The visitor accepts the same compression used in the origin server's response (GZIP or Brotli), according to the `accept-encoding` header.
 - [Rocket Loader](/speed/optimization/content/rocket-loader/), [Minification](/speed/optimization/content/auto-minify/), [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), and [Railgun](/railgun/) (deprecated) features are disabled.
 
-In all other situations, Cloudflare will convert strong ETag headers to weak ETag headers. For example, in the following conditions:
+In all other situations, Cloudflare will convert strong ETag headers to weak ETag headers. For example, given the following conditions:
 
 - **Respect Strong ETags** is disabled
 - [Brotli compression](/speed/optimization/content/brotli/) is enabled
