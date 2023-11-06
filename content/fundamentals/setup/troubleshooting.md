@@ -40,7 +40,7 @@ When you [set up Cloudflare](/fundamentals/setup/), you may experience the follo
 ## General resources
 
 - [DNS FAQ](/dns/troubleshooting/faq/)
-- [SSL/TLS FAQ](/support/ssl-tls/faq-and-reference/ssl-faq/)
+- [SSL/TLS FAQ](/ssl/troubleshooting/faq/)
 
 ## Is Cloudflare attacking me?
 
