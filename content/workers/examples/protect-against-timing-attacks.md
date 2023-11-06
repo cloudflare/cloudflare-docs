@@ -18,10 +18,17 @@ To use this function, create a new [`TextEncoder`](/workers/runtime-apis/encodin
 ```ts
 const encoder = new TextEncoder();
 
-const a = new TextEncoder().encode("foo")
-const b = new TextEncoder().encode("bar")
+const username = "foo";
+const password = "bar";
 
-if (string1.byteLength !== string2.byteLength) {
+if (username.length !== password.length) {
+  // Minimise the possibility of a timing attack via how long encoding takes on the strings
+}
+
+const a = encoder.encode(username)
+const b = encoder.encode(password)
+
+if (a.byteLength !== b.byteLength) {
   // Strings must be the same length in order to compare
   // with crypto.timingSafeEqual
   return false
