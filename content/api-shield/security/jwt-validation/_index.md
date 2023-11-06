@@ -10,13 +10,13 @@ JSON Web Tokens (JWTs) are often used as part of an authentication component on 
 
 API Shield’s JWT Validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT Validation will also stop requests with expired tokens or tokens that are not yet valid.
 
-# Process
+## Process
 
 Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for JWT Validation to protect them.
 
 A JWT Validation configuration consists of creating a Token Validation Configuration by adding your JWT signer’s public keys and a JWT Validation Rule by specifying which hostnames and endpoints should be included for validation.
 
-## Add a Token Validation Configuration
+### Add a Token Validation Configuration
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **API Shield** > **Settings**.
@@ -31,7 +31,7 @@ Each JWT issuer typically publishes public keys for verification at a known URL 
 
 To automatically keep your keys up to date when your Identity Provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 
-## Add a JWT Validation Rule
+### Add a JWT Validation Rule
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **API Shield** > **API Rules**.
 3. Add a name for your rule.
