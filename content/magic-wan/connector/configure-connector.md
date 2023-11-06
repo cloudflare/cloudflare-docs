@@ -83,10 +83,10 @@ LAN to LAN communication in Magic WAN Connector is not yet supported. If you hav
 If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow the following traffic:
 
 - **UDP/53 (DNS destination IP 1.1.1.1)**: Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API endpoints.
-**TCP/443**: The Connector will open outbound HTTPS connections over this port for control plane operations.
-**UDP/4500 (destination IP 162.159.64.1)**: Needed for Connector's initialization and discovery traffic through outbound connections.
-**UDP/4500 (destination IP - Cloudflare Anycast IPs)**: Needed for the [Cloudflare Anycast IPs](/magic-wan/get-started/configure-tunnels/) assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
-**TCP/7844, UDP/7844 Outbound connections**: This is for debugging facilities in the connector.
+- **TCP/443**: The Connector will open outbound HTTPS connections over this port for control plane operations.
+- **UDP/4500 (destination IP 162.159.64.1)**: Needed for Connector's initialization and discovery traffic through outbound connections.
+- **UDP/4500 (destination IP - Cloudflare Anycast IPs)**: Needed for the [Cloudflare Anycast IPs](/magic-wan/get-started/configure-tunnels/) assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
+- **TCP/7844, UDP/7844 Outbound connections**: This is for debugging facilities in the connector.
 
 ### Device activation
 
