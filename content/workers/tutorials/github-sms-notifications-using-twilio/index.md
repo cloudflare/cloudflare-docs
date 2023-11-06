@@ -83,7 +83,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 With your local environment set up, parse the repository update with your Worker.
 
-Initially, your generated `worker.js` should look like this:
+Initially, your generated `index.js` should look like this:
 ```js
 ---
 filename: index.js
@@ -136,7 +136,7 @@ The `checkSignature` function will use the Node.js crypto library to hash the re
 
 ```js
 ---
-filename: worker.js - checkSignature()
+filename: index.js - checkSignature()
 ---
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { Buffer } from 'node:buffer';
@@ -180,7 +180,7 @@ You can then create a helper function to send text messages by sending a `POST` 
 Create a new function called `sendText()` that will handle making the request to Twilio:
 ```js
 ---
-filename: worker.js - sendText()
+filename: index.js - sendText()
 ---
 async function sendText(accountSid, authToken, message) {
   const endpoint = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
@@ -220,7 +220,7 @@ Modify your `githubWebhookHandler` to send a text message using the `sendText` f
 
 ```js
 ---
-filename: worker.js - fetch()
+filename: index.js - fetch()
 ---
 async fetch(request, env, ctx) {
   if(request.method !== 'POST') {
