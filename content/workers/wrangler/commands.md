@@ -8,8 +8,6 @@ meta:
 
 # Wrangler commands
 
-{{<render file="_wrangler_survey.md">}}
-
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.

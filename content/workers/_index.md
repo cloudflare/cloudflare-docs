@@ -18,14 +18,7 @@ Build serverless applications and deploy instantly across the globe for exceptio
 
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 
-
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in hundreds of cities worldwide, offering both [Free and Paid plans](/workers/platform/pricing/).
-
-{{<Aside type="warning" header="Cloudflare CLI User Experience Feedback">}}
-Help us improve Wrangler and C3 by completing our user experience survey (total time: 3 minutes).
-
-Take the survey: [Cloudflare CLI User Experience Feedback](https://forms.gle/4pSRFv3CNhLNK8pt8).
-{{</Aside>}}
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
  
