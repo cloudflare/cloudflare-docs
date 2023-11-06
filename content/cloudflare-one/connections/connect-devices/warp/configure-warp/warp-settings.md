@@ -75,9 +75,9 @@ Overrides the default IP address of the [virtual network interface](/cloudflare-
 
 **Value:**
 
-- `Disabled`: (default) The interface IP is set to `172.16.0.2` on all devices.
+- `Disabled`: (default) The local interface IP is set to `172.16.0.2` on all devices.
 
-- `Enabled`: Each device in your organization is assigned a unique IP address in the `100.96.0.0/12` range. The new interface IP takes effect when the user reconnects or re-enrolls the WARP client.
+- `Enabled`: Each device in your organization is assigned a unique IP address in the `100.96.0.0/12` range. The new local interface IP takes effect when the user reconnects or re-enrolls the WARP client.
 
 This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
 
