@@ -6,7 +6,7 @@ weight: 2
 
 # Set up private IPs with Cloudflare Tunnel
 
-Consider the following steps to learn how to configure Cloudflare local traffic management (LTM) solution, using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) as the off-ramp to securely connect to your private/internal services.
+Consider the following steps to learn how to configure Cloudflare local traffic management (LTM) solution, using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) as the off-ramp to securely connect to your private or internal services.
 
 ## 1. Configure a Cloudflare tunnel with an assigned virtual network
 
@@ -54,6 +54,8 @@ $ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 ## 2. Configure Cloudflare Load Balancing
 
 Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each origin when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP origins.
+
+The specific configuration will vary depending on your use case. Refer to the following steps to understand the workflow.
 
 1. [Create the Load Balancing monitor](/load-balancing/monitors/create-monitor/) according to your needs.
 2. [Create the origin pool](/load-balancing/pools/create-pool/) specifying your private origin IP addresses and corresponding virtual networks.
