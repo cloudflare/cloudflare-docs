@@ -9,7 +9,7 @@ weight: 7
 To get the value for a given key, call the `get()` method on any KV namespace you have bound to your Worker code:
 
 ```js
-NAMESPACE.get(key);
+env.NAMESPACE.get(key);
 ```
 
 The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
@@ -38,7 +38,7 @@ You can [read key-value pairs from the command line with Wrangler](/kv/platform/
 You can pass in an options object with a `type` parameter to the `get()` method:
 
 ```js
-NAMESPACE.get(key, { type: "text" });
+env.NAMESPACE.get(key, { type: "text" });
 ```
 
 The `type` parameter can be any of the following:
@@ -67,7 +67,7 @@ A hot read means that the data is cached on Cloudflare's edge network using the 
 The `get()` options object also accepts a `cacheTTL` parameter:
 
 ```js
-NAMESPACE.get(key, { cacheTTL: 3600 });
+env.NAMESPACE.get(key, { cacheTTL: 3600 });
 ```
 
 The `cacheTTL` parameter must be an integer greater than or equal to `60`, which is the default. 
@@ -81,7 +81,7 @@ A metadata is a serializable value you append to each KV entry.
 Get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a KV namespace you have bound in your Worker code:
 
 ```js
-const { value, metadata } = await NAMESPACE.getWithMetadata(key);
+const { value, metadata } = await env.NAMESPACE.getWithMetadata(key);
 ```
 
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.

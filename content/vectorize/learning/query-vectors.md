@@ -29,8 +29,8 @@ You can optionally change the number of results returned and/or whether results 
 
 ```ts
 let queryVector = [54.8, 5.5, 3.1];
-// topK defaults to 3; returnVectors defaults to false
-let matches = await env.YOUR_INDEX.query(queryVector, { topK: 1, returnVectors: true })
+// topK defaults to 3; returnValues defaults to false; returnMetadata defaults to false
+let matches = await env.YOUR_INDEX.query(queryVector, { topK: 1, returnValues: true, returnMetadata: true })
 ```
 
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
@@ -70,7 +70,7 @@ Passing `queryVector` or `queryVector.data` will cause `.query()` to return an e
 
 ## OpenAI
 
-When using OpenAI's [JavaScript client API](https://github.com/openai/openai-node) and [Embeddings API](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings), the response type from `embeddings.create` is an object that includes the model, usage information and the requested vector embedding. 
+When using OpenAI's [JavaScript client API](https://github.com/openai/openai-node) and [Embeddings API](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings), the response type from `embeddings.create` is an object that includes the model, usage information and the requested vector embedding.
 
 ```ts
 const openai = new OpenAI({ apiKey: env.YOUR_OPENAPI_KEY });

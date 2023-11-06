@@ -162,9 +162,7 @@ entries:
 
 - term: team name
   general_definition: |-
-    the customizable portion of your team domain, allowing you to personalize your Cloudflare Zero Trust configuration.
-
-    You can view your team name in Cloudflare Zero Trust under **Settings** > **Account**.
+    the customizable portion of your team domain, allowing you to personalize your Cloudflare Zero Trust configuration. You can view your team name in Zero Trust under **Settings** > **Custom Pages**.
 
     | team domain                             | team name        |
     | --------------------------------------- | ---------------- |
@@ -183,6 +181,24 @@ entries:
     the Cloudflare Tunnel software, `cloudflared`, generates a certificate for secure connections using a service token and an origin certificate.
   associated_products:
     - Tunnel
+
+- term: User risk score
+  general_definition: |-
+    Cloudflare Zero Trust user risk score ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
+  associated_products:
+    - Access
+    - Gateway
+    - DLP
+    - CASB
+
+- term: User risk score level
+  general_definition: |-
+    Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
+  associated_products:
+    - Access
+    - Gateway
+    - DLP
+    - CASB
 
 - term: Virtual Private Network (VPN)
   general_definition: |-

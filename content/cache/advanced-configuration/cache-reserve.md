@@ -42,7 +42,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
@@ -153,3 +153,65 @@ the estimated cost for the month would be:
 ## Tips and best practices
 
 Cache Reserve should be used with [Tiered Cache](/cache/how-to/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling Cache Reserve via the Cloudflare dashboard will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled.
+
+## Cache Reserve Analytics
+
+Cache Reserve Analytics provides insights regarding your Cache Reserve usage. It allows you to check what content is stored in Cache Reserve, how often it is being accessed, how long it has been there and how much egress from your origin it is saving you.
+
+In the **Overview** section, under **Cache Reserve**, you have access to the following metrics:
+
+- **Egress savings (bandwidth)** - is an estimation based on response bytes served from Cache Reserve that did not need to be served from your origin server. These are represented as cache hits.
+- **Requests served by Cache Reserve** - is the number of requests served by Cache Reserve (total).
+- **Data storage summary** - is based on a representative sample of requests. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details about how Cloudflare samples data.
+    - **Current data stored** - is the data stored (currently) over time.
+    - **Aggregate storage usage** - is the total of storage used for the selected timestamp.
+- **Operations** - [Class A](/cache/advanced-configuration/cache-reserve/#class-a-operations-writes) (writes) and [Class B](/cache/advanced-configuration/cache-reserve/#class-b-operations-reads) (reads) operations over time.
+
+## Cache Reserve clear button
+
+You can remove all data stored in Cache Reserve through the dashboard or via API. To clear your cache reserve:
+- Cache Reserve must have already been enabled for the zone.
+- Cache Reserve needs to be off.
+
+Be aware that the deletion may take up to 24 hours to complete.
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
+2. Go to **Caching** > **Cache Reserve**.
+3. In **Delete Cache Reserve Data**, select **Delete Storage**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To delete Cache Reserve data via API use the following example request. For more information, refer to the [API documentation](/api/operations/zone-cache-settings-start-cache-reserve-clear).
+
+```json
+---
+header: Request
+---
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve/ \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "editable": true,
+    "id": "cache_reserve",
+    "value": "off"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+{{</tab>}}
+{{</tabs>}}
+

@@ -10,7 +10,9 @@ weight: 1
 
 You need [Magic WAN](/magic-wan/get-started/) to be able to use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
-Refer to the following steps to configure your Magic WAN Connector.
+Refer to the steps below to configure your Magic WAN Connector.
+
+---
 
 ## 1. Purchase a Magic WAN Connector device
 
@@ -32,10 +34,9 @@ To add a site:
 8. Select **Next** to proceed.
 9. Create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/) under **WAN configuration**. Configuring multiple WANs will create multiple IPsec tunnels. This allows the Connector to failover between circuits according to their [health](/magic-wan/reference/traffic-steering/). Select **Create**, and define the following settings:
     1. **Network name**: Enter a descriptive name for your WAN.
-    2. **(Optional) VLAN ID**: Specify a VLAN ID and port for your WAN.
-    3. **Physical port**: This refers to the physical Magic WAN Connector port that you are using for your WAN.
-    4. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn more about how Cloudlfare calculates priorities.
-    5. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
+    2. **Physical port**: This refers to the physical Magic WAN Connector port that you are using for your WAN.
+    3. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn more about how Cloudlfare calculates priorities.
+    4. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
 
     <div class="medium-img">
 
@@ -47,11 +48,10 @@ To add a site:
 
 11. In **LAN configuration**, select **Create**, and repeat the process to define your LAN:
     1. **Network name**: Enter a descriptive name for your LAN.
-    2. **(Optional) VLAN ID**: Specify a VLAN ID and port for your LAN.
-    3. **Physical port**: This refers to the physical Magic WAN Connector port's number that you are using for your LAN.
-    4. **Overlay subnet**: The subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
-    5. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address.
-    6. **(Optional) This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
+    2. **Physical port**: This refers to the physical Magic WAN Connector port's number that you are using for your LAN.
+    3. **Overlay subnet**: The subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
+    4. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address.
+    5. **(Optional) This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
         - The DNS server address
         - The DHCP pool start
         - The DHCP pool end
@@ -76,13 +76,17 @@ The Magic WAN Connector is shipped to you deactivated, and will only establish a
 
 There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local set up and have static IP addresses assigned to it.
 
-If there is a firewall deployed upstream of the Magic WAN Connector, configure it to allow traffic on ports `443` and `4500`. This is needed to allow Magic WAN Connector's initiation traffic with Cloudflare.
+{{<Aside type="warning">}}
+If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow traffic on ports `443` and `4500`. This is needed to allow Magic WAN Connector's initiation traffic with Cloudflare.
+{{</Aside>}}
 
-{{<Aside type="note">}}LAN to LAN communication in Magic WAN Connector is not yet supported. If you have a LAN set up on port one of Magic WAN Connector and need to communicate with the LAN set up behind LAN port two, packets will be routed through Cloudflare first before reaching their destination.{{</Aside>}}
+LAN to LAN communication in Magic WAN Connector is not yet supported. If you have a LAN set up on port one of Magic WAN Connector and need to communicate with the LAN set up behind LAN port two, packets will be routed through Cloudflare first before reaching their destination.
 
 ### Device activation
 
-When the Connector is first activated, one of the ports must be connected to the Internet through a route that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#2-define-a-site-configuration) step.
+When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#2-define-a-site-configuration) step.
+
+{{<Aside type="warning">}}Remember to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, Connector will not work.{{</Aside>}}
 
 When you are ready to connect your Magic WAN Connector to the Cloudflare network:
 
@@ -97,11 +101,13 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
  If your final network configuration is based on a static IP address without a route to the Internet that has DHCP enabled:
 
 1. Wait 60 seconds.
-2. Remove the route to the Internet with DHCP.
+2. Unplug the physical connection to the Internet-connected device which provides DHCP.
 3. Adjust your physical connections as required to match the configuration specified in the *Site configuration* step (for example, static IP WAN plugged into physical port with no DHCP connection).
 4. Power cycle the Connector.
 
 {{</Aside>}}
+
+--- 
 
 ## IP sec tunnels and static routes
 
@@ -113,6 +119,8 @@ To check the IPsec tunnels and static routes created by your Magic Wan Connector
 2. Go to **Magic WAN** > **Sites**.
 3. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
 4. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+
+---
 
 ## Maintenance
 

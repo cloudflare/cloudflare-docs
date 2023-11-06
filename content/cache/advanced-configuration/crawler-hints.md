@@ -37,4 +37,4 @@ When enabled, Crawler Hints is a global setting for your entire website. You can
 
 * Having the origin server send through the header `X-Robots-Tag: noindex` on any pages that should not be indexed.
 * Including `<meta name="robots" content="noindex, nofollow" />` in the HTML of any pages that should not be indexed.
-* Creating a [Request header Transform Rule](/rules/transform/request-header-modification/) in Cloudflare to add the `X-Robots-Tag: noindex` header instead of doing it from the origin server.
+* Creating a [Response header Transform Rule](/rules/transform/response-header-modification/) in Cloudflare to add the `X-Robots-Tag: noindex` header instead of doing it from the origin server.

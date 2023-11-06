@@ -77,3 +77,7 @@ $ curl -sX PUT https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
 -H "X-Auth-Key: <API_KEY>" \
 -d '{"logstream":true}'
 ```
+
+## How can I check my Logpush job version?
+
+You can use the [API](/api/operations/get-zones-zone_identifier-logpush-jobs-job_identifier) to get details about your Logpush jobs. If there is a `logstream=true` parameter in the response, this means that the job is running on Logpush v2.

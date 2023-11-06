@@ -3,9 +3,10 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: param1
 ---
 
-Use the [Upload mTLS certificate endpoint](/api/operations/m-tls-certificate-management-upload-m-tls-certificate) to upload the certificate and private key to Cloudflare. The certificate must be a root CA, formatted as a single string with `\n` replacing the line breaks.
+Use the [Upload mTLS certificate endpoint](/api/operations/m-tls-certificate-management-upload-m-tls-certificate) to upload the certificate and private key to Cloudflare. The certificate must be a root CA, formatted as a single string with `\n` replacing the line breaks. $1
 
    ```bash
    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/mtls_certificates" \

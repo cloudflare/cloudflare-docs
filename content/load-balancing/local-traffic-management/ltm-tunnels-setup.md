@@ -14,7 +14,7 @@ The specific configuration steps can vary depending on your infrastructure and s
 
 1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).
 2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to the data center hosting the origin servers.
-3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
+3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
 
 {{<tabs labels="Dashboard | CLI">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -27,7 +27,7 @@ To create a virtual network:
 
 To assign the virtual network to the tunnel:
 
-1. Go to **Access** > **Tunnels**.
+1. Go to **Networks** > **Tunnels**.
 2. Select the tunnel you created in the previous steps and select **Configure**.
 3. Under **Private Network**, select **Add a private network**.
 4. Specify an IP range under **CIDR** and select the virtual network under **Additional settings**.
@@ -53,10 +53,10 @@ $ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 
 ## 2. Configure Cloudflare Load Balancing
 
-Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each origin when you [create or edit a pool](/load-balancing/how-to/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP origins.
+Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each origin when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP origins.
 
-1. [Create the Load Balancing monitor](/load-balancing/how-to/create-monitor/) according to your needs.
-2. [Create the origin pool](/load-balancing/how-to/create-pool/) specifying your private origin IP addresses and corresponding virtual networks.
+1. [Create the Load Balancing monitor](/load-balancing/monitors/create-monitor/) according to your needs.
+2. [Create the origin pool](/load-balancing/pools/create-pool/) specifying your private origin IP addresses and corresponding virtual networks.
 
 {{<Aside type="note">}}
 
@@ -107,4 +107,4 @@ $ curl --request PATCH \
 {{</tab>}}
 {{</tabs>}}
 
-3. [Create the load balancer](/load-balancing/how-to/create-load-balancer/), specifying the pool and monitor you created in the previous steps, as well as the desired load-balancing method.
+3. [Create the load balancer](/load-balancing/load-balancers/create-load-balancer/), specifying the pool and monitor you created in the previous steps, as well as the desired load-balancing method.

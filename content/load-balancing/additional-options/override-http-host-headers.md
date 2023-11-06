@@ -24,7 +24,7 @@ For example, you might have a pool with origins hosted in multiple AppEngine pro
 
 Since these examples require specific hostnames per origin, your load balancer will not properly route traffic _without_ a `Host` header override.
 
-If you need an origin `Host` header override, add it when [creating](/load-balancing/how-to/create-pool/) or editing a pool. For security reasons, this header must meet one of the following criteria:
+If you need an origin `Host` header override, add it when [creating](/load-balancing/pools/create-pool/) or editing a pool. For security reasons, this header must meet one of the following criteria:
 
 - Is a subdomain of a zone associated with this account
 - Matches the origin address

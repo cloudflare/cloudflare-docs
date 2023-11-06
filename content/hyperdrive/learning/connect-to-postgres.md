@@ -46,11 +46,10 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 | Driver               | Docs                                 | Minimum Version Required |
 | -------------------- | ------------------------------------ | ------------------------ |
 | node-postgres - `pg` | https://node-postgres.com/           | `pg@8.11.0`              |
-| Postgres.js          | https://github.com/porsager/postgres | `3.4.0`                  |
 | Drizzle              | https://orm.drizzle.team/            | `0.26.2`^                |
 | Kysely               | https://kysely.dev/                  | `0.26.3`^                |
 
-^ _The marked libraries use `node-postgres` or `Postgres.js` as a dependency._
+^ _The marked libraries use `node-postgres` as a dependency._
 
 Other drivers and ORMs not listed may also be supported: this list is not exhaustive.
 
@@ -74,9 +73,9 @@ Hyperdrive does not currently support uploading client CA certificates. In the f
 
 ## Driver examples
 
-The following Workers code shows examples for both `node-postgres` and Postgres.js:
+The following Workers code shows examples for `node-postgres`:
 
-{{<tabs labels="node-postgres | postgres-js">}}
+{{<tabs labels="node-postgres">}}
 {{<tab label="node-postgres" default="true">}}
 
 ```sh
@@ -84,69 +83,53 @@ $ npm install pg
 ```
 
 {{</tab>}}
-
-{{<tab label="postgres-js">}}
-
-```sh
-$ npm install postgres
-```
-
-{{</tab>}}
 {{</tabs>}}
 
 The following Workers examples show you how to:
 
-1. Create a database client in each driver.
+1. Create a database client with a database driver.
 2. Pass the Hyperdrive connection string and connect to the database.
 3. Write a query.
 
-{{<tabs labels="node-postgres | postgres-js">}}
+{{<tabs labels="node-postgres">}}
 {{<tab label="node-postgres" default="true">}}
 
 ```ts
 ---
 filename: src/worker.ts
 ---
-import { Client } from 'pg'
+import { Client } from 'pg';
 
-interface Env {
-    HYPERDRIVE: Hyperdrive;
+export interface Env {
+	// If you set another name in wrangler.toml as the value for 'binding',
+	// replace "HYPERDRIVE" with the variable name you defined.
+	HYPERDRIVE: Hyperdrive;
 }
 
-export default async fetch(req: Request, env: Env, ctx: ExecutionContext) {
-    // The node-postgres client accepts a 'connectionString' parameter
-    const client = new Client({
-      connectionString: env.HYPERDRIVE.connectionString,
-    });
-    await client.connect()
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		// Create a database client that connects to our database via Hyperdrive
+		//
+		// Hyperdrive generates a unique connection string you can pass to
+		// supported drivers, including node-postgres, Postgres.js, and the many
+		// ORMs and query builders that use these drivers.
+		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
 
-    const results = await client.query("SELECT * FROM users LIMIT 10")
+		try {
+			// Connect to our database
+			await client.connect();
 
-    return Response.json(results)
-}
-```
+			// A very simple test query
+			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
-{{</tab>}}
-{{<tab label="postgres-js">}}
-
-```ts
----
-filename: src/worker.ts
----
-import postgres from 'postgres'
-
-interface Env {
-    HYPERDRIVE: Hyperdrive;
-}
-
-export default async fetch(req: Request, env: Env, ctx: ExecutionContext) {
-    // The Postgres.js library accepts a connection string directly
-    const sql = postgres(env.HYPERDRIVE.connectionString)
-
-    const results = await sql`SELECT * FROM users LIMIT 10`
-
-    return Response.json(results)
-}
+			// Return our result rows as JSON
+			return Response.json({ result: result });
+		} catch (e) {
+			console.log(e);
+			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
+		}
+	},
+};
 ```
 
 {{</tab>}}

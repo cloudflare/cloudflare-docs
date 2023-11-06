@@ -14,7 +14,7 @@ This page covers examples for the following scenarios:
 
 - Serve images from custom paths
 - Modify existing URLs to be compatible with Image Resizing
-- Add parameters to every image that passes through Image Resizing
+- Pass every image requested on your zone through Image Resizing
 
 To create a rule, log in to the Cloudflare dashboard and select your account and website. Then, select **Rules** > **Transform Rules**.
 
@@ -28,11 +28,42 @@ To direct the request to the origin server, you can check for the string `image-
 
 `...and (not (any(http.request.headers["via"][*] contains "image-resizing")))`
 
-## Serve images from custom paths 
+## Serve images from custom paths
 
 By default, requests to transform images through Image Resizing are served from the `/cdn-cgi/image/` path.
+You can use Transform Rules to rewrite URLs.
 
-This example lets you rewrite a request to `example.com/cdn-cgi/image/` to `example.com/images`:
+### Basic version
+
+Free and Pro plans only support string matching rules that do not require regular expressions.
+
+This example lets you rewrite a request from `example.com/images` to `example.com/cdn-cgi/image/`:
+
+```txt
+---
+header: Text in Expression Editor
+---
+(starts_with(http.request.uri.path, "/images")) and (not (any(http.request.headers["via"][*] contains "image-resizing")))
+```
+
+```txt
+---
+header: Text in Path > Rewrite to... > Dynamic
+---
+concat("/cdn-cgi/images", substring(http.request.uri.path, 7))
+```
+
+### Advanced version
+
+{{<Aside type="note">}}
+
+This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to [Cloudflare Transform Rules Availability](/rules/transform/#availability) for more information.
+
+{{</Aside>}}
+
+There is an advanced version of Transform Rules supporting regular expressions.
+
+This example lets you rewrite a request from `example.com/images` to `example.com/cdn-cgi/image/`:
 
 ```txt
 ---
@@ -45,10 +76,16 @@ header: Text in Expression Editor
 ---
 header: Text in Path > Rewrite to... > Dynamic
 ---
-regex_replace(   http.request.uri.path,   "^/images/",   "/cdn-cgi/image/" )
+regex_replace(http.request.uri.path, "^/images/", "/cdn-cgi/image/")
 ```
 
 ## Modify existing URLS to be compatible with Image Resizing
+
+{{<Aside type="note">}}
+
+This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to [Cloudflare Transform Rules Availability](/rules/transform/#availability) for more information.
+
+{{</Aside>}}
 
 This example lets you rewrite your URL parameters to be compatible with Image Resizing:
 
@@ -72,9 +109,15 @@ regex_replace(
 
 Leave the **Query** > **Rewrite to...** > *Static* field empty.
 
-## Add parameters to every image that passes through Image Resizing
+## Pass every image requested on your zone through Image Resizing
 
-This example lets you add `format=auto` to every image that passes through Image Resizing on your zone:
+{{<Aside type="note">}}
+
+This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to [Cloudflare Transform Rules Availability](/rules/transform/#availability) for more information.
+
+{{</Aside>}}
+
+This example lets you pass every image that is requested on your zone through Image Resizing with the `format=auto` option:
 
 ```
 ---

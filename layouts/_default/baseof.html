@@ -1,3 +1,6 @@
+{{- $littlefootJS := "https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" -}}
+{{- $littlefootCSS := "https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" -}}
+
 <!doctype html>
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}}>
   <head>
@@ -12,6 +15,10 @@
       <link rel="stylesheet preconnect" href="/style.css" />
     {{- end -}}
 
+    <link rel="preload" href="{{$littlefootCSS}}" as="style">
+    <link rel="preload" href="{{$littlefootJS}}" as="script" />
+    <link rel="stylesheet" href="{{$littlefootCSS}}" />
+
     
     {{- block "styles" . -}}{{- end -}} 
 
@@ -21,12 +28,12 @@
 
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
     {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
-    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
+    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
     {{- end -}}
   </head>
   <body>
     {{- block "main" . -}}{{- end -}}
-    {{- partial "gtag" -}}
-    {{- partial "littlefoot" -}}
+    <script defer src="{{$littlefootJS}}" type="application/javascript" ></script> 
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
   </body>
 </html>

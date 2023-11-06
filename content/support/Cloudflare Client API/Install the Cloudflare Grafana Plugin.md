@@ -6,7 +6,9 @@ title: Install the Cloudflare Grafana Plugin
 
 # Install the Cloudflare Grafana Plugin
 
-
+{{<Aside type="warning">}}
+The Cloudflare Grafana plugin is deprecated and will no longer be updated after December 31, 2023. Please consider using the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/analytics/dns) or [DNS Analytics API](https://developers.cloudflare.com/api/operations/dns-analytics-table) instead.
+{{</Aside>}}
 
 ## Overview
 

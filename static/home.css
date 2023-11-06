@@ -497,30 +497,6 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
-    .ZTHeroImage {
-        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-        background-repeat: no-repeat;
-        margin: 0 auto;
-        position: relative;
-        box-shadow: 0 0 0px .5px white inset;
-        margin-top: 3em;
-    }
-}
-
-@media (min-width:768px) {
-    [theme=dark] .ZTHeroImage {
-        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-        box-shadow: 0 0 0px .5px #1d1f20 inset;
-    }
-}
-
-@media (max-width:768px) {
-    .ZTHeroImage {
-        background-image: none;
-    }
-}
-
 .HeroBlockGrid {
     padding: 40px 0;
     background: #e2f5fa;
@@ -3459,6 +3435,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocSearch-Button {
     margin: 0 48px 0 16px;
+}
+
+.DocSearch-Help a {
+    text-decoration: underline;
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
 }
 
 .DocsMobileHeader {

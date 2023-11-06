@@ -30,7 +30,7 @@ You can create and configure a tunnel once and run that tunnel through multiple,
 
 ## Remotely-managed tunnel
 
-A remotely-managed tunnel is a [tunnel](#tunnel) that was created in [Zero Trust](https://one.dash.cloudflare.com/) under **Access** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the [API](/api/operations/cloudflare-tunnel-configuration-get-configuration).
+A remotely-managed tunnel is a [tunnel](#tunnel) that was created in [Zero Trust](https://one.dash.cloudflare.com/) under **Networks** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the [API](/api/operations/cloudflare-tunnel-configuration-get-configuration).
 
 ## Locally-managed tunnel
 
@@ -51,13 +51,13 @@ This is a YAML file that functions as the operating manual for `cloudflared`. `c
 
 ### Cert.pem
 
-This is the certificate file issued by Cloudflare when you run `cloudflared tunnel login`. This file uses a certificate to authenticate your instance of `cloudflared` and it is required when you create new tunnels, delete existing tunnels, change DNS records, or configure tunnel routing from cloudflared. This file is not required to perform actions such as running an existing tunnel or managing tunnel routing from the Cloudflare dashboard. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-permissions/) for more details on when this file is needed.
+This is the certificate file issued by Cloudflare when you run `cloudflared tunnel login`. This file uses a certificate to authenticate your instance of `cloudflared` and it is required when you create new tunnels, delete existing tunnels, change DNS records, or configure tunnel routing from cloudflared. This file is not required to perform actions such as running an existing tunnel or managing tunnel routing from the Cloudflare dashboard. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/) for more details on when this file is needed.
 
 The `cert.pem` origin certificate is valid for at least 10 years, and the service token it contains is valid until revoked.
 
 ### Credentials file
 
-This file is created when you run `cloudflared tunnel create <NAME>`. It stores your tunnel’s credentials in JSON format, and is unique to each tunnel. This file functions as a token authenticating the tunnel it is associated with. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-permissions/) for more details on when this file is needed.
+This file is created when you run `cloudflared tunnel create <NAME>`. It stores your tunnel’s credentials in JSON format, and is unique to each tunnel. This file functions as a token authenticating the tunnel it is associated with. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/) for more details on when this file is needed.
 
 ### Ingress rule
 
@@ -69,4 +69,4 @@ Quick tunnels, when run, will generate a URL that consists of a random subdomain
 
 ## Virtual networks
 
-A [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network.  Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
+A [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network.  Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.

@@ -19,7 +19,7 @@ When you choose an inline deployment, you get the following benefits:
 - Your deployment is simpler, because any complex processing can happen downstream and without modification.
 - Area 1 can [modify delivered messages](/email-security/email-configuration/email-policies/text-addons/), adding subject or body mark-ups.
 - Area 1 can offer high availability and adaptive message pooling.
-- You can set up advanced handling downstream for non-quarantined messages with [added X-headers](/email-security/reference/dispositions-and-attributes/).
+- You can set up advanced handling downstream for non-quarantined messages with [added `X-headers`](/email-security/reference/dispositions-and-attributes/).
 
 ## Limitations
 
