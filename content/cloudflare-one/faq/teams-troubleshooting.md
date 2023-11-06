@@ -161,7 +161,7 @@ If `cloudflared` returns error `error="remote error: tls: handshake failure"`, c
 
 ## Tunnel connections fail with `Too many open files` error.
 
-If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
+If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/downloads/system-requirements/#recommended-ulimits) on the machine running `cloudflared`.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
