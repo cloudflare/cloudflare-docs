@@ -30,7 +30,7 @@ const b = encoder.encode(password)
 
 if (a.byteLength !== b.byteLength) {
   // Strings must be the same length in order to compare
-  // with crypto.timingSafeEqual
+  // with crypto.subtle.timingSafeEqual
   return false
 }
 
