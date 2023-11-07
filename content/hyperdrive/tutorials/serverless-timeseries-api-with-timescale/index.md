@@ -174,7 +174,7 @@ Now copy the below Worker code, and replacing the current code in `./src/index.t
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 
