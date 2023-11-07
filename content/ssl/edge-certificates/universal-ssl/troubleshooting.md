@@ -20,6 +20,11 @@ To resolve timeout issues, try one or more of the following options:
 - Send a PATCH request to the [validation endpoint](/api/operations/ssl-verification-edit-ssl-certificate-pack-validation-method) using the same DCV method (API only).
 - Follow the [APEX validation method](/ssl/edge-certificates/changing-dcv-method/methods/#perform-dcv).
 
+## Resolve a deleted state
+
+If you click **Enable Universal SSL** on a zone where a certificate has been active at some point, the certificate might stay in the **Deleted** state.
+If that happens, click [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) and wait at least a minute. Then, re-enable Universal SSL.
+
 ## Other issues
 
 For additional troubleshooting help, refer to [Troubleshooting SSL errors](/ssl/troubleshooting/).
