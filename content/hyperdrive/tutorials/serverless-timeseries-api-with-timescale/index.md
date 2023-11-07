@@ -139,13 +139,18 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 {{</Aside>}}
 
-This command outputs your Hyperdrive ID, which you will need to paste at the bottom of your **wrangler.tom** file:
+This command outputs your Hyperdrive ID, add it to your wrangler.toml by replacing the contents with the following:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
-# Pasted at bottom of file from the output of `wrangler hyperdrive create $NAME --connection-string=[...]` above.
+name = "timescale-api"                                                                                      
+main = "src/index.ts"                                                                                       
+compatibility_date = "2023-10-30"     
+
+node_compat = true
+
 [[hyperdrive]]
 binding = "HYPERDRIVE"
 id = "your-id-here"
