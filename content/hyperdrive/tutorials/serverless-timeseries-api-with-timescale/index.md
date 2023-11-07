@@ -141,7 +141,7 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 {{</Aside>}}
 
-This command outputs your Hyperdrive ID, add it to your wrangler.toml by replacing the contents with the following:
+This command outputs your Hyperdrive ID.  You can now bind your Hyperdrive configuration to your Worker in your `wrangler.toml` configuration by replacing the contents with the following:
 
 ```toml
 ---
