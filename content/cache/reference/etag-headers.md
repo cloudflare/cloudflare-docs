@@ -44,17 +44,17 @@ The Cloudflare network will take the following actions, depending on the visitor
 
 {{</table-wrap>}}
 
-Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, and Railgun (deprecated).
+Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, Automatic HTTPS Rewrites, Mirage, Server-side Excludes (SSE), and Railgun (deprecated).
 
 ### Behavior with Respect Strong ETags disabled
 
 When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag headers set by the origin web server if all the following conditions apply:
 
-- The origin server sends a response compressed using GZIP/Brotli.
-- The visitor accepts the same compression used in the origin server's response (GZIP or Brotli), according to the `accept-encoding` header.
+- The origin server sends a response compressed using GZIP or Brotli, or an uncompressed response.
+- If the origin server sends a compressed response, the visitor accepts the same compression (GZIP, Brotli), according to the `accept-encoding` header.
 - [Rocket Loader](/speed/optimization/content/rocket-loader/), [Minification](/speed/optimization/content/auto-minify/), [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), and [Railgun](/railgun/) (deprecated) features are disabled.
 
-In all other situations, Cloudflare will convert strong ETag headers to weak ETag headers. For example, given the following conditions:
+In all other situations, Cloudflare will either convert strong ETag headers to weak ETag headers or remove the strong ETag (for example, when using Minification). For example, given the following conditions:
 
 - **Respect Strong ETags** is disabled
 - [Brotli compression](/speed/optimization/content/brotli/) is enabled
@@ -66,7 +66,7 @@ The Cloudflare network will take the following actions, depending on the visitor
 
 `accept-encoding`<br>header from visitor | Compression used in origin server response | Cloudflare actions
 -----------|--------|--------
-`gzip, br` | GZIP   | Return GZIP-compressed response to visitor with strong ETag header: `etag: "foobar"`.
+`gzip, br` | GZIP   | Decompress GZIP and return Brotli-compressed response to visitor (since Brotli compression is enabled) with weak ETag header: `etag: W/"foobar"`.
 `gzip, br` | Brotli | Return Brotli-compressed response to visitor with strong ETag header: `etag: "foobar"`.
 `br`       | GZIP   | Decompress GZIP and return Brotli-compressed response to visitor with weak ETag header: `etag: W/"foobar"`.
 `gzip`     | Brotli | Decompress Brotli and return GZIP-compressed response to visitor with weak ETag header: `etag: W/"foobar"`.
