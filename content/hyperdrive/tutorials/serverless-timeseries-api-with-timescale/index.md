@@ -18,7 +18,7 @@ We will create and deploy a Worker function that exposes API routes for ingestin
 
 You will learn how to:
 
-- Build and deploy Workers.
+- Build and deploy a Cloudflare Worker.
 - Use Worker secrets with the Wrangler CLI 
 - Deploy a Timescale service
 - Integrate Workers, Hyperdrive and Timescale
