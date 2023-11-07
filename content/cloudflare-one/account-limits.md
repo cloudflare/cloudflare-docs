@@ -28,18 +28,17 @@ This page lists the default account limits for rules, applications, fields, and 
 
 | Feature                                   | Limit |
 | ----------------------------------------- | ----- |
-| DNS Logpush jobs                          | 5     |
-| HTTP Logpush jobs                         | 5     |
+| DNS policies per account                  | 500   |
+| Network policies per account              | 500   |
+| HTTP policies per account                 | 500   |
+| DNS locations                             | 250   |
+| Concurrent streams for HTTP/2 connections | 256   |
+| Source IP addresses per proxy endpoint    | 2,000 |
 | Lists                                     | 100   |
 | Entries per list (Standard users)         | 1,000 |
 | Entries per list (Enterprise users)       | 5,000 |
-| DNS policies                              | 500   |
-| DNS locations                             | 250   |
-| Concurrent streams for HTTP/2 connections | 256   |
-| DNS policies per account                  | 500   |
-| HTTP policies per account                 | 500   |
-| Network policies per account              | 500   |
-| Source IP addresses per proxy endpoint    | 2,000 |
+| DNS Logpush jobs                          | 5     |
+| HTTP Logpush jobs                         | 5     |
 
 ## Data Loss Prevention
 
