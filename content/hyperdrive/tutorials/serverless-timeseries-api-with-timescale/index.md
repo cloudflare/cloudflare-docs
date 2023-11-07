@@ -166,7 +166,7 @@ $ npm install pg
 
 ```
 
-Now copy the below Worker code, and replacing the current code in `./src/index.js`.  This code does several things.
+Now copy the below Worker code, and replacing the current code in `./src/index.ts`.  This code does several things.
 
 1. uses Hyperdrive to connect to Timescale using the the connection string generated from `env.HYPERDRIVE.connectionString` directly to the driver.
 2. creates a `POST` route which accepts an array of JSON readings to insert into Timescale in one transaction
