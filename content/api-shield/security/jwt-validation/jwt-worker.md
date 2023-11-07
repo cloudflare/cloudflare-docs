@@ -35,7 +35,7 @@ The keys listed below are for example purposes only and must not be used in your
 
 ```txt
 ---
-header: Example
+header: Query the JWKs endpoint
 ---
 
 curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq .keys
