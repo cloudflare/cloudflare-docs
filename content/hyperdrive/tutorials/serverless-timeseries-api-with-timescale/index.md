@@ -20,7 +20,7 @@ You will learn how to:
 
 - Build and deploy a Cloudflare Worker.
 - Use Worker secrets with the Wrangler CLI 
-- Deploy a Timescale service
+- Deploy a Timescale database service
 - Connect your Worker to your Timescale database service with Hyperdrive
 - Query your new API
 
