@@ -6,6 +6,10 @@ entries:
   title:
   description: |-
     * **Google Analytics 4 Managed component**: Remove `debug_mode` key if falsy or `false`.
+- publish_date: '2023-10-26'
+  title:
+  description: |-
+    * **Custom HTML**: Added support for non-JavaScript script tags.
 - publish_date: '2023-10-20'
   title:
   description: |-
