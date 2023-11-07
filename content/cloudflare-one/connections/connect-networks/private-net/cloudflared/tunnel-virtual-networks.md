@@ -40,7 +40,7 @@ To route overlapping IPs over virtual networks:
     4. Name your virtual network `staging-vnet` and select **Save**.
     5. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
 2. Next, create a Cloudflare Tunnel for each private network:
-    1. Go to **Access** > **Tunnels**.
+    1. Go to **Networks** > **Tunnels**.
     2. Select **Create a tunnel**.
     3. Name your tunnel `Staging tunnel` and select **Save tunnel**.
     4. Install the connector within your staging environment.
@@ -153,7 +153,7 @@ You can use now the Cloudflare WARP client to [switch between virtual networks](
 
 To delete a virtual network:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
 
 2. Next, go to **Settings** > **WARP Client**.
 

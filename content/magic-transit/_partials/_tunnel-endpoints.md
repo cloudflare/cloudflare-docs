@@ -250,6 +250,10 @@ Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirecti
 
 Refer to [Tunnel health checks]($8) to learn more.
 
+### Legacy health checks system
+
+{{<render file="_legacy-hc-system.md" >}}
+
 ## Next steps
 
 Now that you have set up your tunnel endpoints, you need to configure [static routes]($5) to route your traffic through Cloudflare.

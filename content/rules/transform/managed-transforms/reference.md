@@ -22,7 +22,7 @@ layout: list
     <tr>
       <td><strong>Add bot protection headers</strong></td>
       <td>
-        <p>Adds HTTP request headers with bot-related values:</p>
+        <p>Adds HTTP headers with bot-related values to the request sent to the origin server:</p>
         <ul>
           <li><code>cf-bot-score</code>: Contains the bot score (for example, <code>30</code>).</li>
           <li><code>cf-verified-bot</code>: Contains <code>true</code> if the request comes from a <a href="/bots/concepts/bot/#verified-bots">verified bot</a>, or <code>false</code> otherwise.</li>
@@ -35,7 +35,7 @@ layout: list
     <tr>
       <td><strong>Add TLS client auth headers</strong></td>
       <td>
-        <p>Adds HTTP request headers with <a href="/api-shield/security/mtls/">Mutual TLS</a> (mTLS) client authentication values:</p>
+        <p>Adds HTTP headers with <a href="/api-shield/security/mtls/">Mutual TLS</a> (mTLS) client authentication values to the request sent to the origin server:</p>
         <ul>
           <li><code>cf-cert-revoked</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_revoked"><code>cf.tls_client_auth.cert_revoked</code></a> field.</li>
           <li><code>cf-cert-verified</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_verified"><code>cf.tls_client_auth.cert_verified</code></a> field.</li>
@@ -60,7 +60,7 @@ layout: list
     <tr>
       <td><strong>Add visitor location headers</strong></td>
       <td>
-        <p>Adds HTTP request headers with location information for the visitor's IP address. The added headers are:</p>
+        <p>Adds HTTP headers with location information for the visitor's IP address to the request sent to the origin server:</p>
         <ul>
           <li><code>cf-ipcity</code>: The visitor's city (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-city"><code>ip.src.city</code></a> field).</li>
           <li><code>cf-ipcountry</code>: The visitor's country (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-country"><code>ip.src.country</code></a> field).</li>
@@ -86,7 +86,7 @@ layout: list
     <tr>
       <td><strong>Remove visitor IP headers</strong></td>
       <td>
-        <p>Removes HTTP request headers that may contain the visitor's IP address. Handles the following HTTP request headers:</p>
+        <p>Removes HTTP headers that may contain the visitor's IP address from the request sent to the origin server. Handles the following HTTP request headers:</p>
         <ul>
           <li><code>cf-connecting-ip</code></li>
           <li><code>x-forwarded-for</code> (refer to the <a href="#visitor-ip-address-in-the-x-forwarded-for-http-header">notes</a> below)</li>

@@ -53,7 +53,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Caching/CDN | ✅ | ✅ | ✅ |
 | Cache Reserve | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
 | DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Image Resizing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Image Resizing | ✅ | ✘ | 🚧{{<fnref num="1">}} |
 | Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 | Stream Delivery | ✅ | ✅ | ✅ |
 | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |

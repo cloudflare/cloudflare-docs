@@ -16,10 +16,10 @@ Cloudflare produces a simple, trustworthy map of API endpoints through a process
 
 For example, you might have thousands of APIs, but a lot of the calls look similar, such as:
 
-- `api.example.com/login/238`
-- `api.example.com/login/392`
+- `api.example.com/profile/238`
+- `api.example.com/profile/392`
 
-Both paths serve a similar purpose — allowing users to log in to their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/login/*`.
+Both paths serve a similar purpose — allowing users to log in to their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/profile/*`.
 
 API Discovery runs this process across all your traffic, generating a simple map of endpoints that might look like:
 

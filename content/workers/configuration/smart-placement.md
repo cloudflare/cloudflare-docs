@@ -32,6 +32,10 @@ Smart Placement is only active for Workers that **make more than one roundtrip**
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
 
+Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
+
+### D1
+
 Workers with a [D1](/d1/) binding will always be placed in a data center near the location of the D1 database they are bound to. Subrequests to other back-end services are ignored by Smart Placement in this case.
 
 ### Unsupported back-end services
@@ -48,8 +52,6 @@ There are some back-end services that are not considered by the Smart Placement 
 ## Enable Smart Placement (beta)
 
 Smart Placement is available to users on all Workers plans.
-
-Smart Placement is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/configuration/cron-triggers/).
 
 ### Enable Smart Placement via Wrangler
 

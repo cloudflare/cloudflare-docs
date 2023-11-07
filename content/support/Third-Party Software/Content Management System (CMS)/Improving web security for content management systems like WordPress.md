@@ -90,18 +90,21 @@ After configuring a web application, users will be required to authenticate in s
 
 ![](/images/support/Screenshot_2022-12-22_at_14.39.21.png)
 
-### Advanced Firewall Rules with mTLS
+### WAF custom rules with mTLS
 
-While designed for authenticating appliances that can’t perform a log in, you can use mTLS as another method of multifactor authentication (what you know and what you have) to authenticate based on device certificate. To do this, you need to:
+While designed for authenticating appliances that cannot perform a login, you can use mTLS as another method of multifactor authentication (what you know and what you have) to authenticate based on device certificate.
 
-1.  [Create a Client Certificate](/ssl/client-certificates/create-a-client-certificate/) and save both the certificate and key to your device
-2.  Import the certificate to your computer’s key storage. With macOS Keychain, you can use the steps listed here: [mTLS - Test in the Browser](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
-3.  [Enable mTLS](/ssl/client-certificates/enable-mtls/) by adding the correct host
-4.  Under Firewall rules, Create mTLS Rule
-5.  Select **Use firewall rule builder** to narrow the scope of this rule to the admin section, otherwise you will block your visitors from accessing the public content.
-6.  Set the rule to Block any requests made to your admin panel if the Client Certificate is not verified.
+Do the following:
 
-**Note:** if you have issues getting your certificate to verify, try accessing the page in a private window. If it works, the previous successful TLS state may be cached in your browser.
+1. [Create a client certificate](/ssl/client-certificates/create-a-client-certificate/) and save both the certificate and key to your device.
+2. Import the certificate to your computer’s key storage. With macOS Keychain, you can use the steps listed in [Test in the browser](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
+3. [Enable mTLS](/ssl/client-certificates/enable-mtls/) by adding the correct host.
+4. In **SSL/TLS** > **Client Certificates**, select **Create mTLS Rule**.
+5. Under **If incoming requests match**, enter a value for thr **URI Path** field to narrow the rule scope to the admin section, otherwise you will block your visitors from accessing the public content.
+6. Set the rule to _Block_ any requests made to your admin panel if the client certificate is not verified.
+7. Select **Deploy**. This creates a WAF custom rule that checks all requests to the admin section for a valid client certificate.
+
+**Note:** If you have issues getting your certificate to verify, try accessing the page in a private window. If it works, the previous successful TLS state may be cached in your browser.
 
 ### Rate Limiting
 

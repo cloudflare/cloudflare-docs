@@ -50,5 +50,5 @@ ___
 
 -   [Learn more about the SameSite cookie](https://web.dev/samesite-cookies-explained/) 
 -   [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/)
--   [Cloudflare SSL FAQ](/support/ssl-tls/faq-and-reference/ssl-faq/)
+-   [Cloudflare SSL FAQ](/ssl/troubleshooting/faq/)
 -   [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)

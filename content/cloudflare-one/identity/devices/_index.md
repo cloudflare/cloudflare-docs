@@ -9,13 +9,9 @@ layout: single
 
 With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on additional signals from the WARP client or from third-party endpoint security providers. When device posture checks are configured, users can only connect to a protected application or network resource if they have a managed or healthy device.
 
-## Prerequisites
-
-The WARP client must be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/) in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
-
 ## 1. Enable device posture checks
 
-Setup instructions vary depending on the device posture attribute. Refer to the links below to view the setup guide for your provider.
+Setup instructions and requirements vary depending on the device posture attribute. Refer to the links below to view the setup guide for your provider.
 
 - [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the Cloudflare WARP client.
 - [Service-to-service checks](/cloudflare-one/identity/devices/service-providers/) are performed by third-party device posture providers.

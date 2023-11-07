@@ -1,5 +1,5 @@
 ---
-title: Network Interconnect
+title: Network Interconnect (CNI)
 pcx_content_type: tutorial
 weight: 10
 meta:

@@ -75,35 +75,42 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mic
 ## API schema
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
+### Input
+
 ```json
 {
-    "task": "image-classification",
-    "tsClass": "AiImageClassification",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "properties": {
-                "image": {
-                    "type": "string",
-                    "format": "binary"
-                }
-            },
-            "required": ["image"]
+  oneOf: [
+    { type: "string", format: "binary" },
+    {
+      type: "object",
+      properties: {
+        image: {
+          type: "array",
+          items: {
+            type: "number",
+          },
         },
-        "output": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "score": {
-                        "type": "number"
-                    },
-                    "label": {
-                        "type": "string"
-                    }
-                }
-            }
-        }
-    }
+      },
+    },
+  ],
+}
+```
+
+### Output
+
+```json
+{
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      score: {
+        type: "number",
+      },
+      label: {
+        type: "string",
+      },
+    },
+  },
 }
 ```

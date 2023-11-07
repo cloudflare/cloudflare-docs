@@ -35,6 +35,13 @@ To work around the issue, you can either:
 - Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.76.76/32` from WARP.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
+## Cox DNS servers
+
+Similar to the [Comcast DNS servers](#comcast-dns-servers) limitation listed above, Cox DNS servers will not respond to traffic from the WARP egress IPs (or any IP that is not a Cox IP). The workaround is nearly identical, except that Cox DNS servers may be specific to the individual end user. You can either:
+
+- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes all Cox DNS servers.  For business customers, refer to the [COX documentation](https://www.cox.com/business/support/cox-business-dns-and-mail-exchange-hosting-services.html) for the DNS server IPs. For residential customers, check your local DNS servers. The residential DNS servers typically fall under `68.105.28.0/24` and `68.105.29.0/24`.
+- Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
+
 ## HP Velocity
 
 The HP Velocity driver has a bug which will cause a blue screen error on devices running WARP. HP recommends [uninstalling this driver](https://support.hp.com/gb-en/document/c06266198).
