@@ -60,7 +60,7 @@ Log in to your PayPal account and send your payment to ar@cloudflare.com. The pa
 
 {{<Aside type="note">}}
 
-US banks do not participate in IBAN.
+US banks do not participate in International Bank Account Numbers (IBAN).
 
 {{</Aside>}}
 
