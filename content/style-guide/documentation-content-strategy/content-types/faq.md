@@ -121,9 +121,13 @@ structured_data: true
 
 ```
 
-Two highlights for this templating:
-- The `structured_data: true` is required in the frontmatter.
-- For `faq-questions`, the `level` parameter controls what level (2-6) the associated heading is in Markdown. This is useful if you have a FAQ divided into different sections.
+For these components to work, you need to adjust several pieces of the page content:
+
+- Frontmatter must have `structured_data: true` specified.
+- Each FAQ item must be wrapped in the following elements:
+    - `faq-item`: Overall wrapper.
+    - `faq-question level=<HEADING_LEVEL> text="<TITLE>"`: Wraps the question itself. Has an optional level parameter to control the level of the header. This is useful if you have a FAQ divided into different sections.
+    - `faq-answer`: Wraps the answer text.
 
 ---
 
