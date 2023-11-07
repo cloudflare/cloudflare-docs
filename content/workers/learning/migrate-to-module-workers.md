@@ -161,9 +161,6 @@ API_ACCOUNT_ID = "<EXAMPLE-ACCOUNT-ID>"
 In Service Worker format, the `API_ACCOUNT_ID` is defined in the global scope of your Worker application. Your `API_ACCOUNT_ID` environment variable is available to use anywhere in your Worker application's code.
 
 ```js
----
-filename: worker.js
----
 addEventListener("fetch", async (event) => {
   console.log(API_ACCOUNT_ID) // Logs "<EXAMPLE-ACCOUNT-ID>"
   return new Response("Hello, world!")
@@ -175,9 +172,6 @@ addEventListener("fetch", async (event) => {
 In ES modules format, environment variables are only available inside the `env` parameter that is provided at the entrypoint to your Worker application.
 
 ```js
----
-filename: worker.js
----
 export default {
   async fetch(request, env, ctx) {
     console.log(env.API_ACCOUNT_ID) // Logs "<EXAMPLE-ACCOUNT-ID>"

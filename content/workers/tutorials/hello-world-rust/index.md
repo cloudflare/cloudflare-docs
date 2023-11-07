@@ -96,7 +96,7 @@ pub fn parse() -> String {
 }
 ```
 
-Update your `worker/worker.js` to use the new code:
+Update your `index.js` to use the new code:
 
 ```js
 addEventListener("fetch", (event) => {
