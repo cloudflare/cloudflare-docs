@@ -130,7 +130,7 @@ Hyperdrive is currently in public beta and is currently free to use for all Work
 Hyperdrive uses the *create* command with the *--connection-string* argument to pass this information. Run it as follows:
 
 ```sh
-$ wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
+$ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
 ```
 
 {{<Aside type="note">}}
