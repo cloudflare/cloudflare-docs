@@ -129,7 +129,7 @@ To create a new Hyperdrive instance you will need:
 Hyperdrive is currently in public beta and is currently free to use for all [Workers paid plans](https://developers.cloudflare.com/workers/platform/pricing/).
 {{</Aside>}}
 
-Hyperdrive uses the *create* command with the *--connection-string* argument to pass this information. Run it as follows:
+Hyperdrive uses the `create` command with the `--connection-string` argument to pass this information. Run it as follows:
 
 ```sh
 $ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
