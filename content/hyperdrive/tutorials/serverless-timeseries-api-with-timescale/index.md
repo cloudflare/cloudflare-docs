@@ -126,7 +126,7 @@ To create a new Hyperdrive instance you will need:
 * A NAME for your Hyperdrive service. We will use **hyperdrive**
 
 {{<Aside type="note">}}
-Hyperdrive is currently in public beta and is currently free to use for all Workers paid plans.
+Hyperdrive is currently in public beta and is currently free to use for all [Workers paid plans](https://developers.cloudflare.com/workers/platform/pricing/).
 {{</Aside>}}
 
 Hyperdrive uses the *create* command with the *--connection-string* argument to pass this information. Run it as follows:
