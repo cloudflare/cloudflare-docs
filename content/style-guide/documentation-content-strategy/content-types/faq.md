@@ -37,7 +37,7 @@ The FAQ should include a list of questions and answers to a particular topic, an
 
 Make sure each question includes the entire text of the question.
 
-Make sure the answer includes the entire answer, as well as a direct response to the question (if the question is phrased in a Yes/No manner).
+Make sure the answer includes the entire answer, and a direct response to the question (if the question is phrased in a Yes/No manner).
 
 ## Structure
 
