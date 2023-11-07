@@ -29,7 +29,7 @@ Alternatively, download the client from one of the following links after checkin
 
 |                      |    |
 | ---------------------| ---|
-| **OS version**       | Catalina, Big Sur, Monterey, Ventura|
+| **OS version**       | Catalina+ (10.15+)
 | **OS type**          | 64-bit only |
 | **HD space**         | 75 MB|
 | **Memory**           | 35 MB |
