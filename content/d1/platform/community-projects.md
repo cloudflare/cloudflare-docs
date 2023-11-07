@@ -17,7 +17,7 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 
 ### Backup/export tools
 
-2 tools are available for creating `.sql` backups/exports of your D1 databases.
+Two tools are available for creating `.sql` backups/exports of your D1 databases.
 
 * [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs as a local script using the D1 API (slower but simpler)
 * [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs as a deployed Worker (faster but more complex)
