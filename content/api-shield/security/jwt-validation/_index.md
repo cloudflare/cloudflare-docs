@@ -65,7 +65,3 @@ Currently, the following limitations are in place:
 
 1. JWT Validation only operates on JWTs sent in client request headers or cookies. If your clients send in JWTs in a `POST` body, direct that feedback to your account team.
 1. JWT Validation only operates for endpoints (host, method, and path) added to Endpoint Management.
-
-{{<Aside type="note">}}
-Refer to [configuring JWT Validation](/api-shield/security/jwt-validation/configure/) for more specific limitations around JWT claim support and supported encryption algorithms.
-{{</Aside>}}
