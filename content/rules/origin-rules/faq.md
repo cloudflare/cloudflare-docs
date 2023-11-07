@@ -41,7 +41,10 @@ No. This is currently a manual process, since your Page Rules may include additi
 
 If two or more origin rules match a request, the configuration of those rules is merged. While merging two configurations, the settings of later rules will override the settings defined in previous rules, updating or adding configuration properties. The final configuration applied by Cloudflare will be this merged version.
 
-For example, if you configure the following two [origin rules](/rules/origin-rules/) and both rules match, Cloudflare will use the destination port set by the first rule, and the DNS hostname override and `Host` header value set by the second rule.
+{{</faq-answer>}}
+{{</faq-item>}}
+
+<p>For example, if you configure the following two [origin rules](/rules/origin-rules/) and both rules match, Cloudflare will use the destination port set by the first rule, and the DNS hostname override and `Host` header value set by the second rule.</p>
 
 {{<example>}}
 
@@ -109,6 +112,3 @@ Set destination port | `8081`
 Set DNS hostname     | `example.net`
 
 If you also configured a destination port in rule #2, that value would override the `8081` destination port defined in rule #1.
-
-{{</faq-answer>}}
-{{</faq-item>}}
