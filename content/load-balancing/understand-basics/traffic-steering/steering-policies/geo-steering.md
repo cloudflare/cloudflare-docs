@@ -8,7 +8,7 @@ meta:
 
 # Geo steering
 
-**Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers. 
+**Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers.
 
 This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
@@ -20,9 +20,12 @@ You can assign multiple pools to the same area and the load balancer will use th
 
 Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query.
 
-{{<Aside type="note">}}If you define region pools for a load balancer, you cannot delete these pools until you remove them from the load balancer configuration.{{</Aside>}}
+{{<Aside type="warning">}}
+If you add a pool to a region, you cannot [delete this pool](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.
+{{</Aside>}}
 
-#### Via the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}} 
 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
@@ -34,9 +37,11 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more regions if needed.
 
-#### Via the API
-
-Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region. 
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
@@ -62,10 +67,14 @@ header: Request
 
 If you only define `WNAM`, then traffic from the East Coast will be routed to the `default_pools`. You can test this using a client in each of those locations.
 
-### Country steering 
+{{</tab>}}
+{{</tabs>}}
 
-#### Via the dashboard
+### Country steering
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
 1. Follow the [create a load balancer procedure](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic steering** step.
@@ -76,14 +85,18 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more countries if needed.
 
-#### Via the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
 
 When creating a load balancer [via the API](/api/operations/load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
 
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
-
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ### PoP steering
 
@@ -94,7 +107,6 @@ For help finding data center identifiers, refer to [this community thread](https
 Any data center not explicitly defined will fall back to using the corresponding `country_pool`, then `region_pool` mapping (if it exists), and finally to associated default pools.
 
 {{<Aside type="note">}}PoP steering is only available to Enterprise customers and only accessible via the API.{{</Aside>}}
-
 
 ### Failover behavior
 
