@@ -307,6 +307,16 @@ header: Response
 }
 ```
 
+### SVCB and HTTPS
+
+Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
+
+If your domain has [HTTP/2 or HTTP/3 enabled](/support/network/understanding-cloudflare-http2-and-http3-support/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your internet property.
+
+For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
+
+{{<render file="_api-field-definitions.md">}}
+
 ### PTR
 
 A [pointer (PTR) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ptr-record/) specifies the allowed hosts for a given IP address.
