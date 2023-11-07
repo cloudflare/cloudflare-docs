@@ -133,6 +133,7 @@
 
 # api-shield
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
+/api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/ 301
 
 # bots
 /bots/about/javascript-detections/ /bots/reference/javascript-detections/ 301
