@@ -44,7 +44,7 @@ If two or more origin rules match a request, the configuration of those rules is
 {{</faq-answer>}}
 {{</faq-item>}}
 
-<p>For example, if you configure the following two [origin rules](/rules/origin-rules/) and both rules match, Cloudflare will use the destination port set by the first rule, and the DNS hostname override and `Host` header value set by the second rule.</p>
+For example, if you configure the following two [origin rules](/rules/origin-rules/) and both rules match, Cloudflare will use the destination port set by the first rule, and the DNS hostname override and `Host` header value set by the second rule.
 
 {{<example>}}
 
