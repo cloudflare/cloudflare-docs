@@ -133,7 +133,7 @@ The following configuration will modify settings in your Cloudflare account.
    ---
    filename: Cloudflare-config.tf
    ---
-   # Generates a 35-character secret for the tunnel.
+   # Generates a 64-character secret for the tunnel.
    # Using `random_password` means the result is treated as sensitive and, thus,
    # not displayed in console output. See: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
    resource "random_password" "tunnel_secret" {
