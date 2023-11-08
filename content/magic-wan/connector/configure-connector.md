@@ -32,7 +32,7 @@ To add a site:
 6. Choose from the list the Connector corresponding to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Device activation](#device-activation) for more details.
 8. Select **Next** to proceed.
-9. Create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/) under **WAN configuration**. Configuring multiple WANs will create multiple IPsec tunnels. This allows the Connector to failover between circuits according to their [health](/magic-wan/reference/traffic-steering/). Select **Create**, and define the following settings:
+9. Create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/) under **WAN configuration**. Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their [health](/magic-wan/reference/traffic-steering/). Select **Create**, and define the following settings:
     1. **Network name**: Enter a descriptive name for your WAN.
     2. **Physical port**: This refers to the physical Magic WAN Connector port that you are using for your WAN.
     3. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn more about how Cloudlfare calculates priorities.
@@ -85,7 +85,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 - **UDP/53 (DNS destination IP 1.1.1.1)**: Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API endpoints.
 - **TCP/443**: The Connector will open outbound HTTPS connections over this port for control plane operations.
 - **UDP/4500 (destination IP 162.159.64.1)**: Needed for Connector's initialization and discovery traffic through outbound connections.
-- **UDP/4500 (destination IP - Cloudflare Anycast IPs)**: Needed for the [Cloudflare Anycast IPs](/magic-wan/get-started/configure-tunnels/) assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
+- **UDP/4500 (destination IP - Cloudflare Anycast IPs)**: Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/get-started/configure-tunnels/">}}Anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
 - **TCP/7844, UDP/7844 Outbound connections**: This is for debugging facilities in the connector.
 
 ### Device activation
@@ -108,7 +108,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 1. Wait 60 seconds.
 2. Unplug the physical connection to the Internet-connected device which provides DHCP.
-3. Adjust your physical connections as required to match the configuration specified in the *Site configuration* step (for example, static IP WAN plugged into physical port with no DHCP connection).
+3. Adjust your physical connections as required to match the configuration specified in the [Site configuration](#2-define-a-site-configuration) step (for example, static IP WAN plugged into physical port with no DHCP connection).
 4. Power cycle the Connector.
 
 {{</Aside>}}
