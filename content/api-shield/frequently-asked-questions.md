@@ -24,6 +24,7 @@ Endpoints discovered using session identifiers will be labeled as such in the da
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="How does Cloudflare calculate the recommended rate limit for my endpoint?" >}}
@@ -36,6 +37,7 @@ You can view the `P50`/`95`/`99` of your request count for more details under an
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Will I be able to access an endpoint’s data after I delete it?" >}}
@@ -46,6 +48,7 @@ No. Cloudflare will stop tracking performance data when you delete an endpoint a
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Why do I still see my endpoint in Discovery after I’ve added it to Endpoint Management?" >}}
@@ -56,6 +59,7 @@ Your endpoints will continue to appear in Discovery after being added to Endpoin
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Why do I not receive threshold recommendations for my discovered API endpoints?" >}}
@@ -76,6 +80,7 @@ If you do not receive threshold recommendations for a discovered endpoint, you w
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Does this work for JDCloud customers?" >}}
@@ -86,6 +91,7 @@ Not currently.
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="What version of OpenAPI specification do you support?" >}}
