@@ -15,13 +15,13 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 - **Tunnel name**: A name with 15 or fewer characters that does not contain spaces or special characters. The name cannot be shared with other tunnels.
 - **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel.
 - **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them. <br>
-This value is not required for IPsec tunnels, unless your router is using an IKE ID of type `ID_IPV4_ADDR`.
+This value is not required for {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, unless your router is using an {{<glossary-tooltip term_id="Internet Key Exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} ID of type `ID_IPV4_ADDR`.
 - **Interface address**: A 31-bit (recommended) or 30-bit subnet (`/31` or `/30` in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   - `10.0.0.0/8`
   - `172.16.0.0/12`
   - `192.168.0.0/16`
   - $1
-- **TTL**: Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
+- **TTL**: Time to Live (TTL) in number of hops for the {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnel. The default value is 64.
 - **MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
 
 ## GRE and IPsec tunnels
@@ -34,7 +34,7 @@ Refer to [Tunnels and encapsulation]($6) to learn more about the technical requi
 
 ### Anti-replay protection
 
-If you use $2 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+If you use $2 and {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
 Refer to [Anti-replay protection]($9) for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
 
