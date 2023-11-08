@@ -9,10 +9,11 @@ title: Paragraphs and line breaks
 
 To start a new paragraph, leave an empty line (with no spaces) before adding the new paragraph content.
 
-``` This sentence is the first one in this paragraph.
+```txt
+This sentence is the first one in this paragraph.
 This second sentence also belongs to the first paragraph.
- 
-This is the first sentence of the second paragraph. 
+
+This is the first sentence of the second paragraph.
 ```
 
 ## Line breaks in Markdown
@@ -23,7 +24,8 @@ If you need to add a line break, use the `<br/>` HTML element.
 
 Example inside a table:
 
-```| Feature                          | Enabled |
+```txt
+| Feature                          | Enabled |
 |----------------------------------|---------|
 | Feature name<br/>Additional info | Yes     |
 ```

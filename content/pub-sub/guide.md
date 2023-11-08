@@ -222,7 +222,7 @@ $ export BROKER_NAME="TheBrokerYouCreated"
 
 We can now generate an access token for Pub/Sub. We will need both the client ID and the token (a JSON Web Token) itself to authenticate from our MQTT client:
 
-```console
+```sh
 $ curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/namespace/brokers/is-it-broken/credentials?type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0]'
 ```
 
@@ -237,8 +237,8 @@ This will output a `key` representing the `clientId`, and a `value` representing
 
 Copy the `value` field and set it as the `BROKER_TOKEN` environmental variable:
 
-```console
-export BROKER_TOKEN="<>"
+```sh
+$ export BROKER_TOKEN="<VALUE>"
 ```
 
 Create a file called `index.js `, making sure that:
@@ -287,7 +287,7 @@ Your client ID and timestamp will be different from above, but you should see a 
 
 If you do not see the message you published, or you are receiving error messages, ensure that:
 
-- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN`  in your terminal.
+- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN` in your terminal.
 - You updated the `brokerEndpoint` to match the broker you created. The **Endpoint** field of your broker will show this address and port.
 - You correctly [installed MQTT.js](https://github.com/mqttjs/MQTT.js#install).
 

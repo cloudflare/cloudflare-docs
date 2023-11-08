@@ -8,7 +8,7 @@ meta:
 
 # Invoke Wasm from JavaScript
 
-Wasm can be used from within a Worker written in JavaScript or TypeScript by importing a Wasm module, 
+Wasm can be used from within a Worker written in JavaScript or TypeScript by importing a Wasm module,
 and instantiating an instance of this module using [`WebAssembly.instantiate()`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate). This can be used to accelerate computationally intensive operations which do not involve significant I/O.
 
 This guide demonstrates the basics of Wasm and JavaScript interoperability.
@@ -19,10 +19,10 @@ In this guide, you will use the WebAssembly Text Format to create a simple Wasm 
 
 Review the following example module (`;;` denotes a comment):
 
-```wat
+```txt
 ;; src/simple.wat
 (module
-  ;; Import a function from JavaScript named `imported_func` 
+  ;; Import a function from JavaScript named `imported_func`
   ;; which takes a single i32 argument and assign to
   ;; variable $i
   (func $i (import "imports" "imported_func") (param i32))
@@ -42,7 +42,7 @@ Review the following example module (`;;` denotes a comment):
 Using [`wat2wasm`](https://github.com/WebAssembly/wabt), convert the WAT format to WebAssembly Binary Format:
 
 ```sh
-wat2wasm src/simple.wat -o src/simple.wasm
+$ wat2wasm src/simple.wat -o src/simple.wasm
 ```
 
 ## Bundling
@@ -69,7 +69,7 @@ const importObject = {
 // the expected imports in `importObject`. This should be
 // done at the top level of the script to avoid instantiation on every request.
 const instance = await WebAssembly.instantiate(mod, importObject);
-    
+
 export default {
   async fetch() {
     // Invoke the `exported_func` from our Wasm Instance with

@@ -1,4 +1,9 @@
-
+---
+_build:
+  publishResources: false
+  render: never
+  list: never
+---
 
 Two-factor authentication (2FA) allows user account owners to add an additional layer of login security to Cloudflare accounts. This additional authentication step requires you to provide both something you know, such as a Cloudflare password, and something you have, such as an authentication code from a mobile device.
 
