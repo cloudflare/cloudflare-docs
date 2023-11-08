@@ -10,7 +10,7 @@ inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
 
 ## Tunnels and encapsulation
 
-$1 uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec tunnels](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
+$1 uses {{<glossary-tooltip term_id="GRE tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-ipsec/">}}IPsec tunnels{{</glossary-tooltip>}} to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
 
 To accommodate additional header data introduced by encapsulation, the {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
