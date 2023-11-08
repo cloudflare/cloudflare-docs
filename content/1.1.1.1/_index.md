@@ -7,8 +7,6 @@ weight: 1
 
 # Cloudflare 1.1.1.1
 
-Here's a {{<glossary-tooltip term_id="active zone" link="https://www.example.com/test/">}}tooltip{{</glossary-tooltip>}} example and another {{<glossary-tooltip term_id="active zone" link="/test/">}}tooltip{{</glossary-tooltip>}} example.
-
 {{<description>}}
 Speed up your online experience with Cloudflare's public DNS resolver.
 {{</description>}}
