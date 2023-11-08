@@ -12,7 +12,7 @@ layout: single
 
 ## Overview
 
-In this tutorial you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale])(https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
+In this tutorial you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
 We will create and deploy a Worker function that exposes API routes for ingesting data, and use [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) to proxy our database connection from the edge and maintain a connection pool to prevent us having to make a new database connection on every request.
 
