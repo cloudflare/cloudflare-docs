@@ -12,7 +12,7 @@ Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/
 
 {{<Aside type="warning" header="Gateway device posture limitation">}}
 
-The Tanium integration cannot be used with [Gateway device posture policies](/cloudflare-one/identity/devices/).
+The Tanium integration cannot be used with [Gateway device posture policies](/cloudflare-one/policies/gateway/network-policies/#device-posture).
 
 {{</Aside>}}
 
