@@ -6,7 +6,7 @@ weight: 2
 
 # DNS record types
 
-This page provides reference information about the different types of DNS records. For guidance on adding DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
+This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ---
 
