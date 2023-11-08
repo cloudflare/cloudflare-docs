@@ -21,12 +21,6 @@ The `wrangler generate` command is deprecated, but still active in v3. `wrangler
 
 Use `npm create cloudflare@latest` for new Workers and Pages projects.
 
-#### `init`
-
-The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
-
-Use `npm create cloudflare@latest` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
-
 #### `publish`
 
 The `wrangler publish` command is deprecated, but still active in v3. `wrangler publish` will be fully removed in v4.
