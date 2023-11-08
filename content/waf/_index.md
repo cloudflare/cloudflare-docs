@@ -36,7 +36,7 @@ Enable the pre-configured managed rulesets to get immediate protection. These ru
 Monitor and block use of stolen/exposed credentials for account takeover.
 {{</feature>}}
 
-{{<feature header="Security Events" href="/waf/security-events/" cta="Explore Security Events">}}
+{{<feature header="Security Events" href="/waf/analytics/security-events/" cta="Explore Security Events">}}
 Review mitigated requests (rule matches) using an intuitive interface. Tailor your security configurations based on the activity log.
 {{</feature>}}
 

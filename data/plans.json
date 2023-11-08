@@ -1344,7 +1344,7 @@
     },
     "security_events": {
       "title": "Security Events",
-      "link": "/waf/security-events/",
+      "link": "/waf/analytics/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1393,7 +1393,7 @@
     },
     "security_analytics": {
       "title": "Security Analytics",
-      "link": "/waf/security-analytics/",
+      "link": "/waf/analytics/security-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",

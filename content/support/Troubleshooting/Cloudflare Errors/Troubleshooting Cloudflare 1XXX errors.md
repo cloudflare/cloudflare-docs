@@ -156,7 +156,7 @@ If you are not the website owner, provide the website owner with a screenshot of
 If you are the website owner:
 
 1.  Retrieve a screenshot of the 1005 error from your customer
-2.  Search the [**Security Events log**](/waf/security-events/) (available at **Security** \> **Events**) for the **RayID**, or client IP Address from the visitor’s 1005 error message.
+2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID**, or client IP Address from the visitor’s 1005 error message.
 
 {{<Aside type="note">}}
 Convert the UTC timestamp of the 1005 error to your local timezone when
@@ -386,7 +386,7 @@ If you are not the website owner, provide the website owner with a screenshot of
 If you are the website owner:
 
 1.  Retrieve a screenshot of the 1020 error from your customer
-2.  Search the [**Security Events log**](/waf/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
+2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
 
 {{<Aside type="note">}}
 Convert the UTC timestamp of the 1005 error to your local timezone when

@@ -803,6 +803,8 @@
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/custom-rulesets/ /waf/custom-rules/custom-rulesets/ 301
 /waf/exposed-credentials-check/ /waf/managed-rules/check-for-exposed-credentials/ 301
+/waf/security-analytics/ /waf/analytics/security-analytics/ 301
+/waf/security-events/ /waf/analytics/security-events/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301

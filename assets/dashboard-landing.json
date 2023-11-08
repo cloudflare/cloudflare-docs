@@ -459,7 +459,7 @@
           "title": "IP Access rules"
         },
         {
-          "url_path": "/waf/security-events/",
+          "url_path": "/waf/analytics/security-events/",
           "title": "Security Events"
         },
         {
