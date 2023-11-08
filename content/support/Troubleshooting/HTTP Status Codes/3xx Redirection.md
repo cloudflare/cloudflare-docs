@@ -25,13 +25,13 @@ Multiple options for the resource that the client may follow. For instance, it c
 
 Permanent URL redirect for the resource requested. The target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs.
 
-Cloudflare is able to generate these responses, avoiding the need to send a request to the origin server’s response through the use of Page rules. Read how Cloudflare can help generate redirects at [Page Rules URL Forwarding](https://blog.cloudflare.com/introducing-pagerules-url-forwarding/)
+Cloudflare is able to generate these responses, avoiding the need to send a request to the origin server’s response through the use of Page rules. Read how Cloudflare can help generate redirects using [Redirect Rules](/rules/url-forwarding/).
 
 ## **302 Found (aka Temporary Redirect) (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 Similar to a 301 redirect, but is intended for temporary purposes only. User-Agent may automatically follow the `Location` header, but should not replace the current URI with it as a 301.
 
-Cloudflare is able to generate these responses, thus avoiding the need to send a request to the origin server’s response through the use of Page rules. Read more How Cloudflare can help generate redirects at [Page Rules URL Forwarding](https://blog.cloudflare.com/introducing-pagerules-url-forwarding/)
+Cloudflare is able to generate these responses, thus avoiding the need to send a request to the origin server’s response through the use of Page rules. Read more How Cloudflare can help generate redirects using [Redirect Rules](/rules/url-forwarding/).
 
 ## **303 See Other (since HTTP/1.1)** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
