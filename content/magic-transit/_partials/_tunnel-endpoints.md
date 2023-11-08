@@ -256,4 +256,4 @@ Refer to [Tunnel health checks]($8) to learn more.
 
 ## Next steps
 
-Now that you have set up your tunnel endpoints, you need to configure [static routes]($5) to route your traffic through Cloudflare.
+Now that you have set up your tunnel endpoints, you need to configure {{<glossary-tooltip term_id="static route" link="$5">}}static routes{{</glossary-tooltip>}} to route your traffic through Cloudflare.
