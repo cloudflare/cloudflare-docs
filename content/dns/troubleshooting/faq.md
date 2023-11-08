@@ -186,7 +186,7 @@ ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a proxied DNS record that can use Cloudflare Redirect Rules, Page Rules or Cloudflare Workers.
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/), or [Cloudflare Workers](/workers/).
 
 ## Why are DNS queries returning incorrect results?
 
