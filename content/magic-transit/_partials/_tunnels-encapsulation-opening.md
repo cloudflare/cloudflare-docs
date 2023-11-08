@@ -12,7 +12,7 @@ inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
 
 $1 uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec tunnels](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
 
-To accommodate additional header data introduced by encapsulation, the maximum segment size (MSS) must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
+To accommodate additional header data introduced by encapsulation, the {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
 For instructions, refer to [Set Maximum Segment Size]($2).
 
@@ -38,11 +38,11 @@ Note right of C: Egress <br> traffic
 
 ## ​​Anycast
 
-$1 uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) IP addresses for Cloudflare’s tunnel endpoints. In the Anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
+$1 uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) IP addresses for Cloudflare’s tunnel endpoints. In the {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
-This works with GRE tunnels because the GRE protocol is stateless. Each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
+This works with {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnels because the GRE protocol is stateless. Each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
-For IPsec tunnels, the customer's router negotiates the creation of an IPsec tunnel with Cloudflare using the Internet Key Exchange (IKE) protocol. Next, the Cloudflare server that handled that negotiation will propagate the details of that newly created IPsec tunnel (traffic selectors, keys, etc.) across Cloudflare's data centers. The result is that any Cloudflare server can then handle traffic for that IPsec tunnel, even though only one Cloudflare server actually negotiated the setup of that tunnel.
+For {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, the customer's router negotiates the creation of an IPsec tunnel with Cloudflare using the {{<glossary-tooltip term_id="Internet Key Exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} protocol. Next, the Cloudflare server that handled that negotiation will propagate the details of that newly created IPsec tunnel (traffic selectors, keys, etc.) across Cloudflare's data centers. The result is that any Cloudflare server can then handle traffic for that IPsec tunnel, even though only one Cloudflare server actually negotiated the setup of that tunnel.
 
 Cloudflare’s Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
 
