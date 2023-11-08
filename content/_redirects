@@ -653,7 +653,7 @@
 /support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/brotli/ 301
 /support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/auto-minify-not-working/ 301
 /support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
-/speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301 
+/speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-url/enable-amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
 
@@ -802,6 +802,7 @@
 /waf/change-log/historical/ /waf/change-log/historical-2019/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/custom-rulesets/ /waf/custom-rules/custom-rulesets/ 301
+/waf/exposed-credentials-check/ /waf/managed-rules/check-for-exposed-credentials/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301

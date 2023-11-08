@@ -1,12 +1,14 @@
 ---
 pcx_content_type: how-to
-title: Configure exposed credentials checks via API
+title: Configure via API
 weight: 4
+meta:
+  title: Configure exposed credential checks via API
 ---
 
-# Configure exposed credentials checks via API
+# Configure exposed credential checks via API
 
-Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
+Configure exposed credential checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
 *   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
 *   Create custom rules that check for exposed credentials.
@@ -19,7 +21,7 @@ This feature requires account-level WAF, which is available to Enterprise custom
 
 You can create rules that check for exposed credentials using the [Rulesets API](/ruleset-engine/rulesets-api/). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
 
-A rule with exposed credentials check has a match when both the rule expression and the result from the exposed credentials check are true.
+A rule checking for exposed credentials has a match when both the rule expression and the result from the exposed credentials check are true.
 
 To check for exposed credentials in a custom rule, include the `exposed_credential_check` object in the rule definition. This object must have the following properties:
 

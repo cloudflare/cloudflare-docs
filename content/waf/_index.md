@@ -32,7 +32,7 @@ Define rate limits for incoming requests matching an expression, and the action 
 Enable the pre-configured managed rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
 {{</feature>}}
 
-{{<feature header="Exposed credential checks" href="/waf/exposed-credentials-check/">}}
+{{<feature header="Exposed credential checks" href="/waf/managed-rules/check-for-exposed-credentials/">}}
 Monitor and block use of stolen/exposed credentials for account takeover.
 {{</feature>}}
 
