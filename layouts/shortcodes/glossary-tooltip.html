@@ -16,7 +16,15 @@
 
 {{- with $link -}}
 <span tabindex="0" class='glossary-tooltip-link' data-title='{{- $tooltip | safeHTML -}}' data-toggle='tooltip' data-placement='top' aria-label='{{ $text }}'>
-{{- (printf "[%s](%s)" $text .) | $.Page.RenderString -}}
+{{- $renderedLink := (printf "[%s](%s)" $text .) | $.Page.RenderString -}}
+
+<!-- Required b/c external links get wrapped in a new <p> tag for some reason -->
+{{- if (in $renderedLink "<p>")}}
+{{- $renderedLink = replace (replace $renderedLink "<p>" "") "</p>" "" -}}
+{{- $renderedLink = $renderedLink | $.Page.RenderString -}}
+{{- end -}}
+
+{{- $renderedLink -}}
 </span>
 {{- else -}}
 <span tabindex="0" class='glossary-tooltip' data-title='{{- $tooltip | safeHTML -}}' data-toggle='tooltip' data-placement='top' aria-label='{{ $text }}'>

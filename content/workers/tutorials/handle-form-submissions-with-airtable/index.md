@@ -148,11 +148,11 @@ Before you continue, review the keys that you should have from Airtable:
 
 With your Airtable base set up, and the keys and IDs you need to communicate with the API ready, you will now set up your Worker to persist data from your form into Airtable.
 
-In your Worker project's `worker.js` file, replace the default code with a Workers fetch handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will return a `404 Not Found` response.
+In your Worker project's `index.js` file, replace the default code with a Workers fetch handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will return a `404 Not Found` response.
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export default {
   async fetch(request, env) {
@@ -169,7 +169,7 @@ The `submitHandler` has two functions. First, it will parse the form data coming
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 async function submitHandler (request, env) {
   if (request.method !== "POST") {
@@ -216,7 +216,7 @@ Then you call `createAirtableRecord` (the function you will define next). The `c
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 async function createAirtableRecord(env, body) {
   try {

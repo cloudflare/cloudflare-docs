@@ -12,11 +12,8 @@ To check the list of members in your account, or to manage roles and permissions
 
 ## Zero Trust roles
 
-{{<Aside type="note">}}
-This feature is only available on Enterprise plans.
-{{</Aside>}}
 
-Only Super Administrators of Enterprise accounts will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
+Only Super Administrators will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 
 {{<table-wrap>}}
 
