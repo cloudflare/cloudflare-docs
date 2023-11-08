@@ -200,7 +200,7 @@ $ cloudflared tunnel run <UUID or NAME>
 If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag and specify the path.
 
 ```sh
-$ cloudflared tunnel --config /path/your-config-file.yaml run <UUID or NAME>
+$ cloudflared tunnel --config /path/your-config-file.yml run <UUID or NAME>
 ```
 
 {{<Aside>}}
