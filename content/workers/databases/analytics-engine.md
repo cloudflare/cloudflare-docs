@@ -9,5 +9,5 @@ _build:
   render: never
 
 meta:
-  description: test
+  description: Use Workers to receive performance analytics about your applications, products and projects.
 ---
