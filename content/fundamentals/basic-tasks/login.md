@@ -18,7 +18,7 @@ Cloudflare offers the following sign-in options:
 
 Enter your email address and password.
 
-### Single sign on (SSO) 
+### Single Sign-On (SSO) 
 
 Enter your email address (available if your admin has [enabled SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
 
