@@ -25,4 +25,4 @@ Make sure that:
 
 - You have filled in the `CNAME` record fields correctly.
 - The proxy status is set to **DNS only**.
-- Under **DNS** > **Settings**, CNAME Flattening is set to **Flatten CNAME at apex**.
+- Under **DNS** > **Settings**, [CNAME Flattening](/dns/cname-flattening/) is set to **Flatten CNAME at apex**.
