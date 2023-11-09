@@ -18,12 +18,13 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 
-5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Enter any name for the application. In the **Sign-in redirect URIs** field, enter the following URL:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 6. Choose the desired **Assignment** option and select **Save**.
 
 7. From the application view, go to the **Sign On** tab.
