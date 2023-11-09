@@ -1,17 +1,26 @@
 ---
-title: Large language model (LLM)
+title: Text Generation
 pcx_content_type: get-started
 weight: 1
 ---
 
-# Large language model (LLM)
-Llama 2 is a family of generative text models and can be adapted for a variety of natural language generation tasks.
+# Text Generation
 
-* ID:  **@cf/meta/llama-2-7b-chat-int8** or **@cf/meta/llama-2-7b-chat-fp16** - used to `run` this model via SDK or API
-* Name: Llama 2 chat model from Meta (Quantized and full-precision variants available)
-* Task: text-generation
-* License type: Source Available
-* [Terms + Information](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
+Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks.
+
+* Task type: **text-generation**
+* TypeScript class: **AiTextGeneration**
+
+## Available Embedding Models
+
+List of available models in for this task type:
+
+| Model ID                        | Description                   |
+| ------------------------------- | ----------------------------- |
+| `@cf/meta/llama-2-7b-chat-fp16`                   | Full precision (fp16) generative text model with 7 billion parameters from Meta<br/><strong>Default max (sequence) tokens (stream)</strong>: 2500<br/><strong>Default max (sequence) tokens</strong>: 256<br/><strong>Context tokens limit</strong>: 3072<br/><strong>Sequence tokens limit</strong>: 2500<br/>[More information](https://ai.meta.com/llama/)<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>  |
+| `@cf/meta/llama-2-7b-chat-int8`                   | Quantized (int8) generative text model with 7 billion parameters from Meta<br/><strong>Default max (sequence) tokens (stream)</strong>: 1800<br/><strong>Default max (sequence) tokens</strong>: 256<br/><strong>Context tokens limit</strong>: 2048<br/><strong>Sequence tokens limit</strong>: 1800<br/>[More information](https://ai.meta.com/llama/)<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>  |
+| `@cf/mistral/mistral-7b-instruct-v0.1`                   | Instruct fine-tuned version of the Mistral-7b generative text model with 7 billion parameters<br/><strong>Default max (sequence) tokens (stream)</strong>: 1800<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://mistral.ai/news/announcing-mistral-7b/)<br/>  |
+| `@hf/codellama/codellama-7b-hf`                   | Generative text model built on top of Llama 2, fine-tuned for generating and discussing code<br/><strong>Default max (sequence) tokens (stream)</strong>: 1800<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://github.com/facebookresearch/codellama)<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>  |
 
 ## Examples - chat style with system prompt (preferred)
 {{<tabs labels="streaming | worker | node | python | curl">}}
@@ -162,71 +171,91 @@ source.onmessage = (event) => {
 ```
 
 ## API schema
+
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
 ### Input
 
 ```json
 {
-  type: "object",
-  oneOf: [
+  "type": "object",
+  "oneOf": [
     {
-      properties: {
-        prompt: {
-          type: "string",
+      "properties": {
+        "prompt": {
+          "type": "string"
         },
-        stream: {
-          type: "boolean",
-          default: false,
+        "stream": {
+          "type": "boolean",
+          "default": false
         },
+        "max_tokens": {
+          "type": "integer",
+          "default": 256
+        }
       },
-      required: ["prompt"],
+      "required": [
+        "prompt"
+      ]
     },
     {
-      properties: {
-        messages: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              role: {
-                type: "string",
+      "properties": {
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string"
               },
-              content: {
-                type: "string",
-              },
+              "content": {
+                "type": "string"
+              }
             },
-            required: ["role", "content"],
-          },
+            "required": [
+              "role",
+              "content"
+            ]
+          }
         },
-        stream: {
-          type: "boolean",
-          default: false,
+        "stream": {
+          "type": "boolean",
+          "default": false
         },
+        "max_tokens": {
+          "type": "integer",
+          "default": 256
+        }
       },
-      required: ["messages"],
-    },
+      "required": [
+        "messages"
+      ]
+    }
   ]
 }
 ```
+
+TypeScript class: **AiTextGenerationInput**
 
 ### Output
 
 ```json
 {
-  oneOf: [
+  "oneOf": [
     {
-      type: "object",
-      properties: {
-        response: {
-          type: "string",
-        },
-      },
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string"
+        }
+      }
     },
     {
-      type: "string",
-      format: "binary",
-    },
-  ],
+      "type": "string",
+      "format": "binary"
+    }
+  ]
 }
 ```
+
+TypeScript class: **AiTextGenerationOutput**

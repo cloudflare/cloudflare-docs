@@ -1,17 +1,23 @@
 ---
-title: Speech to text
+title: Automatic Speech Recognition
 pcx_content_type: get-started
 weight: 2
 ---
 
-# Speech to text
-Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data collected from the web.
+# Automatic Speech Recognition
 
-* ID: **@cf/openai/whisper** - used to `run` this model via SDK or API
-* Name: Automatic speech recognition (ASR) system from OpenAI
-* Task: speech-recognition
-* License type: MIT
-* [Terms + Information](https://github.com/openai/whisper/blob/main/LICENSE)
+Automatic speech recognition (ASR) models convert a speech signal, tipically an audio input, to text.
+
+* Task type: **speech-recognition**
+* TypeScript class: **AiSpeechRecognition**
+
+## Available Embedding Models
+
+List of available models in for this task type:
+
+| Model ID                        | Description                   |
+| ------------------------------- | ----------------------------- |
+| `@cf/openai/whisper`                   | Automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data<br/>[More information](https://openai.com/research/whisper)<br/>  |
 
 ## Examples
 
@@ -57,38 +63,46 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/ope
 {{</tabs>}}
 
 ## API schema
+
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
 ### Input
 
 ```json
 {
-  oneOf: [
-    { type: "string", format: "binary" },
+  "oneOf": [
     {
-      type: "object",
-      properties: {
-        audio: {
-          type: "array",
-          items: {
-            type: "number",
-          },
-        },
-      },
+      "type": "string",
+      "format": "binary"
     },
-  ],
+    {
+      "type": "object",
+      "properties": {
+        "audio": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  ]
 }
 ```
+
+TypeScript class: **AiSpeechRecognitionInput**
 
 ### Output
 
 ```json
 {
-  type: "object",
-  properties: {
-    text: {
-      type: "string",
-    },
-  },
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string"
+    }
+  }
 }
 ```
+
+TypeScript class: **AiSpeechRecognitionOutput**
