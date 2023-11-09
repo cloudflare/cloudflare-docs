@@ -108,9 +108,13 @@ ___
 
 ## View the DNSSEC chain of trust with Dig
 
-Full verification of domain signatures (for example: `cloudflare.com`) involves verifying the key-signing key at the top-level-domain (for example: `.com`).  Similar verification is then performed by checking the key-signing key of `.com` at the root server level. DNSSEC root keys are distributed to DNS clients to complete the trust chain.
+Full verification of domain signatures (for example, `cloudflare.com`) involves verifying the key signing key at the top-level domain (for example, `.com`).  
 
-When DNSSEC is enabled, a `DS` record is required at the registrar's DNS. The `DS` record contains a hash of the public key-signing key as well as metadata about the key.
+Similar verification is then performed by checking the key-signing key of `.com` at the root server level. DNSSEC root keys are distributed to DNS clients to complete the chain of trust.
+
+When DNSSEC is enabled, a `DS` record is required at the registrar's DNS. The `DS` record contains a hash of the public key signing key as well as metadata about the key.
+
+{{<example>}}
 
 Use `dig` to find a `DS` record:
 
@@ -131,14 +135,17 @@ com.            172800  IN  NS  e.gtld-servers.net.
 ;; Received 1213 bytes from 2001:502:1ca1::30#53(e.gtld-servers.net) in 37 ms
 
 ```
+{{</example>}}
 
-An easier alternative to manually running all the steps above is to use the third-party [DNSViz online tool](#troubleshooting-dnssec-validation-using-dnsviz).
+An easier alternative to manually running the steps above is to use the third-party tool [DNSViz](#troubleshoot-dnssec-validation-using-dnsviz).
 
 ___
 
 ## Troubleshoot DNSSEC validation with Dig
 
 Issues occur if authoritative DNS providers are changed without updating or removing old DNSSEC records at the registrar:
+
+{{<example>}}
 
 ```sh
 $ dig A brokendnssec.net @1.0.0.1
@@ -154,8 +161,9 @@ $ dig A brokendnssec.net @1.0.0.1 +dnssec +cd +short
 104.20.48.61
 ```
 
-In the above example, DNSSEC is misconfigured if a proper DNS response is received when using the _+cd_ option but queries using DNSSEC return a `SERVFAIL` response. This issue often happens when authoritative nameservers are changed but `DS` records are not updated. The issue can also occur if an attacker attempts to forge a response to a query.
+In this example, DNSSEC is misconfigured if a proper DNS response is received when using the `+cd` option but queries using DNSSEC return a `SERVFAIL` response. This issue often happens when authoritative nameservers are changed but `DS` records are not updated. The issue can also occur if an attacker attempts to forge a response to a query.
 
+{{</example>}}
 ___
 
 ## Next steps
