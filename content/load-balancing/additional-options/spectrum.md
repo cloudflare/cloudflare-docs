@@ -20,7 +20,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ### 1. Configure your load balancer
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain where the Load Balancing add-on is [enabled](/load-balancing/get-started/enable-load-balancing/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account where the Load Balancing add-on is [enabled](/load-balancing/get-started/enable-load-balancing/).
 
 1. Go to **Traffic** > **Load Balancing**.
 
@@ -29,7 +29,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 3.  On the **Hostname** page, define the settings presented and select **Next**.
     *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
     {{<Aside type="warning">}}
-  To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname you intend to define for your Spectrum application.
+  To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname (or domain) you intend to define for your Spectrum application.
     {{</Aside>}}
     *   Keep the orange cloud icon enabled, meaning the load balancer is proxied. This refers to the [proxy mode](/load-balancing/understand-basics/proxy-modes/) and, with Spectrum, traffic is always proxied.
     *   Keep **Session Affinity** disabled as this feature is not supported with Spectrum.
