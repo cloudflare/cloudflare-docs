@@ -40,7 +40,7 @@ Monitor and block use of stolen/exposed credentials for account takeover.
 Review mitigated requests (rule matches) using an intuitive interface. Tailor your security configurations based on the activity log.
 {{</feature>}}
 
-{{<feature header="Security Analytics" href="/waf/security-analytics/" cta="Explore Security Analytics">}}
+{{<feature header="Security Analytics" href="/waf/analytics/security-analytics/" cta="Explore Security Analytics">}}
 {{<plan type="business">}}
 Displays information about all incoming HTTP requests, including those not affected by security measures.
 {{</feature>}}
