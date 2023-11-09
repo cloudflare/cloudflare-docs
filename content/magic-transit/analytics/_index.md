@@ -8,6 +8,6 @@ weight: 11
 
 ## Query analytics with GraphQL
 
-Review the topics below to learn more about querying analytics data with GraphQL.
+Review the topics below to learn more about querying analytics data with GraphQL:
 
 {{<directory-listing>}}
