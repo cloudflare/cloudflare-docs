@@ -1,12 +1,12 @@
 ---
-title: Nameservers
+title: Troubleshooting
 pcx_content_type: troubleshooting
 weight: 1
 meta:
-  title: Troubleshooting zone setups - Nameservers
+  title: Troubleshooting full setup
 ---
 
-# Nameservers
+# Troubleshooting full setup nameservers
 
 If you see unexpected results when [changing your nameservers](/dns/zone-setups/full-setup/setup/), review the following troubleshooting questions.
 
