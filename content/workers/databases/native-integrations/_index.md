@@ -8,7 +8,7 @@ meta:
 
 {{<heading-pill style="beta">}} Database Integrations {{</heading-pill>}}
 
-## Background
+## Background 
 
 Connect to databases using the new Database Integrations (beta) experience. Enable Database Integrations in the [Cloudflare dashboard](https://dash.cloudflare.com). With Database Integrations, Cloudflare automatically handles the process of creating a connection string and adding it as secrets to your Worker.
 
