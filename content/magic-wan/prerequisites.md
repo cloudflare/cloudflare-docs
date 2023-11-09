@@ -6,7 +6,9 @@ weight: 2
 
 # Prerequisites
 
-Before you can begin using Magic WAN, verify that you meet Cloudflare's onboarding requirements. Skip the list of prerequisites below if you use [Magic WAN Connector](/magic-wan/connector/) to onboard your network locations to Cloudflare.
+Before you can begin using Magic WAN, verify that you meet Cloudflare's onboarding requirements. 
+
+{{<Aside type="note">}}Skip the list of prerequisites below if you use [Magic WAN Connector](/magic-wan/connector/) to onboard your network locations to Cloudflare.{{</Aside>}}
 
 ## Use compatible tunnel endpoint routers
 
