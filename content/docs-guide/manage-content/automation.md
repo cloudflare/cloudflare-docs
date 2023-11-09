@@ -43,7 +43,7 @@ At Cloudflare, we use several automations to reduce the cost associated with con
 
 | Automation | Purpose | Implementation | Runs when |
 | --- | --- | --- | --- |
-| [Label PRs](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/label-pr.yml) | Adds and updates labels related to the content subfolder and size of a pull request. Usefully for rollup reporting and team self-assignment. | GitHub Actions | Every commit |
+| [Label PRs](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/label-pr.yml) | Adds and updates labels related to the content subfolder and size of a pull request. Useful for rollup reporting and team self-assignment. | GitHub Actions | Every commit |
 
 ### Contributor resources
 
@@ -51,8 +51,8 @@ The following resources help contributors and stakeholders when they are making 
 
 | Automation | Purpose | Implementation | Runs when |
 | --- | --- | --- | --- |
-| [Build check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml) | Does our docs site build correctly? | GitHub Actions | Every commit |
+| [Build check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml) | Verifies that our docs site builds correctly. | GitHub Actions | Every commit |
 | [Show before/after links](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/show-changed-files.yml) | Provide a comparison table that shows the current page in production and the changed page in a preview build. | GitHub Actions | Every Pages build |
 | [Flag needed redirects](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/comment-changed-filenames.yml) | Comments with a list of changed or deleted files that might need a redirect. | GitHub Actions | Every commit |
-| [Infinite redirect check](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/find-infinite-redirects.ts) | Is the commit adding conflicting redirects?  | GitHub Actions | Every commit |
+| [Infinite redirect check](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/find-infinite-redirects.ts) | Verifies whether the commit adds conflicting redirects.  | GitHub Actions | Every commit |
 | [Spell check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/spell-check.yml) | Flag issues with spelling, casing, or insensitive language. | GitHub Actions | Every commit |

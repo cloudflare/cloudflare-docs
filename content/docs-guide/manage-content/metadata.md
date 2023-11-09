@@ -32,7 +32,7 @@ At Cloudflare, we track the following information about each page:
 | **Last reviewed** | How many days ago was this page last reviewed? | `100` |
 | **Word count** | How many words does the page contain (rounded to the nearest hundred)? | `100` |
 
-Of all of these values, there is a bit of nuance to our **Last reviewed** metadata. **Last reviewed** differs from **Last modified** because a "review" is more thorough than an update. It implies that all contents of the page have been vetted for accuracy.
+Of all of these values, there is a bit of nuance to our **Last reviewed** metadata. **Last reviewed** differs from **Last modified** because a review is more thorough than an update. A review implies that all contents of the page have been vetted for accuracy.
 
 Because of this extra effort, we only track **Last reviewed** for content types that are particularly important to the user journey and require an additional level of maintenance. At the moment, those content types are [tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/) and specific types of [configurations](/style-guide/documentation-content-strategy/content-types/configuration/).
 
