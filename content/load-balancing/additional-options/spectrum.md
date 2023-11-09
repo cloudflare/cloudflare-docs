@@ -48,7 +48,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 8. On the **Review** page:
     *   Review your configuration and make any changes.
-        * If you set traffic steering to Off, re-order the pools in your load balancer to adjust the fallback order.
+        * If you set traffic steering to **Off**, re-order the pools in your load balancer to adjust the fallback order.
         * If you chose to set traffic steering to Random, you can [set weights to your pools](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the [API](/api/operations/load-balancers-create-load-balancer)) to determine the percentage of traffic sent to each pool.
     *   Choose whether to **Save as Draft** or **Save and Deploy**.
 

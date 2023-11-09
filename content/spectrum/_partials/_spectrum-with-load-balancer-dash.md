@@ -8,7 +8,7 @@ _build:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select **Spectrum**.
 3. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
-4. Select your **Application Type**.
+4. Select your **[Application Type](/spectrum/reference/configuration-options/#application-type)**.
 5. Under **Domain**, enter the domain that will use Spectrum.
 6. Under **Edge Port**, enter the port Cloudflare should use for your application.
 7. Under **Origin**, select **Load Balancer**.
