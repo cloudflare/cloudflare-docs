@@ -35,18 +35,19 @@ flowchart TB
 - S3 bucket to be protected by Cloudflare Zero Trust
 - S3 bucket and AWS VPC configured in the same [AWS region](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
 
-### 1. Create VPC endpoint on AWS
+### 1. Create a VPC endpoint in AWS
 
-1. In the AWS dashboard, go to the **VPC dashboard** > **Virtual private cloud** > **Endpoints**.
-2. Select **Create endpoint** and name the endpoint.
-3. Choose _AWS services_ as the Service category.
-4. Under **Services**, search and select the S3 service in the same region of the VPC. For example, for **Europe (London) - eu-west-2**, the S3 service is `com.amazonaws.eu-west-2.s3`. This is a service of type **Gateway**.
-5. Under **VPC**, select the VPC that contains the EC2 VM hosting the Cloudflare tunnel daemon.
-6. Under **Route tables**, select the route table associated with the VPC.
-7. Under **Policy**, select **Full access**.
-8. Select **Create endpoint**.
+1. In the [AWS dashboard](https://aws.amazon.com/console/), go to **Services** > **Networking & Content Delivery** > **VPC**.
+2. Under **Virtual private cloud**, go to **Endpoints**.
+3. Select **Create endpoint** and name the endpoint.
+4. Choose _AWS services_ as the service category.
+5. In **Services**, search and select the S3 service in the same region of the VPC. For example, for the AWS region **Europe (London) - eu-west-2**, the corresponding S3 service is named `com.amazonaws.eu-west-2.s3` with a type of Gateway.
+6. In **VPC**, select your VPC that contains the EC2 VM hosting the Cloudflare tunnel daemon.
+7. In **Route tables**, select the route table associated with the VPC.
+8. In **Policy**, choose _Full access_.
+9. Select **Create endpoint**.
 
-After the VPC endpoint is created, there will be a new entry in the VPC route table with the target being the VPC endpoint. The entry will have the format `vpce-xxxxxxxxxxxxxxxxx`.
+After you create the VPC endpoint, a new entry in the VPC route table with the target being your VPC endpoint. The entry will have the format `vpce-xxxxxxxxxxxxxxxxx`.
 
 ### 2. Set up a bucket policy on the S3 bucket so that the VPC can access the bucket
 
