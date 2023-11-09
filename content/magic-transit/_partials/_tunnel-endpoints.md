@@ -55,7 +55,7 @@ Refer to [Anti-replay protection]($9) for more information on this topic, or [Ad
 5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-8. In **Customer GRE endpoint**, enter your router’s public IP address.
+8. In **Customer GRE endpoint**, enter your router’s public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
 9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team.
 10. Leave the default values for **TTL** and **MTU**.
 11. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
