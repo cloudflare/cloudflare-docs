@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Maintenance
+weight: 2
 meta:
     title: Redirects | Maintenance
 ---

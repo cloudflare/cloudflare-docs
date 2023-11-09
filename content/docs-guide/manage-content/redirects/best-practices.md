@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Best practices
+weight: 3
 meta:
     title: Redirects | Best practices
 ---

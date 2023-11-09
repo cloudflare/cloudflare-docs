@@ -1,25 +1,12 @@
 ---
-pcx_content_type: concept
-title: Metadata
+pcx_content_type: reference
+title: How we do it
+weight: 1
+meta:
+    title: Metadata | How we do it
 ---
 
-# Metadata
-
-Page-level metadata - content type, associated products, last updated, word count - lets you take a broader, more strategic view of your content.
-
-It helps you answer questions like the following:
-
-- As a writer:
-    - Am I missing something obvious in the content strategy?
-    - What are some pages I should be updating right now?
-- As a manager:
-    - Are we over or underinvesting in a specific product area? Or a specific content type?
-    - How does the traffic to this set of products compare to another?
-    - How can I communicate broader trends to my stakeholders?
-
-You cannot answer these questions without some level of rollup reporting, which you can only get through metadata.
-
-## Values
+# How we do it
 
 At Cloudflare, we track the following information about each page:
 
@@ -35,6 +22,8 @@ At Cloudflare, we track the following information about each page:
 Of all of these values, there is a bit of nuance to our **Last reviewed** metadata. **Last reviewed** differs from **Last modified** because a review is more thorough than an update. A review implies that all contents of the page have been vetted for accuracy.
 
 Because of this extra effort, we only track **Last reviewed** for content types that are particularly important to the user journey and require an additional level of maintenance. At the moment, those content types are [tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/) and specific types of [configurations](/style-guide/documentation-content-strategy/content-types/configuration/).
+
+---
 
 ## Implementation
 

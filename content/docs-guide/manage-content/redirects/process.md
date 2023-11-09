@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: How we do it
+weight: 1
 meta:
     title: Redirects | How we do it
 ---
@@ -44,7 +45,7 @@ During normal content work, you want to add redirects when you do the following 
 - Change any part of the URL (filename, folder).
 - Delete the page.
 
-We have some automation to help [flag needed redirects](/docs-guide/manage-content/automation/#contributor-resources).
+We have some automation to help [flag needed redirects](/docs-guide/manage-content/automation/process/#contributor-resources).
 
 ### Based on data
 

@@ -1,33 +1,16 @@
 ---
-pcx_content_type: concept
-title: Automation
+pcx_content_type: reference
+title: How we do it
+weight: 1
+meta:
+    title: Automation | How we do it
 ---
 
-# Automation
+# How we do it
 
-Automation allows us to provide more functionality at a lower maintenance cost, as well as enable and support community contributors.
+Cloudflare uses the following automations to streamline our documentation process. 
 
-## General principles
-
-When thinking about what to automate in your documentation, look for tasks that are frequent, repetitive, or tedious.
-
-Often, the easiest way to do that is to think through the following questions:
-
-- What do new team members or infrequent contributors struggle with?
-- What is part of your standard review checklist? And which steps require an additional level of attention to detail?
-- What do stakeholders commonly misunderstand? What do they strugle with?
-
-Another component to think about is how often this automation runs:
-
-- What checks need to run on every contribution? Or, another way, what issues would cause you to decline a contribution?
-- What checks take a lot of time to run?
-- If a check found something wrong, what would be the expected turnaround for a fix?
-
----
-
-## Examples
-
-### Content maintenance
+## Content maintenance
 
 At Cloudflare, we use several automations to reduce the cost associated with content maintenance.
 
@@ -39,13 +22,13 @@ At Cloudflare, we use several automations to reduce the cost associated with con
 | [API docs link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/api-links-crawl.yml) | Evaluates links to our API docs. | GitHub Actions | Every weekend |
 | [Unused images check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/image-audit.yml) | Flags images that are in our resources, but not currently referenced in our documentation. | GitHub Actions | Every month |
 
-### Reporting
+## Reporting
 
 | Automation | Purpose | Implementation | Runs when |
 | --- | --- | --- | --- |
 | [Label PRs](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/label-pr.yml) | Adds and updates labels related to the content subfolder and size of a pull request. Useful for rollup reporting and team self-assignment. | GitHub Actions | Every commit |
 
-### Contributor resources
+## Contributor resources
 
 The following resources help contributors and stakeholders when they are making changes to our documentation.
 
