@@ -13,9 +13,9 @@ When thinking about what to automate in your documentation, look for tasks that 
 
 Often, the easiest way to do that is to think through the following questions:
 
-- What do new team members or infrequent contributors get wrong?
+- What do new team members or infrequent contributors struggle with?
 - What is part of your standard review checklist? And which steps require an additional level of attention to detail?
-- What do stakeholders commonly complain about?
+- What do stakeholders commonly misunderstand? What do they strugle with?
 
 Another component to think about is how often this automation runs:
 
@@ -33,11 +33,11 @@ At Cloudflare, we use several automations to reduce the cost associated with con
 
 | Automation | Purpose | Implementation | Runs when |
 | --- | --- | --- | --- |
-| [Internal link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/crawl.ts) | Evaluate all internal links to make sure they are in the current build. Increases cross linking while reducing maintenance cost. | GitHub Actions | Every commit |
-| External link checking | Evaluate external links for broken links or links that redirect to another location. | SEO crawler | Periodically |
-| [Header link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/anchor-link-audit.yml) | Evaluate anchor links within our docs to make sure they resolve correctly. | GitHub Actions | Every weekend |
-| [API docs link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/api-links-crawl.yml) | Evaluate links to our API docs. | GitHub Actions | Every weekend |
-| [Unused images check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/image-audit.yml) | Flag images that are in our resources, but not currently referenced in our documentation. | GitHub Actions | Every month |
+| [Internal link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/crawl.ts) | Evaluates all internal links to make sure they are in the current build. Increases cross linking while reducing maintenance cost. | GitHub Actions | Every commit |
+| External link checking | Evaluates external links for broken links or links that redirect to another location. | SEO crawler | Weekly |
+| [Header link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/anchor-link-audit.yml) | Evaluates anchor links within our docs to make sure they resolve correctly. | GitHub Actions | Every weekend |
+| [API docs link checking](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/api-links-crawl.yml) | Evaluates links to our API docs. | GitHub Actions | Every weekend |
+| [Unused images check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/image-audit.yml) | Flags images that are in our resources, but not currently referenced in our documentation. | GitHub Actions | Every month |
 
 ### Reporting
 
@@ -52,7 +52,7 @@ The following resources help contributors and stakeholders when they are making 
 | Automation | Purpose | Implementation | Runs when |
 | --- | --- | --- | --- |
 | [Build check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml) | Verifies that our docs site builds correctly. | GitHub Actions | Every commit |
-| [Show before/after links](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/show-changed-files.yml) | Provide a comparison table that shows the current page in production and the changed page in a preview build. | GitHub Actions | Every Pages build |
+| [Show before/after links](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/show-changed-files.yml) | Provides a comparison table that shows the current page in production and the changed page in a preview build. | GitHub Actions | Every Pages build |
 | [Flag needed redirects](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/comment-changed-filenames.yml) | Comments with a list of changed or deleted files that might need a redirect. | GitHub Actions | Every commit |
 | [Infinite redirect check](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/find-infinite-redirects.ts) | Verifies whether the commit adds conflicting redirects.  | GitHub Actions | Every commit |
-| [Spell check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/spell-check.yml) | Flag issues with spelling, casing, or insensitive language. | GitHub Actions | Every commit |
+| [Spell check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/spell-check.yml) | Flags issues with spelling, casing, or insensitive language. | GitHub Actions | Every commit |
