@@ -6,6 +6,13 @@ rss: file
 ---
 
 # Changelog
+
+## 2023-11-12
+
+### Increased concurrent connections
+
+Hyperdrive may now open up to 20 connections per region to your origin database (up from 10) to improve concurrent connection performance.
+
 ## 2023-09-28
 
 ### Hyperdrive now available
