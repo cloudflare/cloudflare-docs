@@ -13,7 +13,7 @@ Beyond [how Cloudflare uses redirects](/docs-guide/manage-content/redirects/proc
 
 As much as you can, try to organize your redirects into logical groups (products, alphabetical order). This process helps prevent duplicate redirects, as well as identifying specific ones you might be looking for.
 
-In our [Pages `_redirects` file](/pages/platform/redirects/), we use extensive comments throughout our `_redirects` file, separating different product areas and explicitly calling out products with dynamic redirects (that are listed at the bottom of the file for formatting reasons). We also try, as much as we can, to keep the redirects in alphabetical order within a section.
+In our [Pages `_redirects` file](https://github.com/cloudflare/cloudflare-docs/blob/production/content/_redirects), we use extensive comments, separating different product areas. We also try, as much as we can, to keep the redirects in alphabetical order within a section.
 
 We used to apply a similar principle to [Bulk Redirect lists](/rules/url-forwarding/bulk-redirects/) (when that was our primary method). We created lists that grouped together similar products and labeled them as such, so it was easier to find which redirect you were looking for.
 
