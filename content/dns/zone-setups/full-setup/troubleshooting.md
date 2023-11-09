@@ -6,7 +6,7 @@ meta:
   title: Troubleshooting full setup
 ---
 
-# Troubleshooting full setup nameservers
+# Troubleshooting full setup
 
 If you see unexpected results when [changing your nameservers](/dns/zone-setups/full-setup/setup/), review the following troubleshooting questions.
 
