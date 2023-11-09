@@ -43,7 +43,7 @@ At Cloudflare, we use several automations to reduce the cost associated with con
 
 | Automation | Purpose | Implementation | Runs when |
 | --- | --- | --- | --- |
-| [Label PRs](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/label-pr.yml) | Adds and updates labels related to the content subfolder and size of a pull request. | GitHub Actions | Every commit |
+| [Label PRs](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/label-pr.yml) | Adds and updates labels related to the content subfolder and size of a pull request. Usefully for rollup reporting and team self-assignment. | GitHub Actions | Every commit |
 
 ### Contributor resources
 
