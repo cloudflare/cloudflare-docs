@@ -23,12 +23,6 @@ This setup allows us to use the same workflow for redirects as for any other doc
 
 We also love the flexibility provided by the [Pages syntax](/pages/platform/redirects/#advanced-redirects).
 
-{{<Aside type="note">}}
-
-We also have extensive comments throughout our `_redirects` file, separating out different product areas and explicitly calling out products with dynamic redirects (that are listed at the bottom of the file for formatting reasons).
-
-{{</Aside>}}
-
 ### Bulk redirects (secondary)
 
 In certain situations, we also use [Bulk redirects](/rules/url-forwarding/bulk-redirects/).
