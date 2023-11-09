@@ -18,7 +18,7 @@ Before you start, make sure you:
 
 ## 1. Create a tunnel
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Tunnels**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com) and go to **Networks** > **Tunnels**.
 
 2. Select **Create a tunnel**.
 

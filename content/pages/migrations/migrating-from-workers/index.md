@@ -67,7 +67,7 @@ Before you deploy, you will need to delete your old Workers routes to start send
 
 ### Using Direct Upload
 
-If your Workers site has its custom build settings, you can bring your prebuilt assets to Pages with [Direct Uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare global network by either using the [Wrangler CLI](/workers/wrangler/install-and-update/) or the drag and drop option. 
+If your Workers site has its custom build settings, you can bring your prebuilt assets to Pages with [Direct Upload](/pages/get-started/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare global network by either using the [Wrangler CLI](/workers/wrangler/install-and-update/) or the drag and drop option. 
 
 These options allow you to create and name a new project from the CLI or dashboard. After your project deployment is complete, you can set the custom domain by following the [adding a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) steps to your Pages project. 
 

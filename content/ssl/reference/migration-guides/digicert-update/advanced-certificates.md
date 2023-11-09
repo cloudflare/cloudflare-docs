@@ -94,7 +94,7 @@ If your certificate includes a wildcard hostname, you will see a TXT DCV token r
 
 If you want to take control of migrating your certificates and choose a particular CA - instead of having Cloudflare handle migrations as certificates come up for renewal and choose a CA on your behalf - you will need to:
 
-1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-23-2023) noted before).
+1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-26-2023) noted before).
 2. Make sure your certificates are validated ([partial zones](#dcv---partial-zones) will require additional steps than previously).
 3. [Delete](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) all existing DigiCert certificates (once each has been replaced and the new certificate is active).
 

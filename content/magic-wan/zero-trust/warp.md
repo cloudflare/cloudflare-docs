@@ -7,7 +7,7 @@ meta:
 
 # WARP on-ramp to Magic WAN
 
-Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE, IPsec](/magic-wan/get-started/configure-tunnels/#tunnels), or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
+Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE, IPsec](/magic-wan/get-started/configure-tunnels/#add-tunnels), or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
 
 Depending on your use case, you will see the following IP addresses when connecting a WARP device to Magic WAN:
 - `100.96.0.0/12`: When connecting a WARP device to an origin behind a GRE or IPsec tunnel.

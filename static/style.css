@@ -4444,6 +4444,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   width: unset !important;
 }
 
+.DocSearch-Help a {
+  text-decoration: underline;
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}
+
 .DocsMobileHeader {
   position: absolute;
   display: flex;

@@ -8,8 +8,6 @@ meta:
 
 # Wrangler API
 
-{{<render file="_wrangler_survey.md">}}
-
 Wrangler offers an experimental API to programmatically manage your Cloudflare Workers.
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.

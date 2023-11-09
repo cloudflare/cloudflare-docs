@@ -7,15 +7,47 @@ weight: 1
 # Large language model (LLM)
 Llama 2 is a family of generative text models and can be adapted for a variety of natural language generation tasks.
 
-* ID:  **@cf/meta/llama-2-7b-chat-int8** - used to `run` this model via SDK or API
-* Name: Quantized Llama 2 chat model from Meta	
+* ID:  **@cf/meta/llama-2-7b-chat-int8** or **@cf/meta/llama-2-7b-chat-fp16** - used to `run` this model via SDK or API
+* Name: Llama 2 chat model from Meta (Quantized and full-precision variants available)
 * Task: text-generation
 * License type: Source Available
 * [Terms + Information](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
 
 ## Examples - chat style with system prompt (preferred)
-{{<tabs labels="worker | node | python | curl">}}
-{{<tab label="worker" default="true">}}
+{{<tabs labels="streaming | worker | node | python | curl">}}
+{{<tab label="streaming" default="true">}}
+
+```ts
+import { Ai } from '@cloudflare/ai'
+
+export interface Env {
+  AI: any;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const ai = new Ai(env.AI);
+
+    const messages = [
+      { role: 'system', content: 'You are a friendly assistant' },
+      { role: 'user', content: 'What is the origin of the phrase Hello, World' }
+    ];
+
+    const stream = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+      messages,
+      stream: true
+    });
+
+    return new Response(
+      stream,
+      { headers: { "content-type": "text/event-stream" } }
+    );
+  },
+};
+```
+
+{{</tab>}}
+{{<tab label="worker">}}
 
 ```ts
 import { Ai } from '@cloudflare/ai'
@@ -67,7 +99,6 @@ run('@cf/meta/llama-2-7b-chat-int8', 'Tell me a story').then((response) => {
 ```
 
 {{</tab>}}
-
 {{<tab label="python">}}
 
 ```py
@@ -85,7 +116,7 @@ def run(model, prompt):
   }
   response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
   return response.json()
-    
+
 output = run("@cf/meta/llama-2-7b-chat-int8", "Tell me a story")
 print(output)
 ```
@@ -103,7 +134,9 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
 {{</tab>}}
 {{</tabs>}}
 
-**Example Workers AI response**
+## Responses
+
+### Non-streaming response
 
 ```json
 {
@@ -112,55 +145,88 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
   }
 ```
 
+### Handling streaming responses in the client
+
+A streaming response will be returned in the [server-side events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events), or SSE format. Below is an example showing how to parse this response in JavaScript, from the browser:
+
+```js
+const source = new EventSource("/"); // Workers AI streaming endpoint
+source.onmessage = (event) => {
+  if (event.data == "[DONE]") {
+    source.close();
+    return;
+  }
+  const data = JSON.parse(event.data);
+  el.innerHTML += data.response;
+}
+```
+
 ## API schema
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
+### Input
+
 ```json
 {
-    "task": "text-generation",
-    "tsClass": "AiTextGeneration",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "oneOf": [
-                {
-                    "properties": {
-                        "prompt": {
-                            "type": "string"
-                        }
-                    },
-                    "required": ["prompt"]
-                },
-                {
-                    "properties": {
-                        "messages": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "role": {
-                                        "type": "string"
-                                    },
-                                    "content": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": ["role", "content"]
-                            }
-                        }
-                    },
-                    "required": ["messages"]
-                }
-            ]
+  type: "object",
+  oneOf: [
+    {
+      properties: {
+        prompt: {
+          type: "string",
         },
-        "output": {
-            "type": "object",
-            "properties": {
-                "response": {
-                    "type": "string"
-                }
-            }
-        }
-    }
+        stream: {
+          type: "boolean",
+          default: false,
+        },
+      },
+      required: ["prompt"],
+    },
+    {
+      properties: {
+        messages: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              role: {
+                type: "string",
+              },
+              content: {
+                type: "string",
+              },
+            },
+            required: ["role", "content"],
+          },
+        },
+        stream: {
+          type: "boolean",
+          default: false,
+        },
+      },
+      required: ["messages"],
+    },
+  ]
+}
+```
+
+### Output
+
+```json
+{
+  oneOf: [
+    {
+      type: "object",
+      properties: {
+        response: {
+          type: "string",
+        },
+      },
+    },
+    {
+      type: "string",
+      format: "binary",
+    },
+  ],
 }
 ```

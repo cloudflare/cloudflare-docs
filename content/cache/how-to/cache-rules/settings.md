@@ -230,7 +230,7 @@ Cache Reserve eligibility allows you to specify which website resources should b
 This rule can also be used to specify Cache Reserve eligibility for website resources based on their size. For example, by specifying that all assets which are eligible be 100 MB and above, Cloudflare will look for eligible assets at or above 100 MB for Cache Reserve eligibility and only persistently store those assets.
 
 {{<Aside type="note">}}
-Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limitations) when using this configuration.
+Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) when using this configuration.
 {{</Aside>}}
 
 {{<details header="API information">}}

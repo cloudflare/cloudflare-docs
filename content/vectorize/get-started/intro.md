@@ -166,7 +166,7 @@ export default {
 			// Insert some sample vectors into our index
 			// In a real application, these vectors would be the output of a machine learning (ML) model,
 			// such as Workers AI, OpenAI, or Cohere.
-			let inserted = await env.VECTORIZE_INDEX.insert(sampleVectors);
+			const inserted = await env.VECTORIZE_INDEX.insert(sampleVectors);
 
 			// Return the number of IDs we successfully inserted
 			return Response.json(inserted);
@@ -240,7 +240,7 @@ export default {
 		//
 		// In this example, we're going to construct a simple vector that should
 		// match vector id #5
-		let queryVector: Array<number> = [54.8, 5.5, 3.1];
+		const queryVector: Array<number> = [54.8, 5.5, 3.1];
 
 		// Query our index and return the three (topK = 3) most similar vector
 		// IDs with their similarity score.
@@ -248,7 +248,7 @@ export default {
 		// By default, vector values are not returned, as in many cases the
 		// vectorId and scores are sufficient to map the vector back to the
 		// original content it represents.
-		let matches = await env.VECTORIZE_INDEX.query(queryVector, { topK: 3, returnVectors: true });
+		const matches = await env.VECTORIZE_INDEX.query(queryVector, { topK: 3, returnValues: true, returnMetadata: true });
 
 		return Response.json({
 			// This will return the closest vectors: we'll see that the vector
@@ -291,7 +291,7 @@ You can now visit the URL for your newly created project to insert vectors and t
 
 Subsequent visits will return `count:0` as you cannot `.insert()` the same vector IDs.
 
-2. Query our index - we expect our query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` - by visting the root path of `/` . This will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
+2. Query our index - we expect our query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` - by visiting the root path of `/` . This will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
 
 You will see that `vectorId: 5` has a `score` of `0.999909486`: because we're using `cosine` as our distance metric, the closer the score to `1.0`, the closer our vectors are.
 
@@ -302,43 +302,33 @@ You will see that `vectorId: 5` has a `score` of `0.999909486`: because we're us
     "count": 3,
     "matches": [
       {
+        "id": "5",
         "score": 0.999909486,
-        "vectorId": "5",
-        "vector": {
-          "id": "5",
-          "values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
-          "metadata": {
-            "url": "/products/sku/55519183"
-          }
+        "values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
+        "metadata": {
+          "url": "/products/sku/55519183"
         }
       },
       {
+        "id": "4",
         "score": 0.789848214,
-        "vectorId": "4",
-        "vector": {
-          "id": "4",
-          "values": [75.0999984741211, 67.0999984741211, 29.899999618530273],
-          "metadata": {
-            "url": "/products/sku/418313"
-          }
+        "values": [75.0999984741211, 67.0999984741211, 29.899999618530273],
+        "metadata": {
+          "url": "/products/sku/418313"
         }
       },
       {
+        "id": "2",
         "score": 0.611976262,
-        "vectorId": "2",
-        "vector": {
-          "id": "2",
-          "values": [
-            15.100000381469727, 19.200000762939453, 15.800000190734863
-          ],
-          "metadata": {
-            "url": "/products/sku/10148191"
-          }
+        "values": [15.100000381469727, 19.200000762939453, 15.800000190734863],
+        "metadata": {
+          "url": "/products/sku/10148191"
         }
       }
     ]
   }
 }
+
 ```
 
 From here, we could experiment by passing a different `queryVector` and observing the results: the matches and the `score` should change based on the change in distance between the query vector and the vectors in our index.

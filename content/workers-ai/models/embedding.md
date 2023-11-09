@@ -6,7 +6,7 @@ weight: 6
 
 # Embeddings
 
-Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. 
+Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset.
 
 These models are ideal as part of building [vector search](/vectorize/learning/what-is-a-vector-database/) applications or [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) workflows with Large Language Models (LLM).
 
@@ -16,8 +16,8 @@ Workers AI includes the following built-in text embedding models:
 
 | Model ID                        | Max Input Tokens <sup>1</sup> | Output Dimensions  |
 | ------------------------------- | ----------------------------- | ------------------ |
-| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 384                | 
-| `@cf/baai/bge-base-en-v1.5`     | 512 tokens                    | 768                | 
+| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 384                |
+| `@cf/baai/bge-base-en-v1.5`     | 512 tokens                    | 768                |
 | `@cf/baai/bge-large-en-v1.5`    | 512 tokens                    | 1024               |
 
 <sup>1</sup> An English word is approximately 1-3 tokens, depending on word length and representation within the model.
@@ -25,7 +25,7 @@ Workers AI includes the following built-in text embedding models:
 ## Model details
 
 * IDs:  **@cf/baai/bge-small-en-v1.5** | **@cf/baai/bge-base-en-v1.5** | **@cf/baai/bge-large-en-v1.5** - used to `run` this model via the SDK or API
-* Name: Feature extraction model	
+* Name: Feature extraction model
 * Task: text-embeddings
 * License type: MIT
 * [Terms + Information](https://github.com/FlagOpen/FlagEmbedding/blob/master/LICENSE)
@@ -79,7 +79,7 @@ async function run(model, input) {
 	const result = await response.json();
 	return result;
 }
-  
+
 // Can be a string or array of strings]
 const stories = [
 'This is a story about an orange cloud',
@@ -110,7 +110,7 @@ stories = [
   'This is a story about a llama',
   'This is a story about a hugging emoji'
 ]
-    
+
 output = run("@cf/baai/bge-base-en-v1.5", { "text": stories })
 print(output)
 ```
@@ -159,48 +159,50 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/baa
 ## API schema
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
+### Input
+
 ```json
 {
-    "task": "text-embeddings",
-    "tsClass": "AiTextEmbeddings",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "properties": {
-                "text": {
-                    "oneOf": [
-                        { "type": "string" },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ]
-                }
-            },
-            "required": ["text"]
+  type: "object",
+  properties: {
+    text: {
+      oneOf: [
+        { type: "string" },
+        {
+          type: "array",
+          items: {
+            type: "string",
+          },
+          maxItems: 100,
         },
-        "output": {
-            "type": "object",
-            "properties": {
-                "shape": {
-                    "type": "array",
-                    "items": {
-                        "type": "number"
-                    }
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "type": "array",
-                        "items": {
-                            "type": "number"
-                        }
-                    }
-                }
-            }
-        }
-    }
+      ],
+    },
+  },
+  required: ["text"],
+}
+```
+
+### Output
+
+```json
+{
+  type: "object",
+  properties: {
+    shape: {
+      type: "array",
+      items: {
+        type: "number",
+      },
+    },
+    data: {
+      type: "array",
+      items: {
+        type: "array",
+        items: {
+          type: "number",
+        },
+      },
+    },
+  },
 }
 ```

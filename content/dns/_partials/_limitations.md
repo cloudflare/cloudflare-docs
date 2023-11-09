@@ -15,14 +15,14 @@ If you encounter a `CNAME` record that you cannot proxy — usually associated w
 
 By default, Cloudflare only proxies HTTP and HTTPS traffic.
 
-If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/reference/network-ports/) at the origin, either leave your records [unproxied (DNS-only)](#dns-only-records) or use [Cloudflare Spectrum](/spectrum/).
+If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/reference/network-ports/) at the origin, either leave your records [unproxied (DNS-only)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) or use [Cloudflare Spectrum](/spectrum/).
 
 #### Pending domains
 
 {{<render file="_onboard-warning.md" productFolder="DNS">}}
 <br/>
 
-This means that DNS records - even those set to [proxy traffic through Cloudflare](#proxied-records) -- will be [DNS-only](#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
+This means that DNS records - even those set to [proxy traffic through Cloudflare](#proxied-records) -- will be [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
 
 If this warning is still present after 24 hours, refer to our [troubleshooting guide](/dns/zone-setups/troubleshooting/nameservers/).
 

@@ -7,17 +7,15 @@ layout: single
 
 # CrowdStrike
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
-Cloudflare Zero Trust can integrate with Crowdstrike to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
+{{<render file="posture/_service-provider-intro.md" withParameters="Crowdstrike">}}
 
 ## Prerequisites
 
 Device posture with Crowdstrike requires:
 
 - Falcon Enterprise plan or above
-- Crowdstrike agent deployed on the device
-- Cloudflare WARP client deployed on the device
+- Crowdstrike agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## Set up CrowdStrike as a service provider
 

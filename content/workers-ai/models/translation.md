@@ -13,7 +13,7 @@ M2M100 is a multilingual encoder-decoder (seq-to-seq) model trained for Many-to-
 * [Terms + Information](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)
 
 ## Supported languages
-The following languages are currently supported by the model: 
+The following languages are currently supported by the model:
 *  english
 *  chinese
 *  french
@@ -43,7 +43,7 @@ export default {
     const response = await ai.run('@cf/meta/m2m100-1.2b', {
         text: "I'll have an order of the moule frites",
         source_lang: "english", // defaults to english
-        target_lang: "french" 
+        target_lang: "french"
       }
     );
 
@@ -91,11 +91,11 @@ headers = {"Authorization": "Bearer {API_TOKEN}"}
 def run(model, input):
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
-    
+
 output = run('@cf/meta/m2m100-1.2b', {
   "text": "I'll have an order of the moule frites",
   "source_lang": "english",
-  "target_lang": "french" 
+  "target_lang": "french"
 })
 
 print(output)
@@ -129,35 +129,36 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
 ## API schema
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
+### Input
+
 ```json
 {
-    "task": "translation",
-    "tsClass": "AiTranslation",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "properties": {
-                "input_text": {
-                    "type": "string"
-                },
-                "source_lang": {
-                    "type": "string",
-                    "default" : "en"
-                },
-                "target_lang": {
-                    "type": "string"
-                }
-            },
-            "required": ["input_text", "target_lang"]
-        },
-        "output": {
-            "type": "object",
-            "properties": {
-                "translated_text": {
-                    "type": "string"
-                }
-            }
-        }
-    }
+  type: "object",
+  properties: {
+    text: {
+      type: "string",
+    },
+    source_lang: {
+      type: "string",
+      default: "en",
+    },
+    target_lang: {
+      type: "string",
+    },
+  },
+  required: ["text", "target_lang"],
+}
+```
+
+### Output
+
+```json
+{
+  type: "object",
+  properties: {
+    translated_text: {
+      type: "string",
+    },
+  },
 }
 ```

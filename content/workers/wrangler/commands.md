@@ -8,8 +8,6 @@ meta:
 
 # Wrangler commands
 
-{{<render file="_wrangler_survey.md">}}
-
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
@@ -281,6 +279,12 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 ### `backup download`
 
+{{<Aside type="warning">}}
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/learning/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
+{{</Aside>}}
+
 Download existing data to your local machine.
 
 ```txt
@@ -360,6 +364,10 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ---
 
 ## `hyperdrive`
+
+{{<Aside type="note">}}
+Hyperdrive is currently in open beta. Report Hyperdrive bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
@@ -446,6 +454,10 @@ wrangler hyperdrive get <ID>
 ---
 
 ## `vectorize`
+
+{{<Aside type="note">}}
+Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
@@ -1772,7 +1784,7 @@ wrangler whoami
 ## `deployments`
 
 {{<Aside type="note">}}
-Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in open beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 For more information about deployments and how they work, refer to [Deployments](/workers/configuration/deployments).
@@ -1863,6 +1875,10 @@ binding = "MY_KV"
 ```
 
 ## `rollback`
+
+{{<Aside type="note">}}
+Rollback is currently in open beta. Report rollback bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
 

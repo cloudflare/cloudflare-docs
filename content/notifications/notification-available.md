@@ -879,6 +879,8 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive a notification when Cloudflare detects edge and/or origin errors.
 
+{{<render file="_traffic-alerts.md">}}
+
 **Other options / filters**
 
 Multiple filters available:
@@ -902,7 +904,6 @@ Enterprise plans.
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing.
 2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
-3. {{<render file="_errors.md">}}
 
 {{</details>}}
 
@@ -911,6 +912,8 @@ Enterprise plans.
 **Who is it for?**
 
 Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server.
+
+{{<render file="_traffic-alerts.md">}}
 
 **Other options / filters**
 
@@ -960,6 +963,8 @@ All Cloudflare plans.
 
 Enterprise customers who want to receive a notification when one zone is experiencing an unexpected spike or drop in traffic.
 
+{{<render file="_traffic-alerts.md">}}
+
 **Other options / filters**
 
 Multiple filters available:
@@ -974,7 +979,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
+1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
 
 {{</details>}}
 
