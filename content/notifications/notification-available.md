@@ -146,6 +146,8 @@ Customers can filter incident alerts to specific impact levels (minor, major, cr
 
 Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.
 
+The impact level and affected components of an incident may change as the incident progresses. A notification will only be sent if the configured filters match at the time of the incident update. Updates will not be sent retroactively.
+
 **Included with**
 
 All Cloudflare plans.
