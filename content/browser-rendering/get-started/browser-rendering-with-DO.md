@@ -56,6 +56,8 @@ $ npm install @cloudflare/puppeteer --save-dev
 
 Create two R2 buckets, one for production, and one for development.
 
+Note that bucket names must be lowercase and can only contain dashes.
+
 ```sh
 $ wrangler r2 bucket create SCREENSHOTS
 $ wrangler r2 bucket create SCREENSHOTS-TEST
