@@ -5,7 +5,7 @@ title: Automation
 
 # Automation
 
-Automation allow us to provide more functionality at a lower maintenance cost, as well as enable and support community contributors.
+Automation allows us to provide more functionality at a lower maintenance cost, as well as enable and support community contributors.
 
 ## General principles
 
