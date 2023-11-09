@@ -3,19 +3,26 @@ productName: WAF
 entries:
 - term: allowlist
   general_definition: |-
-    an allowlist list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
+    an allowlist is a list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
+
+- term: attack score
+  general_definition: |-
+    a number from 1 (likely malicious) to 99 (likely clean) classifying how likely an incoming request is malicious or not. Allows you to detect new attack techniques before they are publicly known.
 
 - term: blocklist
   general_definition: |-
     a blocklist is a list of items (usually websites, IP addresses, email addresses, etc.) that are prevented from accessing a system.
 
+- term: content object
+  general_definition: |-
+    a content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: `text/html`, `text/x-shellscript`, `application/json`, text/csv`, and `text/xml`.
+
 - term: firewall
   general_definition: |-
     a firewall is a security system that monitors and controls network traffic based on a set of security rules.
 
-
 - term: SIEM
   general_definition: |-
     Security Information and Event Management (SIEM) solutions provide analysis of log data from various systems.
-  associated_products: 
+  associated_products:
     - Cloudflare One
