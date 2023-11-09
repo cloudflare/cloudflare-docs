@@ -44,4 +44,4 @@ If you have chosen to hide your email when creating a Cloudflare account with Ap
 
 Changing your Cloudflare account email address will unlink the login credentials with the Apple ID from your Cloudflare account. Attempting to log in using the same Apple ID after the email is changed will create a new Cloudflare account.
 
-If you have created your Cloudflare account using Apple Relay and decide to change your Apple ID or email address, you are unable to retrieve the Cloudflare account and all login options are permanently lost.
+If you created your Cloudflare account using Apple Relay and decide to change your Apple ID or email address, you will be unable to retrieve the Cloudflare account and all login options are permanently lost.
