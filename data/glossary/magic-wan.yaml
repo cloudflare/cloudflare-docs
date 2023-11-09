@@ -38,14 +38,14 @@ entries:
 
 - term: maximum segment size (MSS)
   general_definition: |-
-    MSS limits the size of packets, or small chunks of data, that travel across a network, such as the Internet. 
+    MSS limits the size of packets, or small chunks of data, that travel across a network, such as the Internet. It ensures that the size of the packet does not exceed the maximum transmission unit (MTU) of 1500 bytes when using services such as Magic WAN or Magic Transit.
   associated_products:
     - Magic WAN
     - Magic Transit
 
 - term: on-ramp
   general_definition: |-
-    refers to a way to connect a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE or IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
+    refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
   associated_products:
     - Magic WAN
     - Magic Transit
