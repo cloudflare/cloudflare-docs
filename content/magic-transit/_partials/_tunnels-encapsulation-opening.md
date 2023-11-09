@@ -38,7 +38,7 @@ Note right of C: Egress <br> traffic
 
 ## ​​Anycast
 
-$1 uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) IP addresses for Cloudflare’s tunnel endpoints. In the {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
+$1 uses {{<glossary-tooltip term_id="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">}}Anycast{{</glossary-tooltip>}} IP addresses for Cloudflare’s tunnel endpoints. In the Anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
 This works with {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnels because the GRE protocol is stateless. Each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
