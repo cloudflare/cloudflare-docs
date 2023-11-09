@@ -6,6 +6,6 @@ weight: 9
 
 # Databases
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true">}}
 
 
