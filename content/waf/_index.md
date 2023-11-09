@@ -32,10 +32,6 @@ Define rate limits for incoming requests matching an expression, and the action 
 Enable the pre-configured managed rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
 {{</feature>}}
 
-{{<feature header="Exposed credential checks" href="/waf/managed-rules/check-for-exposed-credentials/">}}
-Monitor and block use of stolen/exposed credentials for account takeover.
-{{</feature>}}
-
 {{<feature header="Security Events" href="/waf/analytics/security-events/" cta="Explore Security Events">}}
 Review mitigated requests (rule matches) using an intuitive interface. Tailor your security configurations based on the activity log.
 {{</feature>}}
