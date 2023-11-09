@@ -45,10 +45,6 @@ Refer to [Anti-replay protection]($9) for more information on this topic, or [Ad
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-{{<Aside type="note">}}
-Bidirectional health checks are available for GRE and IPsec tunnels. For $2 this option defaults to $10. Continue reading to learn how to set up bidirectional health checks, or refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
-{{</Aside>}}
-
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
 3. From the **Tunnels** tab, select **Create**.
