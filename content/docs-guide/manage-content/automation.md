@@ -9,7 +9,7 @@ Automation allow us to provide more functionality at a lower maintenance cost, a
 
 ## General principles
 
-When thinking about what to automate in your documentation, look for tasks that are frequent, repetitive, and tedious.
+When thinking about what to automate in your documentation, look for tasks that are frequent, repetitive, or tedious.
 
 Often, the easiest way to do that is to think through the following questions:
 
