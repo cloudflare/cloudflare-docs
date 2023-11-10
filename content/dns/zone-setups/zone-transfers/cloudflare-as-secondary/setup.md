@@ -49,17 +49,23 @@ Get the following values from your Cloudflare account:
 
 {{<render file="_tsig-definition.md">}}
 
-### Using the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 {{<render file="_tsig-create-dash.md">}}
-
-### Using the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 {{<render file="_tsig-create-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## 2. Create Peer Server
 
-### Using the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To create a peer server using the dashboard:
 
@@ -73,14 +79,19 @@ To create a peer server using the dashboard:
     - **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
     - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
 6. Click **Create**.
-
-### Using the API
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To create a peer DNS server using the API, send a [POST request](/api/operations/secondary-dns-(-peer)-create-peer).
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## 3. Create the Secondary Zone
 
-### Using the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To create a secondary zone using the dashboard:
 
@@ -98,10 +109,14 @@ To create a secondary zone using the dashboard:
     {{<Aside type="note">}} If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
     {{</Aside>}}
 10. Click **Initiate zone transfer**.
-
-### Using the API
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To create a secondary zone using the API, send a [POST](/api/operations/secondary-dns-(-secondary-zone)-create-secondary-zone-configuration) request with the `type` parameter set to `"secondary"`.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## 4. Update registrar
 
