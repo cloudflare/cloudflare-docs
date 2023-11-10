@@ -6,7 +6,7 @@ weight: 10
 
 # WARP with legacy VPN
 
-The Cloudflare WARP client can run alongside most legacy third-party VPNs. Because the WARP client and third-party VPN client both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over IP and DNS traffic. To ensure compatibility:
+The Cloudflare WARP client can run alongside most legacy third-party VPNs. Because the WARP client and third-party VPN client both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over IP and DNS traffic. To ensure compatibility make sure that:
 
 - IP traffic is split tunneled between WARP and the VPN. All VPN traffic must bypass WARP and vice versa.
 - DNS resolution is handled by either WARP or the VPN. You must disable DNS filtering in one of the two products.
