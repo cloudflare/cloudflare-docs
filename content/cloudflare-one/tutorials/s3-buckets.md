@@ -8,7 +8,7 @@ title: Protect access to Amazon S3 buckets with Cloudflare Zero Trust
 
 # Protect access to Amazon S3 buckets with Cloudflare Zero Trust
 
-This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. With Zero Trust, you can use Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
+This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. You can combine Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
 
 ## Method 1: Via Cloudflare Access and VPC endpoints
 
@@ -52,7 +52,7 @@ After you create the VPC endpoint, a new entry in the VPC route table with the t
 ### 2. Set up a bucket policy for VPC access
 
 1. Go to **Services** > **Storage** > **S3**.
-2. In Amazon S3, go to **Buckets** > **`<your-S3-bucket>`** > **Permissions**.
+2. In Amazon S3, go to **Buckets** > **\<your-S3-bucket\>** > **Permissions**.
 3. Disable **Block all public access**.
 4. In **Bucket policy**, add the following policy:
 
@@ -84,7 +84,7 @@ Your bucket policy will allow your VPC to access your S3 bucket.
 
 ### 3. Enable static website hosting for the S3 bucket
 
-1. Return to Amazon S3, then go to **Buckets** > **`<your-S3-bucket01>`** > **Properties**.
+1. Return to Amazon S3, then go to **Buckets** > **\<your-S3-bucket01\>** > **Properties**.
 2. In **Static website hosting**, select **Edit**.
 3. Enable **Static website hosting**.
 4. Specify the Index and Error documents for the S3 bucket.
@@ -110,7 +110,11 @@ Your Cloudflare Tunnel will terminate at the AWS VPC using your public hostname.
 2. Select **Self-hosted**.
 3. Enter a name for the application.
 4. In **Application Domain**, enter the public hostname used by your Tunnel. For example, `s3-bucket.<your-domain>.com`.
-5. Configure the settings per your organization's requirements. For more information, refer to the [Access policies](/cloudflare-one/policies/access/). For automated systems, to access the bucket, [Service Tokens](/cloudflare-one/identity/service-tokens/) can be used.
+5. (Optional) Create a [service token](/cloudflare-one/identity/service-tokens/) to automatically authenticate access to your S3 bucket.
+6. Configure your application, then select **Next**.
+7. Add [Access policies](/cloudflare-one/policies/access/) to determine which users and applications may access your bucket.
+8. Configure the settings per your organization's requirements.
+9. Select **Add application**.
 
 Users and applications that successfully authenticate via Cloudflare Access can access your S3 bucket at `https://s3-bucket.<your-domain>.com`.
 
@@ -141,7 +145,7 @@ flowchart TB
 ### 1. Set up a bucket policy to restrict access to a specific IP address
 
 1. In the [AWS dashboard](https://aws.amazon.com/console/), go to **Services** > **Storage** > **S3**.
-2. Go to **Buckets** > `your-S3-bucket02` > **Permissions**.
+2. Go to **Buckets** > **\<your-S3-bucket02\>** > **Permissions**.
 3. Disable **Block all public access**.
 4. In **Bucket policy**, add the following policy:
 
