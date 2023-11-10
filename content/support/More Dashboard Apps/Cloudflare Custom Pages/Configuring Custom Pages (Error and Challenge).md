@@ -87,7 +87,7 @@ Only one page-specific custom error token can be used per page.
 | **Token** | **Available to** |
 | --- | --- |
 | ::GEO:: | IP/Country Block |
-| ::CAPTCHA\_BOX:: | Interactive Challenge<br/>Country Challenge (CAPTCHA Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
+| ::CAPTCHA\_BOX:: | Interactive Challenge<br/>Country Challenge (Managed Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
 | ::IM\_UNDER\_ATTACK\_BOX:: | JS Challenge |
 | ::CLOUDFLARE\_ERROR\_500S\_BOX:: | 5XX Errors |
 | ::CLOUDFLARE\_ERROR\_1000S\_BOX:: | 1XXX Errors |
