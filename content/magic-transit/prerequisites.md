@@ -10,19 +10,19 @@ Before you can begin using Magic Transit, verify that you meet Cloudflare's onbo
 
 ## Verify router compatibility
 
-Magic Transit relies on Anycast tunnels to transmit packets from Cloudflare’s global network to your origin network.
+Magic Transit relies on {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels to transmit {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} from Cloudflare’s global network to your origin network.
 
 The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
 - Support Anycast tunneling.
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
-- Support maximum segment size (MSS) clamping.
+- Support {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} clamping.
 
 ## Draft Letter of Agency
 
 Draft a [Letter of Agency (LOA)](/byoip/concepts/loa/) - sometimes referred to as a Letter of Authorization - that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. See this [LOA template](/byoip/concepts/loa/) for an example.
 
-If you are an Internet service provider (ISP) and advertising prefixes on behalf of a customer, an LOA is required for the ISP and for the customer.
+If you are an Internet service provider (ISP) and advertising {{<glossary-tooltip term_id="prefix">}}prefixes{{</glossary-tooltip>}} on behalf of a customer, an LOA is required for the ISP and for the customer.
 
 If you are using a [Cloudflare IP address](/magic-transit/cloudflare-ips/), you do not need to submit an LOA. 
 
