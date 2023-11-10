@@ -94,6 +94,6 @@ entries:
 
 - term: WAN
   general_definition: |-
-    stands for wide area network. It refers to a computer network that connects groups of computers over large distances. WANs are often used by businesses to connect their office networks. The objective is to make each of the local area networks (LANs) be remotely connected and accessible.
+    stands for Wide Area Network. It refers to a computer network that connects groups of computers over large distances. WANs are often used by businesses to connect their office networks. The objective is to make each of the local area networks (LANs) be remotely connected and accessible.
   associated_products:
     - Magic WAN
