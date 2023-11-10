@@ -9,7 +9,7 @@ meta:
 
 ## API request limits
 
-All Security Intelligence API endpoints will be counted against the monthly quota, including Page Shield endpoints.
+All API calls made to Threat Intelligence endpoints will contribute to the monthly quota. Additionally, utilizing features within the Security Center such as Investigate and Brand Protection, or other products, such as Page Shield, which also leverage the Security Intelligence APIs, will also contribute to the consumption of the quota. 
 
 {{<table-wrap>}}
 
