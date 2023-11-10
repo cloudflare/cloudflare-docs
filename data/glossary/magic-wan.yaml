@@ -52,7 +52,7 @@ entries:
 
 - term: maximum segment size (MSS)
   general_definition: |-
-    MSS limits the size of packets, or small chunks of data, that travel across a network, such as the Internet. It ensures that the size of the packet does not exceed the maximum transmission unit (MTU) of 1500 bytes when using services such as Magic WAN or Magic Transit.
+    MSS limits the size of packets, or small chunks of data, that travel across a network, such as the Internet.
   associated_products:
     - Magic WAN
     - Magic Transit
