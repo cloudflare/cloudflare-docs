@@ -153,4 +153,14 @@ You can add tracking scripts to challenge pages to capture the correct referer h
 
 ### Cross-origin resource sharing (CORS) preflight requests
 
-Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, excludes user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed, or interactive challenge).
+Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed, or interactive challenge).
+
+---
+
+## Limitations
+
+Cloudflare challenges cannot support the following:
+
+1. Implementations where a domain serves a challenge page originally requested for another domain.
+2. Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
+3. Forward proxies that can be abused to steal clearances. 
