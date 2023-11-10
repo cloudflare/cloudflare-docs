@@ -6,7 +6,7 @@ weight: 2
 
 # Automatic Speech Recognition
 
-Automatic speech recognition (ASR) models convert a speech signal, tipically an audio input, to text.
+Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text.
 
 * Task type: **speech-recognition**
 * TypeScript class: **AiSpeechRecognition**
