@@ -15,7 +15,7 @@ For the most stable and consistent connection, we recommend connecting your [pri
 
 ## Gateway with WARP
 
-In [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode, WARP must be allowed to capture and route all DNS traffic on the device. You can use [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) to send DNS requests to a server behind your third-party VPN or firewall, but the request must first go through WARP's local DNS proxy. Refer to [WARP architecture](/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/) for more information about this requirement.
+In [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode, WARP must be allowed to capture and route all DNS traffic on the device. You can use [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) to send DNS requests to a server behind your third-party VPN or firewall, but the request must first go through WARP's local DNS proxy. Refer to [WARP architecture](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/) for more information about this requirement.
 
 If you cannot disable DNS on your VPN, switch to [Secure Web Gateway without DNS filtering](#secure-web-gateway-without-dns-filtering) mode to disable DNS in WARP.
 
