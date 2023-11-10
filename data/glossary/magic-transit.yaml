@@ -3,8 +3,15 @@ productName: Magic Transit
 entries:
 - term: letter of agency
   general_definition: |-
-    sometimes referred to as a Letter of Authorization. A document that authorizes Cloudflare to advertise your prefixes. This is required to transit providers can accept the routes Cloudflare advertises on your behalf.
+    sometimes referred to as a Letter of Authorization. A document that authorizes Cloudflare to advertise your prefixes. This is required so transit providers can accept the routes Cloudflare advertises on your behalf.
   associated_products:
+    - Magic Transit
+
+- term: policy-based routing
+  general_definition: |-
+    policy-based routing (PBR) is technique used to make routing decisions based on policies set by your administrador.
+  associated_products:
+    - Magic WAN
     - Magic Transit
 
 - term: prefix
@@ -13,4 +20,4 @@ entries:
   associated_products:
     - Magic WAN
     - Magic Transit
-
+    - Magic Network Monitoring
