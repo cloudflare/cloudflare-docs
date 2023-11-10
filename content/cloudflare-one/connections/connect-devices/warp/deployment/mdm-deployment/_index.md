@@ -7,13 +7,13 @@ weight: 1
 
 # Managed deployment
 
-{{<render file="_mdm-intro.md">}}
+{{<render file="warp/_mdm-intro.md">}}
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 {{<Aside type="warning">}}
 
-{{<render file="_mdm-dash-conflict.md">}}
+{{<render file="warp/_mdm-dash-conflict.md">}}
 
 {{</Aside>}}
 
