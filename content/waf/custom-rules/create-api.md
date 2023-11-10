@@ -3,14 +3,13 @@ pcx_content_type: how-to
 type: overview
 title: Create custom rules via API
 weight: 3
-layout: list
 ---
 
 # Create custom rules via API
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule via API.
 
-You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset).
+You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
 ## Create a custom rule
 
@@ -63,3 +62,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 ```
 
 {{<render file="_api-create-ruleset-with-rule.md">}}
+
+---
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks:
+
+{{<render file="_rules-next-steps-table.md" withParameters="custom rules;;http_request_firewall_custom">}}

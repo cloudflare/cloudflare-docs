@@ -3,8 +3,6 @@ pcx_content_type: how-to
 title: Under a DDoS attack?
 meta:
     description: Learn a few ways to tell if your application is under a DDoS attack.
-aliases:
-- /fundamentals/get-started/basic-tasks/under-ddos-attack/
 ---
 
 # How to tell if you are under DDoS attack

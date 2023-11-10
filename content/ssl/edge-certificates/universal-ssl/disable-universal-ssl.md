@@ -51,7 +51,7 @@ To disable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/operatio
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}Even with Universal SSL disabled, some features such as [AMP Real URL](/speed/optimization/other/amp-real-ulr/) and [Signed Exchanges](/speed/optimization/other/signed-exchanges/) will still provision certificates for your domain.{{</Aside>}}
+{{<Aside type="note">}}Even with Universal SSL disabled, some features such as [AMP Real URL](/speed/optimization/other/amp-real-url/) and [Signed Exchanges](/speed/optimization/other/signed-exchanges/) will still provision certificates for your domain.{{</Aside>}}
 
 ## Re-enable Universal SSL
 

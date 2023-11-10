@@ -34,7 +34,7 @@ $ npm create cloudflare@latest
 {{<tab label="yarn" no-code="true">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}

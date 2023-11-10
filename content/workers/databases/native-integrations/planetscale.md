@@ -39,7 +39,7 @@ To set up an integration with PlanetScale:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
-    4. Select **Settings** > **Integrations** > **PlanetScale**. 
+    4. Select **Integrations** > **PlanetScale**. 
     5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:

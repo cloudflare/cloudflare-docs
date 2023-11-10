@@ -19,35 +19,33 @@ Regions and regional objects are automatically updated. If you route traffic thr
 
 {{</Aside>}}
 
-<details>
-  <summary>Scoping configuration data example</summary>
-  
-| Tunnel      | Region code |
-| --------------- | ----------- |
-| TUNNEL_1_IAD       | AFR         |
-| TUNNEL_2_IAD       | EEUR        |
-| TUNNEL_3_ATL       | ENAM        |
-| TUNNEL_4_ATL       | ME          |
+{{<details header="Scoping configuration data example">}}
 
-</details>
+| Tunnel       | Region code |
+| ------------ | ----------- |
+| TUNNEL_1_IAD | AFR         |
+| TUNNEL_2_IAD | EEUR        |
+| TUNNEL_3_ATL | ENAM        |
+| TUNNEL_4_ATL | ME          |
+
+{{</details>}}
 
 Cloudflare has nine geographic regions across the world which are listed below.
 
-<details>
-  <summary>Region codes and associated regions</summary>
+{{<details header="Region codes and associated regions">}}
 
-| Region code     | Region                |
-| --------------- | --------------------- |
-| AFR             | Africa                |
-| APAC            | Asia Pacific          |
-| EEUR            | Eastern Europe        |
-| ENAM            | Eastern North America |
-| ME              | Middle East           |
-| OC              | Oceania               |
-| SAM             | South America         |
-| WEUR            | Western Europe        |
-| WNAM            | Western North America |
+| Region code | Region                |
+| ----------- | --------------------- |
+| AFR         | Africa                |
+| APAC        | Asia Pacific          |
+| EEUR        | Eastern Europe        |
+| ENAM        | Eastern North America |
+| ME          | Middle East           |
+| OC          | Oceania               |
+| SAM         | South America         |
+| WEUR        | Western Europe        |
+| WNAM        | Western North America |
 
-</details>
+{{</details>}}
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) or [Edit a static route](#edit-a-static-route) for more information on this.

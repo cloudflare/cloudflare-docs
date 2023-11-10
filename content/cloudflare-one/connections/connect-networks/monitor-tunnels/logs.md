@@ -18,11 +18,11 @@ If you have access to the origin server, you can enable logging when you start t
 $ cloudflared tunnel --loglevel debug run <UUID>
 ```
 
-The [`--loglevel` flag](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#loglevel) indicates the logging level for the local `cloudflared` instance, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
+The [`--loglevel` flag](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) indicates the logging level for the local `cloudflared` instance, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
 
 ### Write logs to file
 
-By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can use the [`--logfile` flag](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) to save your logs to a file:
+By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can use the [`--logfile` flag](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) to save your logs to a file:
 
 ```sh
 $ cloudflared tunnel --logfile mytunnel.log run <UUID>
@@ -41,7 +41,7 @@ You can view real-time logs for a Cloudflare Tunnel via the dashboard or from an
 
 #### View logs
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels** and select your tunnel.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and select your tunnel.
 2. In the sidebar, select the **Connector ID** for the `cloudflared` instance you want to view.
 3. Select **Begin log stream**.
 
@@ -84,15 +84,15 @@ $ cloudflared tail --level debug <UUID>
 | Flag   | Description | Allowed values | Default value |
 | ------ | ----------- | -------| --------|
 | `--event` | Filter by the type of event / request. | `cloudflared`, `http`, `tcp`, `udp` | All events |
-| `--level` | Return logs at this level and above. Works independently of the [`--loglevel`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#loglevel) setting on the server. | `debug`, `info`, `warn`, `error`, `fatal` | `debug` |
+| `--level` | Return logs at this level and above. Works independently of the [`--loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) setting on the server. | `debug`, `info`, `warn`, `error`, `fatal` | `debug` |
 | `--sampling` | Sample a fraction of the total logs. | Number from `0.0` to `1.0` | `1.0` |
 {{</table-wrap>}}
 
 #### View logs for a replica
 
-If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/)), you must specify an individual instance to stream logs from:
+If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/)), you must specify an individual instance to stream logs from:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels** and select your tunnel.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and select your tunnel.
 2. Find the **Connector ID** for the `cloudflared` instance you want to view.
 3. Specify the Connector ID in `cloudflared tail`:
     ```sh

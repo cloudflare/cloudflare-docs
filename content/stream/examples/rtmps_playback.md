@@ -18,7 +18,7 @@ Copy the RTMPS _playback_ key for your live input from the [Stream Dashboard](ht
 ---
 header: RTMPS playback with ffplay
 ---
-$ ffplay -analyzeduration 1 -fflags -nobuffer -probesize 32 -sync ext 'rtmps://live.cloudflare.com:443/live/<RTMPS_PLAYBACK_KEY>'
+$ ffplay -analyzeduration 1 -fflags -nobuffer -sync ext 'rtmps://live.cloudflare.com:443/live/<RTMPS_PLAYBACK_KEY>'
 ```
 
 For more, refer to [Play live video in native apps with less than one second latency](/stream/viewing-videos/using-own-player/#play-live-video-in-native-apps-with-less-than-1-second-latency).

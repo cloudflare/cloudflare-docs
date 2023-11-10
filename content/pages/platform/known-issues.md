@@ -9,13 +9,13 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Builds and deployment
 
-- GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct uploads](/pages/platform/direct-upload/) allow you to integrate your own build platform or upload from your local computer.
+- GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct Upload](/pages/get-started/direct-upload/) allows you to integrate your own build platform or upload from your local computer.
 
-- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Uploads](/pages/platform/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
+- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Upload](/pages/get-started/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
 
 - Incremental builds are currently not supported in Cloudflare Pages.
 
-- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
+- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#using-functions)).
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
@@ -113,4 +113,4 @@ $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_N
 
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
 
-To find your Account ID, refer to [Find your zone and account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).

@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Understand Cloudflare invoices
 weight: 3
-aliases:
-- /fundamentals/account-and-billing/account-maintenance/understand-invoices/
 ---
 
 # Understand Cloudflare invoices
@@ -85,7 +83,7 @@ Billing periods are 30 days. Payments for all recurring monthly costs are proces
 
 ### Cloudflare invoice without company name
 
-To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/account-and-billing/account-maintenance/updating-billing-info/).
+To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/account-and-billing/account-billing/updating-billing-info/).
 
 ### Inconsistent invoice and payment amounts
 

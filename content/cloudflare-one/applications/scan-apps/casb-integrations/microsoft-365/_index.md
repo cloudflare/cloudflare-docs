@@ -73,6 +73,12 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 | Microsoft Folder Shared Company Wide Read Only      | Medium   |
 | Calendar shared externally                          | Low      |
 
+### Data Loss Prevention (optional)
+
+{{<render file="casb/_data-loss-prevention.md">}}
+
+{{<render file="casb/_m365-dlp-findings.md">}}
+
 ### Third-party apps
 
 Identify and get alerted about the third-party apps that have access to at least one service in your Microsoft 365 domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into Shadow IT.

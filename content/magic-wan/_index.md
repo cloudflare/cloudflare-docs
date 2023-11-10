@@ -15,9 +15,9 @@ meta:
 
 Magic WAN provides secure, performant connectivity and routing for your entire corporate networking, reducing cost and operation complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with Magic WAN, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
 
-With Magic WAN, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
+With Magic WAN, you can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 
-Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels, [Cloudflare Network Interconnect](/network-interconnect/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners.
+Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps{{</glossary-tooltip>}} including {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, [Cloudflare Network Interconnect](/network-interconnect/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners.
 
 ---
  
@@ -27,7 +27,7 @@ Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels,
 Use Magic WAN Connector to automatically connect, steer, and shape any IP traffic.
 {{</feature>}}
 
-{{<feature header="Probes" href="/magic-wan/reference/probe-construction/">}}
+{{<feature header="Tunnel health checks" href="/magic-wan/reference/tunnel-health-checks/">}}
 Magic WAN sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 

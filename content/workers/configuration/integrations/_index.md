@@ -2,11 +2,13 @@
 pcx_content_type: concept
 title: Integrations
 layout: single
+meta:
+  description: Integrate with third-party services and products.
 ---
 
 # Integrations
 
-One of the key features of Cloudflare Workers is the ability to easily integrate with other services and products. In this document, we will explain the types of integrations available with Cloudflare Workers and provide step-by-step instructions for using them.
+One of the key features of Cloudflare Workers is the ability to integrate with other services and products. In this document, we will explain the types of integrations available with Cloudflare Workers and provide step-by-step instructions for using them.
 
 ## Types of integrations
 

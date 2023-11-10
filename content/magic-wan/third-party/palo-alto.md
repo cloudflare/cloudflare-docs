@@ -1,6 +1,6 @@
 ---
 pcx_content_type: integration-guide
-title: Palo Alto
+title: Palo Alto Networks NGFW
 meta:
   title: Palo Alto Networks Next-Generation Firewall
 ---
@@ -53,7 +53,7 @@ These are the target IP addresses for bidirectional tunnel health checks:
 - `172.64.240.253`: Use with the primary IPsec tunnel.
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
 
-{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
+{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
 
 
 #### Add IPsec tunnels

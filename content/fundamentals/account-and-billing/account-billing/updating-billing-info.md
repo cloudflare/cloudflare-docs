@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Update billing information
 weight: 2
-aliases:
-- /fundamentals/account-and-billing/account-maintenance//updating-billing-info/
 ---
 
 # Update billing information
@@ -27,6 +25,44 @@ To access your current payment methods (primary and backup):
 ## Add or update payment methods
 
 {{<render file="_billing-add-payment-method.md">}}
+
+### Payment options
+
+Enterprise customers can submit payments via the following payment options:
+
+#### ACH 
+
+(preferred method)
+
+- **Bank**: Citibank, One Penn’s Way, New Castle, DE 19720 USA
+- **Account name**: CLOUDFLARE INC
+- **Account number**: 31460181
+- **ABA/Routing number**: 031100209
+
+#### Wire transfer
+
+- **Bank**: Citibank, One Penn’s Way, New Castle, DE 19720 USA
+- **Account name**: CLOUDFLARE INC
+- **Account number**: 31460181
+- **ABA/Routing number**: 031100209
+- **SWIFT**: CITIUS33
+
+#### PayPal
+
+Log in to your PayPal account and send your payment to ar@cloudflare.com. The payment must include the invoice number and customer name.
+
+#### International payments
+
+- **Bank**: Citibank, One Penn’s Way, New Castle, DE 19720 USA
+- **Account name**: CLOUDFLARE INC
+- **Account number**: 31460181
+- **SWIFT**: CITIUS33
+
+{{<Aside type="note">}}
+
+US banks do not participate in International Bank Account Numbers (IBAN).
+
+{{</Aside>}}
 
 ## Delete your current payment method
 

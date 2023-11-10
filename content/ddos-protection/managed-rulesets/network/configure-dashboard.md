@@ -25,16 +25,16 @@ For more information on the available parameters and allowed values, refer to [R
 
 7. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
-    <details><summary>Configure all the rules in the ruleset (ruleset override)</summary><div>
+    {{<details header="Configure all the rules in the ruleset (ruleset override)">}}
 
     1. Select **Next**.
     2. Enter a name for your override in **Execution name**.
     3. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
     4. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 
-    </div></details>
+    {{</details>}}
 
-    <details><summary>Configure one or more rules</summary><div>
+    {{<details header="Configure one or more rules">}}
 
     1. Search for the rules you wish to override using the available filters. You can search for tags.
 
@@ -46,9 +46,10 @@ For more information on the available parameters and allowed values, refer to [R
 
     4. Enter a name for your override in **Execution name**.
 
-    </div></details>
+    {{</details>}}
 
     {{<Aside type="note" header="Notes">}}
+
 * Tag and rule overrides have priority over ruleset overrides.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
     {{</Aside>}}

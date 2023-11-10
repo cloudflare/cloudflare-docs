@@ -494,6 +494,15 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-bot_management-verified_bot_categories">
+        <td><p><code>cf.verified_bot_category</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+          <p>Provides the type and purpose of a verified bot.</p>
+          <p>For more details, refer to <a href="/bots/reference/verified-bot-categories/">Verified Bot Categories</a>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-bot_management-score">
         <td><p><code>cf.bot_management.score</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
@@ -582,6 +591,13 @@ The Cloudflare Rules language supports these dynamic fields:
           <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code>uuidv4()</code></a> function.
           </p>
         </td>
+    </tr>
+    <tr id="field-cf-ray_id">
+      <td><code>cf.ray_id</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The Ray ID of the current request. A <a href="/fundamentals/reference/cloudflare-ray-id/">Ray ID</a> is an identifier given to every request that goes through Cloudflare.
+        </p>
+      </td>
     </tr>
     <tr id="field-cf-threat_score">
         <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>

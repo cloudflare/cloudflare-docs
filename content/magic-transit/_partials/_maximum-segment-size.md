@@ -28,7 +28,7 @@ B->>C: Protocol <br> IP <br> GRE <br> IP
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-Cloudflare Magic WAN uses tunnels to deliver packets from our global network to your data centers. Cloudflare encapsulates these packets adding new headers.
+Cloudflare $1 uses tunnels to deliver packets from our global network to your data centers. Cloudflare encapsulates these packets adding new headers.
 
 $2
 

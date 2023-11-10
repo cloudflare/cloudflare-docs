@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Logs
-weight: 6
+weight: 3
 meta:
     title: Zero Trust logs
 ---

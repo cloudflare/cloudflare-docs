@@ -4,6 +4,11 @@ pcx_content_type: concept
 weight: 2
 meta:
   title: Changelog for the HTTP DDoS managed ruleset
+layout: changelog
+changelog_file_name: [ddos-http]
+outputs:
+    - html
+    - rss
 ---
 
 # Changelog for the HTTP DDoS managed ruleset

@@ -20,6 +20,10 @@ All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTP
 
 {{<render file="_doh-ips.md">}}
 
+### Android devices
+
+If you are deploying the Cloudflare One Agent on Android/ChromeOS, you must also add `cloudflare-dns.com` to your firewall exception list. On Android/ChromeOS devices, WARP uses `cloudflared-dns.com` to resolve domains on your [Split Tunnel list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
+
 ## Client authentication endpoint
 
 When you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow the following domains:

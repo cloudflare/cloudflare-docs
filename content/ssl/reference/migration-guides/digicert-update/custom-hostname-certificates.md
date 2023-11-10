@@ -13,7 +13,13 @@ Starting on **September 7, 2023**, new Cloudflare accounts will not have the opt
 
 On **October 18, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new SSL for SaaS certificates. This will not affect existing SSL for SaaS certificates.
 
-On **October 25, 2023**, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
+{{<Aside type="warning">}}
+
+The offboarding for SSL for SaaS certificate renewals has been postponed from October 25, 2023 to November 1, 2023.
+
+{{</Aside>}}
+
+On **November 1, 2023**, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
 
 The default CA - for API orders that do not specify `certificate_authority` - and the CA used for certificate renewals will shift to either Let's Encrypt or Google Trust Services.
 
@@ -51,9 +57,9 @@ If your system integrates with the Cloudflare for SaaS API to [create custom hos
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
-### Before October 25, 2023
+### Before November 1, 2023
 
-We recommend that you migrate all your current custom hostnames away from DigiCert before October 25, 2023. This will give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
+We recommend that you migrate all your current custom hostnames away from DigiCert before November 1, 2023. This will give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
 
 #### Identify certificates
 

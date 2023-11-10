@@ -225,7 +225,7 @@ ___
 
 ### Cause courante
 
-Le nom d'hôte envoyé par le client ou le navigateur via [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) ne correspond pas à l'en-tête de l’hôte de la requête.
+Le nom d'hôte envoyé par le client ou le navigateur via [Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) ne correspond pas à l'en-tête de l’hôte de la requête.
 
 ### Résolution
 

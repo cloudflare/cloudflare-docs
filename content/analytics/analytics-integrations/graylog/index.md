@@ -3,8 +3,6 @@ pcx_content_type: how-to
 title: Graylog
 weight: 102
 layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/graylog/
 ---
 
 # Graylog

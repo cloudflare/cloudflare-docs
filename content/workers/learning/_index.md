@@ -1,9 +1,11 @@
 ---
 pcx_content_type: navigation
 title: Learning
-weight: 5
+weight: 6
 ---
 
 # Learning
 
-{{<directory-listing>}}
+Conceptual knowledge about how Workers works.
+
+{{<directory-listing showDescriptions="true">}}

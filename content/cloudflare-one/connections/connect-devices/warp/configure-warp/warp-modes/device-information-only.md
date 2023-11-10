@@ -10,7 +10,7 @@ Device Information Only mode allows you to enforce device posture rules when a u
 
 To set up Device Information Only mode:
 
-1. Enable client certificate provisioning for [your zone](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/):
+1. Enable client certificate provisioning for [your zone](/fundamentals/setup/find-account-and-zone-ids/):
 
    ```sh
    curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE ID>/devices/policy/certificates' \

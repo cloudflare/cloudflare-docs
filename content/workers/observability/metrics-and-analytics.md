@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
+meta:
+  description: Diagnose issues for individual Worker projects with Workers metrics, and review request data for all Workers assigned to a zone with Workers analytics.
 ---
 
 # Metrics and analytics
@@ -11,7 +13,7 @@ There are two graphical sources of information about your Workers traffic at a g
 
 ## Workers metrics
 
-Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). To view your Worker's metrics:
+Workers metrics aggregate request data for an individual Worker (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). To view your Worker's metrics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages**.
@@ -60,7 +62,7 @@ The CPU Time per execution chart shows historical CPU time data broken down into
 
 The Duration per execution chart shows historical [duration](/workers/platform/limits/#duration) per Worker execution. The data is broken down into relevant quantiles, similar to the CPU time chart. Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). Understanding duration on your Worker is especially useful when you are intending to do a significant amount of computation on the Worker itself.
 
-Workers on the [Bundled Usage Model](/workers/platform/pricing/#usage-models) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like `fetch` requests, and waiting on responses.
+Workers on the [Bundled Usage Model](/workers/platform/pricing/#bundled-usage-model) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like `fetch` requests, and waiting on responses.
 
 ### Request duration
 
@@ -75,13 +77,13 @@ The egress data chart shows the total amount of data sent out of the Worker over
 
 ### Metrics retention
 
-Worker script metrics can be inspected for up to three months in the past in maximum increments of one week. The dashboard includes the charts and information described below.
+Worker metrics can be inspected for up to three months in the past in maximum increments of one week. The dashboard includes the charts and information described below.
 
 ---
 
 ## Zone analytics
 
-Aggregates request data for all scripts assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
+Aggregates request data for all Workers assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
 
 Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
 

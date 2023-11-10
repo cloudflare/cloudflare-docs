@@ -35,14 +35,14 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 6. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
-    <details><summary>Configure all the rules in the ruleset (ruleset override)</summary><div>
+    {{<details header="Configure all the rules in the ruleset (ruleset override)">}}
 
     1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
     2. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 
-    </div></details>
+    {{</details>}}
 
-    <details><summary>Configure one or more rules</summary><div>
+    {{<details header="Configure one or more rules">}}
 
     1. Under **Rule configuration**, select **Browse rules**.
 
@@ -54,13 +54,13 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
     4. Select **Next**.
 
-    </div></details>
+    {{</details>}}
 
     {{<Aside type="note" header="Notes">}}
+
 * Tag and rule overrides have priority over ruleset overrides.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
     {{</Aside>}}
-
 
 7. Select **Save**.
 

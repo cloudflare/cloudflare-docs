@@ -25,10 +25,10 @@ These examples use:
 
 For best results:
 
-- Use [Bot Analytics](/learning-paths/bot-management/setup/review-analytics/) to learn about your traffic before applying rules.
+- Use [Bot Analytics](/bots/bot-analytics/bm-subscription/) to learn about your traffic before applying rules.
 - Start small and increase your bot threshold over time.
 
-Your rules may also vary based on the [nature of your site](/learning-paths/bot-management/setup/expand-rules/) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/) and your tolerance for false positives.
 
 ### Protect browser endpoints
 

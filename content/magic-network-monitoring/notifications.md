@@ -1,7 +1,7 @@
 ---
 title: Notifications
 pcx_content_type: how-to
-weight: 5
+weight: 6
 ---
 
 # Notifications

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Deploy button
+meta:
+  description: Deploy an application from a set of ready-made Cloudflare templates or make deploy buttons for your own applications to make sharing your work easier.
 ---
 
 # Deploy button

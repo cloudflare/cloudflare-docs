@@ -7,31 +7,23 @@ weight: 2
 
 # Create custom rules in the dashboard
 
-Create custom rules in **Security** > **WAF** > **Custom rules**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
-## Create a custom rule
+2. Go to **Security** > **WAF** > **Custom rules**.
 
-To create a new custom rule:
+3. Select **Create rule**.
 
-1. Log in to the Cloudflare dashboard.
-
-2. Select the **Websites** tab and choose the site for which you want to create a rule.
-
-3. Go to **Security** > **WAF** > **Custom rules**.
-
-4. Select **Create rule**.
-
-5. Enter a descriptive name for the rule in **Rule name**.
+4. Enter a descriptive name for the rule in **Rule name**.
 
     ![Custom rule creation page in the Cloudflare dashboard](/images/waf/custom-rules/firewall-custom-rule-create.png)
 
-6. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-7. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
+6. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-8. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
+7. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
 
-9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Configuring a custom response for blocked requests
 

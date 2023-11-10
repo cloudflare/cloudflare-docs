@@ -41,12 +41,6 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 {{<pages-build-preset framework="angular-cli">}}
 
-{{<Aside type="warning" header="Minimum Node.js version">}}
-
-Angular requires a Node version of `14.15` or `16.10` to deploy successfully to Cloudflare Pages. When setting up your project, select **Environment variables (advanced)** and input an environment variable `NODE_VERSION` with one of these values.
-
-{{</Aside>}}
-
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
 #### Angular CLI Configuration

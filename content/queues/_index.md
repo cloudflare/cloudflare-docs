@@ -59,7 +59,7 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 {{<resource header="Pricing" href="/queues/platform/pricing/" icon="price">}}Learn about pricing.{{</resource>}}
 
-{{<resource header="Limits" href="/queues/platform/limits/" icon="documentation-clipboard">}}Learn about Queues limits (100 Queues per account).{{</resource>}}
+{{<resource header="Limits" href="/queues/platform/limits/" icon="documentation-clipboard">}}Learn about Queues limits.{{</resource>}}
 
 {{<resource header="Try the Demo" href="https://github.com/Electroid/queues-demo#cloudflare-queues-demo" icon="learning-center-book">}}Try Cloudflare Queues which can run on your local machine.{{</resource>}}
 

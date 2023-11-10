@@ -32,7 +32,7 @@ To serve static files like CSS, image or JavaScript files, add the following to 
 
 ```javascript
 app.get("/public/*", async (ctx) => {
-  return await ctx.env.ASSETS.fetch(ctx.req);
+  return await ctx.env.ASSETS.fetch(ctx.req.raw);
 });
 ```
 

@@ -5,21 +5,46 @@ title: Redirects
 
 # Redirects
 
-## Create redirects
-
 To use redirects on Cloudflare Pages, declare your redirects in a plain text file called `_redirects` without a file extension, in the output folder of your project. The [build output folder](/pages/platform/build-configuration/) is project-specific, so the `_redirects` file should not always be in the root directory of the repository. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
 
-Only one redirect can be defined per line and must follow this format:
+## Structure
+
+### Per line
+
+Only one redirect can be defined per line and must follow this format, otherwise it will be ignored.
 
 ```txt
 [source] [destination] [code?]
 ```
 
-{{<Aside type="note">}}
+{{<definitions>}}
 
-The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
+- `source` {{<prop-meta>}}required{{</prop-meta>}}
+  
+  - A file path.
+  - Can include [wildcards (`*`)](#splats) and [placeholders](#placeholders).
+  - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source are not evaluated.
+    
+- `destination` {{<prop-meta>}}required{{</prop-meta>}}
+  
+  - A file path or external link. 
+  - Can include fragments, query strings, [splats](#splats), and [placeholders](#placeholders).
+    
+- `code` {{<prop-meta>}}default: `302`{{</prop-meta>}}
+  
+  - Optional parameter
 
-{{</Aside>}}
+{{</definitions>}}
+
+### Per file
+
+A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
+
+In your `_redirects` file:
+
+- The order of your redirects matter. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
+- Static redirects should appear before dynamic redirects.
+- Redirects are always followed, regardless of whether or not an asset matches the incoming request.
 
 A complete example with multiple redirects may look like the following:
 
@@ -33,6 +58,7 @@ filename: _redirects
 /twitch https://twitch.tv
 /trailing /trailing/ 301
 /notrailing/ /nottrailing 301
+/page/ /page/#fragment 301
 /blog/* https://blog.my.domain/:splat
 /products/:code/:name /products?code=:code&name=:name
 ```
@@ -47,13 +73,7 @@ In the case of some frameworks, such as Jekyll, you may need to manually copy an
 
 {{</Aside>}}
 
-A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied. Redirects are always followed, regardless of whether or not an asset matches the incoming request.
-
-{{<Aside type= "note">}}
-
-Make sure that static redirects are before dynamic redirects in your `_redirects` file.
-
-{{</Aside>}}
+## Advanced redirects
 
 Cloudflare currently offers limited support for advanced redirects. More support will be added in the future.
 

@@ -6,7 +6,7 @@ _build:
 inputParameters: healthChecksUrl;;addTunnelsPath
 ---
 
-By default, Cloudflare servers send [health checks]($1) to each GRE, CNI, or IPsec tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency [via the API](/api/operations/magic-gre-tunnels-update-gre-tunnel) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+By default, Cloudflare servers send {{<glossary-tooltip term_id="tunnel health-check" link="$1">}}health checks{{</glossary-tooltip>}} to each {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}}, CNI, or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency [via the API](/api/operations/magic-gre-tunnels-update-gre-tunnel) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
 
 Available options are `low`, `mid`, and `high`.
 
@@ -30,6 +30,7 @@ curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tunnel_id} \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Key: <API_KEY>" \
 --data '{
   "health_check": {"rate":"low"}
   }'

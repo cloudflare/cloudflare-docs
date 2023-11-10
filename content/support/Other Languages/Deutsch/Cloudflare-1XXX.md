@@ -231,7 +231,7 @@ ___
 
 ### Häufige Ursache
 
-Der vom Client oder Browser durch [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) gesendete Hostname stimmt nicht mit dem Host-Header der Anfrage überein.
+Der vom Client oder Browser durch [Server Name Indication](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) gesendete Hostname stimmt nicht mit dem Host-Header der Anfrage überein.
 
 ### Lösung
 

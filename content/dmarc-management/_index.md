@@ -8,7 +8,7 @@ meta:
   description: Stop brand impersonation.
 ---
 
-{{<beta>}} Cloudflare DMARC Management {{</beta>}}
+{{<heading-pill style="beta">}} Cloudflare DMARC Management {{</heading-pill>}}
 
 {{<description>}}
 Stop brand impersonation.

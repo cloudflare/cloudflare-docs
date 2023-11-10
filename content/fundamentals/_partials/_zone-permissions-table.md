@@ -66,8 +66,8 @@ inputParameters: editWord
 | Waiting Room $1                | Grants write access to [Waiting Room](/waiting-room/).                                                                                     |
 | Web3 Hostnames Read              | Grants read access to [Web3 Hostnames](/web3/).                                                                                            |
 | Web3 Hostnames $1              | Grants write access to [Web3 Hostnames](/web3/).                                                                                           |
-| Workers Routes Read              | Grants read access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/workers/runtime-apis/kv/).                                 |
-| Workers Routes $1              | Grants write access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/workers/runtime-apis/kv/).                                |
+| Workers Routes Read              | Grants read access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                 |
+| Workers Routes $1              | Grants write access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                |
 | Zaraz Read                       | Grants read access to [Zaraz](/zaraz/) zone level settings.                                                                                |
 | Zaraz $1                       | Grants write access to [Zaraz](/zaraz/) zone level settings.                                                                               |
 | Zone Read                        | Grants read access to zone management.                                                                                                     |

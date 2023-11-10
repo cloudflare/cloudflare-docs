@@ -177,7 +177,7 @@ An additional access rule is required for Magic WAN health checks to work proper
 
 ## 8. Setup health checks
 
-You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-health-checks/) correctly. Here is an example of how to set up health checks: 
+You have to [configure Magic WAN health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) correctly. Here is an example of how to set up health checks: 
 
 ```bash
 curl --request PUT \

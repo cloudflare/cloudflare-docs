@@ -12,7 +12,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ## Prerequisites
 
-- [Add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+- [Add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
 - [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 
 ## 1. Add your application to Access
@@ -32,7 +32,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
    - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) that you control.
    - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
-7. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+7. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
 8. {{<render file="_access-block-page.md">}}
 
@@ -78,7 +78,7 @@ Next, set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/
 
 To secure your origin, you must validate the [application token](/cloudflare-one/identity/authorization-cookie/) issued by Cloudflare Access.
 
-One option is to configure the Cloudflare Tunnel daemon, `cloudflared`, to validate the token on your behalf. This is done by enabling [**Protect with Access**](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/#access) in your Cloudflare Tunnel settings. If you do not wish to use Cloudflare Tunnel, you can [manually configure your origin](/cloudflare-one/identity/authorization-cookie/validating-json/) to check all requests for a valid token.
+One option is to configure the Cloudflare Tunnel daemon, `cloudflared`, to validate the token on your behalf. This is done by enabling [**Protect with Access**](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access) in your Cloudflare Tunnel settings. If you do not wish to use Cloudflare Tunnel, you can [manually configure your origin](/cloudflare-one/identity/authorization-cookie/validating-json/) to check all requests for a valid token.
 
 Users can now connect to your self-hosted application after authenticating with Cloudflare Access.
 

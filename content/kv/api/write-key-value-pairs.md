@@ -11,7 +11,7 @@ To create a new key-value pair, or to update the value for a particular key, cal
 The basic form of the method  `put()` looks like this:
 
 ```js
-await NAMESPACE.put(key, value);
+await env.NAMESPACE.put(key, value);
 ```
 
 ## Parameters
@@ -69,9 +69,9 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTTL`, depending on how you want to specify the key’s expiration time. 
+The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtl`, depending on how you want to specify the key’s expiration time. 
 
-To use `expiration` or `expirationTTL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
+To use `expiration` or `expirationTtl`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 
 {{<definitions>}}
 
@@ -83,16 +83,16 @@ To use `expiration` or `expirationTTL`, run one of the two commands below to set
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write with an expiration on the command line via Wrangler](/kv/learning/kv-namespaces/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 ## Metadata
 
-To associate some metadata with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
+To associate some {{<glossary-tooltip term_id="metadata">}}metadata{{</glossary-tooltip>}} with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
 
 To do this in your Worker script:
 
 ```js
-await NAMESPACE.put(key, value, {
+await env.NAMESPACE.put(key, value, {
   metadata: { someMetadataKey: "someMetadataValue" },
 });
 ```

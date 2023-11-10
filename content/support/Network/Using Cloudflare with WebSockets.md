@@ -46,11 +46,9 @@ ___
 
 ## Do Cloudflare Workers support proxying WebSockets?
 
-Yes, Cloudflare Workers support proxying WebSockets. However, it currently does not support:
+Yes, Cloudflare Workers support proxying WebSockets.
 
--   Manipulating or modifying individual messages
-
-Cloudflare Workers also supports terminating (acting as an endpoint for) WebSockets sessions using [Durable Objects](/durable-objects/).
+You can also use [Durable Objects](/durable-objects/) as an endpoint for WebSocket sessions, giving you full control over messages sent to and from clients.
 
 ___
 

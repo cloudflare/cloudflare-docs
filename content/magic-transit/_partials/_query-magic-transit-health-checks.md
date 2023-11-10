@@ -11,7 +11,7 @@ In this example, you are going to use the GraphQL Analytics API to query Magic T
 
 The following API call will request a particular account's tunnel health checks over a one day period for a particular Cloudflare data center, and outputs the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your API credentials, and adjust the `datetimeStart`, `datetimeEnd` variables as needed.
 
-It will return the tunnel health check results by Cloudflare data center. The result for each data center is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel](/magic-transit/reference/probe-construction/). These states are used by Magic Transit for [routing](/magic-transit/reference/probe-construction/). The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
+It will return the tunnel health check results by Cloudflare data center. The result for each data center is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel](/magic-transit/reference/tunnel-health-checks/). These states are used by Magic Transit for [routing](/magic-transit/reference/tunnel-health-checks/). The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
 
 ## API Call
 

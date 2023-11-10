@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Magic Network Monitoring
 ---
 
-{{<beta>}} Cloudflare Magic Network Monitoring {{</beta>}}
+{{<heading-pill style="beta">}} Cloudflare Magic Network Monitoring {{</heading-pill>}}
 
 {{<description>}}
 

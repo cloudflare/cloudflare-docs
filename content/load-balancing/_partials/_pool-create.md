@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You can create a pool within the [load balancer workflow](/load-balancing/how-to/create-load-balancer/) or in the **Origin Pools** section of the dashboard:
+You can create a pool within the [load balancer workflow](/load-balancing/load-balancers/create-load-balancer/) or in the **Origin Pools** section of the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 
@@ -19,7 +19,7 @@ You can create a pool within the [load balancer workflow](/load-balancing/how-to
 4.  For each origin, enter the following information:
     *   A name (must be unique)
     *   The origin server address or associated hostname
-    *   (Optional) A [**Virtual Network**](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). Required when the origin has a private IP address.
+    *   (Optional) A [**Virtual Network**](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). Required when the origin has a private IP address.
     *   A [**Weight**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights)
     *   (Optional) A [hostname](/load-balancing/additional-options/override-http-host-headers/) by clicking **Add host header**
 
@@ -29,8 +29,8 @@ You can create a pool within the [load balancer workflow](/load-balancing/how-to
 
 7.  On the origin pool, update the following information:
     *   **Health Threshold**: {{<render file=_pool-health-threshold.md productFolder="load-balancing">}}
-    *   **Monitor**: Attach a [monitor](/load-balancing/how-to/create-monitor/)
-    *   **Health Monitor Regions**: Choose whether to check pool health from [multiple locations](/load-balancing/understand-basics/monitors/#health-monitor-regions), which increases accuracy but can lead to probe traffic to your origin
+    *   **Monitor**: Attach a [monitor](/load-balancing/monitors/create-monitor/)
+    *   **Health Monitor Regions**: Choose whether to check pool health from [multiple locations](/load-balancing/monitors/#health-monitor-regions), which increases accuracy but can lead to probe traffic to your origin
     *   **Pool Notifications**: You can set up new alerts - and view existing alerts - to be notified when pools are enabled or disabled, or pools or origins have changes in their [health status](/load-balancing/understand-basics/health-details/).
 
 8.  When finished, select **Save**.

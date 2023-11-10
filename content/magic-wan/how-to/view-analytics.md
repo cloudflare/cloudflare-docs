@@ -9,4 +9,7 @@ meta:
 
 ## Query analytics with GraphQL
 
-You can also query analytics data using GraphQL. Refer to [Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-bandwidth-analytics/) and [Querying Magic Transit tunnel health check results with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/) for more information.
+You can also query analytics data using GraphQL. Review the topics below to learn more:
+
+- [Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-bandwidth-analytics/) 
+- [Querying Magic Transit tunnel health check results with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/)

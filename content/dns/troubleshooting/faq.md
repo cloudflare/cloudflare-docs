@@ -178,15 +178,15 @@ ___
 This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
-1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
+1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/get-started/setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
 
 ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a proxied DNS record that can use Cloudflare Page Rules or Cloudflare Workers.
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/), or [Cloudflare Workers](/workers/).
 
 ## Why are DNS queries returning incorrect results?
 

@@ -130,7 +130,7 @@ Error 520 occurs when the origin server returns an empty, unknown, or unexpected
 {{<Aside type="note">}}
 A quick workaround while further investigating 520 errors is to either
 make the record [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records)
-in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 {{</Aside>}}
 
 [Contact your hosting provider or site administrator](#required-error-details-for-hosting-provider) and request a review of your origin web server error logs for crashes and to check for these common causes:
@@ -154,7 +154,7 @@ If 520 errors continue after contacting your hosting provider or site administra
 -   Output from `http://<YOUR_DOMAIN>/cdn-cgi/trace`
 -   Two [HAR files](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file):
     -   one with Cloudflare enabled on your website, and
-    -   the other with [Cloudflare temporarily disabled](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+    -   the other with [Cloudflare temporarily disabled](/fundamentals/setup/manage-domains/pause-cloudflare/).
 
 ___
 
@@ -230,7 +230,7 @@ ___
 Error 524 indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second connection timed out. This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
 
 {{<Aside type="note">}}
-A 522 occurs if the origin web server
+A 524 occurs if the origin web server
 acknowledges (*ACK*) the resource request after the connection has been
 established, but does not send a timely response.
 {{</Aside>}}
@@ -254,9 +254,15 @@ or
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting).
+-   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting) or using a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting in the Cloudflare Dashboard.
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
 -   If error 524 occurs for a domain using [Cloudflare Railgun](/railgun/) (deprecated), ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
+
+{{<Aside type="note">}}
+Please note that you may observe a 1 second difference between the timeout you've set and the actual time at which the Error 524 is returned.
+This is expect, it's due to the current work on implementing [Pingora, our new proxy](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
+As a workaround you can simply set the timeout to 1 second more (121 seconds instead of 120 seconds for example).
+{{</Aside>}}
 
 ___
 
@@ -279,7 +285,7 @@ Contact your hosting provider to exclude the following common causes at your or
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support
+-   No [SNI](https://developers.cloudflare.com/fundamentals/reference/glossary/#server-name-indication-sni) support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
@@ -321,7 +327,7 @@ Request your server administrator or hosting provider to review the origin web s
 -   Certificate is signed by a [Certificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
 -   The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**
 -   Your origin web server accepts connections over port SSL port 443
--   [Temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
+-   [Temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
 ![Screen showing an SSL certificate with no errors.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 

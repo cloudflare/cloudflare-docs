@@ -13,7 +13,7 @@ Bulk Redirects involve the following elements:
 
 - **URL redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL redirects are the list items of Bulk Redirect Lists.
 
-- **Bulk Redirect List**: A list, similar to an IP List, containing one or more URL redirects. To enable all the URL redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
+- **Bulk Redirect List**: A list, similar to an IP list, containing one or more URL redirects. To enable all the URL redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
 - **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
 

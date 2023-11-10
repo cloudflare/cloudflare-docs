@@ -25,6 +25,6 @@ Receive an alert when a tunnel changes its health status.
 | Health status | Description  |
 | ------------- | ------------ |
 | Healthy       | The tunnel is active and serving traffic through four connections to the Cloudflare global network. |
-| Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/) could risk the tunnel going down and failing to serve traffic.|
+| Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) could risk the tunnel going down and failing to serve traffic.|
 | Down          | The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.|
 | Inactive      | This value is reserved for tunnels which have been created, but have never been run.|

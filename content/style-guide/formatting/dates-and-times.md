@@ -7,7 +7,7 @@ title: Dates and times
 
 ## Product content
 
-To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard when writing dates and times as much as possible. This includes content in the UI/dashboard.
+To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard when writing dates and times as much as possible.
 
 ## Blogs
 

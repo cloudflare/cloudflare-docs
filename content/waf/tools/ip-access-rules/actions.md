@@ -12,7 +12,7 @@ An IP Access rule can perform one of the following actions:
 
 * **Block**: Prevents a visitor from visiting your site.
 
-* **Allow**: Excludes visitors from all security checks, including [Browser Integrity Check](/fundamentals/security/browser-integrity-check/), [I'm Under Attack Mode](/fundamentals/security/under-attack-mode/), and the WAF. Use this option when a trusted visitor is being blocked by Cloudflare's default security features. The _Allow_ action takes precedence over the _Block_ action. Note that allowing a given country code will not bypass WAF managed rules (previous and new versions).
+* **Allow**: Excludes visitors from all security checks, including [Browser Integrity Check](/waf/tools/browser-integrity-check/), [I'm Under Attack Mode](/fundamentals/reference/under-attack-mode/), and the WAF. Use this option when a trusted visitor is being blocked by Cloudflare's default security features. The _Allow_ action takes precedence over the _Block_ action. Note that allowing a given country code will not bypass WAF managed rules (previous and new versions).
 
 * **Managed Challenge**: Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from a list of possible actions. For more information, refer to [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended).
 

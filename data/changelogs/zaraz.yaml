@@ -2,6 +2,24 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-10-31'
+  title:
+  description: |-
+    * **Google Analytics 4 Managed component**: Remove `debug_mode` key if falsy or `false`.
+- publish_date: '2023-10-26'
+  title:
+  description: |-
+    * **Custom HTML**: Added support for non-JavaScript script tags.
+- publish_date: '2023-10-20'
+  title:
+  description: |-
+    * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
+    * **Dashboard: Improved welcome screen for new Zaraz users".
+- publish_date: '2023-10-03'
+  title:
+  description: |-
+    * **Bugfix**: Fixed an issue that prevented some server-side requests from arriving to their destination
+    * **Google Analytics 4 Managed Component**: Add support for `dbg` and `ir` fields.
 - publish_date: '2023-09-13'
   title:
   description: |-

@@ -1,11 +1,13 @@
 ---
 pcx_content_type: navigation
 title: Databases
-weight: 8
+weight: 9
 ---
 
 # Databases
 
-{{<directory-listing>}}
+Explore database integrations for your Worker projects.
+
+{{<directory-listing showDescriptions="true">}}
 
 

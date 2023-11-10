@@ -23,6 +23,6 @@ This data can help when looking at long-term DDoS attack trends or when you need
 
 ## Bot Management
 
-For more detailed analytics about potential bot attacks, Enterprise customers can also purchase [Bot Management](/learning-paths/bot-management/).
+For more detailed analytics about potential bot attacks, Enterprise customers can also purchase [Bot Management](/bots/get-started/bm-subscription/).
 
 {{<render file="_bm-analytics-features.md" productFolder="bots">}}

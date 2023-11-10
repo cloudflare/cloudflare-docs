@@ -400,7 +400,7 @@ export default {
 }
 ```
 
-Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/cloudflare-images/api-request/).
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/cloudflare-images/api-request/).
 
 Run your Worker and go to the `/original-image` route to review your image.
 

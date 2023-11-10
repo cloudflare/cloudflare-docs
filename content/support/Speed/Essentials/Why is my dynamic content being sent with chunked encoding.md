@@ -22,7 +22,7 @@ ___
 
 If you add a file extension to the resource so that it matches our list of supported file extensions so `http://example.com/test/dynamicallyimage.php?size=3**` becomes `http://example.com/dynamicallyimage.jpg*` Cloudflare's system will then send it with the content-length header as long as you're also sending HTTP 1.0 as the protocol.
 
-Alternatively, you can create a Page Rule in the Cloudflare dashboard by clicking **Rules** > click **Create Page Rule >** select _Cache Level_ in the _Pick a Setting_ dropdown and select _Cache Everything_ in the S_elect Cache Level_ dropdown. This will force our system to cache `http://example.com/test/dynamicallyimage.php?size=3` even though it doesn't have one of our usual file extensions -- in this case the content-length will also be preserved.
+Alternatively, you can create a Page Rule in the Cloudflare dashboard by clicking **Rules** > click **Create Page Rule >** select _Cache Level_ in the _Pick a Setting_ dropdown and select _Cache Everything_ in the _Select Cache Level_ dropdown. This will force our system to cache `http://example.com/test/dynamicallyimage.php?size=3` even though it doesn't have one of our usual file extensions -- in this case the content-length will also be preserved.
 
 ___
 

@@ -115,6 +115,16 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 {{</faq-item>}}
 
 {{<faq-item>}}
+{{<faq-question level=2 text="Is it possible to restore a deleted tunnel?">}}
+
+{{<faq-answer>}}
+
+No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`config.yaml` file](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#configuration-file) will still be present and you can create a new tunnel with the same configuration. If the tunnel was remotely-managed, both the tunnel and its configuration are permanently deleted.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
 {{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured from Zero Trust?" >}}
 
 {{<faq-answer>}}
@@ -176,9 +186,9 @@ Before contacting the Cloudflare support team:
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Set [`log-level`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 

@@ -44,7 +44,7 @@ The `constructor()` in the Durable Object makes your `Environment` available (in
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 interface Env {
   YOUR_QUEUE: Queue;

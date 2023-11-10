@@ -22,22 +22,13 @@ Health Checks are optional within a Load Balancer. However, without a health che
 
 The example below shows a TCP health check configuration for an application running on port 2408 with a refresh rate every 30 seconds. You can configure TCP health checks through the dashboard or through Cloudflare's API.
 
-<details>
-<summary>
-  TCP health check - Dashboard example
-</summary>
-<div class="special-class" markdown="1">
+{{<details header="TCP health check - Dashboard example">}}
 
 ![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/images/spectrum/spectrum-tcp-check.png)
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>
-  TCP health check - API example
-</summary>
-  <div class="special-class" markdown="1">
+{{<details header="TCP health check - API example">}}
 
 ```bash
 curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers/monitors'  \
@@ -59,8 +50,7 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Weights
 

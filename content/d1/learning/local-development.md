@@ -148,7 +148,7 @@ describe("Test D1 Worker endpoint", () => {
       `NO_D1_WARNING=true wrangler d1 migrations apply db --local`
     );
     
-    worker = await unstable_dev("src/worker.ts", {
+    worker = await unstable_dev("src/index.ts", {
       experimental: { disableExperimentalWarning: true },
     });
   });

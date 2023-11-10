@@ -29,7 +29,7 @@ $ git commit -m 'Initial commit'
 ```
 ## 1. Create and bind a KV namespace
 
-To access KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#1-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory. 
+To access KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#3-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory. 
 
 If you do not have an existing KV namespace, create one using [Wrangler](/workers/wrangler/install-and-update/). 
 

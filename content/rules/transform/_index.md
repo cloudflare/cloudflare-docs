@@ -40,7 +40,7 @@ This table outlines the Transform Rules features available with each customer pl
 
 {{<feature-table id="rules.transform_rules">}}
 
-A Cloudflare user must have the [Firewall role](/fundamentals/account-and-billing/members/roles/) or one of the Administrator roles to access Transform Rules.
+A Cloudflare user must have the [Firewall role](/fundamentals/setup/manage-members/roles/) or one of the Administrator roles to access Transform Rules.
 
 ## Get started
 

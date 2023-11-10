@@ -8,7 +8,7 @@ inputParameters: ruleName;;extraObject;;phase
 
 To create a $1 for a zone, add a rule $2 to the `$3` phase entry point ruleset.
 
-1. Invoke the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rulesets in your zone. You will need the [zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for this operation.
+1. Invoke the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rulesets in your zone. You will need the [zone ID](/fundamentals/setup/find-account-and-zone-ids/) for this operation.
 
 2. Search for an entry point ruleset for the `$3` phase in the response. Such a ruleset would have the following properties: `"kind": "zone"` and `"phase": "$3"`. If you find the ruleset, take note of its ID for the next step.
 

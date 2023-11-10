@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare HTTP request headers
-aliases:
-- /fundamentals/get-started/reference/http-request-headers/
 ---
 
 # HTTP request headers
@@ -11,14 +9,17 @@ Cloudflare passes all HTTP request headers to your origin web server and adds ad
 
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+
+[^1]: Brotli support between Cloudflare and the origin will be available across all plans by the end of Q4 2023.
+
 
 ## CF-Connecting-IP
 
 `CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
 This header will only be sent on the traffic from Cloudflare's edge to your origin web server.
 
-For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
+For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
@@ -34,9 +35,10 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 ## CF-Connecting-IPv6
 
-Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](https://support.cloudflare.com/hc/en-us/articles/229666767) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
-If Pseudo IPv4 is set to `Overwrite Headers` - Cloudflare overwrites the existing `Cf-Connecting-IP` and `X-Forwarded-For` headers with a pseudo IPv4 address while preserving the real IPv6 address in `CF-Connecting-IPv6` header.
+{{<render file="_pseudo-ipv4-warning.md">}}
+<br/>
 
 ## CF-EW-Via
 
@@ -86,7 +88,7 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 ## CF-RAY
 
-The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
+The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
 Add the [`CF-Ray` header to your origin web server logs](https://support.cloudflare.com/hc/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) to match requests proxied to Cloudflare to requests in your server logs.
 
@@ -141,3 +143,4 @@ When using Spectrum with a TCP application, these headers are not visible at the
 
 - Use an HTTP or HTTPS Spectrum app instead of TCP
 - Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
+

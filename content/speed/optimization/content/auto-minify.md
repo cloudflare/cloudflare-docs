@@ -2,7 +2,7 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200168196-Using-Cloudflare-Auto-Minify
 title: Auto Minify
-weight: 5
+weight: 1
 ---
 
 # Auto Minify

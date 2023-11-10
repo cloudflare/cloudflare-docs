@@ -82,6 +82,10 @@ Then, add Azure’s required records to [Cloudflare DNS](/dns/manage-dns-records
 
 ## Miscellaneous vendors
 
+### Forward Email
+
+To use Cloudflare with Forward Email, refer to [Forward Email configuration with Cloudflare](https://forwardemail.net/guides/cloudflare).
+
 ### ClickFunnels
 
 You can configure Cloudflare to work with ClickFunnels. The process requires updating your Cloudflare DNS settings.

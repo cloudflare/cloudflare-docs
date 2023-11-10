@@ -3,8 +3,6 @@ pcx_content_type: how-to
 title: Elastic
 weight: 100
 layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/elastic/
 ---
 
 # Elastic

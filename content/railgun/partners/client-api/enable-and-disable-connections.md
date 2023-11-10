@@ -18,15 +18,13 @@ Establish a connection between a domain and a Railgun.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
-*   `mode` – Railgun operation mode. `1` for active, `0` for inactive
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
+* `mode` – Railgun operation mode. `1` for active, `0` for inactive
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/conn_set HTTP/1.1
@@ -43,12 +41,9 @@ mode=0
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -64,8 +59,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_set
 
@@ -75,15 +69,13 @@ Establish a connection between a domain and a Railgun.
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
-*   `mode` – Railgun operation mode. `1` for active, `0` for inactive
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
+* `mode` – Railgun operation mode. `1` for active, `0` for inactive
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/conn_set?email=&tkn=&rtkn=&z=&mode= HTTP/1.1
@@ -100,12 +92,9 @@ mode=0
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -121,8 +110,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST conn\_setmode\_enabled
 
@@ -132,14 +120,12 @@ Enable a Railgun. If request is successful, the specified Railgun will be enable
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/conn_setmode_enabled HTTP/1.1
@@ -155,12 +141,9 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -176,8 +159,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_setmode\_enabled
 
@@ -187,14 +169,12 @@ Enable a Railgun. If request is successful, the specified Railgun will be enable
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/conn_setmode_enabled?email=&tkn=&rtkn=&z= HTTP/1.1
@@ -210,12 +190,9 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -231,8 +208,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST conn\_setmode\_disabled
 
@@ -242,14 +218,12 @@ Disable a Railgun. If request is successful, the specified Railgun will be disab
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/conn_setmode_disabled HTTP/1.1
@@ -265,12 +239,9 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -286,8 +257,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_setmode\_disabled
 
@@ -297,14 +267,12 @@ Disable a Railgun. If request is successful, the specified Railgun will be disab
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/conn_setmode_disabled?email=&tkn=&rtkn=&z= HTTP/1.1
@@ -320,12 +288,9 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -341,8 +306,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST conn\_delete
 
@@ -352,14 +316,12 @@ Remove a connection between a domain and a Railgun. This API call will allow a c
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` – Domain name
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `z` – Domain name
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/conn_delete HTTP/1.1
@@ -375,12 +337,9 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -396,8 +355,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET conn\_delete
 
@@ -407,14 +365,12 @@ Remove a connection between a domain and a Railgun. This API call will allow a c
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `z` Domain name
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `z` Domain name
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/conn_delete?email=&tkn=&rtkn=&z= HTTP/1.1
@@ -430,12 +386,9 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -451,5 +404,4 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}

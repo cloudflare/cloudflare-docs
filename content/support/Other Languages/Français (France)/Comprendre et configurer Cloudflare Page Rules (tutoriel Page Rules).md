@@ -256,7 +256,7 @@ Remarque : `exemple.com/some-path/cloudflare.com` sera enregistré _sans_ barre 
 
 Si vous spécifiez un port dans le champ **If the URL matches** (Si l'URL correspond) d'une Page Rule, celui-ci doit être l'un des suivants :
 
--   Un des ports HTTP/HTTPS [compatible avec le proxy de Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Un des ports HTTP/HTTPS [compatible avec le proxy de Cloudflare](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
 -   Un port personnalisé d'une application [Cloudflare Spectrum](/spectrum/) HTTPS.
 
 ### Utilisation de Page Rules avec Workers

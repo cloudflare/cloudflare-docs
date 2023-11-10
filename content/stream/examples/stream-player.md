@@ -9,7 +9,6 @@ weight: 1
 layout: example
 ---
 
-[Run and edit this code in your browser on StackBlitz.](https://workers.new/stream/stream-player) 
 
 ```html
 <html>

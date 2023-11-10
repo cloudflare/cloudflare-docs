@@ -37,8 +37,8 @@ For help determining which data center to select for a packet capture, visit htt
 - `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
 
 **Full**
-- `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes.
 
+- `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -59,11 +59,7 @@ The PCAPs API needs both `system` and `type` to be specified to start a capture.
 
 Currently, you can only send one collect request per minute for simple PCAPs, and you can only have one running or pending full PCAP at a time.
 
-<details>
-<summary>
-  Full PCAP
-</summary>
-<div class="special-class" markdown="1">
+{{<details header="Full PCAP">}}
 
 For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than simple packets.
 
@@ -116,14 +112,10 @@ header: Full PCAP example response
   "messages": []
 }
 ```
-</div>
-</details>
 
-<details>
-<summary>
-  Simple PCAP
-</summary>
-<div class="special-class" markdown="1">
+{{</details>}}
+
+{{<details header="Simple PCAP">}}
 
 To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](/api/operations/magic-pcap-collection-create-pcap-request).
 
@@ -181,8 +173,7 @@ header: Simple PCAP example response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{</tab>}}
 {{</tabs>}}
@@ -260,7 +251,7 @@ After your request finishes processing, you can download your packet captures.
 4. Select the **Captures** tab.
 5. Locate your packet capture you want to download, and select **Download**.
 
-Packet captures are available to download when the **Status** displays **Success**. 
+Packet captures are available to download when the **Status** displays **Success**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -287,7 +278,6 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/
 {{</tabs>}}
 
 ## List packet captures
-
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

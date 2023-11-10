@@ -2,8 +2,6 @@
 title: Manage active sessions
 pcx_content_type: how-to
 weight: 4
-aliases:
-- /fundamentals/account-and-billing/account-security/manage-active-sessions/
 ---
 
 # Manage active sessions
@@ -16,7 +14,7 @@ If you notice any suspicious activity, you can also revoke any active sessions.
 
 {{<Aside type="note">}}
 
-By default, the session timeout for the [Cloudflare dashboard](https://dash.cloudflare.com) is 24 hours.
+By default, the session timeout for the [Cloudflare dashboard](https://dash.cloudflare.com) is 72 hours without any activity.
 
 Some customers can also enforce single-sign on (SSO) by [adding a Dashboard SSO application](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
 

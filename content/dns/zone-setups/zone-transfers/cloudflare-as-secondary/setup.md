@@ -38,8 +38,8 @@ You will also need the following information from your Primary DNS provider:
 Make sure your account team has enabled your zone for Secondary DNS.
 
 Get the following values from your Cloudflare account:
-- [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
-- [Zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
+- [Account ID](/fundamentals/setup/find-account-and-zone-ids/)
+- [Zone ID](/fundamentals/setup/find-account-and-zone-ids/)
 - [Nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names), which should have **secondary** in the name.
 
 ---

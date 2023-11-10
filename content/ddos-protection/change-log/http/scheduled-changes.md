@@ -24,13 +24,24 @@ meta:
   </thead>
   <tbody>
     <tr>
-      <td>2023-08-24</td>
-      <td>2023-09-04</td>
-      <td>...4a95ba67</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #32).</td>
-      <td>ddos_dynamic</td>
-      <td>ddos_dynamic</td>
-      <td>Expand the scope of the rule to catch more attacks</td>
+      <td>2023-10-30</td>
+      <td>2023-11-13</td>
+      <td>...e269dfd6</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #56).</td>
+      <td>N/A</td>
+      <td>block</td>
+      <td>This rule might cause false positives in case the requests go through a
+third party proxy before reaching the Cloudflare network.</td>
+    </tr>
+<tr>
+      <td>2023-10-30</td>
+      <td>2023-11-13</td>
+      <td>...f35a42a0</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #57).</td>
+      <td>N/A</td>
+      <td>block</td>
+      <td>This rule might cause false positives in case the requests go through a
+third party proxy before reaching the Cloudflare network.</td>
     </tr>
   </tbody>
 </table>

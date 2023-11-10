@@ -48,7 +48,7 @@ To set up an integration with Neon:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
-    4. Select **Settings** > **Integrations** > **Neon**. 
+    4. Select **Integrations** > **Neon**. 
     5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@neondatabase/serverless` driver to connect to your database and start manipulating data:

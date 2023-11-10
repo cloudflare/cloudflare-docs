@@ -9,4 +9,4 @@ Cloudflare uses the `__cf_bm cookie` to smooth out the Bot Score and reduce fals
 
 The Bot Management cookie measures a single user's request pattern and applies it to the machine learning data to generate a reliable Bot Score for all of that user's requests.
 
-For more details, refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/).
+For more details, refer to [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/).

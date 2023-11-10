@@ -56,7 +56,7 @@ The three options available for configuring **Pseudo IPv4** are:
 
 -   _Off_ \- This is the default value.
 -   _Add Header_ \- Cloudflare automatically adds the `Cf-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
--   _Overwrite Headers_ - Cloudflare overwrites the existing `Cf-Connecting-IP` and `X-Forwarded-For` headers with a pseudo IPv4 address while preserving the real IPv6 address in a `Cf-Connecting-IPv6` header.
+-   _Overwrite Headers_ - {{<render file="_pseudo-ipv4-warning.md" productFolder="fundamentals">}}
 
 {{<Aside type="note">}}
 When using *Overwrite Headers*, no software changes are necessary in

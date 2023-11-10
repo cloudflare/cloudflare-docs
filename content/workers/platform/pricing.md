@@ -2,11 +2,13 @@
 pcx_content_type: concept
 title: Pricing
 weight: 12
+meta:
+  description: Workers plans and pricing information.
 ---
 
 # Pricing
 
-By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
 The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
 
@@ -20,67 +22,121 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 
 ## Workers
 
+
+{{<Aside type="note" header="Workers Standard pricing is now available">}}
+  
+New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today. 
+
+{{</Aside>}}
+
+{{<table-wrap>}}
+|             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
+| ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
+| **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
+| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation                    |
+
+{{</table-wrap>}}
+<sup>1</sup>  Inbound requests to your Worker. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but do impact the duration (wall-clock time) of your Worker.
+
+### Example pricing: Standard Usage Model
+
+A Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
 {{<table-wrap>}}
 
-|          | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
-| -------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
-| Requests<sup>1</sup> | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
-| Duration | 10 ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
+| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $45.40             |                                                                                                          |
 
 {{</table-wrap>}}
 
-1.  Requests inbound to your Worker from the Internet are charged on a unit basis for paid plans. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but network time incurred may slightly increase any duration-based billing.
+{{<Aside type="note" header="Custom limits">}}
 
-2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
-3.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
+{{</Aside>}}
 
-### Usage models
+### Deprecated usage models
 
-Workers are available under two Usage Models: Bundled and Unbound. Usage Models are settings on your Workers that specify the upper [limits](/workers/platform/limits/) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests and duration at the rates shown under [Pricing](/workers/platform/pricing/#pricing).
+Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of CPU time your Worker can use per invocation. 
 
-#### Default usage model
+Starting October 31, 2023, the Bundled and Unbound usage models are deprecated. Workers and Pages Functions using Bundled and Unbound will continue to be billed at the rates below until March 1, 2024. After March 1, 2024, all Workers and Pages Functions will be automatically migrated to Workers Standard.
 
-When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. To change your default account-wide Usage Model:
 
+{{<table-wrap>}}
+
+|             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
+| ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **Bundled** |  10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
+| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation        |
+
+{{</table-wrap>}}
+
+<sup>1</sup>  Inbound requests to your Worker. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but do impact the duration (wall-clock time) of your Worker.
+
+<sup>2</sup>  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+
+<sup>3</sup>  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
+
+#### Example pricing: Bundled Usage Model
+
+A Worker that serves 100 million requests per month would have the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                      |
+| ------------------ | ------------------- | ----------------------------------------------------------------------------- |
+| **Workers Paid Plan**   |  $5                 |                                                                               |
+| **Requests**       |  $45                | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.50     |
+| **Total**          |  $50                |                                                                                |
+
+{{</table-wrap>}}
+
+#### Example pricing: Unbound Usage Model
+
+Consider a Worker that serves 100 million requests per month, with an average duration (wall-clock time) of 200 milliseconds per request. This translates to the following duration (wall-clock time) metrics:
+
+- 0.2 seconds per request (200 milliseconds / 1000)
+- 0.025 gigabyte seconds (GB-s) per request (0.2 seconds * 128 MB / 1024 MB)
+- 2,500,000 gigabyte seconds (GB-s) per month (0.025 GB-s per request * 100,000,000 requests)
+
+Resulting in the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                  |
+| ------------------ | ------------------- | ------------------------------------------------------------------------- |
+| **Workers Paid Plan**   |  $5.00              |                                                                           |
+| **Requests**       |  $14.85             | (100,000,000 requests - 1,000,000 included requests) / 1,000,000 * $0.15  |
+| **Duration**       |  $26.25             | (2,500,000 GB-s per month - 400,000 included GB-s) / 1,000,000 * $12.50   |
+| **Total**          |  $46.10             |                                                                           |
+
+{{</table-wrap>}}
+
+### How to switch usage model
+
+When an account is first upgraded to the Workers Paid plan, the Standard model is used as the default usage model. If you have Workers on Bundled or Unbound, their usage model can be changed all at once to Standard or their usage model can be changed the individual Worker level.
+
+To migrate all Workers to the Standard Usage model:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. Find **Default Usage Model** on the right-side menu > **Change**. 
+3. Find **Usage Model** on the right-side menu > **Migrate**. 
 
-Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
-
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/configuration/) in your `wranger.toml` file and in the dashboard.
-
-To change the Usage Model for individual Workers:
+To change the usage model for individual Workers:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
 
-### Same features
+To change your default account-wide usage model:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Find **Usage Model** on the right-side menu > **Change**. 
 
-Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/).
+Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 
-### Workers Unbound billing examples
-
-#### Example 1
-
-If an Unbound Worker executed 1.5 million times and was active a total of 200,000 seconds, the estimated cost in a month would be:
-
-Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
-
-- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
-- (200,000 seconds) \* 128 MB / 1 GB = 25,000 GB-seconds
-- (25,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
-
-#### Example 2
-
-If an Unbound Worker executed 10 million times and was active a total of 6,400,000 seconds the estimated cost in a month would be:
-
-Total = ~$6.35 + Minimum $5/mo usage = $11.35
-
-- (10 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $1.35
-- (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
-- (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
 ## Workers Trace Events Logpush
 
@@ -141,6 +197,12 @@ For more information and [examples of Durable Objects billing](/durable-objects/
 
 {{<render file="_transactional_storage_api_pricing.md">}}
 
+## Vectorize
+
+Vectorize is currently only available on the Workers paid plan.
+
+{{<render file="_vectorize-pricing.md">}}
+
 ## Service bindings
 
 Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
@@ -151,4 +213,4 @@ For more information on how service bindings work, refer to [About Service bindi
 
 Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
 
-Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).
+Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. Refer to [Limits](/workers/platform/limits/) to review definitions and behavior after a limit is hit.

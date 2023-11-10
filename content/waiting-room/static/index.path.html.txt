@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Waiting Room powered by Cloudflare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body,
+    #wrapper {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    html {
+      direction: ltr;
+    }
+
+    #wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+        Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+      font-size: 1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    main .content-container {
+      max-width: 64rem;
+    }
+
+    .center {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .content-container {
+      width: 100%;
+      min-width: 25rem;
+      margin: 0 auto;
+      padding: 2rem 4rem;
+      display: flex;
+      text-align: left;
+    }
+
+    @media (max-width: 900px) {
+      .content-container {
+        flex-direction: column;
+        padding: 2rem 2rem;
+      }
+    }
+
+    main .content-container section {
+      flex: 1 0 0;
+      display: flex;
+      flex-direction: column;
+      margin: 1rem;
+    }
+
+    footer {
+      background: #404242;
+      color: white;
+      font-size: 0.75rem;
+      direction: ltr;
+      min-width: 25rem;
+    }
+
+    footer .content-container {
+      justify-content: space-between;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 0 0 2rem 0;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .links {
+      color: #cac8c8;
+      margin-top: 1rem;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .links a,
+    .links a:visited {
+      text-decoration: none;
+      color: #cac8c8;
+    }
+
+    .logo {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .logo .cloudflare-logo {
+      width: 8.75rem;
+      margin-right: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <main>
+      <div class="center">
+        <section class="content-container">
+        {{#isRejectQueue}}
+          <section>
+            <h1>
+              <span id="waiting_room.reject.title.line1" />
+            </h1>
+            <h1>
+              <span id="waiting_room.reject.title.line2" />
+            </h1>
+          </section>
+          <section>
+        {{/isRejectQueue}}
+
+        {{^isRejectQueue}} 
+        {{#isEventPrequeueing}}
+          <section>
+            <h1>
+              <span id="waiting_room.prequeue.title.line1" />
+            </h1>
+            <h1>
+              <span id="waiting_room.prequeue.title.line2" />
+            </h1>
+          </section>
+          <section>
+            <h2 id="prequeueTime">
+            </h2>
+            <p>
+              <span id="waiting_room.prequeue.explanation" />
+            </p>
+        {{/isEventPrequeueing}}
+        {{/isRejectQueue}}
+
+        {{^isRejectQueue}}
+        {{^isEventPrequeueing}}
+          <section>
+            <h1>
+              <span id="waiting_room.title.line1" />
+            </h1>
+            <h1>
+              <span id="waiting_room.title.line2" />
+            </h1>
+          </section>
+          <section>
+            <h2 id="waitTime">
+              {{^waitTimeKnown}}
+                  {{#queueIsFull}}
+                      <span id="waiting_room.estimated_wait_time.queue_full" />
+                  {{/queueIsFull}}
+                  {{^queueIsFull}}
+                      <span id="waiting_room.estimated_wait_time.unavailable" />
+                  {{/queueIsFull}}
+              {{/waitTimeKnown}}
+            </h2>
+            <p>
+              <span id="waiting_room.explanation" />
+            </p>
+        {{/isEventPrequeueing}}
+        {{/isRejectQueue}}
+
+            <p>
+              <strong>
+                {{#refreshIntervalSeconds}}
+                  <span id="waiting_room.auto_refresh" />
+                {{/refreshIntervalSeconds}}
+                {{^refreshIntervalSeconds}}
+                  <span id="waiting_room.no_refresh" />
+                {{/refreshIntervalSeconds}}
+              </strong>
+            </p>
+            <p>
+              <strong>
+                  <span id="waiting_room.last_updated" />
+                <span id="last-updated"></span>
+              </strong>
+            </p>
+          </section>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="center">
+        <section class="content-container">
+          <section class="logo">
+            <div class="cloudflare-logo">
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2572.531 854.222"
+                style="enable-background: new 0 0 2572.531 854.222" xml:space="preserve">
+                <style type="text/css">
+                  .st0 {
+                    fill: #f78100;
+                  }
+
+                  .st1 {
+                    fill: #fbac42;
+                  }
+
+                  .st2 {
+                    fill: #ffffff;
+                  }
+
+                  .st3 {
+                    fill: #f8fbfb;
+                  }
+
+                  .st4 {
+                    fill: #4e4e4e;
+                  }
+
+                  .st5 {
+                    fill: #fcad32;
+                  }
+
+                  .st6 {
+                    fill: #747474;
+                  }
+                </style>
+                <g>
+                  <g>
+                    <path class="st0" d="M2093.89,545.07l6.251-21.622c7.449-25.73,4.677-49.514-7.824-66.989
+			c-11.499-16.098-30.664-25.573-53.938-26.674l-440.852-5.622c-2.968-0.157-5.425-1.494-6.938-3.695
+			c-1.533-2.26-1.887-5.17-0.944-7.961c1.455-4.344,5.759-7.627,10.241-7.823l444.941-5.641
+			c52.777-2.418,109.919-45.249,129.929-97.476l25.376-66.301c0.699-1.805,1.014-3.718,1.001-5.636
+			c-0.007-1.047-0.083-2.096-0.313-3.13C2171.985,96.906,2056.347,0,1918.065,0c-127.413,0-235.602,82.242-274.403,196.544
+			c-25.042-18.792-57.082-28.777-91.52-25.337c-61.131,6.074-110.252,55.293-116.326,116.425
+			c-1.592,15.863-0.295,31.175,3.361,45.563c-99.854,2.909-179.934,84.719-179.934,185.281c0,9.101,0.688,18.044,1.965,26.791
+			c0.629,4.246,4.207,7.43,8.492,7.43l813.891,0.098c0.081,0,0.152-0.037,0.232-0.038
+			C2088.48,552.653,2092.576,549.573,2093.89,545.07z" />
+                    <path class="st1" d="M2240.755,240.122c-4.089,0-8.158,0.118-12.207,0.315c-0.668,0.035-1.303,0.197-1.912,0.41
+			c-2.114,0.741-3.796,2.453-4.437,4.681l-17.337,59.873c-7.45,25.73-4.678,49.495,7.823,66.969
+			c11.499,16.118,30.664,25.573,53.937,26.674l93.977,5.641c2.772,0.137,5.209,1.474,6.703,3.636c1.572,2.28,1.926,5.209,0.982,8
+			c-1.474,4.344-5.759,7.627-10.221,7.823l-97.653,5.641c-53.014,2.438-110.154,45.249-130.165,97.476l-7.057,18.438
+			c-1.284,3.336,1.106,6.889,4.635,7.064c0.089,0.004,0.169,0.033,0.26,0.033h336.006c4.01,0,7.587-2.615,8.668-6.467
+			c5.838-20.757,8.944-42.634,8.944-65.259C2481.702,347.996,2373.828,240.122,2240.755,240.122z" />
+                  </g>
+                  <path class="st2" d="M2550.811,695.031c-12.01,0-21.74-9.71-21.74-21.72c0-11.951,9.73-21.661,21.74-21.661
+		c11.991,0,21.72,9.71,21.72,21.661C2572.531,685.321,2562.802,695.031,2550.811,695.031 M2550.811,655.659
+		c-9.612,0-17.415,7.922-17.415,17.651c0,9.789,7.804,17.71,17.415,17.71c9.592,0,17.396-7.922,17.396-17.71
+		C2568.207,663.581,2560.403,655.659,2550.811,655.659 M2561.779,684.77h-5.15l-4.324-8.334h-5.819v8.275h-4.501v-23.882h11.46
+		c5.032,0,8.216,3.067,8.216,7.804c0,3.42-1.985,6.172-4.973,7.253L2561.779,684.77z M2553.504,672.288
+		c1.867,0,3.715-0.963,3.715-3.656c0-2.713-1.435-3.656-3.715-3.656h-7.018v7.312H2553.504z" />
+                  <polygon class="st2" points="276.215,649.424 331.862,649.424 331.862,801.446 429.101,801.446 429.101,850.194 276.215,850.194 	
+		" />
+                  <path class="st2" d="M486.732,750.387v-0.57c0-57.652,46.467-104.414,108.424-104.414s107.835,46.192,107.835,103.844v0.57
+		c0,57.652-46.467,104.395-108.404,104.395C532.629,854.212,486.732,808.039,486.732,750.387 M646.204,750.387v-0.57
+		c0-28.973-20.934-54.212-51.618-54.212c-30.408,0-50.773,24.669-50.773,53.642v0.57c0,28.973,20.934,54.212,51.342,54.212
+		C625.84,804.029,646.204,779.361,646.204,750.387" />
+                  <path class="st2" d="M771.099,762.145V649.416h56.512v111.589c0,28.973,14.624,42.733,36.993,42.733
+		c22.369,0,36.993-13.19,36.993-41.298V649.416h56.512V760.71c0,64.827-36.993,93.211-94.075,93.211
+		C806.951,853.921,771.099,824.967,771.099,762.145" />
+                  <path class="st2" d="M1043.266,649.434h77.446c71.706,0,113.299,41.298,113.299,99.225v0.59
+		c0,57.927-42.163,100.955-114.439,100.955h-76.306V649.434z M1121.577,800.866c33.278,0,55.352-18.359,55.352-50.772v-0.57
+		c0-32.118-22.074-50.772-55.352-50.772h-22.664v102.115H1121.577z" />
+                  <polygon class="st2" points="1314.882,649.424 1475.493,649.424 1475.493,698.192 1370.529,698.192 1370.529,732.315 
+		1465.468,732.315 1465.468,778.488 1370.529,778.488 1370.529,850.194 1314.882,850.194 	" />
+                  <polygon class="st2" points="1552.924,649.424 1608.571,649.424 1608.571,801.446 1705.811,801.446 1705.811,850.194 
+		1552.924,850.194 	" />
+                  <path class="st2" d="M1851.218,647.991h53.622l85.485,202.205h-59.657l-14.644-35.853h-77.446l-14.329,35.853h-58.517
+		L1851.218,647.991z M1899.966,771.04l-22.369-57.082l-22.664,57.082H1899.966z" />
+                  <path class="st2" d="M2061.997,649.42h94.94c30.703,0,51.912,8.04,65.397,21.799c11.774,11.479,17.789,26.968,17.789,46.762v0.57
+		c0,30.683-16.354,51.048-41.298,61.662l47.902,69.996h-64.256l-40.433-60.817h-24.394v60.817h-55.647V649.42z M2154.363,745.795
+		c18.929,0,29.838-9.179,29.838-23.804v-0.57c0-15.784-11.479-23.804-30.133-23.804h-36.423v48.177H2154.363z" />
+                  <polygon class="st2"
+                    points="2320.411,649.424 2481.888,649.424 2481.888,696.757 2375.488,696.757 2375.488,727.145 
+		2471.863,727.145 2471.863,771.038 2375.488,771.038 2375.488,802.881 2483.323,802.881 2483.323,850.194 2320.411,850.194 	" />
+                  <path class="st2"
+                    d="M154.381,773.925c-7.784,17.573-24.197,30.094-45.977,30.094c-30.408,0-51.342-25.239-51.342-54.212v-0.57
+		c0-28.973,20.364-53.642,50.772-53.642c22.919,0,40.374,14.094,47.745,33.278h58.655c-9.396-47.785-51.381-83.461-105.83-83.461
+		C46.447,645.412,0,692.155,0,749.807v0.57c0,57.652,45.878,103.845,107.835,103.845c52.993,0,94.41-34.32,105.339-80.296H154.381z" />
+                </g>
+              </svg>
+            </div>
+            <span class="waitingrooms-text">
+              Waiting Room powered by Cloudflare
+            </span>
+          </section>
+          <section class="links">
+            <span>
+              &#169;
+              <span id="year"></span>
+              Cloudflare, Inc. |
+              <a target="_blank" id="waiting_room.links.privacy" href="#">
+                <span id="waiting_room.privacy" />
+              </a>
+              |
+              <a target="_blank" id="waiting_room.links.terms" href="#">
+                <span id="waiting_room.terms" />
+              </a>
+              |
+              <a target="_blank" id="waiting_room.links.abuse" href="#">
+                <span id="waiting_room.abuse" />
+              </a>
+              |
+              <a target="_blank" id="waiting_room.links.trademark" href="#">
+                <span id="waiting_room.trademark" />
+              </a>
+            </span>
+          </section>
+        </section>
+      </div>
+    </footer>
+  </div>
+  <script>
+    var date = new Date();
+    var translations = {
+      //#region en-US
+      "en": {
+        "waiting_room.locale_code": "en-US",
+        "waiting_room.title": "Waiting Room powered by Cloudflare",
+        "waiting_room.title.line1": "You are now in line.",
+        "waiting_room.title.line2": "Thank you for your patience.",
+        "waiting_room.explanation": "We are experiencing a high volume of traffic and using a virtual queue to limit the amount of users on the website at the same time. This will ensure you have the best possible online experience.",
+        "waiting_room.estimated_wait_time.minute": "Your estimated wait time is {{waitTime}} minute.",
+        "waiting_room.estimated_wait_time.minutes": "Your estimated wait time is {{waitTime}} minutes.",
+        "waiting_room.estimated_wait_time.hour": "Your estimated wait time is {{waitTimeHours}} hour.",
+        "waiting_room.estimated_wait_time.hours": "Your estimated wait time is {{waitTimeHours}} hours.",
+        "waiting_room.estimated_wait_time.hour_minute": "Your estimated wait time is {{waitTimeHours}} hour and {{waitTimeHourMinutes}} minute.",
+        "waiting_room.estimated_wait_time.hour_minutes": "Your estimated wait time is {{waitTimeHours}} hour and {{waitTimeHourMinutes}} minutes.",
+        "waiting_room.estimated_wait_time.hours_minute": "Your estimated wait time is {{waitTimeHours}} hours and {{waitTimeHourMinutes}} minute.",
+        "waiting_room.estimated_wait_time.hours_minutes": "Your estimated wait time is {{waitTimeHours}} hours and {{waitTimeHourMinutes}} minutes.",
+        "waiting_room.estimated_wait_time.unavailable": "Your estimated wait time is unavailable.",
+        "waiting_room.estimated_wait_time.queue_full": "The estimated wait time is greater than a day. You will automatically be placed in the queue once space is available.",
+        "waiting_room.estimated_wait_time.too_long": "Your estimated wait time is more than 4 hours.",
+        "waiting_room.reject.title.line1": "The page you are trying to access is unavailable right now.",
+        "waiting_room.reject.title.line2": "We apologize for the inconvenience.",
+        "waiting_room.prequeue.title.line1": "You are now in the pre-queue.",
+        "waiting_room.prequeue.title.line2": "Thank you for your patience.",
+        "waiting_room.prequeue.explanation": "When the event starts, you will either be admitted into the website or placed in a virtual queue if we are experiencing a high volume of traffic. Placing you on a virtual queue will limit the number of users visiting the website at the same time, this will guarantee that you have the best online experience.",
+        "waiting_room.prequeue.wait_time.minute": "The event will start in {{timeUntilEventStart}} minute.",
+        "waiting_room.prequeue.wait_time.minutes": "The event will start in {{timeUntilEventStart}} minutes.",
+        "waiting_room.prequeue.wait_time.hour": "The event will start in {{timeUntilEventStartHours}} hour.",
+        "waiting_room.prequeue.wait_time.hours": "The event will start in {{timeUntilEventStartHours}} hours.",
+        "waiting_room.prequeue.wait_time.hour_minute": "The event will start in {{timeUntilEventStartHours}} hour and {{timeUntilEventStartHourMinutes}} minute.",
+        "waiting_room.prequeue.wait_time.hour_minutes": "The event will start in {{timeUntilEventStartHours}} hour and {{timeUntilEventStartHourMinutes}} minutes.",
+        "waiting_room.prequeue.wait_time.hours_minute": "The event will start in {{timeUntilEventStartHours}} hours and {{timeUntilEventStartHourMinutes}} minute.",
+        "waiting_room.prequeue.wait_time.hours_minutes": "The event will start in {{timeUntilEventStartHours}} hours and {{timeUntilEventStartHourMinutes}} minutes.",
+        "waiting_room.auto_refresh": "This page will automatically refresh, please do not close your browser.",
+        "waiting_room.no_refresh": "This page will not automatically refresh, please come back later.",
+        "waiting_room.last_updated": "Last updated",
+        "waiting_room.privacy": "Privacy Policy",
+        "waiting_room.terms": "Terms of Use",
+        "waiting_room.abuse": "Trust & Safety",
+        "waiting_room.trademark": "Trademark",
+        "waiting_room.links.privacy": "https://www.cloudflare.com/privacypolicy/",
+        "waiting_room.links.terms": "https://www.cloudflare.com/website-terms/",
+        "waiting_room.links.abuse": "https://www.cloudflare.com/trust-hub/abuse-approach/",
+        "waiting_room.links.trademark": "https://www.cloudflare.com/trademark/"
+      },
+      //#endregion
+      //#region es-ES
+      "es": {
+        "waiting_room.locale_code": "es-ES",
+        "waiting_room.title": "Waiting Room con tecnología de Cloudflare",
+        "waiting_room.title.line1": "Ya está en la fila de espera.",
+        "waiting_room.title.line2": "Gracias por su paciencia.",
+        "waiting_room.explanation": "Estamos manejando un alto volumen de tráfico y utilizando una fila virtual para limitar la cantidad de usuarios en el sitio web al mismo tiempo. Esto le garantizará la mejor experiencia en la fila posible.",
+        "waiting_room.estimated_wait_time.minute": "El tiempo de espera estimado es {{waitTime}} minuto.",
+        "waiting_room.estimated_wait_time.minutes": "El tiempo de espera estimado es {{waitTime}} minutos.",
+        "waiting_room.estimated_wait_time.hour": "El tiempo de espera estimado es {{waitTimeHours}} hora.",
+        "waiting_room.estimated_wait_time.hours": "El tiempo de espera estimado es {{waitTimeHours}} horas.",
+        "waiting_room.estimated_wait_time.hour_minute": "El tiempo de espera estimado es {{waitTimeHours}} hora y {{waitTimeHourMinutes}} minuto.",
+        "waiting_room.estimated_wait_time.hour_minutes": "El tiempo de espera estimado es {{waitTimeHours}} hora y {{waitTimeHourMinutes}} minutos.",
+        "waiting_room.estimated_wait_time.hours_minute": "El tiempo de espera estimado es {{waitTimeHours}} horas y {{waitTimeHourMinutes}} minuto.",
+        "waiting_room.estimated_wait_time.hours_minutes": "El tiempo de espera estimado es {{waitTimeHours}} de horas y {{waitTimeHourMinutes}} minutos.",
+        "waiting_room.estimated_wait_time.unavailable": "El tiempo de espera estimado no está disponible.",
+        "waiting_room.estimated_wait_time.queue_full": "El tiempo de espera estimado es superior a un día. Se le colocará automáticamente en la fila una vez que haya espacio disponible.",
+        "waiting_room.estimated_wait_time.too_long": "El tiempo de espera estimado es de más de 4 horas.",
+        "waiting_room.reject.title.line1": "La página a la que intenta acceder no está disponible en este momento.",
+        "waiting_room.reject.title.line2": "Disculpe las molestias ocasionadas.",
+        "waiting_room.prequeue.title.line1": "Ahora se encuentra en la fila de espera previa.",
+        "waiting_room.prequeue.title.line2": "Gracias por su paciencia.",
+        "waiting_room.prequeue.explanation": "Cuando se inicie el evento, se le admitirá en el sitio web o se le colocará en una fila virtual si manejamos un gran volumen de tráfico. Si lo coloca en una cola virtual, se limitará el número de usuarios que visitan el sitio web al mismo tiempo, lo que garantizará que tiene la mejor experiencia en línea.",
+        "waiting_room.prequeue.wait_time.minute": "El evento comenzará en {{timeUntilEventStart}} minuto.",
+        "waiting_room.prequeue.wait_time.minutes": "El evento comenzará en {{timeUntilEventStart}} minutos.",
+        "waiting_room.prequeue.wait_time.hour": "El evento comenzará en {{timeUntilEventStartHours}} hora.",
+        "waiting_room.prequeue.wait_time.hours": "El evento comenzará en {{timeUntilEventStartHours}} horas.",
+        "waiting_room.prequeue.wait_time.hour_minute": "El evento comenzará en {{timeUntilEventStartHours}} hora y {{timeUntilEventStartHourMinutes}} minuto.",
+        "waiting_room.prequeue.wait_time.hour_minutes": "El evento comenzará en {{timeUntilEventStartHours}} hora y {{timeUntilEventStartHourMinutes}} minutos.",
+        "waiting_room.prequeue.wait_time.hours_minute": "El evento comenzará en {{timeUntilEventStartHours}} horas y {{timeUntilEventStartHourMinutes}} minuto.",
+        "waiting_room.prequeue.wait_time.hours_minutes": "El evento comenzará en {{timeUntilEventStartHours}} horas y {{timeUntilEventStartHourMinutes}} minutos.",
+        "waiting_room.auto_refresh": "Esta página se actualizará automáticamente, no cierre el explorador.",
+        "waiting_room.no_refresh": "Esta página no se actualizará automáticamente, por favor vuelva más tarde.",
+        "waiting_room.last_updated": "Última actualización",
+        "waiting_room.privacy": "Política de privacidad",
+        "waiting_room.terms": "Condiciones de uso",
+        "waiting_room.abuse": "Confianza y seguridad",
+        "waiting_room.trademark": "Marca comercial",
+        "waiting_room.links.privacy": "https://www.cloudflare.com/es-es/privacypolicy/",
+        "waiting_room.links.terms": "https://www.cloudflare.com/es-es/website-terms/",
+        "waiting_room.links.abuse": "https://www.cloudflare.com/es-es/trust-hub/abuse-approach/",
+        "waiting_room.links.trademark": "https://www.cloudflare.com/es-es/trademark/"
+      },
+      //#endregion
+      //#region fr-FR
+      "fr": {
+        "waiting_room.locale_code": "fr-FR",
+        "waiting_room.title": "Waiting Room avec Cloudflare",
+        "waiting_room.title.line1": "Vous êtes maintenant dans la file d’attente.",
+        "waiting_room.title.line2": "Merci pour votre patience.",
+        "waiting_room.explanation": "Nous rencontrons actuellement un volume de trafic élevé et nous utilisons une file d’attente virtuelle pour limiter le nombre d’utilisateurs présents simultanément sur le site Web. Vous bénéficiez ainsi de la meilleure expérience en ligne possible.",
+        "waiting_room.estimated_wait_time.minute": "Votre temps d’attente est estimé à {{waitTime}} minute.",
+        "waiting_room.estimated_wait_time.minutes": "Votre temps d’attente est estimé à {{waitTime}} minutes.",
+        "waiting_room.estimated_wait_time.hour": "Votre temps d’attente est estimé à {{waitTimeHours}} heure.",
+        "waiting_room.estimated_wait_time.hours": "Votre temps d’attente est estimé à {{waitTimeHours}} heures.",
+        "waiting_room.estimated_wait_time.hour_minute": "Votre temps d’attente est estimé à {{waitTimeHours}} heure et {{waitTimeHourMinutes}} minute.",
+        "waiting_room.estimated_wait_time.hour_minutes": "Votre temps d’attente est estimé à {{waitTimeHours}} heure et {{waitTimeHourMinutes}} minutes.",
+        "waiting_room.estimated_wait_time.hours_minute": "Votre temps d’attente est estimé à {{waitTimeHours}} heures et {{waitTimeHourMinutes}} minute.",
+        "waiting_room.estimated_wait_time.hours_minutes": "Votre temps d’attente est estimé à {{waitTimeHours}} heures et {{waitTimeHourMinutes}} minutes.",
+        "waiting_room.estimated_wait_time.unavailable": "L’estimation de votre temps d’attente n’est pas disponible.",
+        "waiting_room.estimated_wait_time.queue_full": "Le temps d’attente estimé est supérieur à un jour. Vous serez automatiquement placé(e) dans la file d’attente dès qu’une place sera disponible.",
+        "waiting_room.estimated_wait_time.too_long": "Votre temps d’attente estimé est supérieur à 4 heures.",
+        "waiting_room.reject.title.line1": "La page à laquelle vous tentez d’accéder n’est pas disponible pour le moment.",
+        "waiting_room.reject.title.line2": "Veuillez nous excuser pour le désagrément.",
+        "waiting_room.prequeue.title.line1": "Vous êtes maintenant dans la file d’attente préliminaire.",
+        "waiting_room.prequeue.title.line2": "Merci pour votre patience.",
+        "waiting_room.prequeue.explanation": "Au début de l’événement, vous serez admis(e) sur le site Web ou placé(e) dans une file d’attente virtuelle si nous rencontrons un volume de trafic élevé. En vous plaçant dans une file d’attente virtuelle, nous limitons le nombre d’utilisateurs présents simultanément sur le site Web, vous permettant ainsi de bénéficier de la meilleure expérience en ligne possible.",
+        "waiting_room.prequeue.wait_time.minute": "L’événement commence dans {{timeUntilEventStart}} minute.",
+        "waiting_room.prequeue.wait_time.minutes": "L’événement commence dans {{timeUntilEventStart}} minutes.",
+        "waiting_room.prequeue.wait_time.hour": "L’événement commence dans {{timeUntilEventStartHours}} heure.",
+        "waiting_room.prequeue.wait_time.hours": "L’événement commence dans {{timeUntilEventStartHours}} heures.",
+        "waiting_room.prequeue.wait_time.hour_minute": "L’événement commence dans {{timeUntilEventStartHours}} heure et {{timeUntilEventStartHourMinutes}} minute.",
+        "waiting_room.prequeue.wait_time.hour_minutes": "L’événement commence dans {{timeUntilEventStartHours}} heure et {{timeUntilEventStartHourMinutes}} minutes.",
+        "waiting_room.prequeue.wait_time.hours_minute": "L’événement commence dans {{timeUntilEventStartHours}} heures et {{timeUntilEventStartHourMinutes}} minute.",
+        "waiting_room.prequeue.wait_time.hours_minutes": "L’événement commence dans {{timeUntilEventStartHours}} heures et {{timeUntilEventStartHourMinutes}} minutes.",
+        "waiting_room.auto_refresh": "Cette page s’actualisera automatiquement. Ne fermez pas votre navigateur.",
+        "waiting_room.no_refresh": "Cette page ne s’actualisera pas automatiquement. Revenez-y ultérieurement.",
+        "waiting_room.last_updated": "Dernière mise à jour",
+        "waiting_room.privacy": "Politique de confidentialité",
+        "waiting_room.terms": "Conditions d’utilisation",
+        "waiting_room.abuse": "Sécurité et confidentialité",
+        "waiting_room.trademark": "Marque déposée",
+        "waiting_room.links.privacy": "https://www.cloudflare.com/fr-fr/privacypolicy/",
+        "waiting_room.links.terms": "https://www.cloudflare.com/fr-fr/website-terms/",
+        "waiting_room.links.abuse": "https://www.cloudflare.com/fr-fr/trust-hub/abuse-approach/",
+        "waiting_room.links.trademark": "https://www.cloudflare.com/fr-fr/trademark/"
+      },
+      //#endregion
+      //#region ja-JP
+      "jp": {
+        "waiting_room.locale_code": "ja-JP",
+        "waiting_room.title": "Waiting Room powered by Cloudflare",
+        "waiting_room.title.line1": "順番待ちに追加されました。",
+        "waiting_room.title.line2": "ご不便をおかけいたしますが、よろしくお願いいたします。",
+        "waiting_room.explanation": "大量のトラフィックが発生しています。\n最適なオンライン体験をご提供するために、仮想キューを使用し、同時にウェブサイトのユーザ数を制限しています。",
+        "waiting_room.estimated_wait_time.minute": "予想待機時間は {{waitTime}} 分です。",
+        "waiting_room.estimated_wait_time.minutes": "予想待機時間は {{waitTime}} 分です。",
+        "waiting_room.estimated_wait_time.hour": "予想待機時間は {{waitTimeHours}} 時間です。",
+        "waiting_room.estimated_wait_time.hours": "予想待機時間は {{waitTimeHours}} 時間です。",
+        "waiting_room.estimated_wait_time.hour_minute": "予想待機時間は {{waitTimeHours}} 時間 {{waitTimeHourMinutes}} 分です。",
+        "waiting_room.estimated_wait_time.hour_minutes": "予想待機時間は {{waitTimeHours}} 時間 {{waitTimeHourMinutes}} 分です。",
+        "waiting_room.estimated_wait_time.hours_minute": "予想待機時間は {{waitTimeHours}} 時間 {{waitTimeHourMinutes}} 分です。",
+        "waiting_room.estimated_wait_time.hours_minutes": "予想待機時間は {{waitTimeHours}} 時間 {{waitTimeHourMinutes}} 分です。",
+        "waiting_room.estimated_wait_time.unavailable": "待機時間は予測不可能です。",
+        "waiting_room.estimated_wait_time.queue_full": "予想待機時間は1日を超えています。空きが出来次第、自動的に順番に追加いたします。",
+        "waiting_room.estimated_wait_time.too_long": "予想待機時間は 4 時間以上です。",
+        "waiting_room.reject.title.line1": "アクセスしようとしているページは現在使用できません。",
+        "waiting_room.reject.title.line2": "ご不便をおかけして申し訳ございません。",
+        "waiting_room.prequeue.title.line1": "プレキューに入りました。",
+        "waiting_room.prequeue.title.line2": "ご不便をおかけいたしますが、よろしくお願いいたします。",
+        "waiting_room.prequeue.explanation": "イベントの開始後、ウェブサイトにそのまま進むことができます。大量のトラフィックが発生した場合には、仮想キューに配置されます。仮想キューを使用することにより、ウェブサイトを同時にアクセスするユーザ数が制限され、最適なオンライン体験をお届けします。",
+        "waiting_room.prequeue.wait_time.minute": "イベントは {{timeUntilEventStart}} 分後に開始されます。",
+        "waiting_room.prequeue.wait_time.minutes": "イベントは {{timeUntilEventStart}} 分後に開始されます。",
+        "waiting_room.prequeue.wait_time.hour": "イベントは {{timeUntilEventStartHours}} 時間後に開始されます。",
+        "waiting_room.prequeue.wait_time.hours": "イベントは {{timeUntilEventStartHours}} 時間後に開始されます。",
+        "waiting_room.prequeue.wait_time.hour_minute": "イベントは {{timeUntilEventStartHours}} 時間 {{timeUntilEventStartHourMinutes}} 分後に開始されます。",
+        "waiting_room.prequeue.wait_time.hour_minutes": "イベントは {{timeUntilEventStartHours}} 時間 {{timeUntilEventStartHourMinutes}} 分後に開始されます。",
+        "waiting_room.prequeue.wait_time.hours_minute": "イベントは {{timeUntilEventStartHours}} 時間 {{timeUntilEventStartHourMinutes}} 分後に開始されます。",
+        "waiting_room.prequeue.wait_time.hours_minutes": "イベントは {{timeUntilEventStartHours}} 時間 {{timeUntilEventStartHourMinutes}} 分後に開始されます。",
+        "waiting_room.auto_refresh": "このページは自動的に更新されます。ブラウザを閉じないでください。",
+        "waiting_room.no_refresh": "このページは自動的に更新されません。後ほど再度お戻りください。",
+        "waiting_room.last_updated": "最終更新",
+        "waiting_room.privacy": "プライバシー ポリシー",
+        "waiting_room.terms": "利用規約",
+        "waiting_room.abuse": "信頼性および安全性",
+        "waiting_room.trademark": "商標",
+        "waiting_room.links.privacy": "https://www.cloudflare.com/ja-jp/privacypolicy/",
+        "waiting_room.links.terms": "https://www.cloudflare.com/ja-jp/website-terms/",
+        "waiting_room.links.abuse": "https://www.cloudflare.com/ja-jp/trust-hub/abuse-approach/",
+        "waiting_room.links.trademark": "https://www.cloudflare.com/ja-jp/trademark/"
+      }
+      //#endregion
+    };
+
+    // default to English by default if the supported locale isn't included in the path
+    var locale = location.pathname.split("/")[1];
+    locale = locale in translations ? locale : "en";
+
+    var date = new Date();
+    document.getElementById('year').innerText = date.getFullYear();
+    document.getElementById(
+      'last-updated'
+    ).innerText = date.toLocaleTimeString(translations[locale]["waiting_room.locale_code"]);
+
+    {{^isRejectQueue}} 
+    {{#isEventPrequeueing}}
+    var minutes = parseInt( {{timeUntilEventStart}} , 10);
+    var time = document.getElementById('prequeueTime');
+    if ( minutes < 2) {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.minute"]
+    } else if (minutes < 60) {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.minutes"]
+    } else if (minutes === 60) {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.hour"]
+    } else if (minutes < 120 && (minutes % 60 === 1)) {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.hour_minute"]
+    } else if (minutes < 120) {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.hour_minutes"]
+    } else if (minutes % 60 === 0) {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.hours"]
+    } else {
+      time.innerText = translations[locale][ "waiting_room.prequeue.wait_time.hours_minutes"]
+    }
+    {{/isEventPrequeueing}}
+    {{/isRejectQueue}} 
+
+    {{#waitTimeKnown}}
+    {{^isRejectQueue}}
+    {{^isEventPrequeueing}}
+    var minutes = parseInt( {{waitTime}} , 10);
+    var time = document.getElementById('waitTime');
+
+    if ( minutes < 2) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.minute"]
+    } else if (minutes < 60) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.minutes"]
+    } else if (minutes === 60) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.hour"]
+    } else if (minutes < 120 && (minutes % 60 === 1)) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.hour_minute"]
+    } else if (minutes < 120) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.hour_minutes"]
+    } else if (minutes > (60 * 4)) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.too_long"]
+    } else if (minutes % 60 === 0) {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.hours"]
+    } else {
+      time.innerText = translations[locale]["waiting_room.estimated_wait_time.hours_minutes"]
+    }
+    {{/isEventPrequeueing}}
+    {{/isRejectQueue}}
+    {{/waitTimeKnown}}
+
+    // perform translations of the default page elemens
+    var translationIds = Object.keys(translations[locale]);
+    for (const id of translationIds) {
+      var el = document.getElementById(id);
+      if (!el) continue;
+
+      if (id.includes("links")) {
+        el.href = translations[locale][id];
+      } else {
+        el.innerText = translations[locale][id];
+      }
+    }
+  </script>
+</body>
+
+</html>

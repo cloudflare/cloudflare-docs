@@ -13,7 +13,7 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-1. A [Cloudflare account](/fundamentals/account-and-billing/account-setup/), if you do not have one already. 
+1. A [Cloudflare account](/fundamentals/setup/account-setup/), if you do not have one already. 
 2. [Wrangler](/workers/wrangler/install-and-update/) installed.
 
 ## 1. Enable Workers KV in the dashboard
@@ -39,7 +39,7 @@ $ npm create cloudflare@latest
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}
@@ -55,7 +55,7 @@ In your terminal, you will be asked a series of questions related to your projec
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
 
-This will create a new directory, which will include both a `src/worker.ts` Worker code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. 
+This will create a new directory, which will include both a `src/index.ts` Worker code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. 
 
 ## 3. Create a KV namespace 
 

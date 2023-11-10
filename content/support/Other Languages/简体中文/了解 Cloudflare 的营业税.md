@@ -17,7 +17,7 @@ _根据法律要求，Cloudflare 就我们在俄罗斯和美国某些州的服�
 -   [美国州营业税](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#2IBuAhhkbLxTr39W79THGy)
 -   [俄罗斯增值税（VAT）](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#2oyOmMH4GOhfpEIWEZ6ETG)
 -   [新加坡税款](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#h_6rIxZ29oODYgA0QTsAFcdY)
--   [中国台湾增值税（VAT）](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#h_5zS6KgfWKKmApDRspDervs)
+-   [台湾增值税（VAT）](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#h_5zS6KgfWKKmApDRspDervs)
 -   [加拿大](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#h_2g8xEPCRENGw1vHq2eqhxM)
 -   [马来西亚（增值税）](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#h_1XGrVKaJIcMmUJeTosjzfY)
 -   [南非（增值税）](https://support.cloudflare.com/hc/zh-cn/articles/360026135951-%E4%BA%86%E8%A7%A3-Cloudflare-%E7%9A%84%E8%90%A5%E4%B8%9A%E7%A8%8E#h_2xoVLGAGGiTHeaDNhUbU0S)
@@ -65,9 +65,9 @@ ___
 
 ___
 
-## 中国台湾增值税（VAT）
+## 台湾增值税（VAT）
 
-Cloudflare 对中国台湾的所有随用随付客户收取增值税。Cloudflare 仪表板中会显示 eGUI 发票 ID 和 eGUI 代码，这是向中国台湾地方政府获取发票时需要的。
+Cloudflare 对台湾的所有随用随付客户收取增值税。Cloudflare 仪表板中会显示 eGUI 发票 ID 和 eGUI 代码，这是向台湾当局获取发票时需要的。
 
 ___
 

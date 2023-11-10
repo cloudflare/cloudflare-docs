@@ -1,11 +1,13 @@
 ---
 pcx_content_type: configuration
-title: System Environment Variables
+title: System environment variables
+meta:
+  description: Local environment variables that can change Wrangler's behavior.
 ---
 
-# System Environment Variables
+# System environment variables
 
-System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set System Environment Variables:
+System environment variables are local environment variables that can change Wrangler's behavior. There are three ways to set system environment variables:
 
 1. Create an `.env` file in your project directory. Set the values of your environment variables in your [`.env`](/workers/wrangler/system-environment-variables/#example-env-file) file. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
 
@@ -21,7 +23,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_ACCOUNT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for the Workers related account.
+  - The [account ID](/fundamentals/setup/find-account-and-zone-ids/) for the Workers related account.
 
 - `CLOUDFLARE_API_TOKEN` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

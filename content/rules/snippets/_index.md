@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Snippets (alpha)
 ---
 
-{{<alpha>}} Cloudflare Snippets {{</alpha>}}
+{{<heading-pill style="alpha">}} Cloudflare Snippets {{</heading-pill>}}
 
 Cloudflare Snippets (alpha) provide a flexible way to customize the behavior of your website or application using short pieces of JavaScript code. Use snippets to customize HTTP response headers, implement JWT validation, define complex redirect functionality, and more.
 

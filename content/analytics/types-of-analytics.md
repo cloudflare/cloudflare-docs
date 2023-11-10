@@ -2,8 +2,6 @@
 pcx_content_type: reference
 title: Types of analytics
 weight: 2
-aliases:
-- /fundamentals/data-products/types-of-analytics/
 ---
 
 # Types of analytics

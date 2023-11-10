@@ -1,7 +1,6 @@
 ---
 title: PhishNet for Office 365
 pcx_content_type: how-to
-weight: 1
 ---
 
 # PhishNet for Office 365

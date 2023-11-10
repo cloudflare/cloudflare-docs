@@ -8,7 +8,7 @@ meta:
 
 # Phish reports
 
-Area 1 automatically generates phish reports to provide an overview of your email traffic.
+Area 1 automatically generates phish reports to provide an overview of your email traffic. The report only includes malicious emails. Spam and bulk emails are not included.
 
 ## In the dashboard
 

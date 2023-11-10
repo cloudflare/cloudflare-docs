@@ -129,6 +129,12 @@ By default, all messages in the batch will be acknowledged as soon as all of the
 
 If the `queue()` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
 
+{{<Aside type="note">}}
+
+`waitUntil()` is the only supported method to run tasks (such as logging or metrics calls) that resolve after a queue handler has completed. Promises that have not resolved by the time the queue handler returns may not complete and will not block completion of execution. 
+
+{{</Aside>}}
+
 ```ts
 export default {
   async queue(
@@ -154,6 +160,12 @@ addEventListener('queue', (event) => {
 ```
 
 In service worker syntax, `event` provides the same fields and methods as `MessageBatch`, as defined below, in addition to [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil).
+
+{{<Aside type="note">}}
+
+When performing asynchronous tasks in your queue handler that iterates through messages, use an asynchronous version of iterating through your messages. For example, `for (const m of batch.messages)`or `await Promise.all(batch.messages.map(work))` allow for waiting for the results of asynchronous calls. `batch.messages.forEach()` does not.
+
+{{</Aside>}}
 
 ### `MessageBatch`
 

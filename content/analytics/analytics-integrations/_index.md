@@ -2,8 +2,6 @@
 pcx_content_type: navigation
 title: Analytics integrations
 weight: 7
-aliases:
-- /fundamentals/data-products/analytics-integrations/
 ---
 
 # Analytics integrations

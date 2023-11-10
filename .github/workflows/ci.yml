@@ -5,6 +5,10 @@ on:
     branches:
       - production
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   compile:
     name: Compiles
@@ -34,7 +38,9 @@ jobs:
         run: pnpm run crawl
         if: success()
 
-      
+      - name: Check - Infinite redirects
+        run: npx tsm bin/find-infinite-redirects.ts
+
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest

@@ -32,7 +32,7 @@ name = "my-worker"
 
 ```ts
 ---
-filename: worker.ts
+filename: index.ts
 ---
 type Environment = {
 	readonly ERROR_QUEUE: Queue<Error>;

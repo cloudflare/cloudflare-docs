@@ -735,7 +735,7 @@ ___
 
 如果您在 Page Rule 的**如果 URL 匹配**字段中指定一个端口，则它必须是下列端口之一：
 
--   [与 Cloudflare 的代理兼容的](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 端口之一。
+-   [与 Cloudflare 的代理兼容的](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 端口之一。
 -   [Cloudflare Spectrum](/spectrum/) HTTPS 应用程序的自定义端口。
 
 ### 将页面规则用于 Workers

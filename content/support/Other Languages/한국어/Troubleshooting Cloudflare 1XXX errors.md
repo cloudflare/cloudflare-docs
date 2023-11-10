@@ -225,7 +225,7 @@ ___
 
 ### 일반적인 원인
 
-클라이언트 또는 브라우저에서  [서버 이름 표시](/fundamentals/glossary#server-name-indication-sni) (SNI)를 통해 전송된 호스트 이름이 요청 호스트 헤더와 일치하지 않습니다.
+클라이언트 또는 브라우저에서  [서버 이름 표시](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI)를 통해 전송된 호스트 이름이 요청 호스트 헤더와 일치하지 않습니다.
 
 ### 문제 해결
 

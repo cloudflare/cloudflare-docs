@@ -139,7 +139,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
    $ cd redirect-worker
    ```
 
-3. Open `wrangler.toml` in a text editor and insert your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+3. Open `wrangler.toml` in a text editor and insert your [account ID](/fundamentals/setup/find-account-and-zone-ids/).
 
    ```txt
    ---

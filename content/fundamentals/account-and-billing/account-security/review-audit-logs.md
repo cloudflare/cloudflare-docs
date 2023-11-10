@@ -2,8 +2,6 @@
 title: Review audit logs
 pcx_content_type: how-to
 weight: 3
-aliases:
-- /fundamentals/account-and-billing/account-security/review-audit-logs/
 ---
 
 # Review audit logs

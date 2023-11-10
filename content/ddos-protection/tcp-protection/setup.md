@@ -34,6 +34,8 @@ The allowlist only applies to source IPs — it does not apply to your own IPs o
 
 [Create a rule](/ddos-protection/tcp-protection/how-to/create-rule/) for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received packets.
 
+Optionally, you can create [filters](/ddos-protection/tcp-protection/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). {{<render file="_atp-filter-definition.md">}}
+
 ## 5. Enable Advanced TCP Protection
 
 1. In the Cloudflare dashboard, go to Account Home > **L3/4 DDoS** > **Advanced TCP Protection**.

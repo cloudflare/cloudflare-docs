@@ -225,7 +225,7 @@ ___
 
 ### Causa comum
 
-O hostname enviado pelo cliente ou pelo navegador por meio da [Indicação de Nome do Servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) não corresponde ao cabeçalho do host da solicitação.
+O hostname enviado pelo cliente ou pelo navegador por meio da [Indicação de Nome do Servidor](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) não corresponde ao cabeçalho do host da solicitação.
 
 ### Solução
 

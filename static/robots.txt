@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /client-ip-geolocation
 Disallow: /plans/
+Disallow: /constellation
 
 Sitemap: https://developers.cloudflare.com/sitemap.xml

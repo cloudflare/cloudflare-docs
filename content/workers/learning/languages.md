@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Languages
+meta:
+  description: Languages supported on Workers, a polyglot platform.
 ---
 
 # Languages

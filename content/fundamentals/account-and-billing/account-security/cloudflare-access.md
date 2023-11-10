@@ -4,8 +4,6 @@ title: Allow Cloudflare access
 weight: 4
 meta:
     title: Provide edit access to Cloudflare Support
-aliases:
-- /fundamentals/account-and-billing/account-security/cloudflare-access/
 ---
 
 # Provide edit access to Cloudflare Support

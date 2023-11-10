@@ -16,9 +16,15 @@ To deploy a managed ruleset for several Enterprise domains in your account, refe
 
 ## Deploy a managed ruleset
 
-To deploy a managed ruleset with the default configuration, under **Managed Rulesets** select **Deploy** next to a managed ruleset. This operation will deploy the managed ruleset for the current zone.
+To deploy a managed ruleset with the default configuration:
 
-When you deploy a managed ruleset, the WAF adds an _Execute_ rule, displayed in **Managed rules**, that deploys the managed ruleset.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Managed rules**.
+
+3. Under **Managed Rulesets**, select **Deploy** next to a managed ruleset.
+
+This operation will deploy the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
 
 ## Enable or disable a managed ruleset
 

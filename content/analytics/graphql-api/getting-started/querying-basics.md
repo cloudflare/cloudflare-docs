@@ -276,7 +276,7 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 [1]: </analytics/graphql-api/features/discovery/introspection/>
 [2]: </analytics/graphql-api/getting-started/compose-graphql-query/>
 [3]: </analytics/graphql-api/getting-started/execute-graphql-query/>
-[5]: </fundamentals/get-started/basic-tasks/find-account-and-zone-ids/>
+[5]: </fundamentals/setup/find-account-and-zone-ids/>
 [6]: <https://www.howtographql.com/>
 [7]: <https://graphql.org/learn/thinking-in-graphs/>
 [8]: <https://graphql.org/learn/schema/>

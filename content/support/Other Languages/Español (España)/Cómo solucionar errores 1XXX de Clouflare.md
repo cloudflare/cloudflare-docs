@@ -230,7 +230,7 @@ ___
 
 ### Causas habituales
 
-El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
+El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/reference/glossary/#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
 
 ### Solución
 

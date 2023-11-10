@@ -109,7 +109,7 @@ To set up an integration with Upstash QStash:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
-    4. Select **Settings** > **Integrations** > **Upstash QStash**. 
+    4. Select **Integrations** > **Upstash QStash**. 
     5. Follow the setup flow.
     
 3. In your Worker, install the `@upstash/qstash`, a HTTP client to connect to your database QStash endpoint:

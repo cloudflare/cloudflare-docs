@@ -44,7 +44,7 @@ If you would like to require all of your configured HTTP headers to be present o
 
 ## Enabling Session Affinity from the Cloudflare dashboard
 
-Enable Session Affinity when you [create or edit a load balancer](/load-balancing/how-to/create-load-balancer/), during the **Hostname** step.
+Enable Session Affinity when you [create or edit a load balancer](/load-balancing/load-balancers/create-load-balancer/), during the **Hostname** step.
 
 If you enable Session Affinity, choose one of the following options:
 
@@ -72,7 +72,7 @@ Customize the behavior of session affinity by using the `session_affinity`, `ses
 To enable session affinity by HTTP header, set the `session_affinity` value to `header` and add your
 HTTP header names to `session_affinity_attributes.headers`.
 
-For more details on API commands in context, refer to [Create a load balancer with the API](/load-balancing/how-to/create-load-balancer/).
+For more details on API commands in context, refer to [Create a load balancer with the API](/load-balancing/load-balancers/create-load-balancer/).
 
 ---
 

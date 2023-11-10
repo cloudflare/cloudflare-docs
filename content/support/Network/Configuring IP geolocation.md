@@ -111,7 +111,7 @@ ___
 
 ## Related resources
 
--   [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/)
+-   [HTTP request headers](/fundamentals/reference/http-request-headers/)
 -   [Managed Transforms](/rules/transform/managed-transforms/)
 -   [Apache Log Files Format](https://httpd.apache.org/docs/2.4/logs.html)
 -   [Configuring NGINX Logging](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)

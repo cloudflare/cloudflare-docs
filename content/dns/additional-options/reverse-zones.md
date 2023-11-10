@@ -33,40 +33,35 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 ### Step 1 - Create a reverse DNS zone
 
-1.  Within your account, click **Add site**.
+1. Within your account, click **Add site**.
 
-2.  For your site name, use the reverse IP address:
+2. For your site name, use the reverse IP address:
 
-    *   For IPv4 /24 prefixes, the pattern is:
-        *   **IP prefix**: `<octet_1>.<octet_2>.<octet_3>.0/24`
-        *   **Reverse zone address**: `<octet_3>.<octet_2>.<octet_1>.in-addr.arpa`
-    *   For IPv4 /16 prefixes, the pattern is:
-        *   **IP prefix**: `<octet_1>.<octet_2>.0.0/16`
-        *   **Reverse zone address**: `<octet_2>.<octet_1>.in-addr.arpa`
+    - For IPv4 /24 prefixes, the pattern is:
+        - **IP prefix**: `<octet_1>.<octet_2>.<octet_3>.0/24`
+        - **Reverse zone address**: `<octet_3>.<octet_2>.<octet_1>.in-addr.arpa`
+    - For IPv4 /16 prefixes, the pattern is:
+        - **IP prefix**: `<octet_1>.<octet_2>.0.0/16`
+        - **Reverse zone address**: `<octet_2>.<octet_1>.in-addr.arpa`
 
-         <details>
-         <summary>Example</summary>
-         <div>
+         {{<details header="Example">}}
 
-        *   **IPv4 prefix**: `198.51.100.0/24`
-        *   **Reverse zone**: `100.51.198.in-addr.arpa`
+        - **IPv4 prefix**: `198.51.100.0/24`
+        - **Reverse zone**: `100.51.198.in-addr.arpa`
 
-         </div>
-         </details>
+         {{</details>}}
 
-3.  If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
+3. If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
 
-4.  Skip the rest of the onboarding process.
+4. Skip the rest of the onboarding process.
 
 ### Step 2 - Add PTR records
 
-1.  Go to **DNS** > **Records**.
+1. Go to **DNS** > **Records**.
 
-2.  For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
+2. For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 
-    <details>
-    <summary>Example</summary>
-    <div>
+    {{<details header="Example">}}
 
     For example, you might have the following configuration:
 
@@ -75,9 +70,8 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
     The PTR record on the subdomain would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
 
-    </div>
-    </details>
+    {{</details>}}
 
-3.  Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
+3. Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
 
 After this process, your reverse zone will be activated and you can perform reverse DNS lookups.

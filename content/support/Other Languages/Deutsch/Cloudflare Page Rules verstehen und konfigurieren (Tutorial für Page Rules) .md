@@ -785,7 +785,7 @@ Beachten Sie, dass `example.com/some-path/cloudflare.com` _ohne_ einen abschlie√
 
 Wenn Sie einen Port im Page-Rule-Feld **Wenn die URL √ºbereinstimmt** angeben, muss es sich um einen der folgenden Ports handeln:
 
--   Einer der HTTP/HTTPS-Ports, die [mit dem Proxy von Cloudflare kompatibel](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) sind.
+-   Einer der HTTP/HTTPS-Ports, die [mit dem Proxy von Cloudflare kompatibel](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) sind.
 -   Ein benutzerdefinierter Port einer [Cloudflare Spectrum](/spectrum/) HTTPS-Anwendung.
 
 ### Page Rules mit Workers verwenden
