@@ -13,13 +13,13 @@ entries:
   general_definition: |-
     a blocklist is a list of items (usually websites, IP addresses, email addresses, etc.) that are prevented from accessing a system.
 
+- term: content object
+  general_definition: |-
+    a content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: `text/html`, `text/x-shellscript`, `application/json`, `text/csv`, or `text/xml`.
+
 - term: credential stuffing
   general_definition: |-
     credential stuffing is the automated injection of stolen username and password pairs (known as "credentials") into website login forms, trying to gain access to user accounts.
-
-- term: content object
-  general_definition: |-
-    a content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: `text/html`, `text/x-shellscript`, `application/json`, text/csv`, or `text/xml`.
 
 - term: exposed credentials
   general_definition: |-
@@ -34,7 +34,7 @@ entries:
     a request to which Cloudflare applied a blocking action, preventing the request from being processed as usual. Includes blocked requests and challenged requests that were not solved successfully.
 
 - term: rate limiting
-  general definition: |-
+  general_definition: |-
     rate limiting is a technique used in computer systems to control the rate at which requests are processed. It can be used as a security measure to prevent attacks, or to limit resource usage in your origin servers.
 
 - term: SIEM
