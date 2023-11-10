@@ -159,7 +159,7 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, excludes 
 
 ## Limitations
 
-Challenge Platform cannot support the following:
+Cloudflare's challenges cannot support the following:
 
 1. Implementations where a domain serves a challenge page originally requested for another domain.
 2. Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
