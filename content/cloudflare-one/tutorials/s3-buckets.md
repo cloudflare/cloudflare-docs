@@ -49,11 +49,12 @@ flowchart TB
 
 After you create the VPC endpoint, a new entry in the VPC route table with the target being your VPC endpoint. The entry will have the format `vpce-xxxxxxxxxxxxxxxxx`.
 
-### 2. Set up a bucket policy on the S3 bucket so that the VPC can access the bucket
+### 2. Set up a bucket policy for VPC access
 
-1. In the AWS dashboard, go to the **S3 dashboard** > **Buckets** > **`<your-S3-bucket>`** > **Permissions**.
-2. Disable **Block all public access**.
-3. Edit the **Bucket policy** add this policy.
+1. Go to **Services** > **Storage** > **S3**.
+2. In Amazon S3, go to **Buckets** > **`<your-S3-bucket>`** > **Permissions**.
+3. Disable **Block all public access**.
+4. In **Bucket policy**, add the following policy:
 
 ```json
 {
@@ -79,37 +80,39 @@ After you create the VPC endpoint, a new entry in the VPC route table with the t
 }
 ```
 
-### 3. Enable Static website hosting on the S3 bucket
+Your bucket policy will allow your VPC to access your S3 bucket.
 
-From the AWS dashboard, go to the **S3 dashboard** > **Buckets** > `your-S3-bucket01` > **Properties**
+### 3. Enable static website hosting for the S3 bucket
 
-1. Under **Static website hosting** Select **Edit**.
-2. Choose **Enable** for **Static website hosting**.
-3. Specify the **Index** and **Error** documents for the S3 bucket.
-4. Select **Save changes**.
+1. Return to the S3 dashboard, then go to **Buckets** > **`your-S3-bucket01`** > **Properties**.
+2. In **Static website hosting**, select **Edit**.
+3. Enable **Static website hosting**.
+4. Specify the Index and Error documents for the S3 bucket.
+5. Select **Save changes**.
 
-A bucket website endpoint will be available at `http://<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com` . Due to the bucket policy, this website endpoint will only accessible from the VPC with the VPC endpoint configured.
+A bucket website endpoint will be available at `http://<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com` . Because of the bucket policy, this website endpoint will only be accessible from the VPC with the VPC endpoint configured.
 
-### 4. Add a new public hostname to the Cloudflare tunnel terminating in the AWS VPC
+### 4. Add a new public hostname to the Cloudflare Tunnel
 
-From the Cloudflare Zero Trust dashboard, go to **Access** > **Tunnels** > `your-cloudflare-tunnel` > **Configure**
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels**
+2. Select your Tunnel, then select **Configure**.
+3. Go to **Public Hostname**, then select **Add a public hostname**.
+4. Enter a subdomain your organization will use to access the S3 bucket. For example, `s3-bucket.<your-domain>.com`.
+5. Under **Service**, choose _HTTP_ for **Type**. In **URL**, enter `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
+6. In **Additional application settings** > **HTTP Settings**, input the **HTTP Host Header** as `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
+7. Select **Save hostname**.
 
-1. Go to **Public hostnames** > **Add a public hostname**.
-2. Under **Subdomain**, choose a subdomain name that will be used by your organization to access the S3 bucket, for example, `s3-bucket.your-domain.com`.
-3. Under **Service**, choose `Type = HTTP` and `URL = <your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
-4. Expand the **Additional application settings** > **HTTP Settings** and configure the **HTTP Host Header** as `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
-5. Select **Save hostname**.
+Your Cloudflare Tunnel will terminate at the AWS VPC using your public hostname.
 
-### 5. Add a new Access Policy to restrict access to the S3 bucket
+### 5. Restrict S3 access with an Access policy
 
-From the Cloudflare Zero Trust dashboard, go to **Access** > **Applications** > **Add an application**
+1. Go to **Access** > **Applications**. Select **Add an application**.
+2. Select **Self-hosted**.
+3. Enter a name for the application.
+4. In **Application Domain**, enter the public hostname used by your Tunnel. For example, `s3-bucket.<your-domain>.com`.
+5. Configure the settings per your organization's requirements. For more information, refer to the [Access policies](/cloudflare-one/policies/access/). For automated systems, to access the bucket, [Service Tokens](/cloudflare-one/identity/service-tokens/) can be used.
 
-1. Select **Self-hosted** as the application type.
-2. Provide a name to the **Application**, for example, `s3-bucket`.
-3. Define the **Application Domain** as the **Public hostname** added to the Cloudflare tunnel, for example, `s3-bucket.your-domain.com`.
-4. Configure the rest of the Application settings as per your organization requirements. For more details, refer to the [Access Policies](/cloudflare-one/policies/access/) documentation. For automated systems, to access the bucket, [Service Tokens](/cloudflare-one/identity/service-tokens/) can be used.
-
-The S3 bucket is now available at `https://s3-bucket.your-domain.com` but only for users/applications that successfully authenticate via Cloudflare Access.
+Users and applications that successfully authenticate via Cloudflare Access can access your S3 bucket at `https://s3-bucket.<your-domain>.com`.
 
 ## Method 2: Via Cloudflare Gateway egress policies
 
