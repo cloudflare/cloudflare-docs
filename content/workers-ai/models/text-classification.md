@@ -144,6 +144,7 @@ TypeScript class: **AiTextClassificationInput**
 ```json
 {
   "type": "array",
+  "contentType": "application/json",
   "items": {
     "type": "object",
     "properties": {

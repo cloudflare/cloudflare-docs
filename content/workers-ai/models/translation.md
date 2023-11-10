@@ -155,6 +155,7 @@ TypeScript class: **AiTranslationInput**
 ```json
 {
   "type": "object",
+  "contentType": "application/json",
   "properties": {
     "translated_text": {
       "type": "string"

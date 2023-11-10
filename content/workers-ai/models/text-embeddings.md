@@ -186,6 +186,7 @@ TypeScript class: **AiTextEmbeddingsInput**
 ```json
 {
   "type": "object",
+  "contentType": "application/json",
   "properties": {
     "shape": {
       "type": "array",

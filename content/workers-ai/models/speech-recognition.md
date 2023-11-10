@@ -97,6 +97,7 @@ TypeScript class: **AiSpeechRecognitionInput**
 ```json
 {
   "type": "object",
+  "contentType": "application/json",
   "properties": {
     "text": {
       "type": "string"

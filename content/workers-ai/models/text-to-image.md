@@ -101,6 +101,7 @@ TypeScript class: **AiTextToImageInput**
 ```json
 {
   "type": "string",
+  "contentType": "image/png",
   "format": "binary"
 }
 ```

@@ -244,6 +244,7 @@ TypeScript class: **AiTextGenerationInput**
   "oneOf": [
     {
       "type": "object",
+      "contentType": "application/json",
       "properties": {
         "response": {
           "type": "string"
@@ -252,6 +253,7 @@ TypeScript class: **AiTextGenerationInput**
     },
     {
       "type": "string",
+      "contentType": "text/event-stream",
       "format": "binary"
     }
   ]
