@@ -50,7 +50,7 @@ ___
 We do count `503` errors from your origin that are passed as a response from the edge, though in this version 503 errors from the edge have multiple potential sources.
 
 -   Your origin server had a `503`.  We received this from the origin and the status code was in the response from the on the edge
--   Websocket rate-limit error
+-   WebSocket rate-limit error
 
 ___
 
