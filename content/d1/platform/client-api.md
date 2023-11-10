@@ -210,6 +210,10 @@ console.log(info);
 
 ### await db.dump()
 
+{{<Aside type="warning">}}
+This API only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+{{</Aside>}}
+
 Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
 
 ```js
