@@ -42,3 +42,7 @@ entries:
     Security Information and Event Management (SIEM) solutions provide analysis of log data from various systems.
   associated_products:
     - Cloudflare One
+
+- term: threat score
+  general_definition: |-
+    threat score is a score from 0 to 100 classifying the IP reputation of a visitor, where 0 indicates low risk. IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
