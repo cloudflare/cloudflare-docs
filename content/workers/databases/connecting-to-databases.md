@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Connect to databases
 weight: 1
 meta:
-  description: Learn about the different kind of database integrations Cloudflare supports.
+  description: Learn about the different kinds of database integrations Cloudflare supports.
 ---
 
 # Connect to databases
