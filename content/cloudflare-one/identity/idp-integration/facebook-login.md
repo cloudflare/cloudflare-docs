@@ -50,13 +50,15 @@ Use these steps to set up Facebook as your identity provider.
 
 20. Ensure that the **Use Strict Mode for Redirect URIs** slider is set to **Yes**.
 
-21. In the **Valid OAuth redirect URIs** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}, followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+21. In the **Valid OAuth redirect URIs** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-21. Select **Save Changes**.
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+
+22. Select **Save Changes**.
 
 To test that your connection is working, follow the steps on [SSO Integration](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust).
 

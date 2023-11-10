@@ -18,6 +18,10 @@ It does this by:
 
 ---
 
+## Comparison
+
+{{<render file="_comparison-mirage-polish.md" productFolder="images" withParameters="Mirage;;Polish;;/images/polish/" >}}
+
 ## Availability
 
 {{<feature-table id="speed.mirage">}}

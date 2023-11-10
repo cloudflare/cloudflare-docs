@@ -55,6 +55,8 @@ Overview by product-behavior is summarized in the following table. Below you can
 | DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Image Resizing | ✅ | ✘ | 🚧{{<fnref num="1">}} |
 | Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Onion Routing | ✘ | ✘ | ✘ |
+| Orange-to-Orange (O2O) | ✘ | ✘ | ✘ |
 | Stream Delivery | ✅ | ✅ | ✅ |
 | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="2">}} |
 | Waiting Room | ⚫️ | ✅ | ✅ |

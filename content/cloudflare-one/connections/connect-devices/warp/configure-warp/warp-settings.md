@@ -16,13 +16,7 @@ WARP settings define the WARP client modes and permissions available to end user
 
 ### Admin override
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 {{<Aside type="note">}}
 
@@ -67,17 +61,31 @@ The WARP client will now show **Disabled by Admin Override** and the time when t
 
 When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) your organization's root certificate on the device.
 
+{{<heading-pill style="beta" heading="h3">}}Override local interface IP{{</heading-pill>}}
+
+{{<details header="Feature availability">}}
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows, macOS, Linux | Gateway with WARP, Secure Web Gateway without DNS Filtering                                                        | All plans                                                     |
+
+{{</details>}}
+
+Overrides the default IP address of the [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) created by WARP.
+
+**Value:**
+
+- `Disabled`: (default) The local interface IP is set to `172.16.0.2` on all devices.
+
+- `Enabled`: Each device in your organization is assigned a unique IP address in the `100.96.0.0/12` range. The new local interface IP takes effect when the user reconnects or re-enrolls the WARP client.
+
+This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+
 ## Device settings
 
 ### Captive portal detection
 
-{{<details header="Feature availability">}}
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems    | Any mode                                                                         | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 Captive portal detection is the ability for the WARP client to detect a third-party onboarding flow before Internet access is obtained. Captive portals typically occur in places such as airports, cafes, and hotels.
 
@@ -118,13 +126,7 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 
 ### Allow device to leave organization
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 **Value:**
 
@@ -145,13 +147,7 @@ When `Enabled`, users will receive update notifications when a new version of th
 
 ### Auto connect
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](#lock-warp-switch) above.
 
@@ -164,13 +160,7 @@ We recommend keeping this set to a very low value — usually just enough time f
 
 ### Support URL
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 When `Enabled`, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
 
@@ -179,13 +169,7 @@ When `Enabled`, the **Send Feedback** button in the WARP client appears and will
 
 ### Service mode
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes) for a detailed description of each mode.
 
@@ -203,24 +187,12 @@ Configures the WARP client to redirect DNS requests to a private DNS resolver. F
 
 ### Split Tunnels
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
 
 ### Directly route Office 365 traffic
 
-{{<details header="Feature availability">}}
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-{{</details>}}
+{{<render file="warp/_all-systems-modes-plans.md">}}
 
 Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.

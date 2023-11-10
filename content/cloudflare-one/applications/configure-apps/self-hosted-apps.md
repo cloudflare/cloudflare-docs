@@ -34,7 +34,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 7. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-8. {{<render file="_access-block-page.md">}}
+8. {{<render file="access/_access-block-page.md">}}
 
 9. In the **Identity Providers** card, select the identity providers you want to enable for your app.
 

@@ -38,7 +38,7 @@ To retrieve those values:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}} in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
    ![Registering an application in Azure](/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -114,7 +114,7 @@ To synchronize users and groups between Access and Azure:
 
 ### 1. Enable SCIM in Zero Trust
 
-{{<render file="_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
+{{<render file="access/_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
 
 ### 2. Configure SCIM in Azure
 

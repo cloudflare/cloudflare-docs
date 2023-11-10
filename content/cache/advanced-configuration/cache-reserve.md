@@ -86,6 +86,8 @@ In most cases, a Cache Reserve miss will result in both one class A and one clas
   </tbody>
 </table>
 
+{{<render file="_cache-reserve-billing-note.md">}}
+
 ### Storage usage
 
 Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by recording total bytes stored for the duration of the month.
@@ -131,7 +133,7 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 | **TOTAL**          |                                          |                   | **$19.86** |
 {{</table-wrap>}}
 
-(Note the billable quantity is rounded up to the nearest million.)
+{{<render file="_cache-reserve-billing-note.md">}}
 
 #### Example 2
 
@@ -149,6 +151,8 @@ the estimated cost for the month would be:
 | Storage            | (1,000,000 assets) * (1MB per asset)                |   1,000 GB-months |      $15.00 |
 | **TOTAL**          |                                                     |                   | **$171.60** |
 {{</table-wrap>}}
+
+{{<render file="_cache-reserve-billing-note.md">}}
 
 ## Tips and best practices
 

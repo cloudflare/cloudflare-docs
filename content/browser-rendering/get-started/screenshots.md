@@ -69,7 +69,7 @@ Update your `wrangler.toml` configuration file with the Browser Rendering API bi
 filename: wrangler.toml
 ---
 name = "browser-worker"
-main = "src/worker.js"
+main = "src/index.js"
 compatibility_date = "2023-03-14"
 compatibility_flags = [ "nodejs_compat" ]
 
@@ -83,7 +83,7 @@ kv_namespaces = [
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
-Update `src/worker.js` with your Worker code:
+Update `src/index.js` with your Worker code:
 
 ```js
 import puppeteer from "@cloudflare/puppeteer";

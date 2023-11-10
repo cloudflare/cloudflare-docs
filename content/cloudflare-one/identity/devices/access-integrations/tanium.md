@@ -10,6 +10,12 @@ meta:
 
 Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource. When users attempt to connect to a resource protected by Access with a Tanium rule, Cloudflare Access will validate the user's identity, and the browser will connect to the Tanium agent before making a decision to grant access.
 
+{{<Aside type="warning" header="Gateway device posture limitation">}}
+
+The Tanium integration cannot be used with [Gateway device posture policies](/cloudflare-one/policies/gateway/network-policies/#device-posture).
+
+{{</Aside>}}
+
 ## Prerequisites
 
 - Tanium Core Platform version 7.2 or later
@@ -17,7 +23,7 @@ Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/
 
 ## Integrate Tanium with Cloudflare Access
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 The integration does not currently support Safari.
 

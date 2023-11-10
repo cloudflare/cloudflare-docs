@@ -49,7 +49,7 @@ Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addr
 
 1. Install `cloudflared` on your instance. In this example, we are running a Debian-based instance, so use the Debian package of `cloudflared`:
 
-   {{<render file="_cloudflared-debian-install.md">}}
+   {{<render file="tunnel/_cloudflared-debian-install.md">}}
 
 1. Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
 
