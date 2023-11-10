@@ -15,11 +15,11 @@ entries:
 
 - term: credential stuffing
   general_definition: |-
-    credential stuffing is the automated injection of stolen username and password pairs (known as "credentials") in to website login forms, trying to gain access to user accounts.
+    credential stuffing is the automated injection of stolen username and password pairs (known as "credentials") into website login forms, trying to gain access to user accounts.
 
 - term: content object
   general_definition: |-
-    a content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: `text/html`, `text/x-shellscript`, `application/json`, text/csv`, and `text/xml`.
+    a content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: `text/html`, `text/x-shellscript`, `application/json`, text/csv`, or `text/xml`.
 
 - term: exposed credentials
   general_definition: |-
@@ -45,4 +45,4 @@ entries:
 
 - term: threat score
   general_definition: |-
-    threat score is a score from 0 to 100 classifying the IP reputation of a visitor, where 0 indicates low risk. IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
+    threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor. IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
