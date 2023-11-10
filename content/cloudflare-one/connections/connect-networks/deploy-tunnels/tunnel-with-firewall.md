@@ -12,18 +12,19 @@ You can implement a positive security model with Cloudflare Tunnel by blocking a
 
 The parameters below can be configured for egress traffic inside of a firewall.
 
-| Destination | Port | Protocols |
-| ----------- | -------- | --------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `api.cloudflare.com`        | 443  | TCP (HTTPS) |
-| `update.argotunnel.com`     | 443  | TCP (HTTPS) |
+{{<table-wrap>}}
 
-{{<Aside type="note">}}
+| Destination | Port | Protocols | Required? | Description |
+| ----------- | -------- | --------- | ------- | -------|
+| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2` and `quic`) | Yes | Allows `cloudflared` to establish connections to the Cloudflare global network. |
+| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2` and `quic`) | Yes | Allows `cloudflared` to establish connections to the Cloudflare global network. |
+| `cftunnel.com`              | 7844 | TCP/UDP (`http2` and `quic`) | Yes, for firewalls that enforce SNI | Allows `cloudflared` to establish connections to the Cloudflare global network. |
+| `h2.cftunnel.com`              | 7844 | TCP/UDP (`http2`) | Yes, for firewalls that enforce SNI | Allows `cloudflared` to establish connections to the Cloudflare global network. |
+| `quic.cftunnel.com`              | 7844 | TCP/UDP (`quic`) | Yes, for firewalls that enforce SNI | Allows `cloudflared` to establish connections to the Cloudflare global network. |
+| `api.cloudflare.com`        | 443  | TCP (HTTPS) | No | Allows `cloudflared` to query if software updates are available. |
+| `update.argotunnel.com`     | 443  | TCP (HTTPS) | No | Allows `cloudflared` to query if software updates are available. |
 
-Opening port 443 for connections to `update.argotunnel.com` is optional. Failure to do so will prompt a log error, but `cloudflared` will still run correctly.
-
-{{</Aside>}}
+{{</table-wrap>}}
 
 ## Firewall configuration
 
