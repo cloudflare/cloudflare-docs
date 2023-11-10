@@ -7,10 +7,19 @@ entries:
   associated_products:
     - Magic Transit
 
+- term: policy-based routing
+  general_definition: |-
+    policy-based routing (PBR) is technique used to make routing decisions based on policies set by your administrador.
+  associated_products:
+    - Magic WAN
+    - Magic Transit
+
 - term: prefix
   general_definition: |-
     refers to a number that identifies the network portion of an IP address. It tells devices if an IP address is on the same network or not, and how many bits are used for a network. It is shown as a number after a slash (for example, `/31`) at the end of the IP address. Using an analogy, the prefix is like a street address. If an IP address is in the same street, it belogs to the same network of devices.
   associated_products:
     - Magic WAN
     - Magic Transit
+
+
 
