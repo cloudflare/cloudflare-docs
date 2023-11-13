@@ -2,6 +2,7 @@
 title: Managed Lists
 pcx_content_type: concept
 weight: 3
+layout: single
 ---
 
 # Managed Lists
@@ -40,10 +41,25 @@ Cloudflare provides the following Managed IP Lists:
     <tr>
       <td>Cloudflare VPNs</td>
       <td><code>cf.vpn</code></td>
-      <td>IP addresses of known VPN servers.</td>
-    </tr>
+      <td>IP addresses of known VPN servers. 
+      </td>
+    </tbody>
+    </table>
+
+{{<Aside>}}
+Cloudflare primarily detects VPN traffic that passes through our public resolver at 1.1.1.1 and is not shared with other hostnames. Additionally, we can identify major VPNs based on their published IP addresses. However, we do not block all VPNs at this time. We are continually working to improve our detection capabilities and expand our coverage to include a wider range of VPN services.
+{{</Aside>}}
+
+<table>
+<thead>
+<tr>
+<th style="width: 18%"></th>
+<th style="width: 25%"></th>
+<th></th>
+</thead>
+<tbody>
     <tr>
-      <td>Cloudflare Malware</td>
+      <td >Cloudflare Malware</td>
       <td><code>cf.malware</code></td>
       <td>IP addresses of known sources of malware.</td>
     </tr>

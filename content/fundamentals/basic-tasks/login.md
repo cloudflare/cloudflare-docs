@@ -42,8 +42,6 @@ If you have chosen to hide your email when creating a Cloudflare account with Ap
 2. [Register a new Cloudflare account](/fundamentals/setup/account-setup/create-account/) with your secondary email address and set a password.
 3. Access the Cloudflare dashboard with the new user and password to obtain an API key. 
 
-{{<Aside type="note">}}
-
 Changing your Cloudflare account email address will unlink the login credentials with the Apple ID from your Cloudflare account. Attempting to log in using the same Apple ID after the email is changed will create a new Cloudflare account.
 
-{{</Aside>}}
+If you created your Cloudflare account using Apple Relay and decide to change your Apple ID or email address, you will be unable to retrieve the Cloudflare account and all login options are permanently lost.

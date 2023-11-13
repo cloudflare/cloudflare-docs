@@ -6,7 +6,9 @@ weight: 3
 
 # Threat Intelligence APIs
 
-Cloudflare provides a series of endpoints covering various areas of internet security and insights.
+Cloudflare provides a series of endpoints covering various areas of internet security and insights. Based on your Cloudflare plan type, the [limit](/security-center/intel-apis/limits/) of API calls will vary per month. 
+
+
 
 | Intelligence Endpoint | Definition |
 | --- | --- |

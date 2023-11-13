@@ -49,7 +49,7 @@ Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-on
 
 Use the apt package manager to install `cloudflared` on compatible machines.
 
-{{<render file="_cloudflared-debian-install.md">}}
+{{<render file="tunnel/_cloudflared-debian-install.md">}}
 
 **RHEL RPM**
 

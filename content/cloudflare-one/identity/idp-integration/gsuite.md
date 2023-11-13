@@ -49,13 +49,15 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 10. Choose _Web application_ as the Application type.
 
-11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}.
+11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your team domain:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com
     ```
 
-12. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+
+12. Under **Authorized redirect URIs**, in the **URIs** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

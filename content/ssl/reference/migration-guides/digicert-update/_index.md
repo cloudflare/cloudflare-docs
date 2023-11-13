@@ -20,7 +20,7 @@ SSL for SaaS renewals offboarding is postponed until November 1, 2023.
 
 ## Scope
 
-This migration only affects [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) certificates where the certificate has been provisionned by Cloudflare using DigiCert as certificate authority.
+This migration only affects [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) certificates where the certificate has been provisioned by Cloudflare using DigiCert as certificate authority.
 
 Also, this change will not impact existing certificates issued from DigiCert that Cloudflare is currently serving, but it will impact new certificate orders and renewals.
 
