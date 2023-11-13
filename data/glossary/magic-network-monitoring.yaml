@@ -13,9 +13,9 @@ entries:
   associated_products:
     - Magic Network Monitoring
 
-- term: sampling rate
+- term: sampling
   general_definition: |-
-    in the context of Magic Network Monitoring, sampling rate is the process of taking samples of packets for a specific period to identify potential attacks.
+    in the context of Magic Network Monitoring, sampling is the process of taking samples of packets for a specific period to identify potential attacks.
   associated_products:
     - Magic Network Monitoring
 
