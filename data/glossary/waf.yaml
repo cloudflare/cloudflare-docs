@@ -31,7 +31,7 @@ entries:
 
 - term: mitigated request
   general_definition: |-
-    a request to which Cloudflare applied a blocking action, preventing the request from being processed as usual. Includes blocked requests and challenged requests that were not solved successfully.
+    a request to which Cloudflare applied a terminating action such as block or challenge.
 
 - term: rate limiting
   general_definition: |-
@@ -45,4 +45,4 @@ entries:
 
 - term: threat score
   general_definition: |-
-    threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor. IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
+    the threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor. IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
