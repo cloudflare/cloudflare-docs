@@ -33,19 +33,25 @@ Before you generate a custom root CA, make sure you have [OpenSSL](https://www.o
 3. Generate a private key for the root CA.
 
    ```sh
-   $ openssl genrsa -out rootCAKey.pem 2048
+   $ openssl genrsa -out <CUSTOM-ROOT-PRIVATE-KEY>.pem 2048
    ```
 
-4. Generate the root certificate.
+4. Generate a self-signed root certificate.
 
    ```sh
-   $ openssl req -x509 -sha256 -new -nodes -key rootCAKey.pem -days 365 -out rootCACert.pem
+   $ openssl req -x509 -sha256 -new -nodes -key <CUSTOM-ROOT-PRIVATE-KEY>.pem -days 365 -out <CUSTOM-ROOT-CERT>.pem
    ```
 
-When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name. To review the certificate, run the following command:
+When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name. To review the private key, run the following command:
 
 ```sh
-$ openssl x509 -in rootCACert.pem -text`
+$ openssl rsa -in <CUSTOM-ROOT-PRIVATE-KEY>.key -text
+```
+
+To review the certificate, run the following command:
+
+```sh
+$ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 ```
 
 ## Deploy a custom root certificate
