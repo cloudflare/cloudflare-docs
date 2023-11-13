@@ -56,7 +56,7 @@ Not all operators are available for every selected field.
 
 ## Cache eligibility
 
-In cache eliginility, you have the option to select Bypass cache if you want matching requests to not be cached, or Eligible for cache if you want Cloudflare to attempt to cache them.
+In cache eligibility, you have the option to select Bypass cache if you want matching requests to not be cached, or Eligible for cache if you want Cloudflare to attempt to cache them.
 
 ### Bypass cache
 
