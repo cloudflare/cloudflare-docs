@@ -2,7 +2,26 @@
 link: "/d1/changelog/"
 productName: D1
 entries:
-- publish_date: '2023-11-20'
+- publish_date: '2023-12-04'
+  title: Updated D1Result typing
+  description: |-
+    The [`D1Result`](/d1/platform/client-api/#return-object) type now correctly types the `meta` object to make it easier to parse in your applications. Existing applications using the [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) package will need to use a version _later_ than 4.20231025.0 to benefit from the improved type definitions.
+
+    ```ts
+    interface D1Meta {
+      duration: number;
+      size_after: number;
+      rows_read: number;
+      rows_written: number;
+      last_row_id: number;
+      changed_db: boolean;
+      changes: number;
+    }
+    ```
+
+    Thank you to community member [DaniFoldi](https://github.com/DaniFoldi) for the contribution.
+
+- publish_date: '2023-11-22'
   title: New SQL functions
   description: |-
     D1 now uses [SQLite 3.44.0](https://sqlite.org/releaselog/3_44_0.html) (up from 3.40.0) as the query engine, which brings support for the `concat()`, `concat_ws()`, `string_agg()`, `octet_length()`, and `timediff()` SQL functions.
