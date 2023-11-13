@@ -23,7 +23,9 @@ entries:
 
 - term: exposed credentials
   general_definition: |-
-    exposed credentials refers to sensitive authentication information disclosed in some way (for example, due to misconfigurations, data breaches, or simple human error), allowing other parties to gain access to digital resources. Credentials may include usernames, passwords, API keys, authentication tokens, or private keys.
+    exposed credentials refers to sensitive authentication information disclosed in some way (for example, due to misconfigurations, data breaches, or simple human error), allowing other parties to gain access to digital resources.
+
+    Credentials may include usernames, passwords, API keys, authentication tokens, or private keys.
 
 - term: firewall
   general_definition: |-
@@ -39,10 +41,12 @@ entries:
 
 - term: SIEM
   general_definition: |-
-    Security Information and Event Management (SIEM) solutions provide analysis of log data from various systems.
+    a Security Information and Event Management (SIEM) solution collects, analyzes, and correlates data to help manage security incidents, detect anomalies, and meet compliance requirements.
   associated_products:
     - Cloudflare One
 
 - term: threat score
   general_definition: |-
-    the threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor. IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
+    the threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor.
+
+    IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
