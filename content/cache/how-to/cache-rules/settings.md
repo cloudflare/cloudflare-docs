@@ -54,7 +54,15 @@ The operators available for Cache Rule expressions are:
 Not all operators are available for every selected field.
 {{</Aside>}}
 
-## Configuration settings
+## Cache eligibility
+
+In cache eliginility, you have the option to select Bypass cache if you want matching requests to not be cached, or Eligible for cache if you want Cloudflare to attempt to cache them.
+
+### Bypass cache
+
+When creating a cache rule, you have the option to select Bypass cache if you want matching requests to not be cached. Alternatively, you can use [Development Mode](/cache/reference/development-mode/), if you want to bypass cache for shorter periods.
+
+### Eligible for cache settings
 
 When you select eligible for cache, you can change the configuration settings described below.
 
@@ -62,7 +70,7 @@ When you select eligible for cache, you can change the configuration settings de
 Currently, Cache Rules are not compatible with Image Resizing. Cache Rules will not be applied to Image Resizing requests. Page Rules are supported.
 {{</Aside>}}
 
-### Edge TTL 
+#### Edge TTL 
 
 Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests.
 
@@ -121,7 +129,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Browser TTL
+#### Browser TTL
 
 Browser TTL refers to the maximum cache time-to-live (TTL) that an asset should be considered available to serve from the browser’s cache.
 
@@ -153,7 +161,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Cache Key
+#### Cache Key
 
 Cache keys refer to the criteria that Cloudflare uses to determine how to store resources in our cache. Customizing the cache key allows you to determine how Cloudflare can reuse particular cache entries across requests or share the cache entries for more granularity for end users.
 
@@ -222,8 +230,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-
-### Cache Reserve Eligibility
+#### Cache Reserve Eligibility
 
 Cache Reserve eligibility allows you to specify which website resources should be eligible for our persistent cache called [Cache Reserve](/cache/advanced-configuration/cache-reserve/). If the request matches and also meets [eligibility criteria](/cache/advanced-configuration/cache-reserve/#cache-reserve-asset-eligibility), Cloudflare will write the resource to cache reserve. This requires an add-on cache reserve plan.
 
@@ -256,7 +263,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Caching on Port (Enterprise-only)
+#### Caching on Port (Enterprise-only)
 
 Cloudflare supports several [network ports](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) by default, like 80 or 443. Some ports, traditionally admin ports, are supported but have caching disabled as they are used to manage sensitive information that should be ineligible for cache. Enterprise customers wanting to enable caching on these admin ports can cache on these ports by entering their desired port.
 
@@ -283,7 +290,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Proxy Read Timeout (Enterprise-only)
+#### Proxy Read Timeout (Enterprise-only)
 
 Define a timeout value between two successive read operations to your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce `HTTP 524` errors because of timeouts from an origin server, try increasing this timeout value.
 
@@ -305,7 +312,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Serve stale content while revalidating
+#### Serve stale content while revalidating
 
 Defines if Cloudflare will serve stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
 
@@ -329,7 +336,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Respect Strong ETags
+#### Respect Strong ETags
 
 Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. When enabled, Cloudflare will use [strong ETag](/cache/reference/etag-headers/#strong-etags) header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-for-byte identical. If disabled, Cloudflare converts ETag headers into [weak ETag](/cache/reference/etag-headers/#weak-etags) headers.
 
@@ -351,7 +358,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Origin error page pass-through
+#### Origin error page pass-through
 
 Turn on or off Cloudflare error pages generated from error HTTP status codes sent from the origin server. If enabled, this setting enables the use of error pages issued by the origin.
 
@@ -373,7 +380,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 {{</details>}}
 
-### Origin Cache Control (Enterprise-only)
+#### Origin Cache Control (Enterprise-only)
 
 When this option is enabled, Cloudflare will aim to strictly adhere to [RFC 7234](https://datatracker.ietf.org/doc/html/rfc7234). Enterprise customers have the ability to select if Cloudflare will adhere to this behavior. Free, Pro, and Business customers have this option enabled by default and cannot disable it.
 
