@@ -32,7 +32,7 @@ The exact settings will vary depending on your use case. Refer to the following 
   To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname (or domain) you intend to define for your Spectrum application.
     {{</Aside>}}
     *   Keep the orange cloud icon enabled, meaning the load balancer is proxied. This refers to the [proxy mode](/load-balancing/understand-basics/proxy-modes/) and, with Spectrum, traffic is always proxied.
-    *   Keep **Session Affinity** disabled as this feature is not supported with Spectrum.
+    *   Keep **Session Affinity** and **Failover across pools** disabled as these features are not supported with Spectrum.
 
 4.  On the **Add an Origin Pool** page, define the settings presented and select **Next**.
     *   Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool) [^1].
