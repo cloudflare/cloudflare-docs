@@ -24,3 +24,7 @@ Beyond applying firewall filters to Tor traffic, Cloudflare users can improve th
 -   Human Tor users and bots can be distinguished by our Onion services, such that interactive challenges are only served to malicious bot traffic. 
 
 Toggle **Onion Routing** _On_ or _Off_ via the Cloudflare **Network** app.
+
+[Tor Browser](https://tb-manual.torproject.org/about/) users receive an [alt-svc header](https://httpwg.org/specs/rfc7838.html#alt-svc) as part of the response to the first request to your website. The browser then creates a Tor Circuit to access this website using the `.onion` TLD service provided by this header.
+
+You should note that the visible domain in the UI remains unchanged, as the host header and the SNI are preserved. However, the underlying connection changes to be routed through Tor, as the [UI denotes on the left of the address bar](https://tb-manual.torproject.org/managing-identities/#managing-identities) with a Tor Circuit. Cloudflare does not provide a certificate for the `.onion` domain provided as part of alt-svc flow, which therefore cannot be accessed via HTTPS.
