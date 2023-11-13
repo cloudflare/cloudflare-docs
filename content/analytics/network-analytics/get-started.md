@@ -25,4 +25,4 @@ Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the
 
 ## Send Network Analytics logs to a third-party service
 
-[Create a Logpush job](/logs/get-started/enable-destinations/) that sends Network analytics logs to your storage service, SIEM, or log management provider.
+[Create a Logpush job](/logs/get-started/enable-destinations/) that sends Network analytics logs to your storage service, {{<glossary-tooltip term_id="SIEM">}}SIEM solution{{</glossary-tooltip>}}, or log management provider.
