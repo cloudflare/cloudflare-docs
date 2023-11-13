@@ -43,7 +43,7 @@ Refer to the [Workers Client API documentation](/vectorize/platform/client-api/)
 
 ## Workers AI
 
-If you are generating embeddings from a [Workers AI](/workers-ai/models/embedding/) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
+If you are generating embeddings from a [Workers AI](/workers-ai/models/text-embeddings/) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
 
 ```ts
 interface EmbeddingResponse {
