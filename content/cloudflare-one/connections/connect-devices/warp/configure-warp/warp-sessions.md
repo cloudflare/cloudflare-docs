@@ -32,7 +32,7 @@ To configure a session timeout for a Gateway policy:
 
 Session checks are now enabled for the application protected by this policy. Users can continue to reach applications outside of the policy definition.
 
-## Configure WARP sessions in Access
+{{<heading-pill style="beta" heading="h2">}}Configure WARP sessions in Access{{</heading-pill>}}
 
 You can allow users to log in to Access applications using their WARP session. WARP authentication is only supported for Access applications protected by Allow or Block policies.
 
