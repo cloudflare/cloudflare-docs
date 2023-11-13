@@ -552,7 +552,7 @@ curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gate
 
 Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-### Update parts of the configuration
+### Update Token Validation Rules
 
 Token Validation rules can be updated with a `PATCH` request. A single `PATCH` request can update multiple rules.
 
@@ -578,19 +578,87 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 ]'
 ```
 
+Rules can be reordered by setting a position field in the `PATCH` body.
+
+This example moves rule `714d3dd0-cc59-4911-862f-8a27e22353cc` to second place in the rules order:
 
 ```bash
 ---
 header: Example using cURL
 ---
-curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}" \
---header "Content-Type: application/json" \
---data '{
-    "description": "example description",
-    "allow_absent_token": false,
-}'
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
+        "position": {
+            "index": 2
+        }
+    }
+]'
 ```
-Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+
+### Update Token Validation Rules
+
+Token Validation rules can be updated with a `PATCH` request. A single `PATCH` request can update multiple rules.
+
+A `PATCH` request is specified as a JSON array in the request body. Each item in that array contains updates to a single rule, defined by `id`.
+
+The following example updates one rule and disables another:
+
+```bash
+---
+header: Example using cURL
+---
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
+        "action": "log",
+        "title": "updated title"
+    }, {
+        "id": "7124f9bc-d6b5-430d-b488-b6bc2892f2fb",
+        "enabled": false
+    }
+]'
+```
+
+This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` after rule `7124f9bc-d6b5-430d-b488-b6bc2892f2fb`:
+
+```bash
+---
+header: Example using cURL
+---
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
+        "position": {
+            "after": "7124f9bc-d6b5-430d-b488-b6bc2892f2fb"
+        }
+    }
+]'
+```
+
+This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` before rule `7124f9bc-d6b5-430d-b488-b6bc2892f2fb`:
+
+```bash
+---
+header: Example using cURL
+---
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
+        "position": {
+            "before": "7124f9bc-d6b5-430d-b488-b6bc2892f2fb"
+        }
+    }
+]'
+```
 
 ## How it works
 
