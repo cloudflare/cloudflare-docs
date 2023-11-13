@@ -133,16 +133,18 @@ The following configuration will modify settings in your Cloudflare account.
    ---
    filename: Cloudflare-config.tf
    ---
-   # Generates a 35-character secret for the tunnel.
-   resource "random_id" "tunnel_secret" {
-     byte_length = 35
+   # Generates a 64-character secret for the tunnel.
+   # Using `random_password` means the result is treated as sensitive and, thus,
+   # not displayed in console output. Refer to: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
+   resource "random_password" "tunnel_secret" {
+     length = 64
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
    resource "cloudflare_tunnel" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Terraform GCP tunnel"
-     secret     = random_id.tunnel_secret.b64_std
+     secret     = base64sha256(random_password.tunnel_secret.result)
    }
 
    # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.

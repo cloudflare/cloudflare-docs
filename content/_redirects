@@ -228,6 +228,7 @@
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
 /dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/ /dns/troubleshooting/dns-probe-finished-nxdomain/ 301
+/dns/zone-setups/troubleshooting/nameservers/ /dns/zone-setups/full-setup/troubleshooting/ 301
 /support/dns/ /dns/ 301
 /support/dns/advanced-topics/ /dns/ 301
 /support/dns/dnssec/ /dns/dnssec/ 301
@@ -826,7 +827,6 @@
 /workers/about/routes/ /workers/configuration/routing/routes/ 301
 /workers/platform/routes/ /workers/configuration/routing/ 301
 /workers/about/tips/debugging/ /workers/observability/ 301
-/workers/observability/debug-workers/ /workers/observability/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301

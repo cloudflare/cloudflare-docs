@@ -18,12 +18,13 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 
-5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Enter any name for the application. In the **Sign-in redirect URIs** field, enter the following URL:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 6. Choose the desired **Assignment** option and select **Save**.
 
 7. From the application view, go to the **Sign On** tab.
@@ -34,9 +35,9 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
-10. In the **General** tab, copy the **Client ID**, **Client secret**, and **Okta domain**.
+10. In the **General** tab, copy the **Client ID** and **Client secret**.
 
-    ![Finding your Client credentials and Okta domain in Okta](/images/cloudflare-one/identity/okta/okta-3.png)
+    ![Finding your Client credentials in Okta](/images/cloudflare-one/identity/okta/okta-3.png)
 
 11. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
@@ -47,7 +48,7 @@ Okta provides cloud software that helps companies manage and secure user authent
     - **Name**: Name your identity provider.
     - **App ID**: Enter your Okta client ID.
     - **Client secret**: Enter your Okta client secret.
-    - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
+    - **Okta account URL**: Enter your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/), for example `https://my-company.okta.com`.
 
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
@@ -82,7 +83,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 ### 1. Enable SCIM in Zero Trust
 
-{{<render file="_enable-scim-on-dashboard.md" withParameters="**Enable SCIM**">}}
+{{<render file="access/_enable-scim-on-dashboard.md" withParameters="**Enable SCIM**">}}
 
 ### 2. Configure SCIM in Okta
 
