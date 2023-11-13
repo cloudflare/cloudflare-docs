@@ -2,6 +2,11 @@
 link: "/d1/changelog/"
 productName: D1
 entries:
+- publish_date: '2023-11-20'
+  title: New SQL functions
+  description: |-
+    D1 now uses [SQLite 3.44.0](https://sqlite.org/releaselog/3_44_0.html) (up from 3.40.0) as the query engine, which brings support for the `concat()`, `concat_ws()`, `string_agg()`, `octet_length()`, and `timediff()` SQL functions.
+
 - publish_date: '2023-10-03'
   title: Create up to 50,000 D1 databases 
   description: |-
