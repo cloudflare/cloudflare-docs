@@ -131,8 +131,8 @@ Token Validation Rules allow you to enforce a security policy using existing Tok
 | `description` | A human-readable description that gives more details than title and helps to document it.	| Log requests without a valid `authorization` header. | Limited to 500 characters. |
 | `action` | The Firewall Action taken on requests that do not meet expression. | `log` | Possible: `log` or `block` |
 | `enabled` | Enable or disable the rule. | `true` | Possible: `true` or `false` |
-| `expression` | The rule's security policy. | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Defining a security policy]() below. |
-| `selector` | Configure what operations are covered by this rule. | Refer to the example below. | Refer to [Applying a rule to operations]() below. |
+| `expression` | The rule's security policy. | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Define a security policy](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
+| `selector` | Configure what operations are covered by this rule. | Refer to the example below. | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
 
 ```bash
 ---
@@ -163,7 +163,7 @@ header: Selector example
 {{<Aside type="note">}}
 A request must also match an operation covered by this rule to trigger an action.
 
-Refer to [Apply a rule to operations]() for more information.
+Refer to [Apply a rule to operations](/api-shield/security/jwt-validation/configure/#apply-a-rule-to-operations) for more information.
 {{</Aside>}}
 
 A Token Validation rule's expression defines a security policy that a request must meet.
