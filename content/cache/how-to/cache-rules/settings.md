@@ -56,15 +56,15 @@ Not all operators are available for every selected field.
 
 ## Cache eligibility
 
-In cache eligibility, you have the option to select Bypass cache if you want matching requests to not be cached, or Eligible for cache if you want Cloudflare to attempt to cache them.
+In **Cache eligibility**, you have the option to select **Bypass cache** if you want matching requests to not be cached, or **Eligible for cache** if you want Cloudflare to attempt to cache them.
 
 ### Bypass cache
 
-When creating a cache rule, you have the option to select Bypass cache if you want matching requests to not be cached. Alternatively, you can use [Development Mode](/cache/reference/development-mode/), if you want to bypass cache for shorter periods.
+When creating a cache rule, you have the option to select **Bypass cache** if you want matching incoming requests to not be cached. Alternatively, you can use [Development Mode](/cache/reference/development-mode/), if you want to bypass cache for shorter periods.
 
 ### Eligible for cache settings
 
-When you select eligible for cache, you can change the configuration settings described below.
+When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
 Currently, Cache Rules are not compatible with Image Resizing. Cache Rules will not be applied to Image Resizing requests. Page Rules are supported.
