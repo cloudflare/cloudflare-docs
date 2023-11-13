@@ -578,52 +578,6 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 ]'
 ```
 
-Rules can be reordered by setting a position field in the `PATCH` body.
-
-This example moves rule `714d3dd0-cc59-4911-862f-8a27e22353cc` to second place in the rules order:
-
-```bash
----
-header: Example using cURL
----
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
---header 'Content-Type: application/json' \
---data '[
-    {
-        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
-        "position": {
-            "index": 2
-        }
-    }
-]'
-```
-
-### Update Token Validation Rules
-
-Token Validation rules can be updated with a `PATCH` request. A single `PATCH` request can update multiple rules.
-
-A `PATCH` request is specified as a JSON array in the request body. Each item in that array contains updates to a single rule, defined by `id`.
-
-The following example updates one rule and disables another:
-
-```bash
----
-header: Example using cURL
----
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
---header 'Content-Type: application/json' \
---data '[
-    {
-        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
-        "action": "log",
-        "title": "updated title"
-    }, {
-        "id": "7124f9bc-d6b5-430d-b488-b6bc2892f2fb",
-        "enabled": false
-    }
-]'
-```
-
 This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` after rule `7124f9bc-d6b5-430d-b488-b6bc2892f2fb`:
 
 ```bash
