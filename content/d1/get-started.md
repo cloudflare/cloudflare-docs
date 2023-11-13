@@ -142,7 +142,7 @@ $ wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
 Then validate your data is in your database by running:
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers'
+$ wrangler d1 execute <DATABASE_NAME> --local --command="SELECT * FROM Customers"
 ```
 
 ### Write queries within your Worker
@@ -227,7 +227,7 @@ $ wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
 Then validate the data is in production by running:
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> --command='SELECT * FROM Customers'
+$ wrangler d1 execute <DATABASE_NAME> --command="SELECT * FROM Customers"
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
