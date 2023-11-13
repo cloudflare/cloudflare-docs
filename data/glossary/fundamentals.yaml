@@ -85,6 +85,10 @@ entries:
   general_definition: |-
     a protocol is a set of rules governing the exchange or transmission of data between devices.
 
+- term: redirect
+  general_definition: |-
+    URL redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
+
 - term: roles
   general_definition: |-
     authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/setup/manage-members/roles/).
