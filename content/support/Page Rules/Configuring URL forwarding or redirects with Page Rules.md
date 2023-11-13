@@ -6,13 +6,7 @@ title: Configuring URL forwarding or redirects with Page Rules
 
 # Configuring URL forwarding or redirects with Page Rules
 
-## Overview
-
-If you want to forward or redirect traffic to a different URL, you have the following options using Cloudflare:
-
--   [Single Redirects](/rules/url-forwarding/single-redirects/): Create static or dynamic redirects at the zone level. Dynamic redirects are advanced URL redirects, such as redirects based on the source country of requests.
--   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/): Define a large number (thousands or even millions) of essentially static URL redirects at the account level.
--   [Page Rules](https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules#how-to): Should only be used when the other two options do not meet your use case.
+Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/concepts/redirects/).
 
 {{<Aside type="warning">}}
 In order to ensure that traffic to the hostname (e.g. `www.example.com`) you want to redirect is reaching Cloudflare, you need to create a DNS record with the proxy status set to \"[proxied](/dns/manage-dns-records/reference/proxied-dns-records)\". 
