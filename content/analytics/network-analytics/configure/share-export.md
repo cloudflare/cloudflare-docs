@@ -24,7 +24,7 @@ To export log data:
 2. Choose either CSV or JSON format for rendering exported data. The downloaded file name will reflect the selected time range, using this pattern:
 
 ```txt
-network-analytics-attacks-[start time]-[end time].json
+network-analytics-attacks-<START_TIME>-<END_TIME>.json
 ```
 
 ## Export a Network Analytics report
