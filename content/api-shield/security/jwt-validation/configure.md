@@ -131,7 +131,7 @@ Token Validation Rules allow you to enforce a security policy using existing Tok
 | `description` | A human-readable description that gives more details than title and helps to document it.	| Log requests without a valid `authorization` header. | Limited to 500 characters. |
 | `action` | The Firewall Action taken on requests that do not meet expression. | `log` | Possible: `log` or `block` |
 | `enabled` | Enable or disable the rule. | `true` | Possible: `true` or `false` |
-| `expression` | The rule's security policy. | `is_jwt_valid("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Defining a security policy]() below.
+| `expression` | The rule's security policy. | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Defining a security policy]() below. |
 | `selector` | Configure what operations are covered by this rule. | Refer to the example below. | Refer to [Applying a rule to operations]() below. |
 
 ```bash
@@ -554,13 +554,30 @@ Make sure to replace `{zoneID}` with the relevant zone ID and add your [authenti
 
 ### Update parts of the configuration
 
-You may want to first log requests that fail the policy using WAF custom rules and only later block them. Similarly, requirements may change and other parts of the configuration need to be changed. To support this, we allow modifying parts of an existing configuration.
+Token Validation rules can be updated with a `PATCH` request. A single `PATCH` request can update multiple rules.
 
-Use `PATCH` to update other configuration parameters.
+A `PATCH` request is specified as a JSON array in the request body. Each item in that array contains updates to a single rule, defined by `id`.
 
-{{<Aside type="note">}}
-You can only modify the following fields with `PATCH`: `title`, `description`, `action`, `enabled`, and `allow_absent_token`. Use `PUT` to modify JWK material.
-{{</Aside>}}
+The following example updates one rule and disables another:
+
+```bash
+---
+header: Example using cURL
+---
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
+        "action": "log",
+        "title": "updated title"
+    }, {
+        "id": "7124f9bc-d6b5-430d-b488-b6bc2892f2fb",
+        "enabled": false
+    }
+]'
+```
+
 
 ```bash
 ---
