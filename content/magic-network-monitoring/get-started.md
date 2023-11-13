@@ -27,7 +27,7 @@ When you register your router with Cloudflare, your router links your NetFlow or
 3. In **Magic Network Monitoring Analytics**, select **Configure Magic Network Monitoring**.
 4. Select the **Configure routers** tab.
 5. Under **IP Address**, enter your router's public IP address.
-6. Under **Default router sampling rate**, enter a value for the {{<glossary-tooltip term_id="sampling rate">}}sampling rate{{</glossary-tooltip>}}. The value should match the sampling rate of your NetFlow or sFlow configuration.
+6. Under **Default router sampling rate**, enter a value for the {{<glossary-tooltip term_id="sampling rate">}}sampling{{</glossary-tooltip>}} rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
 7. Select **Next**.
 
 ## 3. Configure your router 
