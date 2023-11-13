@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Cloudflare Load Balancer
+title: Cloudflare Load Balancing
 weight: 0
 ---
 
-# Cloudflare Load Balancer
+# Cloudflare Load Balancing
 
 You can configure Spectrum with Cloudflare [Load Balancing](/load-balancing/) to provide TCP healthchecks, failover, and traffic steering, bringing resiliency to your Spectrum applications.
 
