@@ -11,7 +11,7 @@ meta:
 
 {{<description>}}
 
-Detect and receive notifications about attacks based on traffic flows
+Detect and receive notifications about attacks based on traffic flows.
 
 {{</description>}}
 
