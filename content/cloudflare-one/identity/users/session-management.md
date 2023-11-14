@@ -6,22 +6,28 @@ weight: 3
 
 # Manage user sessions
 
+A user session is generated when a user logs in to an Access application. The authentication process involves Cloudflare Access issuing a signed JSON Web Token (JWT) when the user authenticates and meets the criteria defined in your Access application policy. The token is valid for the duration configured in the application (default is 24 hours). The user can access the application for the entire duration of that token’s lifecycle without re-authenticating until the session [expires](#session-duration) or is [manually terminated](#revoke-user-sessions).
+
 ## Session duration
+
+Cloudflare Access allows you to specify three different levels of session durations:
+
+- Global session duration
+- Access application session duration
+- Access policy session duration
+
+The most specific session duration will always take precedence.
+
 
 When users log in to an application protected by Access, Access generates two session tokens:
 
-{{<table-wrap>}}
 
 | Token                    | Description                                                        | Storage                                                                                        |
 | ------------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| **Global session token** | Establishes the maximum amount of time for a user’s Access session | Your Cloudflare {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} |
-| **Application token**    | Establishes a session for a specific application                   | The hostname of the application protected                                                      |
-
-{{</table-wrap>}}
+| **Global session token** | Establishes the maximum amount of time for a user’s Access session. | Your Cloudflare {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} |
+| **Application token**    | Establishes a session for a specific application. Token expiration is determined by the policy session duration (if set) or the application session duration.                 | The hostname of the Access application                                                     |
 
 When users log in, the global session token will default to the duration of the application token. You can configure the duration of the global session token to be shorter or longer than the application’s session token.
-
-If the global session duration is shorter than an application’s session length, users will be required to re-authenticate each time the global session time elapses. This can be helpful to establish a maximum session duration across all applications.
 
 If the global session duration is longer than an application’s session length, a user’s application session will be automatically refreshed until the global session expires. This provides a more secure way to allow for longer user sessions, since the global session cookie cannot be used to directly access an application.
 
@@ -41,11 +47,22 @@ You can set an application session duration ranging from immediate timeout to 1 
 2. Locate the application you want to configure and select **Edit**.
 3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
 
+If you do not set a policy session duration, users will be prompted to reauthenticate after the application session duration expires.
+
+### Set policy session duration
+
+You can set a policy session duration ranging from immediate timeout to 1 month.
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the application you want to configure and select **Edit**.
+3. Go to the **Policies** tab and select **Configure** for any policy.
+4. Select a **Session Duration** from the dropdown menu.
+
+Users who match this policy will be prompted to reauthenticate after the policy session duration expires.
+
 ## Revoke user sessions
 
 Access provides two options for revoking user sessions: per-application and per-user.
-
-The authentication process involves Cloudflare Access issuing a signed JSON Web Token (JWT) when a user authenticates and meets the criteria defined in your Access application policy. The token is valid for the duration configured in the application (default is 24 hours). The user can access the application for the entire duration of that token’s lifecycle without re-authenticating until the session expires.
 
 ### Per-Application
 
