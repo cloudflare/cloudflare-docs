@@ -108,10 +108,6 @@ Users of wrangler `2.x` must use the `--persist` flag: previous versions of wran
 
 You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to create D1 databases you can use for testing:
 
-import ConfigTabs from "../components/mdx/config-tabs";
-
-<ConfigTabs>
-
 ```toml
 ---
 filename: wrangler.toml
@@ -127,8 +123,6 @@ const mf = new Miniflare({
   d1Databases: ["DB"],
 });
 ```
-
-</ConfigTabs>
 
 You can then use the `getD1Database` method to retrieve the simulated database and run queries against it as if it were your real production D1 database:
 
