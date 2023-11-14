@@ -1,17 +1,23 @@
 ---
-title: Sentiment Analysis
+title: Text Classification
 pcx_content_type: get-started
 weight: 4
 ---
 
-# Sentiment Analysis
-DistilBERT-SST-2 is a distilled BERT model that was finetuned on SST-2 for sentiment classification.
+# Text Classification
 
-* ID: **@cf/huggingface/distilbert-sst-2-int8** - used to `run` this model via SDK or API
-* Name: Quantized DistilBERT model finetuned for sentiment-analysis
-* Task: text-classification
-* License type: Apache 2.0
-* [Terms + Information](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english)
+Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes.
+
+* Task type: **text-classification**
+* TypeScript class: **AiTextClassification**
+
+## Available Embedding Models
+
+List of available models in for this task type:
+
+| Model ID                        | Description                   |
+| ------------------------------- | ----------------------------- |
+| `@cf/huggingface/distilbert-sst-2-int8`                   | Distilled BERT model that was finetuned on SST-2 for sentiment classification<br/>[More information](https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static)<br/>  |
 
 ## Examples
 {{<tabs labels="worker | node | python | curl">}}
@@ -112,37 +118,45 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/hug
 ```
 
 ## API schema
+
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
 ### Input
 
 ```json
 {
-  type: "object",
-  properties: {
-    text: {
-      type: "string",
-    },
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string"
+    }
   },
-  required: ["text"],
+  "required": [
+    "text"
+  ]
 }
+```
 
+TypeScript class: **AiTextClassificationInput**
 
 ### Output
 
 ```json
 {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      score: {
-        type: "number",
+  "type": "array",
+  "contentType": "application/json",
+  "items": {
+    "type": "object",
+    "properties": {
+      "score": {
+        "type": "number"
       },
-      label: {
-        type: "string",
-      },
-    },
-  },
+      "label": {
+        "type": "string"
+      }
+    }
+  }
 }
 ```
+
+TypeScript class: **AiTextClassificationOutput**
