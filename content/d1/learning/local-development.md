@@ -124,7 +124,7 @@ const mf = new Miniflare({
 });
 ```
 
-You can then use the `getD1Database` method to retrieve the simulated database and run queries against it as if it were your real production D1 database:
+You can then use the `getD1Database()` method to retrieve the simulated database and run queries against it as if it were your real production D1 database:
 
 ```js
 const db = await mf.getD1Database("DB");
