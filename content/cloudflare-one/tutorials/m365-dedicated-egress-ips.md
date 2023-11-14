@@ -3,39 +3,78 @@ updated: 2023-11-13
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
-title: Restrict access to Microsoft 365 with dedicated egress IPs
+title: Protect access to Microsoft 365 with dedicated egress IPs
 ---
 
-# Restrict access to Microsoft 365 with dedicated egress IPs
+# Protect access to Microsoft 365 with dedicated egress IPs
 
 This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. You can combine Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
 
 {{<tutorial>}}
 
-{{<tutorial-step title="Create egress policy in Cloudflare ZT dash">}}
+{{<tutorial-prereqs>}}
 
-Under Gateway > Egress Policies > Add a policy
-For example, this policy will be applied to my users that are configured on Azure AD and for which the device posture passes
-In that case they will get the following IP addresses: IPv4 = 8.29.231.206 / IPv6 = 2a09:bac0:1001:3e::/64
+Make sure you have:
+
+- In Cloudflare, a Zero Trust Enterprise plan with [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
+- In Microsoft 365, an organization managed with [Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/)
+
+{{</tutorial-prereqs>}}
+
+{{<tutorial-step title="Create an egress policy in Cloudflare Gateway">}}
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies**.
+2. Select **Add a policy**.
+3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for the following [identity conditions](/cloudflare-one/policies/gateway/identity-selectors/):
+
+    | Selector         | Operator | Value                                         |
+    | ---------------- | -------- | --------------------------------------------- |
+    | User Group Names | in       | `Sales and Marketing`, `Retail`, `U.S. Sales` |
+
+    Additionally, you can check for [device posture conditions](/cloudflare-one/identity/devices/):
+
+    | Selector                    | Operator | Value                                             | Logic |
+    | --------------------------- | -------- | ------------------------------------------------- | ----- |
+    | Passed Device Posture Check | is       | `CrowdStrike Overall ZTA score (Crowdstrike s2s)` | And   |
+    | Passed Device Posture Check | is       | `AppCheckMac - Required SW (Application)`         |       |
+
+4. Enable **Use dedicated Cloudflare egress IPs**. Select your desired IPv4 and IPv6 addresses. For example:
+
+    | Primary IPv4 address | IPv6 address    |
+    | -------------------- | --------------- |
+    | `203.0.113.0`        | `2001:db8::/32` |
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Create conditional access policy in Azure AD (aka Entra ID)">}}
+{{<tutorial-step title="Create a named IP range location in Microsoft Entra ID">}}
 
-Go to the Azure portal > Entra ID > Security > Named locations
-Create a new location specifying the WARP IP addresses from the dedicated egress policy
-Then go to Conditional Access and choose "Create new policy"
-I created a policy that applies to the user Adele
-That blocks access from "Any location" except the Named Location I configured
-And applies to Office365 applications
+1. In the [Microsoft Azure portal](https://aka.ms/azureportal), go to **Entra ID** > **Security** > **Named locations**.
+2. Select **IP ranges location**.
+3. Name your location, then add the IP addresses from your Cloudflare dedicated egress IP policy.
+4. Select **Upload**.
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Test connectivity">}}
+{{<tutorial-step title="Create a conditional access policy in Microsoft Entra ID">}}
 
-With the WARP user connected, access to the M365 apps is allowed
-As soon as the WARP user is disconnected if I try to do anything on Outlook, access will be blocked by Microsoft
-The other big benefit of using dedicated egress IPs, is that enforcement of device posture will be almost real-time. As soon as posture check fails, access to the M365 apps will be blocked.
+1. In **Protect**, go to **Conditional Access**.
+2. Select **Create new policy**.
+3. Configure which users you want to limit access for, and which traffic, apps, or actions you want to protect.
+4. In **Conditions**, select **Locations**. Enable **Configure**.
+5. In **Include**, select _Any location_. In **Exclude**, select the named location you created.
+6. In **Access controls**, go to **Grant**. Enable _Block access_.
+
+Your policy will block access for your selected users from any location except those using your dedicated egress IPs.
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Test your policy" optional="true">}}
+
+1. Connect to your Zero Trust as your user with [WARP](/cloudflare-one/connections/connect-devices/warp/).
+2. Access any Microsoft 365 app within your organization. Microsoft should allow access.
+3. Disconnect WARP. Microsoft should block access to any Microsoft 365 apps.
+
+As soon as posture check fails, access to the M365 apps will be blocked.
 
 {{</tutorial-step>}}
 
