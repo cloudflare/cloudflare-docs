@@ -1,0 +1,89 @@
+---
+pcx_content_type: how-to
+title: Terraform
+---
+
+# Manage API Shield with Terraform
+
+Get started with API Shield using Terraform from the examples below. For more information on how to use Terraform with Cloudflare, refer to the [Terraform documentation](/terraform/).
+
+The following resources are available to configure through Terraform:
+
+**Session identifiers** 
+- [`api_shield`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield) for configuring [session identifiers] in API Shield.
+
+**Endpoint Management**
+- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring endpoints in [Endpoint Management].
+
+**Schema Validation 2.0**
+- [`api_shield_schema`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema) for configuring a schema in [Schema Validation 2.0](/api-shield/security/schema-validation/).
+- [`api_shield_schema_validation_settings`](http://cloudflare_api_shield_schema_validation_settings/) for configuring zone-level Schema Validation 2.0 settings.
+- [`api_shield_operation_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation_schema_validation_settings) for configuring operation-level Schema Validation 2.0 settings.
+
+## Manage API Shield session identifiers
+
+```tf
+---
+header: Example configuration
+---
+
+resource "cloudflare_api_shield" "my_api_shield" {
+  zone_id  = var.zone_id
+  auth_id_characteristics {
+    name = "authorization"
+    type = "header"
+  }
+}
+```
+
+## Manage API Shield Endpoint Management
+
+```tf
+---
+header: Example configuration
+---
+
+resource "cloudflare_api_shield_operation" "get_image" {
+  zone_id  = var.zone_id
+  method   = "GET"
+  host     = "example.com"
+  endpoint = "/api/images/{var1}"
+}
+ 
+resource "cloudflare_api_shield_operation" "post_image" {
+  zone_id  = var.zone_id
+  method   = "POST"
+  host     = "example.com"
+  endpoint = "/api/images/{var1}"
+}
+```
+
+## Manage Schema Validation 2.0
+
+```tf
+---
+header: Example configuration
+---
+
+# Schema that should be used for schema validation 2.0
+resource "cloudflare_api_shield_schema" "example_schema" {
+  zone_id                   = var.zone_id
+  name                      = "example-schema"
+  kind                      = "openapi_v3"
+  validation_enabled        = true
+  source                    = file("./schemas/example-schema.json")
+}
+ 
+# Block all requests that violate schema by default
+resource "cloudflare_api_shield_schema_validation_settings" "zone_level_settings" {
+  zone_id                               = var.zone_id
+  validation_default_mitigation_action  = "block"
+}
+ 
+# For endpoint post_image - only log requests that violate schema
+resource "cloudflare_api_shield_operation_schema_validation_settings" "post_image_log_only" {
+  zone_id           = var.zone_id
+  operation_id      = cloudflare_api_shield_operation.post_image.id
+  mitigation_action = "log"
+}
+```
