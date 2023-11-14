@@ -47,7 +47,7 @@ Cloudflare provides the following Managed IP Lists:
     </table>
 
 {{<Aside>}}
-Cloudflare primarily detects VPN traffic that passes through our public resolver at 1.1.1.1 and is not shared with other hostnames. Additionally, we can identify major VPNs based on their published IP addresses. However, we do not block all VPNs at this time. We are continually working to improve our detection capabilities and expand our coverage to include a wider range of VPN services.
+We primarily detect VPN traffic that passes through our public resolver at 1.1.1.1. Additionally, we can identify major VPNs based on their published IP addresses. Managed Lists for VPNs allow you to block these categories of detected VPNs. However, it's important to clarify that we do not detect and block all VPNs at this time. We are continually working to improve our detection capabilities and expand our coverage to include a wider range of VPN services.
 {{</Aside>}}
 
 <table>
