@@ -10,10 +10,10 @@ Get started with API Shield using Terraform from the examples below. For more in
 The following resources are available to configure through Terraform:
 
 **Session identifiers** 
-- [`api_shield`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield) for configuring [session identifiers] in API Shield.
+- [`api_shield`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield) for configuring session identifiers in API Shield.
 
 **Endpoint Management**
-- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring endpoints in [Endpoint Management].
+- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring endpoints in Endpoint Management.
 
 **Schema Validation 2.0**
 - [`api_shield_schema`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema) for configuring a schema in [Schema Validation 2.0](/api-shield/security/schema-validation/).
@@ -21,6 +21,8 @@ The following resources are available to configure through Terraform:
 - [`api_shield_operation_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation_schema_validation_settings) for configuring operation-level Schema Validation 2.0 settings.
 
 ## Manage API Shield session identifiers
+
+Refer to the example configuration below to set up [session identifiers]() on your zone.
 
 ```tf
 ---
@@ -37,6 +39,8 @@ resource "cloudflare_api_shield" "my_api_shield" {
 ```
 
 ## Manage API Shield Endpoint Management
+
+Refer to the example configuration below to [manage endpoints](/api-shield/management-and-monitoring/) on your zone.
 
 ```tf
 ---
@@ -59,6 +63,8 @@ resource "cloudflare_api_shield_operation" "post_image" {
 ```
 
 ## Manage Schema Validation 2.0
+
+Refer to the example configuration below to manage [Schema Validation 2.0](/api-shield/security/schema-validation/configure/) on your zone.
 
 ```tf
 ---
