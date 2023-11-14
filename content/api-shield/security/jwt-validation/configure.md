@@ -132,31 +132,7 @@ Token Validation Rules allow you to enforce a security policy using existing Tok
 | `action` | The Firewall Action taken on requests that do not meet expression. | `log` | Possible: `log` or `block` |
 | `enabled` | Enable or disable the rule. | `true` | Possible: `true` or `false` |
 | `expression` | The rule's security policy. | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Define a security policy](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
-| `selector` | Configure what operations are covered by this rule. | Refer to the example below. | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
-
-```bash
----
-header: Selector example
----
-{
-    "include": [
-        {
-            "host": [
-                "v1.example.com",
-                "v2.example.com"
-            ]
-        }
-    ],
-    "exclude": [
-        {
-            "operation_ids": [
-                "f9c5615e-fe15-48ce-bec6-cfc1946f1bec",
-                "56828eae-035a-4396-ba07-51c66d680a04"
-            ]
-        }
-    ]
-}
-```
+| `selector` | Configure what operations are covered by this rule. | | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
 
 ## Define a security policy
 
@@ -168,7 +144,7 @@ Refer to [Apply a rule to operations](/api-shield/security/jwt-validation/config
 
 A Token Validation rule's expression defines a security policy that a request must meet.
 
-For example, the expression `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` or `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` will trigger if an incoming request does not have at least one valid authentication token.
+For example, the expression `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` will trigger if an incoming request does not have at least one valid authentication token.
 
 These expressions are similar to [expressions used in Ruleset Engine](/ruleset-engine/rules-language/), with a few key differences:
 
@@ -184,27 +160,29 @@ The following functions can be used to interact with JWT Tokens on a request:
 | `is_jwt_valid(token_configuration_id String) bool` | `True` if the request has a valid token according to the Token Configuration with the ID `token_configuration_id`. | `token_configuration_id` must be the ID of an existing Token Configuration. This will return `false` if the token is missing from the request. |
 | `is_jwt_present(token_configuration_id String) bool` | `True` if the request has a token as configured in the Token Configuration with the ID `token_configuration_id`. | `token_configuration_id` must be the ID of an existing Token Configuration. |
 
-### Require a token
+### Common use cases 
+
+#### Require a token
 
 The `is_jwt_present("51231d16-01f1-48e3-93f8-91c99e81288e")` expression will trigger an action if a request is missing a JWT.
 
 It can be combined with a `log` action in the Token Validation rule to log requests that are missing an authentication header.
 
-### Require a valid token
+#### Require a valid token
 
 The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` expression will trigger an action if a request does not have a valid JWT.
 
 It can be combined with a `block` action in the Token Validation rule to block requests with no or invalid credentials.
 
-### Require at least one of two possible tokens
+#### Require at least one of two possible tokens
 
-The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` or `is_jwt_valid("fddfc39e-3686-4683-ab23-bf917da6bb43")` expressions will trigger an action if a request does not have at least one valid token.
+The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or  is_jwt_valid("fddfc39e-3686-4683-ab23-bf917da6bb43")` expressions will trigger an action if a request does not have at least one valid token.
 
 This can occur if you need to split JWKs into multiple token configurations.
 
-### Require a valid token but ignore requests without a token
+#### Require a valid token but ignore requests without a token
 
-The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` or `not is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` expressions will trigger an action if a request has an invalid token, ignoring requests with no tokens at all.
+The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or not is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` expressions will trigger an action if a request has an invalid token, ignoring requests with no tokens at all.
 
 ## Apply a rule to operations
 
