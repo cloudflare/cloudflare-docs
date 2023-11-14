@@ -13,7 +13,7 @@ Cloudflare will deploy some updates to security-related fields in Cloudflare Log
 
 ## Timeline
 
-To minimize possible impacts on our customers' existing {{<glossary-tooltip term_id="SIEM">}}Security Information and Event Management (SIEM){{</glossary-tooltip>}} configurations, these updates will happen in two phases according to the following timeline:
+To minimize possible impacts on our customers' existing {{<glossary-tooltip term_id="SIEM">}}SIEM{{</glossary-tooltip>}} configurations, these updates will happen in two phases according to the following timeline:
 
 ### Phase 1 (February 1, 2023)
 
