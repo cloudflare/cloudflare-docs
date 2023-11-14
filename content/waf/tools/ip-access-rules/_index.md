@@ -7,7 +7,7 @@ layout: single
 
 # IP Access rules
 
-Use IP Access rules to allowlist, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
+Use IP Access rules to {{<glossary-tooltip term_id="allowlist">}}allowlist{{</glossary-tooltip>}}, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
 
 IP Access rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
 
