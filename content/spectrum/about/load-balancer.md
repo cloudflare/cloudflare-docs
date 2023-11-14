@@ -71,6 +71,5 @@ Weight configured within a load balancer pool will be honored with load balancin
 
 ## Requirements and limitations
 
+{{<render file="_spectrum-lb-limitations.md" productFolder="load-balancing">}}
 * This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
-* Currently, [session affinity](/load-balancing/understand-basics/session-affinity/) and [custom rules](/load-balancing/additional-options/load-balancing-rules/) are not supported by Spectrum.
-* UDP health checks are only available with public monitoring. TCP can be used with both public and private montoring.

@@ -60,9 +60,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ## Limitations
 
-* Load Balancing [session affinity](/load-balancing/understand-basics/session-affinity/) and [custom rules](/load-balancing/additional-options/load-balancing-rules/) are not supported by Spectrum.
-
-* UDP health checks are only available with public monitoring. TCP can be used with both public and private montoring.
+{{<render file="_spectrum-lb-limitations.md">}}
 
 [^1]: Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool.
 [^2]: A fallback pool is the pool of last resort. When all pools are disabled or unhealthy, this is where the load balancer will send traffic.
