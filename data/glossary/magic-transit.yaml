@@ -16,7 +16,9 @@ entries:
 
 - term: prefix
   general_definition: |-
-    a number that identifies the network portion of an IP address. It tells devices if an IP address is on the same network or not. It is shown as a number after a slash (for example, `/31`) at the end of the IP address.
+    a number that identifies the network portion of an IP address. It tells devices if an IP address is on the same network or not. It is shown as a number after a slash (for example, `/31`) at the end of the IP address. 
+    
+    Using an analogy, the prefix is like a street address. If an IP is in the same street, it belongs to the same network of devices.
   associated_products:
     - Magic WAN
     - Magic Transit
