@@ -11,7 +11,7 @@ entries:
 
 - term: dynamic content
   general_definition: |-
-    dynamic content is website content that has to be fetched from the origin server.
+    dynamic content is content that changes based on factors specific to the user such as time of visit, location, and device. News websites or social media are examples of this type of content. For this type of website, content has to be fetched from the origin server every time it is requested.
 
 - term: origin bandwidth (origin egress bandwidth)
   general_definition: |-

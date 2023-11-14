@@ -492,6 +492,7 @@
 /logs/logpush/ /logs/about/ 301
 /logs/logpush/aws-s3/ /logs/get-started/enable-destinations/aws-s3/ 301
 /logs/logpush/azure/ /logs/get-started/enable-destinations/azure/ 301
+/logs/reference/glossary/ /logs/glossary/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301

@@ -1,0 +1,30 @@
+---
+productName: Logs
+entries:
+- term: request
+  general_definition: |-
+    a request is a message that is sent between a client, or web browser, to a server. Each request that has been processed through the Cloudflare network generates a record.
+
+- term: origin requests
+  general_definition: |-
+    an origin request is a type of request that is served from the origin server. The origin server is the server that contains the original version of your website.
+
+- term: total bandwidth (Total egress bandwidth, Edge bandwidth)
+  general_definition: |-
+    total bandwidth is the amount of data transferred from Cloudflare to end users within a certain period of time. Total bandwidth equals the sum of all `EdgeResponseBytes` for a certain period of time.
+
+- term: edge response status code
+  general_definition: |-
+    edge response status code is an HTTP response code sent from Cloudflare to the client (end user). Edge response status code is one of the filters that you can use to drill down and examine your data at a granular level in the Cloudflare dashboard Analytics app.
+
+- term: origin response status code
+  general_definition: |-
+    origin response status code is an HTTP response code sent from the origin server to Cloudflare. Origin response status code is one of the filters that you can use to drill down and examine your data at a granular level in the Cloudflare dashboard Analytics app.
+
+- term: badHost
+  general_definition: |-
+    the value `badHost` indicates that a bad host header or no host header was used in the request.
+
+- term: tor
+  general_definition: |-
+    the value `tor` indicates that the request was made using a Tor browser.
