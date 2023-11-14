@@ -30,6 +30,8 @@ entries:
 - term: firewall
   general_definition: |-
     a firewall is a security system that monitors and controls network traffic based on a set of security rules.
+  associated_products:
+    - Magic Firewall  
 
 - term: mitigated request
   general_definition: |-
