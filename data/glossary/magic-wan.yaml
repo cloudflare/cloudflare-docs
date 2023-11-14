@@ -10,7 +10,7 @@ entries:
 
 - term: data packet
   general_definition: |-
-    a data packet (or network packet) is a unit of data consisting of user and control information. Information in a network is broken down into packets, that might follow different paths to their final destination.
+    a data packet is a unit of data consisting of user and control information. Information in a network is broken down into packets, that might follow different paths to their final destination.
   associated_products:
     - Magic WAN
     - Magic Transit
