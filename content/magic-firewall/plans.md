@@ -10,7 +10,7 @@ If you are a [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/) user, 
 
 ## Standard features
 
-- Filtering rules based on protocol, port, IP addresses, {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} length, and bit field match.
+- Filtering rules based on protocol, port, IP addresses, {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} length, and {{<glossary-tooltip term_id="bit field matching">}}bit field match{{</glossary-tooltip>}}.
 - Fast propagation of rule changes in less than a minute.
 - Single dashboard to manage {{<glossary-tooltip term_id="firewall">}}firewall{{</glossary-tooltip>}} and network configuration.
 - Programmable API for automated deployment and management — compatible with infrastructure-as-code platforms like [Terraform](/terraform/).
