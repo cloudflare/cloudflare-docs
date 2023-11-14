@@ -189,9 +189,7 @@ Choosing between presigned URLs and public buckets is dependent on your specific
 
 ## Limitations
 
-Presigned URLs cannot be used with Custom Domains, they must be used with the `<accountid>.r2.cloudflarestorage.com` S3 API domain.
-
-You can use the [general purpose HMAC validation feature of the WAF instead](/ruleset-engine/rules-language/functions/#hmac-validation) (requires Pro plan or above).
+Presigned URLs can only be used with the `<accountid>.r2.cloudflarestorage.com` S3 API domain and cannot be used with custom domains. Instead, you can use the [general purpose HMAC validation feature of the WAF](/ruleset-engine/rules-language/functions/#hmac-validation), which requires a Pro plan or above.
 
 ## Related resources
 
