@@ -29,7 +29,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
-- [`queues`](#queues) - Configure Workers Queues
+- [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
@@ -1718,7 +1718,7 @@ Manage your Workers [Queues](/queues/) configurations.
 Create a new Queue.
 
 ```txt
-wrangler queue create <name> [OPTIONS]
+wrangler queues create <name> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1733,7 +1733,7 @@ wrangler queue create <name> [OPTIONS]
 Delete an existing queue.
 
 ```txt
-wrangler hyperdrive delete <name> [OPTIONS]
+wrangler queues delete <name> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1748,7 +1748,7 @@ wrangler hyperdrive delete <name> [OPTIONS]
 List all queues in the current account.
 
 ```txt
-wrangler queues list
+wrangler queues list [OPTIONS]
 ```
 
 ### `consumer`
@@ -1760,7 +1760,7 @@ Manage queue consumer configurations.
 Add a Worker script as a [queue consumer](/queues/learning/how-queues-works/#consumers).
 
 ```txt
-wrangler queues consumer add <queue-name> <script-name>
+wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
 ```
 
 {{<definitions>}}
