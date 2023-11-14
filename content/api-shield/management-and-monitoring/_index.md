@@ -71,7 +71,7 @@ For more information on how Cloudflare uses variables in API Shield, refer to th
 
 Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters. 
 
-To protect your API with a learned schema, refer to [Schema Validation](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname).
+To protect your API with a learned schema, refer to [Schema Validation](/api-shield/security/schema-validation/#add-validation-learned-schema).
 
 ### Export a schema
 
