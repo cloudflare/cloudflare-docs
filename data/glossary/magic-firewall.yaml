@@ -1,9 +1,8 @@
 ---
 productName: Magic Firewall
 entries:
-- term: anycast
+- term: firewall-as-a-service (FWaaS)
   general_definition: |-
-    Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations. Anycast typically routes incoming traffic to the nearest data center with the capacity to process the request efficiently.
+    also known as cloud firewall. A security product that is hosted in the cloud.
   associated_products:
-    - Magic WAN
-    - Magic Transit
+    - Magic Firewall
