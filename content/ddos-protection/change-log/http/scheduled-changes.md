@@ -28,9 +28,9 @@ meta:
       <td>2023-11-20</td>
       <td>...254da96a</td>
       <td>HTTP requests with unusual HTTP headers or URI path (signature #58).</td>
-      <td>N/A</td>
       <td>log</td>
       <td>block</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
