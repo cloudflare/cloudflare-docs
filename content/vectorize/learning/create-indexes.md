@@ -27,7 +27,7 @@ To create an index with `wrangler`:
 $ npx wrangler vectorize create your-index-name --dimensions=NUM_DIMENSIONS --metric=SELECTED_METRIC
 ```
 
-For example, to create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/embedding/) embedding model, which outputs vectors with 768 dimensions:
+For example, to create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/text-embeddings/) embedding model, which outputs vectors with 768 dimensions:
 
 ```sh
 $ npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
@@ -52,7 +52,7 @@ As an example, the following table highlights some example embeddings models and
 
 {{<Aside type="note" header="Learn more about Workers AI">}}
 
-Visit the [Workers AI documentation](/workers-ai/models/embedding/) to learn about its built-in embedding models.
+Visit the [Workers AI documentation](/workers-ai/models/text-embeddings/) to learn about its built-in embedding models.
 
 {{</Aside>}}
 ## Distance metrics

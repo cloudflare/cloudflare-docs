@@ -1,34 +1,27 @@
 ---
-title: Embedding
+title: Text Embeddings
 pcx_content_type: get-started
 weight: 6
 ---
 
-# Embeddings
+# Text Embeddings
 
-Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset.
+Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM).
 
-These models are ideal as part of building [vector search](/vectorize/learning/what-is-a-vector-database/) applications or [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) workflows with Large Language Models (LLM).
+* Task type: **text-embeddings**
+* TypeScript class: **AiTextEmbeddings**
 
 ## Available Embedding Models
 
-Workers AI includes the following built-in text embedding models:
+List of available models in for this task type:
 
-| Model ID                        | Max Input Tokens <sup>1</sup> | Output Dimensions  |
-| ------------------------------- | ----------------------------- | ------------------ |
-| `@cf/baai/bge-small-en-v1.5`    | 512 tokens                    | 384                |
-| `@cf/baai/bge-base-en-v1.5`     | 512 tokens                    | 768                |
-| `@cf/baai/bge-large-en-v1.5`    | 512 tokens                    | 1024               |
+| Model ID                        | Description                   |
+| ------------------------------- | ----------------------------- |
+| `@cf/baai/bge-base-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector<br/><strong>Max input tokens</strong>: 512<br/><strong>Output dimensions</strong>: 768<br/>[More information](https://huggingface.co/BAAI/bge-base-en-v1.5)<br/>  |
+| `@cf/baai/bge-large-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector<br/><strong>Max input tokens</strong>: 512<br/><strong>Output dimensions</strong>: 1024<br/>[More information](https://huggingface.co/BAAI/bge-base-en-v1.5)<br/>  |
+| `@cf/baai/bge-small-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector<br/><strong>Max input tokens</strong>: 512<br/><strong>Output dimensions</strong>: 384<br/>[More information](https://huggingface.co/BAAI/bge-base-en-v1.5)<br/>  |
 
-<sup>1</sup> An English word is approximately 1-3 tokens, depending on word length and representation within the model.
-
-## Model details
-
-* IDs:  **@cf/baai/bge-small-en-v1.5** | **@cf/baai/bge-base-en-v1.5** | **@cf/baai/bge-large-en-v1.5** - used to `run` this model via the SDK or API
-* Name: Feature extraction model
-* Task: text-embeddings
-* License type: MIT
-* [Terms + Information](https://github.com/FlagOpen/FlagEmbedding/blob/master/LICENSE)
+An English word is approximately 1-3 tokens, depending on word length and representation within the model.
 
 ## Examples
 
@@ -155,54 +148,63 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/baa
 }
 ```
 
-
 ## API schema
+
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
 ### Input
 
 ```json
 {
-  type: "object",
-  properties: {
-    text: {
-      oneOf: [
-        { type: "string" },
+  "type": "object",
+  "properties": {
+    "text": {
+      "oneOf": [
         {
-          type: "array",
-          items: {
-            type: "string",
-          },
-          maxItems: 100,
+          "type": "string"
         },
-      ],
-    },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100
+        }
+      ]
+    }
   },
-  required: ["text"],
+  "required": [
+    "text"
+  ]
 }
 ```
+
+TypeScript class: **AiTextEmbeddingsInput**
 
 ### Output
 
 ```json
 {
-  type: "object",
-  properties: {
-    shape: {
-      type: "array",
-      items: {
-        type: "number",
-      },
+  "type": "object",
+  "contentType": "application/json",
+  "properties": {
+    "shape": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
     },
-    data: {
-      type: "array",
-      items: {
-        type: "array",
-        items: {
-          type: "number",
-        },
-      },
-    },
-  },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      }
+    }
+  }
 }
 ```
+
+TypeScript class: **AiTextEmbeddingsOutput**
