@@ -203,7 +203,7 @@
     "body": [
       "{{<glossary-tooltip term_id=\"${1:term}\">}}$0$TM_SELECTED_TEXT{{</glossary-tooltip>}}",
     ],
-    "description": "Adds a new glossary reference with the (short) definition in a tooltip",
+    "description": "Adds a new glossary reference, displaying its definition as a tooltip",
     "scope": "markdown"
   },
   "Glossary definition": {
