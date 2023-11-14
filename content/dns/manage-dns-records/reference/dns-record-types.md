@@ -26,9 +26,9 @@ These records include the following fields:
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
 {{<Aside type="note">}}
-Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an `AAAA` record with `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
+Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an `AAAA` record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
 
-The short notation of IPv4 addresses (`1.1` for `1.1.1.1`, for example) is not supported for `A` records.
+Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) is not supported for `A` records.
 {{</Aside>}}
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
