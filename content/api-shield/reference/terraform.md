@@ -22,7 +22,7 @@ The following resources are available to configure through Terraform:
 
 ## Manage API Shield session identifiers
 
-Refer to the example configuration below to set up [session identifiers]() on your zone.
+Refer to the example configuration below to set up [session identifiers](/api-shield/get-started/#set-up-session-identifiers) on your zone.
 
 ```tf
 ---
