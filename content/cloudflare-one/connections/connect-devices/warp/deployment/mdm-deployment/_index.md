@@ -37,10 +37,16 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ### Uninstall WARP
 
-To uninstall the WARP client, run the following command:
+To uninstall the WARP client, run the following steps:
 
+1. First, locate the .msi package with the following Powershell command
 ```txt
-msiexec /x Cloudflare_WARP_Release-x64.msi /quiet
+Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+```
+
+2. You can then use the LocalPackage output given to run the uninstall command
+```txt
+msiexec /x path_To_Cloudflare_WARP_Release-x64.msi /quiet
 ```
 
 ### Update the configuration
