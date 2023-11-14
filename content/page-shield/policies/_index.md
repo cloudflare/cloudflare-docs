@@ -14,7 +14,7 @@ meta:
 Only available to Enterprise customers with a paid add-on.
 {{</Aside>}}
 
-Policies define the resources allowed on your applications through Content Security Policy (CSP) directives. Policies can log violations and also enforce an allowlist of resources, effectively blocking resources not included in the policies.
+Policies define the resources allowed on your applications through {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} directives. Policies can log violations and also enforce an allowlist of resources, effectively blocking resources not included in the policies.
 
 Create [allow policies](#policy-actions) to define a positive security model, also known as positive blocking. According to this model, you define what is allowed and reject everything else. Such an approach helps you reduce the attack surface for unwanted third-party scripts in your application.
 
