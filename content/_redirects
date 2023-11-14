@@ -501,7 +501,6 @@
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
 /logs/reference/logpush-api-configuration/custom-fields/ /logs/reference/custom-fields/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
-/logs/reference/glossary/ /logs/glossary/ 301
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
