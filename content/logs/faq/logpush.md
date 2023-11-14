@@ -11,7 +11,7 @@ meta:
 
 # Logpush
 
-## What happens if my cloud storage destination is temporarily unavailable?
+## What happens if my cloud storage destination is temporarily unavailable? { #storage-unavailable }
 
 **Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will retry around five times over five minutes. However, note that this number and time are just approximations. If Cloudflare persistently receives errors from your destination, and cannot keep up with incoming batches, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
 
@@ -19,7 +19,7 @@ meta:
 
 No. Cloudflare pushes logs in batches as soon as possible.
 
-## My job was accidentally turned off, and I did not receive my logs for a certain time period. Can they still be pushed to me?
+## My job was accidentally turned off, and I did not receive my logs for a certain time period. Can they still be pushed to me? { #job-turned-off }
 
 No. **Logpush** only pushes the logs once as they become available and is unable to backfill. However, the logs are stored for at least 72 hours and can be downloaded using the **Logpull API**.
 
@@ -27,11 +27,11 @@ No. **Logpush** only pushes the logs once as they become available and is unable
 
 Although we cannot provide a precise time, we estimate that it will take 10-15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic.
 
-## If I add new fields to an existing Logpush job, how long will it take for the change to become effective? 
+## If I add new fields to an existing Logpush job, how long will it take for the change to become effective?
 
 We cannot provide a precise time, but we estimate that the new fields will show up within 10-15 minutes.
 
-## Why am I receiving a validating destination error while setting up a Splunk job? 
+## Why am I receiving a validating destination error while setting up a Splunk job?
 
 You could be seeing this error for multiple reasons:
 * The Splunk endpoint URL is not correct. Cloudflare only supports Splunk HEC raw endpoint over HTTPS.
