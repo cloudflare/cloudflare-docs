@@ -68,7 +68,7 @@ We recommend disabling [Rocket Loader](/speed/optimization/content/rocket-loader
 
 {{<faq-answer>}}
 
-Yes. To learn more about how Zaraz works to be compatible with CSP configurations, refer to the [Cloudflare Zaraz supports CSP](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/) blog post.
+Yes. To learn more about how Zaraz works to be compatible with {{<glossary-tooltip term_id="content security policy (CSP)">}}CSP{{</glossary-tooltip>}} configurations, refer to the [Cloudflare Zaraz supports CSP](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/) blog post.
 
 {{</faq-answer>}}
 {{</faq-item>}}
