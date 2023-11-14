@@ -4,5 +4,3 @@ entries:
 - term: firewall-as-a-service (FWaaS)
   general_definition: |-
     also known as cloud firewall. A security product that is hosted in the cloud.
-  associated_products:
-    - Magic Firewall
