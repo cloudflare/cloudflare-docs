@@ -25,7 +25,7 @@ Cloudflare supports two types of packet captures:
 
 {{<Aside type="note" header="Note:">}}
 
-For help determining which data center to select for a packet capture, visit https://cloudflare.com/cdn-cgi/trace and refer to the `colo` field. Note some colos can be regional such as `ORD` while other names may be more specific like `ord02`. Either of these names can be used for this same field.
+For help determining which data center to select for a packet capture, visit https://cloudflare.com/cdn-cgi/trace and refer to the `colo` field. Note some data centers can be regional such as `ORD` while other names may be more specific like `ord02`. Either of these names can be used for this same field.
 
 {{</Aside>}}
 
