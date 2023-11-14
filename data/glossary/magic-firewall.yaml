@@ -4,3 +4,7 @@ entries:
 - term: firewall-as-a-service
   general_definition: |-
     also known as cloud firewall. A security product that is hosted in the cloud.
+
+- term: bit field matching
+  general_definition: |-
+    matches the raw bits in a packet to perform actions.
