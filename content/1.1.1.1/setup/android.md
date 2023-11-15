@@ -54,7 +54,7 @@ Android 9 and Android 10 support DNS over TLS to secure your queries through enc
 
 Before making changes, take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 
-1. Open **Settings** > **WiFi**.
+1. Open **Settings** > **Wi-Fi**.
 2. Press down and hold the name of the network you are currently connected to.
 3. Select **Modify Network**.
 4. Select the checkbox **Show Advanced Options**.
