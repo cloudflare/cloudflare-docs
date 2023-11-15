@@ -1,10 +1,19 @@
 ---
 productName: Area 1
 entries:
-- term: anycast
+- term: phishing
   general_definition: |-
-    Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations. Anycast typically routes incoming traffic to the nearest data center with the capacity to process the request efficiently.
-  associated_products:
-    - Magic WAN
-    - Magic Transit
+    the practice of trying to acquire sensitive data through fraudulent emails. Usually, the perpetrators try to pass for a legitimate company when asking for sensitive data.
+
+- term: SMTP
+  general_definition: |-
+    stands for Simple Mail Trasnfer Protocol. It is an Internet standard based on TCP/IP to send and receive email.
+
+- term: disposition
+  general_definition: |-
+    represents Area 1's evaluation of a specific message. For example, after evaluating an email it may get a disposition of malicous. This means that message exibits characteristics typical of malicious emails.
+
+- term: attribute
+  general_definition: |-
+    traffic that flows through Area 1 can receive one or more attributes, which indicate that a specific condition has been met.
 
