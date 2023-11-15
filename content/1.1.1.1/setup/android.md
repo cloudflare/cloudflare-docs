@@ -32,14 +32,23 @@ Your connection to the Internet and your DNS queries are now protected.
 
 ## Configure 1.1.1.1 manually
 
-### Android 9 Pie or later
+### Android 11 or later
 
-Android Pie and later supports DNS over TLS to secure your queries through encryption. In Android, this option is called Private DNS. It prevents your queries from being tracked, modified or surveilled by third-parties. Unlike previous versions of Android, this method also ensures 1.1.1.1 does not need to be configured for each new Wi-Fi network your smartphone joins.
+Android 11 or later versions support both DNS over TLS (DoT) and DNS over HTTPS (DoH).
 
 1. Go to **Settings** > **Network & internet**.
 2. Select **Advanced** > **Private DNS**.
 3. Select the **Private DNS provider hostname** option.
-4. Enter `one.one.one.one` and press **Save**.
+4. Enter `cloudflare-dns.com` and select **Save**.
+
+### Android 9 or 10
+
+Android 9 and Android 10 support DNS over TLS to secure your queries through encryption. In Android, this option is called Private DNS. It prevents your queries from being tracked, modified or surveilled by third-parties. Unlike previous versions of Android, this method also ensures 1.1.1.1 does not need to be configured for each new Wi-Fi network your smartphone joins.
+
+1. Go to **Settings** > **Network & internet**.
+2. Select **Advanced** > **Private DNS**.
+3. Select the **Private DNS provider hostname** option.
+4. Enter `one.one.one.one` and select **Save**.
 
 ### Previous Android versions
 
