@@ -82,7 +82,7 @@ To add additional TLS requirements for emails coming from certain domains, you c
 
 ## Reports
 
-You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as [SIEM events](https://horizon.area1security.com/settings/email/routing/webhooks). For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Area 1 first.
+You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as {{<glossary-tooltip term_id="SIEM" link="https://horizon.area1security.com/settings/email/routing/webhooks">}}SIEM events{{</glossary-tooltip>}}. For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Area 1 first.
 
 ## Whitelisting and blocklisting senders
 

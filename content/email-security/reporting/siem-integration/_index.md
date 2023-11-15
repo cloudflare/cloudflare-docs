@@ -9,7 +9,7 @@ updated: 2022-07-14
 
 # SIEM integration
 
-With a bit of configuration, you can also bring Area 1 data into your Security Information and Event Management (SIEM) tools to view message-level information outside of the dashboard and create your own custom reports.
+With a bit of configuration, you can also bring Area 1 data into your {{<glossary-tooltip term_id="SIEM">}}Security Information and Event Management (SIEM){{</glossary-tooltip>}} tools to view message-level information outside of the dashboard and create your own custom reports.
 
 ## Connect a SIEM tool
 
