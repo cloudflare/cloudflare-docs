@@ -152,7 +152,7 @@ Lists allow you to create a group of items and refer to them collectively, by na
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
-The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/) named `office_network`:
+The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#ip-lists) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
