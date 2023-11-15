@@ -125,7 +125,7 @@ Specifically:
 
 ## 4. Insert vectors
 
-Before you can query a vector database, you need to insert vectors for it to query against. These vectors would be generated from data (text, images, etc) you pass to a machine learning model. However, this tutorial will define static vectors to illustrate how vector search works on its own.
+Before you can query a vector database, you need to insert vectors for it to query against. These vectors would be generated from data (such as text or images) you pass to a machine learning model. However, this tutorial will define static vectors to illustrate how vector search works on its own.
 
 First, go to your `vectorize-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
@@ -280,7 +280,7 @@ Once deployed, preview your Worker at `https://vectorize-tutorial.<YOUR_SUBDOMAI
 
 ## 7. Query your index
 
-To insert vectors and then query them, use the URL for your deployed Worker, such as `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/`, open your browser and:
+To insert vectors and then query them, use the URL for your deployed Worker, such as `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/`. Open your browser and:
 
 1. Insert your vectors first by visiting `/insert`. This should return the below JSON:
 
@@ -291,7 +291,7 @@ To insert vectors and then query them, use the URL for your deployed Worker, suc
 
 Subsequent visits will return `count:0` as you cannot `insert()` the same vector IDs.
 
-2. Query your index - expect your query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` by visiting the root path of `/` . This will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
+2. Query your index - expect your query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` by visiting the root path of `/` . This query will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
 
 You will notice that `vectorId: 5` has a `score` of `0.999909486`. Because you are using `cosine` as our distance metric, the closer the score to `1.0`, the closer your vectors are.
 
