@@ -36,11 +36,9 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 8. {{<render file="access/_access-block-page.md">}}
 
-9. In the **Identity Providers** card, select the identity providers you want to enable for your app.
+9. {{<render file="access/_access-choose-idps.md">}}
 
-10. (Optional) Turn on **Instant Auth** if you selected only one IdP and want users to skip the identity provider selection step.
-
-11. Select **Next**.
+10. Select **Next**.
 
 ## 2. Add an Access policy
 
