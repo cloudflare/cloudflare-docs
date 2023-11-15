@@ -7,4 +7,4 @@ entries:
 
 - term: bit field matching
   general_definition: |-
-    matches the raw bits in a packet to perform actions.
+    matches raw bits in a packet to certain conditions specified in your rules.
