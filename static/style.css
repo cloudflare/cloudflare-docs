@@ -5387,6 +5387,10 @@ pre {
   color: var(--color);
 }
 
+.littlefoot__wrapper {
+  max-width: 100% !important;
+}
+
 .littlefoot__content {
   width: 100% !important;
 }
