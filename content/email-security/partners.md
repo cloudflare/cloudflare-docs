@@ -70,7 +70,7 @@ With an [inline deployment](/email-security/deployment/inline/), Area 1 evaluate
 
 ## Classification actions
 
-Area 1 recommends that you quarantine `MALICIOUS` and `SPAM` dispositions. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Area 1](/email-security/email-configuration/domains-and-routing/domains/).
+Area 1 recommends that you quarantine `MALICIOUS` and `SPAM` {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}}. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Area 1](/email-security/email-configuration/domains-and-routing/domains/).
 
 ## Message retraction
 

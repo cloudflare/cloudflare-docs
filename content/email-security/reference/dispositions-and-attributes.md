@@ -12,7 +12,7 @@ Based on these patterns, Area 1 may add `X-Headers` to each email message that p
 
 ## Dispositions
 
-Any traffic that flows through Area 1 is given a final {{<glossary-tooltip term_id="disposition">}}disposition{{</glossary-tooltip>}}, which represents our evaluation of that specific message. Each message will only receive one disposition header so your organization can take clear and specific actions on different message types.
+Any traffic that flows through Area 1 is given a final disposition, which represents our evaluation of that specific message. Each message will only receive one disposition header so your organization can take clear and specific actions on different message types.
 
 You can use disposition values when [creating your quarantine policy](/email-security/email-configuration/domains-and-routing/domains/) or [setting up auto-retract](/email-security/email-configuration/retract-settings/).
 

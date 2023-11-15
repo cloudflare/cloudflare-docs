@@ -6,7 +6,7 @@ _build:
 inputParameters: hardRetract
 ---
 
-You can set up auto-retraction to automatically move messages matching certain dispositions to specific folders within a user's mailbox.
+You can set up auto-retraction to automatically move messages matching certain {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} to specific folders within a user's mailbox.
 
 To set up automatic retraction:
 
@@ -14,7 +14,7 @@ To set up automatic retraction:
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Retract Settings** > **Auto-Retract**.
 4. Select **Edit**. 
-5. For each {{<glossary-tooltip term_id="disposition">}}disposition{{</glossary-tooltip>}}, choose which folder the message should be sent to:
+5. For each disposition, choose which folder the message should be sent to:
 
     - **No Action**: Do not move the message.
     - **Junk Email**: Sends the message to the junk or spam email folder.
