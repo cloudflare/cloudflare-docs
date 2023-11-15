@@ -1,0 +1,10 @@
+---
+productName: Area 1
+entries:
+- term: anycast
+  general_definition: |-
+    Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations. Anycast typically routes incoming traffic to the nearest data center with the capacity to process the request efficiently.
+  associated_products:
+    - Magic WAN
+    - Magic Transit
+
