@@ -1502,6 +1502,8 @@ wrangler tail <WORKER> [OPTIONS]
   - Filter by a text match in `console.log` messages.
 - `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+- `--force` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Bypass any prompts and immediately start a live logging session. This will reset any active connections to a Durable Object as if you had answered 'yes' to the prompt.
 
 {{</definitions>}}
 
