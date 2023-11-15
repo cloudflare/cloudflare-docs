@@ -106,7 +106,11 @@ entries:
 
 - term: two-factor authentication (2FA)
   general_definition: |-
-    Two-factor authentication (2FA) is a security process in which a user provides two different authentication factors to verify their identity. It adds an extra layer of security to user logins by requiring users to present two or more separate pieces of evidence (factors) that establish their identity.
+    Two-factor authentication (2FA) is a security process in which a user provides two different authentication factors to verify their identity. In addition to something you know, typically your password, 2FA adds an extra layer of security to user logins by requiring users to also present something they have, such as Yubikey or a one-time login code, or something you are, such as a fingerprint. 
+    
+    It adds an extra layer of security to user logins by requiring users to present two or more separate pieces of evidence (factors) that establish their identity.
+  associated_products:
+    - Area 1
 
 - term: website
   general_definition: |-

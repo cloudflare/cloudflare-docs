@@ -44,6 +44,7 @@ entries:
     a Security Information and Event Management (SIEM) solution collects, analyzes, and correlates data to help manage security incidents, detect anomalies, and meet compliance requirements.
   associated_products:
     - Cloudflare One
+    - Area 1
 
 - term: threat score
   general_definition: |-

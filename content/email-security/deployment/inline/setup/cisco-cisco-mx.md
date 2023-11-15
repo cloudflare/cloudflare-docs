@@ -35,7 +35,7 @@ To add a new Sender Group:
 
 ![Sender group](/images/email-security/deployment/inline-setup/cisco-cisco-mx/step1.png)
 
-## 2. Add SMTP route for the Area 1 Email Protection Hosts
+## 2. Add {{<glossary-tooltip term_id="SMTP">}}SMTP{{</glossary-tooltip>}} route for the Area 1 Email Protection Hosts
 
 To add a new SMTP Route:
 
