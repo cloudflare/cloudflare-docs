@@ -31,7 +31,7 @@ The root directory is where your site’s content lives. If not specified, Cloud
 
 Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools.
 
-If you are not using a framework preset, use `exit 0` as your **Build command**.
+If you are not using a preset, use `exit 0` as your **Build command**.
 
 {{<pages-build-presets-table>}}
 
