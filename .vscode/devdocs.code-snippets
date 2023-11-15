@@ -197,5 +197,21 @@
     ],
     "description": "Create FAQ entry (heading level 2, default)",
     "scope": "markdown"
-},
+  },
+  "Glossary tooltip": {
+    "prefix": ["glossarytooltip"],
+    "body": [
+      "{{<glossary-tooltip term_id=\"${1:term}\">}}$0$TM_SELECTED_TEXT{{</glossary-tooltip>}}",
+    ],
+    "description": "Adds a new glossary reference, displaying its definition as a tooltip",
+    "scope": "markdown"
+  },
+  "Glossary definition": {
+    "prefix": ["glossarydefinition"],
+    "body": [
+      "{{<glossary-definition term_id=\"${1:term}\">}}",
+    ],
+    "description": "Adds the definition of a glossary entry in the current location",
+    "scope": "markdown"
+  },
 }

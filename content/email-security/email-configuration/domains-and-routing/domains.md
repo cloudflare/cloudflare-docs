@@ -24,7 +24,7 @@ To create a new domain in Area 1:
     - **IP Restrictions** (optional): Restrict incoming traffic to the IP addresses of your mail servers.
     - **Inbound TLS** (only available for non-MX domains): Applies TLS to incoming traffic.
     - **Outbound TLS**: Choose between **Forward all messages over TLS** (recommended) or **Forward all messages using opportunistic TLS**.
-    - **Quarantine Policy**: Choose the [dispositions](/email-security/reference/dispositions-and-attributes/) you want to send to [Admin quarantine](/email-security/email-configuration/admin-quarantine/).
+    - **Quarantine Policy**: Choose the {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}dispositions{{</glossary-tooltip>}} you want to send to [Admin quarantine](/email-security/email-configuration/admin-quarantine/).
 
 6. Select **Publish Domain**.
 

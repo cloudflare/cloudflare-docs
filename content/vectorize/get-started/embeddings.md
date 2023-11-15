@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 {{<render file="_vectorize-beta.md">}}
 
-Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/). 
+Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
@@ -80,7 +80,7 @@ $ cd embeddings-tutorial
 
 To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
-- A combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
+- A combination of lowercase and/or numeric ASCII characters, shorter than 32 characters, starts with a letter, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment - for example, "production-doc-search" or "dev-recommendation-engine"
 - Only used for describing the index, and is not directly referenced in code.
 
@@ -126,7 +126,7 @@ Specifically:
 
 ## 4. Set up Workers AI
 
-Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/embedding/) built-in.
+Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/text-embeddings/) built-in.
 
 From within the `embeddings-tutorial` directory, install the `Workers AI` package:
 
@@ -241,7 +241,7 @@ $ npx wrangler deploy
 
 ## 7. Query your index
 
-You can now visit the URL for your newly created project to insert vectors and then query them. 
+You can now visit the URL for your newly created project to insert vectors and then query them.
 
 With the URL for your deployed Worker (for example,`https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev/`), open your browser and:
 

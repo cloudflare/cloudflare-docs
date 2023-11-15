@@ -65,7 +65,7 @@ In Vectorize, a database and an index are the same concept: each index you creat
 
 Vector embeddings represent the features of a machine learning model as a numerical vector (array of numbers). They are a one-way representation that encodes how a machine learning model understands the input(s) provided to it, based on how the model was originally trained and its' internal structure.
 
-For example, a [text embedding model](/workers-ai/models/embedding/) available in Workers AI is able to take text input and represent it as a 768-dimension vector. The text `This is a story about an orange cloud`, when represented as a vector embedding, resembles the following:
+For example, a [text embedding model](/workers-ai/models/text-embeddings/) available in Workers AI is able to take text input and represent it as a 768-dimension vector. The text `This is a story about an orange cloud`, when represented as a vector embedding, resembles the following:
 
 ```json
 [-0.019273685291409492,-0.01913292706012726,<764 dimensions here>,0.0007094172760844231,0.043409910053014755]
@@ -77,7 +77,7 @@ When a model considers the features of an input as "similar" (based on its under
 
 Vector dimensions describe the width of a vector embedding: the number of floating point elements that comprise a given vector.
 
-The number of dimensions are defined by the machine learning model used to generate the vector embeddings, and how it represents input features based on its internal model and complexity. More dimensions ("wider" vectors) may provide more accuracy at the cost of compute and memory resources, as well as latency (speed) of vector search. 
+The number of dimensions are defined by the machine learning model used to generate the vector embeddings, and how it represents input features based on its internal model and complexity. More dimensions ("wider" vectors) may provide more accuracy at the cost of compute and memory resources, as well as latency (speed) of vector search.
 
 Refer to the [dimensions](/vectorize/learning/create-indexes/#dimensions) documentation to learn how to configure the accepted vector dimension size when creating a Vectorize index.
 

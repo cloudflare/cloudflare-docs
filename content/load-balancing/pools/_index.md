@@ -1,11 +1,11 @@
 ---
 pcx_content_type: concept
-title: Origin Pools
+title: Origin pools
 weight: 4
 layout: single
 ---
 
-# Origin Pools
+# Origin pools
 
 {{<glossary-definition term_id="origin pool">}}
 

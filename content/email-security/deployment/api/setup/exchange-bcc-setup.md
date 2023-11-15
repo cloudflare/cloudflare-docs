@@ -9,7 +9,7 @@ updated: 2022-10-11
 
 # Microsoft Exchange BCC setup with Area 1
 
-For customers using Microsoft Exchange, setting up Area 1 via BCC is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential phishing attacks. The following email flow shows how this works:
+For customers using Microsoft Exchange, setting up Area 1 via BCC is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} attacks. The following email flow shows how this works:
 
 ![Email flow when setting up a phishing assessment risk for Microsoft Exchange with Area 1.](/images/email-security/deployment/api-setup/exchange/exchange-bcc-flow.png)
 

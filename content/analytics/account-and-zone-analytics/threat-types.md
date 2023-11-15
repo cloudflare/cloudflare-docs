@@ -38,19 +38,19 @@ Cloudflare uses Threat Scores gathered from sources such as Project Honeypot, as
 
 ## Country block
 
-Requests from countries that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+Requests from countries that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## IP block (user)
 
-Requests from specific IP addresses that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+Requests from specific IP addresses that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## IP range block (/16)
 
-A /16 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+A /16 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## IP range block (/24)
 
-A /24 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+A /24 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## New Challenge (user)
 
@@ -68,6 +68,6 @@ Request that came from a bot.
 
 ## Unclassified
 
-Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on the edge based on the composition of the request (and not its content).
+Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on Cloudflare's global network based on the composition of the request (and not its content).
 
-Unclassified means a number of conditions under which we group common threats related to Hotlink protection as well as certain cases of IP reputation and specific requests that are blocked at the Cloudflare edge before reaching your servers.
+Unclassified means a number of conditions under which we group common threats related to Hotlink Protection as well as certain cases of IP reputation and specific requests that are blocked at Cloudflare's global network before reaching your servers.

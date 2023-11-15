@@ -79,7 +79,7 @@ $ cd vectorize-tutorial
 
 To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
-- A combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
+- A combination of lowercase and/or numeric ASCII characters, shorter than 32 characters, starts with a letter, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment - for example, "production-doc-search" or "dev-recommendation-engine"
 - Only used for describing the index, and is not directly referenced in code.
 

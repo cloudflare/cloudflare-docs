@@ -29,6 +29,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
+- [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
@@ -1701,6 +1702,92 @@ wrangler pages publish [<DIRECTORY>] [OPTIONS]
 This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](#deploy-1). It will be removed in v4.
 
 {{</Aside>}}
+
+---
+
+## `queues`
+
+{{<Aside type="note">}}
+Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
+
+Manage your Workers [Queues](/queues/) configurations.
+
+### `create`
+
+Create a new Queue.
+
+```txt
+wrangler queues create <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to create.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an existing queue.
+
+```txt
+wrangler queues delete <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to delete.
+
+{{</definitions>}}
+
+### `list`
+
+List all queues in the current account.
+
+```txt
+wrangler queues list [OPTIONS]
+```
+
+### `consumer`
+
+Manage queue consumer configurations.
+
+### `consumer add <script-name>`
+
+Add a Worker script as a [queue consumer](/queues/learning/how-queues-works/#consumers).
+
+```txt
+wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `queue-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to add the consumer to.
+- `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Workers script to add as a consumer of the named queue.
+
+{{</definitions>}}
+
+### `consumer remove`
+
+Remove a consumer from a queue.
+
+```txt
+wrangler queues consumer remove <queue-name> <script-name>
+```
+
+{{<definitions>}}
+
+- `queue-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to remove the consumer from.
+- `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Workers script to remove as the consumer.
+
+{{</definitions>}}
 
 ---
 

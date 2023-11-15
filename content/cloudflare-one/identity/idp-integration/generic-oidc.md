@@ -54,7 +54,7 @@ OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can 
 
 #### Email claim
 
-You can specify a custom **Email claim** name that Access will use to identify user emails. This is useful if your IdP does not return the standard `email` claim in the OIDC ID token. For example, you may wish to identify Azure AD users based on their `upn` instead of `email`.
+You can specify a custom **Email claim** name that Access will use to identify user emails. This is useful if your IdP does not return the standard `email` claim in the OIDC ID token.
 
 #### Multi-record OIDC claims
 

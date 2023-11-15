@@ -197,6 +197,11 @@
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-wp-engine/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/wpengine/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/security/access-for-saas/ /cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/ 301
 
+# Constellation
+/constellation/platform/wrangler/ /constellation/ 301
+/constellation/platform/ /constellation/ 301
+/constellation/ /workers-ai/ 301
+
 # d1
 /d1/client-api/ /d1/platform/client-api/ 301
 /d1/learning/using-d1-from-pages/ /pages/platform/functions/bindings/#d1-databases 301
@@ -1002,10 +1007,11 @@
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 
-# Constellation
-/constellation/platform/wrangler/ /constellation/ 301
-/constellation/platform/ /constellation/ 301
-/constellation/ /workers-ai/ 301
+# workers ai
+/workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
+/workers-ai/models/speech-to-text/ /workers-ai/models/speech-recognition/ 301
+/workers-ai/models/sentiment-analysis/ /workers-ai/models/text-classification/ 301
+/workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
 
 # zaraz
 

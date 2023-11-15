@@ -36,7 +36,7 @@ If you set a header override on an individual origin, it will take precedence ov
 
 For example, you might have a load balancer for `www.example.com` with the following setup:
 
-- Origin Pools:
+- Origin pools:
 
   - Pool 1:
 

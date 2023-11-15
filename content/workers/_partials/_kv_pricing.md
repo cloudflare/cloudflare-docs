@@ -7,6 +7,8 @@ _build:
 
 {{<table-wrap>}}
 
+Workers KV is included in both the Free and Paid [Workers plans](/workers/platform/pricing/).
+
 |                 | Free plan<sup>1</sup> | Paid plan                         |
 | --------------- | --------------------- | --------------------------------- |
 | Read requests   | 100,000 / day         | 10 million/month, + $0.50/million |

@@ -26,7 +26,7 @@ layout: list
         <ul>
           <li><code>cf-bot-score</code>: Contains the bot score (for example, <code>30</code>).</li>
           <li><code>cf-verified-bot</code>: Contains <code>true</code> if the request comes from a <a href="/bots/concepts/bot/#verified-bots">verified bot</a>, or <code>false</code> otherwise.</li>
-          <li><code>cf-threat-score</code>: Contains the threat score (0-100).</li>
+          <li><code>cf-threat-score</code>: Contains the {{<glossary-tooltip term_id="threat score">}}threat score{{</glossary-tooltip>}} (for example, <code>10</code>).</li>
           <li><code>cf-ja3-hash</code>: Contains the <a href="/bots/concepts/ja3-fingerprint/">JA3 fingerprint</a>.</li>
         </ul>
         <p>This Managed Transform requires a Enterprise plan with <a href="/bots/plans/bm-subscription/">Bot Management</a> enabled.</p>
