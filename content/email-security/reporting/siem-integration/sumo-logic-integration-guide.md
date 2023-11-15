@@ -8,7 +8,7 @@ updated: 2023-01-26
 
 # Sumo Logic integration guide
 
-When Area 1 detects a phishing email, the metadata of the detection can be sent directly into your instance of Sumo Logic. This document outlines the steps required to integrate Area 1 with Sumo Logic.
+When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly into your instance of Sumo Logic. This document outlines the steps required to integrate Area 1 with Sumo Logic.
 
 ![A diagram outlining what happens when Area 1 detects a phishing email and sends it to Sumo Logic.](/images/email-security/siem-integration/sumo-logic/opening-sumo-logic.png)
 

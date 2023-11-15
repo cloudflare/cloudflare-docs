@@ -8,7 +8,7 @@ weight: 1
 # Area 1 Email Security
 
 {{<description>}}
-Stop phishing attacks with Area 1 cloud-native email security service.
+Stop {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} attacks with Area 1 cloud-native email security service.
 {{</description>}}
 
 {{<plan id="email.email_security.properties.availability.summary">}}

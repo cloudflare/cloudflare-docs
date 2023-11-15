@@ -8,7 +8,7 @@ updated: 2023-01-26
 
 # Splunk Cloud integration guide
 
-When Area 1 detects a phishing email, the metadata of the detection can be sent directly to Splunk. This document outlines the steps required to integrate with Splunk Cloud.
+When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to Splunk. This document outlines the steps required to integrate with Splunk Cloud.
 
 ![A diagram outlining what happens when Area 1 detects a phishing email and sends it to Splunk.](/images/email-security/siem-integration/splunk/open-splunk.png)
 
