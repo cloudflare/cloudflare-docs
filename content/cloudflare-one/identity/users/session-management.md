@@ -6,30 +6,22 @@ weight: 3
 
 # Manage user sessions
 
-A user session is generated when a user logs in to an Access application. The authentication process involves Cloudflare Access issuing a signed JSON Web Token (JWT) when the user authenticates and meets the criteria defined in your Access application policy. The token is valid for the duration configured in the application (default is 24 hours). The user can access the application for the entire duration of that token’s lifecycle without re-authenticating until the session [expires](#session-duration) or is [manually terminated](#revoke-user-sessions).
+A user session determines how long a user can access an Access application without re-authenticating.
 
 ## Session duration
 
-Cloudflare Access allows you to specify three different levels of session durations:
+When a user logs in to an application protected by Access, Access validates their identity against your Access policies and generates two signed JSON Web Tokens (JWTs):
 
-- Global session duration
-- Access application session duration
-- Access policy session duration
+{{<table-wrap>}}
+| Token  | Description  | Expiration | Storage   |
+| --------| ---------- | ----------- |---------  |
+| Global session token | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#set-global-session-duration) | Your Cloudflare {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} |
+| Application token   | Allows the user to access a specific Access application.  | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application     |
+{{</table-wrap>}}
 
-The most specific session duration will always take precedence.
+The user can access the application for the entire duration of the application token’s lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
 
-
-When users log in to an application protected by Access, Access generates two session tokens:
-
-
-| Token                    | Description                                                        | Storage                                                                                        |
-| ------------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| **Global session token** | Establishes the maximum amount of time for a user’s Access session. | Your Cloudflare {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} |
-| **Application token**    | Establishes a session for a specific application. Token expiration is determined by the policy session duration (if set) or the application session duration.                 | The hostname of the Access application                                                     |
-
-When users log in, the global session token will default to the duration of the application token. You can configure the duration of the global session token to be shorter or longer than the application’s session token.
-
-If the global session duration is longer than an application’s session length, a user’s application session will be automatically refreshed until the global session expires. This provides a more secure way to allow for longer user sessions, since the global session cookie cannot be used to directly access an application.
+The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
 ### Set global session duration
 
@@ -39,26 +31,28 @@ You can set a global session duration between 15 minutes and 1 month.
 2. Under **Global session timeout**, select **Edit**,
 3. Select the desired timeout duration from the dropdown menu.
 
+The user will be required to re-authenticate with the IdP after this period of time.
+
 ### Set application session duration
 
-You can set an application session duration ranging from immediate timeout to 1 month.
+You can set an application session duration ranging from immediate timeout to 1 month. The default is 24 hours.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the application you want to configure and select **Edit**.
 3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
 
-If you do not set a policy session duration, users will be prompted to reauthenticate after the application session duration expires.
+The application token will expire after this period of time (unless you have set a [policy session duration](#set-policy-session-duration)).
 
 ### Set policy session duration
 
-You can set a policy session duration ranging from immediate timeout to 1 month.
+You can set a policy session duration ranging from immediate timeout to 1 month. The policy session duration takes precedence over the application session duration.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the application you want to configure and select **Edit**.
 3. Go to the **Policies** tab and select **Configure** for any policy.
 4. Select a **Session Duration** from the dropdown menu.
 
-Users who match this policy will be prompted to reauthenticate after the policy session duration expires.
+Users who match this policy will be issued an application token with this expiration time.
 
 ## Revoke user sessions
 
@@ -74,7 +68,7 @@ To immediately terminate all active sessions for a specific application:
 
 3. In the **Overview** tab, select **Revoke existing tokens**.
 
-Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
+Unless there are changes to rules in the policy, users can start a new session if their profile in your identity provider is still active.
 
 ### Per-User
 
