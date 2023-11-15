@@ -164,7 +164,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 4. Select the **...** > **Edit**.
 
-5. Select the additional dispositions you want to quarantine.
+5. Select the additional {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} you want to quarantine.
 
     <div class="large-img">
 
