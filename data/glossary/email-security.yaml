@@ -3,7 +3,7 @@ productName: Area 1
 entries:
 - term: phishing
   general_definition: |-
-    the practice of trying to acquire sensitive data through fraudulent emails. Usually, the perpetrators try to pass for a legitimate company when asking for sensitive data.
+    the practice of trying to acquire sensitive data through fraudulent emails or other means. Usually, the perpetrators try to pass for a legitimate company when asking for sensitive data.
 
 - term: SMTP
   general_definition: |-
@@ -11,7 +11,7 @@ entries:
 
 - term: disposition
   general_definition: |-
-    represents Area 1's evaluation of a specific message. For example, after evaluating an email it may get a disposition of malicous. This means that message exibits characteristics typical of malicious emails.
+    represents Area 1's evaluation of a specific message. For example, after evaluating an email it may get a disposition of `malicious`. Email messages with this disposition exibit characteristics typical of malicious emails.
 
 - term: attribute
   general_definition: |-
