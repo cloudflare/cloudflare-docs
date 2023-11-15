@@ -52,9 +52,11 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
 {{</Aside>}}
 
-## Enforce device posture
+## Check device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
+
+### Require a minimum OS version
 
 | Selector                     | Operator | Value                | Action |
 | ---------------------------- | -------- | -------------------- | ------ |
