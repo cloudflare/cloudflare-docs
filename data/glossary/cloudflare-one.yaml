@@ -123,6 +123,8 @@ entries:
 - term: SAML
   general_definition: |-
     Security Assertion Markup Language (SAML) enables single sign-on and authentication for multiple applications.
+  associated_products:
+    - Area 1
 
 - term: SASE
   general_definition: |-
