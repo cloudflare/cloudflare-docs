@@ -24,6 +24,7 @@ limits:
 
 These limits are applied to every query for every plan:
 
+* GraphQL inputs cannot be larger than **25KB**
 * A zone-scoped query can include up to **10 zones**
 * An account-scoped query can include only **1 account**
 
