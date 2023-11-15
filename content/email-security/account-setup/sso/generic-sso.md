@@ -8,7 +8,7 @@ meta:
 
 # Generic single sign-on integration guide
 
-Below is a generic guide to successfully set up an identity provider based SAML. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
+Below is a generic guide to successfully set up an identity provider based {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}}. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
 
 ## 1. Identity Provider SAML setup
 

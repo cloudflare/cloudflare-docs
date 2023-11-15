@@ -8,7 +8,7 @@ meta:
 
 # Azure integration guide
 
-This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a SAML SSO connection with Area 1.
+This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} SSO connection with Area 1.
 
 ## 1. Azure Active Directory configuration
 

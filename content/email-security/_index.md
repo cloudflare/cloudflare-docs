@@ -24,7 +24,7 @@ Area 1 provides two architectures to protect your organization: inline or API se
 {{</feature>}}
 
 {{<feature header="SSO integration" href="/email-security/account-setup/sso/">}}
-In addition to standard logins, Area 1 offers support for SAML based single sign-on (SSO) logins to your dashboard.
+In addition to standard logins, Area 1 offers support for {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} based single sign-on (SSO) logins to your dashboard.
 {{</feature>}}
 
 {{<feature header="Business email compromise" href="/email-security/email-configuration/enhanced-detections/business-email-compromise/">}}
