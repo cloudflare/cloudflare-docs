@@ -90,7 +90,7 @@ If you need to whitelist of blocklist senders, refer to [Allow and block lists](
 
 ## Submitting false positives and false negatives
 
-There are several ways of dealing with missed phish or messages flagged as such that are not. Refer to [Phish submissions](/email-security/email-configuration/phish-submissions/) to learn more.
+There are several ways of dealing with missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} or messages flagged as such that are not. Refer to [Phish submissions](/email-security/email-configuration/phish-submissions/) to learn more.
 
 ## Best practices
 
