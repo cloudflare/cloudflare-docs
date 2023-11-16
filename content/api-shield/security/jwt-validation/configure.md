@@ -19,7 +19,7 @@ A Token Configuration defines a JSON Web Key Set (JWKs), which is used to valida
 A zone may have up to four Token Configurations.
 {{</Aside>}}
 
-### Required information
+Token Configurations require the following information:
 
 |  <div style="width:120px">Field name</div> | Description | Example | Notes |
 | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ A zone may have up to four Token Configurations.
 |  `token_type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. |
 | `credentials` | This describes the cryptographic public keys that should be used to validate JWTs. This field must be a JSON web key. |  Refer to the example below. | Refer to the [information](#credentials) below. |
 
-#### Token sources
+### Token sources
 
 Each item must be a be a Ruleset Engine expression that resolves to a string.
 
@@ -39,7 +39,7 @@ You can set up to four token sources. If a request has more than one of these fi
 
 Refer to the [Ruleset Engine documentation](/ruleset-engine/rules-language/fields) for details on working with Ruleset Engine fields.
 
-#### Credentials
+### Credentials
 
 API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them. 
 
@@ -132,7 +132,17 @@ Token Validation Rules allow you to enforce a security policy using existing Tok
 | `action` | The Firewall Action taken on requests that do not meet expression. | `log` | Possible: `log` or `block` |
 | `enabled` | Enable or disable the rule. | `true` | Possible: `true` or `false` |
 | `expression` | The rule's security policy. | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Define a security policy](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
-| `selector` | Configure what operations are covered by this rule. | | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
+| `selector` | Configure what operations are covered by this rule. | | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#apply-a-rule-to-operations) below. |
+
+### Selectors
+
+Selectors control the scope of your token validation rule.
+
+If you only need JWT Validation on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include it in the JWT Validation rule.
+
+If you need to exclude endpoints from JWT validation that never have valid JWTs used with them (by design), such as a path and method used to establish a valid JWT in the first place, you must use the endpoint’s operation ID to exclude the endpoint in a selector. 
+
+To find the operation ID, refer to [Endpoint Management](/api-shield/management-and-monitoring/) or use the [Cloudflare API](/api/operations/api-shield-endpoint-management-retrieve-information-about-all-operations-on-a-zone).
 
 ## Define a security policy
 
@@ -162,6 +172,8 @@ The following functions can be used to interact with JWT Tokens on a request:
 
 ### Common use cases 
 
+Refer to the following example use cases to understand which security policy to use. For most use cases, Cloudflare recommends requiring a valid token across your API and excluding any paths that are used to establish or refresh tokens using selectors.
+
 #### Require a token
 
 The `is_jwt_present("51231d16-01f1-48e3-93f8-91c99e81288e")` expression will trigger an action if a request is missing a JWT.
@@ -186,13 +198,13 @@ The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or not is_jwt_valid("5
 
 ## Apply a rule to operations
 
-{{<Aside type="note">}}
 Only one Token Validation rule can apply to an operation. If an operation is covered by multiple rules, then the rule with highest precedence will take effect.
-{{</Aside>}}
 
 You can configure which operations JWT Validation is enforced on using the `selector` field.
 
+{{<Aside type="note">}}
 Selectors will also apply to new operations. New operations that match an existing selector will automatically be covered by that Token Validation rule.
+{{</Aside>}}
 
 For example, the following selector will apply a rule to all operations in `v1.example.com` and `v2.example.com`, except for two operations on these hosts:
 
@@ -250,7 +262,9 @@ curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gate
     }'
 ```
 
-The response will include all operations on a zone with an additional `state` field.
+The response will include all operations on a zone with an additional `state` field. 
+
+The `state` field can be `ignored`, `excluded`, or `included`. Included operations will match the hostname selectors you specified. Excluded operations will match the operation IDs you specified in the selector. Ignored operations are those that do not match anything specified in the selector.
 
 ```bash
 ---
