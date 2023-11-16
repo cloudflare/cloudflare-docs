@@ -16,7 +16,7 @@ You may need to adjust these settings in case of false positives or due to speci
 
 Advanced DNS Protection rules have one of the following scopes:
 
-* `global`: The rule will apply to all incoming packets.
+* `global`: The rule will apply to all incoming {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}}.
 * `region`: The rule will apply to incoming packets in a selected region.
 * `datacenter`: The rule will apply to incoming packets in the selected Cloudflare data center.
 

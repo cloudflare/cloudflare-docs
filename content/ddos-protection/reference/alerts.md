@@ -20,7 +20,7 @@ Each notification email includes the following information:
 * Rule that matched the attack (ID and description)
 * Rule override, if any
 
-Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target hostname.
+Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target {{<glossary-tooltip term_id="hostname">}}hostname{{</glossary-tooltip>}}.
 
 You will not receive duplicate DDoS alerts within the same one-hour time frame.
 

@@ -29,7 +29,7 @@ To adjust rule behavior, do one of the following:
 
 You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 
-Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
+Overrides can apply to all {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
 
 ## Availability
 

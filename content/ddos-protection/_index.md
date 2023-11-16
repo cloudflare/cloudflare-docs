@@ -9,7 +9,7 @@ meta:
 
 # Cloudflare DDoS Protection
 
-Cloudflare automatically detects and mitigates [Distributed Denial of Service (DDoS) attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) using its Autonomous Edge.
+Cloudflare automatically detects and mitigates {{<glossary-tooltip term_id="distributed denial-of-service (DDoS) attack" link="https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/">}}distributed denial-of-service (DDoS) attacks{{</glossary-tooltip>}} using its Autonomous Edge.
 
 The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloudflare DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
 
