@@ -72,7 +72,7 @@ entries:
     - Magic WAN
     - Magic Transit
 
-- term: health-check
+- term: tunnel health-check
   general_definition: |-
     a probe sent by Cloudflare to check for tunnel health. If a tunnel is not considered healthy, Cloudflare reroutes traffic to one that is considered healthy.
   associated_products:
