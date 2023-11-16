@@ -111,7 +111,7 @@ ___
 
 Latency metrics currently are not supported when a Cloudflare Worker is running on the URL, as the requests are not passed directly to your origin.
 
-Some Cloudflare products such as [Waiting Room](/waiting-room/) are built on top of Workers, so the same limititaions apply to applications using these products. 
+Some Cloudflare products such as [Waiting Room](/waiting-room/) are built on top of Workers, so the same limitations apply to applications using these products. 
 
 {{</faq-answer>}}
 {{</faq-item>}}
