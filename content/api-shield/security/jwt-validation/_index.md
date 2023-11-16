@@ -45,6 +45,10 @@ To automatically keep your keys up to date when your Identity Provider refreshes
 8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when _Mark as non-compliant_ is selected in the previous step.
 9. Select **Save**.
 
+{{<Aside type="note">}}
+Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule.
+{{</Aside>}}
+
 ## Special cases
 
 ### Validate two JWTs with different Identity Providers on a single request

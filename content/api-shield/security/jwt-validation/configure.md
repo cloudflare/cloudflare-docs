@@ -13,7 +13,9 @@ Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-va
 
 ## Token Configurations 
 
-A Token Configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request. Token Configurations can be configured using the Cloudflare API or Dashboard.
+A Token Configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request. 
+
+Token Configurations can be configured using the Cloudflare API or [dashboard](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
 
 {{<Aside type="note">}}
 A zone may have up to four Token Configurations.
@@ -52,7 +54,6 @@ It is highly recommended to validate the output of the API call to check that th
 ## Create a Token Configuration using the Cloudflare API
 
 Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
-
 
 ```bash
 ---
@@ -123,7 +124,9 @@ header: Example response
 
 ## Token Validation Rules
 
-Token Validation Rules allow you to enforce a security policy using existing Token Configurations.
+Token Validation Rules allow you to enforce a security policy using existing Token Configurations. 
+
+Token Validation Rules can be configured using the Cloudflare API or [dashboard](/api-shield/security/jwt-validation/#add-a-jwt-validation-rule).
 
 | <div style="width:120px">Field name</div> | Description | Example | Notes |
 | --- | --- | --- | --- |
