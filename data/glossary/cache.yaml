@@ -23,7 +23,7 @@ entries:
 
 - term: static content
   general_definition: |-
-    static content is website content that can be served directly from cache, without having to fetch it from the origin server. Static content includes files like images, stylesheets, and JavaScript that do not change frequently.
+    static content, like images, stylesheets, and JavaScript, remains the same for all users. It can be directly served from the cache without fetching from the origin server because it does not change without manual intervention.
 
 - term: uncached requests
   general_definition: |-
@@ -65,6 +65,6 @@ entries:
   general_definition: |-
     the act of removing outdated or unnecessary content from the cache to make room for new or updated content.
 
-- term: TTL (Time-to-Live)
+- term: Time-to-Live (TTL)
   general_definition: |-
     the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.
