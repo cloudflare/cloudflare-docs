@@ -24,6 +24,8 @@ entries:
 - term: content delivery network (CDN)
   general_definition: |-
     a geographically distributed group of servers which work together to provide fast delivery of Internet content.
+  associated_products:
+    - Cache
 
 - term: content security policy (CSP)
   general_definition: |-
