@@ -87,11 +87,9 @@ This setting is primarily used to enable site-to-site connectivity with [WARP co
 
 {{<render file="warp/_all-systems-modes-plans.md">}}
 
-Captive portal detection is the ability for the WARP client to detect a third-party onboarding flow before Internet access is obtained. Captive portals typically occur in places such as airports, cafes, and hotels.
+When `Enabled`, the WARP client will automatically turn off when it detects a {{<glossary-tooltip term_id="captive portal">}}captive portal{{</glossary-tooltip>}}, and it will automatically turn back on after the **Timeout** duration.
 
-When `Enabled`, the WARP client will automatically turn off when it detects a captive portal, and it will automatically turn back on after the **Timeout** duration.
-
-Since captive portal implementations vary, WARP may not detect all captive portals. If captive portal detection does not work, you can provide end users with a temporary [admin override](#admin-override) code. For more information, refer to the [FAQ](/cloudflare-one/faq/teams-devices-faq/#why-is-my-device-not-connecting-to-a-public-wi-fi).
+Since captive portal implementations vary, WARP may not detect all captive portals. For more information, refer to [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/).
 
 ### Mode switch
 
