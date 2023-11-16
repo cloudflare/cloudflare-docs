@@ -24,7 +24,7 @@ Prefixes | Description
 `partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
 `partialincludeparams` or `renderpartialparams` | Inserts a `render` shortcode to include content from a partial with input parameters in the current document.
 `twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
-`detailssection` or `collapsible` | Inserts a collapsible `<details>` HTML element.
+`detailssection` or `collapsible` | Inserts a collapsible details section.
 
 Triggering one of the available snippets will insert their body content at the current cursor position.
 
