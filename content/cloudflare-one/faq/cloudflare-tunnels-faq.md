@@ -186,141 +186,29 @@ Before contacting the Cloudflare support team:
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+
+- Gather any relevant error/access logs from your server.
+
+Set [`loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
 - Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 
-- Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
-
-- Gather any relevant error/access logs from your server.
-
 {{</faq-answer>}}
 {{<faq-answer>}}
-
-### I am having an issue with a remote-managed/dashboard tunnel.
+### I am having an issue with a remotely-managed/dashboard tunnel.
 
 Before contacting the Cloudflare support team:
 
 - Take note of any specific error messages and/or problematic behaviors.
 
-- Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
 
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). 
-
-If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) in your service configuration, additionally set [`log-level`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
-
-The details below provide guidance regarding configuration of logging on the service by adding the parameters `--loglevel debug --logfile <PATH>` to the configuration: 
-
-{{<tabs labels="Linux | macOS | Windows">}}
-{{<tab label="linux" no-code="true">}}
-
-On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudflared.service`. To configure your tunnel on Linux:
-
-1. Open `cloudflared.service`.
-
-   ```sh
-   $ sudo systemctl edit --full cloudflared.service
-   ```
-
-2. Modify the `cloudflared tunnel run` command with the desired configuration flag.
-
-   ```txt
-   ---
-   highlight: [8]
-   ---
-   [Unit]
-   Description=Cloudflare Tunnel
-   After=network.target
-
-   [Service]
-   TimeoutStartSec=0
-   Type=notify
-   ExecStart=/usr/local/bin/cloudflared tunnel --loglevel debug --logfile <PATH>  run --token <TOKEN VALUE>
-   Restart=on-failure
-   RestartSec=5s
-   ```
-
-{{</tab>}}
-{{<tab label="macos" no-code="true">}}
-
-On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on macOS:
-
-1. Stop the `cloudflared` service.
-
-   ```sh
-   $ sudo launchctl stop com.cloudflare.cloudflared
-   ```
-
-2. Unload the configuration file.
-
-   ```sh
-   $ sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-   ```
-
-3. Open `/Library/LaunchDaemons/com.cloudflare.cloudflared.plist` in a text editor.
-
-4. Modify the `ProgramArguments` key with the desired configuration flag:
-
-   ```txt
-   ---
-   highlight: [8-11]
-   ---
-   <plist version="1.0">
-       <dict>
-           <key>Label</key>
-           <string>com.cloudflare.cloudflared</string>
-           <key>ProgramArguments</key>
-           <array>
-               <string>/opt/homebrew/bin/cloudflared</string>
-               <string>--logfile</string>
-               <string></PATH></string>
-               <string>--loglevel</string>
-               <string>debug</string>
-               <string>tunnel</string>
-               <string>run</string>
-               <string>--token</string>
-               <string>TOKEN VALUE </string>
-           </array>
-   ```
-
-5. Load the updated configuration file.
-
-   ```sh
-   $ sudo launchctl load /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-   ```
-
-6. Start the `cloudflared` service.
-
-   ```sh
-   $ sudo launchctl start com.cloudflare.cloudflared
-   ```
-
-{{</tab>}}
-{{<tab label="windows" no-code="true">}}
-
-On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudflared`. To configure your tunnel on Windows:
-
-1. Open the Registry Editor.
-
-2. Go to **HKEY_LOCAL_MACHINE** > **SYSTEM** > **CurrentControlSet** > **Services** > **cloudflared**.
-
-3. Double-click **ImagePath**.
-
-4. Modify **Value data** with the desired configuration flag. Adding `--loglevel debug --logfile <PATH>` in this case:
-
-   ```txt
-   C:\Program Files (x86)\cloudflared\.\cloudflared.exe --loglevel debug --logfile <PATH>  tunnel run --token <TOKEN VALUE>
-   ```
-
-
-{{</tab>}}
-{{</tabs>}}
-
-
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, add [`--logfile <PATH>`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) and [`--loglevel debug`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to your system service configuration. To modify the system service, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
