@@ -6,7 +6,7 @@ pcx_content_type: how-to
 
 # Set up a bucket for full packet captures
 
-Before you can begin a full packet capture, you must first configure a bucket that Cloudflare can use to upload your files.
+Before you can begin a full {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} capture, you must first configure a bucket that Cloudflare can use to upload your files.
 
 You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target.
 

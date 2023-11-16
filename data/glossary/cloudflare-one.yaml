@@ -62,6 +62,7 @@ entries:
     a program that performs tasks without active management or maintenance.
   associated_products:
     - Tunnel
+    - DDoS Protection
 
 - term: DNS filtering
   general_definition: |-
