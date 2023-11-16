@@ -61,3 +61,11 @@ For example, if you push changes to a `development` branch (which is not associa
 Branch name aliases are lowercased and non-alphanumeric characters are replaced with a hyphen — for example, the `fix/api` branch creates the `fix-api.<project>.pages.dev` alias.
 
 To view branch aliases within your Pages project, select **View build** for any preview deployment. **Deployment details** will display all aliases associated with that deployment.
+
+### Preview custom domain
+
+It is possible to use a custom domain with a Preview aliase.  In order to do this, you will initially need to add a normal [Custom domain](https://developers.cloudflare.com/pages/platform/custom-domains/#add-a-custom-domain).  Once you have done this, you can then change the DNS record to point to the Preview aliase instead of the production.
+
+For example, if you have a preview alias of `development.<project>.pages.dev`, you setup the custom domain which will initially point to `<project>.pages.dev`.  Once that is setup, you then change the DNS record pointing to `<project>.pages.dev` to be `development.<project>.pages.dev`
+
+As it is possible to create multiple custom domains, you can still have custom domains setup for production and other custom domains setup for preview aliases.
