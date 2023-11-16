@@ -15,12 +15,11 @@ In most cases, this is due to the system not observing enough valid requests ove
 
 API Discovery only looks at requests that satisfy all of the following criteria:
 
-1. Requests must send the session identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
-2. Requests must return `2XX` response codes from the edge.
-3. Requests must not come directly from Cloudflare Workers.
-4. At least 500 requests are made to the discovered endpoint within a 10 day period.
+1. Requests must return `2XX` response codes from the edge.
+2. Requests must not come directly from Cloudflare Workers.
+3. At least 500 requests are made to the discovered endpoint within a 10 day period.
 
-Endpoints discovered using session identifiers will be labeled as such in the dashboard.
+Endpoints discovered using session identifiers will be labeled as such in the dashboard. If the endpoints are not discovered through session identifiers, they will be discovered using our machine learning-based [API Discovery](/api-shield/security/api-discovery/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
