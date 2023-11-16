@@ -36,6 +36,7 @@ entries:
   associated_products:
     - Magic WAN
     - Magic Transit
+    - DDoS Protection
 
 - term: Internet Key Exchange (IKE)
   general_definition: |-
