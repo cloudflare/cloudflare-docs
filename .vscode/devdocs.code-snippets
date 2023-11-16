@@ -171,16 +171,13 @@
     "Create collapsible details section": {
       "prefix": ["detailssection", "collapsible"],
       "body": [
-        "<details>",
-        "<summary>${1:header}</summary>",
-        "<div>",
+        "{{<details header=\"${1:header}\">}}",
         "",
         "$0$TM_SELECTED_TEXT",
         "",
-        "</div>",
-        "</details>",
+        "{{</details>}}",
       ],
-      "description": "Creates a new collapsible <details> element with a title and a body",
+      "description": "Creates a new collapsible details section with a title and a body",
       "scope": "markdown"
   },
   "Create FAQ entry": {
