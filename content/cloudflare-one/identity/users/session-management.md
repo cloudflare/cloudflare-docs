@@ -45,7 +45,7 @@ The application token will expire after this period of time (unless you have set
 
 ### Set policy session duration
 
-You can set a policy session duration ranging from immediate timeout to 1 month. The policy session duration takes precedence over the application session duration.
+You can set a policy session duration ranging from immediate timeout to one month. The policy session duration takes precedence over the application session duration.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the application you want to configure and select **Edit**.
