@@ -31,7 +31,7 @@ The root directory is where your site’s content lives. If not specified, Cloud
 
 Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools.
 
-If you are not using a framework, leave the **Build command** field blank.
+If you are not using a preset, use `exit 0` as your **Build command**.
 
 {{<pages-build-presets-table>}}
 
@@ -40,8 +40,9 @@ If you are not using a framework, leave the **Build command** field blank.
 If your project makes use of environment variables to build your site, provide custom environment variables:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages** > in **Overview**,select your Pages project.
-3. Select **Settings** > **Environment variables**.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
+4. Select **Settings** > **Environment variables**.
 
 The following system environment variables are injected by default (but can be overridden):
 

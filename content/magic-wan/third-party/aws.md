@@ -58,7 +58,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
     - **Tunnel name**: `tunnel01`
     - **Interface address**: The `/30`CIDR block enforced by AWS. For example, `169.xx.xx.xx/30`.
     - **Customer endpoint**: The IP address from AWS’s VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
-    - **Cloudflare endpoint**: Enter the first of your two Anycast IPs (typically begins with `162.x.x.x`).
+    - **Cloudflare endpoint**: Enter the first of your two Anycast IPs.
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
     - **Replay protection**: Select **Enabled**.
 2. Select **Save**.

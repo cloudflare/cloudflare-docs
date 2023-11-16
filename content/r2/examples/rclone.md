@@ -42,6 +42,10 @@ endpoint = https://<accountid>.r2.cloudflarestorage.com
 acl = private
 ```
 
+{{<Aside type="note">}}
+If you are using a token with [Object-level permissions](/r2/api/s3/tokens/#permissions), you will need to add `no_check_bucket = true` to the configuration to avoid errors.
+{{</Aside>}}
+
 You may then use the new `rclone` provider for any of your normal workflows.
 
 ## List buckets & objects

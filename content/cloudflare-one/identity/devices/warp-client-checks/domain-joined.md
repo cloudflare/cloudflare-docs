@@ -8,15 +8,11 @@ meta:
 
 # Domain joined
 
-{{<details header="Feature availability">}}
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Windows           | WARP with Gateway                                                                         | All plans                                                     |
-
-{{</details>}}
-
 The Domain Joined device posture attribute ensures that a user is a member of a specific Windows Active Directory domain.
+
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Enable the Domain Joined check
 

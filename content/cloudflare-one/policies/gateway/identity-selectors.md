@@ -1,12 +1,14 @@
 ---
 pcx_content_type: reference
 title: Identity-based policies
-weight: 9
+weight: 10
 ---
 
 # Identity-based policies
 
 With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
+
+You may also filter outbound traffic based on additional signals from [device posture checks](/cloudflare-one/identity/devices/).
 
 ## Gateway identity checks
 

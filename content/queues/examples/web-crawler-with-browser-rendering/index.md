@@ -77,7 +77,7 @@ filename: wrangler.toml
 highlight: [7, 9, 10, 11, 12, 14, 15, 16, 18, 19, 20]
 ---
 name = "queues-web-crawler"
-main = "src/worker.ts"
+main = "src/index.ts"
 compatibility_date = "2023-06-09"
 node_compat = true
 usage_model = "unbound"
@@ -110,11 +110,11 @@ Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more 
 
 ## 4. Add bindings to environment
 
-Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
+Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
 
 ```ts
 ---
-filename: src/worker.ts 
+filename: src/index.ts 
 ---
 import { BrowserWorker } from "@cloudflare/puppeteer";
 
@@ -132,7 +132,7 @@ Add a `fetch()` handler to the Worker to submit links to crawl.
 
 ```ts
 ---
-filename: src/worker.ts 
+filename: src/index.ts 
 ---
 type Message = {
   url: string;
@@ -159,7 +159,7 @@ Add a `queue()` handler to the Worker to process the links you send.
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import puppeteer from "@cloudflare/puppeteer";
 import robotsParser from "robots-parser";
@@ -204,7 +204,7 @@ The `puppeteer.launch()` is wrapped in a `try...catch` to allow the whole batch 
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 type Result = {
   numCloudflareLinks: number;
@@ -251,7 +251,7 @@ To enable recursively crawling links, add a snippet after checking the number of
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 highlight: [3,4,5,6,7,8,9,10,11,12,13,14]
 ---
 // const numCloudflareLinks = await page.$$eval("a", (links) => { ...
@@ -276,7 +276,7 @@ Then, in the `queue` handler, call `crawlPage` on the URL.
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 highlight: [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 ---
 // in the `queue` handler:
@@ -314,7 +314,7 @@ Add a snippet before checking `robots.txt` to check KV for a crawl within the la
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 highlight: [12,13,14,15,16,17,18,19,20,21,22,23]
 ---
 type KeyMetadata = {

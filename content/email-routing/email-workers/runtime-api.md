@@ -1,7 +1,7 @@
 ---
 title: Runtime API
 pcx_content_type: configuration
-weight: 4
+weight: 5
 ---
 
 # EmailEvent
@@ -74,8 +74,11 @@ export default {
   readonly raw: ReadableStream;
   readonly rawSize: number;
 
+  public constructor(from: String, to: String, raw: ReadableStream | String);
+
   setReject(reason: String): void;
   forward(rcptTo: string, headers?: Headers): Promise<void>;
+  reply(message: EmailMessage): Promise<void>;
 }
 ```
 
@@ -109,5 +112,10 @@ export default {
 
   - Forward this email message to a verified destination address of the account. If you want, you can add extra headers to the email message. Only `X-*` headers are allowed.
   - When the promise resolves, the message is confirmed to be forwarded to a verified destination address.
+
+- {{<code>}}reply(message{{<param-type>}}EmailMessage{{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
+
+  - Reply to the sender of this email message with a new EmailMessage object.
+  - When the promise resolves, the message is confirmed to be replied.
 
 {{</definitions>}}

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Block page
-weight: 10
+weight: 11
 ---
 
 # Configure block page

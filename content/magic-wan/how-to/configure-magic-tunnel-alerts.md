@@ -5,4 +5,4 @@ meta:
     description: Use the API to set up and configure Magic Tunnel health alerts
 ---
 
-{{<render file="_magic-tunnel-health-alerts.md" withParameters="Magic WAN" >}}
+{{<render file="_magic-tunnel-health-alerts.md" withParameters="Magic WAN;;To enable Magic Tunnel health alerts, Magic WAN customers should use the following workflow:" >}}

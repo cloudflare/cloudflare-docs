@@ -13,10 +13,12 @@ Cloudflare respects the origin web server’s cache headers in the following ord
   - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
   - The [`Set-Cookie` header](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) exists.
 - Cloudflare **does** cache the resource when:
-  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0. Note that Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl).
+  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0.
   - The `Expires` header is set to a future date.
 
-Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
+{{<Aside type="note">}}Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl).{{</Aside>}}
+
+{{<Aside type="note">}}If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.{{</Aside>}}
 
 For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
@@ -38,13 +40,15 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 
 To cache additional content, refer to [Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) to create a rule to cache everything.
 
-## Customization options and limitations
+## Customization options and limits
 
 Cloudflare’s CDN provides several cache customization options:
 
 - Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
 - Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
+
+### Upload limits
 
 Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
@@ -53,6 +57,8 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 - 500MB Enterprise by default. Contact [Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to request a limit increase.
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+### Cacheable size limits
 
 Cloudflare cacheable file limits:
 

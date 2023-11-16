@@ -14,18 +14,19 @@ The Verified Bot Categories field is not compatible with legacy Firewall rules.
 
 ## Categories
 
-- Academic research
-- Accessibility
-- Advertising or marketing
-- Aggregators
-- Feed fetcher
-- Monitoring or analytics
-- Page preview
-- Search engine crawler
-- Search engine optimization
-- Security
-- Webhooks
-- Other
+- **Academic research**: Internet Archive, Library of Congress, TurnItInBot
+- **Accessibility**
+- **Advertising or marketing**: Google Adsbot
+- **Aggregators**: Pinterest, Indeed Jobsbot
+- **AI Crawler**: Google Bard, ChatGPT bot
+- **Feed fetcher**: RSS or Podcast feed updaters
+- **Monitoring or analytics**: Uptime Monitors
+- **Page preview**: Facebook, Slack, Twitter, or Discord Link Preview tools
+- **Search engine crawler**: Googlebot, Bingbot, Yandexbot, Baidubot
+- **Search engine optimization**: Google Lighthouse, GT Metrix, Pingdom, AddThis
+- **Security**: Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools
+- **Webhooks**: Payment processors, WordPress Integration tools
+- **Other**
 
 ## Availability
 

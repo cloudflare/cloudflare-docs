@@ -50,7 +50,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Network Services Read (Magic) | Grants read access to network configurations for Magic services. |
 | Minimal Account Access | Can view account, and nothing else. |
 | Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
-| Page Shield Read | Grants write access to [Page Shield](/page-shield/) across the whole account. |
+| Page Shield Read | Grants read access to [Page Shield](/page-shield/) across the whole account. |
 | Hyperdrive Read | Grants read access to [Hyperdrive](/hyperdrive/) database configuration. |
 | Hyperdrive Admin | Grants write access to [Hyperdrive](/hyperdrive/) database configuration. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for [DNS](/dns/) and [Firewall](/waf/). |
@@ -58,7 +58,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |
 | Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
 | Vectorize Admin | Can edit [Vectorize](/vectorize/) configurations. |
-| Vectorize Read only | Can edit [Vectorize](/vectorize/) configurations. |
+| Vectorize Read only | Can read [Vectorize](/vectorize/) configurations. |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
 | Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.
@@ -83,7 +83,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domains in an account. |
 | Domain Waiting Room Admin | Can edit [waiting rooms](/waiting-room/) configuration. |
 | Domain Waiting Room Read | Can read [waiting rooms](/waiting-room/) configuration. |
-| Domain Page Shield | Grants read access to [Page Shield](/page-shield/) for domain. |
-| Domain Page Shield Read | Grants write access to [Page Shield](/page-shield/) for domain. |
+| Domain Page Shield | Grants write access to [Page Shield](/page-shield/) for domain. |
+| Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domain. |
 | Zone Versioning | Grants full access to [Zone Versioning](/version-management/). |
 | Zone Versioning Read | Grants read-only access to [Zone Versioning](/version-management/). |

@@ -14,7 +14,7 @@ The specific configuration steps can vary depending on your infrastructure and s
 
 1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).
 2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to the data center hosting the origin servers.
-3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
+3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
 
 {{<tabs labels="Dashboard | CLI">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -27,7 +27,7 @@ To create a virtual network:
 
 To assign the virtual network to the tunnel:
 
-1. Go to **Access** > **Tunnels**.
+1. Go to **Networks** > **Tunnels**.
 2. Select the tunnel you created in the previous steps and select **Configure**.
 3. Under **Private Network**, select **Add a private network**.
 4. Specify an IP range under **CIDR** and select the virtual network under **Additional settings**.

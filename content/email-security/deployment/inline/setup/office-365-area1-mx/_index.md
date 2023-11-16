@@ -164,7 +164,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 4. Select the **...** > **Edit**.
 
-5. Select the additional dispositions you want to quarantine.
+5. Select the additional {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} you want to quarantine.
 
     <div class="large-img">
 
@@ -202,7 +202,7 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 
 Office 365 (O365) has various options, as well as limitations, as to how quarantine email messages. Refer to [Office 365 use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for more information.
 
-The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 example tutorials will cover:
+The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 [example tutorials](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) will cover:
 
 - **Use case 1**: Deliver emails to Office 365 junk email folder and Admin Quarantine in Area 1 (Recommended)
 - **Use case 2**: Deliver emails to junk email folder and user managed quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 dashboard)
@@ -221,7 +221,7 @@ DNS changes will reach the major DNS servers in about an hour or follow the TTL 
 
 ### Secure Office 365 from MX records bypass (recommended)
 
-One method of DNS attacks is to search for old MX records and send phishing emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encryption. This step is optional but recommended.
+One method of DNS attacks is to search for old MX records and send {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encryption. This step is optional but recommended.
 
 {{<Aside type="warning" header="Important">}}
 This step should not be performed until 24 hours after all domains (excluding your `<on_microsoft.com>` domain) in your Office 365 organization have been onboarded to Area 1, and Area 1 is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.

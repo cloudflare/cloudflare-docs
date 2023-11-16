@@ -254,6 +254,8 @@ The country of the user making the request.
 
 ### URL
 
+{{<render file="gateway/_url-slash.md">}}
+
 | UI name | API example                                             |
 | ------- | ------------------------------------------------------- |
 | URL     | `not(any(http.request.uri.content_category[*] in {1}))` |

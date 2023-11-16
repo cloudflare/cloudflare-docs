@@ -1,10 +1,10 @@
 ---
-title: Send emails from Workers (beta)
+title: Send emails from Workers
 pcx_content_type: how-to
-weight: 3
+weight: 4
 ---
 
-{{<heading-pill style="beta">}}Send emails from Workers{{</heading-pill>}}
+# Send emails from Workers
 
 {{<render file="_send-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings):">}}
 

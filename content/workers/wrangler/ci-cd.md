@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Run in CI/CD
+meta:
+  description: Deploy your Workers within a CI/CD environment.
 ---
 
 # Run Wrangler in CI/CD
@@ -55,7 +57,8 @@ filename: .github/workflows/push.yml
 name: Deploy Worker
 on:
   push:
-    main
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest

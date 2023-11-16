@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 type: overview
 title: Build developer portals
-weight: 3
+weight: 4
 ---
 
 # Build developer portals

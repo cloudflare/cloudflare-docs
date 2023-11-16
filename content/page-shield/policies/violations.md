@@ -114,7 +114,7 @@ echo '{ "query":
 
 ## Get policy violations via Logpush
 
-[Cloudflare Logpush](/logs/about/) supports pushing logs to storage services, SIEMs, and log management providers.
+[Cloudflare Logpush](/logs/about/) supports pushing logs to storage services, {{<glossary-tooltip term_id="SIEM">}}SIEM systems{{</glossary-tooltip>}}, and log management providers.
 
 Information about Page Shield policy violations is available in the [`page_shield_events` dataset](/logs/reference/log-fields/zone/page_shield_events/).
 

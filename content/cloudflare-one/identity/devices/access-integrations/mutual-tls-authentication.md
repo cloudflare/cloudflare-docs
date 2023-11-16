@@ -6,13 +6,9 @@ weight: 3
 
 # Mutual TLS
 
-{{<details header="Feature availability">}}
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP not required                                                                         | Enterprise plans                                              |
-
-{{</details>}}
+{{<Aside type="note">}}
+Only available on Enterprise plans.
+{{</Aside>}}
 
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 

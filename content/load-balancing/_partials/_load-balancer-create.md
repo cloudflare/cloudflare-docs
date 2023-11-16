@@ -12,7 +12,7 @@ To create a load balancer in the dashboard:
 2.  Click **Create Load Balancer**.
 
 3.  On the **Hostname** page:
-    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
+    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
     *   Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
     *   If you want [session-based load balancing](/load-balancing/understand-basics/session-affinity/), toggle the **Session Affinity** switch.
 

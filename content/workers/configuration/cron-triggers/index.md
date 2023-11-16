@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Cron Triggers
 layout: single
+meta:
+  description: Enable your Worker to be executed on a schedule.
 ---
 
 # Cron Triggers

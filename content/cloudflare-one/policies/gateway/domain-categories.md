@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Domain categories
-weight: 8
+weight: 9
 ---
 
 # Domain categories
@@ -10,8 +10,8 @@ Cloudflare Gateway allows you to block known and potential security risks on the
 
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
-{{<Aside type="note" header="Subdomain Category">}}
-Subdomains that have not been assigned a category will inherit the category of their parent domain.{{</Aside>}}
+{{<Aside type="note" header="Subdomain category">}}
+Subdomains that have not been assigned a category will inherit the category of their parent domain. When Gateway categorizes a subdomain, the subdomain will carry only its own category. Categorized subdomains will not inherit their parent domain's categories.{{</Aside>}}
 
 ## Security categories
 
@@ -72,13 +72,13 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 {{<table-wrap>}}
 
-| Category      | Definition                                                             |
-| ------------- | ---------------------------------------------------------------------- |
-| Login Screens | Sites hosting login screens that are not included in other categories. |
-| Miscellaneous | Sites that do not belong to other content categories.                  |
-| No Content    | Sites that have no content.                                            |
-| Redirect      | Domains that redirect to other sites.                                  |
-| Unreachable   | Domains that resolve to unreachable IP addresses.                      |
+| Category      | Definition                                                                      |
+| ------------- | ------------------------------------------------------------------------------- |
+| Login Screens | Sites hosting login screens that might be included in other categories as well. |
+| Miscellaneous | Sites that do not belong to other content categories.                           |
+| No Content    | Sites that have no content.                                                     |
+| Redirect      | Domains that redirect to other sites.                                           |
+| Unreachable   | Domains that resolve to unreachable IP addresses.                               |
 
 {{</table-wrap>}}
 
@@ -105,7 +105,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 2           | Adult Themes           | 133            | Pornography                                |
 | 3           | Business & Economy     | 75             | Business                                   |
 | 3           | Business & Economy     | 89             | Economy & Finance                          |
-| 3           | Business & Economy     | 183            | Cryptocurrency                             | 
+| 3           | Business & Economy     | 183            | Cryptocurrency                             |
 | 6           | Education              | 90             | Education                                  |
 | 6           | Education              | 91             | Educational Institutions                   |
 | 6           | Education              | 144            | Science                                    |

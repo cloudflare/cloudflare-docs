@@ -36,7 +36,7 @@ Refer to the [Storage options guide](/workers/learning/storage-options/) to revi
 
 {{</Aside>}}
 
-<sup>beta</sup> This is a beta-only limitation. The maximum storage per-database, storage per-account and number of databases will automatically increase for paid plans during the course of D1's public beta.
+<sup>beta</sup> This is a beta-only limitation. The D1 team will increase the maximum storage per-database, storage per-account and number of databases for Paid plans during the course of D1's public beta.
 
 <sup>1</sup> A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, environmental variable or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to ~5,000 D1 databases to a single Worker script.
 

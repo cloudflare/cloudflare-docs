@@ -102,7 +102,29 @@ To submit a support ticket, follow these steps:
     -   Any collaborators whom you wish to be cc’d on the ticket
 11.  Click **Submit Ticket**
 
+
 \*\* Available to certain plan types only. Refer to chart above for details.
+
+### Accepted file formats in tickets and chats
+
+You can only upload the following file types in a ticket or a chat:
+
+*Image*
+ - png, jpg, gif, ico, tiff
+
+*Video*
+ - mp4, avi, webm
+
+*Text*
+- har, txt, csv, eml, css, html, json, tf
+
+Cloudflare Support only accepts the WARP diagnostics as compressed files.
+Please do not upload ZIP or RAR files when sharing HAR files, and please do not share compressed documents like DOCX, XLSX or PPTX.
+
+The maximum file size is **20 MB**. 
+If you need to share a larger file, please provide a link to the file using Google Drive or a similar sharing platform of your choice.
+
+
 
 ### View open support tickets
 

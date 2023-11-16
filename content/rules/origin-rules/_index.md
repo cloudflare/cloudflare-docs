@@ -4,10 +4,10 @@ title: Origin Rules
 weight: 6
 layout: single
 meta:
-  title: Origin Rules (beta)
+  title: Origin Rules
 ---
 
-{{<heading-pill style="beta">}} Origin Rules {{</heading-pill>}}
+# Origin Rules
 
 Origin Rules allow you to customize where the incoming traffic will go and with which parameters. Currently you can perform the following overrides:
 

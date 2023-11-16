@@ -62,7 +62,7 @@ When Area 1 is deployed as the MX record for Google Workspace, the Inbound gatew
 
 This optional step is highly recommended to prevent users from being exposed to malicious messages.
 
-When messages are identified as malicious, Area 1 will insert the X-header `X-Area1Security-Disposition` into the message with the corresponding disposition. Based on the value of the `X-Area1Security-Disposition`, a content compliance filter can be configured to send malicious detections to an administrative quarantine. This section will outline the steps required to:
+When messages are identified as malicious, Area 1 will insert the X-header `X-Area1Security-Disposition` into the message with the corresponding {{<glossary-tooltip term_id="disposition">}}disposition{{</glossary-tooltip>}}. Based on the value of the `X-Area1Security-Disposition`, a content compliance filter can be configured to send malicious detections to an administrative quarantine. This section will outline the steps required to:
 * Create an Area 1 Malicious quarantine.
 * Create the content compliance filter to send malicious messages to quarantine.
 

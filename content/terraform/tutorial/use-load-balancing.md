@@ -214,7 +214,7 @@ EOF
 
 ### iii. Define and create the load balancer
 
-When you create a load balancer (LB), it will [replace any existing DNS records with the same name](/load-balancing/reference/dns-records/). For example, if you create the `www.example.com` load balancer below, it will supersede the two `www` DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in [step 2](#2-preview-and-merge-the-changes) above.
+When you create a load balancer (LB), it will [replace any existing DNS records with the same name](/load-balancing/load-balancers/dns-records/). For example, if you create the `www.example.com` load balancer below, it will supersede the two `www` DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in [step 2](#2-preview-and-merge-the-changes) above.
 
 ```bash
 $ cat >> cloudflare.tf <<'EOF'

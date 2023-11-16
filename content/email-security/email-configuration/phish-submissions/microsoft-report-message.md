@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Microsoft Report Message
 
-Microsoft 365 allows users to report missed phish and spam messages directly to Area 1 from Outlook. This is achieved with the Report Message add-in functionality.
+Microsoft 365 allows users to report missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} and spam messages directly to Area 1 from Outlook. This is achieved with the Report Message add-in functionality.
 
 ### Deploy Report Message add-in
 

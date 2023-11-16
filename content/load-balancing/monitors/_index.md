@@ -15,7 +15,7 @@ Health monitor requests that result in a status change for an origin server are 
 
 {{<Aside type="note">}}
 
-Health monitors associated with load balancers are different from [**Standalone health checks**](/health-checks/).
+Health monitors associated with load balancers are different from standalone [Health Checks](/health-checks/). For an overview of how the Cloudflare Load Balancing solution works, refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
 
 {{</Aside>}}
 

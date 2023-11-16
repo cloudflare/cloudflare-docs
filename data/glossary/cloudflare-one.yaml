@@ -62,6 +62,7 @@ entries:
     a program that performs tasks without active management or maintenance.
   associated_products:
     - Tunnel
+    - DDoS Protection
 
 - term: DNS filtering
   general_definition: |-
@@ -123,6 +124,8 @@ entries:
 - term: SAML
   general_definition: |-
     Security Assertion Markup Language (SAML) enables single sign-on and authentication for multiple applications.
+  associated_products:
+    - Area 1
 
 - term: SASE
   general_definition: |-
@@ -181,6 +184,24 @@ entries:
     the Cloudflare Tunnel software, `cloudflared`, generates a certificate for secure connections using a service token and an origin certificate.
   associated_products:
     - Tunnel
+
+- term: User risk score
+  general_definition: |-
+    Cloudflare Zero Trust user risk score ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
+  associated_products:
+    - Access
+    - Gateway
+    - DLP
+    - CASB
+
+- term: User risk score level
+  general_definition: |-
+    Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
+  associated_products:
+    - Access
+    - Gateway
+    - DLP
+    - CASB
 
 - term: Virtual Private Network (VPN)
   general_definition: |-

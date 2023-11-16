@@ -21,7 +21,7 @@ But, if you see unexpected scripts on your Script Monitor dashboard, check them 
 
 ## Why do I see warnings in my browser's developer tools related to Content Security Policy (CSP)?
 
-Page Shield uses a Content Security Policy (CSP) report-only directive to gather a list of all scripts running on your application.
+Page Shield uses a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} report-only directive to gather a list of all scripts running on your application.
 
 Some browsers display scripts being reported as warnings in the console pane of their developer tools. For example:
 
@@ -29,7 +29,7 @@ Some browsers display scripts being reported as warnings in the console pane of 
 [Report Only] Refused to execute inline script because it violates
 the following Content Security Policy directive: "script-src 'none'".
 
-Either the 'unsafe-inline' keyword, a hash ('sha256-RFWPLDbv2BY+rCkDzsE+0fr8ylGr2R2faWMhq4lfEQc='), or a nonce ('nonce-...') 
+Either the 'unsafe-inline' keyword, a hash ('sha256-RFWPLDbv2BY+rCkDzsE+0fr8ylGr2R2faWMhq4lfEQc='), or a nonce ('nonce-...')
 is required to enable inline execution.
 ```
 

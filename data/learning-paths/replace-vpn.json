@@ -103,12 +103,12 @@
             "additional_description": "Cloudflare Tunnel will run on a host locally in your network and make a persistent, outbound QUIC connection to Cloudflare."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/",
+            "url_path": "/cloudflare-one/connections/connect-networks/private-net/cloudflared/",
             "link_title": "Create private network routes in Cloudflare Tunnel",
             "additional_description": "Routes determine which private IP addresses are available to users in your Zero Trust organization. It's okay to make these routes relatively wide, since you can add granular security control with Zero Trust policies."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#create-zero-trust-policies",
+            "url_path": "/cloudflare-one/connections/connect-networks/private-net/cloudflared/#create-zero-trust-policies",
             "link_title": "Build Zero Trust policies",
             "additional_description": "While the Cloudflare Tunnel will advertise a relatively broad range, you can restrict network access by user identity, device posture, domain request, IP, port, protocol, and more."
           }

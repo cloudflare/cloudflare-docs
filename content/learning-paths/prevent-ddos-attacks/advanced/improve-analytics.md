@@ -17,7 +17,7 @@ If needed, you can [restore the original visitor's IP address](/support/troubles
 
 ## Cloudflare Logs
 
-Enterprise customers can set up [Logpush](/logs/about/) jobs to regularly send Cloudflare logs to the security information and event management (SIEM) system of their choice.
+Enterprise customers can set up [Logpush](/logs/about/) jobs to regularly send Cloudflare logs to the {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}} of their choice.
 
 This data can help when looking at long-term DDoS attack trends or when you need custom visualizations.
 

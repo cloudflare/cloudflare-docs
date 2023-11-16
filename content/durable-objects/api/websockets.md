@@ -263,5 +263,5 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 ## Related resources
 
-- [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
-- [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)
+- [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
+- [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template).

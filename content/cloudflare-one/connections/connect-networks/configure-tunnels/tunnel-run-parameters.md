@@ -102,7 +102,7 @@ For locally-managed tunnels only.
 | ------------------ | ------------------------- | -------------------- |
 |  `cloudflared tunnel --origincert <PATH> run <UUID or NAME>` | `~/.cloudflared/cert.pem` | `TUNNEL_ORIGIN_CERT` |
 
-Specifies the [account certificate](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-permissions/#locally-managed-tunnels) for one of your zones, authorizing the client to serve as an origin for that zone. You can obtain a certificate by using the `cloudflared tunnel login` command or by visiting `https://dash.cloudflare.com/argotunnel`.
+Specifies the [account certificate](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/) for one of your zones, authorizing the client to serve as an origin for that zone. You can obtain a certificate by using the `cloudflared tunnel login` command or by visiting `https://dash.cloudflare.com/argotunnel`.
 
 ## `pidfile`
 

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Install/Update Wrangler
 weight: 1
+meta:
+  description: Get started by installing Wrangler, and update to newer versions by following this guide.
 ---
 
 # Install/Update Wrangler
@@ -16,22 +18,7 @@ Wrangler is installed locally into each of your projects. This allows you and yo
 
 To install Wrangler within your Worker project, run:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm install wrangler --save-dev
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn add --dev wrangler
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_install_wrangler.md" >}}
 
 ## Check your Wrangler version
 

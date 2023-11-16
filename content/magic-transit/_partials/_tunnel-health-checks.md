@@ -119,7 +119,7 @@ During onboarding, you specify IP addresses to configure endpoint health checks.
 
 ### ​Tunnel health checks
 
-Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) and IPsec tunnels that route traffic from Cloudflare to your origin network. Magic Transit and Magic WAN rely on health checks to steer traffic to the best available routes.
+Tunnel health checks monitor the status of the {{<glossary-tooltip term_id="GRE tunnel">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels that route traffic from Cloudflare to your origin network. $2 relies on health checks to steer traffic to the best available routes.
 
 During onboarding, you [specify the tunnel endpoints]($4) the tunnel probes originating from Cloudflare’s global network will target.
 
@@ -132,3 +132,7 @@ To check for tunnel health, Cloudflare sends packets in the form of ICMP echo re
 Note that the interface address field is always a `/30` or `/31` CIDR range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side.
 
 These packets will flow to and from Cloudflare over the IPsec tunnels you have configured to provide full visibility into the traffic path between our network and your sites. You will need to configure traffic selectors to accept the health check packets.
+
+#### Legacy health checks system
+
+{{<render file="_legacy-hc-system.md" >}}

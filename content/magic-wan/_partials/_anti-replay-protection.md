@@ -8,7 +8,7 @@ inputParameters: productName;;productPath
 
 # Anti-replay protection
 
-If you use $1 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway. 
+If you use $1 and {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway. 
 
 Refer to [Add tunnels]($2) to learn how to set up replay protection. Review the information below to learn about replay attacks, why we recommend disabling IPsec anti-replay, and related considerations.
 
@@ -30,7 +30,7 @@ IPsec anti-replay protection works similarly to the prevention example in the sc
 
 ## $1 and anti-replay protection
 
-Cloudflare’s global Anycast network consists of thousands of servers in hundreds of data centers around the world. Similar to Cloudflare’s Anycast GRE tunnel implementation, Cloudflare’s IPsec implementation is also Anycast, which enables users to enjoy all the benefits of Cloudflare’s Anycast network architecture. These benefits include unparalleled performance and low latency, greatly simplified configuration and management, and native network resiliency with automatic failover. By default, any packet for $1 may go through any one of these servers where it will be encrypted and encapsulated with IPsec and sent to our user’s router.
+Cloudflare’s global Anycast network consists of thousands of servers in hundreds of data centers around the world. Similar to Cloudflare’s Anycast {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnel implementation, Cloudflare’s IPsec implementation is also Anycast, which enables users to enjoy all the benefits of Cloudflare’s Anycast network architecture. These benefits include unparalleled performance and low latency, greatly simplified configuration and management, and native network resiliency with automatic failover. By default, any packet for $1 may go through any one of these servers where it will be encrypted and encapsulated with IPsec and sent to our user’s router.
 
 IPsec anti-replay protection was not designed for such a distributed scenario — the protection scheme is designed for a single sender and single receiver. For a single sender, keeping track of the sequence number is trivial, and the sequence number is stored in memory and incremented for every packet sent. If replay protection is enabled for $1 IPsec tunnels, packets for a single tunnel are routed to one server that keeps track of the sequence number. This means the replay protection mechanism will work correctly, but users lose the benefits of automatically distributing traffic across Cloudflare’s global servers. It also will only be actioned in one direction (Cloudflare to customer network) — packets from the customer network to Cloudflare will not be routed to a single server, and will not have replay protection applied.
 

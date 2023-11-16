@@ -2,6 +2,7 @@
 title: Setup
 pcx_content_type: navigation
 weight: 2
+layout: single
 ---
 
 # Setup

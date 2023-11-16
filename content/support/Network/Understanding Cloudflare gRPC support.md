@@ -12,7 +12,7 @@ title: Understanding Cloudflare gRPC support
 
 The gRPC protocol was developed by Google in 2015 to build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.  Cloudflare offers support for gRPC to protect your APIs on any orange-clouded gRPC endpoints.
 
-Running gRPC traffic on Cloudflare is compatible with most Cloudflare products, including WAF, Bot Management, and Page Rules. gRPC support is available on all Cloudflare plans for no additional fees.  However, charges may occur for gRPC traffic over add-on products such as Argo Smart Routing, WAF, and Bot Management. gRPC support is broadly tested and considered stable, but bugs are still possible.  Report unexpected behaviors to [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+Running gRPC traffic on Cloudflare is compatible with most Cloudflare products, including Bot Management and Page Rules. gRPC support is available on all Cloudflare plans for no additional fees. However, charges may occur for gRPC traffic over add-on products such as Argo Smart Routing, WAF, and Bot Management. gRPC support is broadly tested and considered stable, but bugs are still possible. Report unexpected behaviors to [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 ___
 
@@ -29,8 +29,9 @@ ___
 
 The following products have limited capabilities with gRPC requests:
 
--   **Cloudflare Tunnel** currently does not support gRPC.
--   **Cloudflare Access** does not support gRPC traffic sent through Cloudflare’s reverse proxy. gRPC traffic will be ignored by Access if gRPC is enabled in Cloudflare. We recommend disabling gRPC for any sensitive origin servers protected by Access or enabling another means of authenticating gRPC traffic to your origin servers.
+- The [Cloudflare WAF](/waf/) will only run for header inspection during the connection phase. WAF Managed Rules will not run on the content of a gRPC stream.
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) currently does not support gRPC.
+- [Cloudflare Access](/cloudflare-one/policies/access/) does not support gRPC traffic sent through Cloudflare’s reverse proxy. gRPC traffic will be ignored by Access if gRPC is enabled in Cloudflare. We recommend disabling gRPC for any sensitive origin servers protected by Access or enabling another means of authenticating gRPC traffic to your origin servers.
 
 ___
 

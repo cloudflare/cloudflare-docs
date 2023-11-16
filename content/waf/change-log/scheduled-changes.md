@@ -23,30 +23,21 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-10-10</td>
-      <td>2023-10-16</td>
+      <td>2023-10-30</td>
+      <td>2023-11-06</td>
       <td>Block</td>
-      <td>100606</td>
-      <td>...3e3f706d</td>
-      <td>JetBrains TeamCity - Auth Bypass, Remote Code Execution - CVE:CVE-2023-42793</td>
-      <td>N/A</td>
+      <td>100593BETA</td>
+      <td>...24af2540</td>
+      <td>Adobe ColdFusion - Auth Bypass, Remote Code Execution - CVE:CVE-2023-29298, CVE:CVE-2023-38203, CVE:CVE-2023-26360</td>
+      <td>This rule will replace ...c3b6a372 on New WAF and 100593 on legacy WAF</td>
     </tr>
     <tr>
-      <td>2023-10-10</td>
-      <td>2023-10-16</td>
+      <td>2023-10-30</td>
+      <td>2023-11-06</td>
       <td>Block</td>
-      <td>100607</td>
-      <td>...469c4a38</td>
-      <td>Progress WS_FTP - Information Disclosure - CVE:CVE-2023-40044</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-10-10</td>
-      <td>2023-10-16</td>
-      <td>Block</td>
-      <td>100608</td>
-      <td>...7ccccdce</td>
-      <td>Progress WS_FTP - Remote Code Execution - CVE:CVE-2023-40044</td>
+      <td>100611</td>
+      <td>...8ed2b1d9</td>
+      <td>WordPress:Plugin:WooCommerce - Unauthorized Administrator Access - CVE:CVE-2023-28121</td>
       <td>N/A</td>
     </tr>
   </tbody>

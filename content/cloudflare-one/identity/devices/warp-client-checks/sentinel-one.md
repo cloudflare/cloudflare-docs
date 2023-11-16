@@ -8,13 +8,12 @@ meta:
 
 # SentinelOne
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 Cloudflare Zero Trust can check if [SentinelOne](https://www.sentinelone.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
 ## Prerequisites
 
-Before you start, make sure SentinelOne is installed on your machine.
+- SentinelOne agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure the SentinelOne check
 

@@ -7,6 +7,20 @@ rss: file
 
 # Changelog
 
+## 2023-11-08
+
+### Metadata API changes
+
+Vectorize now supports distinct `returnMetadata` and `returnValues` arguments when querying an index, replacing the now-deprecated `returnVectors` argument. This allows you to return metadata without needing to return the vector values, reducing the amount of unnecessary data returned from a query. Both `returnMetadata` and `returnValues` default to false.
+
+For example, to return only the metadata from a query, set `returnMetadata: true`.
+
+```ts
+let matches = await env.YOUR_INDEX.query(queryVector, { topK: 5, returnMetadata: true })
+```
+
+New Workers projects created on or after 2023-11-08 or that [update the compatibility date](/workers/configuration/compatibility-dates/) for an existing project will use the new return type.
+
 ## 2023-10-03
 
 ### Increased indexes per account limits

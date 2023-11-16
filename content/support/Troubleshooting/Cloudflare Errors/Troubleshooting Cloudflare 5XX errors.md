@@ -230,7 +230,7 @@ ___
 Error 524 indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second connection timed out. This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
 
 {{<Aside type="note">}}
-A 522 occurs if the origin web server
+A 524 occurs if the origin web server
 acknowledges (*ACK*) the resource request after the connection has been
 established, but does not send a timely response.
 {{</Aside>}}
@@ -254,9 +254,15 @@ or
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting).
+-   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting) or using a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting in the Cloudflare Dashboard.
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
 -   If error 524 occurs for a domain using [Cloudflare Railgun](/railgun/) (deprecated), ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
+
+{{<Aside type="note">}}
+Please note that you may observe a 1 second difference between the timeout you've set and the actual time at which the Error 524 is returned.
+This is expect, it's due to the current work on implementing [Pingora, our new proxy](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
+As a workaround you can simply set the timeout to 1 second more (121 seconds instead of 120 seconds for example).
+{{</Aside>}}
 
 ___
 

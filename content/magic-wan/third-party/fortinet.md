@@ -30,7 +30,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 3. From the **Tunnels** tab, select **Create**.
 4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
     - **Customer Endpoint**: Enter your external/egress interface of the firewall.
-    - **Cloudflare Endpoint**: Enter the first of your two Anycast IPs (typically begins with `162.x.x.x`).
+    - **Cloudflare Endpoint**: Enter the first of your two Anycast IPs.
     - **Health check rate**: _Low_.
     - **Health check type**: _Reply_.
     - **Health check target**: _Custom_.
@@ -40,7 +40,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
     ![The first IPsec tunnel should have the values mentioned above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
 
  5. For the second tunnel, make the same changes as you did for the first tunnel (including creating a pre-shared key), and ensure the following additional settings are defined:
-    - **Cloudflare Endpoint**: Enter the second of your two Anycast IPs (typically begins with `172.x.x.x`).
+    - **Cloudflare Endpoint**: Enter the second of your two Anycast IPs.
     - **Health check target**: _Custom_.
     - **Target address**: `172.64.240.254`.
 

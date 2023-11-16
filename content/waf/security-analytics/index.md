@@ -18,7 +18,7 @@ Use the Security Analytics dashboard to:
 * View the traffic distribution for your domain.
 * Understand which traffic is being mitigated by Cloudflare security products, and where non-mitigated traffic is being served from (Cloudflare global network or origin server).
 * Analyze suspicious traffic and create tailored WAF custom rules based on applied filters.
-* Learn more about Cloudflare’s security scores ([attack score](/waf/about/waf-attack-score/), [bot score](/bots/concepts/bot-score/), [uploaded content scanning](/waf/about/content-scanning/) results) with real data.
+* Learn more about Cloudflare’s security scores ({{<glossary-tooltip term_id="attack score" link="/waf/about/waf-attack-score/">}}attack score{{</glossary-tooltip>}}, [bot score](/bots/concepts/bot-score/), [uploaded content scanning](/waf/about/content-scanning/) results) with real data.
 * [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
 
 If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.

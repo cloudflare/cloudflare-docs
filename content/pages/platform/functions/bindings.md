@@ -211,7 +211,7 @@ Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API
 [Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
 
 {{<Aside type="warning">}}
-While pages currently supports Wokers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
+While pages currently supports Workers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.

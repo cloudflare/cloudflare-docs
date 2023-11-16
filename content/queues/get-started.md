@@ -68,7 +68,7 @@ In your terminal, you will be asked a series of questions related to your projec
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
 
-This will create a new directory, which will include both a `src/worker.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
+This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
 
 ## 3. Create a queue
 
@@ -111,11 +111,11 @@ You will now configure your producer Worker to create messages to publish to you
 2. Transform the request to JSON format.
 3. Write the request directly to your queue.
 
-In your Worker project directory, open the `src` folder and add the following to your `worker.ts` file:
+In your Worker project directory, open the `src` folder and add the following to your `index.ts` file:
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 highlight: [8]
 ---
 export default {
@@ -133,11 +133,11 @@ export default {
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
 
-Also add the queue to `Env` interface in `worker.ts`.
+Also add the queue to `Env` interface in `index.ts`.
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 highlight: [2]
 ---
 export interface Env {
@@ -151,7 +151,7 @@ In a production application, you would likely use a [`try...catch`](https://deve
 
 ### Publish your producer Worker
 
-With your `wrangler.toml` file and `worker.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
+With your `wrangler.toml` file and `index.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
 $ npx wrangler deploy
@@ -175,11 +175,11 @@ A consumer Worker receives messages from your queue. When the consumer Worker re
 
 In this guide, you will create a consumer Worker and use it to log and inspect the messages with [`wrangler tail`](/workers/wrangler/commands/#tail). You will create your consumer Worker in the same Worker project that you created your producer Worker.
 
-To create a consumer Worker, open your `worker.ts` file and add the following `queue` handler to your existing `fetch` handler:
+To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 highlight: [11]
 ---
 export default {
@@ -237,7 +237,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 
 ### Publish your consumer Worker
 
-With your `wrangler.toml` file and `worker.ts` file configured, publish your consumer Worker by running:
+With your `wrangler.toml` file and `index.ts` file configured, publish your consumer Worker by running:
 
 ```sh
 $ npx wrangler deploy

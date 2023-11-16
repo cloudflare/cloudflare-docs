@@ -19,6 +19,7 @@ To filter HTTP requests from a device:
 3. In the WARP client Settings, log in to your organization’s {{<glossary-tooltip term_id="team name">}}Zero Trust instance{{</glossary-tooltip>}}.
 4. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP. Optionally, you can enable the UDP proxy to inspect all port 443 UDP traffic.
 5. To inspect HTTPS traffic, [enable TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-tls-decryption).
+6. (Optional) To scan file uploads and downloads for malware, [enable anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/).
 
 ## 2. Verify device connectivity
 
