@@ -102,3 +102,16 @@ The importing [(Schema Validation)](/api-shield/security/schema-validation/) and
 
 {{</faq-answer>}}
 {{</faq-item>}}
+___
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Why am I not seeing latency metrics?" >}}
+
+{{<faq-answer>}}
+
+Latency metrics currently are not supported when a Cloudflare Worker is running on the URL, as the requests are not passed directly to your origin.
+
+Some Cloudflare products such as [Waiting Room](/waiting-room/) are built on top of Workers, so the same limititaions apply to applications using these products. 
+
+{{</faq-answer>}}
+{{</faq-item>}}
