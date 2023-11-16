@@ -44,6 +44,11 @@ Learn how to add new account members, edit or revoke their permissions and acces
 
 [^1]: {{<render file="_account-member-manage-limitation.md">}}
 
+{{<Aside type="note">}}
+If you have been invited to an account, you can remove yourself from this account under **Manage Account > Members**.
+You can thee select click on your email address and then click **Leave**.
+{{</Aside>}}
+
 ## Super Administrator access
 
 If you are a Super Administrator for an account that has existing domains and you decide to leave the account, you can invite a new Super Administrator who will have access to the same account privileges.
