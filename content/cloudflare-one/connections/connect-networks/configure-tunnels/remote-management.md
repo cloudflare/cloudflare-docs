@@ -71,7 +71,7 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
            <array>
                <string>/opt/homebrew/bin/cloudflared</string>
                <string>--logfile</string>
-               <string></PATH></string>
+               <string><PATH></string>
                <string>--loglevel</string>
                <string>debug</string>
                <string>tunnel</string>
