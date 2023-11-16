@@ -62,4 +62,4 @@ Branch name aliases are lowercased and non-alphanumeric characters are replaced 
 
 To view branch aliases within your Pages project, select **View build** for any preview deployment. **Deployment details** will display all aliases associated with that deployment.
 
-You can attach a Preview aliase to a custom domain by [adding a custom domain to a branch](https://developers.cloudflare.com/pages/how-to/custom-branch-aliases/)
+You can attach a Preview alias to a custom domain by [adding a custom domain to a branch](https://developers.cloudflare.com/pages/how-to/custom-branch-aliases/)
