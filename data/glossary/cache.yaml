@@ -59,11 +59,7 @@ entries:
 
 - term: purge
   general_definition: |-
-    the process of removing or invalidating content from the cache, typically done to ensure the delivery of the latest content.
-
-- term: content purging
-  general_definition: |-
-    the act of removing outdated or unnecessary content from the cache to make room for new or updated content.
+    the process of removing outdated content from the cache to make room for updated content and ensure the delivery of the latest content.
 
 - term: Time-to-Live (TTL)
   general_definition: |-
