@@ -4,6 +4,8 @@ entries:
 - term: allowlist
   general_definition: |-
     an allowlist is a list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
+  associated_products:
+    - DDoS Protection
 
 - term: attack score
   general_definition: |-
@@ -31,7 +33,7 @@ entries:
   general_definition: |-
     a firewall is a security system that monitors and controls network traffic based on a set of security rules.
   associated_products:
-    - Magic Firewall  
+    - Magic Firewall
 
 - term: mitigated request
   general_definition: |-
