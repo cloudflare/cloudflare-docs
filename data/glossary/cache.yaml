@@ -61,6 +61,6 @@ entries:
   general_definition: |-
     the process of removing outdated content from the cache to make room for updated content and ensure the delivery of the latest content.
 
-- term: Time-to-Live (TTL)
+- term: time-to-live (TTL)
   general_definition: |-
     the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.
