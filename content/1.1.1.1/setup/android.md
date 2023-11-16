@@ -40,6 +40,11 @@ Android 11 or later versions support both DNS over TLS (DoT) and DNS over HTTPS 
 2. Select **Advanced** > **Private DNS**.
 3. Select the **Private DNS provider hostname** option.
 4. Enter `cloudflare-dns.com` and select **Save**.
+{{<Aside type="note">}}
+To configure 1.1.1.1 for Families, use one of the following:
+* Block malware: `security.cloudflare-dns.com` or the [corresponding IP addresses](/1.1.1.1/setup/#1111-for-families) if your device requires it.
+* Block malware and adult content: `family.cloudflare-dns.com` or the [corresponding IP addresses](/1.1.1.1/setup/#1111-for-families) if your device requires it.
+{{</Aside>}}
 
 ### Android 9 or 10
 
