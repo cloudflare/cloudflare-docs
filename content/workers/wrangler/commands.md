@@ -68,11 +68,71 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-All commands can be run with your choice of package manager. For example, to run the `wrangler deploy` command with npm, run:
+Since we recommend installing Wrangler [locally in your project](/workers/wrangler/install-and-update/) (rather than globally), the way to run Wrangler will depend on your specific setup & package manager. 
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
-$ npx wrangler deploy
+$ npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+The easiest way to run Wrangler commands that you use often is to add them as scripts in your project's `package.json` file:
+
+```json
+{
+  ...
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+  ...
+}
+```
+
+You can then run them using your package manager of choice:
+
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm run deploy
+```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn run deploy
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm run deploy
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
