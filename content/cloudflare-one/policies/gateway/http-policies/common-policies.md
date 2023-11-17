@@ -72,8 +72,8 @@ Since the file path will be different for each operating system, you can configu
 
 | Selector                     | Operator | Value              | Logic | Action |
 | ---------------------------- | -------- | ------------------ | ----- | ------ |
-| Passed Device Posture Checks | not in   | `macOS File Check` | Or    | Block  |
-| Passed Device Posture Checks | not in   | `Linux File Check` |       |        |
+| Passed Device Posture Checks | in       | `macOS File Check` | Or    | Allow  |
+| Passed Device Posture Checks | in       | `Linux File Check` |       |        |
 
 ## Enforce session duration
 
