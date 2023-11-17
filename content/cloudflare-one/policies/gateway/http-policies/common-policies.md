@@ -52,9 +52,22 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
 {{</Aside>}}
 
-## Enforce device posture
+## Check device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
+
+### Enforce a specific operating system (OS)
+
+Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users are running a certain operating system. For example, you can enforce either macOS or Linux by checking for OS-specific system files.
+
+| Selector                     | Operator | Value              | Action | Logic |
+| ---------------------------- | -------- | ------------------ | ------ | ----- |
+| Passed Device Posture Checks | not in   | `macOS File Check` | Block  | Or    |
+| Passed Device Posture Checks | not in   | `Linux File Check` |        |       |
+
+### Enforce a minimum OS version
+
+Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
 
 | Selector                     | Operator | Value                | Action |
 | ---------------------------- | -------- | -------------------- | ------ |
