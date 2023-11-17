@@ -120,7 +120,7 @@ Allows the user to turn off the WARP switch and disconnect the client.
 - `Disabled`: (default) The user is able to turn the switch on or off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
 - `Enabled`: The user is prevented from turning off the switch. The WARP client will always start in the connected state.
 
-On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
+On MDM deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
 ### Allow device to leave organization
 
