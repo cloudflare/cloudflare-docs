@@ -772,6 +772,7 @@ Action only needed if notification is about a certificate that failed to be issu
 **Who is it for?**
 
 Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
 
 **Other options / filters**
 
@@ -833,6 +834,7 @@ All Cloudflare plans.
 
 **Who is it for?**
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
 
 **Other options / filters**
 
