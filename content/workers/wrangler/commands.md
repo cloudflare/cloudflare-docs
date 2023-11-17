@@ -68,7 +68,7 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-Since we recommend installing Wrangler [locally in your project](/workers/wrangler/install-and-update/) (rather than globally), the way to run Wrangler will depend on your specific setup & package manager. 
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager. 
 
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
@@ -94,7 +94,7 @@ $ pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 {{</tab>}}
 {{</tabs>}}
 
-The easiest way to run Wrangler commands that you use often is to add them as scripts in your project's `package.json` file:
+You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
 
 ```json
 {
