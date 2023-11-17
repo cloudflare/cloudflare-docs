@@ -15,4 +15,4 @@ entries:
 
 - term: SMTP
   general_definition: |-
-    stands for Simple Mail Trasnfer Protocol. It is an Internet standard based on TCP/IP to send and receive email.
+    stands for Simple Mail Transfer Protocol. It is an Internet standard based on TCP/IP to send and receive email.
