@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Cache
+meta:
+  description: Control reading and writing from the Cloudflare global network cache.
 ---
 
 # Cache

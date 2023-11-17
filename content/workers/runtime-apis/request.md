@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Request
+meta:
+  description: Interface that represents an HTTP request.
 ---
 
 # Request

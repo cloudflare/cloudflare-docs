@@ -6,4 +6,6 @@ weight: 8
 
 # Runtime APIs
 
-{{<directory-listing>}}
+The Workers runtime implements various APIs including those available in modern web browsers, Node.js, and WinterCG. Review configuration details and potential differences from original standards as you set up your Worker project.
+
+{{<directory-listing showDescriptions="true">}}

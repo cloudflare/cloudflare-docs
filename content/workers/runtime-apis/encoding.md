@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Encoding
+meta:
+  description: Takes a stream of code points as input and emits a stream of bytes.
 ---
 
 # Encoding
