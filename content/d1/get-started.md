@@ -28,19 +28,19 @@ Refer to [How Workers works](/workers/learning/how-workers-works/) to learn abou
 
 {{</Aside>}}
 
-You will create a new Worker as the container for both your D1 database and the Worker application that you will use to query your database.
+You will create a new Worker as the means to query your database.
 
 Create a new project named `d1-tutorial` by running:
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare@latest d1-tutorial
 
 ```
 
-When setting up your `d1-tutorial` Worker, answering the questions as below:
+When setting up your `d1-tutorial` Worker, answer the questions as below:
 
 * Your directory has been titled `d1-tutorial`.
-* Choose `"Hello World" script` for the type of application.
+* Choose `"Hello World" Worker` for the type of application.
 * Select `yes` to using TypeScript.
 * Select `yes` to using Git.
 * Select `no` to deploying.
@@ -122,7 +122,7 @@ You can also bind your D1 database to a Pages Function. For more information, re
 
 ### Configure your D1 database
 
-With `wrangler.toml` configured properly, you will set up your database. Use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `d1-tutorial` Worker directory you created in step 1:
+With `wrangler.toml` configured properly, you will set up your database. Use the following example `schema.sql` file to initialize your database. Copy the following code and save it as a `schema.sql` file in the `d1-tutorial` Worker directory you created in step 1:
 
 ```sql
 ---
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS Customers (CustomerId INTEGER PRIMARY KEY, CompanyNam
 INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'), (4, 'Around the Horn', 'Thomas Hardy'), (11, 'Bs Beverages', 'Victoria Ashworth'), (13, 'Bs Beverages', 'Random Name');
 ```
 
-You will configure your database to run and test locally first. Bootstrap your new D1 database by running:
+You will initialize your database to run and test locally first. Bootstrap your new D1 database by running:
 
 ```sh
 $ wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
