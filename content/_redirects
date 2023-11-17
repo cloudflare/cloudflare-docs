@@ -801,10 +801,7 @@
 /support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/troubleshooting/ 301
 /waf/change-log/historical/ /waf/change-log/historical-2019/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
-/waf/custom-rulesets/ /waf/custom-rules/custom-rulesets/ 301
-/waf/exposed-credentials-check/ /waf/managed-rules/check-for-exposed-credentials/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
-/waf/security-events/ /waf/analytics/security-events/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -1232,6 +1229,9 @@
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
 /firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
+/waf/custom-rulesets/* /waf/custom-rules/custom-rulesets/:splat 301
+/waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
+/waf/security-events/* /waf/analytics/security-events/:splat 301
 
 # Old WAF changelog entries
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301
