@@ -806,7 +806,7 @@ Traffic steering is the method of steering between origin pools. For help unders
 
 ##### Custom rules
 
-[Custom rules](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/) allows users to perform actions on requests or connections before the load balancer finishes its decision process. Custom rules are configured with expressions that match certain [fields](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/reference/) in requests or connections. Once the expression is created to match traffic, an [action](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/actions/) is assigned for when a request or connection matches the expression.
+[Custom rules](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/) allow users to perform actions on requests or connections before the load balancer finishes its decision process. Custom rules are configured with expressions that match certain [fields](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/reference/) in requests or connections. Once the expression is created to match traffic, an [action](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/actions/) is assigned for when a request or connection matches the expression.
 
 Custom rules are a powerful tool for customizing the steering and output from a load balancer before the request or connection is sent to the origin. For example, the HTTP method (e.g. GET, PUT, POST) could be matched to ensure that POST messages are sent to a specific origin pool dedicated to handling receiving information from clients.
 
