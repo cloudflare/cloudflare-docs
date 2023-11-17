@@ -119,7 +119,7 @@ For more information on configuring and deploying custom rulesets, refer to [Wor
 
 ### Add a custom rule checking for exposed credentials
 
-The following configuration creates a custom ruleset with a single rule that [checks for exposed credentials](/waf/exposed-credentials-check/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
+The following configuration creates a custom ruleset with a single rule that [checks for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
 
 {{<Aside type="warning">}}
 You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`).

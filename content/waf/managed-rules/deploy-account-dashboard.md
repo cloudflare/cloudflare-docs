@@ -1,7 +1,7 @@
 ---
 title: Deploy in the dashboard for an account
 pcx_content_type: how-to
-weight: 5
+weight: 2
 meta:
   title: Deploy a managed ruleset in the dashboard for an account
 ---
