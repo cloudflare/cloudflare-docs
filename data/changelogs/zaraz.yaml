@@ -5,7 +5,7 @@ entries:
 - publish_date: '2023-11-13'
   title:
   description: |-
-    * "**HTTP Request Managed Component**: Re-added __zarazTrack property".
+    * **HTTP Request Managed Component**: Re-added `__zarazTrack` property.
 - publish_date: '2023-10-31'
   title:
   description: |-
