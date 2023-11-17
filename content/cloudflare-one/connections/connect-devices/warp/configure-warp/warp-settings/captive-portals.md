@@ -34,4 +34,11 @@ B --Succeed--> G[No captive portal]--> H[Retry connection to Cloudflare]
 
 ## Limitations
 
-- Due to how captive portal detection works, it may be possible for an employee to spoof a captive portal in order to temporarily turn off WARP.
+- Due to [how captive portal detection works](#how-captive-portal-detection-works), it may be possible for an employee to spoof a captive portal in order to turn off WARP.
+- Some captive portals, particularly those on airlines, may be slow to respond and exceed the captive portal detection timeout. Users will likely see a [CF_CAPTIVE_PORTAL_TIMED_OUT](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_captive_portal_timed_out) error when they try to connect.
+- WARP may not be able to detect multi-stage captive portals, which redirect the user to different networks during the login process. Users will need to manually turn off WARP to get through the captive portal.
+- Some public Wi-Fi networks are incompatible with running WARP:
+
+  - Captive portals that intercept all DNS traffic will block WARP's [DoH connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_NO_NETWORK](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_no_network) error after they login to the captive portal.
+  - Captive portals that only allow HTTPS traffic will block WARP's [Wireguard UDP connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_HAPPY_EYEBALLS_MITM_FAILURE](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_happy_eyeballs_mitm_failure) error after they login to the captive portal.
+  
