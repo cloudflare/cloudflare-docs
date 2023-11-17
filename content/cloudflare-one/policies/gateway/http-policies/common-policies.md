@@ -56,6 +56,14 @@ You can select either individual applications or the entire Do Not Inspect set, 
 
 Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
+### Enforce a minimum OS version
+
+Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
+
+| Selector                     | Operator | Value                | Action |
+| ---------------------------- | -------- | -------------------- | ------ |
+| Passed Device Posture Checks | in       | `Minimum OS version` | Allow  |
+
 ### Check for a specific file
 
 Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their system.
@@ -66,14 +74,6 @@ Virtual machines may not pass file checks if their operating system differs from
 | ---------------------------- | -------- | ------------------ | ----- | ------ |
 | Passed Device Posture Checks | not in   | `macOS File Check` | Or    | Block  |
 | Passed Device Posture Checks | not in   | `Linux File Check` |       |        |
-
-### Enforce a minimum OS version
-
-Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
-
-| Selector                     | Operator | Value                | Action |
-| ---------------------------- | -------- | -------------------- | ------ |
-| Passed Device Posture Checks | in       | `Minimum OS version` | Allow  |
 
 ## Enforce session duration
 
