@@ -68,7 +68,7 @@ Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-check
 
 Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their system.
 
-Virtual machines may not pass file checks if their operating system differs from the host machine. To ensure checks pass for both operating systems, use the **Or** logical operator.
+Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
 
 | Selector                     | Operator | Value              | Logic | Action |
 | ---------------------------- | -------- | ------------------ | ----- | ------ |
