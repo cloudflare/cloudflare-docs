@@ -7,7 +7,7 @@ entries:
 
 - term: policy-based routing
   general_definition: |-
-    policy-based routing (PBR) is technique used to make routing decisions based on policies set by your administrador.
+    policy-based routing (PBR) is a technique used to make routing decisions based on policies set by your administrador.
   associated_products:
     - Magic WAN
 
