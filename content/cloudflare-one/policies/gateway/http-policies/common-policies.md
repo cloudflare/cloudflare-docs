@@ -56,7 +56,7 @@ You can select either individual applications or the entire Do Not Inspect set, 
 
 Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
-### Enforce a specfic operating system (OS)
+### Enforce a specific operating system (OS)
 
 Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users are running a certain operating system. For example, you can enforce either macOS or Linux by checking for OS-specific system files.
 
