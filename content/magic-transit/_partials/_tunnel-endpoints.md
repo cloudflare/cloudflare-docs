@@ -15,7 +15,7 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 - **Tunnel name**: A name with 15 or fewer characters that does not contain spaces or special characters. The name cannot be shared with other tunnels.
 - **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel.
 - **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them. <br>
-This value is not required for {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, unless your router is using an {{<glossary-tooltip term_id="internet key exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} ID of type `ID_IPV4_ADDR`.
+This value is not required for {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, unless your router is using an {{<glossary-tooltip term_id="Internet key exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} ID of type `ID_IPV4_ADDR`.
 - **Interface address**: A 31-bit (recommended) or 30-bit subnet (`/31` or `/30` in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   - `10.0.0.0/8`
   - `172.16.0.0/12`

@@ -33,7 +33,7 @@ entries:
     - Magic Transit
     - DDoS Protection
 
-- term: internet key exchange (IKE)
+- term: Internet key exchange (IKE)
   general_definition: |-
     the protocol Cloudflare uses to create the IPsec tunnel between Magic WAN and the customer's device.
   associated_products:
