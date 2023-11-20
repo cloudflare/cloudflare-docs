@@ -33,15 +33,17 @@ To report bugs or request features, go to the [Cloudflare Community Forums](http
 
 ---
 
-## Features
+## Get started
  
-{{<feature header="D1 database" href="/d1/get-started/">}}
+{{<feature header="Create your first D1 database" href="/d1/get-started/" cta="Create your D1 database">}}
 
 Create your first D1 database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
 
 {{</feature>}}
 
-{{<feature header="Time Travel" href="/d1/learning/time-travel/">}}
+## Features
+
+{{<feature header="Time Travel" href="/d1/learning/time-travel/" cta="Learn about Time Travel">}}
 
 Time Travel is D1’s approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.
 
