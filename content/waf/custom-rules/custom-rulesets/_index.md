@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom rulesets
-weight: 4
+weight: 6
 layout: single
 ---
 
@@ -17,5 +17,5 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 Refer to the following pages for more information on working with custom rulesets:
 
-* [Work with custom rulesets in the dashboard](/waf/custom-rulesets/create-dashboard/)
-* [Work with custom rulesets using the API](/waf/custom-rulesets/create-api/)
+* [Work with custom rulesets in the dashboard](/waf/custom-rules/custom-rulesets/create-dashboard/)
+* [Work with custom rulesets using the API](/waf/custom-rules/custom-rulesets/create-api/)

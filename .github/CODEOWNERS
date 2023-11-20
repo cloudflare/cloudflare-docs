@@ -43,10 +43,10 @@
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/content/kv/ @CharlieBurnett @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/content/pub-sub/ @CharlieBurnett @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/content/queues/ @CharlieBurnett @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/data/changelogs/queues.yaml @CharlieBurnett @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/content/kv/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/content/pub-sub/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/content/queues/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/data/changelogs/queues.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
 /content/r2/ @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /data/changelogs/r2.yaml @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @cloudflare/pcx-technical-writing
@@ -84,7 +84,7 @@
 /data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
 
 # Support
-/content/support/ @JamieEE14 @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
+/content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
 /content/turnstile/ @migueldemoura @punkeel @worenga @cloudflare/pcx-technical-writing

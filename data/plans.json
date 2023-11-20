@@ -489,16 +489,34 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "b_custom_lists": {
-          "title": "Custom lists (IPs, hostnames, ASNs)",
+        "b_number_of_custom_lists": {
+          "title": "Number of custom lists",
           "link": "/waf/tools/lists/custom-lists/",
           "free": 1,
-          "lite": 2,
-          "pro": 2,
-          "biz": 5,
+          "lite": 10,
+          "pro": 10,
+          "biz": 10,
           "ent": 10
         },
-        "d_open_proxies_list": {
+        "c_custom_lists_ip": {
+          "title": "Custom lists with IPs (IP lists)",
+          "link": "/waf/tools/lists/custom-lists/",
+          "free": "Yes",
+          "lite": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "d_custom_lists_other": {
+          "title": "Other custom lists (ASNs, hostnames)",
+          "link": "/waf/tools/lists/custom-lists/",
+          "free": "No",
+          "lite": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "e_open_proxies_list": {
           "title": "Managed IP List: Cloudflare Open Proxies",
           "link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
           "free": "No",
@@ -506,7 +524,7 @@
           "biz": "No",
           "ent": "Yes"
         },
-        "e_all_managed_ip_lists": {
+        "f_all_managed_ip_lists": {
           "title": "All Managed IP Lists",
           "link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
           "free": "No",
@@ -1326,7 +1344,7 @@
     },
     "security_events": {
       "title": "Security Events",
-      "link": "/waf/security-events/",
+      "link": "/waf/analytics/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1375,7 +1393,7 @@
     },
     "security_analytics": {
       "title": "Security Analytics",
-      "link": "/waf/security-analytics/",
+      "link": "/waf/analytics/security-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1549,7 +1567,7 @@
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
-          "link": "/waf/custom-rulesets/",
+          "link": "/waf/custom-rules/custom-rulesets/",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -2360,7 +2378,7 @@
           "ent": "Create and apply custom firewall rulesets."
         },
         "y_apex": {
-          "title": "[Apex proxing/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
+          "title": "[Apex proxying/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
           "free": "No",
           "pro": "No",
           "biz": "No",

@@ -89,7 +89,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Cloudflare Pages | ✘ | ✅{{<fnref num="11">}} | ✘ |
 | Durable Objects | ⚫️ | ✅{{<fnref num="7">}} | 🚧{{<fnref num="1">}} |
 | Email Routing | ⚫️ | ⚫️ | ✅ |
-| R2 | ⚫️ | 🚧{{<fnref num="8">}} | ✅ |
+| R2 | ✅{{<fnref num="27">}} | ✅{{<fnref num="8">}} | ✅{{<fnref num="28">}} |
 | Stream | ⚫️ | ✘ | ✘ |
 | Workers (deployed on a Zone) | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 | Workers KV | ⚫️ | ✘ | ✘ |
@@ -140,7 +140,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="5">}}Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.{{</fnentry>}}
 {{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/platform/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
 {{<fnentry num="9">}}Argo cannot be used with Regional Services.{{</fnentry>}}
-{{<fnentry num="8">}}You can not yet specify region location for object storage; this is expected in 2023.{{</fnentry>}}
+{{<fnentry num="8">}}Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).{{</fnentry>}}
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}
 {{<fnentry num="11">}}Only when using Custom Domain set to a region.{{</fnentry>}}
 {{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.{{</fnentry>}}
@@ -158,4 +158,6 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="24">}}Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).{{</fnentry>}}
 {{<fnentry num="25">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
 {{<fnentry num="26">}}BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
+{{<fnentry num="27">}}Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).{{</fnentry>}}
+{{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/reference/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
 {{</fnsection>}}

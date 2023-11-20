@@ -16,7 +16,7 @@ JA3 Fingerprints are only available to Enterprise customers who have purchased B
 To get more information about potential bot requests, use these JA3 Fingerprints in:
 
 - [Bot Analytics](/bots/bot-analytics/bm-subscription/)
-- [Security Events](/waf/security-events/) and [Security Analytics](/waf/security-analytics/)
+- [Security Events](/waf/analytics/security-events/) and [Security Analytics](/waf/analytics/security-analytics/)
 - [Analytics GraphQL API](/analytics/graphql-api/), specifically the **HTTP Requests** dataset
 - [Logs](/logs/reference/log-fields/zone/http_requests/)
 

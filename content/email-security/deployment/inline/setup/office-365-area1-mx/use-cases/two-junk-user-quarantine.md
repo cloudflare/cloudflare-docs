@@ -1,6 +1,6 @@
 ---
 title: 2 - Junk email and user managed quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 2
 meta:
     title: Junk email and user managed quarantine - Office 365

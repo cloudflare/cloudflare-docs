@@ -186,15 +186,27 @@ Before contacting the Cloudflare support team:
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+
+- Gather any relevant error/access logs from your server.
+
+Set [`loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
 - Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 
-- Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+### I am having an issue with a remotely-managed/dashboard tunnel.
+
+Before contacting the Cloudflare support team:
+
+- Take note of any specific error messages and/or problematic behaviors.
+
+- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
+
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, add [`--logfile <PATH>`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) and [`--loglevel debug`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to your system service configuration. To modify the system service, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/).
 
 {{</faq-answer>}}
 {{</faq-item>}}

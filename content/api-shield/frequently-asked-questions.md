@@ -15,12 +15,11 @@ In most cases, this is due to the system not observing enough valid requests ove
 
 API Discovery only looks at requests that satisfy all of the following criteria:
 
-1. Requests must send the session identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
-2. Requests must return `2XX` response codes from the edge.
-3. Requests must not come directly from Cloudflare Workers.
-4. At least 500 requests are made to the discovered endpoint within a 10 day period.
+1. Requests must return `2XX` response codes from the edge.
+2. Requests must not come directly from Cloudflare Workers.
+3. At least 500 requests are made to the discovered endpoint within a 10 day period.
 
-Endpoints discovered using session identifiers will be labeled as such in the dashboard.
+Endpoints discovered using session identifiers will be labeled as such in the dashboard. If the endpoints are not discovered through session identifiers, they will be discovered using our machine learning-based [API Discovery](/api-shield/security/api-discovery/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -99,6 +98,19 @@ ___
 {{<faq-answer>}}
 
 The importing [(Schema Validation)](/api-shield/security/schema-validation/) and exporting [(API Discovery)](/api-shield/security/api-discovery/) of OpenAPI schemas from our product to customers is done using **OpenAPI v3.0**. Any specifications using patched versions (3.0.x) are compatible as well. 
+
+{{</faq-answer>}}
+{{</faq-item>}}
+___
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Why am I not seeing latency metrics?" >}}
+
+{{<faq-answer>}}
+
+Latency metrics currently are not supported when a Cloudflare Worker is running on the URL, as the requests are not passed directly to your origin.
+
+Some Cloudflare products such as [Waiting Room](/waiting-room/) are built on top of Workers, so the same limitations apply to applications using these products. 
 
 {{</faq-answer>}}
 {{</faq-item>}}

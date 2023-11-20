@@ -20,7 +20,7 @@ This feature is available on Windows, macOS, and Linux using a client version of
 2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
 3. Enable **Install CA to system certificate store**.
 4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
-5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) in your Zero Trust organization.
+5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 
 If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the system keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
 
