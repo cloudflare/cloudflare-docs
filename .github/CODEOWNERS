@@ -12,6 +12,7 @@
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
 /data/calculations/ @kristianfreeman @kodster28 @pedrosousa @haleycode
+/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa @haleycode
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
