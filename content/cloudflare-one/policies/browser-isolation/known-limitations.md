@@ -23,13 +23,9 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 - Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
 - Internet Explorer 11 and below is unsupported.
 
-## Gateway selector limitation
+## Gateway selectors
 
-Certain selectors for Gateway HTTP policies are resolved later in the flow. Therefore, Browser Isolation does not support these selectors. These selectors include:
-
-- Destination IP
--
-- Port
+Certain selectors for Gateway HTTP policies bypass Browser Isolation. Therefore, you cannot use these selectors in isolation policies, and details for these policies will not appear in logs. Selectors include Destination IP, Port, and any geolocation selectors.
 
 ## File download size
 
