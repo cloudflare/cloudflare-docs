@@ -1,6 +1,6 @@
 ---
 title: Office 365 - Area 1 as MX Record
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 layout: single
 meta:

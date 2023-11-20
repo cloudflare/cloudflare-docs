@@ -196,8 +196,6 @@ Set [`loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/
 
 - Include your full `config.yml` file for the affected tunnel.
 
-{{</faq-answer>}}
-{{<faq-answer>}}
 ### I am having an issue with a remotely-managed/dashboard tunnel.
 
 Before contacting the Cloudflare support team:

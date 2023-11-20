@@ -1344,7 +1344,7 @@
     },
     "security_events": {
       "title": "Security Events",
-      "link": "/waf/security-events/",
+      "link": "/waf/analytics/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1393,7 +1393,7 @@
     },
     "security_analytics": {
       "title": "Security Analytics",
-      "link": "/waf/security-analytics/",
+      "link": "/waf/analytics/security-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1567,7 +1567,7 @@
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
-          "link": "/waf/custom-rulesets/",
+          "link": "/waf/custom-rules/custom-rulesets/",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -2378,7 +2378,7 @@
           "ent": "Create and apply custom firewall rulesets."
         },
         "y_apex": {
-          "title": "[Apex proxing/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
+          "title": "[Apex proxying/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
           "free": "No",
           "pro": "No",
           "biz": "No",

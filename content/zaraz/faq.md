@@ -150,7 +150,7 @@ Zaraz comes with built-in [Single Page Application (SPA) support](/zaraz/referen
 
 {{<faq-answer>}}
 
-You probably have enabled **Hide Originating IP Address** in the [Settings option](/zaraz/get-started/edit-tools-and-actions/) for Google Analytics 4. This tells Zaraz to not send the IP address to Google. To have access to demographics data and anonymize your visitor's IP, you should use [**Anonymize Originating IP Address**](#i-see-two-ways-of-anonymizing-ip-address-information-on-the-third-party-tool-google-analytics-one-in-privacy-and-one-in-additional-fields-which-is-the-correct-one) instead.
+You probably have enabled **Hide Originating IP Address** in the [Settings option](/zaraz/get-started/edit-tools-and-actions/) for Google Analytics 4. This tells Zaraz to not send the IP address to Google. To have access to demographics data and anonymize your visitor's IP, you should use [**Anonymize Originating IP Address**](#i-see-two-ways-of-anonymizing-ip-address-information-on-the-third-party-tool-google-analytics-one-in-privacy-and-one-in-additional-fields.-which-is-the-correct-one) instead.
 
 {{</faq-answer>}}
 {{</faq-item>}}

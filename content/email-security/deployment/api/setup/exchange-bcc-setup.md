@@ -1,6 +1,6 @@
 ---
 title: Exchange BCC setup
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 2
 meta:
     title: Setup phishing risk assessment for Microsoft Exchange with Area 1

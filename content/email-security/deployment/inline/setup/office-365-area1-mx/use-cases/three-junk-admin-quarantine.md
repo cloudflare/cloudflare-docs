@@ -1,6 +1,6 @@
 ---
 title: 3 - Junk email and administrative quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 3
 meta:
     title: Junk email and administrative quarantine - Office 365

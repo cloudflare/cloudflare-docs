@@ -2,6 +2,10 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-11-13'
+  title:
+  description: |-
+    * **HTTP Request Managed Component**: Re-added `__zarazTrack` property.
 - publish_date: '2023-10-31'
   title:
   description: |-
@@ -14,7 +18,7 @@ entries:
   title:
   description: |-
     * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
-    * **Dashboard: Improved welcome screen for new Zaraz users".
+    * **Dashboard**: Improved welcome screen for new Zaraz users".
 - publish_date: '2023-10-03'
   title:
   description: |-

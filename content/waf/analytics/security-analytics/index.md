@@ -1,13 +1,13 @@
 ---
 title: Security Analytics
 pcx_content_type: concept
-weight: 10
+weight: 1
 layout: single
 ---
 
 {{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}
 
-The Security Analytics dashboard displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
+Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
 {{<Aside type="note">}}
 Available to customers on Business and Enterprise plans.
@@ -21,7 +21,7 @@ Use the Security Analytics dashboard to:
 * Learn more about Cloudflare’s security scores ({{<glossary-tooltip term_id="attack score" link="/waf/about/waf-attack-score/">}}attack score{{</glossary-tooltip>}}, [bot score](/bots/concepts/bot-score/), [uploaded content scanning](/waf/about/content-scanning/) results) with real data.
 * [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
 
-If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.
+If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/analytics/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.
 
 ## Access
 

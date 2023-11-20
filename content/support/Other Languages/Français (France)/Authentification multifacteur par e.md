@@ -29,17 +29,17 @@ Cloudflare teste la connexion en envoyant, à l’adresse e-mail associée à ce
 ID de l'article : 115003614752 | Authentification multifacteur par e-mail
 ](/images/support/hc-import-login_authentication.png)
 
-Si vous cochez la case « Remember this computer » (Se souvenir de cet ordinateur), cet appareil/navigateur ne recevra pas de tests d’authentification multifacteur pendant 14 jours. Au bout de 14 jours, Cloudflare vérifiera à nouveau l’adresse IP pour les connexions à partir de cet appareil/ ce navigateur.
+Si vous cochez la case « Remember this computer » (Se souvenir de cet ordinateur), cet appareil / navigateur ne recevra pas de tests d’authentification multifacteur pendant 14 jours. Au bout de 14 jours, Cloudflare vérifiera à nouveau l’adresse IP pour les connexions à partir de cet appareil / ce navigateur.
 
 ___
 
 ## Résolution des incidents liés à l’authentification multifacteur
 
-Les e-mails de Cloudflare sont parfois traités comme courrier indésirable par le service de messagerie du destinataire. Si vous attendez un jeton d'authentification, vérifiez que votre dossier de courrier indésirable ne contient pas d'e-mails de Cloudflare et configurez un filtre pour autoriser les e-mails de Cloudflare envoyés depuis _no-reply@cloudflare.com__**.**_
+Les e-mails de Cloudflare sont parfois traités comme courrier indésirable par le service de messagerie du destinataire. Si vous attendez un jeton d'authentification, vérifiez que votre dossier de courrier indésirable ne contient pas d'e-mails de Cloudflare et configurez un filtre pour autoriser les e-mails de Cloudflare envoyés depuis `no-reply@notify.cloudflare.com`.
 
 Il arrive aussi que les e-mails soient refusés par le service de messagerie du destinataire. Cloudflare tentera à nouveau d’envoyer un e-mail, mais après plusieurs tentatives, votre adresse e-mail sera signalée et aucun autre e-mail ne sera envoyé.
 
-Après avoir vérifié que votre service de messagerie ne bloque pas Cloudflare, si vous ne recevez toujours pas d’e-mails, contactez le [support Cloudflare](https://support.cloudflare.com/requests/new).
+Après avoir vérifié que votre service de messagerie ne bloque pas Cloudflare, si vous ne recevez toujours pas d’e-mails, contactez le [support Cloudflare](https://dash.cloudflare.com/?to=/:account/support).
 
 ___
 

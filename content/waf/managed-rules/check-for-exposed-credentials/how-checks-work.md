@@ -1,10 +1,12 @@
 ---
 pcx_content_type: concept
-title: How exposed credentials checks work
+title: How it works
 weight: 2
+meta:
+  title: How exposed credential checks work
 ---
 
-# How exposed credentials checks work
+# How exposed credential checks work
 
 WAF rules can include a check for exposed credentials. When enabled in a given rule, exposed credentials checking happens when there is a match for the rule expression (that is, the rule expression evaluates to `true`).
 
