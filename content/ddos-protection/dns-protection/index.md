@@ -43,7 +43,7 @@ If you already onboarded the desired prefixes when you configured Advanced TCP P
 
 ### No data about Advanced DNS Protection in Network Analytics
 
-If you cannot find any data related to Advanced DNS Protection in the **DNS protection** tab of Network Analytics, it could be because one of these reasons:
+If you cannot find any data related to Advanced DNS Protection in the **DNS Protection** tab of Network Analytics, it could be because one of these reasons:
 
 * You did not [add your prefixes](/ddos-protection/tcp-protection/how-to/add-prefix/) to Advanced TCP Protection.
 * Your account team did not enable the Advanced DNS Protection system yet.
