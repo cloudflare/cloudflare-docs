@@ -15,7 +15,7 @@
       name="{{.key}}"
       value="{{.value}}"
       {{if .editable}}{{else}}readonly{{end}}
-      onchange="calculateData()"
+      oninput="calculateData()"
     />
     <br />
     {{- end -}}
