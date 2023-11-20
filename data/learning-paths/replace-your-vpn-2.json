@@ -1,0 +1,13 @@
+{
+  "title": "Replace your VPN 2",
+  "path": "/learning-paths/replace-your-vpn-2/",
+  "priority": 1,
+  "description": "This learning path will show you how to use a combination of Cloudflare products to address use cases typically served by a VPN. Cloudflare provides discrete, Zero Trust enabled application and service access to all TCP and UDP ports in both on-premise and cloud networks. We do this using a combination of an endpoint agent and a network connector, but no other software or hardware is required for this deployment. Additionally, security policy is enforced at the Cloudflare edge and managed in your dashboard.",
+  "products": [
+    "Cloudflare Gateway",
+    "Cloudflare Tunnel",
+    "WARP"
+  ],
+  "product_group": "Cloudflare One",
+  "additional_groups": ["Application security", "Application performance"]
+}
