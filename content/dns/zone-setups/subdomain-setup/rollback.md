@@ -3,14 +3,14 @@ pcx_content_type: how-to
 title: Rollback
 weight: 5
 meta:
-    title: Rollback NS delegation
+    title: Rollback subdomain setup
 ---
 
-# Rollback NS delegation
+# Rollback subdomain setup
 
 When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), you can have your child domain as a separate zone within the same account as the parent domain or within a different account.
 
-If both your parent and child domains are in the same Cloudflare account and you no longer want to manage the child domain as a separate zone, you can rollback the NS delegation and recreate the corresponding subdomain DNS records through the following steps:
+If you no longer want to manage the child domain as a separate zone, you can rollback the delegation and recreate the corresponding subdomain DNS records through the following steps:
 
 {{<Aside type="warning" header="Note">}}
 This process may incur in downtime, as it is not possible to add address records (`A`/`AAAA`) on names that already have a corresponding `NS` record.
