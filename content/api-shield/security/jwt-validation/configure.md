@@ -26,14 +26,14 @@ Token Configurations require the following information:
 |  <div style="width:120px">Field name</div> | Description | Example | Notes |
 | --- | --- | --- | --- |
 | `title` | A human-readable name for the configuration that allows to quickly identify the purpose of the configuration. | Production JWT configuration | Limited to 50 characters. |
-| `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all endpoints in endpoint management and checks the JWT in the authorization header.| Limited to 500 characters. |
+| `description ` | A human-readable description that gives more details than `title` which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all endpoints in endpoint management and checks the JWT in the authorization header.| Limited to 500 characters. |
 | `token_sources` | A list of possible locations where then JWT can be found on the request. | `http.request.headers[\"authorization\"][0]` <br /> `http.request.cookies[\"Authorization\"][0]`| Refer to the [information](#token-sources) below. |
 |  `token_type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. |
 | `credentials` | This describes the cryptographic public keys that should be used to validate JWTs. This field must be a JSON web key. |  Refer to the example below. | Refer to the [information](#credentials) below. |
 
 ### Token sources
 
-Each item must be a be a Ruleset Engine expression that resolves to a string.
+Each item must be a Ruleset Engine expression that resolves to a string.
 
 Currently supported fields are `http.request.headers` and `http.request.cookies`.
 
@@ -87,7 +87,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 
 The response will be in a Cloudflare `v4` response envelope and the result contains the created configuration. Note the returned ID, as it will be used to reference the Token Configuration when creating Token Validation rules using the API.
 
-```bash
+```json
 ---
 header: Example response
 ---
@@ -131,8 +131,8 @@ Token Validation Rules can be configured using the Cloudflare API or [dashboard]
 | <div style="width:120px">Field name</div> | Description | Example | Notes |
 | --- | --- | --- | --- |
 | `title` | A human-readable name allowing you to quickly identify it. | JWT Validation on `v1` and `v2.example.com` | Limited to 50 characters. |
-| `description` | A human-readable description that gives more details than title and helps to document it.	| Log requests without a valid `authorization` header. | Limited to 500 characters. |
-| `action` | The Firewall Action taken on requests that do not meet expression. | `log` | Possible: `log` or `block` |
+| `description` | A human-readable description that gives more details than `title` and helps to document it.	| Log requests without a valid `authorization` header. | Limited to 500 characters. |
+| `action` | The Firewall Action taken on requests that do not meet `expression`. | `log` | Possible: `log` or `block` |
 | `enabled` | Enable or disable the rule. | `true` | Possible: `true` or `false` |
 | `expression` | The rule's security policy. | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Define a security policy](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
 | `selector` | Configure what operations are covered by this rule. | | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#apply-a-rule-to-operations) below. |
@@ -211,7 +211,7 @@ Selectors will also apply to new operations. New operations that match an existi
 
 For example, the following selector will apply a rule to all operations in `v1.example.com` and `v2.example.com`, except for two operations on these hosts:
 
-```bash
+```json
 ---
 header: Selector example
 ---
@@ -269,7 +269,7 @@ The response will include all operations on a zone with an additional `state` fi
 
 The `state` field can be `ignored`, `excluded`, or `included`. Included operations will match the hostname selectors you specified. Excluded operations will match the operation IDs you specified in the selector. Ignored operations are those that do not match anything specified in the selector.
 
-```bash
+```json
 ---
 header: Result
 ---
@@ -459,7 +459,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 
 The response will be in a Cloudflare `v4` response envelope and the result contains the created rules. Note the returned ID for each rule, which can be used to edit or delete an existing rule.
 
-```bash
+```json
 ---
 header: Result
 ---

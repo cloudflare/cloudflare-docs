@@ -22,14 +22,14 @@ A JWT Validation configuration consists of creating a Token Validation Configura
 2. Go to **Security** > **API Shield** > **Settings**.
 3. Under **JSON Web Token Settings**, select **Add configuration**.
 4. Add a name for your configuration.
-5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests. For example, a header or cookie and its name.
+5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
 6. Copy and paste your JWT issuer’s public key(s).
 
 {{<Aside type="note">}}
 Each JWT issuer typically publishes public keys for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.
 {{</Aside>}}
 
-To automatically keep your keys up to date when your Identity Provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
+To automatically keep your keys up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 
 ### Add a JWT Validation Rule
 
@@ -37,7 +37,7 @@ To automatically keep your keys up to date when your Identity Provider refreshes
 2. Go to **Security** > **API Shield** > **API Rules**.
 3. Add a name for your rule.
 4. Select a hostname to protect requests with saved endpoints using the rule.
-5. Deselect any endpoints that you want JWT Validation to ignore. For example, an endpoint used to generate a JWT.
+5. Deselect any endpoints that you want JWT Validation to ignore (for example, an endpoint used to generate a JWT).
 6. Select the Token Validation Configuration that corresponds to the incoming requests.
 7. Choose whether to strictly enforce token presence on these endpoints. 
     - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose _Ignore_. JWT Validation will still validate JWTs that are present.
@@ -51,13 +51,13 @@ Token configuration rules will automatically apply to new endpoints added to End
 
 ## Special cases
 
-### Validate two JWTs with different Identity Providers on a single request
+### Validate two JWTs with different identity providers on a single request
 
 If you expect that two different JWTs should be present in a request and you want to validate both, you must create two different token configurations. When selecting the two configurations in your validation rule, select _Validate all configurations_ under **Validation behavior for multiple configurations**.
 
-### Support a migration from one Identity Provider to another
+### Support a migration from one identity provider to another
 
-If you expect to migrate between two different Identity Providers, you must create two different token configurations and two different validation rules, each corresponding to its own configuration. With this setup, you can change the action for different validation rules depending on the state of your migration.
+If you expect to migrate between two different identity providers, you must create two different token configurations and two different validation rules, each corresponding to its own configuration. With this setup, you can change the action for different validation rules depending on the state of your migration.
 
 ## Availability
 

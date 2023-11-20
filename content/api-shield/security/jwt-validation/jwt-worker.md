@@ -9,12 +9,12 @@ meta:
 
 # Configure the Worker for JWT Validation
 
-Use a Worker to automatically keep your Identity Provider’s latest public key in the JWT Validation configuration.
+Use a Worker to automatically keep your identity provider’s latest public key in the JWT Validation configuration.
 
 ## Prerequisites
 
 - Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/). 
-- Find your Identity Provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
+- Find your identity provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
 - Create a [Token Validation Configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
 - [Create a new API token](https://dash.cloudflare.com/profile/api-tokens) with the API Gateway `Write` permission.
 
@@ -30,15 +30,15 @@ Use a Worker to automatically keep your Identity Provider’s latest public key 
 Find your Identity Provider’s URL and fetch the keys using `curl` and `jq`. Your URL may return more than just the issuer’s keys, so Cloudflare recommends using `jq` to filter the response to only return the keys. You must update the provided Worker sample code if your JWKs do not have a `keys` object. 
 
 {{<Aside type="note">}}
-The keys listed below are for example purposes only and must not be used in your production environment, as they will never match the keys used by your Identity Provider to sign JWTs.
+The keys listed below are for example purposes only and must not be used in your production environment, as they will never match the keys used by your identity provider to sign JWTs.
 {{</Aside>}}
 
-```txt
+```sh
 ---
 header: Query the JWKs endpoint
 ---
 
-curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq .keys
+$ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq .keys
 [
   {
     "kid": "ca96ae653935dbfb49b4e19de600cc5f9d5c63e3ac2dbee406ed4bf0ae100cce",
@@ -65,16 +65,16 @@ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq 
 2. Copy and paste the example code below into your new Worker, completely replacing any code that already exists.
 3. Replace the current zone ID with your zone ID.
 4. Replace the current Token Validation Configuration ID with your Token Validation Configuration.
-5. Replace the current Identity Provider’s URL with your Identity Provider’s key URL.
+5. Replace the current identity provider’s URL with your identity provider’s key URL.
 
 {{<Aside type="note">}}
-Identity Provider URLs can typically be accessed at a known URL specific to your deployment. If you are unsure of the URL, contact your Identity Provider.
+Identity provider URLs can typically be accessed at a known URL specific to your deployment. If you are unsure of the URL, contact your identity provider.
 {{</Aside>}}
 
 6. If your JWKs URL returns the keys in any JSON object other than `keys`, update the `fetchCredentials()` function to return only the key data.
 7. Select **Create** > **Deploy**.
 8. In the Worker settings, go to **Variables** and add an environment variable named `CF_API_TOKEN` with the value of the API token that you have created.
-9. In the Worker Triggers, assign a [cron trigger](/workers/configuration/cron-triggers/) to the Worker. Cloudflare recommends a frequent update interval to ensure you always have the latest keys and that an immediate key rotation by your Identity Provider causes minimal downtime.
+9. In the Worker Triggers, assign a [cron trigger](/workers/configuration/cron-triggers/) to the Worker. Cloudflare recommends a frequent update interval to ensure you always have the latest keys and that an immediate key rotation by your identity provider causes minimal downtime.
 
 ```js
 ---
