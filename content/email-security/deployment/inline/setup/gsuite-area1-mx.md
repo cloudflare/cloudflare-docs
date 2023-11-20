@@ -1,6 +1,6 @@
 ---
 title: Google Workspace - Area 1 as MX Record
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 2
 layout: single
 meta:
