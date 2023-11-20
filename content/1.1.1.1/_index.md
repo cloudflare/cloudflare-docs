@@ -7,8 +7,6 @@ weight: 1
 
 # Cloudflare 1.1.1.1
 
-{{<calculation file="tunnel-capacity">}}
-
 {{<description>}}
 Speed up your online experience with Cloudflare's public DNS resolver.
 {{</description>}}
