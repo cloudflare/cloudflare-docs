@@ -26,10 +26,12 @@ To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how
 
 Cloudflare returns a 1016 error when the custom hostname cannot be routed or proxied.
 
-There are two main causes of error 1016:
+There are three main causes of error 1016:
 
 1.  Custom Hostname ownership validation is not complete. To check validation status, run an API call to [search for a certificate by hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
 2.  Fallback Origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
+3.  A Wildcard Custom Hostname has been created, but the requested hostname is associated to a domain that exists in Cloudflare as a stand-alone zone. In this case, as per the [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas) the hostname from the stand-alone zone will take precedence (even if there is no DNS record for this hostname!), and not the wildcard Custom Hostname.
+In this scenario each hostname that needs to be served by the Cloudflare for Saas parent zone needs to be added as an individual Custom Hostname.
 
 {{<Aside type="note">}}
 
