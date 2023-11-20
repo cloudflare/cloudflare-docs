@@ -17,7 +17,6 @@
       {{if .editable}}{{else}}readonly{{end}}
       oninput="calculateData()"
     />
-    <br />
     {{- end -}}
   </fieldset>
   <br />
@@ -30,7 +29,6 @@
     {{- range $calculations -}}
     <label for="{{.key}}">{{.title}}</label>
     <input type="number" id="{{.key}}" name="{{.key}}" data-formula="{{.formula}}" readonly />
-    <br />
     {{- end -}}
   </fieldset>
 </form>
@@ -77,15 +75,30 @@ document.addEventListener('DOMContentLoaded', calculateData());
 </script>
 
 <style>
-  form.calculations {
-    padding-top: 1em;
-    border-top: 4px solid rgba(235, 129, 7, 0.7);
-    margin-bottom: 2em;
-  }
-  input[readonly] {
-    background-color: #f0f0f0; /* Light gray background */
-    border: 1px solid #ccc; /* Light gray border */
-    color: #777; /* Gray text color */
-    cursor: not-allowed; /* Change cursor to 'not-allowed' */
-  }
+form.calculations {
+  padding-top: 1em;
+  border-top: 4px solid rgba(243, 128, 32, 1);
+  margin-bottom: 2em;
+}
+
+input[readonly] {
+  background-color: #f0f0f0; /* Light gray background */
+  border: 1px solid #ccc; /* Light gray border */
+  color: #777; /* Gray text color */
+  cursor: not-allowed; /* Change cursor to 'not-allowed' */
+}
+
+[theme="dark"] input[readonly] {
+  background-color: rgba(173, 210, 235, .8); 
+  border: 1px solid #ccc; 
+  color: rgba(0,0,0, .8); /* Gray text color */
+  cursor: not-allowed; /* Change cursor to 'not-allowed' */
+}
+
+
+input {
+  display: block;
+  margin-bottom: .5em;
+}
+
 </style>
