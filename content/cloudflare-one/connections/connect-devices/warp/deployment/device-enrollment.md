@@ -43,4 +43,4 @@ To check for an mTLS certificate:
 
 4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 
-When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) from the WARP client, their device must present a valid client certificate in order to connect.
+When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) from the WARP client, their device must present a valid client certificate in order to connect.
