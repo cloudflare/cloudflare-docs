@@ -31,7 +31,7 @@ Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
 - [Destination Country IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-country)
 - [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip)
 
-You cannot use these selectors in isolation policies, and isolation matches for these selectors will not appear in your Gateway logs.
+You cannot use these selectors to isolate traffic, and isolation matches for these selectors will not appear in your Gateway logs.
 
 ## File download size
 
