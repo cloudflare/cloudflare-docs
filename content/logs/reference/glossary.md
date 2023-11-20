@@ -90,7 +90,7 @@ The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/supp
 
 #### Bad IP
 
-A Bad IP is the classification for a request that came from an IP address that is not trusted by Cloudflare based on the [Threat Score](/logs/reference/glossary/#threat-score).
+A Bad IP is the classification for a request that came from an IP address that is not trusted by Cloudflare based on the [Threat Score](/analytics/account-and-zone-analytics/threat-types/#bad-ip).
 
 #### Country block
 

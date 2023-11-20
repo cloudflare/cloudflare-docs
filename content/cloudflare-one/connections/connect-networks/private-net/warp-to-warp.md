@@ -22,7 +22,7 @@ This guide covers how to:
 
 - [Install the Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
 - [Define device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/).
-- [Enroll your devices](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) in your Zero Trust organization.​​
+- [Enroll your devices](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.​​
 
 ## Enable WARP-to-WARP
 
