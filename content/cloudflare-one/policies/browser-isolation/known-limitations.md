@@ -25,7 +25,13 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 ## Gateway selectors
 
-Certain selectors for Gateway HTTP policies bypass Browser Isolation. Therefore, you cannot use these selectors in isolation policies, and details for these policies will not appear in logs. Selectors include Destination IP, Port, and any geolocation selectors.
+Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
+
+- [Destination Continent IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-country)
+- [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip)
+
+You cannot use these selectors in isolation policies, and isolation matches for these selectors will not appear in your Gateway logs.
 
 ## File download size
 
