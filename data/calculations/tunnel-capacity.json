@@ -1,0 +1,68 @@
+{
+  "fieldsets": [
+    {
+      "name": "Customer Setup Information",
+      "fields": [
+        {
+          "key": "ephemeral_ports_per_host",
+          "title": "Available ephemeral ports per host",
+          "value": 50000,
+          "editable": true
+        },
+        {
+          "key": "cloudflared_replicas",
+          "title": "Number of cloudflared replicas",
+          "value": 2,
+          "editable": true
+        },
+        {
+          "key": "dns_udp_timeout_in_sec",
+          "title": "DNS UDP Session Timeout (in seconds)",
+          "value": 5,
+          "editable": false
+        },
+        {
+          "key": "max_sessions_timeouts_per_min",
+          "title": "Maximum session timeouts per minute",
+          "value": 12,
+          "editable": false
+        }
+      ]
+    },
+    {
+      "name": "Information from Tunnel Metrics",
+      "fields": [
+        {
+          "key": "tcp_per_sec",
+          "title": "TCP requests per second",
+          "value": 4000,
+          "editable": true
+        },
+        {
+          "key": "private_dns_req_per_sec",
+          "title": "Private DNS requests per second (filter UDP:53)",
+          "value": 0,
+          "editable": true
+        },
+        {
+          "key": "non_dns_udp_req_per_sec",
+          "title": "Non-DNS UDP requests per second",
+          "value": 1,
+          "editable": true
+        }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "key": "percent_capacity_per_replica",
+      "title": "Percent capacity per replica by inputs",
+      "formula": "(((non_dns_udp_req_per_sec * 60) + (private_dns_req_per_sec * dns_udp_timeout_in_sec)) / (ephemeral_ports_per_host - tcp_per_sec)) * 100"
+    },
+    {
+      "key": "max_dns_request_per_min",
+      "title": "Maximum DNS requests per minute across all replicas",
+      "formula": "ephemeral_ports_per_host * cloudflared_replicas * max_sessions_timeouts_per_min"
+    }
+  ]
+}

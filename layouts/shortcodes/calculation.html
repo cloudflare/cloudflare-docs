@@ -1,0 +1,91 @@
+{{- $calculation_file := .Get "file" }} 
+{{- $calculation_data := index $.Site.Data.calculations $calculation_file -}} 
+{{- $fieldsets := index $calculation_data "fieldsets" -}} 
+{{- $calculations := index $calculation_data "calculations" }}
+
+<form class="inputs">
+  {{- range $fieldsets -}}
+  <fieldset>
+    <legend>{{.name}}</legend>
+    {{- range .fields -}}
+    <label for="{{.key}}">{{.title}}</label>
+    <input
+      type="number"
+      id="{{.key}}"
+      name="{{.key}}"
+      value="{{.value}}"
+      {{if .editable}}{{else}}readonly{{end}}
+      onchange="calculateData()"
+    />
+    <br />
+    {{- end -}}
+  </fieldset>
+  <br />
+  {{- end -}}
+</form>
+
+<form class="calculations">
+  <fieldset>
+    <legend>Result</legend>
+    {{- range $calculations -}}
+    <label for="{{.key}}">{{.title}}</label>
+    <input type="number" id="{{.key}}" name="{{.key}}" data-formula="{{.formula}}" readonly />
+    <br />
+    {{- end -}}
+  </fieldset>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.1.0/math.min.js"></script>
+<script>
+const inputs = document.querySelector("form.inputs");
+const inputElements = inputs.querySelectorAll("input");
+
+function replacePlaceholders(inputObj, inputString) {
+inputObj.forEach(function(inputObj) {
+    inputString = inputString.replace(new RegExp(inputObj.id, 'g'), inputObj.value);
+});
+return inputString;
+}
+
+function calculateData() {
+let inputObjects = [];
+
+// Iterate over each input element
+inputElements.forEach(function (input) {
+    // Create an object with "id" and "value" properties
+    const inputObject = {
+    id: input.id,
+    value: input.value,
+    };
+
+    // Push the object into the array
+    inputObjects.push(inputObject);
+});
+
+const results = document.querySelector("form.calculations");
+const resultElements = results.querySelectorAll("input");
+
+resultElements.forEach(function (input){
+    let formula = input.dataset.formula
+    let evaluatableFormula = replacePlaceholders(inputObjects, formula)
+    input.value = math.evaluate(evaluatableFormula);
+})
+
+}
+
+document.addEventListener('DOMContentLoaded', calculateData());
+</script>
+
+<style>
+  form.calculations {
+    padding-top: 1em;
+    border-top: 4px solid rgba(235, 129, 7, 0.7);
+    margin-bottom: 2em;
+  }
+  input[readonly] {
+    background-color: #f0f0f0; /* Light gray background */
+    border: 1px solid #ccc; /* Light gray border */
+    color: #777; /* Gray text color */
+    cursor: not-allowed; /* Change cursor to 'not-allowed' */
+  }
+</style>
