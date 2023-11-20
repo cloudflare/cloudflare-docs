@@ -57,7 +57,7 @@
     {
       "key": "percent_capacity_per_replica",
       "title": "Percent capacity per replica by inputs",
-      "formula": "(((non_dns_udp_req_per_sec * 60) + (private_dns_req_per_sec * dns_udp_timeout_in_sec)) / (ephemeral_ports_per_host - tcp_per_sec)) * 100"
+      "formula": "round(((((non_dns_udp_req_per_sec * 60) + (private_dns_req_per_sec * dns_udp_timeout_in_sec)) / (ephemeral_ports_per_host - tcp_per_sec)) * 100), 4)"
     },
     {
       "key": "max_dns_request_per_min",
