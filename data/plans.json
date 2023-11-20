@@ -2378,7 +2378,7 @@
           "ent": "Create and apply custom firewall rulesets."
         },
         "y_apex": {
-          "title": "[Apex proxing/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
+          "title": "[Apex proxying/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
           "free": "No",
           "pro": "No",
           "biz": "No",
