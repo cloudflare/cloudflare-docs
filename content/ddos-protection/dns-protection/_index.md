@@ -13,36 +13,41 @@ Cloudflare Advanced DNS Protection {{<inline-pill style="beta">}}, powered by [`
 
 Cloudflare's Advanced DNS Protection works by first learning your traffic patterns and forming a baseline of the type of DNS queries you normally receive. Later, the system will be able to distinguish between legitimate and malicious queries, protecting your DNS infrastructure without impacting legitimate traffic.
 
-The [Network Analytics dashboard](/analytics/network-analytics/) will display high-level data about Advanced DNS Protection in the **All Traffic** tab.
+The [Network Analytics dashboard](/analytics/network-analytics/) will display high-level data about Advanced DNS Protection in the **DNS protection** tab.
 
 ## Availability
 
-Advanced DNS Protection is currently available in beta to all [Magic Transit](/magic-transit/) customers.
+Advanced DNS Protection is currently available in beta to [Magic Transit](/magic-transit/) customers.
 
 Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
+
+{{<Aside type="warning" header="Configuration will be available soon">}}
+Currently, you cannot configure Advanced DNS Protection rules using the Cloudflare dashboard or the Cloudflare API.
+{{</Aside>}}
 
 ## Initial setup
 
 Request your account team to enable Advanced DNS Protection and make the initial configuration. The initial thresholds are based on your network’s individual behavior.
 
-Next, add the [prefixes](/ddos-protection/tcp-protection/concepts/#prefixes) you would like to onboard. Advanced DNS Protection will only be applied to the prefixes you onboard. To add prefixes, do one of the following:
+Next, [add the prefixes](/ddos-protection/tcp-protection/how-to/add-prefix/) you wish to onboard using the Advanced TCP Protection user interface. Advanced DNS Protection will only be applied to the prefixes you onboard.
 
-* Go to the Cloudflare dashboard and use the [Advanced TCP Protection user interface](/ddos-protection/tcp-protection/how-to/add-prefix/).
-* Use the [prefix API operations](/ddos-protection/tcp-protection/api/#prefix-operations) provided by Advanced TCP Protection.
-
-{{<Aside type="warning">}}
+{{<Aside type="note">}}
 Currently, the list of onboarded prefixes is shared with [Advanced TCP Protection](/ddos-protection/tcp-protection/). Any onboarded prefixes will be subject to both Advanced TCP Protection and Advanced DNS Protection, assuming that your account team has done the initial configuration of both systems. However, you can leave any of these protection systems in monitoring mode.
 
 If you already onboarded the desired prefixes when you configured Advanced TCP Protection, you do not need to take any other action.
 {{</Aside>}}
 
-## Configuration
+---
 
-After getting Advanced DNS Protection enabled, you can create rules to configure the protection system. By default, Advanced DNS Protection will be enabled in monitoring mode.
+## Troubleshooting
 
-Currently, you must use the Cloudflare API to create and manage DNS protection rules. For more information, refer to [Configure via API](/ddos-protection/dns-protection/api/).
+### No data about Advanced DNS Protection in Network Analytics
 
-For more information on the configuration settings, refer to [Rule settings](/ddos-protection/dns-protection/rule-settings/).
+If you cannot find any data related to Advanced DNS Protection in the **DNS protection** tab of Network Analytics, it could be because one of these reasons:
+
+* You did not [add your prefixes](/ddos-protection/tcp-protection/how-to/add-prefix/) to Advanced TCP Protection.
+* Your account team did not enable the Advanced DNS Protection system yet.
+* You do not have any DNS (over UDP) traffic.
 
 ---
 
