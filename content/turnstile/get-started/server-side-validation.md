@@ -113,7 +113,7 @@ async function handlePost(request) {
 		method: 'POST',
 	});
 
-	const subsequentOutcome = await firstResult.json();
+	const subsequentOutcome = await subsequentResult.json();
 	if (subsequentOutcome.success) {
 		// ...
 	}
