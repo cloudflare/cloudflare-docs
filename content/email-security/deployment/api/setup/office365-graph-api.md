@@ -1,6 +1,6 @@
 ---
 title: Office 365 Graph API setup
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 4
 meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
