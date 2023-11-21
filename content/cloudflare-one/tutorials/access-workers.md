@@ -8,21 +8,17 @@ title: Create custom headers for Cloudflare Access-protected origins with Worker
 
 # Create custom headers for Cloudflare Access-protected origins with Workers
 
-This tutorial covers how to add custom headers to send down to your origin services protected by Cloudflare Access. This can be valuable when applications or some networking implementations require specific, custom headers passed to the origin, which can sometimes be difficult to replicate when moving the traffic to a Zero Trust proxy of any kind.
+This tutorial covers how to use a [Cloudflare Worker](/workers/) to add custom HTTP headers to traffic and how to send those headers to your origin services protected by [Cloudflare Access](/cloudflare-one/policies/access/).
 
-When Cloudflare sends a request to your origin, the request will include an application token as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
+Certain applications or networking implementations require specific custom headers to be passed the origin, which can be difficult to implement for traffic moving through a Zero Trust proxy. You can use a Worker to send the [headers required by Access](/cloudflare-one/identity/authorization-cookie/). In addition, you can send a header called `cf-access-authenticated-user-email`, which contains the authenticated user's email address.
 
-Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that the request came from Access and not a malicious third party.
-
-Along with the JWT header, `CF_Authorization` cookie, and other Cloudflare specific headers, also sent is a header called `cf-access-authenticated-user-email` containing the authenticated user's email address.
-
-To send the authenticated user's email address as a different header or to include other Cloudflare or custom headers you can use a Worker.
+---
 
 {{<tutorial>}}
 
 {{<tutorial-prereqs>}}
 
-- Secure your origin server with [Access](/cloudflare-one/policies/access/)
+- Secure your origin server with Cloudflare Access
 
 {{</tutorial-prereqs>}}
 
