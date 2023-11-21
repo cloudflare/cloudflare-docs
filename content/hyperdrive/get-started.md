@@ -56,7 +56,7 @@ When setting up your `hyperdrive-tutorial` Worker, answering the questions as be
 
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
-- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts`
+- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -180,13 +180,13 @@ With the driver installed, you can now create a Worker script that queries your 
 
 After you have set up your database, you will run a SQL query from within your Worker.
 
-Go to your `hyperdrive-tutorial` Worker and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
+Go to your `hyperdrive-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 
-Populate your `worker.ts` file with the following code:
+Populate your `index.ts` file with the following code:
 
 ```typescript
 ---
-filename: "src/worker.ts"
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 
