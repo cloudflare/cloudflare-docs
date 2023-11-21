@@ -7,5 +7,5 @@ inputParameters: featureName
 ---
 
 {{<Aside type="warning">}}
-Using managed challenges with $1 may cause challenge loops. Refer to [Rules troubleshooting](/rules/reference/troubleshooting/) for more information.
+Using Cloudflare challenges along with $1 may cause challenge loops. Refer to [Rules troubleshooting](/rules/reference/troubleshooting/) for more information.
 {{</Aside>}}
