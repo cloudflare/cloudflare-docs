@@ -19,5 +19,3 @@ Use [IP lists](/waf/tools/lists/custom-lists/#ip-lists) to group services in net
 ## Geo-blocking
 
 Geo-blocking enables you to selectively allow or block traffic to any country. Refer to [Block a country](/magic-firewall/how-to/add-rules/#block-a-country) to check an example of how to block a country.
-
-
