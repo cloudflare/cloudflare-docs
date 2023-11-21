@@ -17,7 +17,7 @@ The following resources are available to configure through Terraform:
 
 **Schema Validation 2.0**
 - [`api_shield_schema`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema) for configuring a schema in [Schema Validation 2.0](/api-shield/security/schema-validation/).
-- [`api_shield_schema_validation_settings`](http://cloudflare_api_shield_schema_validation_settings/) for configuring zone-level Schema Validation 2.0 settings.
+- [`api_shield_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema_validation_settings) for configuring zone-level Schema Validation 2.0 settings.
 - [`api_shield_operation_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation_schema_validation_settings) for configuring operation-level Schema Validation 2.0 settings.
 
 ## Manage API Shield session identifiers
@@ -63,6 +63,10 @@ resource "cloudflare_api_shield_operation" "post_image" {
 ```
 
 ## Manage Schema Validation 2.0
+
+{{<Aside type="note">}}
+It is required to configure Endpoint Management if you want to set up Schema Validation 2.0 using Terraform.
+{{</Aside>}}
 
 Refer to the example configuration below to manage [Schema Validation 2.0](/api-shield/security/schema-validation/configure/) on your zone.
 
