@@ -5,4 +5,4 @@ weight: 3
 layout: learning-unit
 ---
 
-{{<render file="_vpn-overview.md" productFolder="learning-paths" >}}
+{{<render file="_vpn-overview.md" productFolder="cloudflare-one" >}}
