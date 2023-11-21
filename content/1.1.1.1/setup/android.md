@@ -42,12 +42,16 @@ Android 11 or later versions support both DNS over TLS (DoT) and DNS over HTTPS 
 4. Depending on what you want to configure, use one of the following DNS hostnames or [IP addresses](/1.1.1.1/ip-addresses/) and select **Save**.
 
     {{<details header="Use 1.1.1.1 resolver">}}
-- **For DoH**: `cloudflare-dns.com`
-- **For DoT**: `one.one.one.one`
+- `one.one.one.one`
+
+Or the corresponding IP address if your device requires it:
+- **IPv4**: `1.1.1.1` or `1.0.0.1`
+- **IPv6**: `2606:4700:4700::1111` or `2606:4700:4700::1001`
+
     {{</details>}}
 
     {{<details header="Block malware with 1.1.1.1 for Families">}}
-- `security.cloudflare-dns.com` 
+- `security.cloudflare-dns.com`
 
 Or the corresponding IP address if your device requires it:
 - **IPv4**: `1.1.1.2` or `1.0.0.2`
