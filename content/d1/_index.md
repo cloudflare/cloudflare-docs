@@ -25,7 +25,7 @@ Create your first D1 database by [following the Get started guide](/d1/get-start
 
 {{<Aside type="note" header="D1 is in public beta">}}
 
-D1 is in public beta. While the D1 team expect breaking changes and issues to be minimal, they may still occur. The D1 team generally do not recommend running large production workloads on beta products.
+D1 is in public beta. While the D1 team expects breaking changes and issues to be minimal, they may still occur. The D1 team generally does not recommend running large production workloads on beta products.
 
 To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85). To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev). If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
