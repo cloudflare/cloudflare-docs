@@ -138,3 +138,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
     ]
 }'
 ```
+
+## Next steps
+
+Refer to [Form expressions](/magic-firewall/how-to/form-expressions/) for more information on how to write rule expressions.
