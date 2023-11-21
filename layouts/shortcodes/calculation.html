@@ -3,13 +3,14 @@
 {{- $fieldsets := index $calculation_data "fieldsets" -}} 
 {{- $calculations := index $calculation_data "calculations" }}
 
-<form class="inputs">
+<form>
   {{- range $fieldsets -}}
-  <fieldset>
+  <fieldset class="calculationInputs">
     <legend>{{.name}}</legend>
     {{- range .fields -}}
     <label for="{{.key}}">{{.title}}</label>
     <input
+      class="calculationInputField"
       type="number"
       id="{{.key}}"
       name="{{.key}}"
@@ -21,10 +22,8 @@
   </fieldset>
   <br />
   {{- end -}}
-</form>
 
-<form class="calculations">
-  <fieldset>
+  <fieldset class="calculations">
     <legend>Result</legend>
     {{- range $calculations -}}
     <label for="{{.key}}">{{.title}}</label>
@@ -41,9 +40,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.1.0/math.min.js"></script>
 <script>
-  const inputs = document.querySelector("form.inputs");
-  const inputElements = inputs.querySelectorAll("input");
-
+  const inputElements = document.getElementsByClassName("calculationInputField");
+  const inputArray = Array.from(inputElements);
+    
   function replacePlaceholders(inputObj, inputString) {
     inputObj.forEach(function (inputObj) {
       inputString = inputString.replace(
@@ -58,7 +57,7 @@
     let inputObjects = [];
 
     // Iterate over each input element
-    inputElements.forEach(function (input) {
+    inputArray.forEach(function (input) {
       // Create an object with "id" and "value" properties
       const inputObject = {
         id: input.id,
@@ -69,7 +68,7 @@
       inputObjects.push(inputObject);
     });
 
-    const results = document.querySelector("form.calculations");
+    const results = document.querySelector("fieldset.calculations");
     const resultElements = results.querySelectorAll("input");
 
     resultElements.forEach(function (input) {
@@ -83,7 +82,7 @@
 </script>
 
 <style>
-  form.calculations {
+  fieldset.calculations {
     padding-top: 1em;
     border-top: 4px solid rgba(243, 128, 32, 1);
     margin-bottom: 2em;
