@@ -8,4 +8,6 @@ meta:
 
 # Magic Firewall Functions
 
+The Cloudflare Rules language provides [different types of functions](/ruleset-engine/rules-language/functions/) to manipulate and validate values. Magic Firewall also has its own function:
+
 {{<render file="_magic-firewall-functions.md">}}
