@@ -32,6 +32,6 @@ In order to create such records, first remove any `NS` records with the same nam
 
 {{<Aside type="warning" header="Important">}}
 
-This action might be reverting an existing subdomain setup and may incur in downtime. Refer to [Rollback `NS` delegation](/dns/zone-setups/subdomain-setup/rollback/) for more guidance.
+This action might be reverting an existing subdomain setup and may incur in downtime. Refer to [Rollback subdomain setup](/dns/zone-setups/subdomain-setup/rollback/) for more guidance.
 
 {{</Aside>}}
