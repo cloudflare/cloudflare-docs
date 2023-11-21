@@ -46,7 +46,7 @@
   function replacePlaceholders(inputObj, inputString) {
     inputObj.forEach(function (inputObj) {
       inputString = inputString.replace(
-        new RegExp(inputObj.id, "g"),
+        new RegExp("(?<=^|[\\s/+*(-])(" + inputObj.id + ")(?=[\\s+/*)-]|$)", "g"),
         inputObj.value
       );
     });
