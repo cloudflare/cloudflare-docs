@@ -103,10 +103,8 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Add metadata for reporting -->
-  {{- if in $.Context.RelPermalink "/support/other-languages" }}
   {{- with .Context.Params.source -}}
   <meta name="pcx_kb_number" content="{{- replaceRE `^http.+\/articles\/(\d+)-.*$` "$1" . -}}">
-  {{- end -}}
   {{- end -}}
 
   {{- $product := "" -}}
