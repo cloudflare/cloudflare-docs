@@ -95,3 +95,10 @@ The subdomain for the PTR record would be `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
 3. Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
 
 After this process, your reverse zone will be activated and you can perform reverse DNS lookups.
+
+## Other resources
+
+While setting up reverse zones, the following third-party tools may be useful:
+
+- [Reverse DNS record generator](https://www.whatsmydns.net/reverse-dns-generator)
+- [IPv6 subnet calculator](https://www.internex.at/de/toolbox/ipv6)
