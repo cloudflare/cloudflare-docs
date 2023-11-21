@@ -11,7 +11,7 @@ entries:
 
 - term: dynamic content
   general_definition: |-
-    dynamic content is website content that has to be fetched from the origin server.
+    dynamic content refers to website content that changes based on factors specific to the user such as time of visit, location, and device. News websites or social media are examples of this type of content. For this type of website, content has to be fetched from the origin server every time it is requested.
 
 - term: origin bandwidth (origin egress bandwidth)
   general_definition: |-
@@ -23,4 +23,44 @@ entries:
 
 - term: static content
   general_definition: |-
-    static content is website content that can be served directly from cache, without having to fetch it from the origin server. Static content includes files like images, stylesheets, and JavaScript that do not change frequently.
+    static content, like images, stylesheets, and JavaScript, remains the same for all users. It can be directly served from the cache without fetching from the origin server because it does not change without manual intervention.
+
+- term: uncached requests
+  general_definition: |-
+    uncached requests are requests that are not cached and therefore are served from the origin server. Uncached requests are the sum of all requests where `CacheCacheStatus` does not equal to `hit`, `stale`, `updating`, or `ignored`.
+
+- term: uncached bandwidth (uncached egress bandwidth)
+  general_definition: |-
+    uncached bandwidth is the amount of bandwidth that is not cached and therefore is served from the origin. Uncached bandwidth is the sum of all `EdgeResponseBytes` where `CacheCacheStatus` does not equal `hit`, `stale`, `updating`, `ignored`, or `revalidated`.
+
+- term: cache
+  general_definition: |-
+    a temporary storage area where frequently accessed data is stored for quick retrieval.
+
+- term: caching
+  general_definition: |-
+    the process of storing copies of files or data in a cache to accelerate future requests.
+
+- term: edge server
+  general_definition: |-
+    a server located at the edge of a network, typically within a CDN, that serves content to end-users.
+
+- term: origin server
+  general_definition: |-
+    the original server where the web content is hosted before it is distributed to edge servers in a CDN.
+
+- term: cache hit
+  general_definition: |-
+    when a requested piece of content is found in the cache, reducing the need to fetch it from the origin server.
+
+- term: cache miss
+  general_definition: |-
+    when a requested piece of content is not found in the cache, requiring the server to fetch it from the origin server.
+
+- term: purge
+  general_definition: |-
+    the process of removing outdated content from the cache to make room for updated content and ensure the delivery of the latest content.
+
+- term: time-to-live (TTL)
+  general_definition: |-
+    the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.

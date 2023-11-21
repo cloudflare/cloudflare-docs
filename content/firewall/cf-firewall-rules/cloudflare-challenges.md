@@ -30,6 +30,8 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 - A custom interactive challenge (such as click a button).
 - Private Access Tokens (using recent Apple operating systems).
 
+{{<render file="_challenge-issues.md" productFolder="rules" withParameters="Rules features">}}
+
 #### Available products
 
 Currently, **Managed Challenge** actions are available in the following security products:
@@ -163,4 +165,4 @@ Cloudflare challenges cannot support the following:
 
 1. Implementations where a domain serves a challenge page originally requested for another domain.
 2. Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
-3. Forward proxies that can be abused to steal clearances. 
+3. Forward proxies that can be abused to steal clearances.

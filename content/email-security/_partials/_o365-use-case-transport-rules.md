@@ -6,7 +6,7 @@ _build:
 inputParameters: ruleName;;ruleWords;;doFollowing;;img;;ruleName2;;ruleWords2;;doFollowing2;;img2
 ---
 
-To create the transport rules that will send emails with certain dispositions to Area 1:
+To create the transport rules that will send emails with certain {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} to Area 1:
 
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.

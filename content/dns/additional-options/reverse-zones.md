@@ -6,7 +6,7 @@ weight: 0
 
 # Reverse zones and PTR records
 
-Customers who control their own IP prefix(es) can set up reverse zones with PTR records to allow reverse DNS lookups.
+If you control your own IP prefix(es), you can set up reverse zones with PTR records to allow reverse DNS lookups.
 
 ## PTR records
 
@@ -44,12 +44,21 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
         - **IP prefix**: `<octet_1>.<octet_2>.0.0/16`
         - **Reverse zone address**: `<octet_2>.<octet_1>.in-addr.arpa`
 
-         {{<details header="Example">}}
+        {{<details header="Example">}}
 
-        - **IPv4 prefix**: `198.51.100.0/24`
-        - **Reverse zone**: `100.51.198.in-addr.arpa`
+- **IPv4 prefix**: `198.51.100.0/24`
+- **Reverse zone**: `100.51.198.in-addr.arpa`
 
-         {{</details>}}
+        {{</details>}}
+    - For IPv6, consider the following examples:
+        {{<example>}}
+- **IPv6 prefix**: `2001:DB8::0/32`
+- **Reverse zone**: `8.b.d.0.1.0.0.2.ip6.arpa`
+        {{</example>}}
+        {{<example>}}
+- **IPv6 prefix**: `2001:DB8::0/48`
+- **Reverse zone**: `0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`
+        {{</example>}}
 
 3. If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
 
@@ -61,17 +70,35 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 2. For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 
-    {{<details header="Example">}}
+    {{<details header="IPv4 example">}}
 
-    For example, you might have the following configuration:
+    Suppose you have the following configuration:
 
-    - **Reverse zone**: `100.51.198.in-addr.arpa`
-    - **IP address**: `198.51.100.123`
+- **Reverse zone**: `100.51.198.in-addr.arpa`
+- **IP address**: `198.51.100.123`
 
-    The PTR record on the subdomain would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
+The subdomain for the PTR record would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
+
+    {{</details>}}
+
+    {{<details header="IPv6 example">}}
+
+    Suppose you have the following configuration:
+
+- **Reverse zone**: `0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`
+- **IP address**: `2001:DB8::5`
+
+The subdomain for the PTR record would be `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0`, making the full domain for forward lookup `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`.
 
     {{</details>}}
 
 3. Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
 
 After this process, your reverse zone will be activated and you can perform reverse DNS lookups.
+
+## Other resources
+
+While setting up reverse zones, the following third-party tools may be useful:
+
+- [Reverse DNS record generator](https://www.whatsmydns.net/reverse-dns-generator)
+- [IPv6 subnet calculator](https://www.internex.at/de/toolbox/ipv6)

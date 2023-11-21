@@ -290,7 +290,7 @@ The returned configuration in the example above, which would match the existing 
     ```
 
 
-    After invoking this API endpoint, both WAF managed rules and WAF Managed Rules will be enabled. Check the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events for any legitimate traffic getting blocked, and perform any required adjustments to the WAF Managed Rules configuration. For example, you can [add an override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for a single rule that disables it or changes its action.
+    After invoking this API endpoint, both WAF managed rules and WAF Managed Rules will be enabled. Check the [Activity log](/waf/analytics/security-events/paid-plans/#activity-log) in Security Events for any legitimate traffic getting blocked, and perform any required adjustments to the WAF Managed Rules configuration. For example, you can [add an override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for a single rule that disables it or changes its action.
 
 4. To finish the migration and disable WAF managed rules, set the configuration for the new WAF using the settings you obtained in step 2 and possibly adjusted in step 3. Make sure you include the `waf_migration=pending&phase_two=1` query string parameters.
 
@@ -340,7 +340,7 @@ ___
 
 If you are an Enterprise customer, use the **validation mode** of the WAF migration process to check the behavior of the new WAF Managed Rules configuration. Cloudflare enables validation mode after you deploy the new WAF configuration. In this mode, the previous WAF version is still enabled, so that you can validate the behavior of your new configuration during the migration process. The new WAF Managed Rules will run before the previous version.
 
-Go to the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events during validation mode and check the following:
+Go to the [Activity log](/waf/analytics/security-events/paid-plans/#activity-log) in Security Events during validation mode and check the following:
 
 - Look for any requests allowed by the new WAF that are being handled by the previous WAF version (for example, by a challenge or block action). If this happens, consider writing a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to handle the requests you previously identified.
 
@@ -350,7 +350,7 @@ Go to the [Activity log](/waf/security-events/paid-plans/#activity-log) in Secur
 
 Business and Professional customers do not have access to validation mode, which means that they will be able to check the new WAF behavior after they migrate to the new WAF Managed Rules.
 
-In the days following the migration, check the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset).
+In the days following the migration, check the [Activity log](/waf/analytics/security-events/paid-plans/#activity-log) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset).
 
 Additionally, check for requests that should have been blocked. In this situation, consider creating a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block these requests.
 

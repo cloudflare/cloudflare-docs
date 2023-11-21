@@ -7,7 +7,7 @@ _build:
 
 With an **Inline deployment** for your [Area 1 setup](/email-security/deployment/), Area 1 evaluates email messages before they reach a user's inbox.
 
-More technically, Area 1 becomes a hop in the SMTP processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
+More technically, Area 1 becomes a hop in the {{<glossary-tooltip term_id="SMTP">}}SMTP{{</glossary-tooltip>}} processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
 
 ![With inline deployment, messages travel through Area 1's email filter before reaching your users.](/images/email-security/deployment/inline-setup/inline-deployment-diagram.png)
 

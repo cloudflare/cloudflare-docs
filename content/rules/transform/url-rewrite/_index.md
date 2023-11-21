@@ -11,9 +11,9 @@ meta:
 
 You can manipulate the URL of a request through different operations, namely rewrites and redirects:
 
-* **URL rewrite**: A server-side operation that occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change. Configure rewrite URL rules to perform rewrites on the Cloudflare global network without reaching your web server.
+* **URL rewrite**: A server-side operation that converts a source URL into a target URL. It occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change. Configure rewrite URL rules to perform rewrites on the Cloudflare global network without reaching your web server.
 
-* **URL redirect**: A client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can notice the URL changing when the redirect occurs. Refer to [URL forwarding](/rules/url-forwarding/) to learn more about configuring redirects.
+* **URL redirect**: A client-side operation that converts a source URL into a target URL. It occurs after the web server has loaded the initial URL. In this case, a website visitor can notice the URL changing when the redirect occurs. Refer to [URL forwarding](/rules/url-forwarding/) to learn more about configuring redirects.
 
 Use a URL rewrite to return the content of a URL while displaying a different URL in the browser. You can rewrite the URI path, the query string, or both.
 

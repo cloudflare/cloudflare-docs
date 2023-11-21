@@ -9,7 +9,7 @@ meta:
 
 # Search
 
-You can search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
+You can search for emails that have been processed by Area 1, whether they are marked with a {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}detection disposition{{</glossary-tooltip>}} or not.
 
 There are two ways for searching emails:
 

@@ -15,7 +15,7 @@ Cloudflare updates the list of rules in the managed ruleset on a regular basis.
 
 The HTTP DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
-The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS managed rules.
+The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/analytics/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS managed rules.
 
 ## Ruleset configuration
 
