@@ -16,4 +16,4 @@ The execution order of Rules products is the following:
 
 The different types of rules listed above will take precedence over [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). This means that Page Rules will be overridden if there is a match for both Page Rules and the Rules products listed above.
 
-{{<render file="_managed-challenge-issues.md" withParameters="Rules features">}}
+{{<render file="_challenge-issues.md" withParameters="Rules features">}}

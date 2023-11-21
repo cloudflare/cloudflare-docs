@@ -30,7 +30,7 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 - A custom interactive challenge (such as click a button).
 - Private Access Tokens (using recent Apple operating systems).
 
-{{<render file="_managed-challenge-issues.md" productFolder="rules" withParameters="Rules features">}}
+{{<render file="_challenge-issues.md" productFolder="rules" withParameters="Rules features">}}
 
 #### Available products
 

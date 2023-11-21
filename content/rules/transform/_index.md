@@ -32,7 +32,7 @@ Transform Rules run in order. Rules that appear later in the list of Transform R
 
 Request and response fields are immutable within each [phase](/ruleset-engine/about/phases/) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](/ruleset-engine/about/rules/#rule-evaluation-and-field-values).
 
-{{<render file="_managed-challenge-issues.md" withParameters="Rules features such as Transform Rules">}}
+{{<render file="_challenge-issues.md" withParameters="Rules features such as Transform Rules">}}
 
 ## Availability
 
