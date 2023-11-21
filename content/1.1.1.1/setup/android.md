@@ -12,7 +12,7 @@ meta:
 
 The app also allows you to enable encryption for DNS queries or enable [WARP mode](/warp-client/), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
 
-You can select between the options available in the app's settings. By default, 1.1.1.1: Faster Internet is configured to WARP mode.
+You can select between the options available in the app settings. By default, 1.1.1.1: Faster Internet is configured to WARP mode.
 
 ## Set up 1.1.1.1: Faster Internet
 
@@ -39,12 +39,29 @@ Android 11 or later versions support both DNS over TLS (DoT) and DNS over HTTPS 
 1. Go to **Settings** > **Network & internet**.
 2. Select **Advanced** > **Private DNS**.
 3. Select the **Private DNS provider hostname** option.
-4. Enter `cloudflare-dns.com` and select **Save**.
-{{<Aside type="note">}}
-To configure 1.1.1.1 for Families, use one of the following:
-* Block malware: `security.cloudflare-dns.com` or the [corresponding IP addresses](/1.1.1.1/setup/#1111-for-families) if your device requires it.
-* Block malware and adult content: `family.cloudflare-dns.com` or the [corresponding IP addresses](/1.1.1.1/setup/#1111-for-families) if your device requires it.
-{{</Aside>}}
+4. Depending on what you want to configure, use one of the following DNS hostnames or [IP addresses](/1.1.1.1/ip-addresses/) and select **Save**.
+
+    {{<details header="Use 1.1.1.1 resolver">}}
+- **For DoH**: `cloudflare-dns.com`
+- **For DoT**: `one.one.one.one`
+    {{</details>}}
+
+    {{<details header="Block malware with 1.1.1.1 for Families">}}
+- `security.cloudflare-dns.com` 
+
+Or the corresponding IP address if your device requires it:
+- **IPv4**: `1.1.1.2` or `1.0.0.2`
+- **IPv6**: `2606:4700:4700::1112` or `2606:4700:4700::1002`
+    {{</details>}}
+
+    {{<details header="Block malware and adult content with 1.1.1.1 for Families">}}
+- `family.cloudflare-dns.com`
+
+
+Or the corresponding IP address if your device requires it:
+- **IPv4**: `1.1.1.3` or `1.0.0.3`
+- **IPv6**: `2606:4700:4700::1113` or `2606:4700:4700::1003`
+    {{</details>}}
 
 ### Android 9 or 10
 
@@ -53,7 +70,24 @@ Android 9 and Android 10 support DNS over TLS to secure your queries through enc
 1. Go to **Settings** > **Network & internet**.
 2. Select **Advanced** > **Private DNS**.
 3. Select the **Private DNS provider hostname** option.
-4. Enter `one.one.one.one` and select **Save**.
+4. Enter `one.one.one.one` and select **Save**. Or consider the following options if you want to use 1.1.1.1 for Families.
+
+    {{<details header="Block malware with 1.1.1.1 for Families">}}
+- `security.cloudflare-dns.com` 
+
+Or the corresponding IP address if your device requires it:
+- **IPv4**: `1.1.1.2` or `1.0.0.2`
+- **IPv6**: `2606:4700:4700::1112` or `2606:4700:4700::1002`
+    {{</details>}}
+
+    {{<details header="Block malware and adult content with 1.1.1.1 for Families">}}
+- `family.cloudflare-dns.com`
+
+
+Or the corresponding IP address if your device requires it:
+- **IPv4**: `1.1.1.3` or `1.0.0.3`
+- **IPv6**: `2606:4700:4700::1113` or `2606:4700:4700::1003`
+    {{</details>}}
 
 ### Previous Android versions
 
