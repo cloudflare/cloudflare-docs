@@ -221,6 +221,11 @@
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 /support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/best-practices/respond-to-ddos-attacks/ 301
 /support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/about/ 301
+# Redirect the following pages temporarily (using HTTP 307 Temporary redirect)
+/ddos-protection/dns-protection/rule-settings/ /ddos-protection/dns-protection/ 307
+/ddos-protection/dns-protection/api/ /ddos-protection/dns-protection/ 307
+/ddos-protection/dns-protection/api/examples/ /ddos-protection/dns-protection/ 307
+/ddos-protection/dns-protection/api/json-objects/ /ddos-protection/dns-protection/ 307
 
 # dmarc-management
 /dmarc-management/manage-sources/ /dmarc-management/ 301
