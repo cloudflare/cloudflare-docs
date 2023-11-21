@@ -6,7 +6,7 @@ weight: 0
 
 # Reverse zones and PTR records
 
-Customers who control their own IP prefix(es) can set up reverse zones with PTR records to allow reverse DNS lookups.
+If you control your own IP prefix(es), you can set up reverse zones with PTR records to allow reverse DNS lookups.
 
 ## PTR records
 
@@ -70,25 +70,25 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 2. For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 
-    {{<details header="IPv4 Example">}}
+    {{<details header="IPv4 example">}}
 
-    For example, you might have the following configuration:
+    Suppose you have the following configuration:
 
 - **Reverse zone**: `100.51.198.in-addr.arpa`
 - **IP address**: `198.51.100.123`
 
-    The PTR record on the subdomain would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
+The subdomain for the PTR record would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
 
     {{</details>}}
 
-    {{<details header="IPv6 Example">}}
+    {{<details header="IPv6 example">}}
 
-    For example, you might have the following configuration:
+    Suppose you have the following configuration:
 
 - **Reverse zone**: `0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`
 - **IP address**: `2001:DB8::5`
 
-    The subdomain for the PTR record would be `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0`, making the full domain for forward lookup `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`.
+The subdomain for the PTR record would be `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0`, making the full domain for forward lookup `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`.
 
     {{</details>}}
 
