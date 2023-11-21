@@ -42,7 +42,7 @@ To disable an existing rule, from the **Magic Firewall Rules** page, set the **E
 
 ## API
 
-The following section has several examples of how to use the API to perform certain actions.
+Below, you can find examples of how to use the API to perform certain actions.
 
 {{<Aside type="warning" header="Warning">}}
 
