@@ -38,6 +38,8 @@
   </fieldset>
 </form>
 
+<p class="calculationDisclaimer">This calculator is for informational purposes only and all results are estimates.</p>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.1.0/math.min.js"></script>
 <script>
   const inputElements = document.getElementsByClassName("calculationInputField");
@@ -84,7 +86,6 @@
 <style>
   fieldset.calculations {
     border: 4px solid rgba(243, 128, 32, 1);
-    margin-bottom: 2em;
   }
 
   input[readonly] {
@@ -104,5 +105,11 @@
   input {
     display: block;
     margin-bottom: 0.5em;
+  }
+
+  .calculationDisclaimer {
+    font-size: .7em;
+    margin-top: .5em;
+    margin-bottom: 2em;
   }
 </style>
