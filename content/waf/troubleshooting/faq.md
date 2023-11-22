@@ -8,13 +8,20 @@ weight: 10
 
 ## General questions
 
-### Why does a security event display a Cloudflare IP address even though other fields match the client details?
+{{<faq-item>}}
+{{<faq-question level="3" text="Why does a security event display a Cloudflare IP address even though other fields match the client details?">}}
+{{<faq-answer>}}
 
 This happens when a request goes through a Cloudflare Worker.
 
 In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in [Security Events](/waf/analytics/security-events/paid-plans/) will be a Cloudflare IP address.
 
-### Do I need to escape certain characters in expressions?
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level="3" text="Do I need to escape certain characters in expressions?">}}
+{{<faq-answer>}}
 
 Yes, you may have to escape certain characters in expressions. The exact escaping will depend on the string syntax you use:
 
@@ -23,11 +30,21 @@ Yes, you may have to escape certain characters in expressions. The exact escapin
 
 For more information on string syntaxes and escaping, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
 
-### Why is my regular expression pattern not working?
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level="3" text="Why is my regular expression pattern not working?">}}
+{{<faq-answer>}}
 
 If you are using a regular expression, it is recommended that you test it with a tool such as [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
 
-### How do I exclude certain requests from being blocked or challenged?
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level="3" text="How do I exclude certain requests from being blocked or challenged?">}}
+{{<faq-answer>}}
 
 In certain situations you want to enforce a blocking or challenging action but make an exception for specific types of requests.
 
@@ -175,9 +192,14 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 </table>
 {{</table-wrap>}}
 
+{{</faq-answer>}}
+{{</faq-item>}}
+
 ## Bots
 
-### How does the WAF handle traffic from known bots?
+{{<faq-item>}}
+{{<faq-question level="3" text="How does the WAF handle traffic from known bots?">}}
+{{<faq-answer>}}
 
 #### Caution about potentially blocking bots
 
@@ -196,3 +218,6 @@ For more information on verified bots, refer to [Bots](/bots/concepts/bot/).
 {{<Aside type="note">}}
 There is no functional difference between known and verified bots. However, the known bots field (`cf.client.bot`) is available for all customers, while the verified bots field (`cf.bot_management.verified_bot`) is available for Enterprise customers.
 {{</Aside>}}
+
+{{</faq-answer>}}
+{{</faq-item>}}
