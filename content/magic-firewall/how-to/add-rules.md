@@ -117,8 +117,6 @@ Magic Firewall supports [using lists in expressions](/waf/tools/lists/use-in-exp
 - `$cf.malware` - Sources of malware
 - `$<IP_LIST_NAME>` - The name of an account-level IP list
 
-<!---->
-
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 --header 'Content-Type: application/json' \
