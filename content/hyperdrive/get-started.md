@@ -256,8 +256,8 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 ## Next steps
 
-- Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/)
-- How to [configure query caching](/hyperdrive/learning/query-caching/)
+- Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/).
+- How to [configure query caching](/hyperdrive/learning/query-caching/).
 - [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
