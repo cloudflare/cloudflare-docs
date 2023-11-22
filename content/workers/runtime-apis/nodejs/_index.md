@@ -2,13 +2,15 @@
 pcx_content_type: concept
 title: Node.js compatibility
 layout: single
+meta:
+  description: Implemented Node.js runtime APIs and enablement instructions for your Worker project.
 ---
 
 # Node.js compatibility
 
 Most Workers import one or more packages of JavaScript or TypeScript code from [npm](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
 
-To ensure compatibility with a wider set of npm packages, and make it easier for you to run existing applications on Cloudflare Workers, the following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code:
+To ensure compatibility with a wider set of npm packages, and make it easier for you to run existing applications on Cloudflare Workers, the following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as Workers runtime APIs, with no need to add polyfills to your own code:
 
 {{<directory-listing>}}
 

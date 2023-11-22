@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: mTLS
+meta:
+  description: Configure your Worker to present a client certificate to services that enforce an mTLS connection.
 ---
 
 # Client authentication with mTLS

@@ -3,6 +3,7 @@ pcx_content_type: configuration
 title: Service bindings
 meta:
   title: Service bindings - Runtime APIs
+  description: Facilitate Worker-to-Worker communication.
 ---
 
 # Service bindings
