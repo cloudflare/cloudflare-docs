@@ -40,7 +40,7 @@ Namespaces provide a way to segment the vectors within your index: for example, 
 
 * To associate vectors with a namespace, you can optionally provide a `namespace: string` value when performing an insert or upsert operation.
 * When querying, you can pass the namespace to search within as an optional parameter to your query.
-* A namespace can be up to 64 characters (bytes) in length and you can have up to 1000 namespaces per index.
+* A namespace can be up to 63 characters (bytes) in length and you can have up to 1000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
 
 When a namespace is provided, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
 
