@@ -25,9 +25,9 @@ To install Wrangler within your Worker project, run:
 To check your Wrangler version, run:
 
 ```sh
-$ wrangler --version
+$ npx wrangler --version
 // or run:
-$ wrangler version
+$ npx wrangler version
 ```
 
 ## Update Wrangler
