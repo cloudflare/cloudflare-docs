@@ -87,7 +87,7 @@ Cloudflare's global network can deliver content to website visitors using GZIP c
 
 For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
 
-Enterprise customers can override Cloudflare's default compression behavior using [compression rules](/rules/compression-rules/).
+Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
 {{<Aside type="warning" header="Minimum response size for compression">}}
 
