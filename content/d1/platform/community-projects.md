@@ -44,16 +44,6 @@ Drizzle ORM is a TypeScript ORM for SQL databases designed with maximum type saf
 * [D1 example](https://github.com/drizzle-team/drizzle-orm/tree/main/examples/cloudflare-d1)
 * [SQLite API surface](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/sqlite-core/README.md)
 
-### t4-app
-
-The T4 Stack is a universal web and native stack focused on developer experience, rapid development, and performance. The T4 Stack uses Cloudflare D1, Workers, Next.js and Hono as core parts of its stack.
-
-Easy integration with Cloudflare services, such as R2 & D1 enable developers to easily and rapidly build apps with AI-powered features.
-
-* [T4 stack documentation](https://t4stack.com/)
-* [Getting started guide](https://t4stack.com/getting-started)
-* [GitHub repo](https://github.com/timothymiller/t4-app)
-
 ### d1-orm
 
 Object Relational Mapping (ORM) is a technique to query and manipulate data by using JavaScript. Created by a Cloudflare Discord Community Champion, the `d1-orm` seeks to provide a strictly typed experience while using D1.
