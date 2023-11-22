@@ -20,6 +20,16 @@ To continue:
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
 
+## 0. Log in
+
+Before creating your D1 database, log in with your Cloudflare account by running:
+
+```sh
+$ npx wrangler login
+```
+
+You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+
 ## 1. Create a Worker
 
 {{<Aside type="note" header="New to Workers?">}}
@@ -207,14 +217,6 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
 
 ## 6. Deploy your database
-
-Before deploying your D1 database and Worker globally, log in with your Cloudflare account by running:
-
-```sh
-$ npx wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
 To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps _without_ the `--local` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
 
