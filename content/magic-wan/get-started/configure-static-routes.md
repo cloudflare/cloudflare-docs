@@ -13,4 +13,4 @@ meta:
 
 ## Next steps
 
-Refer to the [How to](/magic-wan/how-to/) section to learn about other tasks you configure for your Magic WAN setup.
+Refer to the [How to](/magic-wan/how-to/) section to learn about other taks to configure your Magic WAN setup.
