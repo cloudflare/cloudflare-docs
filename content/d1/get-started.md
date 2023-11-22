@@ -75,7 +75,7 @@ Run the following `wrangler d1` command and give your database a name. A good da
 * Only used for describing the database, and is not directly referenced in code.
 
 ```sh
-$ wrangler d1 create <DATABASE_NAME>
+$ npx wrangler d1 create <DATABASE_NAME>
 
 ✅ Successfully created DB '<DATABASE_NAME>'
 
@@ -136,13 +136,13 @@ INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds
 You will initialize your database to run and test locally first. Bootstrap your new D1 database by running:
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
+$ npx wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
 ```
 
 Then validate your data is in your database by running:
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> --local --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute <DATABASE_NAME> --local --command="SELECT * FROM Customers"
 ```
 
 ### Write queries within your Worker
@@ -199,7 +199,7 @@ After configuring your Worker, you can test your project locally before you depl
 While in your project directory, test your database locally by running:
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
@@ -211,7 +211,7 @@ To test that your database is running successfully, add `/api/beverages` to the 
 Before deploying your D1 database and Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -221,13 +221,13 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
+$ npx wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
 ```
 
 Then validate the data is in production by running:
 
 ```sh
-$ wrangler d1 execute <DATABASE_NAME> --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute <DATABASE_NAME> --command="SELECT * FROM Customers"
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
