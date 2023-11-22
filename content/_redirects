@@ -514,6 +514,7 @@
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
+/magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
