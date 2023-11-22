@@ -173,13 +173,13 @@ export class Browser {
 			await page.setViewport({ width: width[i], height: height[i] });
 			await page.goto("https://workers.cloudflare.com/");
 			const fileName = "screenshot_" + width[i] + "x" + height[i]
-			const sc = await page.screenshot({
-				path: fileName + ".jpg"
-			}
-			);
+			const sc = await page.screenshot({ path: fileName + ".jpg" });
 
 			await this.env.BUCKET.put(folder + "/"+ fileName + ".jpg", sc);
-		  }
+		}
+
+		// close tab when there's no more work to be done on the page
+		await page.close();
 
 		// Reset keptAlive after performing tasks to the DO.
 		this.keptAliveInSeconds = 0;
@@ -202,6 +202,9 @@ export class Browser {
 		if (this.keptAliveInSeconds < KEEP_BROWSER_ALIVE_IN_SECONDS) {
 		  console.log(`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`);
 		  await this.storage.setAlarm(Date.now() + 10 * 1000);
+		  // You could ensure the ws connection is kept alive by requesting something
+		  // or just let it close automatically when there's no work to be done
+          // eg. await this.browser.version()
 		} else {
 			console.log(`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`);
 			if (this.browser) {
