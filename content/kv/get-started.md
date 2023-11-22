@@ -49,22 +49,22 @@ $ npm create cloudflare@latest kv-tutorial
 
 When setting up your `kv-tutorial` Worker, answer the questions as below:
 
-- Your directory has been titled `d1-tutorial`.
+- Your directory has been titled `kv-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using Git.
 - Select `no` to deploying.
 
-This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
+This will create a new `kv-tutorial` directory. Your new `kv-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker will access your kv database.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
-For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 
