@@ -32,7 +32,17 @@ To continue, you will need:
 3. [`Node.js`](https://nodejs.org/en/) installed. Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
 4. **A publicly accessible PostgreSQL (or PostgreSQL compatible) database**. Cloudflare recommends [Neon](https://neon.tech/) if you do not have an existing database. Read the [Neon's documentation to create your first database](https://neon.tech/docs/introduction).
 
-## 1. Create a Worker
+## 1. Log in
+
+Before creating your Hyperdrive binding, log in with your Cloudflare account by running:
+
+```sh
+$ npx wrangler login
+```
+
+You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+
+## 2. Create a Worker
 
 {{<Aside type="note" header="New to Workers?">}}
 
@@ -67,7 +77,7 @@ For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=si
 
 {{</Aside>}}
 
-## 2. Connect Hyperdrive to a database
+## 3. Connect Hyperdrive to a database
 
 {{<Aside type="note" heading="Supported database engines">}}
 
@@ -93,10 +103,10 @@ Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangle
 
 To create your first Hyperdrive, you will need:
 
-* The IP address (or hostname) and port of your database.
-* The database username (for example, `hyperdrive-demo`) you configured in a previous step.
-* The password associated with that username.
-* The name of the database you want Hyperdrive to connect to. For example, `postgres`.
+- The IP address (or hostname) and port of your database.
+- The database username (for example, `hyperdrive-demo`) you configured in a previous step.
+- The password associated with that username.
+- The name of the database you want Hyperdrive to connect to. For example, `postgres`.
 
 Hyperdrive accepts the combination of these parameters in the common connection string format used by database drivers:
 
@@ -109,13 +119,13 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
-$ wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+$ npx wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 If successful, the command will output your new Hyperdrive configuration:
 
 ```json
- {
+{
   "id": "<example id: 57b7076f58be42419276f058a8968187>",
   "name": "your-config-name",
   "origin": {
@@ -138,7 +148,7 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 {{</Aside>}}
 
-## 3. Bind your Worker to Hyperdrive
+## 4. Bind your Worker to Hyperdrive
 
 You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
@@ -161,13 +171,13 @@ Specifically:
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "hyperdrive"` or `binding = "productionDB"` would both be valid names for the binding.
 - Your binding is available in your Worker at `env.<BINDING_NAME>`.
 
-## 4. Run a query against your database
+## 5. Run a query against your database
 
 ### Install a database driver
 
 To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [node-postgres](https://node-postgres.com/), one of the most widely used PostgreSQL drivers.
 
-To install `node-postgres`,  ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
+To install `node-postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
 ```sh
 # For existing projects, make sure you are using pg v8.11.0 or greater
@@ -229,15 +239,7 @@ In the code above, you have:
 3. Initiated a query via `await client.query()` that outputs all tables (user and system created) in the database.
 4. Returned the response as JSON to the client.
 
-## 5. Deploy your database
-
-Before deploying your Hyperdrive binding and Worker globally, log in with your Cloudflare account by running:
-
-```sh
-$ npx wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+## 6. Deploy your database
 
 You can now deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
@@ -254,8 +256,8 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 ## Next steps
 
-* Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/)
-* How to [configure query caching](/hyperdrive/learning/query-caching/)
-* [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
+- Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/).
+- How to [configure query caching](/hyperdrive/learning/query-caching/).
+- [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
