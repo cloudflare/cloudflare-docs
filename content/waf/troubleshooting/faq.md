@@ -6,13 +6,15 @@ weight: 10
 
 # WAF FAQ
 
-## Why does a security event display a Cloudflare IP address even though other fields match the client details?
+## General questions
+
+### Why does a security event display a Cloudflare IP address even though other fields match the client details?
 
 This happens when a request goes through a Cloudflare Worker.
 
 In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in [Security Events](/waf/analytics/security-events/paid-plans/) will be a Cloudflare IP address.
 
-## Do I need to escape certain characters in expressions?
+### Do I need to escape certain characters in expressions?
 
 Yes, you may have to escape certain characters in expressions. The exact escaping will depend on the string syntax you use:
 
@@ -21,11 +23,11 @@ Yes, you may have to escape certain characters in expressions. The exact escapin
 
 For more information on string syntaxes and escaping, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
 
-## Why is my regular expression pattern not working?
+### Why is my regular expression pattern not working?
 
 If you are using a regular expression, it is recommended that you test it with a tool such as [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
 
-## How do I exclude certain requests from being blocked or challenged?
+### How do I exclude certain requests from being blocked or challenged?
 
 In certain situations you want to enforce a blocking or challenging action but make an exception for specific types of requests.
 
@@ -173,16 +175,17 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 </table>
 {{</table-wrap>}}
 
+## Bots
 
-## How does the WAF handle traffic from known bots?
+### How does the WAF handle traffic from known bots?
 
-### Caution about potentially blocking bots
+#### Caution about potentially blocking bots
 
 When you create a WAF custom rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
 Refer to [How do I exclude certain requests from being blocked or challenged?](#how-do-i-exclude-certain-requests-from-being-blocked-or-challenged).
 
-### Bots currently detected
+#### Bots currently detected
 
 [Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that the WAF currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to `true`.
 
