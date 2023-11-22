@@ -16,10 +16,10 @@ If you no longer want to manage the child domain as a separate zone, you can rol
 This process may incur in downtime, as it is not possible to add address records (`A`/`AAAA`) on names that already have a corresponding `NS` record.
 {{</Aside>}}
 
-1. In your child domain, [export](/dns/manage-dns-records/how-to/import-and-export/#export-records) DNS records.
-2. In the parent domain, go to **DNS** > **Records**.
-3. Delete one of the `NS` records defined for the child domain.
-4. Edit the remaining `NS` record to create the subdomain address record.
-5. [Import](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records you had obtained from step 1 into the parent zone.
-6. Also migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
-7. If needed, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
+1. (Optional) In the parent zone, migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
+2. (Optional) If needed, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child domain and any deeper subdomains (if present).
+3. In the child zone, [export](/dns/manage-dns-records/how-to/import-and-export/#export-records) DNS records.
+4. In the parent zone, go to **DNS** > **Records**.
+5. Delete one of the `NS` records defined for the child domain.
+6. Edit the remaining `NS` record to create the subdomain address record.
+7. [Import](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records you had obtained from step 1 into the parent zone.

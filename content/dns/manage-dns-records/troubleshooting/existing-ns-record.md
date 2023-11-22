@@ -16,9 +16,9 @@ NS records with that host already exist. (Code:81056)
 
 ## Causes
 
-When a child domain (`blog.example.com`) of your domain (`example.com`) has been set up as a separate [subdomain zone](/dns/zone-setups/subdomain-setup/), corresponding `NS` records must have been placed within the parent domain zone.
+When a child domain (`blog.example.com`) of your domain (`example.com`) has been set up as a separate [subdomain zone](/dns/zone-setups/subdomain-setup/), corresponding `NS` records must have been placed within the parent zone.
 
-When you are managing DNS records for the parent domain zone (in this example, `example.com`), you cannot create IP address resolution records (`A`, `AAAA`, or `CNAME`) with a name that specifies the same subdomain that already exists as a separate child domain zone.
+When you are managing DNS records for the parent zone (in this example, `example.com`), you cannot create IP address resolution records (`A`, `AAAA`, or `CNAME`) with a name that specifies the same subdomain that already exists as a separate subdomain zone.
 
 {{<example>}}
 | Type | Name | Content | TTL |
