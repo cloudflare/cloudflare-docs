@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Network
-weight: 1
+weight: 2
 ---
  
 # Welcome to the Network Support section
