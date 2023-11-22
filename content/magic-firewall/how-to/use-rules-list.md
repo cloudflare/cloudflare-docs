@@ -30,7 +30,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
 }'
 ```
 
-## 2. Add IPs to the List
+## 2. Add IPs to the list
 
 Next, [create list items](/api/operations/lists-create-list-items). This will add elements to the current list.
 
@@ -47,7 +47,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{lis
 
 ## 3. Use the list in a rule
 
-Finally, add a Magic Firewall rule referencing the List into an existing ruleset:
+Finally, add a Magic Firewall rule referencing the list into an existing ruleset:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules \

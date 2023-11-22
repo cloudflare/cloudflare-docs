@@ -56,7 +56,7 @@ Refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) and [Crea
 
 ### Skip action
 
-The example below blocks all tcp ports, but allows one port (8080) by using the skip action.
+The example below blocks all TCP ports, but allows one port (`8080`) by using the skip action.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
@@ -78,7 +78,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
       {
         "action": "block",
         "expression": "tcp.dstport in { 1..65535 }",
-        "description": "Block all tcp ports"
+        "description": "Block all TCP ports"
       }
     ]
 }'
@@ -86,7 +86,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 
 ### Block a country
 
-The example below blocks all packets with a source or destination IP address coming from Brazil by using its 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
+The example below blocks all packets with a source or destination IP address coming from Brazil by using its 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
@@ -115,7 +115,7 @@ Magic Firewall supports [using lists in expressions](/waf/tools/lists/use-in-exp
 - `$cf.anonymizer` - Anonymizer proxies
 - `$cf.botnetcc` - Botnet command and control channel
 - `$cf.malware` - Sources of malware
-- `${rules list name}` - The name of an account level Rules List
+- `$<IP_LIST_NAME>` - The name of an account-level IP list
 
 <!---->
 
@@ -133,7 +133,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
       {
         "action": "block",
         "expression": "ip.src in $cf.anonymizer",
-        "description": "Block traffic from an anonymizer proxy"
+        "description": "Block traffic from anonymizer proxies"
       }
     ]
 }'
