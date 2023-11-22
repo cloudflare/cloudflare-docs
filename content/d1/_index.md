@@ -33,15 +33,13 @@ To report bugs or request features, go to the [Cloudflare Community Forums](http
 
 ---
 
-## Get started
+## Features
  
 {{<feature header="Create your first D1 database" href="/d1/get-started/" cta="Create your D1 database">}}
 
 Create your first D1 database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
 
 {{</feature>}}
-
-## Features
 
 {{<feature header="Time Travel" href="/d1/learning/time-travel/" cta="Learn about Time Travel">}}
 
