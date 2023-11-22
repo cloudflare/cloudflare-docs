@@ -190,7 +190,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `state.storage` Object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
-## deleteAll
+### deleteAll
 
 - {{<code>}}deleteAll(){{</code>}} : {{<type>}}Promise{{</type>}}
 
