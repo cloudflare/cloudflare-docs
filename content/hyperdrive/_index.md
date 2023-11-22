@@ -48,6 +48,7 @@ Use Hyperdrive to cache the most popular queries executed against your database.
 ---
 
 ## Related products
+
 {{<related header="Workers" href="/workers/" product="workers">}}
 
 Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.

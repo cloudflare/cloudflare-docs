@@ -96,7 +96,7 @@ The following Workers examples show you how to:
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 

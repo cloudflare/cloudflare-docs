@@ -39,7 +39,7 @@ This command outputs a binding for `wrangler.toml`:
 filename: wrangler.toml
 ---
 name = "hyperdrive-example"
-main = "src/worker.ts"
+main = "src/index.ts"
 compatibility_date = "2023-09-11"
 
 node_compat = true # required for database drivers to function
@@ -60,7 +60,7 @@ Copy the below Worker code, which passes the connection string generated from `e
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 
