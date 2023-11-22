@@ -116,7 +116,7 @@ fetch('/my-api-endpoint')
   });
 ```
 
-For additional help, refer to [our FAQ for Challenges](/firewall/known-issues-and-faq#challenges).
+For additional help, refer to [our FAQ for Challenges](/bots/troubleshooting/#challenges).
 
 ---
 
