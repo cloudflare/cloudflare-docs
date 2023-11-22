@@ -9,4 +9,8 @@ meta:
 
 {{<render file="_static-routes1.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/tunnels/;;/magic-wan/reference/traffic-steering/;;">}}
 
-{{<render file="_static-routes3.md" productFolder="magic-transit" withParameters="**Magic WAN** > **Configuration**;;/magic-wan/get-started/configure-tunnels/;;/magic-wan/how-to/;;Magic WAN">}}
+{{<render file="_static-routes3.md" productFolder="magic-transit" withParameters="**Magic WAN** > **Configuration**;;/magic-wan/get-started/configure-tunnels/">}}
+
+## Next steps
+
+Refer to the [How to](/magic-wan/how-to/) section to learn about other tasks you configure for your Magic WAN setup.

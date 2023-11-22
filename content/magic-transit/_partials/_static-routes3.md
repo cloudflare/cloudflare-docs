@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: createPath;;tunnelEndpoints;;howToPath;;productName
+inputParameters: createPath;;tunnelEndpoints
 ---
 
 ## Scoped routes for Anycast GRE or IPsec tunnels
@@ -68,7 +68,3 @@ Configure scoping for your traffic in the **Region code** section when adding or
 
 1. In **Static routes**, locate the static route you want to modify and select **Delete**.
 2. Confirm the action by selecting the checkbox and select **Delete**.
-
-## Next steps
-
-Refer to the [How to]($3) section to learn about other tasks you configure for your $4 setup.
