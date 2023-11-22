@@ -105,7 +105,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### delete
 
-- {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}Promise\<boolean>{{</type>}}
+- {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<boolean>{{</type>}}
 
   - Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
@@ -216,7 +216,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### getAlarm
 
-- {{<code>}}getAlarm(){{</code>}} : {{<type>}}Promise\<Number | null>{{</type>}}
+- {{<code>}}getAlarm(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<Number | null>{{</type>}}
 
   - Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns `null`.
 
@@ -226,7 +226,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### setAlarm
 
-- {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
+- {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}  : {{<type>}}Promise{{</type>}}
 
   - Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
@@ -244,7 +244,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### deleteAlarm
 
-- {{<code>}}deleteAlarm(){{</code>}} : {{<type>}}Promise{{</type>}}
+- {{<code>}}deleteAlarm(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
@@ -267,10 +267,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed()`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
 {{</definitions>}}
-
-#### Supported options
-
-No supported options.
 
 ### Related resources
 
