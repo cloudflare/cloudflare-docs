@@ -25,15 +25,13 @@ Use your existing Postgres drivers and object-relational mapping (ORM) libraries
 
 ---
 
-## Get started
+## Features
  
 {{<feature header="Connect your database" href="/hyperdrive/get-started/" cta="Connect Hyperdrive to your database">}}
 
 Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) that queries it.
 
 {{</feature>}}
-
-## Features
 
 {{<feature header="PostgreSQL support" href="/hyperdrive/learning/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
 
