@@ -28,8 +28,8 @@ The available security levels are the following:
 |---------------------------------|--------------------|------------------------------------------------------------------------------------|
 | Off (Enterprise<br>customers only) | _N/A_           | Does not challenge IP addresses.                                                   |
 | Essentially off                 | 50–100             | Only challenges IP addresses with the worst reputation.                            |
-| Low                             | 25–100             | Challenges only threatening visitors.                                     |
-| Medium                          | 15–100             | Challenges both threatening and moderately threatening visitors.        |
+| Low                             | 25–100             | Challenges only threatening visitors.                                              |
+| Medium                          | 15–100             | Challenges both threatening and moderately threatening visitors.                   |
 | High                            |  0–100             | Challenges all visitors that exhibit threatening behavior within the last 14 days. |
 | I’m Under Attack!               | _N/A_              | Only for use if your website is currently under a DDoS attack.                     |
 
