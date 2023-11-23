@@ -47,3 +47,25 @@ If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Er
 To move a custom hostname back to an Active status, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to restart the hostname validation. A Custom Hostname in a Moved status is deleted after 7 days.
 
 In some circumstances, custom hostnames can also enter a **Moved** state if your customer changes their DNS records pointing to your SaaS service. For more details, refer to [Remove custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/remove-custom-hostnames/).
+
+---
+
+## CAA Errors
+
+The `caa_error` in the status of a custom hostname means that the CAA records configured on the domain prevented the Certificate Authority to issue the certificate.
+
+You can check which CAA records are configured on a domain using the `dig` command:
+`dig CAA example.com`
+
+You will need to ensure that required CAA records for the selected Certificate Authority are configured.
+For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
+
+```
+example.com CAA 0 issue "letsencrypt.org"
+example.com CAA 0 issuewild "letsencrypt.org"
+
+example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
+example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
+```
+
+You can find more details in our [CAA records article](/ssl/edge-certificates/troubleshooting/caa-records/).
