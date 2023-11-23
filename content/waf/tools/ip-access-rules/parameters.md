@@ -42,7 +42,7 @@ You can specify a country by name or two-letter [ISO-3166-1 alpha-2 codes](https
 
 Cloudflare uses the following special country alpha-2 codes that are not part of the ISO:
 
-* `T1`: [Tor exit nodes](https://support.cloudflare.com/hc/articles/203306930) (country name: `Tor`)
+* `T1`: [Tor exit nodes](/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/) (country name: `Tor`)
 * `XX`: Unknown/reserved
 
 {{<Aside type="note" header="Notes about country blocking">}}
