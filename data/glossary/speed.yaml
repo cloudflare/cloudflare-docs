@@ -1,0 +1,50 @@
+---
+productName: Speed
+entries:
+- term: page load time
+  general_definition: |-
+    the time it takes for a web page to fully load in a user's browser.
+
+- term: server response time
+  general_definition: |-
+    the time it takes for a server to respond to a request from a user's browser.
+
+- term: latency
+  general_definition: |-
+    the delay between a user action and the corresponding response from the system. 
+
+- term: bandwidth
+  general_definition: |-
+    the maximum rate of data transfer across a network.
+
+- term: compression
+  general_definition: |-
+    reducing the size of files or data to speed up their transfer over the network.
+
+- term: minification
+  general_definition: |-
+    the process of removing unnecessary characters from code (such as whitespace or comments) to reduce file size and improve loading times.
+
+- term: lazy loading
+  general_definition: |-
+    loading images or other resources only when they are about to be displayed, rather than loading everything at once.
+
+- term: render time
+  general_definition: |-
+    the time it takes for a browser to display a fully rendered web page after receiving the necessary resources.
+
+- term: brotli compression
+  general_definition: |-
+    brotli compression is a data compression algorithm developed by Google, optimized for web content, and designed to achieve higher compression ratios than traditional algorithms like Gzip.
+
+- term: SEO (search engine optimization)
+  general_definition: |-
+    SEO, or search engine optimization, is the practice of optimizing online content to improve its visibility and ranking in search engine results, thereby increasing organic traffic and relevance.
+
+- term: real user monitoring (RUM)
+  general_definition: |-
+    real user monitoring (RUM) is a web performance monitoring technique that collects and analyzes data based on actual user interactions and experiences, providing insights into how users interact with a website or application in real-time.
+
+- term: synthetic test
+  general_definition: |-
+    a synthetic test is an artificial simulation of user interactions and system behaviors designed to evaluate and measure the performance, responsiveness, and functionality of a website or application under controlled conditions.
