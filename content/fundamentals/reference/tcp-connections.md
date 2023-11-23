@@ -18,7 +18,7 @@ A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[
 ```
 <br/>
 
-User traffic is routed to the nearest Cloudflare data center based on the shortest [Border Gateway Protocol](/learning/security/glossary/what-is-bgp/) (BGP) path, thanks to [Anycast](/learning/cdn/glossary/anycast-network/) routing. Cloudflare then processes the request. In case a request is not served from Cloudflare’s data center, Cloudflare will open a connection to the origin server to forward the request.
+User traffic is routed to the nearest Cloudflare data center based on the shortest [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) path, thanks to [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routing. Cloudflare then processes the request. In case a request is not served from Cloudflare’s data center, Cloudflare will open a connection to the origin server to forward the request.
 
 ## TCP connections and keepalives
 
@@ -26,7 +26,7 @@ HTTP (Hypertext Transfer Protocol) is a [Layer 7](https://en.wikipedia.org/wiki/
 
 Keepalives are a mechanism that bridges TCP and HTTP and allow a single TCP connection to remain open for multiple HTTP requests and responses. This minimizes the connection overhead and latency associated with establishing new TCP connections for each web resource. Keepalives improve the efficiency and responsiveness of web applications by facilitating the reuse of existing connections, reducing network traffic, and enhancing user experience. 
 
-TCP connections can persist even after HTTP requests have concluded. However, to manage resources efficiently, idle connections are typically terminated after a certain period of inactivity. To enhance connection re-use and minimize connection overhead, keepalives are employed. These mechanisms collectively optimize the performance and reliability of web applications while conserving network resources.
+TCP connections can persist even after HTTP requests have concluded. However, to manage resources efficiently, idle connections are typically terminated after a certain period of inactivity. To enhance connection reuse and minimize connection overhead, keepalives are employed. These mechanisms collectively optimize the performance and reliability of web applications while conserving network resources.
 
 If either a user or an origin does not respond to two keepalives, Cloudflare will sever the connection by sending a TCP Reset (RST) packet.
 
