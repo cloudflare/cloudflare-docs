@@ -24,7 +24,7 @@ User traffic is routed to the nearest Cloudflare data center based on the shorte
 
 HTTP (Hypertext Transfer Protocol) is a [Layer 7](https://en.wikipedia.org/wiki/OSI_model) application protocol that operates over TCP. By default, HTTP opens a new TCP connection for each request-response cycle, which can lead to performance overhead due to the repeated connection establishment and teardown. 
 
-Keepalives are a mechanism that bridges TCP and HTTP, and allow a single TCP connection to remain open for multiple HTTP requests and responses. This minimizes the connection overhead and latency associated with establishing new TCP connections for each web resource. Keepalives improve the efficiency and responsiveness of web applications by facilitating the reuse of existing connections, reducing network traffic, and enhancing user experience. 
+Keepalives are a mechanism that bridges TCP and HTTP, and allow a single TCP connection to remain open for multiple HTTP requests and responses. This minimizes the connection overhead and latency associated with establishing new TCP connections for each web resource. Keepalives improve the efficiency and responsiveness of web applications by facilitating the reuse of existing connections, reducing network traffic, and enhancing user experience.
 
 TCP connections can persist even after HTTP requests have concluded. However, to manage resources efficiently, idle connections are typically terminated after a certain period of inactivity. To enhance connection reuse and minimize connection overhead, keepalives are employed. These mechanisms collectively optimize the performance and reliability of web applications while conserving network resources.
 
