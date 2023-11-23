@@ -6,10 +6,11 @@ pcx_content_type: get-started
 
 # Get started
 
-Hyperdrive dramatically speeds up access to your existing databases from Cloudflare Workers, making even single-region databases feel globally distributed.
+Hyperdrive accelerates access to your existing databases from Cloudflare Workers, making even single-region databases feel globally distributed.
 
-- By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive cuts out what can typically be seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x) and database authentication (3x).
-- On top of that, Hyperdrive understands the difference between read and write queries to your database, and can intelligently cache the most common read queries made: improving both query performance and reducing load on your origin database.
+By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive reduces seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x) and database authentication (3x).
+
+Hyperdrive understands the difference between read and write queries to your database, and can cache the most common read queries made, improving query performance and reducing load on your origin database.
 
 This guide will instruct you through:
 
@@ -21,7 +22,7 @@ This guide will instruct you through:
 
 {{<Aside type="note" header="Workers Paid plan required">}}
 
-Hyperdrive is available to all users on the [Workers paid plan](/workers/platform/pricing/#workers).
+Hyperdrive is available to all users on the [Workers Paid plan](/workers/platform/pricing/#workers).
 
 {{</Aside>}}
 
@@ -66,7 +67,7 @@ When setting up your `hyperdrive-tutorial` Worker, answering the questions as be
 
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
-- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`
+- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -81,7 +82,7 @@ For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=si
 
 {{<Aside type="note" heading="Supported database engines">}}
 
-Hyperdrive currently works with PostgreSQL and/or PostgreSQL compatible databases, including CockroackDB and Materialize.
+Hyperdrive currently works with PostgreSQL and/or PostgreSQL compatible databases, including CockroachDB and Materialize.
 
 Support for other database engines, including MySQL, is on the roadmap.
 
@@ -180,7 +181,7 @@ To connect to your database, you will need a database driver which allows you to
 To install `node-postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
 ```sh
-# For existing projects, make sure you are using pg v8.11.0 or greater
+# For existing projects, use pg v8.11.0 or greater
 $ npm i pg
 ```
 
@@ -209,14 +210,14 @@ export interface Env {
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		console.log(JSON.stringify(env))
-		// Create a database client that connects to our database via Hyperdrive
+		// Create a database client that connects to your database via Hyperdrive
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
 		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
 
 		try {
-			// Connect to our database
+			// Connect to your database
 			await client.connect();
 
 			// Test query
