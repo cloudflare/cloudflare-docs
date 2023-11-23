@@ -19,7 +19,7 @@ entries:
 
 - term: compression
   general_definition: |-
-    reducing the size of files or data to speed up their transfer over the network.
+    the process of reducing the size of files or data to speed up their transfer over the network.
 
 - term: minification
   general_definition: |-
