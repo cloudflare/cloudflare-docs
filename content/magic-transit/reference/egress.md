@@ -1,0 +1,15 @@
+---
+pcx_content_type: concept
+title: Magic Transit egress
+---
+
+# Magic Transit egress
+
+If you have implemented Magic Transit with egress traffic, below is a list of technical aspects you need to be aware of to create a successful connection to Cloudflare.
+
+- Make sure you configure LAN-connected hosts on private IPs through NAT to use Cloudlare Magic Transit leased IPs when sending traffic to the Internet.
+- Make sure you create policy-based routing (PBR) rules to ensure that only traffic sourced from your BYOIP prefixes or Magic Transit leased IP addresses is sent via your GRE/IPsec tunnels to Cloudflare for egress to the Internet. Cloudflare will only accept egress traffic sourced from authorized prefixes. As such, your PBR policies need to align with this.
+- You need a tunnel failure detection mechanism to re-route your PBR traffic. This is to ensure packets are re-routed if there is a failure in the upstream channel to Cloudflare. For example, you might configure your device to ping the other side of the tunnel or send a probe to an Internet website. When the probe returns with a failure response, you want your device to deprecate the PBR forwarding-path, and switch to a backup tunnel. Refer to your equipment's configuration guide to learn how to implement this.
+- You may need to configure multiple GRE/IPsec tunnels as a way to load-share traffic sent to the Internet via Cloudflare. You can achieve this by applying two different PBR. Thus, traffic sourced from one IP/subnet is routed via one tunnel, and traffic from another IP/subnet is sent out via a different tunnel.
+- Be aware that your Magic Firewall rules will apply in both directions. Ensure that your Magic Firewall rules are set up for your intended traffic flows, both in and out.
+
