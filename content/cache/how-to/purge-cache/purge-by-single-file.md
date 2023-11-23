@@ -34,7 +34,7 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 2.  Select **Caching** > **Configuration**.
 3.  Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 4.  Under **Purge by**, select **URL**.
-5.  Enter the appropriate value(s) in the text field using the format shown in the example. Be aware that the host part of the URL is not case-sensitive, meaning it will always be converted to lowercase according to RFC standards. However, the path portion is case-sensitive. For instance, `https://EXAMPLE.com/helloHI` would be treated as `https://example.com/helloHI`.
+5.  Enter the appropriate value(s) in the text field using the format shown in the example. Be aware that the host part of the URL is not case-sensitive, meaning it will always be converted to lowercase according to RFC standards. However, the path portion is case-sensitive. For example, `https://EXAMPLE.com/helloHI` would be treated as `https://example.com/helloHI`.
 6.  Perform any additional instructions to complete the form.
 7.  Review your entries.
 8.  Select **Purge**.
