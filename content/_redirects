@@ -293,6 +293,7 @@
 /firewall/cf-rulesets/rulesets-api/update-rule/ /ruleset-engine/rulesets-api/update-rule/ 301
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
+/firewall/known-issues-and-faq/ /waf/troubleshooting/faq/ 301
 
 # fundamentals
 /fundamentals/account-and-billing/account-setup/ /fundamentals/setup/account-setup/ 301
