@@ -36,6 +36,6 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * Currently, there is a limited number of HTTP response headers that you cannot change. Cloudflare may remove restrictions for some of these HTTP response headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
 
-* Any response header modifications will also apply to Cloudflare error pages and [custom error pages](https://support.cloudflare.com/hc/articles/200172706).
+* Any response header modifications will also apply to Cloudflare error pages and [custom error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).
 
-* Modifying `cache-control`, `CDN-Cache-Control` or `Cloudflare-CDN-Cache-Control` will not change the way that Cloudflare caches an object.  Instead you should create a [Cache Rule](https://developers.cloudflare.com/cache/how-to/cache-rules/).
+* Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
