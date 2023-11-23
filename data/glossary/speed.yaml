@@ -37,7 +37,7 @@ entries:
   general_definition: |-
     brotli compression is a data compression algorithm developed by Google, optimized for web content, and designed to achieve higher compression ratios than traditional algorithms like Gzip.
 
-- term: SEO (search engine optimization)
+- term: search engine optimization (SEO)
   general_definition: |-
     SEO, or search engine optimization, is the practice of optimizing online content to improve its visibility and ranking in search engine results, thereby increasing organic traffic and relevance.
 
