@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: Magic Transit egress
+title: Egress traffic
 ---
 
-# Magic Transit egress
+# Magic Transit egress traffic
 
 If you have implemented Magic Transit with egress traffic, below is a list of technical aspects you need to be aware of to create a successful connection to Cloudflare.
 
