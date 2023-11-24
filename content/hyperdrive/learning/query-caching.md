@@ -12,7 +12,7 @@ Hyperdrive automatically caches the most popular queries executed against your d
 
 Because Hyperdrive uses database protocols, it can differentiate between a mutating query (a query that writes to the database) and a non-mutating query (a read-only query), allowing Hyperdrive to safely cache read-only queries.
 
-Hyperdrive determines the difference between a `SELECT` and an `INSERT`, as well as parsing the database wire-protocol and using it to differentiate between a mutating or non mutating query.
+Hyperdrive determines the difference between a `SELECT` and an `INSERT`, as well as parsing the database wire-protocol and using it to differentiate between a mutating or non-mutating query.
 
 For example, a read query that populates the front page of a news site would be cached:
 
