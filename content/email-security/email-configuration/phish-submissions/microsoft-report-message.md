@@ -53,7 +53,7 @@ Now that you have installed the Report Message add-in, you need to create transp
         {{<render file="_service-addresses.md">}}
     4. **Rule mode**: **Enforce**
     5. Select **Next** > **Finish**.
-6. To handle **false positives** (malicious messages) reported to Microsoft, create a rule with the following settings:
+6. To handle **false negatives** (malicious messages) reported to Microsoft, create a rule with the following settings:
     1. **Name**: `False positives`
     2. **Apply this rule if**: _The sender_ > _address includes any of these words_
         1. **Specify words or phrases**: `phish@office365.microsoft.com` > **Save**.
