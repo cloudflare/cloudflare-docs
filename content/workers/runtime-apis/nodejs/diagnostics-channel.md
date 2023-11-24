@@ -88,7 +88,7 @@ channels.subscribe({
   },
 });
 
-// The subcriber handlers will be invoked while tracing the execution of the async
+// The subscriber handlers will be invoked while tracing the execution of the async
 // function passed into `channel.tracePromise`...
 channel.tracePromise(async () => {
   // Perform some asynchronous work...

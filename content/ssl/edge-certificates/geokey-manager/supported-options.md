@@ -33,7 +33,7 @@ For customers with Geo Key Manager v2, you can use the `policy` parameter to spe
 
 For customers with Geo Key Manager v2, you can use the `policy` parameter to specify individual countries as well. Cloudflare is constantly expanding the number of supported countries. To indicate a country, specify the two-letter (ISO 3166) country code.
 
-Examples of supported countries are Japan, Canada, India, and Austrailia.
+Examples of supported countries are Japan, Canada, India, and Australia.
 
 ---
 
