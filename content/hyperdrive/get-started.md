@@ -10,7 +10,7 @@ Hyperdrive accelerates access to your existing databases from Cloudflare Workers
 
 By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive reduces seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x), and database authentication (3x).
 
-Hyperdrive understands the difference between read and write queries to your database, and can cache the most common read queries made, improving query performance and reducing load on your origin database.
+Hyperdrive understands the difference between read and write queries to your database, and can cache the most common read queries, improving performance and reducing load on your origin database.
 
 This guide will instruct you through:
 
