@@ -56,7 +56,7 @@ jobs:
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Spelling Errors
-        run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
+        run: codespell --count --skip="*.js,./.git" ${{ env.CHANGED_FILES }}
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Case Police
