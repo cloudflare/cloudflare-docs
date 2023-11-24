@@ -9,8 +9,6 @@ Refer to the following sections for information on the different zone statuses t
 
 If your zone status changes, you will receive an email at the address associated with your account.
 
----
-
 ## Setup
 You initiated but did not finish the signup process.
 
@@ -45,13 +43,3 @@ After being deleted for 7 days, a zone is automatically [purged](#purged).
 ## Purged
 
 After a zone is deleted for 7 days, it will be purged. Cloudflare does not respond to DNS queries for purged zones and, unlike [deleted zones](#deleted), this status cannot be reverted - meaning that, even if you re-add the domain to the same Cloudflare account, the zone settings will not be restored.
-
----
-
-## Domain removal
-
-If domains remain in the **Pending Nameserver Update** or **Moved** status for too long, Cloudflare automatically [removes them](/dns/zone-setups/troubleshooting/domain-deleted/) from your account and the Cloudflare network.
-
-You can also [manually remove a domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
-
-If you need to re-add a domain to your account, follow the [regular onboarding flow](/fundamentals/setup/account-setup/add-site/).
