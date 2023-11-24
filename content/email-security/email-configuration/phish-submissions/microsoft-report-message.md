@@ -7,7 +7,7 @@ pcx_content_type: how-to
 
 Microsoft 365 allows users to report missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} and spam messages directly to Area 1 from Outlook. This is achieved with the Report Message add-in functionality.
 
-{{<Aside type="note">}}The Report Message add-in for Outlook does not support reporting bulk email. Refer to [PhishNet for Office 365](/email-security/email-configuration/phish-submissions/phishnet-o365/) to learn how to use Area 1's tool to report bulk email, spam and phish from Office 365.{{</Aside>}}
+{{<Aside type="note">}}The Report Message add-in for Outlook does not support reporting of bulk email. Refer to [PhishNet for Office 365](/email-security/email-configuration/phish-submissions/phishnet-o365/) to learn how to use Area 1's tool to report bulk email, spam and phish from Office 365.{{</Aside>}}
 
 ### Deploy Report Message add-in
 
