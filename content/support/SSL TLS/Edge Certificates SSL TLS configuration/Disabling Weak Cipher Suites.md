@@ -18,15 +18,20 @@ ___
 
 Cipher Suites is a combination of ciphers used to negotiate security settings during the SSL/TLS handshake and not directly related to TLS version.
 
-The _default Cipher Suites_ provided with Universal SSL certificates are meant for a _balance of security and compatibility_. Some of which, are deemed _weak_ by third-party testing tools such as SSL Labs's SSL Server Test. You can find the list of [Cloudflare-supported Cipher Suites](/ssl/reference/cipher-suites/)
+The default Cipher Suites provided with [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) are meant for a balance of security and compatibility. Some of which, are deemed weak by third-party testing tools such as SSL Labs's SSL Server Test. 
+You can find the list of [Cloudflare-supported Cipher Suites](/ssl/reference/cipher-suites/)
 
 ___
 
 ## Solution
 
-If the Universal SSL _does not meet your business requirements_, we would recommend using our _Advanced Certificate Manager_. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
+If the Universal SSL does not meet your business requirements, we would recommend using our [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/). 
+For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 
-You could restrict the Cipher Suites used for TLS using our [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager). After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting). Currently, restricting cipher suites could only be done via API and not available via Cloudflare Dashboard. Assuming this is just a one-time change, you could trigger the API call using curl. **Step-by-step guide:**
+You could restrict the Cipher Suites used for TLS using our Advanced Certificate Manager. After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting). Currently, restricting cipher suites can only be done via API and not available via Cloudflare Dashboard. 
+Assuming this is just a one-time change, you can trigger the API call using `curl`. 
+
+**Step-by-step guide:**
 
 1.  Get/view Global API Key _(or create Token)_ from: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
 2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
