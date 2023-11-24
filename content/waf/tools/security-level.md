@@ -30,7 +30,7 @@ The available security levels are the following:
 | Essentially off                 | 50–100             | Only challenges IP addresses with the worst reputation.                            |
 | Low                             | 25–100             | Challenges only threatening visitors.                                              |
 | Medium                          | 15–100             | Challenges both threatening and moderately threatening visitors.                   |
-| High                            |  0–100             | Challenges all visitors that exhibit threatening behavior within the last 14 days. |
+| High                            |  0–100             | Challenges all visitors that exhibited threatening behavior within the last 14 days. |
 | I’m Under Attack!               | _N/A_              | Only for use if your website is currently under a DDoS attack.                     |
 
 {{</table-wrap>}}
@@ -62,7 +62,7 @@ To update the security level for your entire zone:
 
 ### Update selectively
 
-To set the Security level more selectively, do one of the following:
+To set the security level more selectively, do one of the following:
 
 - Configure it via a [configuration rule](/rules/configuration-rules/).
 - Use the **Threat Score** as a **Field** criteria within [custom rules](/waf/custom-rules/). If you are using the Expression Editor, use the `cf.threat_score` field.
