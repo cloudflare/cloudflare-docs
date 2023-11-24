@@ -41,7 +41,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
     * [**Bot score**](/bots/concepts/bot-score/)
     * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score**{{</glossary-tooltip>}}
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
-    * **Skip challenge** (skips a Cloudflare-issued [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/), if any, allowing the trace to continue)
+    * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
 5. Select **Send trace**.
 
