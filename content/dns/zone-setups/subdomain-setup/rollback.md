@@ -16,8 +16,8 @@ If you no longer want to manage the child domain as a separate zone, you can rol
 This process may incur in downtime, as it is not possible to add address records (`A`/`AAAA`) on names that already have a corresponding `NS` record.
 {{</Aside>}}
 
-1. (Optional) In the parent zone, migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
-2. (Optional) If needed, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child domain and any deeper subdomains (if present).
+1. (Optional) In the parent zone, migrate over any settings - [WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more - that might be needed for the child domain.
+2. (Optional) If needed, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child domain and any deeper subdomains.
 3. In the child zone, [export](/dns/manage-dns-records/how-to/import-and-export/#export-records) DNS records.
 4. In the parent zone, go to **DNS** > **Records**.
 5. Delete one of the `NS` records defined for the child domain.
