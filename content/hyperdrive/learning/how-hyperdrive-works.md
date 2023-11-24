@@ -35,7 +35,7 @@ The connection pool operates in transaction mode, where the client that executes
 When that transaction has completed, the connection is returned to the pool.
 
 {{<Aside type="warning">}} 
-Named prepared statements (which are rarely used), `SET` commands and advisory locks are not supported. Use features such as `LOCAL` and `pg_advisory_xact_lock` which are scoped to single transactions. In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
+Named prepared statements (which are rarely used), `SET` commands, and advisory locks are not supported. Use features such as `LOCAL` and `pg_advisory_xact_lock` which are scoped to single transactions. In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
 {{</Aside>}}
 
 ## Query Caching

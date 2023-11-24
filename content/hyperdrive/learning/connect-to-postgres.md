@@ -41,7 +41,7 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver               | Documentation                                 | Minimum Version Required |
+| Driver               | Documentation                        | Minimum Version Required |
 | -------------------- | ------------------------------------ | ------------------------ |
 | node-postgres - `pg` | https://node-postgres.com/           | `pg@8.11.0`              |
 | Drizzle              | https://orm.drizzle.team/            | `0.26.2`^                |
