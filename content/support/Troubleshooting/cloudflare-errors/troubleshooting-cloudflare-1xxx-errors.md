@@ -19,7 +19,7 @@ customers to change the appearance of the default error pages discussed
 in this article.
 {{</Aside>}}
 
-If the resolutions within each error description below do not resolve the error, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the resolutions within each error description below do not resolve the error, [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 {{<Aside type="note">}}
 Only the site owner may contact Cloudflare for technical support. Lookup
@@ -51,7 +51,7 @@ Cloudflare halted the request for one of the following reasons:
 
 ### Resolution
 
--   If an A record within your Cloudflare DNS app points to a [Cloudflare IP address](https://www.cloudflare.com/ips/), update the IP address to your origin web server IP address.
+-   If an A record within your Cloudflare DNS app points to a [Cloudflare IP address](https://www.cloudflare.com/ips/), update the IP address to your origin web server IP address. Reach out to your hosting provider if you need help obtaining the origin IP address.
 -   There is a reverse-proxy at your origin that sends the request back through the Cloudflare proxy. Instead of using a reverse-proxy, contact your hosting provider or site administrator to configure an HTTP redirect at your origin.
 
 ___
@@ -139,7 +139,7 @@ ___
 
 ### Resolution
 
-If the issue persists beyond 5 minutes, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the issue persists beyond 5 minutes, [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 ___
 
@@ -163,7 +163,7 @@ Convert the UTC timestamp of the 1005 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
-3\. Assess the cause of the block and ensure the ASN is allowed under the [IP Access Rules](https://support.cloudflare.com/hc/en-us/articles/217074967-Configuring-IP-Access-Rules) security feature.
+3\. Assess the cause of the block and ensure the ASN is allowed under the [IP Access Rules](/waf/tools/ip-access-rules/) security feature.
 
 ___
 
@@ -191,7 +191,7 @@ The owner of the website (e.g. example.com) has banned the country or region you
 
 ### Resolution
 
-Ensure your IP address is allowed under the [IP Access Rules](https://support.cloudflare.com/hc/en-us/articles/217074967) security feature.
+Ensure your IP address is allowed under the [IP Access Rules](/waf/tools/ip-access-rules/) security feature.
 
 ___
 
@@ -216,7 +216,7 @@ ___
 
 ### Common cause
 
-A request is made for a resource that uses [Cloudflare hotlink protection](https://support.cloudflare.com/hc/articles/200170026).
+A request is made for a resource that uses [Cloudflare hotlink protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/#understanding-cloudflare-hotlink-protection).
 
 ### Resolution
 
@@ -263,7 +263,7 @@ Test for an SNI mismatch via an online tool such as: [SSL Shopper](https://www.
 
 Provide Cloudflare Support the following information:
 
-1.  A [HAR file](https://support.cloudflare.com/hc/articles/203118044) captured while duplicating the error.
+1.  A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error.
 
 ___
 
@@ -353,11 +353,11 @@ Error 1018 is returned via a HTTP 409 response code.
 
 ### Resolution
 
-Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) with the following details:
+[Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) with the following details:
 
 1.  Your domain name
 2.  A screenshot of the 1018 error including the **RayID** mentioned in the error message
-3.  The time and timezone the 1018 error occurred
+3.  A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error
 
 ___
 
@@ -393,7 +393,7 @@ Convert the UTC timestamp of the 1005 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
-3\. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor’s IP address in [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967).
+3\. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor’s IP address in [**IP Access Rules**](/waf/tools/ip-access-rules/).
 
 ___
 
@@ -414,8 +414,8 @@ Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/2001724
 
 1.  Your domain name
 2.  A screenshot of the 1023 error including the **RayID** mentioned in the error message
-3.  The time and timezone the 1023 error occurred
-
+3. A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error
+4. 
 ___
 
 ## Error 1025: Please check back later
@@ -580,5 +580,5 @@ ___
 
 ## Related resources
 
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)
--   [Customizing Cloudflare error pages](https://support.cloudflare.com/hc/articles/200172706)
+-   [Contacting Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/)
+-   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
