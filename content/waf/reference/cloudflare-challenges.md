@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Challenges
-weight: 4
+weight: 3
 ---
 
 # Cloudflare challenges
@@ -10,7 +10,7 @@ When a website is protected by Cloudflare, there are several occasions when it w
 
 - The visitor's IP address has shown suspicious behavior online (as tracked by [Project Honeypot](http://www.projecthoneypot.org/search_ip.php)).
 - The website owner has blocked the country associated with the visitor's IP address.
-- The visitor's actions have activated a [WAF custom rule](/waf/custom-rules/) or a firewall rule enabled by the website owner.
+- The visitor's actions have activated a [WAF custom rule](/waf/custom-rules/) enabled by the website owner.
 
 If the visitor passes the challenge, their request is allowed. If they fail, the request will be blocked.
 
@@ -116,7 +116,7 @@ fetch('/my-api-endpoint')
   });
 ```
 
-For additional help, refer to [our FAQ for Challenges](/bots/troubleshooting/#challenges).
+For additional help, refer to [our FAQ for Challenges](/waf/troubleshooting/faq/#challenges).
 
 ---
 
@@ -163,6 +163,6 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 
 Cloudflare challenges cannot support the following:
 
-1. Implementations where a domain serves a challenge page originally requested for another domain.
-2. Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
-3. Forward proxies that can be abused to steal clearances.
+* Implementations where a domain serves a challenge page originally requested for another domain.
+* Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
+* Forward proxies that can be abused to steal clearances.

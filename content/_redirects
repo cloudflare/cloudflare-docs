@@ -294,6 +294,7 @@
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
 /firewall/known-issues-and-faq/ /waf/troubleshooting/faq/ 301
+/firewall/cf-firewall-rules/cloudflare-challenges/ /waf/reference/cloudflare-challenges/ 301
 
 # fundamentals
 /fundamentals/account-and-billing/account-setup/ /fundamentals/setup/account-setup/ 301
@@ -397,7 +398,7 @@
 /fundamentals/get-started/setup/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/minimize-downtime/ /fundamentals/basic-tasks/minimize-downtime/ 301
 /fundamentals/get-started/concepts/what-is-cloudflare/ /fundamentals/concepts/what-is-cloudflare/ 301
-/fundamentals/get-started/concepts/cloudflare-challenges/ /firewall/cf-firewall-rules/cloudflare-challenges/ 301
+/fundamentals/get-started/concepts/cloudflare-challenges/ /waf/reference/cloudflare-challenges/ 301
 /fundamentals/get-started/concepts/accounts-and-zones/ /fundamentals/concepts/accounts-and-zones/ 301
 /fundamentals/get-started/concepts/cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/get-started/concepts/network-layers/ /fundamentals/concepts/network-layers/ 301

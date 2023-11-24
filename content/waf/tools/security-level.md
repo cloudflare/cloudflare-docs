@@ -6,7 +6,7 @@ title: Security Level
 
 # Security Level
 
-Cloudflare's **Security Level** uses the threat score (IP reputation) to decide whether to present a [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/) to the visitor. Once the visitor enters the correct challenge, they receive the appropriate website resources.
+Cloudflare's **Security Level** uses the threat score (IP reputation) to decide whether to present a [challenge](/waf/reference/cloudflare-challenges/) to the visitor. Once the visitor enters the correct challenge, they receive the appropriate website resources.
 
 ---
 
