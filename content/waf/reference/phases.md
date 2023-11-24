@@ -1,7 +1,7 @@
 ---
 title: Phases
 pcx_content_type: reference
-weight: 3
+weight: 2
 layout: list
 ---
 
