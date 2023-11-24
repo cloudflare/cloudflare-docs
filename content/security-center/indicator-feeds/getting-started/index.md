@@ -20,7 +20,7 @@ If your organization has interest in becoming a provider or a subscriber, please
 
 Managing a Custom Indicator Feed is only available using the [Indicator API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds). 
 
-1. The first thing a provider needs to do is create a feed. Feeds are lists of inidicators and can be created using the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds).
+1. The first thing a provider needs to do is create a feed. Feeds are lists of indicators and can be created using the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds).
 
 2. After a feed is created, you can upload data to it. Uploading data to a feed is done through the [`Snapshots` API endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). They are called snapshots because if a provider needs to update their feed with new data, they must upload a file containing all previous and new indicators. 
 

@@ -34,7 +34,7 @@ Railgun can report statistics via `syslog`, JSON via an HTTP `POST` request, or 
 * To enable `syslog` statistics reporting, set `stats.log` to `1`. 
 * To enable reporting via an HTTP `POST` request of JSON data to the specified URL, set `stats.url` to a valid URL. `stats.interval` determines how frequently (in minutes) stats will be logged or POSTed.
 
-If `stats.listen` is set to a non-empty `host:post` string, Railgun will spawn a local HTTP server and listen on that interface awaiting a `GET /` HTTP request. The response will be JSON-encoded statistics. The statistics returned will change according to `stats.interval`. If the Railgun statistics port is not protected via a firewall, the host portion should be set to a loopback interface (like `127.0.0.1` or `localhost`) to prevent external access. The folowing is an example response:
+If `stats.listen` is set to a non-empty `host:post` string, Railgun will spawn a local HTTP server and listen on that interface awaiting a `GET /` HTTP request. The response will be JSON-encoded statistics. The statistics returned will change according to `stats.interval`. If the Railgun statistics port is not protected via a firewall, the host portion should be set to a loopback interface (like `127.0.0.1` or `localhost`) to prevent external access. The following is an example response:
 
 ```sh
 $ curl -v http://127.0.0.1:22408/
