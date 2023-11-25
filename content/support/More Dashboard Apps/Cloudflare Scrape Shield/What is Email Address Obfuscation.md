@@ -58,3 +58,6 @@ To prevent Cloudflare from obfuscating emails, you can:
 -   Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of "application/json".
 
 -   Disable the Email Obfuscation feature by creating a [Configuration Rule](/rules/configuration-rules/) or [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to be applied on a specific endpoint.
+-   
+## Additional Resources
+[Hide Email Address Behind Captcha](https://veilmail.io)
