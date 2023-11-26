@@ -31,7 +31,7 @@ import { Ai } from '@cloudflare/ai';
 const ai = new Ai(env.AI)
 
 const output = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
-  prompt: 'Tell me about Workers AI'  
+  prompt: 'Tell me about Workers AI'
 })
 ```
 
@@ -42,6 +42,7 @@ Workers AI comes with a curated set of popular open-source models that *just wor
 Supporting multiple classes of models, here are some AI tasks you can unlock with Workers AI:
 
 * **Natural language processing** - text generation + summarization + classification + translation, similarity analysis, question answering
+* **Image generation** - text to image generation tasks
 * **Computer Vision** - image classification, object detection
 * **Audio** - Automatic speech recognition (ASR)
 
@@ -51,13 +52,12 @@ With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to its glob
 
 ### Batteries included with a vector database
 
-Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context + memory to an LLM. Head over to the [Vectorize docs](/vectorize) to learn more. 
+Adding Vectorize, Cloudflare's new vector database, is a single click or CLI command away. This addon enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context + memory to an LLM. Head over to the [Vectorize docs](/vectorize) to learn more.
 
 ## Get Started
- 
-{{<resource-group>}}
- 
-{{<resource header="Get started - CLI" href="/workers-ai/get-started/workers-wrangler" icon="learning-center-book">}}Build and deploy your first Workers AI app from your **local development environment**{{</resource>}}
- 
-{{</resource-group>}}
 
+{{<resource-group>}}
+
+{{<resource header="Get started - CLI" href="/workers-ai/get-started/workers-wrangler" icon="learning-center-book">}}Build and deploy your first Workers AI app from your **local development environment**{{</resource>}}
+
+{{</resource-group>}}

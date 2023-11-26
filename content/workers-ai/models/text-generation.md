@@ -11,6 +11,8 @@ Family of generative text models, such as large language models (LLM), that can 
 * Task type: **text-generation**
 * TypeScript class: **AiTextGeneration**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:

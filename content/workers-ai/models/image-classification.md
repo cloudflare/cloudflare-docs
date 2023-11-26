@@ -11,6 +11,8 @@ Image classification models take an image input and assigns it labels or classes
 * Task type: **image-classification**
 * TypeScript class: **AiImageClassification**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:

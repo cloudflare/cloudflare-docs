@@ -11,6 +11,8 @@ Automatic speech recognition (ASR) models convert a speech signal, typically an 
 * Task type: **speech-recognition**
 * TypeScript class: **AiSpeechRecognition**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:

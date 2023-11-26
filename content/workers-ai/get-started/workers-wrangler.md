@@ -43,7 +43,7 @@ When setting up your `hello-ai` Worker, answer the setup questions as follows:
 
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
-* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts` 
+* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
 Navigate to your app directory:
@@ -75,7 +75,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npm install --save @cloudflare/ai
+$ npm install --save-dev @cloudflare/ai
 ```
 
 {{</tab>}}
@@ -87,6 +87,8 @@ $ yarn add --dev @cloudflare/ai
 
 {{</tab>}}
 {{</tabs>}}
+
+{{<render file="_npm-update.md">}}
 
 ## 4. Run an inference task in your Worker
 
