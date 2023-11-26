@@ -218,7 +218,7 @@ declare global {
 export {};
 ```
 
-Then such binding can be simply accessed from `process.env`:
+Then such binding can be accessed directly from `process.env`:
 ```typescript
 ---
 filename: app/api/hello/route.ts
