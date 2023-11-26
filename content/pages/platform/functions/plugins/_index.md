@@ -96,27 +96,27 @@ class FormHandler {
   }
 }
 
-export const onRequestGet = async ({ next }) => {
+export const onRequestGet = async (context) => {
   // We first get the original response from the project
-  const response = await next()
+  const response = await context.next()
 
   // Then, using HTMLRewriter, we transform `form` elements with a `data-static-form-name` attribute, to tell them to POST to the current page
   return new HTMLRewriter().on('form[data-static-form-name]', new FormHandler()).transform(response)
 }
 
-export const onRequestPost = async ({ request, pluginArgs, waitUntil }) => {
+export const onRequestPost = async (context) => {
   // Parse the form
-  const formData = await request.formData()
+  const formData = await context.request.formData()
   const name = formData.get('static-form-name')
   const entries = Object.fromEntries([...formData.entries()].filter(([name]) => name !== 'static-form-name'))
 
   // Get the arguments given to the Plugin by the developer
-  const { kv, respondWith } = pluginArgs
+  const { kv, respondWith } = context.pluginArgs
 
 
   // Store form data in KV under key `form-name:YYYY-MM-DDTHH:MM:SSZ`
   const key = `${name}:${new Date().toISOString()}`
-  waitUntil(kv.put(name, JSON.stringify(entries)))
+  context.waitUntil(kv.put(name, JSON.stringify(entries)))
 
   // Respond with whatever the developer wants
   const response = await respondWith({ formData })
@@ -310,10 +310,10 @@ export const onRequest = [
   }),
 
   // Populate the Sentry plugin with additional information about the current user
-  ({ data, next }) => {
-    const email = data.cloudflareAccessJWT.payload?.email || "service user";
+  (context) => {
+    const email = context.data.cloudflareAccessJWT.payload?.email || "service user";
 
-    data.sentry.setUser({ email });
+    context.data.sentry.setUser({ email });
 
     return next();
   },

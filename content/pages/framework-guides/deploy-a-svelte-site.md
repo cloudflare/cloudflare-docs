@@ -92,8 +92,8 @@ declare namespace App {
 4. Access the added KV or Durable objects (or generally any [binding](/pages/platform/functions/bindings/)) in your endpoint with `env`:
 
 ```js
-export async function post({ request, platform }) {
-  const counter = platform.env.COUNTER.idFromName("A");
+export async function post(context) {
+  const counter = context.platform.env.COUNTER.idFromName("A");
 }
 ```
 

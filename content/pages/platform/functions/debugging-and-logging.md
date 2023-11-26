@@ -4,7 +4,7 @@ title: Debugging and logging
 weight: 12
 ---
 
-# Debugging and logging 
+# Debugging and logging
 
 Access your Functions logs by using the Cloudflare dashboard or the [Wrangler CLI](/workers/wrangler/commands/#deployment-tail).
 
@@ -25,17 +25,16 @@ There are two ways to start a logging session:
 
 ## Add custom logs
 
-Custom logs are `console.log()` statements that you can add yourself inside your Functions. When streaming logs for deployments that contain these Functions, the statements will appear in both `wrangler pages deployment tail` and dashboard outputs. 
+Custom logs are `console.log()` statements that you can add yourself inside your Functions. When streaming logs for deployments that contain these Functions, the statements will appear in both `wrangler pages deployment tail` and dashboard outputs.
 
 Below is an example of a custom `console.log` statement  inside a Pages Function:
 
 ```js
 ---
-filename: 
+filename:
 ---
 export async function onRequest(context) {
-  const { request }  = context;
-  console.log(`[LOGGING FROM /hello]: Request came from ${request.url}`);
+  console.log(`[LOGGING FROM /hello]: Request came from ${context.request.url}`);
 
   return new Response("Hello, world!");
 }
@@ -51,7 +50,7 @@ Your dashboard will display:
 
 ## View logs with Wrangler
 
-`wrangler pages deployment tail` enables developers to livestream logs for a specific project and deployment. 
+`wrangler pages deployment tail` enables developers to livestream logs for a specific project and deployment.
 
 To get started, run `wrangler pages deployment tail` in your Pages project directory. This will log any incoming requests to your application in your local terminal.
 
@@ -87,7 +86,7 @@ To view logs for your `production` or `preview` environments associated with any
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project, go to the deployment you want to view logs for and select **View details** > **Functions**. 
+3. Select your Pages project, go to the deployment you want to view logs for and select **View details** > **Functions**.
 
 Logging is available for all customers (Free, Paid, Enterprise).
 
