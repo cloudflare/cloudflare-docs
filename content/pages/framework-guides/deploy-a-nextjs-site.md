@@ -196,7 +196,7 @@ A [binding](/pages/platform/functions/bindings/) allows your application to inte
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers), and [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props). Then, access bindings set for your application by accessing them in your code via `process.env`.
 
-The following code shows an example of accessing a KV namespace in a Typescript Next.js project.
+The following code shows an example of accessing a KV namespace in a TypeScript Next.js project.
 
 Firstly we create a new `env.d.ts` file in which we declare our binding:
 ```typescript
