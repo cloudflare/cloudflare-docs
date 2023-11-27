@@ -133,6 +133,8 @@ Note that the interface address field is always a `/30` or `/31` CIDR range. In 
 
 These packets will flow to and from Cloudflare over the IPsec tunnels you have configured to provide full visibility into the traffic path between our network and your sites. You will need to configure traffic selectors to accept the health check packets.
 
+Refer to [Add tunnels]($5) to learn how to configure bidirectional or unidirectional health checks.
+
 #### Legacy health checks system
 
 {{<render file="_legacy-hc-system.md" >}}
