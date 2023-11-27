@@ -158,6 +158,6 @@ If you have done the steps above and your domain is still verifying after 15 min
 
 ## Resources
 
-If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for guidance on contacting Cloudflare Support.
+If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](/support/contacting-cloudflare-support/) for guidance on contacting Cloudflare Support.
 
 You can also ask questions in the Pages section of the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).

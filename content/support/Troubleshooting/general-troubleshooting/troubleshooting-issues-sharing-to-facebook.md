@@ -24,4 +24,4 @@ To resolve issues sharing to Facebook, either:
 
 If you experience issues with Facebook sharing, you can re-scrape pages via the **Fetch New Scrape Information** option on Facebook's Object Debugger. Facebook re-scrapes content every 30 days unless instructed otherwise. Facebook [provides an API](https://developers.facebook.com/docs/sharing/opengraph/using-objects) to help update a large number of resources.
 
-You can [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476#h_4b8753c8-f422-4c74-9e8e-07026c4da730) with the URLs of your website that cannot share to Facebook, and confirmation you have re-scraped the URLs if you continue to have issues.
+You can [contact Cloudflare Support](/support/contacting-cloudflare-support/#h_4b8753c8-f422-4c74-9e8e-07026c4da730) with the URLs of your website that cannot share to Facebook, and confirmation you have re-scraped the URLs if you continue to have issues.

@@ -10,7 +10,7 @@ title: Troubleshooting Cloudflare domains blocked by China
 
 ## Overview
 
-To confirm the Cloudflare IPs associated with your domain are blocked in China, provide the following details to [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476):
+To confirm the Cloudflare IPs associated with your domain are blocked in China, provide the following details to [Cloudflare Support](/support/contacting-cloudflare-support/):
 
 -   A [traceroute to your domain](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) from a location in China to demonstrate the network path. 
 -   The results from the [Great Firewall Checker](http://www.greatfirewallofchina.org/).

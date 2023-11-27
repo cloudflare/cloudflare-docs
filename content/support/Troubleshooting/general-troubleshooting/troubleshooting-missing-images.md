@@ -22,7 +22,7 @@ If images are missing from your website, perform the following steps while retes
 **Mirage** is only available for domains on a paid Cloudflare plan.
 {{</Aside>}}
 
--   [Inform Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) of the issue and request assistance.
+-   [Inform Cloudflare support](/support/contacting-cloudflare-support/) of the issue and request assistance.
 
 ___
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Page Rules
-weight: 1
+weight: 2
 ---
  
 # Welcome to the Page Rules section

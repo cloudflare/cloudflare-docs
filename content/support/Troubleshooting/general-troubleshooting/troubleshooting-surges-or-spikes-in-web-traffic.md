@@ -77,7 +77,7 @@ ___
 
 ## What information do I need when submitting a support ticket?
 
-Before the high traffic event occurs, you must [open a Support ticket](https://support.cloudflare.com/hc/articles/200172476) and provide the information below.
+Before the high traffic event occurs, you must [open a Support ticket](/support/contacting-cloudflare-support/) and provide the information below.
 
 **For WAF/CDN customers**
 

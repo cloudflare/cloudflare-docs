@@ -67,7 +67,7 @@ ___
 
 ## Troubleshoot an IPv6 network issue
 
-Provide the following information to [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) if you experience issues with IPv6 connectivity:
+Provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/) if you experience issues with IPv6 connectivity:
 
 -   A [traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) that demonstrates the IPv6 connection issues,
 -   the [Cloudflare data center serving your request](https://support.cloudflare.com/hc/articles/203118044#h_22b01241-01a5-4bed-a897-6e97cff5c288) when the IPv6 issues occur, and
@@ -78,4 +78,4 @@ ___
 ## Related resources
 
 -   [Gathering information to troubleshoot site issues](https://support.cloudflare.com/hc/articles/203118044)
--   [Contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476)
+-   [Contacting Cloudflare support](/support/contacting-cloudflare-support/)
