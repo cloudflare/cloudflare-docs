@@ -79,8 +79,6 @@ sort-by=date
 
 Additionally, set the path rewrite action of the same rule to _Preserve_ so that the URL path does not change.
 
-![Rewrite URL rule configuration to perform a static query rewrite according to the blog example described in the page.](/images/rules/transform/use-case-blog.png)
-
 ## Rewrite path of archived blog posts
 
 To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new rewrite URL rule and define a dynamic URL path rewrite using an expression:
