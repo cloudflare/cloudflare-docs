@@ -38,7 +38,7 @@ Use the following keywords to search for submitted phish samples on the Area 1 d
 
 On the **Reasons** column you will see the feedback regarding the messages found. If the ML module learns and detects it as phish, the **Reasons** column shows the details regarding it. If not, the information on this column shows up as `phish submission`.
 
-If there is a phishing email that is repeatedly sent to users despite being submitted to Area 1 for processing, [contact support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) with the details of the problematic phish submission sample (alert ID or message ID of the sample).
+If there is a phishing email that is repeatedly sent to users despite being submitted to Area 1 for processing, [contact support](/support/contacting-cloudflare-support/) with the details of the problematic phish submission sample (alert ID or message ID of the sample).
 
 ### Phish Submission Response (beta)
 

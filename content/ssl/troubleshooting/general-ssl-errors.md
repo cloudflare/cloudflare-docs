@@ -27,7 +27,7 @@ To solve, [determine if the browser supports SNI](https://caniuse.com/#feat=sni)
 
 {{<Aside type="note">}}
 
-It is possible for [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to enable non-SNI support for paid plans using any certificate.
+It is possible for [Cloudflare Support](/support/contacting-cloudflare-support/) to enable non-SNI support for paid plans using any certificate.
 
 {{</Aside>}}
 
@@ -63,7 +63,7 @@ Our SSL vendors verify each SSL certificate request before Cloudflare can issue 
 If your Cloudflare SSL certificate is not issued within 24 hours of Cloudflare domain activation:
 
 -   If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/), and
--   [Contact Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) and provide a screenshot of the errors.
+-   [Contact Support](/support/contacting-cloudflare-support/) and provide a screenshot of the errors.
 
 Temporarily pausing Cloudflare will allow the HTTPS traffic to be served properly from your origin web server while the support team investigates the issue.
 
@@ -87,7 +87,7 @@ Visitors to your site observe an OCSP response error.
 
 ### Resolution
 
-This error is either caused by the browser version or an issue requiring attention by one of Cloudflare’s SSL vendors. In order to properly diagnose, [contact Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) with the following information provided by the visitor that observes the browser error:
+This error is either caused by the browser version or an issue requiring attention by one of Cloudflare’s SSL vendors. In order to properly diagnose, [contact Support](/support/contacting-cloudflare-support/) with the following information provided by the visitor that observes the browser error:
 
 1.  The output from [https://aboutmybrowser.com/](https://aboutmybrowser.com/)  .
 2.  The output of `https://<YOUR_DOMAIN>/cdn-cgi/trace` from the visitor’s browser.

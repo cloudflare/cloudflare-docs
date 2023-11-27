@@ -6,7 +6,7 @@ weight: 1
 
 # Common issues
 
-This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ## Unable to connect WARP
 

@@ -65,7 +65,7 @@ Once saved, the rule takes effect within one or two minutes. The rule adjustment
 
 ### Alternate procedure
 
-If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for assistance, providing the following details:
+If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](/support/contacting-cloudflare-support/) for assistance, providing the following details:
 
 - Time period of the attack (UTC timestamp)
 - Domain/path being targeted (zone name/ID)

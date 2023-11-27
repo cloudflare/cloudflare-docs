@@ -59,7 +59,7 @@ If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/m
 
 **Solution:**
 
-Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{</faq-answer>}}
 {{</faq-item>}}

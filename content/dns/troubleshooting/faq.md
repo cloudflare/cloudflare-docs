@@ -225,4 +225,4 @@ ___
 
 The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk` TLDs. Use the Cloudflare Dashboard for managing such TLDs.
 
-Enterprise customer can [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to remove this limitation.
+Enterprise customer can [contact Cloudflare Support](/support/contacting-cloudflare-support/) to remove this limitation.
