@@ -11,8 +11,8 @@ Workers KV provides low-latency, high-throughput global storage to your [Cloudfl
 This guide will instruct you through:
 
 - Creating a KV namespace.
-- Writing key-value pairs to your KV namespace from a Cloudflare Worker
-- Reading key-value pairs from a namespace 
+- Writing key-value pairs to your KV namespace from a Cloudflare Worker.
+- Reading key-value pairs from a KV namespace. 
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Refer to [How Workers works](/workers/learning/how-workers-works/) to learn abou
 
 {{</Aside>}}
 
-You will create a new Worker as the means to read and write to your KV namespace.
+Create a new Worker to read and write to your KV namespace.
 
 Create a new project named `kv-tutorial` by running:
 
@@ -61,7 +61,6 @@ This will create a new `kv-tutorial` directory. Your new `kv-tutorial` directory
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker will access your kv database.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
-
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
 For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
@@ -113,7 +112,7 @@ kv_namespaces = [
 ]
 ```
 
-Binding names do not need to correspond to the namespace you created and are only a reference  Specifically:
+Binding names do not need to correspond to the namespace you created. Binding names are only a reference.  Specifically:
 
 - The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_KV"` or `binding = "routingConfig"` would both be valid names for the binding.
@@ -229,7 +228,7 @@ export default {
         }        
       return new Response(value);
     } catch (err) {
-      // In a production application, we could instead choose to retry our KV
+      // In a production application, you could instead choose to retry your KV
       // read or fall back to a default code path.
       console.error(`KV returned error: ${err}`)
       return new Response(err, { status: 500 })
@@ -240,9 +239,9 @@ export default {
 
 The code above:
 
-* Writes a key to `YOUR_KV_NAMESPACE` using KV's `put()` method
-* Reads that same key back using KV's `get()` method, and returns an error if the key is null (not set/does not exist)
-* Uses JavaScript's [`try-catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch`, you should expect to handle exceptions explicitly.
+* Writes a key to `YOUR_KV_NAMESPACE` using KV's `put()` method.
+* Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
+* Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
 ## 5. Develop locally with Wrangler
 
@@ -274,13 +273,12 @@ You can now visit the URL for your newly created Workers KV application.
 
 For example, if the URL of your new Worker is `kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` will send a request to your Worker that writes (and reads) from Workers KV.
 
-By finishing this tutorial, you have created a KV namespace, a Worker that writes and reads from that namespace, and deployed your project globally!
+By finishing this tutorial, you have created a KV namespace, a Worker that writes and reads from that namespace, and deployed your project globally.
 
 ## Next steps
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
-* Learn more about the [KV API](/kv/api/)
-* Understand how to use [Environments](/kv/platform/environments/) with Workers KV
-* See the wrangler [`kv` command documentation](/kv/platform/kv-commands/)
-  
+* Learn more about the [KV API](/kv/api/).
+* Understand how to use [Environments](/kv/platform/environments/) with Workers KV.
+* Read the wrangler [`kv` command documentation](/kv/platform/kv-commands/).
