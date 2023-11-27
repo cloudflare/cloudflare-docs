@@ -243,7 +243,7 @@ export default {
 
 Run the following command to redeploy your Worker:
 
-```bash
+```sh
 $ npx wrangler deploy  
 ```
 Your application is now live and accessible at  `timescale-api.<YOUR_SUBDOMAIN>.workers.dev`. The exact URI will be shown in the output of the wrangler command you just ran.
