@@ -28,7 +28,7 @@ To create an index with `wrangler`:
 $ npx wrangler vectorize create your-index-name --dimensions=NUM_DIMENSIONS --metric=SELECTED_METRIC
 ```
 
-For example, to create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/text-embeddings/) embedding model, which outputs vectors with 768 dimensions:
+To create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/text-embeddings/) embedding model, which outputs vectors with 768 dimensions, use the following command:
 
 ```sh
 $ npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
@@ -42,7 +42,7 @@ The number of output dimensions can determine vector search accuracy, search per
 
 The number of dimensions an index is created for cannot change. Indexes expect to receive dense vectors with the same number of dimensions.
 
-As an example, the following table highlights some example embeddings models and their output dimensions:
+The following table highlights some example embeddings models and their output dimensions:
 
 | Model / Embeddings API                    | Output dimensions    | Use-case              |
 | ----------------------------------------- | -------------------- | --------------------- |
@@ -52,10 +52,9 @@ As an example, the following table highlights some example embeddings models and
 | Google Cloud - `multimodalembedding`      | 1408                 | Multi-modal (text, images) |
 
 {{<Aside type="note" header="Learn more about Workers AI">}}
-
-Visit the [Workers AI documentation](/workers-ai/models/text-embeddings/) to learn about its built-in embedding models.
-
+Refer to the [Workers AI documentation](/workers-ai/models/text-embeddings/) to learn about its built-in embedding models.
 {{</Aside>}}
+
 ## Distance metrics
 
 Distance metrics are functions that determine how close vectors are from each other. Vectorize indexes support the following distance metrics:
@@ -68,4 +67,4 @@ Distance metrics are functions that determine how close vectors are from each ot
 
 Determining the similarity between vectors can be subjective based on how the machine-learning model that represents features in the resulting vector embeddings. For example, a score of `0.8511` when using a `cosine` metric means that two vectors are close in distance, but whether data they represent is _similar_ is a function of how well the model is able to represent the original content.
 
-Note that distance metrics cannot be changed after index creation, and that each metric has a different scoring function.
+Distance metrics cannot be changed after index creation, and that each metric has a different scoring function.
