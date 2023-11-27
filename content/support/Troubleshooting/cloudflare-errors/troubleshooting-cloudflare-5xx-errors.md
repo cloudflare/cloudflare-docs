@@ -442,7 +442,7 @@ ___
 ## Related resources
 
 -   [Gathering information to troubleshoot site issues](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites)
--   [Contacting Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support)
+-   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
 -   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
 -   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)
