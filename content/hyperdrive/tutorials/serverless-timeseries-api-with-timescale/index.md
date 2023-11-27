@@ -98,8 +98,8 @@ Connect to your Timescale database using the Service URL you copied in the last 
 
 If you are using the default PostgreSQL CLI tool [**psql**](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/) to connect, you would run psql like below (substituting your **Service URL** from the previous step). You could also connect using a graphical tool like [PgAdmin](https://www.pgadmin.org/).
 
-```bash
-$ psql SERVICEURL
+```sh
+$ psql <SERVICEURL>
 ```
 
 Once you are connected, create your table by pasting the following SQL:
