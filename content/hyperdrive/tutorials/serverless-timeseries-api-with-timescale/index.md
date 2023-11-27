@@ -169,7 +169,7 @@ Now copy the below Worker code, and replace the current code in `./src/index.ts`
 
 1. Uses Hyperdrive to connect to Timescale using the connection string generated from `env.HYPERDRIVE.connectionString` directly to the driver.
 2. Creates a `POST` route which accepts an array of JSON readings to insert into Timescale in one transaction.
-3. Creates a `GET` route which will take limit parameter and then return the most recent readings. This could be adapted to filter by ID or by timestamp.
+3. Creates a `GET` route which takes a `limit` parameter and returns the most recent readings. This could be adapted to filter by ID or by timestamp.
 
 ```ts
 ---
