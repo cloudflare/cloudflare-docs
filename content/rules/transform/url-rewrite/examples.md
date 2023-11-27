@@ -94,7 +94,7 @@ The filter uses the `starts_with()` function all paths starting with `/news/2012
 
 ## Rewrite path of moved section of a website
 
-To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Create a rewrite URL rule and use the `regex_replace()` function for this purpose:
+To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>` you must modify the first component of the path (`/blog/`). Create a rewrite URL rule and use the [`regex_replace()`](/ruleset-engine/rules-language/functions/#function-regex_replace) function for this purpose:
 
 {{<example>}}
 
@@ -116,7 +116,7 @@ The `regex_replace()` function matches the path component on a regular expressio
 
 ## Rewrite path with several URL segments to a different URL segment
 
-To rewrite paths like `/images/<folder1>/<folder2>/<filename>` — where `<folder1>`, `<folder2>`, and `<filename>` can vary — to `/img/<filename>`, create a rewrite URL rule with a dynamic rewrite of the path component:
+To rewrite paths like `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` — where `<FOLDER1>`, `<FOLDER2>`, and `<FILENAME>` can vary — to `/img/<FILENAME>`, create a rewrite URL rule with a dynamic rewrite of the path component:
 
 {{<example>}}
 
@@ -138,7 +138,7 @@ For example, this rule would rewrite the `/images/nature/animals/tiger.png` path
 
 ## Rewrite blog archive URLs to support a new URL format
 
-To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following rewrite URL rule:
+To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`, create the following rewrite URL rule:
 
 {{<example>}}
 
@@ -156,4 +156,4 @@ regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$",
 
 {{</example>}}
 
-The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
+The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<NUMBER>}` in the replacement string, where `<NUMBER>` is the number of the capture group.
