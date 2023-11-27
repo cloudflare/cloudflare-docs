@@ -21,7 +21,7 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 
 ## Prerequisites
 
-- Cloudflare Provisioning with SCIM is only available to Enterprise customers and requires a Cloudflare-specific feature flag. Contact your account team for more information.
+- Cloudflare provisioning with SCIM is only available to Enterprise customers and requires a Cloudflare-specific feature flag. Contact your account team for more information.
 - In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
 - In other identity providers (IdP), access to the `Create groups` and `Manage applications` [permissions](https://help.okta.com/en-us/Content/Topics/Security/custom-admin-role/about-role-permissions.htm).
 
@@ -109,7 +109,7 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
 
-Refer to [Roles]() more details.
+Refer to [Roles](/fundamentals/account-and-billing/account-security/scim-setup/scim-roles/) more details.
 
 ---
 
@@ -139,7 +139,7 @@ Currently, groups need to match a specific format to provision specific Cloudfla
 
 These permissions work on an exact string match with the prefix `CF-<your_account_id> - <roleName>`
 
-Refer to [Roles]() more details.
+Refer to [Roles](/fundamentals/account-and-billing/account-security/scim-setup/scim-roles/) more details.
 
 1. To ensure that only required groups are provisioned, go to your Microsoft Azure AD instance.
 2. Under Manage on the sidebar menu, select **Provisioning**.
