@@ -6,17 +6,18 @@ pcx_content_type: concept
 
 # Create indexes
 
-Indexes are the "atom" of Vectorize: vectors are inserted into an index and enable you to query the index for similar vectors for a given input vector.
+Indexes are the "atom" of Vectorize. Vectors are inserted into an index and enable you to query the index for similar vectors for a given input vector.
 
 Creating an index requires three inputs:
 
-* A name - e.g. `prod-search-index` or `recommendations-idx-dev`
-* The (fixed) [dimension size](#dimensions) of each vector - e.g. 384 or 1536
+* A name, for example `prod-search-index` or `recommendations-idx-dev`.
+* The (fixed) [dimension size](#dimensions) of each vector, for example 384 or 1536.
 * The (fixed) [distance metric](#distance-metrics) to use for calculating vector similarity.
 
 The configuration of an index cannot be changed after creation.
 
 ## Create an index
+
 ### wrangler CLI
 
 {{<render file="_vectorize-wrangler-version.md">}}
