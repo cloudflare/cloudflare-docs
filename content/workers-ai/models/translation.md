@@ -11,6 +11,8 @@ Translation models convert a sequence of text from one language to another.
 * Task type: **translation**
 * TypeScript class: **AiTranslation**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:

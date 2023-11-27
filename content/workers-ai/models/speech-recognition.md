@@ -11,6 +11,8 @@ Automatic speech recognition (ASR) models convert a speech signal, typically an 
 * Task type: **speech-recognition**
 * TypeScript class: **AiSpeechRecognition**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:
@@ -62,6 +64,47 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/ope
 {{</tab>}}
 {{</tabs>}}
 
+## Responses
+
+Automatic speech recognition responses return both a single string `text` property with the audio transciption and an optional array of `words` with start and end timestamps if the model supports that.
+
+Here's an example of the output from the `@cf/openai/whisper` model:
+
+```json
+{
+  "text": "It is a good day",
+  "word_count": 5,
+  "words": [
+    {
+      "word": "It",
+      "start": 0.5600000023841858,
+      "end": 1
+    },
+    {
+      "word": "is",
+      "start": 1,
+      "end": 1.100000023841858
+    },
+    {
+      "word": "a",
+      "start": 1.100000023841858,
+      "end": 1.2200000286102295
+    },
+    {
+      "word": "good",
+      "start": 1.2200000286102295,
+      "end": 1.3200000524520874
+    },
+    {
+      "word": "day",
+      "start": 1.3200000524520874,
+      "end": 1.4600000381469727
+    }
+  ]
+}
+```
+
+
 ## API schema
 
 The following schema is based on [JSON Schema](https://json-schema.org/)
@@ -101,8 +144,31 @@ TypeScript class: **AiSpeechRecognitionInput**
   "properties": {
     "text": {
       "type": "string"
+    },
+    "word_count": {
+      "type": "number"
+    },
+    "words": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "word": {
+            "type": "string"
+          },
+          "start": {
+            "type": "number"
+          },
+          "end": {
+            "type": "number"
+          }
+        }
+      }
     }
-  }
+  },
+  "required": [
+    "text"
+  ]
 }
 ```
 

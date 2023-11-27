@@ -11,6 +11,8 @@ Feature extraction models transform raw data into numerical features that can be
 * Task type: **text-embeddings**
 * TypeScript class: **AiTextEmbeddings**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:
