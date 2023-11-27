@@ -53,7 +53,7 @@ To serve the TLS certificate using Python:
             self.wfile.write(b'OK')
             return
 
-   server = http.server.HTTPServer(('0.0.0.0', 3333), BasicHandler)
+   server = http.server.ThreadingHTTPServer(('0.0.0.0', 3333), BasicHandler)
    sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
    sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
    server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
