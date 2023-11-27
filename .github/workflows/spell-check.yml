@@ -63,11 +63,6 @@ jobs:
         run: case-police ${{ env.CHANGED_FILES }} --disable DoS
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
-      - name: Create .alexrc file
-        run: |
-          echo '{ "allow": ["actors-actresses", "attacks", "attack", "hooks", "host-hostess", "hostesses-hosts", "invalid", "just", "period", "remains"], "profanitySureness": 2 }' > .alexrc
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
