@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: External search
+layout: list
 weight: 1
 meta:
     title: Signals | External search
