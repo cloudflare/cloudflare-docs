@@ -203,14 +203,18 @@ First, create a new `env.d.ts` file  and declare a binding:
 ```typescript
 ---
 filename: env.d.ts
-highlight: [5,6,7]
+highlight: [5-11]
 ---
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
       [key: string]: string | undefined;
-      // KVNamespace comes from @cloudflare/workers-types, make
-      // sure to include the package in your tsconfig.json's "types" field
+      // The KVNamespace binding type used here comes
+      // from `@cloudflare/workers-types`, in order to
+      // use it like so make sure that you've installed
+      // the package as a dev dependency and you've added
+      // it to your `tsconfig.json` file under
+      // `compilerOptions.types`.
       MY_KV: KVNamespace;
     }
   }
