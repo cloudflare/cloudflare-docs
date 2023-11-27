@@ -266,7 +266,7 @@ You can now use your Cloudflare Worker to insert new rows into the  `readings`  
 
 This tutorial omits the `ts` (the timestamp) and `metadata` (the JSON blob) so they will be set to `now()` and `NULL` respectively.
 
-Once you have sent the `POST` request you can also issue a `GET` request to your Worker’s URL with the  `/readings`  path. Set the `limit` parameter to control the amount of records you get back.
+Once you have sent the `POST` request you can also issue a `GET` request to your Worker’s URL with the  `/readings`  path. Set the `limit` parameter to control the amount of returned records.
 
 If you have **curl** installed you can test with the following commands (replace **<YOUR_SUBDOMAIN>** with your subdomain from the deploy command above):
 
