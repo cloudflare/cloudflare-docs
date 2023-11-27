@@ -198,7 +198,7 @@ In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/
 
 The following code shows an example of accessing a KV namespace in a TypeScript Next.js project.
 
-First, create a new `env.d.ts` file  and declare a binding:
+First, create a new `env.d.ts` file and declare a binding:
 
 ```typescript
 ---
