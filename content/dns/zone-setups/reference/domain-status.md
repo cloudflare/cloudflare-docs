@@ -38,8 +38,8 @@ Your domain has failed multiple DNS checks, indicating that your authoritative D
 
 This domain has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/setup/account-setup/add-site/).
 
-After being deleted for 7 days, a zone is automatically [purged](#purged).
+After being deleted for seven days, a zone is automatically [purged](#purged).
 
 ## Purged
 
-After a zone is deleted for 7 days, it will be purged. Cloudflare does not respond to DNS queries for purged zones and, unlike [deleted zones](#deleted), this status cannot be reverted - meaning that, even if you re-add the domain to the same Cloudflare account, the zone settings will not be restored.
+After a zone is deleted for seven days, it will be purged. Cloudflare does not respond to DNS queries for purged zones and, unlike [deleted zones](#deleted), this status cannot be reverted. In this case, even if you re-add the domain to the same Cloudflare account, the zone settings will not be restored.
