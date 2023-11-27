@@ -65,6 +65,23 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_promiscuous=YES
 > ```
 
+## Spectrum FTPS (ProFTPD) instructions
+
+To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, use the following configuration: 
+
+- **Control Port**: Port 21
+- **Data Ports**: Port ranges 50000-50500
+
+On the ProFTPD server side use the following configuration:
+
+- `MasqueradeAddress``: `www.example.com`
+- `AllowForeignAddress`: `on`. You can also add Cloudflare IP ranges to only allow Cloudflare and not just everyone with `on`.
+- `PassivePorts`: `50000-50500`
+
+In some cases **Origin Server** needs to allow Cloudflare IPs.
+
+For more details, refer to the [ProFTPD documentation](https://www.proftpd.org/docs/modules/mod_core.html). 
+
 ## SFTP
 
 Unlike FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration. When setting up a Spectrum application for SSH, select port 22 and TCP.
