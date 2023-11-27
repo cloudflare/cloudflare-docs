@@ -8,9 +8,9 @@ title: Create custom headers for Cloudflare Access-protected origins with Worker
 
 # Create custom headers for Cloudflare Access-protected origins with Workers
 
-This tutorial covers how to use a [Cloudflare Worker](/workers/) to add custom HTTP headers to traffic and how to send those headers to your origin services protected by [Cloudflare Access](/cloudflare-one/policies/access/).
+This tutorial covers how to use a [Cloudflare Worker](/workers/) to add custom HTTP headers to traffic, and how to send those custom headers to your origin services protected by [Cloudflare Access](/cloudflare-one/policies/access/).
 
-Certain applications or networking implementations require specific custom headers to be passed the origin, which can be difficult to implement for traffic moving through a Zero Trust proxy. You can use a Worker to send the [headers required by Access](/cloudflare-one/identity/authorization-cookie/). In addition, you can send a header called `cf-access-authenticated-user-email`, which contains the authenticated user's email address.
+Some applications and networking implementations require specific custom headers to be passed to the origin, which can be difficult to implement for traffic moving through a Zero Trust proxy. You can configure a Worker to send the [user authorization headers](/cloudflare-one/identity/authorization-cookie/) required by Access.
 
 ---
 
@@ -35,14 +35,14 @@ Certain applications or networking implementations require specific custom heade
    header: Worker with custom HTTP headers
    ---
    addEventListener("fetch", event => {
-   event.respondWith(handleRequest(event.request))
+     event.respondWith(handleRequest(event.request))
    })
 
    async function handleRequest(request) {
-   const { headers } = request;
-   const cfaccessemail = headers.get("<CF-ACCESS-AUTHENTICATED-USER-EMAIL>");
-   const requestWithID = new Request(request);
-   requestWithID.headers.set('<COMPANY-USER-ID>', cfaccessemail);
+     const { headers } = request;
+     const cfaccessemail = headers.get("cf-access-authenticated-user-email");
+     const requestWithID = new Request(request);
+     requestWithID.headers.set('company-user-id', cfaccessemail);
 
    return await fetch(requestWithID);
    }
@@ -57,7 +57,7 @@ Your Worker is now ready to send custom headers to your Access-protected origin 
 
 {{<tutorial-step title="Apply the Worker to your hostname">}}
 
-1. Go to the Worker you created > **Triggers**.
+1. Select the Worker you created, then go to **Triggers**.
 2. In **Routes**, select **Add route**.
 3. Enter the hostname and zone for your origin, then select **Add route**.
 
