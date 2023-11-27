@@ -24,7 +24,7 @@ You will learn how to:
 - Connect your Worker to your Timescale database service with Hyperdrive
 - Query your new API
 
-You can learn more about Timescale by visting their [documentation](https://docs.timescale.com/getting-started/latest/services/).
+You can learn more about Timescale by visiting their [documentation](https://docs.timescale.com/getting-started/latest/services/).
 
 ---
 
@@ -67,11 +67,11 @@ If you're creating a new service go to the [Timescale Console](https://console.c
 4. Set a service name to replace the randomly generated one.
 5. Select  **Create Service**.
 6. On the right hand side expand the **Connection Info** dialog and copy the **Service URL**
-7. Copy the password which is displayed, you will not be able to retreive this again
+7. Copy the password which is displayed, you will not be able to retrieve this again
 8. Click 'I stored my password, go to service overview'
 
 
-If you are using a service you created previously you can retreive your service connection information in the [Timescale Console](https://console.cloud.timescale.com/):
+If you are using a service you created previously you can retrieve your service connection information in the [Timescale Console](https://console.cloud.timescale.com/):
 
 1. Select the service (database) you want Hyperdrive to connect to.
 2. Expand **Connection info**.

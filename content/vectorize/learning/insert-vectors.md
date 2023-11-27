@@ -34,6 +34,52 @@ For example, a vector embedding representing an image could include the path to 
 { id: '1', values: [32.4, 74.1, 3.2], metadata: { path: 'r2://bucket-name/path/to/image.png', format: 'png', category: 'profile_image' } }
 ```
 
+## Namespaces
+
+Namespaces provide a way to segment the vectors within your index: for example, by customer, merchant or store ID.
+
+* To associate vectors with a namespace, you can optionally provide a `namespace: string` value when performing an insert or upsert operation.
+* When querying, you can pass the namespace to search within as an optional parameter to your query.
+* A namespace can be up to 63 characters (bytes) in length and you can have up to 1000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
+
+When a namespace is provided, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
+
+To insert vectors with a namespace:
+
+```ts
+// Mock vectors
+//
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+  {
+    id: "1",
+    values: [32.4, 74.1, 3.2],
+    namespace: "text",
+  },
+  {
+    id: "2",
+    values: [15.1, 19.2, 15.8],
+    namespace: "images",
+  },
+  {
+    id: "3",
+    values: [0.16, 1.2, 3.8],
+    namespace: "pdfs",
+  },
+];
+
+// Insert our vectors, returning a count of the vectors inserted and their vector IDs.
+let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+```
+
+To query vectors within a namespace:
+
+```ts
+// Our queryVector will be searched against vectors within the namespace (only)
+let matches = await env.TUTORIAL_INDEX.query(queryVector, { namespace: "images" })
+```
+
 ## Examples
 
 ### Workers API

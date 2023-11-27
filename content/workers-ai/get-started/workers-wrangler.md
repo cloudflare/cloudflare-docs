@@ -5,7 +5,8 @@ weight: 2
 ---
 
 # Get started - Workers AI local dev
-In this guide, you will get started with Workers AI, experiment with a large laguage model (LLM), and deploy your first AI powered app on the Workers platform.
+
+In this guide, you will get started with Workers AI, experiment with a large language model (LLM), and deploy your first AI powered app on the Workers platform.
 
 ## Before you begin
 
@@ -133,7 +134,7 @@ $ npx wrangler dev --remote
 ```
 
 {{<Aside type="warning">}}
-Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev enviroment is not currently capable of running them locally.
+Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev environment is not currently capable of running them locally.
 {{</Aside>}}
 
 When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:

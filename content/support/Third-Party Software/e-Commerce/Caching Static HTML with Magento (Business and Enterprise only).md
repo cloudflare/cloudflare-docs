@@ -78,7 +78,7 @@ There are a couple of options for installing this:
 -   Install through  with the extension key: `http://connect20.magentocommerce.com/community/Nexcessnet_Turpentine`
 -   Install with . You would just need to use: `modman clone https://github.com/nexcess/magento-turpentine.git`
 
-After installing the plugin, navigate to _System -> Configration -> TURPENTINE -> Varnish Options_ and find the "Use VCL fix" option, set it to "Disable" and save.
+After installing the plugin, navigate to _System -> Configuration -> TURPENTINE -> Varnish Options_ and find the "Use VCL fix" option, set it to "Disable" and save.
 
 ![Use VCL fix option set to Disable.](/images/support/hc-import-use_vcl_fix_magento_cache_static_html.png)
 

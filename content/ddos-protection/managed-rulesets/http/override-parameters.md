@@ -31,7 +31,7 @@ The action that will be performed for requests that match specific rules of Clou
 - **Managed Challenge**
 
   - API value: `"managed_challenge"`.
-  - [Managed Challenges](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
+  - [Managed Challenges](/waf/reference/cloudflare-challenges/#managed-challenge-recommended) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 
 - **Interactive Challenge**
 
