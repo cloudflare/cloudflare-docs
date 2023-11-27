@@ -90,7 +90,7 @@ concat("/archive", http.request.uri.path)
 
 {{</example>}}
 
-The filter uses the `starts_with()` function all paths starting with `/news/2012/`. The dynamic path rewrite uses the `concat()` function to concatenate a prefix to the original URL path of the HTTP request.
+The filter uses the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with) function all paths starting with `/news/2012/`. The dynamic path rewrite uses the [`concat()`](/ruleset-engine/rules-language/functions/#function-concat) function to concatenate a prefix to the original URL path of the HTTP request.
 
 ## Rewrite path of moved section of a website
 
