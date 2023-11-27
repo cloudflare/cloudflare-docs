@@ -50,7 +50,7 @@ Depending on your domain's security settings, you might accidentally block searc
 
 If you notice SEO issues, make sure your:
 
-- [WAF custom rules](/firewall/known-issues-and-faq/#caution-about-potentially-blocking-bots) are allowing **Verified Bots**.
+- [WAF custom rules](/waf/troubleshooting/faq/#caution-about-potentially-blocking-bots) are allowing **Verified Bots**.
 - [Rate limiting rules](/waf/rate-limiting-rules/) are allowing **Verified Bots**.
 - [Bot protection](/bots/concepts/bot/#verified-bots) settings are not blocking **Verified Bots**.
 

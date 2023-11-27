@@ -30,7 +30,7 @@ filename: functions/tsconfig.json
 }
 ```
 
-If you already have a `tsconfig.json` at the root of your project, you may wish to explicitly exclude the `/functions` directory to avoid conflicts. To exlude the `/functions` directory:
+If you already have a `tsconfig.json` at the root of your project, you may wish to explicitly exclude the `/functions` directory to avoid conflicts. To exclude the `/functions` directory:
 
 ```json
 ---
