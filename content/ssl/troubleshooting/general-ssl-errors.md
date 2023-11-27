@@ -75,7 +75,7 @@ Cloudflare SSL/TLS certificates only apply for traffic [proxied through Cloudfla
 
 #### Partial DNS setup
 
-If your domain is on a [partial setup](/dns/zone-setups/partial-setup/), confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/caa-records/) to provision certificates for your domain. 
+If your domain is on a [partial setup](/dns/zone-setups/partial-setup/), confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/caa-records/) to provision certificates for your domain.
 
 ___
 
@@ -119,7 +119,7 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
 
 ### Resolution
 
-- Make sure that you are using a browser that supports [SNI (Server Name Indication)](https://www.cloudflare.com/learning/ssl/what-is-sni/), see our [Browser Compatibility article](/ssl/reference/browser-compatibility/).
+- Make sure that you are using a browser that supports [SNI (Server Name Indication)](https://www.cloudflare.com/learning/ssl/what-is-sni/). Refer to [Browser compatibility](/ssl/reference/browser-compatibility/) for more details.
 - Ensure that the hostname you are accessing is set to [proxied (orange cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) in the DNS tab of your Cloudflare Dashboard.
 - If the hostname you are accessing is a second level subdomain (such as `dev.www.example.com`), you'll need to either:
   - Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers `dev.www.example.com`.
