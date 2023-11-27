@@ -103,10 +103,6 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Add metadata for reporting -->
-  {{- with .Context.Params.source -}}
-  <meta name="pcx_kb_number" content="{{- replaceRE `^http.+\/articles\/(\d+)-.*$` "$1" . -}}">
-  {{- end -}}
-
   {{- $product := "" -}}
   {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
   {{- $product = replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
