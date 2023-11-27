@@ -6,16 +6,7 @@ weight: 4
 
 # URL rewrite examples
 
-The following examples illustrate how to rewrite URLs with Transform Rules:
-
-- [Rewrite path of welcome page for visitors in specific countries](#rewrite-path-of-welcome-page-for-visitors-in-specific-countries)
-- [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
-- [Rewrite path of archived blog posts](#rewrite-path-of-archived-blog-posts)
-- [Rewrite path of moved section of a website](#rewrite-path-of-moved-section-of-a-website)
-- [Rewrite path with several URL segments to a different URL segment](#rewrite-path-with-several-url-segments-to-a-different-url-segment)
-- [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
-
----
+The examples in this page illustrate how to rewrite URLs with Transform Rules.
 
 ## Rewrite path of welcome page for visitors in specific countries
 
