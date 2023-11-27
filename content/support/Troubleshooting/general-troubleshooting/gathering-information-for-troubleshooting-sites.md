@@ -10,7 +10,7 @@ title: Gathering information for troubleshooting sites
 
 ## Overview
 
-It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
+It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](/support/contacting-cloudflare-support/#h_7b55d494-b84d-439b-8e60-e291a9fd3d16). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
 
 {{<Aside type="note">}}
 Cloudflare support cannot make configuration changes on behalf of
@@ -301,7 +301,7 @@ ___
 
 ## Perform a traceroute
 
-Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the _traceroute_ command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](https://support.cloudflare.com/hc/articles/200172476), ensure to provide output from a traceroute.
+Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the _traceroute_ command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](/support/contacting-cloudflare-support/), ensure to provide output from a traceroute.
 
 {{<Aside type="tip">}}
 Timeouts are possible for ping results because Cloudflare limits ping
@@ -443,7 +443,7 @@ ___
 
 ## Related resources
 
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)
+-   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Troubleshooting Cloudflare HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431)
 -   [Diagnosing network issues with MTR and traceroute](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)
 -   [cURL command line tool](https://curl.haxx.se/)
