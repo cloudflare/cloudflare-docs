@@ -68,7 +68,7 @@ If you are creating a new service, go to the [Timescale Console](https://console
 5. Select **Create Service**.
 6. On the right hand side, expand the **Connection Info** dialog and copy the **Service URL**.
 7. Copy the password which is displayed. You will not be able to retrieve this again.
-8. Select 'I stored my password, go to service overview'.
+8. Select **I stored my password, go to service overview**.
 
 If you are using a service you created previously, you can retrieve your service connection information in the [Timescale Console](https://console.cloud.timescale.com/):
 
@@ -84,7 +84,7 @@ You should ensure that you do not break any existing clients if when you reset t
 
 Insert your password into the **Service URL** as follows (leaving the portion after the @ untouched):
 
-```bash
+```sh
 postgres://tsdbadmin:YOURPASSWORD@...
 ```
 
@@ -98,7 +98,7 @@ Connect to your Timescale database using the Service URL you copied in the last 
 
 If you are using the default PostgreSQL CLI tool [**psql**](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/) to connect, you would run psql like below (substituting your **Service URL** from the previous step). You could also connect using a graphical tool like [PgAdmin](https://www.pgadmin.org/).
 
-```sh
+```bash
 $ psql SERVICEURL
 ```
 
@@ -270,7 +270,7 @@ Once you have sent the `POST` request you can also issue a `GET` request to your
 
 If you have **curl** installed you can test with the following commands (replace **<YOUR_SUBDOMAIN>** with your subdomain from the deploy command above):
 
-```sh
+```bash
 ---
 header: Ingest some data
 ---
@@ -291,7 +291,7 @@ EOF
 ---
 header: Query some data
 ---
-$ curl 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings?limit=10'
+curl 'https://timescale-api.<YOUR_SUBDOMAIN>jsewell.workers.dev/readings?limit=10'
 ```
 
 In this tutorial, you have learned how to create a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive, and TypeScript.
