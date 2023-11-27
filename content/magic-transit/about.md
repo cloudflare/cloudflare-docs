@@ -16,7 +16,7 @@ The Cloudflare network uses [Border Gateway Protocol (BGP)](https://www.cloudfla
 
 Once packets hit Cloudflare’s network, traffic is inspected for attacks, filtered, {{<glossary-tooltip term_id="traffic steering">}}steered{{</glossary-tooltip>}}, accelerated, and sent onward to your origin. Magic Transit connects to your origin infrastructure using Anycast {{<glossary-tooltip term_id="GRE tunnel">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} tunnels over the Internet or, with [Cloudflare Network Interconnect (CNI)](/network-interconnect/), via physical or virtual interconnect.
 
-Magic Transit users have two options for their implementation: ingress traffic or ingress and egress traffic. Users with an egress implementation will need to set up {{<glossary-tooltip term_id="policy-based routing">}}policy-based routing (PBR){{</glossary-tooltip>}} or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
+Magic Transit users have two options for their implementation: ingress traffic or ingress and [egress traffic](/magic-transit/reference/egress/). Users with an egress implementation will need to set up {{<glossary-tooltip term_id="policy-based routing">}}policy-based routing (PBR){{</glossary-tooltip>}} or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
 
 ```mermaid
 flowchart LR
