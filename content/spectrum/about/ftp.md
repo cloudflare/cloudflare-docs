@@ -65,22 +65,20 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_promiscuous=YES
 > ```
 
-## Spectrum FTPS (ProFTPD) instructions
+### Spectrum FTPS (ProFTPD) instructions
 
-To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, use the following configuration: 
+To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, the following example configuration is recommended:
 
 - **Control Port**: Port 21
 - **Data Ports**: Port ranges 50000-50500
 
-On the ProFTPD server side use the following configuration:
+On the ProFTPD server side use the following example configuration:
 
-- `MasqueradeAddress``: `www.example.com`
-- `AllowForeignAddress`: `on`. You can also add Cloudflare IP ranges to only allow Cloudflare and not just everyone with `on`.
+- `MasqueradeAddress`: `www.example.com`
+- `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](https://developers.cloudflare.com/learning-paths/get-started/add-domain-to-cf/allow-cloudflare-ips/).
 - `PassivePorts`: `50000-50500`
 
-In some cases **Origin Server** needs to allow Cloudflare IPs.
-
-For more details, refer to the [ProFTPD documentation](https://www.proftpd.org/docs/modules/mod_core.html). 
+For more details, refer to the [ProFTPD documentation](http://www.proftpd.org/docs/modules/mod_core.html). 
 
 ## SFTP
 
