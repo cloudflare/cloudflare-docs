@@ -26,4 +26,4 @@ Cloudflare uses geolocation lookups to extract the following information from ev
 
 Cloudflare uses internal lookups to associate the above data with a customer domain and customer account.
 
-Cloudflare does not store any PII or user-specific data, and any IP data is only kept for the duration of the request as it is processed. After the report is processed through the NEL pipeline, all PII data is purged from the system. For more information, refer to [Understanding Network Error Logging](https://support.cloudflare.com/hc/en-us/articles/360050691831-Understanding-Network-Error-Logging).
+Cloudflare does not store any PII or user-specific data, and any IP data is only kept for the duration of the request as it is processed. After the report is processed through the NEL pipeline, all PII data is purged from the system. For more information, refer to [Understanding Network Error Logging](/network/understanding-cloudflare-http2-and-http3-support/).

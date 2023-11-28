@@ -830,7 +830,7 @@
     },
     "grpc": {
       "title": "gRPC",
-      "link": "/support/network/understanding-cloudflare-grpc-support/",
+      "link": "/network/understanding-cloudflare-grpc-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -844,7 +844,7 @@
     },
     "http2": {
       "title": "HTTP/2",
-      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
+      "link": "/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -880,7 +880,7 @@
     },
     "http3": {
       "title": "HTTP/3 (with QUIC)",
-      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
+      "link": "/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -908,7 +908,7 @@
     },
     "ipv6": {
       "title": "IPv6 Compatibility",
-      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/",
+      "link": "/network/understanding-and-configuring-cloudflares-ipv6-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -966,7 +966,7 @@
     },
     "pseudo_ipv4": {
       "title": "Pseudo IPv4",
-      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
+      "link": "/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1008,7 +1008,7 @@
     },
     "websockets": {
       "title": "WebSockets",
-      "link": "/support/network/using-cloudflare-with-websockets/",
+      "link": "/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",

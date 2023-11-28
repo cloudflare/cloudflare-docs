@@ -216,7 +216,7 @@ Below is the full list of settings available, presented in the order that they a
 | [Security Level](/waf/tools/security-level/) | Control options for the **Security Level** feature from the **Security** app. {{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/)| Turn on or off the **Server Side Excludes** feature of the Cloudflare **Scrape Shield** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} |  All |
 | [SSL](/ssl/origin-configuration/ssl-modes/) | Control options for the **SSL** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
-| True Client IP Header | Turn on or off the **True-Client-IP Header** feature of the Cloudflare **Network** app. [Learn more](/support/network/understanding-the-true-client-ip-header/). | Enterprise |
+| True Client IP Header | Turn on or off the **True-Client-IP Header** feature of the Cloudflare **Network** app. [Learn more](/network/understanding-cloudflare-http2-and-http3-support/). | Enterprise |
 | Web Application Firewall (previous version) | Turn on or off **WAF managed rules** as defined in **Security** > **WAF** > **Managed rules**. [Learn more](/waf/reference/legacy/old-waf-managed-rules/).<br/>You cannot enable or disable individual WAF managed rules via page rules. | Pro and above |
 
 ___
