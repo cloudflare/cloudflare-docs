@@ -6,10 +6,6 @@ title: Configuring IP geolocation
 
 # Configuring IP geolocation
 
-
-
-## Overview
-
 Cloudflare can include the country code of the visitor's IP address (in [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format) with each request between Cloudflare and the upstream origin web server. This allows site administrators to capture their visitor's IP location in server logging and/or application logic. Besides ISO country codes, Cloudflare uses the following special country codes:
 
 -   `XX` - Used for clients without country code data.
