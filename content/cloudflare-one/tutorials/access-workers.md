@@ -24,7 +24,7 @@ Some applications and networking implementations require specific custom headers
 
 {{<tutorial-step title="Create a Worker with custom headers">}}
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Workers & Pages**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Workers & Pages**.
 2. If this is your first Worker, select **Create Worker**. Otherwise, select **Create application**, then select **Create Worker**.
 3. Enter an identifiable name for the Worker, then select **Deploy**.
 4. Select **Edit code**.
