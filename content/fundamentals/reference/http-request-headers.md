@@ -35,7 +35,7 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 ## CF-Connecting-IPv6
 
-Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
 {{<render file="_pseudo-ipv4-warning.md">}}
 <br/>

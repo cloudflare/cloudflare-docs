@@ -34,7 +34,7 @@ This is not an exhaustive list of Cloudflare products and features.
 | [HTTP/2 prioritization](https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/) | Yes | Yes* | This feature must be enabled on the customer zone to function. |
 | [Image resizing](/images/image-resizing/) | Yes | Yes |
 | IPv6 | Yes | Yes |
-| [IPv6 Compatibility](/network/understanding-and-configuring-cloudflares-ipv6-support/) | Yes | Yes* | If the customer zone has **IPv6 Compatibility** enabled, generally the SaaS zone should as well.<br/><br/>If not, make sure the SaaS zone enables [Pseudo IPv4](/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4). |
+| [IPv6 Compatibility](/network/ipv6-compatibility/) | Yes | Yes* | If the customer zone has **IPv6 Compatibility** enabled, generally the SaaS zone should as well.<br/><br/>If not, make sure the SaaS zone enables [Pseudo IPv4](/network/pseudo-ipv4/). |
 | [Load Balancing](/load-balancing/) | No | Yes | Customer zones can still use Load Balancing for non-O2O traffic. |
 | [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) | Yes* | Yes | Page Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Mirage](/speed/optimization/images/mirage/) | Yes | Yes |

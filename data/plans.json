@@ -908,7 +908,7 @@
     },
     "ipv6": {
       "title": "IPv6 Compatibility",
-      "link": "/network/understanding-and-configuring-cloudflares-ipv6-support/",
+      "link": "/network/ipv6-compatibility/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -966,7 +966,7 @@
     },
     "pseudo_ipv4": {
       "title": "Pseudo IPv4",
-      "link": "/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
+      "link": "/network/pseudo-ipv4/",
       "properties": {
         "availability": {
           "title": "Availability",
