@@ -6,42 +6,40 @@ title: gRPC connnections
 
 # gRPC connections
 
-The gRPC protocol was developed by Google in 2015 to build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.  Cloudflare offers support for gRPC to protect your APIs on any orange-clouded gRPC endpoints.
-
-Running gRPC traffic on Cloudflare is compatible with most Cloudflare products, including Bot Management and Page Rules. gRPC support is available on all Cloudflare plans for no additional fees. However, charges may occur for gRPC traffic over add-on products such as Argo Smart Routing, WAF, and Bot Management. gRPC support is broadly tested and considered stable, but bugs are still possible. Report unexpected behaviors to [Cloudflare Support](/support/contacting-cloudflare-support/).
+Cloudflare offers support for gRPC to protect your APIs on any [proxied gRPC endpoints](/dns/manage-dns-records/reference/proxied-dns-records/). The gRPC protocol helps build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.
 
 ## Availability
 
 {{<feature-table id="network.grpc">}}
 
-## Requirements
-
--   Your gRPC endpoint must listen on port 443. 
--   Your gRPC endpoint must support TLS and HTTP/2.
--   HTTP/2 must be advertised over ALPN.
--   Use _application/grpc_ or _application/grpc+<message type_ (for example: _application/grpc+proto_) for the **Content-Type** header of gRPC requests.
-
-___
+Charges may occur for gRPC traffic over add-on products such as [Argo Smart Routing](/argo-smart-routing/), [WAF](/waf/), and [Bot Management](/bots/).
 
 ## Limitations
 
-The following products have limited capabilities with gRPC requests:
+Running gRPC traffic on Cloudflare is compatible with most Cloudflare products.
+
+However, the following products have limited capabilities with gRPC requests:
 
 - The [Cloudflare WAF](/waf/) will only run for header inspection during the connection phase. WAF Managed Rules will not run on the content of a gRPC stream.
 - [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) currently does not support gRPC.
 - [Cloudflare Access](/cloudflare-one/policies/access/) does not support gRPC traffic sent through Cloudflare’s reverse proxy. gRPC traffic will be ignored by Access if gRPC is enabled in Cloudflare. We recommend disabling gRPC for any sensitive origin servers protected by Access or enabling another means of authenticating gRPC traffic to your origin servers.
 
-___
-
 ## Enable gRPC
 
-Follow the instructions below to enable gRPC:
+### Requirements
 
-{{<Aside type="note">}}
-Make sure that the hostname that hosts your gRPC endpoint is set to [proxied (orange-cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) and that you use at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
-{{</Aside>}}
+-   Your gRPC endpoint must listen on port 443. 
+-   Your gRPC endpoint must support TLS and HTTP/2.
+-   HTTP/2 must be advertised over ALPN.
+-   Use `application/grpc` or `application/grpc+<message type` (for example: `application/grpc+proto`) for the **Content-Type** header of gRPC requests.
+-   Make sure that the hostname that hosts your gRPC endpoint:
+        - Is set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
+        - Uses at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 
-1.  Log in to your Cloudflare account.
-2.  Select the appropriate domain.
-3.  Click the **Network** app.
-4.  Toggle the **gRPC**.
+### Procedure
+
+To change the **gRPC** setting in the dashboard:
+
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2.  Go to **Network**.
+3.  For **gRPC**, switch the toggle to **On**.

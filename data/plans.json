@@ -830,7 +830,7 @@
     },
     "grpc": {
       "title": "gRPC",
-      "link": "/network/understanding-cloudflare-grpc-support/",
+      "link": "/network/grpc-connections/",
       "properties": {
         "availability": {
           "title": "Availability",

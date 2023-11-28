@@ -732,6 +732,7 @@
 /support/network/using-cloudflare-with-websockets/ /network/websockets/ 301
 /support/network/understanding-and-configuring-cloudflares-ipv6-support/ /network/ipv6-compatibility/ 301
 /support/network/understanding-cloudflare-http2-and-http3-support/ /speed/optimization/protocol/ 301
+/support/network/understanding-cloudflare-grpc-support/ /network/grpc-connections/ 301
 /support/network/understanding-the-true-client-ip-header/ /network/true-client-ip-header/ 301
 /support/speed/optimization-file-size/will-mirage-and-polish-optimize-off-site-resources/ /speed/optimization/images/ 301
 /support/speed/optimization-file-size/ /speed/optimization/ 301
