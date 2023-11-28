@@ -1,13 +1,37 @@
 ---
 pcx_content_type: reference
-title: Zone statuses
+title: Zone status
+layout: list
 ---
 
-# Zone statuses
+# Zone status
 
 Refer to the following sections for information on the different zone statuses that you can find after you [add your website or application](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
 
 If your zone status changes, you will receive an email at the address associated with your account.
+
+```mermaid
+flowchart LR
+accTitle: Zone status flow
+accDescr: Diagram of the different statuses applicable to Clouflare zones and transitions from one status to the other.
+
+A["Initializing
+(Setup)"]
+B[Pending]
+C[Active]
+D[Moved]
+E[Deleted]
+F[Purged]
+
+ A-- Plan <br />selection --> B
+ B-- Zone <br />authentication --> C
+ C-- Nameservers <br />no longer <br />point to Cloudflare --> D
+ D-- Moved <br />for 7 days --> E
+ E-- Deleted <br />for 7 days --> F
+ B-- Pending for <br />28 days --> E
+
+
+```
 
 ## Setup
 You initiated but did not finish the signup process.
