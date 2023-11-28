@@ -44,6 +44,8 @@ If you are using a [partial zone setup](/dns/zone-setups/partial-setup/) for you
 
 {{<render file="_partial-zone-acm-dcv-wildcard.md" productFolder="ssl" >}}
 
+It is currently not possible to have wildcard custom domains for [Cloudflare Pages](/pages/) - refer to the [known issues](/pages/platform/known-issues/#custom-domains) for details.
+
 ## Additional information
 
 For more information on wildcard records — as well as more details about their limitations — refer to the [introductory blog post](https://blog.cloudflare.com/wildcard-proxy-for-everyone/).
