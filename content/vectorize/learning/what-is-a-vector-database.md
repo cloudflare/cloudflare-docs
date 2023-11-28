@@ -51,7 +51,7 @@ When a user initiates a prompt, instead of passing it (without additional contex
 3. These vectors are used to look up the content they relate to (if not embedded directly alongside the vectors as metadata).
 4. This content is provided as context alongside the original user prompt, providing additional context to the LLM and allowing it to return an answer that is likely to be far more contextual than the standalone prompt.
 
-Refer to the [RAG tutorial using Workers AI](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) to learn how to combine Workers AI and Vectorize for generative AI use-cases.
+Refer to the [RAG using Workers AI tutorial](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) to learn how to combine Workers AI and Vectorize for generative AI use-cases.
 
 <sup>1</sup> You can learn more about the theory behind RAG by reading the [RAG paper](https://arxiv.org/abs/2005.11401).
 
@@ -75,7 +75,7 @@ When a model considers the features of an input as "similar" (based on its under
 
 ### Dimensions
 
-Vector dimensions describe the width of a vector embedding. The width of a vector embegging is the number of floating point elements that comprise a given vector.
+Vector dimensions describe the width of a vector embedding. The width of a vector embedding is the number of floating point elements that comprise a given vector.
 
 The number of dimensions are defined by the machine learning model used to generate the vector embeddings, and how it represents input features based on its internal model and complexity. More dimensions ("wider" vectors) may provide more accuracy at the cost of compute and memory resources, as well as latency (speed) of vector search.
 
@@ -83,7 +83,7 @@ Refer to the [dimensions](/vectorize/learning/create-indexes/#dimensions) docume
 
 ### Distance metrics
 
-The distance metric is an index used for vector search. The distance metric defines how it determines how close your query vector is to other vectors within the index.
+The distance metric is an index used for vector search. It defines how it determines how close your query vector is to other vectors within the index.
 
 - Distance metrics determine how the vector search engine assesses similarity between vectors. 
 - Cosine, Euclidean (L2), and Dot Product are the most commonly used distance metrics in vector search.
