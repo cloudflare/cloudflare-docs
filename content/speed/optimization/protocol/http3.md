@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: HTTP/3 (with QUIC)
 weight: 1
 ---
