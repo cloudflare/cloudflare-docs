@@ -930,7 +930,7 @@
     },
     "response_buffering": {
       "title": "Response buffering",
-      "link": "https://support.cloudflare.com/hc/articles/206049798",
+      "link": "/network/response-buffering/",
       "properties": {
         "availability": {
           "title": "Availability",
