@@ -18,9 +18,9 @@ Due to the behavior of some individuals using the Tor network (spammers, distrib
 
 Our [basic protection level](/waf/tools/security-level/) issues challenges to visitors whose IP address has a high threat score, depending on the level chosen by the Cloudflare customer.
 
-One way to address this threat score is to create [custom WAF rules](). Cloudflare assigns the two-letter code `T1` for Tor.  There's no geographical country associated with these IPs, but this approach lets Cloudflare customers override the default Cloudflare threat score to define the experience for their Tor visitors. Cloudflare updates its list of Tor exit node IP addresses every hour.
+One way to address this threat score is to create [custom WAF rules](/waf/custom-rules/). Cloudflare assigns the two-letter code `T1` for Tor.  There's no geographical country associated with these IPs, but this approach lets Cloudflare customers override the default Cloudflare threat score to define the experience for their Tor visitors. Cloudflare updates its list of Tor exit node IP addresses every hour.
 
-The other way to improve the Tor user experience is through Onion Routing. This improves Tor browsing as follows: 
+The other way to improve the Tor user experience is through Onion Routing. This improves Tor browsing as follows:
 
 -   Tor users no longer access your site via exit nodes, which can sometimes be compromised, and may snoop on user traffic.
 -   Human Tor users and bots can be distinguished by our Onion services, such that interactive challenges are only served to malicious bot traffic. 
