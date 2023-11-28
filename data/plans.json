@@ -1935,10 +1935,10 @@
         },
         "customization": {
           "title": "Can customize",
-          "summary": "Only Enterprise can customize",
+          "summary": "Free customers cannot disable",
           "free": "No",
-          "pro": "No",
-          "biz": "No",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
