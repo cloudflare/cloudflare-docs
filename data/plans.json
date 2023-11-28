@@ -1160,7 +1160,7 @@
     },
     "page_rules": {
       "title": "Page Rules",
-      "link": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
+      "link": "/rules/page-rules/",
       "properties": {
         "availability": {
           "title": "Availability",

@@ -129,7 +129,7 @@ In phase 1 the migration became available to a subset of eligible zones, which h
     - WAF disabled, or
     - WAF enabled and only the Cloudflare Managed Ruleset is enabled (the OWASP ModSecurity Core Rule Set must be disabled).
 
-- The zone has no [firewall rules](/firewall/cf-dashboard/) or [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) bypassing, enabling, or disabling WAF managed rules:
+- The zone has no [firewall rules](/firewall/cf-dashboard/) or [Page Rules](/rules/page-rules/) bypassing, enabling, or disabling WAF managed rules:
 
     - Firewall rules configured with _Bypass_ > _WAF Managed Rules_.
     - Page Rules configured with _Disable Security_.
@@ -520,4 +520,4 @@ ___
 
 The concept of paranoia level did not exist in the OWASP version (2.x) used in WAF managed rules. Based on the OWASP guide recommendations, the WAF migration process will set the paranoia level of the Cloudflare OWASP Core Ruleset to _PL2_.
 
-You cannot disable the new version of WAF Managed Rules using [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/), since the _Web Application Firewall: Off_ setting in Page Rules only applies to the previous version of WAF managed rules. To disable the new WAF Managed Rules you must [configure WAF exceptions](/waf/managed-rules/waf-exceptions/) (also known as skip rules).
+You cannot disable the new version of WAF Managed Rules using [Page Rules](/rules/page-rules/), since the _Web Application Firewall: Off_ setting in Page Rules only applies to the previous version of WAF managed rules. To disable the new WAF Managed Rules you must [configure WAF exceptions](/waf/managed-rules/waf-exceptions/) (also known as skip rules).

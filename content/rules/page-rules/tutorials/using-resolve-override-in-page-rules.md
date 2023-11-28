@@ -37,7 +37,7 @@ To configure a resolve override in Page Rules, do the following:
     -   **TTL:** Auto
     -   **Proxy status:** Proxied (orange cloud icon)
 
-2. [Create a Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#create-a-page-rule) to override a URL or an IP address.
+2. [Create a Page Rule](/rules/page-rules/#create-a-page-rule) to override a URL or an IP address.
 
 -   The following example Page Rule configuration would send all requests from a folder (`/app`) to an AWS S3 bucket:
     -   **If the URL matches:** `example.com/app/*`

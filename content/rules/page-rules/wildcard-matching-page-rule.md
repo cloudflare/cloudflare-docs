@@ -1,8 +1,7 @@
 ---
-title: Wildcard matching
-pcx_content_type: navigation
-meta:
-  title: Wildcard matching and referencing
+pcx_content_type: troubleshooting
+title: Wildcard Matching & Referencing
+weight: 5
 ---
 
 # Wildcard matching and referencing
@@ -18,7 +17,7 @@ example.com/t\*st would match:
 
 ## Helpful tips
 
-- To match both `http` and `https`, `write example.com`. Writing `*example.com` is unnecessary.
+- To match both `http` and `https`, write `example.com`. Writing `*example.com` is unnecessary.
 - To match every page on a domain, write `example.com/*`. Writing `example.com` will not work.
 - To match every page on a domain and its subdomains, write `*example.com/*`. Writing `example.com` won’t work.
 - A wildcard (`*`) in a Page Rule URL will match even if no characters are present and may include any part of the URL, including the query string.
@@ -38,3 +37,7 @@ To add a $ character in the forwarding URL, escape it by adding a backslash `\` 
 Avoid creating a redirect where the domain points to itself as the destination. A domain that points to itself can cause an [infinite redirect error](/ssl/troubleshooting/too-many-redirects/), which makes your site inaccessible to visitors.
 
 {{</Aside>}}
+
+
+
+

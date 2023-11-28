@@ -17,4 +17,4 @@ Use the following table to determine when to use each option.
 | [Bulk redirects](/rules/url-forwarding/bulk-redirects/) | When you have a large number of static redirects. |
 | [Pages redirects](/pages/platform/redirects/) | If you have a Pages project. |
 | [Workers redirect](/workers/examples/redirect/) | When the other redirects do not meet your needs. |
-| [Page Rules](/support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/) | As an option of last resort, since Page Rules [are being replaced](https://blog.cloudflare.com/future-of-page-rules/). |
+| [Page Rules](/rules/page-rules/tutorials/url-forwarding/) | As an option of last resort, since Page Rules [are being replaced](https://blog.cloudflare.com/future-of-page-rules/). |

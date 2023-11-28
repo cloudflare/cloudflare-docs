@@ -7,7 +7,7 @@ meta:
 
 # Page Rules
 
-Page Rules trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to the [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to learn more about configuring Page Rules.
+Page Rules trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to the [Page Rules](/rules/page-rules/) to learn more about configuring Page Rules.
 
 ## Page Rules with Workers
 
@@ -59,7 +59,7 @@ Due to ongoing changes to the Workers runtime, detailed documentation on how the
 
 {{</Aside>}}
 
-To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
+To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](/rules/page-rules/).
 
 {{<Aside type="note" header="Same zone versus other zone">}}
 

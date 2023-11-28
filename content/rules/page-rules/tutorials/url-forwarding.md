@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules
-title: Configuring URL forwarding or redirects with Page Rules
+title: Page Rules URL Forwarding 
 ---
 
 # Configuring URL forwarding or redirects with Page Rules
@@ -147,4 +147,4 @@ ___
 
 -   [Single Redirects](/rules/url-forwarding/single-redirects/)
 -   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
--   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)
+-   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](/rules/page-rules/)

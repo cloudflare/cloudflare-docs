@@ -1,174 +1,9 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
-title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
+title: Page Rule Settings
+weight: 3
 ---
-
-# Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
-
-You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
-
-{{<Aside type="warning">}}
-Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
-
-Depending on the record type, you can use different values for the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
-
-```
-www.example.com  A      192.0.2.1
-www.example.com  AAAA   2001:DB8::1
-www.example.com  CNAME  domain.example
-```
-
-We recommend only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
-
-For more information on reserved IP addresses or top level domains, please refer to these RFCs:
-[RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)
-[RFC 3849](https://datatracker.ietf.org/doc/html/rfc3849)
-[RFC 2606](https://datatracker.ietf.org/doc/html/rfc2606)
-{{</Aside>}}
-
-The default number of allowed page rules depends on the domain plan as shown below.
-
-{{<feature-table id="rules.page_rules">}}
-
-You can [purchase additional rules](https://www.cloudflare.com/features-page-rules/) (up to a maximum of 100) for domains in the Free, Lite, Pro, Pro Plus, and Business plans.
-
-___
-
-## Before getting started
-
-It is important to understand two basic Page Rules behaviors:
-
--   Only the highest priority matching page rule takes effect on a request.
--   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
-
-{{<Aside type="tip">}}
-Cloudflare recommends ordering your rules from most specific to least specific.
-{{</Aside>}}
-
-A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
-
-An example URL with these four segments looks like:
-
-```
-https://www.example.com:443/image.png?parameter1=value1
-```
-
-The `scheme` and `port` segments are optional. If omitted, _scheme_ matches both `http://` and `https://` protocols. If no `port` is specified, the rule will match all ports.
-
-Finally, you can disable a page rule at any time. While a rule is disabled, actions won’t trigger, but the rule still appears in the **Rules** app in the **Page Rules** tab, is editable, and counts against the number of rules allowed for your domain. The _Save as Draft_ option creates a page rule that is disabled by default.
-
-___
-
-## Create a page rule
-
-The steps to create a page rule are:
-
-1.  Log in to the Cloudflare dashboard.
-2.  Select the domain where you want to add the page rule.
-3.  Click the **Rules** app.
-4.  In the **Page Rules** tab, click **Create Page Rule**. The _Create Page Rule for <your domain>_ page opens.
-5.  Under **If the URL matches**, enter the URL or URL pattern that should match the rule. [_Learn more about wildcard matching_](#referencing-wildcard-matches)
-6.  Next, under **Then the settings are:** click **+ Add a Setting** and select the desired setting from the dropdown. You can include more than one setting per rule. Learn more about settings in the [summary below](#summary-of-page-rules-settings).
-7.  In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
-8.  To save, click one of the following options:
-    -   **Save as Draft** to save the rule and leave it disabled.
-    -   **Save and Deploy** to save the rule and enable it immediately.
-
-{{<Aside type="note">}}
-**Note:** We do not support non-ASCII characters (e.g. punycode/unicode
-domain) in Page Rules. Instead, you could URL-encode the string using
-[Punycode converter](https://www.punycoder.com/ "Punycode converter"),
-for example, and this will work.
-{{</Aside>}}
-
-{{<Aside type="tip">}}
-Consult [Recommended Page Rules to
-Consider](/support/page-rules/recommended-page-rules-to-consider/)
-for ideas about the types of page rules you can create.
-{{</Aside>}}
-
-___
-
-## Edit a page rule
-
-To modify an existing rule:
-
-1.  Log in to the Cloudflare dashboard.
-2.  Select the domain where you want to edit your page rule.
-3.  Click the **Rules** app.
-4.  In the **Page Rules** tab, locate the rule to edit.
-5.  Proceed to make the necessary changes, as follows:
-    -   To enable or disable a rule, click the **On/Off** toggle.
-    -   To modify the URL pattern, settings, and order, click the **Edit** button (wrench icon). In the dialog, enter the information you’d like to change.
-    -   To remove a rule, click the **Delete** button (x icon) and confirm by clicking **OK** in the **Confirm** dialog.
-
-___
-
-## Understand wildcard matching and referencing
-
-You can use the asterisk (\*) in any URL segment to match certain patterns. For example,
-
-```
-example.com/t*st
-```
-
-Would match:
-
-```
-example.com/test
-example.com/toast
-example.com/trust
-```
-
-_example.com/foo/\*_ does not match example.com/foo.  However, _example.com/foo\*_ does.
-
-### Helpful tips
-
--   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
--   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write `*example.com/*`. Just writing _example.com_ won’t work.
--   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
-
-### Referencing wildcard matches
-
-In a _Forwarding URL_ rule, you can reference a matched wildcard in the _destination URL_ field by using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
-
-For example:
-
-You could forward:
-
-```
-http://*.example.com/*
-```
-
-to:
-
-```
-http://example.com/images/$1/$2.jpg
-```
-
-This rule would match:
-
-```
-http://cloud.example.com/flare.jpg
-```
-
-which ends up being forwarded to:
-
-```
-http://example.com/images/cloud/flare.jpg
-```
-
-To use a literal `$` character in the forwarding URL, escape it by adding a backslash (\\) in front: `\$`.
-
-{{<Aside type="warning">}}
-Avoid creating a redirect where the domain points to itself as the
-destination. This can cause an infinite redirect error and your site
-cannot be served to visitors.
-{{</Aside>}}
-
-___
 
 ## Summary of Page Rules Settings
 
@@ -201,7 +36,7 @@ Below is the full list of settings available, presented in the order that they a
 | Edge Cache TTL | Specify how long to cache a resource in the Cloudflare edge network. _Edge Cache TTL_ isn't visible in response headers. | All |
 | [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/) | Turn on or off **Email Obfuscation**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | Forwarding URL | Redirects one URL to another using an `HTTP 301/302 redirect`. _Refer to [Understand wildcard matching and referencing above](#understand-wildcard-matching-and-referencing)._ | All |
-| [Host Header Override](/support/page-rules/using-page-rules-to-rewrite-host-headers/) | Apply a specific host header.{{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#host-header">}} | Enterprise |
+| [Host Header Override](/rules/page-rules/tutorials/using-page-rules-to-rewrite-host-headers/) | Apply a specific host header.{{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#host-header">}} | Enterprise |
 | IP Geolocation Header | Cloudflare adds a _CF-IPCountry_ HTTP header containing the country code that corresponds to the visitor. | All |
 | [Mirage](/speed/optimization/images/mirage/) | Turn on or off **Mirage**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | Pro and above |
 | [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) | Turn on or off the **Opportunistic Encryption**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
@@ -209,7 +44,7 @@ Below is the full list of settings available, presented in the order that they a
 | Origin Error Page Pass-thru | Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin. | Enterprise |
 | [Polish](/images/polish/) | Apply options from the **Polish** feature of the Cloudflare **Speed** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | Pro and above |
 | [Query String Sort](/cache/advanced-configuration/query-string-sort/) | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. | Enterprise |
-| [Resolve Override](/support/page-rules/using-resolve-override-in-page-rules/) | Change the origin address to the value specified in this setting. {{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#dns-record">}}| Enterprise |
+| [Resolve Override](/rules/page-rules/tutorials/using-resolve-override-in-page-rules/) | Change the origin address to the value specified in this setting. {{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#dns-record">}}| Enterprise |
 | [Respect Strong ETags](/cache/reference/etag-headers/) | Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. | Enterprise |
 | Response Buffering | Turn on or off whether Cloudflare should wait for an entire file from the origin server before forwarding it to the site visitor. By default, Cloudflare sends packets to the client as they arrive from the origin server. |  Enterprise |
 | [Rocket Loader](/speed/optimization/content/rocket-loader/) | Turn on or off **Rocket Loader** in the Cloudflare **Speed** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
@@ -296,7 +131,7 @@ ___
 
 ## Related resources
 
--   [Recommended Page Rules to Consider](/support/page-rules/recommended-page-rules-to-consider/)
+-   [Recommended Page Rules to Consider](/rules/page-rules/tutorials/recommended-page-rules-to-consider/)
 -   [What subdomains are appropriate for orange/grey clouds?](/dns/manage-dns-records/reference/proxied-dns-records/#limitations)
 -   [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)
 -   [How do I cache static HTML?](/cache/concepts/customize-cache/)

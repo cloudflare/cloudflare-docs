@@ -6,7 +6,7 @@ title: Recommended Page Rules to consider
 
 # Recommended Page Rules to consider
 
-Use [Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to improve the user experience of your domain with **hardened security** and **enhanced site performance,** while **increasing reliability** and **minimizing bandwidth usage** for your origin server.
+Use [Cloudflare Page Rules](/rules/page-rules/) to improve the user experience of your domain with **hardened security** and **enhanced site performance,** while **increasing reliability** and **minimizing bandwidth usage** for your origin server.
 
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
 
