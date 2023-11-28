@@ -842,20 +842,6 @@
         }
       }
     },
-    "http2_to_origin": {
-      "title": "HTTP/2 to Origin",
-      "link": "/cache/concepts/enable-http2-to-origin/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
     "ip_geolocation": {
       "title": "IP Geolocation",
       "link": "/network/ip-geolocation/",
@@ -1953,6 +1939,20 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http2_to_origin": {
+      "title": "HTTP/2 to Origin",
+      "link": "/speed/optimization/protocol/http2-to-origin/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }

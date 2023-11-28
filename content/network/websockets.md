@@ -6,15 +6,11 @@ title: Using Cloudflare with WebSockets
 
 # Using Cloudflare with WebSockets
 
-
-
-## Overview
-
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
 ___
 
-## What plan do I need for WebSockets support on my site?
+## Availability
 
 {{<feature-table id="network.websockets">}}
 

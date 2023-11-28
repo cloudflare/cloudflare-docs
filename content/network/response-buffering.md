@@ -6,17 +6,15 @@ title: Setting up Response Buffering
 
 # Setting up Response Buffering
 
-
-
-## What is response buffering?
-
 By default, Cloudflare **streams** data. This means that each packet is sent as it becomes available. Streaming can improve the delivery of large files.
 
 If your domain sends many small packets, however, it might be faster to **buffer** the file. This approach waits to send the full file until all packets are ready, preventing a client browser from having to re-assemble packets.
 
-___
+## Availability
 
-## Enable Response Buffering (Enterprise only)
+{{<feature-table id="network.response_buffering">}}
+
+## Enable Response Buffering
 
 To set up response buffering for a domain:
 

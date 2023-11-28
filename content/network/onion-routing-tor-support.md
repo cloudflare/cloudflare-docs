@@ -12,6 +12,10 @@ Our [basic protection level](https://support.cloudflare.com/hc/articles/20017005
 
 Cloudflare assigns the two-letter code _T1_ for Tor.  There's no geographical country associated with these IPs, but this approach lets Cloudflare customers override the default Cloudflare threat score to define the experience for their Tor visitors.  Cloudflare updates its list of Tor exit node IP addresses every hour.
 
+## Availability
+
+{{<feature-table id="network.onion_routing">}}
+
 ### Onion Routing
 
 Beyond applying firewall filters to Tor traffic, Cloudflare users can improve the Tor user experience by enabling Onion Routing.  Onion Routing allows Cloudflare to serve your website’s content directly through the Tor network, without requiring exit nodes. This improves Tor browsing as follows: 

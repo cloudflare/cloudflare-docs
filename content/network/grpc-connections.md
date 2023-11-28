@@ -10,7 +10,9 @@ The gRPC protocol was developed by Google in 2015 to build efficient APIs with s
 
 Running gRPC traffic on Cloudflare is compatible with most Cloudflare products, including Bot Management and Page Rules. gRPC support is available on all Cloudflare plans for no additional fees. However, charges may occur for gRPC traffic over add-on products such as Argo Smart Routing, WAF, and Bot Management. gRPC support is broadly tested and considered stable, but bugs are still possible. Report unexpected behaviors to [Cloudflare Support](/support/contacting-cloudflare-support/).
 
-___
+## Availability
+
+{{<feature-table id="network.grpc">}}
 
 ## Requirements
 

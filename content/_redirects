@@ -175,7 +175,8 @@
 /cache/about/cache-control/ /cache/concepts/cache-control/ 301
 /cache/about/cdn-cache-control/ /cache/concepts/cache-control/ 301
 /cache/about/ /cache/concepts/ 301
-/cache/how-to/enable-http2-to-origin/ /cache/concepts/enable-http2-to-origin/ 301
+/cache/concepts/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
+/cache/how-to/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
 /cache/how-to/interact-with-workers/ /cache/concepts/interact-with-workers/ 301
 /cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
