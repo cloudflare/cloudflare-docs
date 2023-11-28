@@ -26,27 +26,30 @@
       // security error
     }
     // set tooltip text
-    if (isDark) {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
-        "Set theme to light (⇧+D)";
-    } else {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
-        "Set theme to dark (⇧+D)";
+    let themeToggleTooltip = document.getElementById("ThemeToggle--tooltip");
+    if (themeToggleTooltip) {
+      if (isDark) {
+        themeToggleTooltip.innerHTML = "Set theme to light (⇧+D)";
+      } else {
+        themeToggleTooltip.innerHTML = "Set theme to dark (⇧+D)";
+      }
     }
   }
 
   function init() {
-    btn = btn || document.querySelector("#ThemeToggle")!;
-    btn.addEventListener("change", () => setter(!!btn.checked));
+    btn = btn || document.querySelector("#ThemeToggle");
+    if (btn) {
+      btn.addEventListener("change", () => setter(!!btn.checked));
 
-    // Shift+D for toggle
-    addEventListener("keydown", (ev) => {
-      if (ev.target !== document.body) return;
-      if (ev.which === 68 && ev.shiftKey) {
-        ev.preventDefault();
-        setter(!btn.checked);
-      }
-    });
+      // Shift+D for toggle
+      addEventListener("keydown", (ev) => {
+        if (ev.target !== document.body) return;
+        if (ev.which === 68 && ev.shiftKey) {
+          ev.preventDefault();
+          setter(!btn.checked);
+        }
+      });
+    }
   }
 
   try {

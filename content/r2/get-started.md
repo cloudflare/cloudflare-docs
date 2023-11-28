@@ -4,6 +4,9 @@ pcx_content_type: get-started
 weight: 2
 meta:
   title: Get started guide
+outputs:
+  - html
+  - dash-sidebar
 ---
 
 # Get started 
@@ -43,7 +46,7 @@ wrangler login
 
 To create a new R2 bucket from the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
+1. Log in to the [Cloudflare Dashboard - R2](https://dash.cloudflare.com/?to=/:account/r2).
 2. Select **Create bucket**.
 3. Enter a name for the bucket and select **Create bucket**.
 

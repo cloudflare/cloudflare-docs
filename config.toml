@@ -26,6 +26,13 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
   page = ['html']
   section = ['html']
 
+[outputFormats]
+  [outputFormats.DashSidebar]
+    name = 'dash-sidebar'
+    mediaType = 'text/html'
+    path = '_docs-dash-sidebar'
+    isHTML = true
+
 [sitemap]
   changefreq = "weekly"
   filename = "sitemap.xml"
