@@ -894,7 +894,7 @@
     },
     "ip_geolocation": {
       "title": "IP Geolocation",
-      "link": "/support/network/configuring-ip-geolocation/",
+      "link": "/support/network/ip-geolocation/",
       "properties": {
         "availability": {
           "title": "Availability",

@@ -35,7 +35,7 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 ## CF-Connecting-IPv6
 
-Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+Cloudflare provides [free IPv6 support](/network/ipv6-compatibility/) to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
 {{<render file="_pseudo-ipv4-warning.md">}}
 <br/>
@@ -46,7 +46,7 @@ This header is used for loop detection, similar to the `CDN-Loop` [header](https
 
 ## CF-Pseudo-IPv4
 
-If Pseudo IPv4 is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
+If [Pseudo IPv4](/network/pseudo-ipv4/) is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
 
 ## True-Client-IP (Enterprise plan only)
 
@@ -96,7 +96,12 @@ Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 ## CF-IPCountry
 
-The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the `XX` country code when the country information is unknown.
+The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. 
+
+Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
+
+-   `XX` - Used for clients without country code data.
+-   `T1` - Used for clients using the Tor network.
 
 To add this header to requests, along with other HTTP headers with location information for the visitor's IP address, [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
