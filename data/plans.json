@@ -958,7 +958,7 @@
     },
     "true_client_ip_header": {
       "title": "True Client IP Header",
-      "link": "/fundamentals/reference/http-request-headers/",
+      "link": "/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only",
       "properties": {
         "availability": {
           "title": "Availability",

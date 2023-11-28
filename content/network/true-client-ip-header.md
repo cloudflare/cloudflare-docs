@@ -6,19 +6,18 @@ title: Understanding the True-Client-IP Header
 
 # Understanding the True-Client-IP Header
 
-Connections from Cloudflare to origin servers come from Cloudflare IPs. True-Client-IP is a solution that allows Cloudflare users to see the end user’s IP address, even when the traffic to the origin is sent directly from Cloudflare.
+Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only) to all requests to your origin server, which includes the end user’s IP address.
 
-For more details on _what_ True-Client-IP is, refer to [HTTP request headers](/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only).
+## Availability
 
-___
+{{<feature-table id="network.true_client_ip_header">}}
 
-To add the `True-Client-IP` header to incoming requests, [enable the **Add “True-Client-IP” header** Managed Transform](/rules/transform/managed-transforms/reference/).
+## Add True-Client-IP Header
 
-For more information, refer to [Managed Transforms](/rules/transform/managed-transforms/).
+The recommended procedure to access client IP information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/). 
 
 {{<Aside type="note">}}
-**Note:** Before Managed Transforms were available, you added the
-`True-Client-IP` header by enabling **True-Client-IP Header** in the
-**Network** app of the Cloudflare dashboard. The current recommended
-procedure is to enable the Managed Transform.
+
+In order to use this data, you will need to then retrieve it from the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#cf-ipcountry).
+
 {{</Aside>}}
