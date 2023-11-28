@@ -21,7 +21,7 @@ This is not an exhaustive list of Cloudflare products and features.
 
 {{<table-wrap>}}
 
-| Product | Customer zone | Saas provider zone | Notes |
+| Product | Customer zone | SaaS provider zone | Notes |
 | --- | --- | --- | --- |
 | [Access](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) | Yes | Yes |
 | [API Shield](/api-shield/) | Yes | No |

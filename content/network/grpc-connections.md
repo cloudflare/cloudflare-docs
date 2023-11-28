@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/360050483011-Understanding-Cloudflare-gRPC-support
-title: gRPC connnections
+title: gRPC connections
 ---
 
 # gRPC connections
