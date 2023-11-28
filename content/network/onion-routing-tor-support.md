@@ -1,14 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/203306930-Understanding-Cloudflare-Tor-support-and-Onion-Routing
-title: Understanding Cloudflare Tor support and Onion Routing
+title: Onion Routing and Tor support
 ---
 
-# Understanding Cloudflare Tor support and Onion Routing
-
-
-
-## Overview
+# Onion Routing and Tor support
 
 Due to the behavior of some individuals using the Tor network (spammers, distributors of malware, attackers, etc.), the IP addresses of Tor exit nodes may earn a bad reputation, elevating their Cloudflare threat score.
 

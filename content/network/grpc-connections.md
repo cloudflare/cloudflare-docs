@@ -1,14 +1,10 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/360050483011-Understanding-Cloudflare-gRPC-support
-title: Understanding Cloudflare gRPC support
+title: gRPC connnections
 ---
 
-# Understanding Cloudflare gRPC support
-
-
-
-## Overview
+# gRPC connections
 
 The gRPC protocol was developed by Google in 2015 to build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.  Cloudflare offers support for gRPC to protect your APIs on any orange-clouded gRPC endpoints.
 
