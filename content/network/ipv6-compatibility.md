@@ -51,7 +51,7 @@ To disable **IPv6 Compatibility** with the API, send a [`PATCH`](/api/operations
 
 Even when IPv6 is disabled, domains can still receive IPv6 traffic via the Tor network. To completely disable all IPv6 traffic:
 
--   Disable [**Onion Routing**](/network/onion-routing-tor-support/).
+-   Disable [**Onion Routing**](/network/onion-routing/).
 -   Use a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block `0:0:0:0:0:0:0:0/0` using the filter `ip.src in {::/0}`.
 
 {{</Aside>}}
