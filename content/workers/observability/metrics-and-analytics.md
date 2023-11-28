@@ -9,7 +9,9 @@ meta:
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers metrics and zone-based Workers analytics.
 
-Workers metrics can help you diagnose issues and understand your Workers' workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, go to **Workers & Pages** and select your Worker in your zone's Cloudflare dashboard to understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
+Workers metrics can help you diagnose issues and understand your Workers' workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, Workers metrics will show how much traffic your Worker is handling on per-zone basis, and how many requests your site is getting.
+
+Zone analytics show how much traffic all Workers assigned to a zone are handling.
 
 ## Workers metrics
 
@@ -91,7 +93,7 @@ Worker metrics can be inspected for up to three months in the past in maximum in
 
 ## Zone analytics
 
-Zone analytics aggregates request data for all Workers assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone.
+Zone analytics aggregate request data for all Workers assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone.
 
 To review zone metrics:
 
