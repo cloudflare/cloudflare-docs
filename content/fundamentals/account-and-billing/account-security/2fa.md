@@ -75,7 +75,7 @@ To enable 2FA mobile app authentication:
 
 -   If you can't scan the QR code, click **Can't scan QR code, Follow alternative steps** to configure your authenticator app manually.
 
-![You can enable 2FA by scanning a QR code with your mobile device.](/images/support/2FA_scan_QR_code.png)
+![You can enable 2FA by scanning a QR code with your mobile device.](/images/fundamentals/2FA_scan_QR_code.png)
 
 5\. Enter your Cloudflare password again.
 
