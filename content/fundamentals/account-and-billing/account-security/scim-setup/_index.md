@@ -77,7 +77,7 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 
 1. In your integration page, go to **Provisioning** > **Configure API Integration**.
 2. Enable **Enable API Integration**.
-3. In SCIM 2.0 Base Url, enter `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
+3. In SCIM 2.0 Base Url, enter: `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
 4. In OAuth Bearer Token, enter your API token value.
 5. Disable **Import Groups**.
 6. Select **Save**.
