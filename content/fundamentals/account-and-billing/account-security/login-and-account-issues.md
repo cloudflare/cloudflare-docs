@@ -1,6 +1,5 @@
 ---
 pcx_content_type: troubleshooting
-source: https://support.cloudflare.com/hc/en-us/articles/203471284-Login-and-account-issues
 title: Login and account issues
 ---
 
@@ -139,7 +138,7 @@ You have several sign-in options for the [Cloudflare dashboard](https://dash.clo
 -   **Single sign on (SSO)**: Enter your email address (so long as your admin has [configured SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) as a sign in option).
 -   **Sign in with Apple**:
     -   _Same Cloudflare account email as Apple ID_: You can either sign in with your email and password or sign in with Apple.
-    -   _Different Cloudflare account email as Apple ID_: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](https://support.cloudflare.com/hc/en-us/articles/203471284-Login-and-account-issues#12345679) to match the one used for your Apple ID.
+    -   _Different Cloudflare account email as Apple ID_: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](/fundamentals/account-and-billing/account-security/login-and-account-issues/) to match the one used for your Apple ID.
 
 {{<Aside type="note">}}
 If you login to your Cloudflare user account with Single Sign-On (SSO),
