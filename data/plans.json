@@ -902,7 +902,7 @@
     },
     "onion_routing": {
       "title": "Onion Routing",
-      "link": "/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/",
+      "link": "/network/onion-routing/",
       "properties": {
         "availability": {
           "title": "Availability",
