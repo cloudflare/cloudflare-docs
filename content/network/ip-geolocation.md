@@ -8,7 +8,9 @@ title: IP geolocation
 
 IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-request-headers/#cf-ipcountry) to all requests to your origin server.
 
-___
+## Availability
+
+{{<feature-table id="network.ip_geolocation">}}
 
 ## Add IP geolocation information
 
@@ -46,5 +48,5 @@ ___
 
 If you find an incorrect IP location, use the [Maxmind tool](https://www.maxmind.com/en/geoip2-precision-demo) to make sure that Maxmind shows the correct **Country Code**. If the data is incorrect:
 
--   Please submit correction requests through Maxmind [here](https://support.maxmind.com/hc/en-us/articles/4408252036123-GeoIP-Corrections).
+-   Please submit correction requests [through Maxmind](https://support.maxmind.com/hc/en-us/articles/4408252036123-GeoIP-Corrections).
 -   [Contact Cloudflare Support](/support/contacting-cloudflare-support/) if Maxmind is showing the correct country code, but **CF-IPCountry** request header is incorrect.

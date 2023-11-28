@@ -10,6 +10,10 @@ Cloudflare enables IPv6 on all domains without requiring additional configuratio
 
 When both IPv4 and IPv6 connections are available, Cloudflare prefers IPv4.
 
+## Availability
+
+{{<feature-table id="network.ipv6">}}
+
 ## Enable IPv6 compatibility
 
 By default, IPv6 compatibility is enabled on your domain and will apply to all domains and subdomains covered by [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).

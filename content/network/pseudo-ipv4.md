@@ -7,6 +7,10 @@ title: Pseudo IPv4
 
 Cloudflare customers can use **Pseudo IPv4** if their origin web server only understands IPv4 formatted IP addresses (meaning it would not support Cloudflare's default [IPv6 compatibility](/network/ipv6-compatibility/)).
 
+## Availability
+
+{{<feature-table id="network.pseudo_ipv4">}}
+
 ## Background
 
 Some older origin server analytics and fraud detection software expect IP addresses in an IPv4 format and do not support IPv6 addresses.

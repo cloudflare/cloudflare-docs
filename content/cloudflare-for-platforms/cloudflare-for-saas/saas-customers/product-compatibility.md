@@ -47,7 +47,7 @@ This is not an exhaustive list of Cloudflare products and features.
 | [WAF custom rules](/waf/custom-rules/) | Yes | Yes | WAF custom rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [WAF managed rules](/waf/managed-rules/) | Yes | Yes |
 | [Waiting Room](/waiting-room/) | Yes | Yes |
-| [Websockets](/network/understanding-cloudflare-http2-and-http3-support/) | No | No |
+| [Websockets](/network/websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Zaraz](/zaraz/) | Yes | No | 
 

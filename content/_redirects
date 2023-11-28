@@ -729,6 +729,7 @@
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
 /support/network/i-activated-through-a-hosting-partner.-can-i-still-use-the-free-cloudflare-ipv6-compatibility/ /network/ipv6-compatibility/ 301
 /support/network/understanding-and-configuring-cloudflares-ipv6-support/ /network/ipv6-compatibility/ 301
+/support/network/understanding-cloudflare-http2-and-http3-support/ /speed/optimization/protocol/ 301
 /support/speed/optimization-file-size/ will-mirage-and-polish-optimize-off-site-resources/ /speed/optimization/images/ 301
 /support/speed/optimization-file-size/ /speed/optimization/ 301
 /support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301

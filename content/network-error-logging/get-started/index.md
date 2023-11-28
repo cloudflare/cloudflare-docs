@@ -15,4 +15,4 @@ To enable Network Error Logging for Free and Pro zones:
 
 To enable this for Business and Enterprise, contact support or your account team. 
 
-For more information, refer to [Understanding Network Error Logging](/network/understanding-cloudflare-http2-and-http3-support/).
+For more information, refer to [Understanding Network Error Logging](/support/network/understanding-network-error-logging/).
