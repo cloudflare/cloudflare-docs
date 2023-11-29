@@ -36,7 +36,7 @@ KV is optimized for high-read applications. It stores data centrally and uses a 
 
 ## Performance
 
-To improve KV performance, increase the [`cacheTTL` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
+To improve KV performance, increase the [`cacheTtl` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
 
 KV achieves high performance by [caching](https://www.cloudflare.com/en-gb/learning/cdn/what-is-caching/) which makes reads eventually-consistent with writes. 
 
