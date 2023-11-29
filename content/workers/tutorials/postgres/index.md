@@ -54,13 +54,13 @@ If you choose to deploy, you will be asked to authenticate (if not logged in alr
 
 ### Enable Node.js compatibility
 
-Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml`.
 
 ```toml
 ---
 header: wrangler.toml
 ---
-compatibility_flags = [ "nodejs_compat" ]
+node_compat = true
 ```
 
 ## 2. Add the PostgreSQL connection library
