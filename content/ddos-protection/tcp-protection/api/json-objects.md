@@ -32,8 +32,8 @@ This page contains examples of the JSON objects used in the API.
   "comment": "Game ranges",
   "enabled": true,
   "created_on": "2021-10-01T13:06:04.721954+01:00",
-  "modified_on": "2021-10-01T13:06:04.721954+01:00",
-},
+  "modified_on": "2021-10-01T13:06:04.721954+01:00"
+}
 ```
 
 The `prefix` field can contain an IP address or a CIDR range.
@@ -65,7 +65,7 @@ The `rate_sensitivity` and `burst_sensitivity` field values must be one of `low`
   "mode": "enabled",
   "created_on": "2022-11-01T13:10:38.762503+01:00",
   "modified_on": "2022-11-01T13:10:38.762503+01:00"
- }
+}
 ```
 
 The `expression` field is a [Rules language expression](/ruleset-engine/rules-language/expressions/) up to 8,192 characters that can include the following fields:
