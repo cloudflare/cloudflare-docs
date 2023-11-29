@@ -22,12 +22,14 @@ When using wrangler, replace the placeholder value provided to `--connection-str
 
 ```sh
 # wrangler v3.11 and above required
-$ wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
+$ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
 ```
 
 The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
 
 ```toml
+node_compat = true # required for database drivers to function
+
 [[hyperdrive]]
 name = "HYPERDRIVE"
 id = "<your-hyperdrive-id-here>"
@@ -113,7 +115,7 @@ export default {
 			await client.connect();
 
 			// A very simple test query
-			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
