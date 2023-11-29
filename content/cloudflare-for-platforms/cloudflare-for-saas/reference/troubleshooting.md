@@ -50,7 +50,29 @@ In some circumstances, custom hostnames can also enter a **Moved** state if your
 
 ---
 
+
+## CAA Errors
+
+The `caa_error` in the status of a custom hostname means that the CAA records configured on the domain prevented the Certificate Authority to issue the certificate.
+
+You can check which CAA records are configured on a domain using the `dig` command:
+`dig CAA example.com`
+
+You will need to ensure that the required CAA records for the selected Certificate Authority are configured.
+For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
+
+```
+example.com CAA 0 issue "letsencrypt.org"
+example.com CAA 0 issuewild "letsencrypt.org"
+
+example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
+example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
+```
+
+More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubleshooting/caa-records/).
+
 ## Custom hostname fails to verify because the zone is held
 
 The [zone hold feature](/fundamentals/account-and-billing/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
 When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
+
