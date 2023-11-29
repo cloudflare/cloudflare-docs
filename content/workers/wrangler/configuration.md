@@ -182,6 +182,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
 
+- `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
+
 {{</definitions>}}
 
 ## Types of routes
