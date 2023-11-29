@@ -47,3 +47,10 @@ If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Er
 To move a custom hostname back to an Active status, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to restart the hostname validation. A Custom Hostname in a Moved status is deleted after 7 days.
 
 In some circumstances, custom hostnames can also enter a **Moved** state if your customer changes their DNS records pointing to your SaaS service. For more details, refer to [Remove custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/remove-custom-hostnames/).
+
+---
+
+## Custom hostname fails to verify because the zone is held
+
+The [zone hold feature](/fundamentals/account-and-billing/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
+When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
