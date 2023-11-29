@@ -8,7 +8,13 @@ title: Use Cloudflare R2 as a Zero Trust log destination
 
 # Use Cloudflare R2 as a Zero Trust log destination
 
-This tutorial covers how to build an [R2 bucket](/r2/buckets/) to store logs in, and connect it to the Zero Trust logpush function in the Zero Trust dashboard to have persistent log storage that could then be ingested by an SIEM or exported into another tool.
+{{<Aside type="note">}}
+
+Only available on Zero Trust Enterprise plans.
+
+{{</Aside>}}
+
+This tutorial covers how to build a [Cloudflare R2 bucket](/r2/buckets/) to store logs, and how to connect the bucket to the [Logpush](/cloudflare-one/insights/logs/logpush/) service in Zero Trust to store logs persistently and export into other tools.
 
 ---
 
@@ -16,8 +22,7 @@ This tutorial covers how to build an [R2 bucket](/r2/buckets/) to store logs in,
 
 {{<tutorial-prereqs>}}
 
-- Add Cloudflare R2 to your plan
-- Add Logpush to your plan
+- Ensure Cloudflare R2 and the Zero Trust Logpush integration are included in your plan. For more information, contact your account team.
 
 {{</tutorial-prereqs>}}
 
@@ -29,7 +34,7 @@ This tutorial covers how to build an [R2 bucket](/r2/buckets/) to store logs in,
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Create an API Token">}}
+{{<tutorial-step title="Create an R2 API token">}}
 
 1. Return to R2, then select **Manage R2 API tokens**.
 2. Select **Create API token**.
@@ -42,7 +47,7 @@ This tutorial covers how to build an [R2 bucket](/r2/buckets/) to store logs in,
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Configure Zero Trust logs">}}
+{{<tutorial-step title="Connect Zero Trust logs">}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
 2. Select **Connect a service**.
