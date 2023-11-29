@@ -43,11 +43,11 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver               | Documentation                        | Minimum Version Required |
-| -------------------- | ------------------------------------ | ------------------------ |
-| node-postgres - `pg` | https://node-postgres.com/           | `pg@8.11.0`              |
-| Drizzle              | https://orm.drizzle.team/            | `0.26.2`^                |
-| Kysely               | https://kysely.dev/                  | `0.26.3`^                |
+| Driver               | Documentation              | Minimum Version Required |
+| -------------------- | -------------------------- | ------------------------ |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |
+| Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |
+| Kysely               | https://kysely.dev/        | `0.26.3`^                |
 
 ^ _The marked libraries use `node-postgres` as a dependency._
 
@@ -81,6 +81,7 @@ header: node-postgres
 ---
 $ npm install pg
 ```
+
 The following Workers examples show you how to:
 
 1. Create a database client with a database driver.
@@ -149,7 +150,7 @@ In cases where you need to issue these unsupported statements from your applicat
 To identify active connections to your Postgres database server from Hyperdrive:
 
 - Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` as the `application_name` in the `pg_stat_activity` table.
-- Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = "Cloudflare Hyperdrive"` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
+- Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
 
 ## Next steps
 

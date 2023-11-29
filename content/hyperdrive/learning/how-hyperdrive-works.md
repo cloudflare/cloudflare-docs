@@ -22,11 +22,11 @@ Hyperdrive creates a global pool of connections to your database that can be reu
 
 When a query hits Hyperdrive, the request is routed to the nearest connection pool.
 
-If the connection pool has pre-existing connections, the connection pool will try and reuse that connection. 
+If the connection pool has pre-existing connections, the connection pool will try and reuse that connection.
 
 If the connection pool does not have pre-existing connections, it will establish a new connection to your database and use that to route your query. This aims at reusing and creating the least number of connections possible as required to operate your application.
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
 Hyperdrive automatically manages the connection pool properties for you, including limiting the total number of connections to your origin database. Refer to [Limits](/hyperdrive/platform/limits/) to learn more.
 {{</Aside>}}
 
@@ -34,7 +34,7 @@ The connection pool operates in transaction mode, where the client that executes
 
 When that transaction has completed, the connection is returned to the pool.
 
-{{<Aside type="warning">}} 
+{{<Aside type="warning">}}
 Named prepared statements (which are rarely used), `SET` commands, and advisory locks are not supported. Use features such as `LOCAL` and `pg_advisory_xact_lock` which are scoped to single transactions. In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
 {{</Aside>}}
 
