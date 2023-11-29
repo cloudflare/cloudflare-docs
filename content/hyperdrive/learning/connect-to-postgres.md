@@ -150,7 +150,7 @@ In cases where you need to issue these unsupported statements from your applicat
 To identify active connections to your Postgres database server from Hyperdrive:
 
 - Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` as the `application_name` in the `pg_stat_activity` table.
-- Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = "Cloudflare Hyperdrive"` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
+- Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
 
 ## Next steps
 
