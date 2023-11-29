@@ -24,6 +24,12 @@ You can deploy projects to Cloudflare Pages from your open-source team, company,
 
 When authorizing Cloudflare Pages to access a GitHub account, you can specify access to your individual account or an organization that you belong to on GitHub. In order to be able to add the Cloudflare Pages installation to that organization, your user account must be an owner or have the appropriate role within the organization (that is, the GitHub Apps Manager role). More information on these roles can be seen on [GitHub's documentation](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#github-app-managers).
 
+{{<Aside type="note">}}
+
+A Github account should only point to one Cloudflare Pages account, independent of which Cloudflare user/member is interacting with that account. So it would not be possible for example to link the same GitHub account to a Dev and a Prod Cloudflare account at the same time, but would be possible for multiple Cloudflare account members to interact with it once linked. 
+
+{{</Aside>}}
+
 ### GitLab
 
 By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow access to organizations, groups, and namespaces your GitLab account can access for use by Cloudflare Pages. Managing access to these organizations and groups is handled by GitLab.
