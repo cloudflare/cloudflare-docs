@@ -57,7 +57,7 @@ The `caa_error` in the status of a custom hostname means that the CAA records co
 You can check which CAA records are configured on a domain using the `dig` command:
 `dig CAA example.com`
 
-You will need to ensure that required CAA records for the selected Certificate Authority are configured.
+You will need to ensure that the required CAA records for the selected Certificate Authority are configured.
 For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
 
 ```
@@ -68,4 +68,4 @@ example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
 example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```
 
-You can find more details in our [CAA records article](/ssl/edge-certificates/troubleshooting/caa-records/).
+More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubleshooting/caa-records/).
