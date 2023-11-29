@@ -109,7 +109,7 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
 
-Refer to [Roles](/fundamentals/account-and-billing/account-security/scim-setup/scim-roles/) more details.
+Refer to [Roles](/fundamentals/setup/manage-members/roles/) more details.
 
 ---
 
@@ -139,7 +139,7 @@ Currently, groups need to match a specific format to provision specific Cloudfla
 
 These permissions work on an exact string match with the prefix `CF-<your_account_id> - <roleName>`
 
-Refer to [Roles](/fundamentals/account-and-billing/account-security/scim-setup/scim-roles/) more details.
+Refer to [Roles](/fundamentals/setup/manage-members/roles/) more details.
 
 1. To ensure that only required groups are provisioned, go to your Microsoft Azure AD instance.
 2. Under Manage on the sidebar menu, select **Provisioning**.
