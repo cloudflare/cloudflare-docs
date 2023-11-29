@@ -128,7 +128,7 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
 
 - `node_compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Add polyfills for node builtin modules and globals. Refer to [node compatibility](#node-compatibility).
+  - Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
 
 - `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -893,7 +893,7 @@ SECRET_KEY=value
 
 ## Node compatibility
 
-If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of node.js APIs to your own code.
+If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of Node.js APIs to your own code.
 
 ### Use runtime APIs directly
 
@@ -908,7 +908,7 @@ compatibility_flags = [ "nodejs_compat" ]
 
 ### Add polyfills using Wrangler
 
-Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+Add polyfills for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
 
 ```toml
 ---

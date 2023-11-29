@@ -52,6 +52,17 @@ To continue with this guide:
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
+### Enable Node.js compatibility
+
+[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml`.
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
+
 ## 2. Add the PostgreSQL connection library
 
 To connect to a PostgreSQL database, you will need the `pg` library. In your Worker application directory, run the following command to install the library:
