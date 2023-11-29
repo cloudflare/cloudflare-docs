@@ -38,7 +38,7 @@ When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to 
 | [Partial](/dns/zone-setups/partial-setup/) | [Partial](/dns/zone-setups/partial-setup/) | Yes |
 
 {{<Aside type="note">}}
-If you need to add the parent zone to Cloudflare when its child zone already exists in a Partial setup, you can leverage [zone status](/dns/zone-setups/reference/domain-status/) to avoid downtime. To achieve this, [convert the parent zone to Partial](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) while it is still in pending status.
+This table assumes zones are in an active [status](/dns/zone-setups/reference/domain-status/). If you need to add the parent zone to Cloudflare when its child zone already exists in a Partial setup, for example, you can [convert the parent zone to Partial](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) while it is still in pending status.
 {{</Aside>}}
 
 ---
