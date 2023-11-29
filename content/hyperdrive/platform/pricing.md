@@ -14,8 +14,8 @@ Hyperdrive is currently in public beta and is currently free to use for all [Wor
 
 Hyperdrive has two primary components:
 
-* Connection pooling (always free).
-* Query caching and analytics (pricing coming soon).
+- Connection pooling (always free).
+- Query caching and analytics (pricing coming soon).
 
 Connection pooling improves the connection latency between a client (such as Cloudflare Workers) and your origin database by keeping a pool of active connections. Connection pooling will always be free.
 

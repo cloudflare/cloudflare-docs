@@ -221,7 +221,7 @@ export default {
 			await client.connect();
 
 			// Test query
-			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
