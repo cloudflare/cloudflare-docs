@@ -345,7 +345,7 @@ The Cloudflare Rules language supports these standard fields:
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
          </p>
-         <p>This field has the same value as the <code>ip.geoip.asnum</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.asnum</code> field, which is deprecated. The <code>ip.geoip.asnum</code> field is still available for new and existing rules, but you should use the <code>ip.src.asnum</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-continent">
@@ -363,7 +363,7 @@ The Cloudflare Rules language supports these standard fields:
               <li>T1 &#8211; Tor network</li>
           </ul>
         </p>
-        <p>This field has the same value as the <code>ip.geoip.continent</code> field, which is still available.</p>
+        <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.continent</code> field, which is deprecated. The <code>ip.geoip.continent</code> field is still available for new and existing rules, but you should use the <code>ip.src.continent</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-country">
@@ -375,8 +375,7 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>In the WAF, the <code>ip.geoip.country</code> field (which is still available) is equivalent to <code>ip.src.country</code>.</p>
-         <p><code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.country</code> field, which is deprecated. The <code>ip.geoip.country</code> field is still available for new and existing rules, but you should use the <code>ip.src.country</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-subdivision-1-iso-code">
@@ -387,7 +386,7 @@ The Cloudflare Rules language supports these standard fields:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is deprecated. The <code>ip.geoip.subdivision_1_iso_code</code> field is still available for new and existing rules, but you should use the <code>ip.src.subdivision_1_iso_code</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-subdivision-2-iso-code">
@@ -400,7 +399,7 @@ The Cloudflare Rules language supports these standard fields:
          <code class="InlineCode">GB-SWK</code>
          </p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is deprecated. The <code>ip.geoip.subdivision_2_iso_code</code> field is still available for new and existing rules, but you should use the <code>ip.src.subdivision_2_iso_code</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-is-in-european-union">
@@ -408,7 +407,7 @@ The Cloudflare Rules language supports these standard fields:
       <td>
          <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
-         <p>This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is deprecated. The <code>ip.geoip.is_in_european_union</code> field is still available for new and existing rules, but you should use the <code>ip.src.is_in_european_union</code> field instead.</p>
       </td>
   </tr>
   <tr id="field-raw-http-request-full-uri">
@@ -915,8 +914,7 @@ The Cloudflare Rules language supports these dynamic fields:
             <code>GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will match on either source or destination address.</p>
-         <p> <code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
+         <p>For Magic Firewall, the <code>ip.geoip.country</code> field (which is deprecated) will match on either source or destination address. The <code>ip.geoip.country</code> field is still available for new and existing rules, but you should use the <code>ip.src.country</code> and/or <code>ip.dst.country</code> fields instead.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">

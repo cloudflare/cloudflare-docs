@@ -10,7 +10,7 @@ Querying an index, or vector search, enables you to search an index by providing
 
 ## Example query
 
-To pass a vector as a query to an index, use the `.query()` method on the index itself.
+To pass a vector as a query to an index, use the `query()` method on the index itself.
 
 A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/learning/insert-vectors/), a query vector does not need an ID or metadata.
 
@@ -60,13 +60,15 @@ const queryVector: EmbeddingResponse = await ai.run(
 );
 ```
 
-When passing the vector to the `.query()` method of a Vectorize index, ensure you are passing only the vector embedding itself on the `.data` sub-object, and not the top-level response. For example:
+When passing the vector to the `query()` method of a Vectorize index, pass only the vector embedding itself on the `.data` sub-object, and not the top-level response. 
+
+For example:
 
 ```ts
 let matches = await env.TEXT_EMBEDDINGS.query(queryVector.data[0], { topK: 1 });
 ```
 
-Passing `queryVector` or `queryVector.data` will cause `.query()` to return an error.
+Passing `queryVector` or `queryVector.data` will cause `query()` to return an error.
 
 ## OpenAI
 

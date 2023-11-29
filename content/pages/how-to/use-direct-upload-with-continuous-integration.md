@@ -147,7 +147,7 @@ Your continuous integration workflow is broken down into jobs when using CircleC
 
 {{<Aside type="note" header="Note">}}
 
-If your project uses a Node version less than `16.13.0`, you will have to upgrade your Node version as Wrangler requires at least Node.js version `16.13.0`.
+Wrangler requires a Node version of at least `16.17.0`. You must upgrade your Node.js version if your version is lower than `16.17.0`.
 
 {{</Aside>}}
 

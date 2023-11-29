@@ -5494,7 +5494,8 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 .tutorialPreReqs {
-  padding-left: 2em;
+  padding-top: 0.5em;
+  padding-inline: 2em;
   border: 2px solid gray;
   border-radius: 15px;
 }
