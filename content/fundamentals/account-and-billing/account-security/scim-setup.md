@@ -9,7 +9,7 @@ updated: 2023-11-27
 
 By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis.
 
-Currently, we only provide SCIM support for Microsoft Entra Active Directory and Okta in Self-Hosted Access applications.
+Currently, we only provide SCIM support for Microsoft Entra and Okta in Self-Hosted Access applications.
 
 For more information about SCIM support, refer to the [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/) blog post.
 
@@ -139,7 +139,7 @@ Refer to [Roles](/fundamentals/setup/manage-members/roles/) more details.
 
 1. To ensure that only required groups are provisioned, go to your Microsoft Entra instance.
 2. Under Manage on the sidebar menu, select **Provisioning**.
-3. Select **Provision Entra Active Directory Groups** in Mappings.
+3. Select **Provision Entra Groups** in Mappings.
 4. Select **All records** under Source Object Scope.
 5. Select **Add scoping filter** and create the appropriate filtering criteria to capture only the necessary groups.
 6. Save the Attribute Mapping by selecting **OK** and return to the Enterprise Application Provisioning overview page.
