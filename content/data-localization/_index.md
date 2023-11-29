@@ -162,5 +162,5 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/reference/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
 {{<fnentry num="29">}}You cannot yet specify region location for object storage itself.{{</fnentry>}}
 {{<fnentry num="30">}}Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.{{</fnentry>}}
-{{<fnentry num="31">}}DLP is part of Gateway HTTP, however, [DLP datasets](/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
+{{<fnentry num="31">}}DLP is part of Gateway HTTP, however, [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
 {{</fnsection>}}
