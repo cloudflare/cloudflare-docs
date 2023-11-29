@@ -1,6 +1,7 @@
 ---
 title: CDN
 pcx_content_type: reference-architecture
+weight: 1
 ---
 
 # Cloudflare CDN Reference Architecture
