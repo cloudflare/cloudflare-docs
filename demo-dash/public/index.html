@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html style="--docs-dash-sidebar-display: none">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@latest/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react-router-dom@5/umd/react-router-dom.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@latest/babel.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const Router = ReactRouterDOM.BrowserRouter;
+      const Link = ReactRouterDOM.Link;
+      const Route = ReactRouterDOM.Route;
+      const Switch = ReactRouterDOM.Switch;
+      const useLocation = ReactRouterDOM.useLocation;
+      const useHistory = ReactRouterDOM.useHistory;
+
+      const root = document.querySelector(":root");
+
+      const App = () => {
+        return (
+          <Router>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+            </ul>
+
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/accounts/:accountId" component={AccountHome} />
+            </Switch>
+          </Router>
+        );
+      };
+
+      const Home = () => {
+        const location = useLocation();
+
+        return (
+          <div>
+            <h1>My fake Cloudflare Dashboard</h1>
+            {location.search
+              ? `Would do the deep-link thing for ${location.search}`
+              : null}
+            <p>
+              <a href="/accounts/123">Log in</a>
+            </p>
+          </div>
+        );
+      };
+
+      const AccountHome = () => {
+        const { accountId } = ReactRouterDOM.useParams();
+        return (
+          <div>
+            <h1>Account home: {accountId}</h1>
+
+            <ul>
+              <li>
+                <Link to={`/accounts/${accountId}/r2`}>R2</Link>
+              </li>
+              <li>
+                <Link to={`/accounts/${accountId}/workers`}>Workers</Link>
+              </li>
+            </ul>
+            <Switch>
+              <Route path="/accounts/:accountId/r2" exact component={R2} />
+              <Route
+                path="/accounts/:accountId/workers"
+                exact
+                component={Workers}
+              />
+            </Switch>
+          </div>
+        );
+      };
+
+      const R2 = () => {
+        const history = useHistory();
+        const ref = React.useRef(null);
+
+        React.useEffect(() => {
+          const handler = (event) => {
+            if (event.origin === window.location.origin) {
+              if (ref.current) {
+                if (
+                  event.data.type === "nav" &&
+                  ref.current.src !== event.data.url
+                ) {
+                  root.style.setProperty(
+                    "--docs-dash-sidebar-display",
+                    "block"
+                  );
+                } else if (event.data.type === "dashboard-nav") {
+                  // TODO: Flatten deeplinks when we already have context from the current URL?
+                  history.push(event.data.url);
+                }
+              }
+            }
+          };
+
+          window.addEventListener("message", handler);
+
+          return () => window.removeEventListener("message", handler);
+        }, [history]);
+
+        return (
+          <div>
+            <h1>R2</h1>
+            <button
+              style={{ display: "var(--docs-dash-sidebar-display)" }}
+              onClick={() => {
+                if (ref.current) {
+                  root.style.setProperty("--docs-dash-sidebar-display", "none");
+                  ref.current.contentWindow.location = ref.current.src;
+                }
+              }}
+            >
+              Go back
+            </button>
+            <iframe
+              ref={ref}
+              id="docs-dash-sidebar"
+              src="/_docs-dash-sidebar/r2/get-started/"
+              width="400"
+              height="800"
+            />
+          </div>
+        );
+      };
+      const Workers = () => {
+        return <h1>Workers</h1>;
+      };
+
+      ReactDOM.render(<App />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>
