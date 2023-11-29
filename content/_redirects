@@ -175,7 +175,8 @@
 /cache/about/cache-control/ /cache/concepts/cache-control/ 301
 /cache/about/cdn-cache-control/ /cache/concepts/cache-control/ 301
 /cache/about/ /cache/concepts/ 301
-/cache/how-to/enable-http2-to-origin/ /cache/concepts/enable-http2-to-origin/ 301
+/cache/concepts/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
+/cache/how-to/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
 /cache/how-to/interact-with-workers/ /cache/concepts/interact-with-workers/ 301
 /cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
@@ -293,6 +294,8 @@
 /firewall/cf-rulesets/rulesets-api/update-rule/ /ruleset-engine/rulesets-api/update-rule/ 301
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
+/firewall/known-issues-and-faq/ /waf/troubleshooting/faq/ 301
+/firewall/cf-firewall-rules/cloudflare-challenges/ /waf/reference/cloudflare-challenges/ 301
 
 # fundamentals
 /fundamentals/account-and-billing/account-setup/ /fundamentals/setup/account-setup/ 301
@@ -396,7 +399,7 @@
 /fundamentals/get-started/setup/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/minimize-downtime/ /fundamentals/basic-tasks/minimize-downtime/ 301
 /fundamentals/get-started/concepts/what-is-cloudflare/ /fundamentals/concepts/what-is-cloudflare/ 301
-/fundamentals/get-started/concepts/cloudflare-challenges/ /firewall/cf-firewall-rules/cloudflare-challenges/ 301
+/fundamentals/get-started/concepts/cloudflare-challenges/ /waf/reference/cloudflare-challenges/ 301
 /fundamentals/get-started/concepts/accounts-and-zones/ /fundamentals/concepts/accounts-and-zones/ 301
 /fundamentals/get-started/concepts/cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/get-started/concepts/network-layers/ /fundamentals/concepts/network-layers/ 301
@@ -716,9 +719,24 @@
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
 
 # support
+
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/setup/troubleshooting/ 301
 /support/about-cloudflare/getting-started/ /fundamentals/setup/troubleshooting/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
+/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
+/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
+/support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
+/support/network/ /network/ 301
+/support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
+/support/network/i-activated-through-a-hosting-partner.-can-i-still-use-the-free-cloudflare-ipv6-compatibility/ /network/ipv6-compatibility/ 301
+/support/network/setting-up-response-buffering/ /network/response-buffering/ 301
+/support/network/using-cloudflare-with-websockets/ /network/websockets/ 301
+/support/network/understanding-and-configuring-cloudflares-ipv6-support/ /network/ipv6-compatibility/ 301
+/support/network/understanding-cloudflare-http2-and-http3-support/ /speed/optimization/protocol/ 301
+/support/network/understanding-cloudflare-grpc-support/ /network/grpc-connections/ 301
+/support/network/understanding-network-error-logging/ /network-error-logging/ 301
+/support/network/understanding-the-true-client-ip-header/ /network/true-client-ip-header/ 301
 /support/speed/optimization-file-size/will-mirage-and-polish-optimize-off-site-resources/ /speed/optimization/images/ 301
 /support/speed/optimization-file-size/ /speed/optimization/ 301
 /support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301
@@ -727,8 +745,10 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /support/more-dashboard-apps/cloudflare-scrape-shield/ 301
 /support/third-party-software/others/can-i-use-cloudflare-and-varnish-together/ /rules/snippets/ 301
 /support/third-party-software/others/is-cloudflare-compatible-with-bad-behavior/ /support/third-party-software/ 301
+/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
 /support/troubleshooting/performance/http2-and-enhanced-http2-prioritization-options-may-affect-content-loading-on-iossafari-devices/ /speed/optimization/protocol/troubleshooting/enhanced-http2-prioritization-ios-safari/ 301
 /support/troubleshooting/performance/ /speed/optimization/ 301
+
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
@@ -1170,12 +1190,6 @@
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
 /cloudflare-one/tutorials/zero-trust-network-access/ /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ 301
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
-
-# Support
-# - KB: https://support.cloudflare.com/hc/*/articles/5995821690637
-/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
-/support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
-/support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 
 ### DYNAMIC REDIRECTS ###
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301

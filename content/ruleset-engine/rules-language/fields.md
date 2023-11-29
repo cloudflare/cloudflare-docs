@@ -608,6 +608,17 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-tls_cipher">
+      <td><code>cf.tls_cipher</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>
+          The cipher for the connection to Cloudflare.
+        </p>
+        <p>Example:<br/>
+        <code>"AES128-SHA256"</code>
+        </p>
+      </td>
+    </tr>
     <tr id="field-cf-tls_client_auth-cert_revoked">
       <td><code>cf.tls_client_auth.cert_revoked</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
@@ -759,6 +770,16 @@ The Cloudflare Rules language supports these dynamic fields:
       <p>Example:<br/>
       <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
       </p></td>
+    </tr>
+    <tr id="field-cf-tls_version">
+      <td><code>cf.tls_version</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The TLS version of the connection to Cloudflare.
+        </p>
+        <p>Example:<br/>
+        <code>"TLSv1.2"</code>
+        </p>
+      </td>
     </tr>
     <tr id="field-cf-waf-score">
         <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>

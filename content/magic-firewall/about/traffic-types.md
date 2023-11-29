@@ -1,7 +1,6 @@
 ---
 title: Traffic types
 pcx_content_type: concept
-weight: 4
 ---
 
 # Traffic types

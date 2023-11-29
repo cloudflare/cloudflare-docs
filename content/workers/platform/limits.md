@@ -36,7 +36,7 @@ Request headers observe a total limit of 32 KB, but each header is limited to 16
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare account's plan, which is separate from your Workers plan. When the request body size of your `POST`/`PUT`/`PATCH` requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
@@ -91,11 +91,11 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 {{<table-wrap>}}
 
-| Feature                       | Free   | Bundled |
-| ----------------------------- | ------ | ------- |
-| [Max object size](#cache-api-limits) | 512 MB | 512 MB  |
-| [Calls/request](#cache-api-limits)   | 50     | 50      |
-| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    |
+| Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#bundled-usage-model) | [Unbound](/workers/platform/pricing/#unbound-usage-model) | [Standard](/workers/platform/pricing/#standard-usage-model)  |
+| ----------------------------- | ------------- | ------- | ------- | ------- | 
+| [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  | 512 MB  |
+| [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   | 1,000   |
+| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    | 5 GB    | 5 GB    |
 
 {{</table-wrap>}}
 

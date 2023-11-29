@@ -116,7 +116,7 @@ async function handlePost(request) {
     if (!outcome.success) {
         return new Response('The provided Turnstile token was not valid!', { status: 401 });
     }
-    // The Turnstile token was successfuly validated. Proceed with your application logic.
+    // The Turnstile token was successfully validated. Proceed with your application logic.
     // Validate login, redirect user, etc.
     return await fetch(request)
 }

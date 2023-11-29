@@ -29,6 +29,8 @@ Turnstile [widget types](/turnstile/reference/widget-types/) include:
 * A non-intrusive interactive challenge (such as clicking a button), if the visitor is a suspected bot.
 * An invisible challenge to the browser.
 
+---
+
 ## Accessibility
 
 Turnstile is WCAG 2.1 AA compliant. Visually or motorically impaired visitors are able to solve Turnstile widgets by obtaining a pre-clearance token via an external service. 
@@ -53,8 +55,4 @@ Cloudflare bot solutions identify and mitigate automated traffic to protect your
 
 ## Availability
 
-Turnstile is available for free for unlimited use via our visible widget in [Managed](/turnstile/reference/widget-types/#managed-recommended) mode. An [Enterprise](/bots/plans/bm-subscription/) version is available for customers who need additional features like support. 
-
-A pay-as-you-go option for advanced features will be available in early 2024 for self-serve customers.
-
-Users can continue to access these advanced features below our 1 million siteverify request limit.
+Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.

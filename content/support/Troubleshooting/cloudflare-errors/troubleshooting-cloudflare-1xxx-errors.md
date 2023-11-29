@@ -19,7 +19,7 @@ customers to change the appearance of the default error pages discussed
 in this article.
 {{</Aside>}}
 
-If the resolutions within each error description below do not resolve the error, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the resolutions within each error description below do not resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{<Aside type="note">}}
 Only the site owner may contact Cloudflare for technical support. Lookup
@@ -139,7 +139,7 @@ ___
 
 ### Resolution
 
-If the issue persists beyond 5 minutes, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the issue persists beyond 5 minutes, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ___
 
@@ -298,7 +298,7 @@ The site owner implemented [Rate Limiting](/waf/reference/legacy/old-rate-limit
 cache
 purge](/cache/how-to/purge-cache).
 Retry the cache purge and contact [Cloudflare
-support](https://support.cloudflare.com/hc/articles/200172476) if errors
+support](/support/contacting-cloudflare-support/) if errors
 persist.
 {{</Aside>}}
 
@@ -353,7 +353,7 @@ Error 1018 is returned via a HTTP 409 response code.
 
 ### Resolution
 
-Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) with the following details:
+Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the following details:
 
 1.  Your domain name
 2.  A screenshot of the 1018 error including the **RayID** mentioned in the error message
@@ -410,7 +410,7 @@ Error 1023 is returned via a HTTP 409 response code.
 
 ### Resolution
 
-Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) with the following details:
+Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the following details:
 
 1.  Your domain name
 2.  A screenshot of the 1023 error including the **RayID** mentioned in the error message
@@ -538,7 +538,7 @@ A Cloudflare Worker throws a runtime JavaScript exception.
 
 ### Resolution:
 
-[Provide appropriate issues details](https://support.cloudflare.com/hc/articles/200172476) to Cloudflare Support.
+[Provide appropriate issues details](/support/contacting-cloudflare-support/) to Cloudflare Support.
 
 ___
 
@@ -580,5 +580,5 @@ ___
 
 ## Related resources
 
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)
+-   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Customizing Cloudflare error pages](https://support.cloudflare.com/hc/articles/200172706)

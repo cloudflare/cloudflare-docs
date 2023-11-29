@@ -6,7 +6,7 @@ weight: 3
 
 # Migrate from Wrangler v1 to Wrangler v2
 
-This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2. Before updating your Wrangler version, review and compelte [Migrate webpack projects from Wrangler version 1](/workers/wrangler/migration/v1-to-v2/eject-webpack/) if it applies to your project.
+This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2. Before updating your Wrangler version, review and complete [Migrate webpack projects from Wrangler version 1](/workers/wrangler/migration/v1-to-v2/eject-webpack/) if it applies to your project.
 
 Wrangler v2 ships with new features and improvements that may require some changes to your configuration.
 

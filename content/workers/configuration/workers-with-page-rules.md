@@ -23,7 +23,7 @@ When using Page Rules with Workers, the following workflow is applied.
 
 Page Rules are evaluated both at the client-to-Worker request stage (step 2) and the Worker subrequest stage (step 5).
 
-If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ## Affected Page Rules
 

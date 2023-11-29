@@ -11,6 +11,8 @@ weight: 5
 * Task type: **text-to-image**
 * TypeScript class: **AiTextToImage**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:

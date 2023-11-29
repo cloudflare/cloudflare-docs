@@ -47,7 +47,7 @@ Error 500 generally indicates an issue with your origin web server.  _Error es
 
 [Provide details to your hosting provider](#required-error-details-for-hosting-provider) to assist troubleshooting the issue.
 
-However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in the HTML response body, provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
+However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in the HTML response body, provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 500 error occurrence
@@ -95,7 +95,7 @@ If the error does not mention “cloudflare,” contact your hosting provider fo
 
 **Resolution**
 
-To avoid delays processing your inquiry, provide these required details to [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476):
+To avoid delays processing your inquiry, provide these required details to [Cloudflare Support](/support/contacting-cloudflare-support/):
 
 1.  Time and timezone the issue occurred.
 2.  URL that resulted in the HTTP 502 or 504 response (for example: `https://www.example.com/images/icons/image1.png`)
@@ -113,7 +113,7 @@ HTTP error 503 occurs when your origin web server is overloaded. There are two p
 
 -   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
 
-**Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
+**Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 503 error occurrence
@@ -147,7 +147,7 @@ in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/se
 origin web server.
 {{</Aside>}}
 
-If 520 errors continue after contacting your hosting provider or site administrator, provide the following information to [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476):
+If 520 errors continue after contacting your hosting provider or site administrator, provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/):
 
 -   Full URL(s) of the resource requested when the error occurred
 -   Cloudflare **cf-ray** from the 520 error message
@@ -199,7 +199,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 
 If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/platform/custom-domains/#add-a-custom-domain).
 
-If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476):
+If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
 -   An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
 -   Details from the hosting provider’s investigation such as pertinent logs or conversations with the hosting provider.
@@ -442,7 +442,7 @@ ___
 ## Related resources
 
 -   [Gathering information to troubleshoot site issues](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites)
--   [Contacting Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support)
+-   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
 -   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
 -   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)

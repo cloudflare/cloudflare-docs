@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Partners Support
-weight: 1
+weight: 2
 ---
  
 # Welcome to the Partners Support section

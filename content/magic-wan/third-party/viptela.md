@@ -58,7 +58,7 @@ To create a Secure Internet Gateway (SIG) using vManage:
 |     Setting        |   Type/Detail                           |
 |--------------------|-----------------------------------------|
 | **Cisco System**   | Default_BootStrap_Cisco_System_Template |
-| **Cisco Loging**   | Default_Logging_Cisco_V01               |
+| **Cisco Logging**  | Default_Logging_Cisco_V01               |
 | **Cisco AAA**      | AWS-Branch-AAA-Template                 |
 | **Cisco BFD**      | Default_BFD_Cisco-V01                   |
 | **Cisco OMP**      |  Default_AWS_TGW_CSR_OMP_IPv46_...      |

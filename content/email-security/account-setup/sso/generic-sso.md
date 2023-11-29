@@ -64,4 +64,4 @@ If you have trouble connecting your SAML provider to Area 1, make sure that:
 - You are using the SHA-1 algorithm.
 - Your encryption is set to 2048 bits.
 
-If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

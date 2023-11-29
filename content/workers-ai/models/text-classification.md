@@ -11,6 +11,8 @@ Sentiment analysis or text classification is a common NLP task that classifies a
 * Task type: **text-classification**
 * TypeScript class: **AiTextClassification**
 
+{{<render file="_npm-update.md">}}
+
 ## Available Embedding Models
 
 List of available models in for this task type:
