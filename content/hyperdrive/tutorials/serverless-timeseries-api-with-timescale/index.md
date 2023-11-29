@@ -270,11 +270,11 @@ Once you have sent the `POST` request you can also issue a `GET` request to your
 
 If you have **curl** installed you can test with the following commands (replace **<YOUR_SUBDOMAIN>** with your subdomain from the deploy command above):
 
-```bash
+```sh
 ---
 header: Ingest some data
 ---
-curl -X POST -d @- 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings' <<EOF
+$ curl -X POST -d @- 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings' <<EOF
 [
   { "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value":0.3},
   { "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value":10.8},
@@ -291,7 +291,7 @@ EOF
 ---
 header: Query some data
 ---
-curl 'https://timescale-api.<YOUR_SUBDOMAIN>jsewell.workers.dev/readings?limit=10'
+$ curl 'https://timescale-api.<YOUR_SUBDOMAIN>jsewell.workers.dev/readings?limit=10'
 ```
 
 In this tutorial, you have learned how to create a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive, and TypeScript.
