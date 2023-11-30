@@ -14,14 +14,14 @@ The following products and features are available on the Cloudflare China Networ
 | Product | Feature | Description |
 |---|---|---|
 | DNS | [DNS resolution service](/china-network/concepts/china-dns/) | Authoritative DNS resolution inside mainland China. |
-| CDN | [Caching](/cache/) | Core cache features. Static cache only. No Cache Reserve. No Tiered Cache.|
+| CDN | [Caching](/cache/) | Core cache features. Static cache only. Does not support Cache Reserve or Tiered Cache. |
 | CDN | [Image Resizing](/images/) | Optimize image format at the edge to fit a domain’s layout. |
 | [DDoS Protection](/ddos-protection/) | Layer 7 (HTTP/HTTPS) DDoS protection | Layer 7 (application layer) protection against DDoS attacks such as HTTP flood attacks, WordPress Pingback attacks, HULK attacks, and LOIC attacks. |
 | [Web Application Firewall (WAF)](/waf/) | WAF Managed Rules | Pre-configured OWASP rulesets and Cloudflare managed rulesets. |
-| [Web Application Firewall (WAF)](/waf/) | WAF Custom Rules | Custom WAF rules. Uploaded Content Scanning, (Interstitial) Managed Challenge are supported. |
+| [Web Application Firewall (WAF)](/waf/) | WAF custom rules | Custom WAF rules. Supports uploaded content scanning and managed challenges. |
 | [Web Application Firewall (WAF)](/waf/) | Rate Limiting | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached. |
 | [Page Shield](/page-shield/) | Page Shield | Simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. |
-| [Bot Management](/bots/) | Bot detection and mitigation | Provides bot identification and protection for a domain, only certain ML models. |
+| [Bot Management](/bots/) | Bot detection and mitigation | Provides bot identification and protection for a domain. Only supports certain Machine Learning (ML) models. |
 | [Argo Smart Routing](/argo-smart-routing/) | Layer 7 smart routing | Layer 7 (application layer) traffic smart-routed more efficiently to origin. |
 | [Rules](/rules/) | Page Rules, Bulk Redirects, Transform Rules, Origin Rules | Make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests. |
 
@@ -48,4 +48,4 @@ The following products and features are available on the Cloudflare China Networ
 | [Analytics](/analytics/) | Web Analytics | Real-time traffic, security, and data monitoring. |
 | [Logs](/logs/) | Instant Logs | Live Tail your Cloudflare HTTP logs in the Cloudflare Dashboard. |
 
-For more details or specific product features, please talk to your account team.
+For more details or specific product features, contact your account team.
