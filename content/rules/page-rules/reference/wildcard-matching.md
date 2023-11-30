@@ -1,5 +1,5 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 title: Wildcard Matching
 meta:
     title: Wildcard Matching | Page Rules
