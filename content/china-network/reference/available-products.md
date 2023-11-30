@@ -17,9 +17,9 @@ The following products and features are available on the Cloudflare China Networ
 | CDN | [Caching](/cache/) | Core cache features. Static cache only. Does not support Cache Reserve or Tiered Cache. |
 | CDN | [Image Resizing](/images/) | Optimize image format at the edge to fit a domain’s layout. |
 | [DDoS Protection](/ddos-protection/) | Layer 7 (HTTP/HTTPS) DDoS protection | Layer 7 (application layer) protection against DDoS attacks such as HTTP flood attacks, WordPress Pingback attacks, HULK attacks, and LOIC attacks. |
-| [Web Application Firewall (WAF)](/waf/) | WAF Managed Rules | Pre-configured OWASP rulesets and Cloudflare managed rulesets. |
-| [Web Application Firewall (WAF)](/waf/) | WAF custom rules | Custom WAF rules. Supports uploaded content scanning and managed challenges. |
-| [Web Application Firewall (WAF)](/waf/) | Rate Limiting | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached. |
+| Web Application Firewall (WAF) | [WAF Managed Rules](/waf/managed-rules/) | Pre-configured OWASP rulesets and Cloudflare managed rulesets. |
+| Web Application Firewall (WAF) | [WAF custom rules](/waf/custom-rules/) | Custom WAF rules. Supports uploaded content scanning and managed challenges. |
+| Web Application Firewall (WAF) | [Rate limiting rules](/waf/rate-limiting-rules/) | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached. |
 | [Page Shield](/page-shield/) | Page Shield | Simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. |
 | [Bot Management](/bots/) | Bot detection and mitigation | Provides bot identification and protection for a domain. Only supports certain Machine Learning (ML) models. |
 | [Argo Smart Routing](/argo-smart-routing/) | Layer 7 smart routing | Layer 7 (application layer) traffic smart-routed more efficiently to origin. |
