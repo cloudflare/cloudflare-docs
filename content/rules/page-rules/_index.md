@@ -19,7 +19,7 @@ The default number of allowed page rules depends on the domain plan as shown bel
 
 {{<feature-table id="rules.page_rules">}}
 
-You can [purchase additional rules](/purchasing-additional-page-rules/) (up to a maximum of 100) for domains in the Free, Lite, Pro, Pro Plus, and Business plans.
+You can [purchase additional rules](/rules/page-rules/troubleshooting/billing-and-subscription/) (up to a maximum of 100) for domains in the Free, Lite, Pro, Pro Plus, and Business plans.
 
 ___
 

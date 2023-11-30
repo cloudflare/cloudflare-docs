@@ -23,7 +23,7 @@ To create a Page Rule in the dashboard:
 2. Go to **Rules** > **Page Rules**.
 3. Select **Create Page Rule**.
 4. For **URL**, enter the URL or URL pattern that should match the rule ([More details about wildcard matching](/rules/page-rules/reference/wildcard-matching/)).
-5. For **Pick a Setting**, select a [Cloudflare setting](/rules/page-rules/settings/) to adjust. If desired, select **Add a Setting** to adjust multiple Cloudflare settings with the same rule.
+5. For **Pick a Setting**, select a [Cloudflare setting](/rules/page-rules/reference/settings/) to adjust. If desired, select **Add a Setting** to adjust multiple Cloudflare settings with the same rule.
 6.  In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
 7.  To save, click one of the following options:
     -   **Save as Draft** to save the rule and leave it disabled.
@@ -36,7 +36,7 @@ For ideas about what rules you can create, refer to [example rules](/rules/page-
 
 To create a Page Rule using the API, send a [`POST` request](/api/operations/page-rules-create-a-page-rule).
 
-You may also want to review our documentation on [wildcard matching](/rules/page-rules/reference/wildcard-matching/), [available settings](/rules/page-rules/settings/), and [example rules](/rules/page-rules/reference/recommended-rules/).
+You may also want to review our documentation on [wildcard matching](/rules/page-rules/reference/wildcard-matching/), [available settings](/rules/page-rules/reference/settings/), and [example rules](/rules/page-rules/reference/recommended-rules/).
 
 {{</tab>}}
 {{</tabs>}}
