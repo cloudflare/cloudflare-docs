@@ -26,7 +26,9 @@ To check your Wrangler version, run:
 
 ```sh
 $ npx wrangler --version
-// or run:
+// or
+$ npx wrangler version
+// or
 $ npx wrangler -V
 ```
 
