@@ -26,8 +26,8 @@ This tutorial covers how to build a [Cloudflare R2 bucket](/r2/buckets/) to stor
 
 {{<tutorial-step title="Create a Cloudflare R2 bucket">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **R2** > **Overview**.
-2. Select **Create bucket**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **R2** > **Overview**. Select **Create bucket**.
 3. Enter an identifiable name for the bucket, then select **Create bucket**.
 
 {{</tutorial-step>}}
