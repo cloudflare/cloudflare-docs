@@ -3968,6 +3968,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsMarkdown blockquote> :last-child,
 .DocsMarkdown details> :last-child,
 .DocsMarkdown details summary+div> :last-child,
+.DocsMarkdown details summary+div> :last-child pre.CodeBlock,
 .DocsMarkdown li> :not(ul):not(ol):not(pre):not(figure):not(table):last-child,
 .DocsMarkdown ol> :last-child,
 .DocsMarkdown ul> :last-child {
