@@ -335,7 +335,7 @@ If the origin server uses a self-signed certificate, configure the domain to use
 
 ___
 
-## 527 Error: Railgun Listener to origin error
+## Error 527: Railgun Listener to origin error
 
 {{<render file="_railgun-deprecation-notice.md" productFolder="railgun">}}
 
