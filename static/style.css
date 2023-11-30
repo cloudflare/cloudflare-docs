@@ -4192,10 +4192,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 
   @media not all and (min-resolution: 0.001dpcm) {
-    @media {
-      .DocsSearch .algolia-autocomplete {
-        background: rgba(var(--background-color-rgb), 1);
-      }
+    .DocsSearch .algolia-autocomplete {
+      background: rgba(var(--background-color-rgb), 1);
     }
   }
 }
