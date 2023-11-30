@@ -332,6 +332,10 @@
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
 /support/account-management-billing/account-management/ /fundamentals/setup/account-setup/301
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/account-and-billing/account-security/2fa/ 301
+/support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/account-and-billing/account-security/multi-factor-email-authentication/ 301
+/support/account-management-billing/billing-cloudflare-plans/troubleshooting-failed-payments/ /fundamentals/account-and-billing/account-billing/troubleshooting-failed-payments/ 301
+/support/account-management-billing/common-account-questions/login-and-account-issues/ /fundamentals/account-and-billing/account-security/login-and-account-issues 301
 /support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/setup/add-multiple-sites-automation/ 301
 /support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/setup/add-multiple-sites-automation/ 301
 /support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/setup/add-multiple-sites-automation/ 301

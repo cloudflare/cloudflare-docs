@@ -35,7 +35,7 @@ When you [set up Cloudflare](/fundamentals/setup/), you may experience the follo
 
 - [Gather information to troubleshoot site issues](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/)
 - [Contact Cloudflare support](/support/contacting-cloudflare-support/)
-- [Login and account issues](/support/account-management-billing/common-account-questions/login-and-account-issues/)
+- [Login and account issues](/fundamentals/account-and-billing/account-security/login-and-account-issues/)
 
 ## General resources
 
