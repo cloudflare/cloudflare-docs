@@ -1,5 +1,5 @@
 ---
-title: Configure a Tunnel route
+title: Make your self-hosted application public
 pcx_content_type: overview
 weight: 2
 layout: learning-unit

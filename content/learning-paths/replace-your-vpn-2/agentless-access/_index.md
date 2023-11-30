@@ -7,7 +7,9 @@ layout: learning-module
 
 # Agentless access to private web services
 
+Cloudflare supports Zero Trust, identity-aware access to internal HTTP applications without the need to use a device client. This step will require an active DNS zone on Cloudflare in the same account in which you are building your Zero Trust policies.
 
+Performing these tasks in this order makes sure your private application is never accessible via the public Internet.
 
 ## Objectives
 
