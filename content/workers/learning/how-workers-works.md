@@ -81,5 +81,5 @@ Because there is no guarantee that any two user requests will be routed to the s
 ## Related resources
 
 - [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) - Review how incoming HTTP requests to a Worker are passed to the `fetch()` handler.
-- [Request context](/workers/runtime-apis/request/) - Learn more about 
-- [Workers limits](/workers/platform/limits/) - Learn about Workers limits, including Worker size, startup time and more.
+- [Request](/workers/runtime-apis/request/) - Learn how incoming HTTP requests are passed to the `fetch()` handler.
+- [Workers limits](/workers/platform/limits/) - Learn about Workers limits including Worker size, startup time, and more.

@@ -1000,6 +1000,7 @@
 /workers/platform/sites/start-from-worker/ /workers/configuration/sites/start-from-worker/ 301
 /workers/platform/sites/configuration/ /workers/configuration/sites/configuration/ 301
 /workers/platform/deploy-button/ /workers/configuration/deploy-button/ 301
+/workers/configuration/deploy-button/ /workers/tutorials/deploy-button/ 301
 /workers/platform/deployments/ /workers/configuration/deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
