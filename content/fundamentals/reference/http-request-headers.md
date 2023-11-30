@@ -19,7 +19,7 @@ For incoming requests, the value of this header will always be set to `accept-en
 `CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
 This header will only be sent on the traffic from Cloudflare's edge to your origin web server.
 
-For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
+For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
@@ -35,9 +35,10 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 ## CF-Connecting-IPv6
 
-Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](https://support.cloudflare.com/hc/en-us/articles/229666767) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+Cloudflare provides [free IPv6 support](/network/ipv6-compatibility/) to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
-If Pseudo IPv4 is set to `Overwrite Headers` - Cloudflare overwrites the existing `Cf-Connecting-IP` and `X-Forwarded-For` headers with a pseudo IPv4 address while preserving the real IPv6 address in `CF-Connecting-IPv6` header.
+{{<render file="_pseudo-ipv4-warning.md">}}
+<br/>
 
 ## CF-EW-Via
 
@@ -45,7 +46,7 @@ This header is used for loop detection, similar to the `CDN-Loop` [header](https
 
 ## CF-Pseudo-IPv4
 
-If Pseudo IPv4 is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
+If [Pseudo IPv4](/network/pseudo-ipv4/) is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
 
 ## True-Client-IP (Enterprise plan only)
 
@@ -95,7 +96,12 @@ Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 ## CF-IPCountry
 
-The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the `XX` country code when the country information is unknown.
+The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. 
+
+Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
+
+-   `XX` - Used for clients without country code data.
+-   `T1` - Used for clients using the Tor network.
 
 To add this header to requests, along with other HTTP headers with location information for the visitor's IP address, [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 

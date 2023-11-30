@@ -18,7 +18,7 @@ By default, WAF managed rules are fully managed via the Cloudflare dashboard and
 
 The definition of suspicious content is subjective for each website. For example, PHP code posted to your website is normally suspicious. However, your website may be teaching how to code and it may require PHP code submissions from visitors. In this situation, you should disable related managed rules for this website, since they would interfere with normal website operation.
 
-To test for false positives, set WAF managed rules to _Simulate_ mode. This mode allows you to record the response to possible attacks without challenging or blocking incoming requests. Also, use the Firewall Analytics [**Activity log**](/waf/security-events/paid-plans/#activity-log) to determine which managed rules caused false positives.
+To test for false positives, set WAF managed rules to _Simulate_ mode. This mode allows you to record the response to possible attacks without challenging or blocking incoming requests. Also, use the Firewall Analytics [**Activity log**](/waf/analytics/security-events/paid-plans/#activity-log) to determine which managed rules caused false positives.
 
 If you find a false positive, there are several potential resolutions:
 

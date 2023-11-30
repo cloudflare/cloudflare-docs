@@ -1,17 +1,25 @@
 ---
-title: Image classification
+title: Image Classification
 pcx_content_type: get-started
 weight: 5
 ---
 
-# Image classification
-ResNet models perform image classification - they take images as input and classify the major object in the image.
+# Image Classification
 
-* ID:  **@cf/microsoft/resnet-50** - used to `run` this model via SDK or API
-* Name: Resnet50 image classification model
-* Task: image-classification
-* License type: Apache 2.0
-* [Terms + Information](https://huggingface.co/microsoft/resnet-50)
+Image classification models take an image input and assigns it labels or classes.
+
+* Task type: **image-classification**
+* TypeScript class: **AiImageClassification**
+
+{{<render file="_npm-update.md">}}
+
+## Available Embedding Models
+
+List of available models in for this task type:
+
+| Model ID                        | Description                   |
+| ------------------------------- | ----------------------------- |
+| `@cf/microsoft/resnet-50`                   | 50 layers deep image classification CNN trained on more than 1M images from ImageNet<br/>[More information](https://www.microsoft.com/en-us/research/blog/microsoft-vision-model-resnet-50-combines-web-scale-data-and-multi-task-learning-to-achieve-state-of-the-art/)<br/>  |
 
 ## Examples
 
@@ -73,44 +81,53 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mic
 ```
 
 ## API schema
+
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
 ### Input
 
 ```json
 {
-  oneOf: [
-    { type: "string", format: "binary" },
+  "oneOf": [
     {
-      type: "object",
-      properties: {
-        image: {
-          type: "array",
-          items: {
-            type: "number",
-          },
-        },
-      },
+      "type": "string",
+      "format": "binary"
     },
-  ],
+    {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  ]
 }
 ```
+
+TypeScript class: **AiImageClassificationInput**
 
 ### Output
 
 ```json
 {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      score: {
-        type: "number",
+  "type": "array",
+  "contentType": "application/json",
+  "items": {
+    "type": "object",
+    "properties": {
+      "score": {
+        "type": "number"
       },
-      label: {
-        type: "string",
-      },
-    },
-  },
+      "label": {
+        "type": "string"
+      }
+    }
+  }
 }
 ```
+
+TypeScript class: **AiImageClassificationOutput**

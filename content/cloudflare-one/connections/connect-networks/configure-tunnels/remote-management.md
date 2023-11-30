@@ -23,7 +23,7 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    $ sudo systemctl edit --full cloudflared.service
    ```
 
-2. Modify the `cloudflared tunnel run` command with the desired configuration flag. The following example changes the tunnel `protocol` to QUIC:
+2. Modify the `cloudflared tunnel run` command with the desired configuration flag. For example,
 
    ```txt
    ---
@@ -36,7 +36,7 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    [Service]
    TimeoutStartSec=0
    Type=notify
-   ExecStart=/usr/local/bin/cloudflared --protocol quic tunnel run --token <TOKEN VALUE>
+   ExecStart=/usr/local/bin/cloudflared tunnel --loglevel debug --logfile <PATH>  run --token <TOKEN VALUE>
    Restart=on-failure
    RestartSec=5s
    ```
@@ -60,12 +60,9 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
 
 3. Open `/Library/LaunchDaemons/com.cloudflare.cloudflared.plist` in a text editor.
 
-4. Modify the `ProgramArguments` key with the desired configuration flag. The following example changes the tunnel `protocol` to QUIC:
+4. Modify the `ProgramArguments` key with the desired configuration flag. For example,
 
    ```txt
-   ---
-   highlight: [8,9]
-   ---
    <plist version="1.0">
        <dict>
            <key>Label</key>
@@ -73,8 +70,10 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
            <key>ProgramArguments</key>
            <array>
                <string>/opt/homebrew/bin/cloudflared</string>
-               <string>--protocol</string>
-               <string>quic</string>
+               <string>--logfile</string>
+               <string><PATH></string>
+               <string>--loglevel</string>
+               <string>debug</string>
                <string>tunnel</string>
                <string>run</string>
                <string>--token</string>
@@ -105,10 +104,10 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 3. Double-click **ImagePath**.
 
-4. Modify **Value data** with the desired configuration flag. The following example changes the tunnel `protocol` to QUIC:
-
+4. Modify **Value data** with the desired configuration flag. For example,
+   
    ```txt
-   C:\Program Files (x86)\cloudflared\.\cloudflared.exe --protocol quic tunnel run --token <TOKEN VALUE>
+   C:\Program Files (x86)\cloudflared\.\cloudflared.exe --loglevel debug --logfile <PATH>  tunnel run --token <TOKEN VALUE>
    ```
 
 ![Modify cloudflared service in the Registry Editor](/images/cloudflare-one/connections/connect-apps/remote-management-windows.png)
@@ -120,7 +119,7 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 You can also configure how `cloudflared` sends requests to your [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) services.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
 2. Choose a tunnel and select **Configure**.
 3. Select the **Public Hostname** tab.
 4. Choose a route and select **Edit**.

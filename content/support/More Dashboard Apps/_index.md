@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: More Dashboard Apps
-weight: 3
+weight: 2
 ---
  
 # Welcome to the More Dashboard Apps section

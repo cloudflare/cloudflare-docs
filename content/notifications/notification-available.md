@@ -146,6 +146,8 @@ Customers can filter incident alerts to specific impact levels (minor, major, cr
 
 Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.
 
+The impact level and affected components of an incident may change as the incident progresses. A notification will only be sent if the configured filters match at the time of the incident update. Updates will not be sent retroactively.
+
 **Included with**
 
 All Cloudflare plans.
@@ -771,6 +773,8 @@ Action only needed if notification is about a certificate that failed to be issu
 
 Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
+
 **Other options / filters**
 
 None.
@@ -831,6 +835,8 @@ All Cloudflare plans.
 
 **Who is it for?**
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
 
 **Other options / filters**
 
@@ -1093,7 +1099,7 @@ Monitor tunnel health over time and consider deploying [`cloudflared` replicas o
 
 **Who is it for?**
 
-Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/security-events/paid-plans/).
+Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/).
 
 For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
@@ -1109,7 +1115,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 {{</details>}}
 
@@ -1117,7 +1123,7 @@ Review the information in [Security Events](/waf/security-events/paid-plans/) to
 
 **Who is it for?**
 
-Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/security-events/paid-plans/).
+Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/).
 
 For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
@@ -1132,7 +1138,7 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 {{</details>}}
 

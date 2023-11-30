@@ -26,7 +26,7 @@ You cannot download the _exact_ input file that you uploaded. However, depending
 
 - By default, a video upload can be at most 30 GB.
 
-- By default, you can have up to 120 videos in the `inprogress`, `queued` or `downloading` state at the same time. Videos in the `error`, `ready` or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, please [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
+- By default, you can have up to 120 videos in the `inprogress`, `queued` or `downloading` state at the same time. Videos in the `error`, `ready` or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, please [contact Cloudflare support](/support/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
 
 {{<Aside type="note">}}
 
@@ -124,7 +124,7 @@ Videos are removed if the subscription is not renewed within 30 days.
 
 ### I use Content Security Policy (CSP) on my website. What domains do I need to add to which directives?
 
-If your website uses [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) directives, depending on your configuration, you may need to add Cloudflare Stream's domains to particular directives, in order to allow videos to be viewed or uploaded by your users.
+If your website uses {{<glossary-tooltip term_id="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">}}Content Security Policy (CSP){{</glossary-tooltip>}} directives, depending on your configuration, you may need to add Cloudflare Stream's domains to particular directives, in order to allow videos to be viewed or uploaded by your users.
 
 If you use the provided [Stream Player](/stream/viewing-videos/using-the-stream-player/), `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
 

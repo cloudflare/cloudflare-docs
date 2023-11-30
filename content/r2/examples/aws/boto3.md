@@ -32,7 +32,7 @@ s3 = boto3.client(
     service_name ="s3",
     endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
     aws_access_key_id = '<access_key_id>',
-    aws_secret_access_key = '<access_key_secret>'
+    aws_secret_access_key = '<access_key_secret>',
     region_name="<location>", # Must be one of: wnam, enam, weur, eeur, apac, auto
 )
 

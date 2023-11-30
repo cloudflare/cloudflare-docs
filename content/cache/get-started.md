@@ -71,8 +71,6 @@ Review the list of Cloudflare features that function in this manner:
 - [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
 - [Bot Management JavaScript Detections](/bots/reference/javascript-detections/)
 
-organise
-
 ## Troubleshoot
 
 Resolve common caching concerns.

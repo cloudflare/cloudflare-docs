@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Response
+meta:
+  description: Interface that represents an HTTP response.
 ---
 
 # Response

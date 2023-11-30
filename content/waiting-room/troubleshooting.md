@@ -81,3 +81,7 @@ If you have Rate Limiting, check your [rate limiting rules](/waf/rate-limiting-r
 The Waiting Room queue page refreshes every 20 seconds by populating the refresh header. If you have a rule set to block requests from a specific IP within 20 seconds, the user in the waiting room will be blocked. Make sure your rules allow at least one request every 20 seconds.
 
 Your user also might not have [cookies](/waiting-room/reference/waiting-room-cookie) enabled. If they do not enable cookies and your waiting room is actively queueing traffic, they will not reach your endpoint until the queueing stops.
+
+### Why is the estimated wait time increasing for some users?
+
+Estimated wait times may increase if the rate of users leaving your site decreases. The estimated wait time is updated upon each page refresh based on the most recently available information about the rate of slots opening up on your site and the number of users ahead of the user in line. To make this increase less likely, you could limit the amount of time users are allowed to spend on your site by disabling session renewal. Be aware that if you change your traffic settings, estimated wait times will change as well.

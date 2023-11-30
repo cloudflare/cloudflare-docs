@@ -39,9 +39,9 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
     * **Cookies**
     * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/#field-ip-src-country), [region](/ruleset-engine/rules-language/fields/#field-ip-src-region_code), and [city](/ruleset-engine/rules-language/fields/#field-ip-src-city))
     * [**Bot score**](/bots/concepts/bot-score/)
-    * [**Threat score**](/ruleset-engine/rules-language/fields/#field-cf-threat_score)
+    * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score**{{</glossary-tooltip>}}
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
-    * **Skip challenge** (skips a Cloudflare-issued [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/), if any, allowing the trace to continue)
+    * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
 5. Select **Send trace**.
 

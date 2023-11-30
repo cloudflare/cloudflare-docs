@@ -8,8 +8,6 @@ meta:
 
 # Configure `wrangler.toml`
 
-{{<render file="_wrangler_survey.md">}}
-  
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deployment setup for a Worker.
 
 {{<Aside type="warning">}}
@@ -130,7 +128,7 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
 
 - `node_compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Add polyfills for node builtin modules and globals. Refer to [node compatibility](#node-compatibility).
+  - Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
 
 - `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -183,6 +181,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `services` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
+
+- `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
 
 {{</definitions>}}
 
@@ -264,7 +266,7 @@ routes = [
 
 {{</definitions>}}
 
-Example: 
+Example:
 
 ```toml
 ---
@@ -347,7 +349,7 @@ watch_dir = "build_watch_dir"
 
 You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#standard-usage-model). Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
 
-Limits have some built-in flexibility to allow for cases where your Worker infrequently runs over the configured limit. If your Worker starts hitting the limit consistently, its execution will be terminated according to the limit configured. 
+Limits have some built-in flexibility to allow for cases where your Worker infrequently runs over the configured limit. If your Worker starts hitting the limit consistently, its execution will be terminated according to the limit configured.
 
 
 {{<definitions>}}
@@ -390,7 +392,19 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
 
+- `preview_database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The preview ID of this D1 database. If provided, `wrangler dev` will use this ID. Otherwise, it will use `database_id`. This option is required when using `wrangler dev --remote`.
+
+  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+
+{{</Aside>}}
 
 Example:
 
@@ -496,9 +510,15 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 - `preview_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The ID of the KV namespace used during `wrangler dev`.
+  - The preview ID of this KV namespace. If provided, `wrangler dev` will use this ID for the KV namespace. Otherwise it will use `id`. This option is required when using `wrangler dev --remote`.
 
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+
+{{</Aside>}}
 
 Example:
 
@@ -610,10 +630,11 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 - `preview_bucket_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The preview name of this R2 bucket used during `wrangler dev --remote`.
+  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote`.
+
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
 
 {{</Aside>}}
 
@@ -656,9 +677,8 @@ header: wrangler.toml
 ---
 
 [[vectorize]]
-vectorize = [
-  { binding = "<INDEX_NAME>", bucket_name = "<your-index>"}
-]
+binding = "<INDEX_NAME>"
+index_name = "<YOUR_INDEX>"
 ```
 
 ### Service bindings
@@ -877,7 +897,7 @@ SECRET_KEY=value
 
 ## Node compatibility
 
-If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of node.js APIs to your own code.
+If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of Node.js APIs to your own code.
 
 ### Use runtime APIs directly
 
@@ -892,7 +912,7 @@ compatibility_flags = [ "nodejs_compat" ]
 
 ### Add polyfills using Wrangler
 
-Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+Add polyfills for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
 
 ```toml
 ---
@@ -964,7 +984,7 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler. 
+We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
 
 If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
 

@@ -58,7 +58,7 @@ $ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_
 3. Add your external provider(s) nameservers as NS records on your zone apex.
 
 ```bash
-curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
+curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <KEY>" \
 --header "Content-Type: application/json" \

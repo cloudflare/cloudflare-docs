@@ -18,7 +18,7 @@ Use overrides to configure the HTTP DDoS Attack Protection managed ruleset. Over
 
 Overrides can have a ruleset, tag, or rule scope. Tag and rule configurations have greater priority than ruleset configurations.
 
-You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be applied for that zone.
+You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/#ip-lists) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be applied for that zone.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -140,7 +140,7 @@ For more information on defining overrides for managed rulesets using the Rulese
 
 ### Account-level configuration example
 
-The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from IP addresses in the `allowlisted_ips` [IP list](/waf/tools/lists/custom-lists/), with the following configuration:
+The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from IP addresses in the `allowlisted_ips` [IP list](/waf/tools/lists/custom-lists/#ip-lists), with the following configuration:
 
 * The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection managed ruleset (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
 

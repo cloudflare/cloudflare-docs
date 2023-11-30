@@ -8,8 +8,6 @@ meta:
 
 # Wrangler commands
 
-{{<render file="_wrangler_survey.md">}}
-
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
@@ -21,7 +19,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
-- [`delete`](#delete) - Delete your Worker from Cloudflare.
+- [`delete`](#delete-3) - Delete your Worker from Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -31,6 +29,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
+- [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
@@ -69,11 +68,71 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-All commands can be run with your choice of package manager. For example, to run the `wrangler deploy` command with npm, run:
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager. 
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
-$ npx wrangler deploy
+$ npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
+
+```json
+{
+  ...
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+  ...
+}
+```
+
+You can then run them using your package manager of choice:
+
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm run deploy
+```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn run deploy
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm run deploy
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -281,6 +340,12 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 ### `backup download`
 
+{{<Aside type="warning">}}
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/learning/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
+{{</Aside>}}
+
 Download existing data to your local machine.
 
 ```txt
@@ -360,6 +425,10 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ---
 
 ## `hyperdrive`
+
+{{<Aside type="note">}}
+Hyperdrive is currently in open beta. Report Hyperdrive bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
@@ -446,6 +515,10 @@ wrangler hyperdrive get <ID>
 ---
 
 ## `vectorize`
+
+{{<Aside type="note">}}
+Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
@@ -565,7 +638,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - IP address to listen on, defaults to `localhost`.
+  - IP address to listen on, defaults to `*` (all interfaces).
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1435,7 +1508,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-  
+
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1590,7 +1663,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-  
+
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
@@ -1692,6 +1765,92 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 ---
 
+## `queues`
+
+{{<Aside type="note">}}
+Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
+
+Manage your Workers [Queues](/queues/) configurations.
+
+### `create`
+
+Create a new Queue.
+
+```txt
+wrangler queues create <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to create.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an existing queue.
+
+```txt
+wrangler queues delete <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to delete.
+
+{{</definitions>}}
+
+### `list`
+
+List all queues in the current account.
+
+```txt
+wrangler queues list [OPTIONS]
+```
+
+### `consumer`
+
+Manage queue consumer configurations.
+
+### `consumer add <script-name>`
+
+Add a Worker script as a [queue consumer](/queues/learning/how-queues-works/#consumers).
+
+```txt
+wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `queue-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to add the consumer to.
+- `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Workers script to add as a consumer of the named queue.
+
+{{</definitions>}}
+
+### `consumer remove`
+
+Remove a consumer from a queue.
+
+```txt
+wrangler queues consumer remove <queue-name> <script-name>
+```
+
+{{<definitions>}}
+
+- `queue-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to remove the consumer from.
+- `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Workers script to remove as the consumer.
+
+{{</definitions>}}
+
+---
+
 ## `login`
 
 Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
@@ -1772,7 +1931,7 @@ wrangler whoami
 ## `deployments`
 
 {{<Aside type="note">}}
-Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in open beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 For more information about deployments and how they work, refer to [Deployments](/workers/configuration/deployments).
@@ -1863,6 +2022,10 @@ binding = "MY_KV"
 ```
 
 ## `rollback`
+
+{{<Aside type="note">}}
+Rollback is currently in open beta. Report rollback bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
 
 Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
 

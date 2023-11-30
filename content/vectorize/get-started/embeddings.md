@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 {{<render file="_vectorize-beta.md">}}
 
-Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/). 
+Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
@@ -29,7 +29,7 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 
 ## 1. Create a Worker
 
@@ -51,7 +51,7 @@ When setting up your `embeddings-tutorial` Worker, answering the questions as be
 
 This will create a new `embeddings-tutorial` directory. Your new `embeddings-tutorial` directory will include:
 
-- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`
+- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `embeddings-tutorial` Worker will access your index.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -80,8 +80,8 @@ $ cd embeddings-tutorial
 
 To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
-- A combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
-- Descriptive of the use-case and environment - for example, "production-doc-search" or "dev-recommendation-engine"
+- A combination of lowercase and/or numeric ASCII characters, shorter than 32 characters, starts with a letter, and uses dashes (-) instead of spaces.
+- Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
 - Only used for describing the index, and is not directly referenced in code.
 
 In addition, define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
@@ -96,7 +96,7 @@ $ npx wrangler vectorize create embeddings-index --dimensions=768 --metric=cosin
 ✅ Successfully created index 'embeddings-index'
 
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # i.e. available in your Worker on env.VECTORIZE_INDEX
+binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "embeddings-index"
 ```
 
@@ -126,7 +126,7 @@ Specifically:
 
 ## 4. Set up Workers AI
 
-Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/embedding/) built-in.
+Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/text-embeddings/) built-in.
 
 From within the `embeddings-tutorial` directory, install the `Workers AI` package:
 
@@ -236,12 +236,13 @@ From here, deploy your Worker to make your project accessible on the Internet. T
 
 ```sh
 $ npx wrangler deploy
-# Outputs: https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 ```
+
+Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`. 
 
 ## 7. Query your index
 
-You can now visit the URL for your newly created project to insert vectors and then query them. 
+You can now visit the URL for your newly created project to insert vectors and then query them.
 
 With the URL for your deployed Worker (for example,`https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev/`), open your browser and:
 

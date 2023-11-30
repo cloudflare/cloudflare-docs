@@ -489,16 +489,34 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "b_custom_lists": {
-          "title": "Custom lists (IPs, hostnames, ASNs)",
+        "b_number_of_custom_lists": {
+          "title": "Number of custom lists",
           "link": "/waf/tools/lists/custom-lists/",
           "free": 1,
-          "lite": 2,
-          "pro": 2,
-          "biz": 5,
+          "lite": 10,
+          "pro": 10,
+          "biz": 10,
           "ent": 10
         },
-        "d_open_proxies_list": {
+        "c_custom_lists_ip": {
+          "title": "Custom lists with IPs (IP lists)",
+          "link": "/waf/tools/lists/custom-lists/",
+          "free": "Yes",
+          "lite": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "d_custom_lists_other": {
+          "title": "Other custom lists (ASNs, hostnames)",
+          "link": "/waf/tools/lists/custom-lists/",
+          "free": "No",
+          "lite": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "e_open_proxies_list": {
           "title": "Managed IP List: Cloudflare Open Proxies",
           "link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
           "free": "No",
@@ -506,7 +524,7 @@
           "biz": "No",
           "ent": "Yes"
         },
-        "e_all_managed_ip_lists": {
+        "f_all_managed_ip_lists": {
           "title": "All Managed IP Lists",
           "link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
           "free": "No",
@@ -812,57 +830,7 @@
     },
     "grpc": {
       "title": "gRPC",
-      "link": "/support/network/understanding-cloudflare-grpc-support/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "http2": {
-      "title": "HTTP/2",
-      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "customization": {
-          "title": "Can customize",
-          "summary": "Only Enterprise can customize",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Yes"
-        }
-      }
-    },
-    "http2_to_origin": {
-      "title": "HTTP/2 to Origin",
-      "link": "/cache/concepts/enable-http2-to-origin/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "http3": {
-      "title": "HTTP/3 (with QUIC)",
-      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
+      "link": "/network/grpc-connections/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -876,7 +844,7 @@
     },
     "ip_geolocation": {
       "title": "IP Geolocation",
-      "link": "/support/network/configuring-ip-geolocation/",
+      "link": "/network/ip-geolocation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -890,7 +858,7 @@
     },
     "ipv6": {
       "title": "IPv6 Compatibility",
-      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/",
+      "link": "/network/ipv6-compatibility/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -934,7 +902,7 @@
     },
     "onion_routing": {
       "title": "Onion Routing",
-      "link": "/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/",
+      "link": "/network/onion-routing/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -948,7 +916,7 @@
     },
     "pseudo_ipv4": {
       "title": "Pseudo IPv4",
-      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
+      "link": "/network/pseudo-ipv4/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -962,7 +930,7 @@
     },
     "response_buffering": {
       "title": "Response buffering",
-      "link": "https://support.cloudflare.com/hc/articles/206049798",
+      "link": "/network/response-buffering/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -976,7 +944,7 @@
     },
     "true_client_ip_header": {
       "title": "True Client IP Header",
-      "link": "/fundamentals/reference/http-request-headers/",
+      "link": "/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -990,7 +958,7 @@
     },
     "websockets": {
       "title": "WebSockets",
-      "link": "/support/network/using-cloudflare-with-websockets/",
+      "link": "/network/websockets/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1326,7 +1294,7 @@
     },
     "security_events": {
       "title": "Security Events",
-      "link": "/waf/security-events/",
+      "link": "/waf/analytics/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1375,7 +1343,7 @@
     },
     "security_analytics": {
       "title": "Security Analytics",
-      "link": "/waf/security-analytics/",
+      "link": "/waf/analytics/security-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1549,7 +1517,7 @@
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
-          "link": "/waf/custom-rulesets/",
+          "link": "/waf/custom-rules/custom-rulesets/",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -1947,6 +1915,56 @@
           "title": "Availability",
           "summary": "Pro and above",
           "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http2": {
+      "title": "HTTP/2",
+      "link": "/speed/optimization/protocol/http2/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "customization": {
+          "title": "Can customize",
+          "summary": "Free customers cannot disable",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http2_to_origin": {
+      "title": "HTTP/2 to Origin",
+      "link": "/speed/optimization/protocol/http2-to-origin/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http3": {
+      "title": "HTTP/3 (with QUIC)",
+      "link": "/speed/optimization/protocol/http3/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -2360,7 +2378,7 @@
           "ent": "Create and apply custom firewall rulesets."
         },
         "y_apex": {
-          "title": "[Apex proxing/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
+          "title": "[Apex proxying/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
           "free": "No",
           "pro": "No",
           "biz": "No",

@@ -32,6 +32,7 @@ const hydrateVueComponents = (): PluginOption => {
       order: "pre",
       handler: async (html: string) => {
         let componentId = 1;
+        if (!html.includes("vue-component")) return html;
         return await rewrite(html, [
           [
             "vue-component",
@@ -64,6 +65,8 @@ const renderCodeBlock = (): PluginOption => {
   return {
     name: "render-code-block",
     async transformIndexHtml(html: string) {
+      if (!html.includes("unparsed-codeblock")) return html;
+
       return await rewrite(html, [
         [
           "unparsed-codeblock",
@@ -106,5 +109,6 @@ export default defineConfig({
     rollupOptions: {
       input: glob.sync("public/**/*.html"),
     },
+    reportCompressedSize: false,
   },
 });

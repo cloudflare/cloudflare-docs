@@ -83,7 +83,7 @@ This means that you will be making API calls to Cloudflare on behalf of your cus
 
 {{<Aside type="note">}}
 
-This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{</Aside>}}
 

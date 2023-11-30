@@ -16,7 +16,7 @@ These limits are subject to change and many will increase over time.
 
 | Item                                             | Limit <img width=200/>| Notes |
 |--------------------------------------------------|-------------|-----------------|
-| Namespaces per Account                           | 1           | The maximum number of namespaces allowed on an account. <br/> Users may be able to create multiple namespaces in the future. |
+| Namespaces per Account                           | 3           | The maximum number of namespaces allowed on an account.
 | Brokers per Namespace                            | 3          | Can eventually be increased. |
 | Subscribers per topic          | 1000            | The maximum number of subscribers per MQTT topic.
 | Connections per Device                           | 1           | The number of simultaneous connections from a single client ID (or token). **More than one connection from the same client ID will result in existing clients receiving a DISCONNECT** using Reason Code 0x8e (Session Taken Over). |

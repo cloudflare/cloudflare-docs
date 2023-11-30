@@ -3968,6 +3968,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsMarkdown blockquote> :last-child,
 .DocsMarkdown details> :last-child,
 .DocsMarkdown details summary+div> :last-child,
+.DocsMarkdown details summary+div> :last-child pre.CodeBlock,
 .DocsMarkdown li> :not(ul):not(ol):not(pre):not(figure):not(table):last-child,
 .DocsMarkdown ol> :last-child,
 .DocsMarkdown ul> :last-child {
@@ -4191,10 +4192,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 
   @media not all and (min-resolution: 0.001dpcm) {
-    @media {
-      .DocsSearch .algolia-autocomplete {
-        background: rgba(var(--background-color-rgb), 1);
-      }
+    .DocsSearch .algolia-autocomplete {
+      background: rgba(var(--background-color-rgb), 1);
     }
   }
 }
@@ -5387,6 +5386,10 @@ pre {
   color: var(--color);
 }
 
+.littlefoot__wrapper {
+  max-width: 100% !important;
+}
+
 .littlefoot__content {
   width: 100% !important;
 }
@@ -5490,7 +5493,8 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 .tutorialPreReqs {
-  padding-left: 2em;
+  padding-top: 0.5em;
+  padding-inline: 2em;
   border: 2px solid gray;
   border-radius: 15px;
 }
