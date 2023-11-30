@@ -1,13 +1,15 @@
 ---
 pcx_content_type: troubleshooting
-title: Wildcard Matching & Referencing
+title: Wildcard Matching
+meta:
+    title: Wildcard Matching | Page Rules
 weight: 5
 ---
 
 # Wildcard matching and referencing
 
 You can use the asterisk (`*`) in any URL segment to match certain patterns. For example,
-example.com/t\*st would match:
+`example.com/t\*st` would match:
 
 - `example.com/test`
 - `example.com/toast`
@@ -19,7 +21,7 @@ example.com/t\*st would match:
 
 - To match both `http` and `https`, write `example.com`. Writing `*example.com` is unnecessary.
 - To match every page on a domain, write `example.com/*`. Writing `example.com` will not work.
-- To match every page on a domain and its subdomains, write `*example.com/*`. Writing `example.com` won’t work.
+- To match every page on a domain and its subdomains, write `*example.com/*`. Writing `example.com` will not work.
 - A wildcard (`*`) in a Page Rule URL will match even if no characters are present and may include any part of the URL, including the query string.
 
 ## Reference wildcard matches
@@ -30,7 +32,7 @@ The `$X` syntax is especially useful with the Forwarding URL setting. For exampl
 
 This rule would match `http://cloud.example.com/flare.jpg` which ends up being forwarded to `http://example.com/images/cloud/flare.jpg`.
 
-To add a $ character in the forwarding URL, escape it by adding a backslash `\` in front like `\$`.
+To add a `$` character in the forwarding URL, escape it by adding a backslash `\` in front like `\$`.
 
 {{<Aside type="warning" header="Warning">}}
 

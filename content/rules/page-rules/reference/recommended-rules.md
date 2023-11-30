@@ -1,10 +1,12 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: configuration
 source: https://support.cloudflare.com/hc/en-us/articles/224509547-Recommended-Page-Rules-to-consider
-title: Recommended Page Rules to consider
+title: Recommended rules
+meta:
+    title: Recommended rules | Page Rules
 ---
 
-# Recommended Page Rules to consider
+# Recommended rules
 
 Use [Cloudflare Page Rules](/rules/page-rules/) to improve the user experience of your domain with **hardened security** and **enhanced site performance,** while **increasing reliability** and **minimizing bandwidth usage** for your origin server.
 

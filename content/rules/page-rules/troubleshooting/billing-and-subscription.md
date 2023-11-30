@@ -1,12 +1,12 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
-title: Purchasing Additional Page Rules
+title: Billing and Subscription
+meta:
+    title: Billing and Subscription FAQ | Page Rules
 ---
 
-# Purchasing Additional Page Rules
-
-
+# Billing and Subscription FAQ
 
 ## If I run out of Page Rules, can I buy more?
 

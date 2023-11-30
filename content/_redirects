@@ -749,15 +749,15 @@
 /support/troubleshooting/performance/http2-and-enhanced-http2-prioritization-options-may-affect-content-loading-on-iossafari-devices/ /speed/optimization/protocol/troubleshooting/enhanced-http2-prioritization-ios-safari/ 301
 /support/troubleshooting/performance/ /speed/optimization/ 301
 /support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
-/support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/ /rules/page-rules/tutorials/url-forwarding/ 301
-/support/page-rules/how-do-i-include-or-exclude-a-specific-url-from-cloudflares-page-rules/ /rules/page-rules/tutorials/specific-url-include-exclude/ 301
-/support/page-rules/purchasing-additional-page-rules/ /rules/page-rules/tutorials/purchasing-additional-page-rules/ 301
-/support/page-rules/recommended-page-rules-to-consider/ /rules/page-rules/tutorials/recommended-page-rules-to-consider/ 301
+/support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/ /rules/page-rules/how-to/url-forwarding/ 301
+/support/page-rules/how-do-i-include-or-exclude-a-specific-url-from-cloudflares-page-rules/ /rules/page-rules/reference/wildcard-matching/ 301
+/support/page-rules/purchasing-additional-page-rules/ /rules/page-rules/troubleshooting/billing-and-subscription/ 301
+/support/page-rules/recommended-page-rules-to-consider/ /rules/page-rules/reference/recommended-rules/ 301
 /support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/ /rules/page-rules/ 301
-/support/page-rules/using-page-rules-to-rewrite-host-headers/ /rules/page-rules/tutorials/using-page-rules-to-rewrite-host-headers/ 301
-/support/page-rules/using-resolve-override-in-page-rules/ /rules/page-rules/tutorials/using-resolve-override-in-page-rules/ 301
-/support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/why-isnt-a-page-rule-working/ 301
-/support/page-rules/wildcard-matching/ /rules/page-rules/wildcard-matching-page-rule/ 301
+/support/page-rules/using-page-rules-to-rewrite-host-headers/ /rules/page-rules/how-to/rewrite-host-headers/ 301
+/support/page-rules/using-resolve-override-in-page-rules/ /rules/page-rules/how-to/override-url-or-ip-address/ 301
+/support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
+/support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 
 
 # r2

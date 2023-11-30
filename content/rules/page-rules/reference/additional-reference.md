@@ -1,7 +1,9 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: Additional Reference
+meta:
+    title: Additional Reference | Page Rules
 weight: 4
 ---
 
@@ -14,7 +16,7 @@ This setting is available to business and enterprise customers.
 The **Bypass Cache on Cookie** setting supports basic regular expressions (regex) as follows:
 
 -   A pipe operator (represented by |) to match multiple cookies using _OR_ boolean logic. For example, `bypass=.*|PHPSESSID=.*` would bypass the cache if either a cookie called bypass or PHPSESSID were set, regardless of the cookie's value.
--   The wildcard operator (represented by .\*), such that a rule value of `t.*st=` would match both a cookie called test and one called teeest.
+-   The wildcard operator (represented by `.*`), such that a rule value of `t.*st=` would match both a cookie called test and one called teeest.
 
 Limitations include:
 
@@ -28,7 +30,11 @@ To learn how to configure **Bypass Cache on Cookie** with a variety of platfor
 -   [Caching Anonymous Page Views with Magento 1 and Magento 2](/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/)
 -   [How do I cache static HTML?](/cache/concepts/customize-cache/)
 
-**Note:** If you add both this setting and the enterprise-only _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.
+{{<Aside type="note">}}
+
+If you add both this setting and the enterprise-only _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.
+
+{{</Aside>}}
 
 ## Zone name occurrences must end with a slash
 
@@ -48,7 +54,7 @@ If you specify a port in the **If the URL matches** field of a Page Rule, it mus
 
 ## Using Page Rules with Workers
 
-If the URL of the current request matches both a Page Rule and a [Workers custom route](/workers/configuration/routing/routes/), some Pages Rules settings will not be applied. For details on using Page Rules with Workers, refer to [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) in the developers documentation.
+If the URL of the current request matches both a Page Rule and a [Workers custom route](/workers/configuration/routing/routes/), some Pages Rules settings will not be applied. For more details, refer to [Workers and Page Rules](/workers/configuration/workers-with-page-rules/).
 
 ## Page Rules are case-insensitive
 
