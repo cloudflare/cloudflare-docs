@@ -29,6 +29,4 @@ To rewrite the Host Header:
 
 4. Click **Save and Deploy**.
 
-Now, any request matching the URL you specified will have the host header overridden to the one you entered in the **Host Header Override** text box. Refer to the example below:
-
-![Example configuration of a Page Rule that overrides the Host Header for all requests to theburritobot.com](/images/support/page-rule-host-header-override_resized.png)
+Now, any request matching the URL you specified will have the host header overridden to the one you entered in the **Host Header Override** text box.
