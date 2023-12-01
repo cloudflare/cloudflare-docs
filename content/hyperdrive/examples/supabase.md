@@ -17,7 +17,7 @@ Alternatively, to create a new user for Hyperdrive, run these commands in the [S
 ```sql
 CREATE ROLE hyperdrive_user LOGIN PASSWORD 'sufficientlyRandomPassword';
 
--- Here we are granting it the postgres role. In practice, you want to create a role with lesser privileges.
+-- Here, you are granting it the postgres role. In practice, you want to create a role with lesser privileges.
 GRANT postgres to hyperdrive_user;
 ```
 
