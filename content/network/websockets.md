@@ -16,25 +16,6 @@ Cloudflare supports proxied WebSocket connections without additional configurati
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
-## Enable WebSockets
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
-
-To enable **WebSockets** connections to your origin server in the dashboard:
-
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Go to **Network**.
-3.  For **WebSockets**, switch the toggle to **On**.
-
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
-
-To enable **WebSockets** connections to your origin server with the API, send a [`PATCH`](/api/operations/zone-settings-change-web-sockets-setting) request with the `value` parameter set to `"on"`.
-
-{{</tab>}}
-{{</tabs>}}
-
 ## Compatibility notes
 
 | Product | Compatible | Notes |
