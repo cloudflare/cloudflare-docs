@@ -741,6 +741,7 @@
 /support/network/understanding-cloudflare-grpc-support/ /network/grpc-connections/ 301
 /support/network/understanding-network-error-logging/ /network-error-logging/ 301
 /support/network/understanding-the-true-client-ip-header/ /network/true-client-ip-header/ 301
+/support/partners/partner-plugin-supportability/ /support/ 301
 /support/speed/optimization-file-size/will-mirage-and-polish-optimize-off-site-resources/ /speed/optimization/images/ 301
 /support/speed/optimization-file-size/ /speed/optimization/ 301
 /support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301
@@ -749,6 +750,7 @@
 /support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ 301
 /support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /support/more-dashboard-apps/cloudflare-scrape-shield/ 301
+/support/third-party-software/others/how-do-i-get-cloudflare-to-work-with-vaultpress/ /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ 301
 /support/third-party-software/others/how-to-configure-matomo-for-use-with-cloudflare/ /support/third-party-software/ 301
 /support/third-party-software/others/can-i-use-cloudflare-and-varnish-together/ /rules/snippets/ 301
 /support/third-party-software/others/does-cloudflare-support-signalr/ /network/websockets/ 301
