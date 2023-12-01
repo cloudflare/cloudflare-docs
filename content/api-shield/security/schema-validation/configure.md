@@ -127,7 +127,7 @@ Schemas contain a set of servers, paths, and methods, which together define an o
 ---
 header: cURL command
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=50000" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
