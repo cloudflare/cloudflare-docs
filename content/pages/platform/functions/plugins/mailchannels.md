@@ -17,7 +17,7 @@ For standard setup with Cloudflare Pages, see [Enabling MailChannels for your Ac
 ## Installation
 
 ```sh
-$ npm install @cloudflare/pages-plugin-mailchannels
+npm install @cloudflare/pages-plugin-mailchannels
 ```
 
 ## Usage
@@ -87,34 +87,31 @@ First, grab your account's workers subdomain:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**, then **Overview**.
-3. In right-hand side, note your worker's *Subdomain*. It's likely something similar to `myaccount.workers.dev`.
+3. On the right-hand side, note your worker's *Subdomain*. It's likely something similar to `myaccount.workers.dev`.
 
 Then, add the MailChannels DNS record:
 
-1. In **Account Home**, select the website you would like to add an SPF record for. 
+1. In **Account Home**, select the website you would like to add an SPF record for.
 2. Select **DNS** > **Records** > **Add Record**.
-3. In the dropdown menu, select *TXT* as the type of record.
-4. In the `Name` field, put `_mailchannels`. This is a special MailChannels-specific name that it uses to authorize your account.
-5. Enter the record contents below, substituting `myaccount.workers.dev` for your account subdomain from above.
+3. Add the following TXT DNS record:
 
-```
-v=mc1 cfid=myaccount.workers.dev
-```
+| Type | Name            | Content                            | Note                                                            |
+|------|-----------------|------------------------------------|-----------------------------------------------------------------|
+| TXT  | `_mailchannels` | `v=mc1 cfid=myaccount.workers.dev` | Replace `myaccount.workers.dev` with your own workers subdomain |
 
-You can find more details the domain lockdown record and more complex use-cases on MailChannel's [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) support article.
+You can find more details about the domain lockdown record and more complex use-cases on MailChannel's [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) support article.
 
 ## SPF support for MailChannels
 
 To use both MailChannels and Cloudflare Email Routing:
 
-1. In **Account Home**, select the website you would like to add an SPF record for. 
+1. In **Account Home**, select the website you would like to add an SPF record for.
 2. Select **DNS** > **Records** > **Add Record**.
-3. In the dropdown menu, select *TXT* as the type of record.  
-4. Enter the SPF record below into your DNS server as a text (`TXT`) entry. This must be on the root (`@`) of the domain. (You currently cannot send mail from a subdomain.)
+3. Add the following TXT DNS record:
 
-```
-v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net -all
-```
+| Type | Name | Content                                                                     | Note                                                                                                  |
+|------|------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| TXT  | `@`  | `v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net -all` | If you already have an SPF record, add the `include:...` entries to it instead of creating a new one. |
 
 ## DKIM support for Mailchannels API
 
@@ -132,15 +129,16 @@ To add a DKIM signature to a message, add the following fields to the `personali
 
 **`dkim_private_key`**: The base-64 encoded private key.
 
-## Generate DKIM credentials 
+## Generate DKIM credentials
 
 You can generate your DKIM credentials using [OpenSSL](https://www.openssl.org/) in the following steps:
 
-1. Generate your private key and DNS record by running the command below in your terminal: 
+1. Generate your private key and DNS record by running the command below in your terminal:
 
 ```sh
-$ openssl genrsa 2048 | tee private_key.pem | openssl rsa -outform der | openssl base64 -A > private_key.txt
+openssl genrsa 2048 | tee private_key.pem | openssl rsa -outform der | openssl base64 -A > private_key.txt
 ```
+
 {{<Aside type="note" header="Command breakdown">}}
 
 `openssl genrsa 2048` generates a 2048-bit RSA key. The output is passed to `tee private_key.pem`, which writes the key to the `private_key.pem` file, and passes the key to `openssl rsa -outform der | openssl base 64 -A`, which converts the key from PEM format to DER format, then base64 encodes it. Take this output into `> private_key.txt` which saves the contents to `private_key.txt`.
@@ -148,34 +146,36 @@ $ openssl genrsa 2048 | tee private_key.pem | openssl rsa -outform der | openssl
 {{</Aside>}}
 
 ```sh
-$ echo -n "v=DKIM1;p=" > dkim_record.txt && openssl rsa -in private_key.pem -pubout -outform der | openssl base64 -A >> dkim_record.txt
+echo -n "v=DKIM1;p=" > dkim_record.txt && openssl rsa -in private_key.pem -pubout -outform der | openssl base64 -A >> dkim_record.txt
 ```
 
 This creates a public key from the private key (`openssl rsa -in priv_key.pem -pubout -outform der`), encodes it in base64 (`openssl base 64 -A`), and finally writes it to the `dkim_record.txt` file.
 
+2. Copy the contents of the `private_key.txt` file and add that as an environment variable to your Pages project by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers & Pages** > your Pages project > **Settings** > **Environment Variables** > **Add variables**. Set the variable name as `DKIM_PRIVATE_KEY` and the value as the contents of `private_key.txt` file. We recommend adding this variable to both production and preview environments.
 
-2. Copy the contents of the `private_key.txt` file and add that as an environment variable to your Pages project by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers & Pages** > your Pages project > **Settings** > **Environment Variables** > **Add variables**. Set the variable name as `DKIM_PRIVATE_KEY` and the value as the contents of `private_key.txt` file.
-
-3. Create a DNS record with the content of the generated `dkim_record.txt` file content.
+3. Create a DNS record with the content of the generated `dkim_record.txt` file content, following the steps below.
 
 Next, look in your generated `dkim_record.txt` file for your DKIM credentials, and add them to your website in the Cloudflare dashboard. Follow the steps below:
 
-1. In Account Home, select the website you would like to add a DKIM record. 
+1. In Account Home, select the website you would like to add a DKIM record.
 2. In the menu on the left select **DNS** > **Records** > **Add Record**.
-3. In the dropdown menu, select **TXT** as the type of record.  
-4. Enter the DKIM record into your DNS server as a text (`TXT`) entry. The name of your DNS record must follow this convention `<selector key>._domainkey`. For example, `mailchannels._domainkey`.
+3. Add the following TXT DNS record:
+
+| Type | Name                      | Content                                 | Note                                                                                                                                                                 |
+|------|---------------------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TXT  | `mailchannels._domainkey` | Paste the contents of `dkim_record.txt` | You may name this record anything following the format of `<selector key>._domainkey`, but make sure to update the selector key in the Pages Function example below. |
 
 {{<Aside type= "note" header="Selector value">}}
 You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers and hyphens).
 {{</Aside>}}
 
-5. Add the content of your `dkim_record.txt` file in the content field.
+4. Add the content of your `dkim_record.txt` file in the content field.
 
 ![Follow the instructions above to add DKIM credentials to your DNS records](/images/pages/platform/functions/mailchannel_DKIM_DNS_setup.png)
 
 ## Add DKIM fields to personalization object
 
-After generating DKIM records, you must add the corresponding fields to the `personalizations` object to use DKIM. 
+After generating DKIM records, you must add the corresponding fields to the `personalizations` object to use DKIM.
 
 The required fields are `dkim_domain`, `dkim_selector`, `dkim_private_key`. The value of these fields must match the values you generated earlier.
 
@@ -212,7 +212,7 @@ export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
 
 ### Related resources
 
-* [Adding a DKIM Signature](https://mailchannels.zendesk.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature)
-* [How to create a DKIM record with OpenSSL](https://www.mailhardener.com/kb/how-to-create-a-dkim-record-with-openssl)
-* [Cloudflare + MailChannels Email Sending with DKIM](https://github.com/maggie-j-liu/mail)
-* [MailChannels Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-)
+- [Adding a DKIM Signature](https://mailchannels.zendesk.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature)
+- [How to create a DKIM record with OpenSSL](https://www.mailhardener.com/kb/how-to-create-a-dkim-record-with-openssl)
+- [Cloudflare + MailChannels Email Sending with DKIM](https://github.com/maggie-j-liu/mail)
+- [MailChannels Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-)
