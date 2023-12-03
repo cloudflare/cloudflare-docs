@@ -95,11 +95,15 @@ Then, add the MailChannels DNS record:
 2. Select **DNS** > **Records** > **Add Record**.
 3. Add the following TXT DNS record, replacing `myaccount.workers.dev` with your own workers subdomain.
 
+{{<example>}}
+
 | Type | Name            | Content                            |
 |------|-----------------|------------------------------------|
 | TXT  | `_mailchannels` | `v=mc1 cfid=myaccount.workers.dev` |
 
-You can find more details about the domain lockdown record and more complex use-cases on MailChannel's [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) support article.
+{{</example>}}
+
+You can find more details about the domain lockdown record and more complex use-cases in MailChannel's [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) support article.
 
 ## SPF support for MailChannels
 
@@ -109,9 +113,13 @@ To use both MailChannels and Cloudflare Email Routing:
 2. Select **DNS** > **Records** > **Add Record**.
 3. Add the following TXT DNS record:
 
+{{<example>}}
+
 | Type | Name | Content                                                                     |
 |------|------|-----------------------------------------------------------------------------|
 | TXT  | `@`  | `v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net -all` |
+
+{{</example>}}
 
 {{<Aside type= "note" header="Existing SPF Record">}}
  If you have an existing SPF record for your domain, add the `include:...` entries to it instead of creating a new one.
@@ -165,15 +173,19 @@ Next, look in your generated `dkim_record.txt` file for your DKIM credentials, a
 2. In the menu on the left select **DNS** > **Records** > **Add Record**.
 3. Add the following TXT DNS record:
 
-| Type | Name                      | Content                                 |
-|------|---------------------------|-----------------------------------------|
-| TXT  | `mailchannels._domainkey` | Paste the contents of `dkim_record.txt` | 
+{{<example>}}
+
+| Type | Name                      | Content                                  |
+|------|---------------------------|------------------------------------------|
+| TXT  | `mailchannels._domainkey` | Insert the contents of `dkim_record.txt` | 
+
+{{</example>}}
 
 {{<Aside type= "note" header="Use a Different Selector">}}
 You can substitute `mailchannels.domainkey` for any name of the format `<selector key>._domainkey`. You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers and hyphens).
 {{</Aside>}}
 
-4. Add the content of your `dkim_record.txt` file in the content field.
+Your record should look like:
 
 ![Follow the instructions above to add DKIM credentials to your DNS records](/images/pages/platform/functions/mailchannel_DKIM_DNS_setup.png)
 
@@ -188,7 +200,7 @@ The following code block shows an example of using DKIM with the MailChannels Pa
 ```typescript
 ---
 filename: functions/_middleware.ts
-highlight: [7,8,9]
+highlight: [7-12]
 ---
 import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
 
@@ -196,8 +208,11 @@ export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
   personalizations: [
     {
       to: [{ name: "Some User", email: "user@cloudflare.com" }],
-      "dkim_domain": "example.com", // This value has to be the domain you added DKIM records to and where you're sending your email from
-      "dkim_selector": "mailchannels", // This value has be the same as the selector you chose for your DKIM record name, for example, use "mailchannels" if you used mailchannels._domainkey as your record name
+      // This value has to be the domain you added DKIM records to and where you're sending your email from
+      "dkim_domain": "example.com", 
+      // This value has be the same as the selector you chose for your DKIM record name
+      // For example, use "mailchannels" if you used mailchannels._domainkey as your record name
+      "dkim_selector": "mailchannels", 
       "dkim_private_key": context.env.DKIM_PRIVATE_KEY
     },
   ],
