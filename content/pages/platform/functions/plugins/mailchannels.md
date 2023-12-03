@@ -93,11 +93,11 @@ Then, add the MailChannels DNS record:
 
 1. In **Account Home**, select the website you would like to add an SPF record for.
 2. Select **DNS** > **Records** > **Add Record**.
-3. Add the following TXT DNS record:
+3. Add the following TXT DNS record, replacing `myaccount.workers.dev` with your own workers subdomain.
 
-| Type | Name            | Content                            | Note                                                            |
-|------|-----------------|------------------------------------|-----------------------------------------------------------------|
-| TXT  | `_mailchannels` | `v=mc1 cfid=myaccount.workers.dev` | Replace `myaccount.workers.dev` with your own workers subdomain |
+| Type | Name            | Content                            |
+|------|-----------------|------------------------------------|
+| TXT  | `_mailchannels` | `v=mc1 cfid=myaccount.workers.dev` |
 
 You can find more details about the domain lockdown record and more complex use-cases on MailChannel's [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) support article.
 
@@ -109,9 +109,13 @@ To use both MailChannels and Cloudflare Email Routing:
 2. Select **DNS** > **Records** > **Add Record**.
 3. Add the following TXT DNS record:
 
-| Type | Name | Content                                                                     | Note                                                                                                  |
-|------|------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| TXT  | `@`  | `v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net -all` | If you already have an SPF record, add the `include:...` entries to it instead of creating a new one. |
+| Type | Name | Content                                                                     |
+|------|------|-----------------------------------------------------------------------------|
+| TXT  | `@`  | `v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net -all` |
+
+{{<Aside type= "note" header="Existing SPF Record">}}
+ If you have an existing SPF record for your domain, add the `include:...` entries to it instead of creating a new one.
+{{</Aside>}}
 
 ## DKIM support for Mailchannels API
 
@@ -161,12 +165,12 @@ Next, look in your generated `dkim_record.txt` file for your DKIM credentials, a
 2. In the menu on the left select **DNS** > **Records** > **Add Record**.
 3. Add the following TXT DNS record:
 
-| Type | Name                      | Content                                 | Note                                                                                                                                                                 |
-|------|---------------------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| TXT  | `mailchannels._domainkey` | Paste the contents of `dkim_record.txt` | You may name this record anything following the format of `<selector key>._domainkey`, but make sure to update the selector key in the Pages Function example below. |
+| Type | Name                      | Content                                 |
+|------|---------------------------|-----------------------------------------|
+| TXT  | `mailchannels._domainkey` | Paste the contents of `dkim_record.txt` | 
 
-{{<Aside type= "note" header="Selector value">}}
-You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers and hyphens).
+{{<Aside type= "note" header="Use a Different Selector">}}
+You can substitute `mailchannels.domainkey` for any name of the format `<selector key>._domainkey`. You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers and hyphens).
 {{</Aside>}}
 
 4. Add the content of your `dkim_record.txt` file in the content field.
