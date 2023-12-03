@@ -17,7 +17,7 @@ For standard setup with Cloudflare Pages, see [Enabling MailChannels for your Ac
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-mailchannels
+$ npm install @cloudflare/pages-plugin-mailchannels
 ```
 
 ## Usage
@@ -140,7 +140,7 @@ You can generate your DKIM credentials using [OpenSSL](https://www.openssl.org/)
 1. Generate your private key and DNS record by running the command below in your terminal:
 
 ```sh
-openssl genrsa 2048 | tee private_key.pem | openssl rsa -outform der | openssl base64 -A > private_key.txt
+$ openssl genrsa 2048 | tee private_key.pem | openssl rsa -outform der | openssl base64 -A > private_key.txt
 ```
 
 {{<Aside type="note" header="Command breakdown">}}
@@ -150,7 +150,7 @@ openssl genrsa 2048 | tee private_key.pem | openssl rsa -outform der | openssl b
 {{</Aside>}}
 
 ```sh
-echo -n "v=DKIM1;p=" > dkim_record.txt && openssl rsa -in private_key.pem -pubout -outform der | openssl base64 -A >> dkim_record.txt
+$ echo -n "v=DKIM1;p=" > dkim_record.txt && openssl rsa -in private_key.pem -pubout -outform der | openssl base64 -A >> dkim_record.txt
 ```
 
 This creates a public key from the private key (`openssl rsa -in priv_key.pem -pubout -outform der`), encodes it in base64 (`openssl base 64 -A`), and finally writes it to the `dkim_record.txt` file.
