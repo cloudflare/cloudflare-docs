@@ -36,7 +36,8 @@ export const onRequest: PagesFunction = mailChannelsPlugin({
   ],
   from: {
     name: "ACME Support",
-    email: "support@example.com",
+    // The domain of your `from` address must be the same as the domain you setup MailChannels Domain Lockdown for (detailed below)
+    email: "support@mydomain.com",
   },
   respondWith: () => {
     return new Response(
@@ -198,7 +199,7 @@ export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
   ],
   from: {
     name: "ACME Support",
-    // The domain of your `from` address must be the same as the domain you setup when you setup MailChannels domain lockdown.
+    // The domain of your `from` address must be the same as the domain you setup MailChannels Domain Lockdown for
     email: "support@mydomain.com",
   },
   respondWith: () => {
