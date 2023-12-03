@@ -24,3 +24,7 @@ To view only starred websites in your account:
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account.
 3. On the account **Home**, select **Starred**.
+
+{{<Aside type="note">}}
+You can “star” up to 10 of the websites and applications you have on Cloudflare for quicker access.
+{{</Aside>}}
