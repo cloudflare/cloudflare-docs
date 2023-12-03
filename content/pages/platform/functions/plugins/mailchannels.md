@@ -31,7 +31,7 @@ import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
 export const onRequest: PagesFunction = mailChannelsPlugin({
   personalizations: [
     {
-      to: [{ name: "ACME Support", email: "support@example.com" }],
+      to: [{ name: "Some User", email: "someuser@example.com" }],
     },
   ],
   from: {
@@ -135,9 +135,9 @@ Setting up DKIM for use in your MailChannels Pages Plugin is optional, but will 
 
 To add a DKIM signature to a message, add the following fields to the `personalization` object for the message:
 
-**`dkim_domain`**: The domain you are sending the email from. For example, if you are sending an email from `support@example.com`, set this to `example.com`.
+**`dkim_domain`**: The domain you are sending the email from. For example, if you are sending an email from `support@mydomin.com`, set this to `mydomain.com`.
 
-**`dkim_selector`**: Specifies where to find the associated public key in your DNS records. For example, if you make the DKIM record available at `mailchannels._domainkey.example.com`, set this to `mailchannels`.
+**`dkim_selector`**: Specifies where to find the associated public key in your DNS records. For example, if you make the DKIM record available at `mailchannels._domainkey.mydomain.com`, set this to `mailchannels`.
 
 **`dkim_private_key`**: The base-64 encoded private key.
 
@@ -207,9 +207,9 @@ import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
 export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
   personalizations: [
     {
-      to: [{ name: "Some User", email: "user@cloudflare.com" }],
+      to: [{ name: "Some User", email: "someuser@example.com" }],
       // This value has to be the domain you added DKIM records to and where you're sending your email from
-      "dkim_domain": "example.com", 
+      "dkim_domain": "mydomain.com", 
       // This value has be the same as the selector you chose for your DKIM record name
       // For example, use "mailchannels" if you used mailchannels._domainkey as your record name
       "dkim_selector": "mailchannels", 
