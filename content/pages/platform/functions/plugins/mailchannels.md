@@ -10,6 +10,8 @@ The MailChannels Pages Plugin intercepts all form submissions made which have th
 
 {{<Aside type="note">}}
 To use the Mailchannels Pages Plugin, you must first add a [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) to the domain you are sending email from. For more information, refer to the [Mailchannels documentation](https://support.mailchannels.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
+
+For standard setup with Cloudflare Pages, see [Enabling MailChannels for your Account](#enabling-mailchannels-for-your-account---domain-lockdown) below.
 {{</Aside>}}
 
 ## Installation
@@ -73,6 +75,32 @@ The Plugin takes a single argument, an object with a number of properties:
 The `method` and `action` attributes of the HTML form do not need to be set. The Plugin will automatically override them to allow it to intercept the submission.
 
 For more information about MailChannels and the options they support, refer to [the documentation](https://mailchannels.zendesk.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
+
+## Enabling MailChannels for your Account - Domain Lockdown
+
+To enable MailChannels to send email on your behalf through Cloudflare Pages Functions, you have to setup a [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) for the domain you are sending email from.
+
+For most cases, all this involves is adding a `TXT` entry to your DNS.
+
+First, grab your account's workers subdomain:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**, then **Overview**.
+3. In right-hand side, note your worker's *Subdomain*. It's likely something similar to `myaccount.workers.dev`.
+
+Then, add the MailChannels DNS record:
+
+1. In **Account Home**, select the website you would like to add an SPF record for. 
+2. Select **DNS** > **Records** > **Add Record**.
+3. In the dropdown menu, select *TXT* as the type of record.
+4. In the `Name` field, put `_mailchannels`. This is a special MailChannels-specific name that it uses to authorize your account.
+5. Enter the record contents below, substituting `myaccount.workers.dev` for your account subdomain from above.
+
+```
+v=mc1 cfid=myaccount.workers.dev
+```
+
+You can find more details the domain lockdown record and more complex use-cases on MailChannel's [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) support article.
 
 ## SPF support for MailChannels
 
@@ -163,14 +191,15 @@ export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
   personalizations: [
     {
       to: [{ name: "Some User", email: "user@cloudflare.com" }],
-      "dkim_domain": "example.com", // The value has to be the domain you added DKIM records to and where you're sending your email from
-      "dkim_selector": "mailchannels",
+      "dkim_domain": "example.com", // This value has to be the domain you added DKIM records to and where you're sending your email from
+      "dkim_selector": "mailchannels", // This value has be the same as the selector you chose for your DKIM record name, for example, use "mailchannels" if you used mailchannels._domainkey as your record name
       "dkim_private_key": context.env.DKIM_PRIVATE_KEY
     },
   ],
   from: {
     name: "ACME Support",
-    email: "support@example.com",
+    // The domain of your `from` address must be the same as the domain you setup when you setup MailChannels domain lockdown.
+    email: "support@mydomain.com",
   },
   respondWith: () => {
     return new Response(
@@ -185,3 +214,4 @@ export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
 * [Adding a DKIM Signature](https://mailchannels.zendesk.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature)
 * [How to create a DKIM record with OpenSSL](https://www.mailhardener.com/kb/how-to-create-a-dkim-record-with-openssl)
 * [Cloudflare + MailChannels Email Sending with DKIM](https://github.com/maggie-j-liu/mail)
+* [MailChannels Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-)
