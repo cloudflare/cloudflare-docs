@@ -78,6 +78,6 @@ ___
 
 ## Related resources
 
--   [Understanding and Configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)
+-   [Page Rules](/rules/page-rules/)
 -   [Using Custom Cache Keys](/cache/how-to/cache-keys/)
 -   [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)

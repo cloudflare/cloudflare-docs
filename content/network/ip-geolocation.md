@@ -25,7 +25,7 @@ To enable **IP Geolocation** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Go to **Network**.
-3.  For **IP Geolocatio**, switch the toggle to **Off**.
+3.  For **IP Geolocation**, switch the toggle to **Off**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

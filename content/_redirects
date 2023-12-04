@@ -181,7 +181,7 @@
 /cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
 /cache/best-practices/ /cache/concepts/ 301
-/cache/reference/wildcard-matching/ /support/page-rules/wildcard-matching/ 301
+/cache/reference/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
 /support/caching/configuration/understanding-query-string-sort/ /cache/advanced-configuration/query-string-sort/ 301
 /support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
@@ -332,6 +332,10 @@
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
 /support/account-management-billing/account-management/ /fundamentals/setup/account-setup/301
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/setup/add-multiple-sites-automation/ 301
+/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/account-and-billing/account-security/2fa/ 301
+/support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/account-and-billing/account-security/multi-factor-email-authentication/ 301
+/support/account-management-billing/billing-cloudflare-plans/troubleshooting-failed-payments/ /fundamentals/account-and-billing/account-billing/troubleshooting-failed-payments/ 301
+/support/account-management-billing/common-account-questions/login-and-account-issues/ /fundamentals/account-and-billing/account-security/login-and-account-issues 301
 /support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/setup/add-multiple-sites-automation/ 301
 /support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/setup/add-multiple-sites-automation/ 301
 /support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/setup/add-multiple-sites-automation/ 301
@@ -737,17 +741,34 @@
 /support/network/understanding-cloudflare-grpc-support/ /network/grpc-connections/ 301
 /support/network/understanding-network-error-logging/ /network-error-logging/ 301
 /support/network/understanding-the-true-client-ip-header/ /network/true-client-ip-header/ 301
+/support/partners/partner-plugin-supportability/ /support/ 301
 /support/speed/optimization-file-size/will-mirage-and-polish-optimize-off-site-resources/ /speed/optimization/images/ 301
 /support/speed/optimization-file-size/ /speed/optimization/ 301
 /support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
+/support/third-party-software/content-management-system-cms/how-do-i-add-a-wordpress.com-custom-domain-mapping-site-to-cloudflare/ /support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/ 301
+/support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ 301
 /support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /support/more-dashboard-apps/cloudflare-scrape-shield/ 301
+/support/third-party-software/others/how-do-i-get-cloudflare-to-work-with-vaultpress/ /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ 301
+/support/third-party-software/others/how-to-configure-matomo-for-use-with-cloudflare/ /support/third-party-software/ 301
 /support/third-party-software/others/can-i-use-cloudflare-and-varnish-together/ /rules/snippets/ 301
+/support/third-party-software/others/does-cloudflare-support-signalr/ /network/websockets/ 301
 /support/third-party-software/others/is-cloudflare-compatible-with-bad-behavior/ /support/third-party-software/ 301
 /support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
 /support/troubleshooting/performance/http2-and-enhanced-http2-prioritization-options-may-affect-content-loading-on-iossafari-devices/ /speed/optimization/protocol/troubleshooting/enhanced-http2-prioritization-ios-safari/ 301
 /support/troubleshooting/performance/ /speed/optimization/ 301
+/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
+/support/page-rules/ /rules/page-rules/ 301
+/support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/ /rules/page-rules/how-to/url-forwarding/ 301
+/support/page-rules/how-do-i-include-or-exclude-a-specific-url-from-cloudflares-page-rules/ /rules/page-rules/reference/wildcard-matching/ 301
+/support/page-rules/purchasing-additional-page-rules/ /rules/page-rules/troubleshooting/billing-and-subscription/ 301
+/support/page-rules/recommended-page-rules-to-consider/ /rules/page-rules/reference/recommended-rules/ 301
+/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/ /rules/page-rules/ 301
+/support/page-rules/using-page-rules-to-rewrite-host-headers/ /rules/page-rules/how-to/rewrite-host-headers/ 301
+/support/page-rules/using-resolve-override-in-page-rules/ /rules/page-rules/how-to/override-url-or-ip-address/ 301
+/support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
+/support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 
 
 # r2
