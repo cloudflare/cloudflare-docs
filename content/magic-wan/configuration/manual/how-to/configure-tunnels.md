@@ -6,7 +6,7 @@ meta:
     description: Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Learn how to configure IPsec or GRE tunnels.
 ---
 
-{{<render file="_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.244.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address));;Magic WAN;;**Magic WAN** > **Configuration**;;/magic-wan/reference/tunnels/#ipsec-tunnels;;/magic-wan/reference/tunnels/;;/magic-wan/how-to/tunnel-health-checks/;;/magic-wan/reference/tunnel-health-checks/;;/magic-wan/reference/anti-replay-protection/;;bidirectional;;;;">}}
+{{<render file="_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.244.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address));;Magic WAN;;**Magic WAN** > **Configuration**;;/magic-wan/reference/tunnels/#ipsec-tunnels;;/magic-wan/reference/tunnels/;;/magic-wan/configuration/manual/how-to/tunnel-health-checks/;;/magic-wan/reference/tunnel-health-checks/;;/magic-wan/reference/anti-replay-protection/;;bidirectional;;;;">}}
 
 ### Legacy health checks system
 
@@ -14,4 +14,4 @@ meta:
 
 ## Next steps
 
-Now that you have set up your tunnel endpoints, you need to configure {{<glossary-tooltip term_id="static route" link="/magic-wan/get-started/configure-static-routes/">}}static routes{{</glossary-tooltip>}} to route your traffic through Cloudflare.
+Now that you have set up your tunnel endpoints, you need to configure {{<glossary-tooltip term_id="static route" link="/magic-wan/configuration/manual/how-to/configure-static-routes/">}}static routes{{</glossary-tooltip>}} to route your traffic through Cloudflare.
