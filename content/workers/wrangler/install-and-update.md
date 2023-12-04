@@ -29,7 +29,7 @@ $ npx wrangler --version
 // or
 $ npx wrangler version
 // or
-$ npx wrangler -V
+$ npx wrangler -v
 ```
 
 ## Update Wrangler
