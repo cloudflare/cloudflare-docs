@@ -13,7 +13,7 @@ There are two ways to set up Magic WAN:
 
 ## Set up through Magic WAN Connector (preferred)
 
-Refer to [Magic WAN Connector documentation](/magic-wan/connector/) for more information.
+Refer to [Magic WAN Connector documentation](/magic-wan/configuration/connector/) for more information.
 
 ## Set up manually through a third-party device
 
