@@ -30,7 +30,7 @@ If you find a false positive, there are several potential resolutions:
 Additional guidelines are as follows:
 
 - If one specific rule causes false positives, set rule’s **Mode** to _Disable_ rather than turning _Off_ the entire rule **Group**.
-- For false positives with the administrator section of your website, create a [**Page Rule**](/rules/page-rules/) to **Disable Security** for the admin section of your site resources — for example, `example.com/admin`.
+- For false positives with the administrator section of your website, create a [page rule](/rules/page-rules/) to **Disable Security** for the admin section of your site resources — for example, `example.com/admin`.
 
 ## Troubleshoot false negatives
 

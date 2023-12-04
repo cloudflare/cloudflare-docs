@@ -8,11 +8,12 @@ weight: 19
 
 # Page Rules
 
-{{<Aside type="warning">}}
-We advise considering alternative [Rules](/rules/) options due to their enhanced configurability. Please note that Page Rules are going to be deprecated in the foreseeable future.
-{{</Aside>}}
-
 Page rules trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
+
+{{<Aside type="warning">}}
+We advise considering alternative [Rules](/rules/) options due to their enhanced configurability.<br>
+Page Rules are going to be deprecated in the foreseeable future. Refer to [our blog post](https://blog.cloudflare.com/future-of-page-rules/) for details.
+{{</Aside>}}
 
 ## Availability
 

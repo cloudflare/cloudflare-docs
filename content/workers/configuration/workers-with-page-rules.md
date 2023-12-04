@@ -35,7 +35,7 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   [Automatic HTTPS Rewrites](/workers/configuration/workers-with-page-rules/#automatic-https-rewrites)
 *   [Browser Cache TTL](/workers/configuration/workers-with-page-rules/#browser-cache-ttl)
 *   [Browser Integrity Check](/workers/configuration/workers-with-page-rules/#browser-integrity-check)
-*   [Cache Deception Armor](/workers/configuration/workers-with-page-rules/#cache-deception-armor)	
+*   [Cache Deception Armor](/workers/configuration/workers-with-page-rules/#cache-deception-armor)
 *   [Cache Level](/workers/configuration/workers-with-page-rules/#cache-level)
 *   Disable Apps
 *   [Disable Zaraz](/workers/configuration/workers-with-page-rules/#disable-zaraz)
@@ -59,7 +59,7 @@ Due to ongoing changes to the Workers runtime, detailed documentation on how the
 
 {{</Aside>}}
 
-To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](/rules/page-rules/).
+To learn what these Page Rules do, refer to [Page Rules](/rules/page-rules/).
 
 {{<Aside type="note" header="Same zone versus other zone">}}
 

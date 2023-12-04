@@ -42,9 +42,9 @@ To configure a resolve override in Page Rules, do the following:
         -   **TTL:** Auto
         -   **Proxy status:** Proxied
 
-2. [Create a Page Rule](/rules/page-rules/manage/) to override a URL or an IP address.
+2. [Create a page rule](/rules/page-rules/manage/) to override a URL or an IP address.
 
-    The following example Page Rule configuration would send all requests from a folder (`/app`) to an AWS S3 bucket:
+    The following example page rule configuration would send all requests from a folder (`/app`) to an AWS S3 bucket:
 
     -   **If the URL matches:** `example.com/app/*`
     -   **Setting:** _Resolve Override_ | **Value:** `resolve.example.com`
@@ -52,8 +52,8 @@ To configure a resolve override in Page Rules, do the following:
 
 {{<Aside type="warning">}}
 
-The _Resolve Override_ Page Rule setting only allows override of the hostname, not the path.
+The _Resolve Override_ setting only allows override of the hostname, not the path.
 
-If you need to modify the path also, you will need to either use a [Worker](/workers/runtime-apis/request/#requestinitcfproperties) or combine the Page Rule with a [transform rule](/rules/transform/url-rewrite/).
+If you need to modify the path also, you will need to either use a [Worker](/workers/runtime-apis/request/#requestinitcfproperties) or combine the page rule with a [transform rule](/rules/transform/url-rewrite/).
 
 {{</Aside>}}
