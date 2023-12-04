@@ -39,7 +39,7 @@ The CVC code is verified against the card entered. The verification will fail if
 
 ### Card type validation
 
-The card type is being validated, which means that card types that we do not support will fail. Not all card types are supported by Cloudflare. As a result, some Visa and Mastercard methods may not be supported.
+The card type will be validated, which means that card types that we do not support will fail. Not all card types are supported by Cloudflare. As a result, some Visa and Mastercard methods may not be supported.
 
 ### Email validation
 
