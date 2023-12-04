@@ -18,8 +18,8 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 ## Prerequisites
 
-This tutorial assumes you have a standalone NGFW with two network interfaces: 
-- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network); 
+This tutorial assumes you have a standalone NGFW with two network interfaces:
+- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network);
 - And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
 
 Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
@@ -46,19 +46,19 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ### Magic IPsec Tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels). The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
 - `172.64.240.253`: Use with the primary IPsec tunnel.
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
 
-{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
+{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
 
 
 #### Add IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/configuration/manual/how-to/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
     - **Tunnel name**: `SFO_IPSEC_TUN01`
     - **Interface address**: `10.252.2.96/31`
     - **Customer endpoint**: `203.0.113.254`
@@ -103,7 +103,7 @@ After creating your IPsec tunnels, the Cloudflare dashboard will list them under
 
 If you refer to the [Environment section](#environment), you will notice there is one subnet within `Trust_L3_Zone`: `10.1.100.0/24`.
 
-Create a [static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
+Create a [static route](/magic-wan/configuration/manual/how-to/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
 
 #### Tunnel 01
 
@@ -457,7 +457,7 @@ The tunnel interfaces are placed in a separate zone to facilitate the configurat
 
 | Name              | Option                  | Value           |
 | ----------------- | ----------------------- | --------------- |
-| `Trust_L3_zone`   | Log setting             | _None_          | 
+| `Trust_L3_zone`   | Log setting             | _None_          |
 |                   | Type                    | _Layer3_        |
 |                   | Interfaces              | **ethernet1/1** |
 |                   | Zone Protection Profile | _None_          |

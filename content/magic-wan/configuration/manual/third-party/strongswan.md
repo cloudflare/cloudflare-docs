@@ -9,7 +9,7 @@ This tutorial explains how to set up strongSwan along with Magic WAN. You will l
 
 ## 1. Health checks configuration
 
-Start by configuring the [bidirectional health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) target for Magic WAN. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
+Start by configuring the [bidirectional health checks](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels) target for Magic WAN. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
 
 This can be set up [with the API](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel). For example:
 
@@ -62,7 +62,7 @@ include strongswan.d/*.conf
 config setup
     charondebug="all"
     uniqueids = yes
- 
+
 conn %default
     ikelifetime=4h
     rekey=yes
@@ -71,7 +71,7 @@ conn %default
     authby=secret
     dpdaction=restart
     closeaction=restart
- 
+
 # Sample VPN connections
 conn cloudflare-ipsec
     auto=start
@@ -96,18 +96,18 @@ conn cloudflare-ipsec
     leftupdown=/etc/strongswan.d/ipsec-vti.sh
 ```
 
-2. Now, you need to create a virtual tunnel interface (VTI) with the IP we configured earlier as the target for Cloudflare’s health checks (`172.64.240.252`) to route IPsec packets. Go to `/etc/strongswan.d/` 
+2. Now, you need to create a virtual tunnel interface (VTI) with the IP we configured earlier as the target for Cloudflare’s health checks (`172.64.240.252`) to route IPsec packets. Go to `/etc/strongswan.d/`
 
 3. Create a script called `ipsec-vti.sh` and add the following:
 
 ```txt
 #!/bin/bash
- 
+
 set -o nounset
 set -o errexit
- 
+
 VTI_IF="vti0"
- 
+
 case "${PLUTO_VERB}" in
     up-client)
         ip tunnel add "${VTI_IF}" local "${PLUTO_ME}" remote "${PLUTO_PEER}" mode vti \
@@ -131,7 +131,7 @@ echo "executed"
 
 ## 4. Add Policy Based Routing (PBR)
 
-Although the IPsec tunnel is working as is, we need to create Policy Based Routing (PBR) to redirect returning traffic via the IPsec tunnel. Without it, the ICMP replies to the health probes sent by Cloudflare will be returned via the Internet, instead of the same IPsec tunnel. This is required to avoid any potential issues. 
+Although the IPsec tunnel is working as is, we need to create Policy Based Routing (PBR) to redirect returning traffic via the IPsec tunnel. Without it, the ICMP replies to the health probes sent by Cloudflare will be returned via the Internet, instead of the same IPsec tunnel. This is required to avoid any potential issues.
 
 To accomplish this, the tutorial uses [iproute2](https://en.wikipedia.org/wiki/Iproute2) to route IP packets from `172.63.240.252` to the tunnel interface.
 
