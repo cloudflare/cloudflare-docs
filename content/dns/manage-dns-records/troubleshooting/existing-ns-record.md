@@ -10,7 +10,7 @@ meta:
 
 As you try to create a new DNS record, Cloudflare displays the following error:
 
-```
+```txt
 NS records with that host already exist. (Code:81056)
 ```
 
@@ -28,7 +28,7 @@ When you are managing DNS records for the parent zone (in this example, `example
 
 ## Solution
 
-In order to create such records, first remove any `NS` records with the same name.
+Before creating such records, remove any `NS` records with the same name.
 
 {{<Aside type="warning" header="Important">}}
 
