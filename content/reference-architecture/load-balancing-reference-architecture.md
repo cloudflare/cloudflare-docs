@@ -38,7 +38,8 @@ Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure 
 Those who read this reference architecture will learn:
 * How Cloudflare load balancing can address both local traffic management and global traffic management use cases
 * How Cloudflare’s global network enhances the functionality of Cloudflare load balancing
-* The capabilities of Cloudflare load balancers, and how they apply to various use cases The structure and configuration of a Cloudflare load balancer
+* The capabilities of Cloudflare load balancers, and how they apply to various use cases
+* The structure of Cloudflare load balancers and their various configurations
 
 
 ## Handling dynamic workloads in modern applications
@@ -54,7 +55,7 @@ In this document, the term “origin” refers to the location traffic is being 
 
 #### Steering
 
-Steering is a load balancer’s main function — the process of handling, sending, and forwarding requests based on a set of policies. These policies generally take many factors into account,including request URL, URL path, headers, configured weights, priority, and server latency, responsiveness, capacity, and load. 
+Steering is a load balancer’s main function — the process of handling, sending, and forwarding requests based on a set of policies. These policies generally take many factors into account, including request URL, URL path, HTTP headers, configured weights, priority, and server latency, responsiveness, capacity, and load. 
 
 
 #### Layer 7
@@ -115,7 +116,7 @@ Service availability encompasses both unintentional and intentional downtime of 
 
 Load balancers solve these issues by always monitoring the health of origins. If an origin is slow to respond to a health check, or or fails to respond entirely,the origin is marked as unhealthy. Several methods exist for doing so, including basic health tests like ICMP (ping) and TCP connection tests. More advanced health tests can be used like issuing an HTTP GET request and ensuring a specific response code and response body are returned from the origin. Once a server is in a degraded state, the load balancer will send fewer or no requests its way in favor of healthier origins. As the origin becomes operational again and the load balancer is able to receive responses to its health checks, the origin is marked as operational and has traffic steered towards it once more.
 
-Intentional downtime comes in a few different forms, including capacity changes, hardware or infrastructure changes, and software updates. Load balancers gracefully remove traffic from one or more origins to allow for such maintenance..
+Intentional downtime comes in a few different forms, including capacity changes, hardware or infrastructure upgrades, and software updates. Load balancers gracefully remove traffic from one or more origins to allow for such maintenance..
 
 
 #### Scale
@@ -194,10 +195,6 @@ Figure 6, above, shows other Cloudflare services are also running in each of the
 ![Cloudflare Layer 7 features can be used together to further secure a service](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-7.png)
 _Figure 7: Some of the processes a HTTP request passes through in the Cloudflare layer 7 stack_
 
-ALT Text: Cloudflare Layer 7 features can be used together to further secure a service
-
-Figure 7: Some of the processes a HTTP request passes through in the Cloudflare layer 7 stack
-
 Cloudflare also has a [network optimization service](https://blog.cloudflare.com/orpheus-saves-internet-requests-while-maintaining-speed/) that is constantly running at all data centers to ensure that Cloudflare provides the best path between Cloudflare data centers and also track all the available paths to origins. This allows Cloudflare to ensure that origins can always be reached and reroute traffic to alternate Cloudflare data centers, if necessary, to reach an origin. After the load balancer has made a decision on which origin to steer the traffic, the traffic is then forwarded to Cloudflare’s network optimization service to determine the best path to reach the destination. The path can be affected by a feature called Argo Smart Routing which, when enabled, uses timed TCP connections to find the Cloudflare data center with the fastest RTT to the origin server. Figure 8 shows how Argo Smart Routing can help improve connection time to origins.
 
 ![Argo Smart Routing finds the fastest path between requestor and origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-8.png)
@@ -257,7 +254,7 @@ Weight influences the randomness of origin pool or origin selection for a single
 ![A pair of origin pools with equal probability of being selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-12.png)
 _Figure 12: A pair of origin pools with equal capacity_
 
-Specific algorithms, such as Least Connection Steering and Least Outstanding Request Steering, take into account the number of open requests and connections. Weight is used to determine which origins or origin pools can handle a greater number of open requests or connections. Essentially, weight defines the capacity of origins or origin pools, regardless of the selected steering method.
+Specific algorithms, such as Least Outstanding Request Steering, take into account the number of open requests and connections. Weight is used to determine which origins or origin pools can handle a greater number of open requests or connections. Essentially, weight defines the capacity of origins or origin pools, regardless of the selected steering method.
 
 Weight is defined as any number between 0.00 and 1.00. It’s important to note that the total weight of the origin pools or the origins within an origin pool do not need to equal 1. Instead, the weights will be added together, and then an individual weight value is divided by that sum to get the probability of that origin being selected.
 
@@ -357,13 +354,13 @@ Cloudflare determines the requestor’s physical location using the following me
 Proximity steering requires providing GPS coordinates for all origin pools, allowing Cloudflare to calculate the closest origin pool based on the requesting IP, DNS resolver, or Cloudflare data center. 
 
 
-##### Least outstanding requests steering (LORS) and least connection steering (LCS)
+##### Least outstanding requests steering (LORS)
 
-Least outstanding request steering (LORS) and least connection steering (LCS) are available to enterprise plan customers and can be used for both traffic and origin steering.
+Least outstanding request steering (LORS) is available to enterprise plan customers and can be used for both traffic and origin steering.
 
-LORS uses the number of unanswered HTTP requests to influence steering, while LCS uses the number of open connections, which includes both active and idle connections. Both methods are only functional when used with Cloudflare Layer 7 proxied Cloudflare load balancers. If these methods are assigned to any other type of load balancer, their behavior will be equivalent to random steering. LORS and LCS use their respective counts of open requests or connections, along with weight, to create a new transformed weight that is used for the steering decision.
+LORS uses the number of unanswered HTTP requests to influence steering and is only functional when used with Cloudflare Layer 7 proxied Cloudflare load balancers. If LORS is assigned to any other type of load balancer, its behavior will be equivalent to random steering. LORS uses the counts of open requests, along with weight, to create a new transformed weight that is used for the steering decision.
 
-Equation for LCS and LORS transformed weight:
+Equation for LORS transformed weight:
 
 * weight / (count + 1) = transformedWeight
 
@@ -371,12 +368,12 @@ Reminder for random weight calculation:
 
 * weight / (total weight) = probability of being selected
 
-Here’s an example of LCS:
+Here’s an example of LORS:
 
 * Pool A has a weight of 0.4
 * Pool B has a weight of 0.6
-* Pool A has 3 connections
-* Pool B has 0 connections
+* Pool A has 3 open requests
+* Pool B has 0 open requests
 * Relevant equation
   * weight / (count + 1) = transformedWeight
 * Pool A's transformed weight: 0.4 / (3 + 1) = 0.1
@@ -388,12 +385,9 @@ Here’s an example of LCS:
 
 In this example, the next connection has a 14.29% probability of being steered to Pool A and a 85.71% probability of being steered to Pool B. While it’s likely that traffic will be steered towards Pool B, it is still possible for it to be steered to Pool A. In situations with lighter load conditions, there will be more variation in the steering results, which may not precisely match the configured weights. However, as the load increases, the actual steering results will closely match the configured weights.
 
-When non-L7 proxied load balancers are used with LORS or LCS, the open request and connection count information is not available. As a result, the denominator will always be 1. Since dividing any number by 1 doesn’t change the numerator, and in this case, the numerator is the weight, steering decisions will be made solely on weight. This results in the random method described above.
+When non-L7 proxied load balancers are used with LORS, the open request count information is not available. As a result, the denominator will always be 1. Since dividing any number by 1 doesn’t change the numerator, and in this case, the numerator is the weight, steering decisions will be made solely on weight. This results in the random method described above.
 
 LORS is best used if origin pools or origins are easily overwhelmed by spikes in concurrent requests. It is well-suited for applications that value server health over factors like latency, geographic alignment, or other metrics. This is especially useful when some or all requests put a heavy load on an origin and take a significant amount of time to generate a response. 
-
-On the other hand, LCS is recommended for when connections consistently have similar response times, and most connections use the same amount of resources on the origin to respond. Both methods take into account the adaptive routing and session affinity, which can lead to subsequent requests being routed to the same origin pool or origin as the first request, regardless of the configured method and weight.
-
 
 #### Steering options overview
 |Steering Method|Traffic Steering|Origin Steering|Weight-based|Enterprise-only|
@@ -405,7 +399,6 @@ On the other hand, LCS is recommended for when connections consistently have sim
 |Dynamic|X|||X|
 |Proximity|X|||X|
 |Least Outstanding Requests|X|X|X|X|
-|Least Connection|X|X|X|X|
 
 All traffic steering methods marked above as Enterprise-only can also be obtained as a self-service add-on as well. All origin steering methods marked as Enterprise-Only require an enterprise plan with Cloudflare.
 
@@ -558,7 +551,7 @@ The use of the _virtual network_ option is reserved for private IP resources. Th
 
 ##### Origin weight
 
-_Origin weight_ is only used for the random, hash, least connection, and least outstanding request steering methods; it must always be defined as part of the origin definition. (Please refer to the [Weighted Steering](https://docs.google.com/document/d/1LaB02sJmkkO3SWwTVGCor7nVKNAgl5jpajOcTGBCDoI/edit#heading=h.6p3ygdw372ja) section for more information on how weights are used for origin selection.)
+_Origin weight_ is only used for the random, hash, and least outstanding request steering methods; it must always be defined as part of the origin definition. (Please refer to the [Weighted Steering](https://docs.google.com/document/d/1LaB02sJmkkO3SWwTVGCor7nVKNAgl5jpajOcTGBCDoI/edit#heading=h.6p3ygdw372ja) section for more information on how weights are used for origin selection.)
 
 
 ##### Host header modification
@@ -684,7 +677,7 @@ Please note that DNS-only load balancers have a few limitations compared to prox
 * The load balancer no longer hides the origin’s IP address from the client as it is sent back to the client directly
 * They do not have the built-in layer 7 stack services mentioned in the previous model; i.e., DNS-only load balancers do not include caching, WAF, DDoS protection, or Zero Trust support
 * Session affinity is limited to `ip_cookie`, which will select an origin deterministically and then map that origin to the client IP address for all subsequent requests. 
-* Finally, because connections are not proxied through the load balancer for DNS only, certain steering methods will not work either. For example, [LCS and LORS](#least-outstanding-requests-steering-lors-and-least-connection-steering-lcs) will not work since Cloudflare will not be aware of the connections to the origins. These steering methods will revert to random weighted steering.
+* Finally, because connections are not proxied through the load balancer for DNS only, certain steering methods will not work either. For example, [LORS](#least-outstanding-requests-steering-lors) will not work since Cloudflare will not be aware of the connections to the origins. These steering methods will revert to random weighted steering.
 
 For more information on additional steering methods, please refer to the [Steering](#steering) section.
 
