@@ -148,7 +148,7 @@ To ensure **only** videos from **your** Cloudflare Stream account can be played 
 
 ### Why is PageSpeed Insights giving a bad score when using the Stream Player?
 
-If your website loads in a lot of player instances, PageSpeed Insights will penalise the JavaScript load for each player instance.  Our testing shows that when actually loading the page the script itself is only downloaded once with the local browser cache retrieving the script for the other player objects on the same page.  Therefore we believe that the PageSpeed Insights score is not matching real-world behavior in this situation.
+If your website loads in a lot of player instances, PageSpeed Insights will penalize the JavaScript load for each player instance. Our testing shows that when actually loading the page, the script itself is only downloaded once with the local browser cache retrieving the script for the other player objects on the same page. Therefore, we believe that the PageSpeed Insights score is not matching real-world behavior in this situation.
 
 If you are using thumbnails, you can use [animated thumbnails](https://developers.cloudflare.com/stream/viewing-videos/displaying-thumbnails/#animated-gif-thumbnails) that then link to the video pages.
 
