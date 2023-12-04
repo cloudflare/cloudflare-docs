@@ -23,8 +23,12 @@ Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps
 
 ## Features
 
-{{<feature header="Magic WAN Connector" href="/magic-wan/configuration/connector/">}}
+{{<feature header="Magic WAN Connector" href="/magic-wan/configuration/connector/" cta="Connect with Magic WAN Connector">}}
 Use Magic WAN Connector to automatically connect, steer, and shape any IP traffic.
+{{</feature>}}
+
+{{<feature header="Third-party device" href="/magic-wan/configuration/manual/" cta="Connect manually">}}
+Magic WAN is compatible with a host of third-party devices. If you do not have Magic WAN Connector, start here to learn how to set up Magic WAN manually.
 {{</feature>}}
 
 {{<feature header="Tunnel health checks" href="/magic-wan/reference/tunnel-health-checks/" cta="Learn about health checks">}}
