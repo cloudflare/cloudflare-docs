@@ -1,7 +1,7 @@
 ---
 title: Configure with Connector
 pcx_content_type: reference
-weight: 8
+weight: 2
 layout: single
 ---
 

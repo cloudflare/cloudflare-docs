@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Configuration
-weight: 1
+weight: 3
 ---
 
 # Configure Magic WAN Connector
