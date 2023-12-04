@@ -522,7 +522,7 @@ Purchase of Magic Transit and Magic WAN.
 
 **What should you do if you receive one?**
 
-Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/how-to/check-tunnel-health-dashboard/) for more information on what the issue might be.
+Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/manual/how-to/check-tunnel-health-dashboard/) for more information on what the issue might be.
 
 {{</details>}}
 
@@ -985,7 +985,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
+1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
 
 {{</details>}}
 
