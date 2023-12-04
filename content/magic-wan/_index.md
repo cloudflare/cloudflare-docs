@@ -23,7 +23,7 @@ Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps
 
 ## Features
 
-{{<feature header="Magic WAN Connector" href="/magic-wan/connector/">}}
+{{<feature header="Magic WAN Connector" href="/magic-wan/configuration/connector/">}}
 Use Magic WAN Connector to automatically connect, steer, and shape any IP traffic.
 {{</feature>}}
 
@@ -35,7 +35,7 @@ Magic WAN sends health check probes to monitor network status and the health of 
 Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 
-{{<feature header="Network analytics" href="/magic-wan/how-to/view-analytics/">}}
+{{<feature header="Network analytics" href="/magic-wan/configuration/how-to/view-analytics/">}}
 Network analytics allows you to check traffic patterns and DDoS attacks in near real-time, to troubleshoot IP traffic issues.
 {{</feature>}}
 
