@@ -1,12 +1,12 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
-title: Billing and Subscription
+title: Billing and subscription
 meta:
-    title: Billing and Subscription FAQ | Page Rules
+    title: Billing and subscription FAQ | Page Rules
 ---
 
-# Billing and Subscription FAQ
+# Billing and subscription FAQ
 
 ## If I run out of Page Rules, can I buy more?
 
@@ -16,9 +16,9 @@ If you need more Page Rules as an Enterprise customer, contact Sales.
 
 ## How do I buy additional Page Rules (Free, Pro, or Business Plans)?
 
-1. Go to the [Rules tab](http://dash.cloudflare.com/?to=/:account/:zone/rules).
+1. In the Cloudflare dashboard, go to **Rules** > [**Page Rules**](http://dash.cloudflare.com/?to=/:account/:zone/rules).
 
-2. Click **Buy More Page Rules**.
+2. Select **Buy More Page Rules**.
 
 3. Select the number of additional page rules.
 
@@ -30,9 +30,9 @@ To cancel a purchase:
 
 1. Go to [your Account Subscriptions settings](http://dash.cloudflare.com/?to=/:account/billing/subscriptions).
 
-2. Find the associated website (listed in alphabetical order) and click **Edit**.
+2. Find the associated website (listed in alphabetical order) and select **Edit**.
 
-3. For **Additional page rules**, change the amount to your previous value. If you are over your current limit, you may have to delete existing Page Rules (paused or active).
+3. For **Additional page rules**, change the amount to your previous value. If you are over your current limit, you may have to delete existing page rules (paused or active).
 
 4. Finish the updates to your subscription.
 
