@@ -409,7 +409,7 @@ A health monitor determines the health of origins once they are configured insid
 
 By default, health monitors probes are sent directly to the origin address, bypassing the entire layer 7 stack. This means that actual traffic to the origin through the load balancer will receive different treatment than the health monitor probe. Depending on the configuration, this could result in a health monitor reporting an origin as healthy, even if actual connections or requests are failing. 
 
-The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire stack. This is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also allows health monitor probes to use the path provided by [Argo Smart Routing](https://developers.cloudflare.com/argo-smart-routing/), ensuring that probes will follow the same path to the origin as actual requests.
+The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire stack. This is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also allows health monitor probes to use the path provided by [Argo Smart Routing](/argo-smart-routing/), ensuring that probes will follow the same path to the origin as actual requests.
 
 ![HTTPS health monitor to monitor the status of an origin web server](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-16.png)
 _Figure 16: HTTPS health monitor configuration_
@@ -499,9 +499,9 @@ The public origin method allows organizations to define a tunnel that points to 
 
 When configured via the Dashboard, Cloudflare automatically creates a CNAME record in the DNS zone that refers to the cfargotunnel.com hostname. For example, a CNAME record of myTunnelService.example.com could be created to point the A record of d74b3a46-f3a3-4596-9049-da7e72c876f5.cfargotunnel.com. The main benefit being the ease of use and administration as the CNAME record is much more suggestive about its purpose and belongs to the customer DNS zone.
 
-Another option is to create these tunnels and services on the host running cloudflared. This is called a [locally-managed tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/). When working with locally-managed tunnels, the CNAME entry is not created automatically however, so the organization would have to configure this manually, after the tunnel and service is defined.
+Another option is to create these tunnels and services on the host running cloudflared. This is called a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/). When working with locally-managed tunnels, the CNAME entry is not created automatically however, so the organization would have to configure this manually, after the tunnel and service is defined.
 
-From a load balancer perspective, it's very important to understand how these tunnels can be used as an origin. An origin can only be defined by using the cfargotunnel.com hostname. Using a public CNAME record that points to the cfargotunnel.com address will not work properly and is not supported. This is especially important for origin services that don’t operate on ports 80 or 443. Cloudflare load balancers default to these two ports to access the services running on the origins. If an organization has services running on other ports, they will need to configure a Cloudflare Tunnel with a [catch-all rule](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#how-traffic-is-matched) to reach that port. This configuration allows a Cloudflare load balancer to reach the service via port 443 while having Cloudflare tunnel proxy the connection to the desired port on the origin.
+From a load balancer perspective, it's very important to understand how these tunnels can be used as an origin. An origin can only be defined by using the cfargotunnel.com hostname. Using a public CNAME record that points to the cfargotunnel.com address will not work properly and is not supported. This is especially important for origin services that don’t operate on ports 80 or 443. Cloudflare load balancers default to these two ports to access the services running on the origins. If an organization has services running on other ports, they will need to configure a Cloudflare Tunnel with a [catch-all rule](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#how-traffic-is-matched) to reach that port. This configuration allows a Cloudflare load balancer to reach the service via port 443 while having Cloudflare tunnel proxy the connection to the desired port on the origin.
 
 
 ###### Private IP
@@ -546,7 +546,7 @@ _Origin address_ can be defined in one of the following ways:
 
 Using public IPs and hostnames of any type require no additional configuration. In those scenarios, the virtual network should be set to the default value of “_none_”. The “_none_” setting signals that these resources will be accessible on the public Internet, routed via Cloudflare’s global edge network. 
 
-The use of the _virtual network_ option is reserved for private IP resources. This setting maps to IP subnets that are hosted behind [Cloudflare Tunnel configurations](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/). A virtual network should be selected that has a route to the IP address of the origin. To navigate to this setting in the Cloudflare Dashboard, select _Networks - Routes_ from the Zero Trust page.
+The use of the _virtual network_ option is reserved for private IP resources. This setting maps to IP subnets that are hosted behind [Cloudflare Tunnel configurations](/cloudflare-one/connections/connect-networks/configure-tunnels/). A virtual network should be selected that has a route to the IP address of the origin. To navigate to this setting in the Cloudflare Dashboard, select _Networks - Routes_ from the Zero Trust page.
 
 
 ##### Origin weight
@@ -577,7 +577,7 @@ Also, at the origin pool, GPS coordinates for the pool (which are used with prox
 
 ##### Load shedding
 
-[Load shedding ](https://developers.cloudflare.com/load-balancing/additional-options/load-shedding/)— a real-time response available to administrators to protect against origins in a pool that are [becoming unhealthy ](https://developers.cloudflare.com/load-balancing/understand-basics/health-details/)— is also configured on the origin pool. 
+[Load shedding ](/load-balancing/additional-options/load-shedding/)— a real-time response available to administrators to protect against origins in a pool that are [becoming unhealthy ](/load-balancing/understand-basics/health-details/)— is also configured on the origin pool. 
 
 The load shedding setting is not intended to be enabled unless an administrator is trying to actively protect an origin pool from becoming unhealthy. It is activated, for example, when an origin that is still responding to requests is experiencing increased CPU or memory usage, increased response times, or occasionally failing to respond at all. 
 
@@ -619,7 +619,7 @@ The following explores the four main deployment models (and their differences) i
 
 ##### Layer 7 HTTP(S) load balancing
 
-First, the most common model is the **HTTP(S)-based layer 7 proxied load balancer**. These load balancers exist on Cloudflare’s edge and are publicly reachable. Amongst other features, this model supports [WebSockets](https://developers.cloudflare.com/support/network/using-cloudflare-with-websockets/), which are open connections between the client and origin allowing for data to be passed back and forth between the two.
+First, the most common model is the **HTTP(S)-based layer 7 proxied load balancer**. These load balancers exist on Cloudflare’s edge and are publicly reachable. Amongst other features, this model supports [WebSockets](/support/network/using-cloudflare-with-websockets/), which are open connections between the client and origin allowing for data to be passed back and forth between the two.
 
 Because this same layer 7 security stack also provides WAF, DDoS protection, Bot Management, Zero Trust, and other services, accessing these public load balancers can be restricted to authenticated and authorized users as needed. (Please refer to [Securing Load Balancers](#protecting-and-securing-load-balancers) for more information.) 
 
@@ -696,7 +696,7 @@ The TTL of a DNS-only load balancer is set to 30 (seconds). This ensures that as
 
 ##### Spectrum load balancing
 
-Cloudflare also offers another ingress method via the [Spectrum](https://developers.cloudflare.com/spectrum/) product. 
+Cloudflare also offers another ingress method via the [Spectrum](/spectrum/) product. 
 
 Where the layer 7 stack only supported HTTP(S) and WebSockets, Spectrum offers support for any TCP- or UDP-based protocol. A Cloudflare load balancer using Spectrum as an ingress for traffic operates at layer 4, where both TCP and UDP protocols exist. Any service that utilizes TCP or UDP for transport can leverage Spectrum with a Cloudflare load balancer including SSH, FTP, NTP, SMTP, and more. 
 
@@ -768,7 +768,7 @@ Origin draining is only applicable for session affinity because without session 
 
 ##### Zero-downtime failover
 
-Zero-downtime failover automatically sends traffic to origin servers within an origin pool during transient network issues. The decision to retry another origin in the pool is driven by Cloudflare returning a [521, 522, or 523 response code](https://developers.cloudflare.com/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-521-web-server-is-down). Any other response code will not result in a zero-downtime failover operation. These response codes are not returned from the origin, but from requests made by upstream Cloudflare services to an organization's origins.
+Zero-downtime failover automatically sends traffic to origin servers within an origin pool during transient network issues. The decision to retry another origin in the pool is driven by Cloudflare returning a [521, 522, or 523 response code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-521-web-server-is-down). Any other response code will not result in a zero-downtime failover operation. These response codes are not returned from the origin, but from requests made by upstream Cloudflare services to an organization's origins.
 
 Zero-downtime failover has three modes of operation:
 1. **None (Off):** No failover will take place and users may receive error messages or a poor user experience.
@@ -803,7 +803,7 @@ Traffic steering is the method of steering between origin pools. For help unders
 
 ##### Custom rules
 
-[Custom rules](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/) allow users to perform actions on requests or connections before the load balancer finishes its decision process. Custom rules are configured with expressions that match certain [fields](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/reference/) in requests or connections. Once the expression is created to match traffic, an [action](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/actions/) is assigned for when a request or connection matches the expression.
+[Custom rules](/load-balancing/additional-options/load-balancing-rules/) allow users to perform actions on requests or connections before the load balancer finishes its decision process. Custom rules are configured with expressions that match certain [fields](/load-balancing/additional-options/load-balancing-rules/reference/) in requests or connections. Once the expression is created to match traffic, an [action](/load-balancing/additional-options/load-balancing-rules/actions/) is assigned for when a request or connection matches the expression.
 
 Custom rules are a powerful tool for customizing the steering and output from a load balancer before the request or connection is sent to the origin. For example, the HTTP method (e.g. GET, PUT, POST) could be matched to ensure that POST messages are sent to a specific origin pool dedicated to handling receiving information from clients.
 
@@ -812,8 +812,8 @@ Alternatively, that session affinity TTL could be reset based on a request going
 It is not possible to document all of the potential combinations of fields that can be matched and actions that can be taken. However, the following resources describe all of the fields and actions that are currently available: 
 
 
-* [Supported fields and operators](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/reference/)
-* [Load Balancing actions](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/actions/)
+* [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/)
+* [Load Balancing actions](/load-balancing/additional-options/load-balancing-rules/actions/)
 
 If the default behavior of a load balancer is not covered in the documents listed above, it is likely that a custom rule can help meet unique use case requirements.
 
@@ -828,12 +828,12 @@ All Cloudflare load balancer deployment models come with inherent protections. T
 
 
 * Proxied HTTP layer 7 load balancer (Public)
-    * [DDoS protection](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http/) to protect against attacks
-    * WAF with [Cloudflare managed ruleset](https://developers.cloudflare.com/waf/managed-rules/reference/cloudflare-managed-ruleset/) and [OWASP ruleset](https://developers.cloudflare.com/waf/managed-rules/reference/owasp-core-ruleset/#cloudflare-owasp-core-ruleset) to block known vulnerabilities and exploits
+    * [DDoS protection](/ddos-protection/managed-rulesets/http/) to protect against attacks
+    * WAF with [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) and [OWASP ruleset](/waf/managed-rules/reference/owasp-core-ruleset/#cloudflare-owasp-core-ruleset) to block known vulnerabilities and exploits
 * DNS-only load balancer (Public)
     * [DNS DDoS protection](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) to ensure a DNS-only load balancer is always available
 * Spectrum layer 4 load balancer (Public)
-    * [DDoS Protection](https://developers.cloudflare.com/spectrum/about/ddos-for-spectrum/#ddos-protection-for-spectrum) to protect against layer 4 attacks
+    * [DDoS Protection](/spectrum/about/ddos-for-spectrum/#ddos-protection-for-spectrum) to protect against layer 4 attacks
 
 
 #### Additional options
@@ -843,14 +843,14 @@ Cloudflare offers additional security layers that can be used in conjunction wit
 
 
 * Proxied HTTP layer 7 load balancer (Public)
-    * [Bot management](https://developers.cloudflare.com/bots/) to control which bots can access resources
-    * [WAF](https://developers.cloudflare.com/waf/) for creating custom rules for web applications
-    * [Page Shield](https://developers.cloudflare.com/page-shield/) for monitoring script usage on web applications
-    * [API Shield](https://developers.cloudflare.com/api-shield/) for protecting APIs
+    * [Bot management](/bots/) to control which bots can access resources
+    * [WAF](/waf/) for creating custom rules for web applications
+    * [Page Shield](/page-shield/) for monitoring script usage on web applications
+    * [API Shield](/api-shield/) for protecting APIs
 * DNS-only load balancer (Public)
-    * [DNSSEC](https://developers.cloudflare.com/dns/dnssec/) to ensure authenticity of DNS records
+    * [DNSSEC](/dns/dnssec/) to ensure authenticity of DNS records
 * Spectrum layer 4 load balancer (Public)
-    * [IP Access Rules](https://developers.cloudflare.com/spectrum/reference/configuration-options/#ip-access-rules) for controlling access to public layer 4 load balancers
+    * [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) for controlling access to public layer 4 load balancers
 
 
 ## Summary
