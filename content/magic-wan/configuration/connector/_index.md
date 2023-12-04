@@ -1,5 +1,5 @@
 ---
-title: Magic WAN Connector
+title: Configure with Connector
 pcx_content_type: reference
 weight: 8
 layout: single
