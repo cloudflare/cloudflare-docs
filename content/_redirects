@@ -516,6 +516,7 @@
 /logs/logpush/s3-compatible-endpoints/ /logs/get-started/enable-destinations/s3-compatible-endpoints/ 301
 /logs/reference/logpush-api-configuration/ /logs/get-started/api-configuration/ 301
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
+# Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/custom-fields /logs/reference/custom-fields/ 301
 /logs/reference/logpush-api-configuration/custom-fields/ /logs/reference/custom-fields/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
