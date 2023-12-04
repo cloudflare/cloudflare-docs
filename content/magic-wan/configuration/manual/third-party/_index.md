@@ -1,7 +1,7 @@
 ---
 title: Third-party integration
 pcx_content_type: navigation
-weight: 6
+weight: 2
 layout: single
 meta:
     title: Third-party integration tutorials
