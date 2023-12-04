@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="warning">}}
-Page Rule require an [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
+Page Rules require a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
 {{</Aside>}}
