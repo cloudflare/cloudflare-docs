@@ -12,5 +12,5 @@ With APO, you can manage your WordPress site as normal. Whenever you update cont
 
 ## Limitations
 
-Automatic Platform Optimization is not compatible with enterprise [subdomain setup](/dns/zone-setups/subdomain-setup/) when the subdomain `www` is in a different zone to the apex domain.
+Automatic Platform Optimization is not compatible with enterprise [subdomain setup](/dns/zone-setups/subdomain-setup/) when a subdomain, for example `www` is in a different zone to the apex domain.
 
