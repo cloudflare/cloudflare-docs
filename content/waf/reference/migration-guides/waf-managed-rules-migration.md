@@ -48,16 +48,15 @@ For API users, the APIs for managing the previous version of WAF managed rules w
 
 The update process will create an equivalent configuration for the following settings of WAF managed rules:
 
-- Global settings of OWASP ModSecurity Core Rule Set.
 - Firewall rules configured with _Bypass_ > _WAF Managed Rules_.
 - Page Rules configured with _Disable Security_.
 - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On_.
 
 ### Configurations that will be lost in the update process
 
-The update process will not migrate specific settings at the rule or group level of the OWASP ModSecurity Core Rule Set, available in WAF managed rules.
+The update process will not migrate any settings of the OWASP ModSecurity Core Rule Set, available in the previous version of WAF managed rules.
 
-The OWASP version supporting WAF managed rules and WAF Managed Rules is quite different, and there is no direct equivalence between rules in the two versions. You will need to configure specific OWASP rules again in the Cloudflare OWASP Core Ruleset, available in WAF Managed Rules. For more information on configuring this Managed Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
+The OWASP version in the two WAF implementations (old and new) are quite different, and there is no direct equivalence between rules in the two versions. You will need to configure the Cloudflare OWASP Core Ruleset in WAF Managed Rules again according to your needs. For more information on configuring this Managed Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
 
 ### Configurations that will prevent you from updating
 
