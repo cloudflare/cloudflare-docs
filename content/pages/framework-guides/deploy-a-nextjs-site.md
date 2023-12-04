@@ -198,7 +198,7 @@ In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/
 
 The following code shows an example of accessing a KV namespace in a TypeScript Next.js project.
 
-First, create a new `env.d.ts` file and declare a binding:
+First, create a new `env.d.ts` file and declare a [binding](/pages/platform/functions/bindings/):
 
 ```typescript
 ---
@@ -209,10 +209,10 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       [key: string]: string | undefined;
-      // The KVNamespace binding type used here comes
+      // The KV Namespace binding type used here comes
       // from `@cloudflare/workers-types`, in order to
-      // use it like so make sure that you've installed
-      // the package as a dev dependency and you've added
+      // use it like so, make sure that you have installed
+      // the package as a dev dependency and you have added
       // it to your `tsconfig.json` file under
       // `compilerOptions.types`.
       MY_KV: KVNamespace;
