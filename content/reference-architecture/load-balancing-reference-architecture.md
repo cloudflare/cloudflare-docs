@@ -619,7 +619,7 @@ The following explores the four main deployment models (and their differences) i
 
 ##### Layer 7 HTTP(S) load balancing
 
-First, the most common model is the **HTTP(S)-based layer 7 proxied load balancer**. These load balancers exist on Cloudflare’s edge and are publicly reachable. Amongst other features, this model supports [WebSockets](/support/network/using-cloudflare-with-websockets/), which are open connections between the client and origin allowing for data to be passed back and forth between the two.
+First, the most common model is the **HTTP(S)-based layer 7 proxied load balancer**. These load balancers exist on Cloudflare’s edge and are publicly reachable. Amongst other features, this model supports [WebSockets](/network/websockets/), which are open connections between the client and origin allowing for data to be passed back and forth between the two.
 
 Because this same layer 7 security stack also provides WAF, DDoS protection, Bot Management, Zero Trust, and other services, accessing these public load balancers can be restricted to authenticated and authorized users as needed. (Please refer to [Securing Load Balancers](#protecting-and-securing-load-balancers) for more information.) 
 
