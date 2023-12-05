@@ -21,7 +21,7 @@ _build:
 To add an IP address to Split Tunnels:
 
 1. Select _IP Address_.
-2. Enter the IP address or CIDR you want to exclude or include.
+2. Enter the IP address or {{<glossary-tooltip term_id="CIDR">}}CIDR{{</glossary-tooltip>}} you want to exclude or include.
 3. Select **Save destination**.
 
 Traffic to this IP address is now excluded or included from the WARP tunnel.

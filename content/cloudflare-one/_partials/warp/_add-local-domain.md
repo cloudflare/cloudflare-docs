@@ -7,7 +7,7 @@ _build:
 
 1. Go to the [**Local Domain Fallback** page](#view-local-domains).
 
-2. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`).
+2. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `*.example.com`).
 
 3. Enter the DNS server(s) that should resolve that domain name.
 

@@ -11,9 +11,3 @@ Zero Trust Network Access (ZTNA) is the main technology that enables organizatio
 
 In summary, Zero Trust assumes that threats may exist both inside and outside the network, emphasizes the principle of least privilege, relies on continuous authentication and authorization, network micro-segmentation, and has an easy integration with cloud environments.
  
-
-
-
-
-
-
