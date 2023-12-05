@@ -14,6 +14,6 @@ If you need to re-add a domain to your account, follow the [regular onboarding f
 
 {{<Aside type="warning" header="Purged zones">}}
 
-By default, seven days after the removal, your zone will be automatically purged. In this case, even if you re-add the domain to the same Cloudflare account, the zone settings will not be restored. Refer to [zone statuses](/dns/zone-setups/reference/domain-status/) for more details.
+By default, seven days after the removal, your zone will be automatically purged. In this case, even if you re-add the domain to the same Cloudflare account, none of the zone settings are expected to be restored. Refer to [zone statuses](/dns/zone-setups/reference/domain-status/) for more details.
 
 {{</Aside>}}
