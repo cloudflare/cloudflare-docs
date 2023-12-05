@@ -6,48 +6,48 @@ weight: 3
 
 # Connect to Postgres
 
-Hyperdrive supports both PostgreSQL and PostgreSQL-compatible databases, as well as [popular drivers](#supported-drivers) and the many Object Relational Mapper (ORM) libraries that use those drivers.
-
-
+Hyperdrive supports PostgreSQL and PostgreSQL-compatible databases, [popular drivers](#supported-drivers) and Object Relational Mapper (ORM) libraries that use those drivers.
 
 ## Create a Hyperdrive
 
 {{<Aside type="note">}}
 
-New to Hyperdrive? Visit the [get started guide](/hyperdrive/get-started/) first to learn how to set up your first Hyperdrive.
+New to Hyperdrive? Refer to the [Get started guide](/hyperdrive/get-started/) to learn how to set up your first Hyperdrive.
 
 {{</Aside>}}
 
-To quickly create a Hyperdrive that connects to an existing PostgreSQL database, you can use the [wrangler](/workers/wrangler/install-and-update/) CLI or use the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/hyperdrive).
+To create a Hyperdrive that connects to an existing PostgreSQL database, use the [wrangler](/workers/wrangler/install-and-update/) CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/hyperdrive).
 
 When using wrangler, replace the placeholder value provided to `--connection-string` with the connection string for your database:
 
 ```sh
 # wrangler v3.11 and above required
-$ wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
+$ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
 ```
 
-This will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
+The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
 
 ```toml
+node_compat = true # required for database drivers to function
+
 [[hyperdrive]]
 name = "HYPERDRIVE"
-id = "<your-hyperdrive-id-here>
+id = "<your-hyperdrive-id-here>"
 ```
 
-This will allow Hyperdrive to generate a dynamic connection string within your Worker that you can pass to your existing database driver. See the [code examples](#driver-examples) on this page for how to set up a database driver with Hyperdrive.
+This will allow Hyperdrive to generate a dynamic connection string within your Worker that you can pass to your existing database driver. Refer to [Driver examples](#driver-examples) to learn how to set up a database driver with Hyperdrive.
 
-Refer to the [examples documentation](/hyperdrive/examples/) for step-by-step guides on how to set up Hyperdrive with several popular database providers.
+Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step guides on how to set up Hyperdrive with several popular database providers.
 
 ## Supported drivers
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver               | Docs                                 | Minimum Version Required |
-| -------------------- | ------------------------------------ | ------------------------ |
-| node-postgres - `pg` | https://node-postgres.com/           | `pg@8.11.0`              |
-| Drizzle              | https://orm.drizzle.team/            | `0.26.2`^                |
-| Kysely               | https://kysely.dev/                  | `0.26.3`^                |
+| Driver               | Documentation              | Minimum Version Required |
+| -------------------- | -------------------------- | ------------------------ |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |
+| Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |
+| Kysely               | https://kysely.dev/        | `0.26.3`^                |
 
 ^ _The marked libraries use `node-postgres` as a dependency._
 
@@ -75,15 +75,12 @@ Hyperdrive does not currently support uploading client CA certificates. In the f
 
 The following Workers code shows examples for `node-postgres`:
 
-{{<tabs labels="node-postgres">}}
-{{<tab label="node-postgres" default="true">}}
-
 ```sh
+---
+header: node-postgres
+---
 $ npm install pg
 ```
-
-{{</tab>}}
-{{</tabs>}}
 
 The following Workers examples show you how to:
 
@@ -96,7 +93,7 @@ The following Workers examples show you how to:
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 
@@ -108,21 +105,20 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		// Create a database client that connects to our database via Hyperdrive
-		//
+		// Create a database client that connects to your database via Hyperdrive
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
 		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
 
 		try {
-			// Connect to our database
+			// Connect to your database
 			await client.connect();
 
 			// A very simple test query
-			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
-			// Return our result rows as JSON
+			// Return result rows as JSON
 			return Response.json({ result: result });
 		} catch (e) {
 			console.log(e);
@@ -137,24 +133,24 @@ export default {
 
 ## Transaction and statement support
 
-Hyperdrive's connection pooling mode is equivalent to the `transaction` mode of connection poolers like PgBouncer and PgCat.
+Hyperdrive's connection pooling mode is equivalent to the `transaction` mode of connection poolers like [PgBouncer](https://www.pgbouncer.org/) and [PgCat](https://github.com/postgresml/pgcat).
 
-When using Hyperdrive, the following PostgreSQL features are unsupported:
+Hyperdrive does not support the following PostgreSQL features:
 
-- Named prepared statements ([PostgreSQL docs](https://www.postgresql.org/docs/current/sql-prepare.html)). Note that these are distinct from the typical and common _unnamed_ prepared statements used to safely provide values to a query.
-- `SET` statements 
-- Advisory locks ([PostgreSQL docs](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS))
-- `LISTEN` and `NOTIFY`
-- `PREPARE` and `DEALLOCATE`
+- Named prepared statements ([PostgreSQL docs](https://www.postgresql.org/docs/current/sql-prepare.html)). These are distinct from the typical and common _unnamed_ prepared statements used to safely provide values to a query.
+- `SET` statements.
+- Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
+- `LISTEN` and `NOTIFY`.
+- `PREPARE` and `DEALLOCATE`.
 
-In cases where you need to issue these unsupported statements from your application, Cloudflare recommends setting up a second, direct client without Hyperdrive.
+In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
 
 ## Identify connections from Hyperdrive
 
 To identify active connections to your Postgres database server from Hyperdrive:
 
 - Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` as the `application_name` in the `pg_stat_activity` table.
-- You can run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = "Cloudflare Hyperdrive"` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
+- Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
 
 ## Next steps
 

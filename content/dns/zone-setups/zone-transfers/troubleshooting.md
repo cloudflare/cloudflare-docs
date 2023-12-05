@@ -8,7 +8,7 @@ meta:
 
 # Troubleshooting secondary nameservers
 
-When [updating your registrar](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#step-4---update-registrar) with the Cloudflare secondary nameservers (`nsXXXX.secondary.cloudflare.com`), you get an error.
+When [updating your registrar](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#4-update-registrar) with the Cloudflare secondary nameservers (`nsXXXX.secondary.cloudflare.com`), you get an error.
 
 {{<Aside type="note">}}
 
@@ -28,4 +28,4 @@ ___
 
 ## Solution
 
-The Cloudflare engineering team needs to be engaged [through Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to make sure the nameserver gets registered again manually at Verisign.
+The Cloudflare engineering team needs to be engaged [through Support](/support/contacting-cloudflare-support/) to make sure the nameserver gets registered again manually at Verisign.

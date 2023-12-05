@@ -9,7 +9,7 @@ meta:
   title: Hyperdrive
 ---
 
-# Hyperdrive
+{{<heading-pill style="beta" heading="h1">}}Hyperdrive{{</heading-pill>}}
 
 {{<description>}}
 
@@ -17,18 +17,38 @@ Turn your existing regional database into a globally distributed database.
 
 {{</description>}}
 
+{{<plan type="workers_paid">}}
+
 Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location. Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon.
 
 Use your existing Postgres drivers and object-relational mapping (ORM) libraries of your choice without any changes. Hyperdrive gives you a connection string that looks just like any other. You do not need to write new code or replace your favorite tools: Hyperdrive works with the ones you already use.
 
+---
+
 ## Features
  
-{{<feature header="Hyperdrive to connect to your database" href="/hyperdrive/get-started/">}}
+{{<feature header="Connect your database" href="/hyperdrive/get-started/" cta="Connect Hyperdrive to your database">}}
 
 Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) that queries it.
 
 {{</feature>}}
+
+{{<feature header="PostgreSQL support" href="/hyperdrive/learning/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
+
+Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
+
+{{</feature>}}
+
+{{<feature header="Query Caching" href="/hyperdrive/learning/query-caching/" cta="Learn about Query Caching">}}
+
+Use Hyperdrive to cache the most popular queries executed against your database.
+
+{{</feature>}}
+
+---
+
 ## Related products
+
 {{<related header="Workers" href="/workers/" product="workers">}}
 
 Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
@@ -40,6 +60,8 @@ Build serverless applications and deploy instantly across the globe for exceptio
 Deploy dynamic front-end applications in record time.
 
 {{</related>}}
+
+---
 
 ## More resources
  
@@ -56,4 +78,3 @@ Deploy dynamic front-end applications in record time.
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
  
 {{</resource-group>}}
-

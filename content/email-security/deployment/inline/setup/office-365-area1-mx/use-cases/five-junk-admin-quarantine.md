@@ -1,6 +1,6 @@
 ---
 title: 5 - Junk email folder and administrative quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 5
 meta:
     title: Deliver emails to the junk email folder - Office 365

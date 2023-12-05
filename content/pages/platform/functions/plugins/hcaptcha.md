@@ -27,10 +27,10 @@ export const onRequestPost: PagesFunction[] = [
     secret: "0x0000000000000000000000000000000000000000",
     sitekey: "10000000-ffff-ffff-ffff-000000000001",
   }),
-  (async ({ request }) => {
+  (async (context) => {
     // Request has been validated as coming from a human
 
-    const formData = await request.formData()
+    const formData = await context.request.formData()
 
     // Store user credentials
 

@@ -16,7 +16,7 @@ The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>
 
 Authentication is done via bearer token. An `Authorization: Bearer <token>` header must be supplied with every request to the API.
 
-Use the dashboard to create a token with permssion to read analytics data on your account:
+Use the dashboard to create a token with permission to read analytics data on your account:
 
 1. Visit the [API tokens](https://dash.cloudflare.com/profile/api-tokens) page in the Cloudflare dashboard.
 2. Select **Create Token**.

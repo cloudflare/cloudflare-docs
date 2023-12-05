@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Fetch
+meta:
+  description: An interface for asynchronously fetching resources via HTTP requests inside of a Worker.
 ---
 
 # Fetch

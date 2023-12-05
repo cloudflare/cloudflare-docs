@@ -3,6 +3,7 @@ title: Web standards
 pcx_content_type: configuration
 meta:
   title: JavaScript and web standards
+  description: Standardized APIs for use by Workers running on Cloudflare's global network.
 ---
 
 # JavaScript and web standards

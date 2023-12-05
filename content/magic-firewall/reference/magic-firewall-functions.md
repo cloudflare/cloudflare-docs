@@ -1,11 +1,8 @@
 ---
+pcx_content_type: navigation
 title: Magic Firewall functions
-pcx_content_type: reference
-meta:
-  title: Magic Firewall Functions
-  description: Review functions available in Cloudflare Magic Firewall.
+external_link: /ruleset-engine/rules-language/functions/#magic-firewall-functions
+_build:
+  publishResources: false
+  render: never
 ---
-
-# Magic Firewall Functions
-
-{{<render file="_magic-firewall-functions.md">}}

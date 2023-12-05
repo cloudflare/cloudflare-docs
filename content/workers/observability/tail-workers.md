@@ -88,7 +88,7 @@ filename: index.js
 3. Add the following to the `wrangler.toml` file of the producer Worker:
 
 ```toml
-tail_consumers = [{service = "<TAIL_WORKER_NAME>", environment = "<ENVIRONMENT_NAME>"}]
+tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
 ```
 
 {{<Aside type="note">}}

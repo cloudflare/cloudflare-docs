@@ -1,6 +1,6 @@
 ---
 title: Cisco - Cisco as MX record
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 4
 layout: single
 meta:

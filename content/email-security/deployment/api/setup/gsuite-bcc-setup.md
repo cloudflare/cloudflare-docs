@@ -1,6 +1,6 @@
 ---
 title: Gmail BCC setup
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 meta:
     title: Setup phishing risk assessment for Gmail with Area 1

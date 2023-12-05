@@ -522,7 +522,7 @@ Purchase of Magic Transit and Magic WAN.
 
 **What should you do if you receive one?**
 
-Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/how-to/check-tunnel-health-dashboard/) for more information on what the issue might be.
+Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) for more information on what the issue might be.
 
 {{</details>}}
 
@@ -773,6 +773,8 @@ Action only needed if notification is about a certificate that failed to be issu
 
 Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
+
 **Other options / filters**
 
 None.
@@ -833,6 +835,8 @@ All Cloudflare plans.
 
 **Who is it for?**
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
 
 **Other options / filters**
 
@@ -981,7 +985,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions. 
+1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
 
 {{</details>}}
 

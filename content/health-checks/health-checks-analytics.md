@@ -129,7 +129,7 @@ Data transmission was not acknowledged and the retransmit of data did not succee
 
 #### Solution
 
-Confirm whether the SYN-ACK for the handshake takes place at your origin and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Confirm whether the SYN-ACK for the handshake takes place at your origin and contact [Cloudflare support](/support/contacting-cloudflare-support/).
 
 ### ​​Network Unreachable
 
@@ -199,4 +199,4 @@ If the failure cannot be classified as any other type of failure mentioned above
 
 #### Solution
 
-Contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Contact [Cloudflare support](/support/contacting-cloudflare-support/).

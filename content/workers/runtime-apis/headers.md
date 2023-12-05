@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Headers
+meta:
+  description: Access HTTP request and response headers.
 ---
 
 # Headers

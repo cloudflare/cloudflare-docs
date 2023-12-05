@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Enable DNSSEC
-weight: 4
+weight: 3
 meta: 
     title: Enable DNSSEC - subdomain setup
 ---
