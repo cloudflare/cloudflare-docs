@@ -70,13 +70,17 @@ Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-set
 
 Your domain has failed multiple DNS checks, where either the Cloudflare nameservers are no longer present on your domain's `NS` records ([Full setup](/dns/zone-setups/full-setup/)) or no `SOA` record is returned for the zone ([Partial (CNAME) setup](/dns/zone-setups/partial-setup/)).
 
-The zone will be deleted automatically after 7 days, unless there is an active plan subscription.
+Zones that do not have any active subscriptions and have been moved will be deleted automatically after 7 days.
+
+{{<Aside type="warning">}}
+If you have an active subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/setup/manage-domains/remove-domain/).
+{{</Aside>}}
 
 ## Deleted
 
 Your zone has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/setup/account-setup/add-site/).
 
-After being deleted for seven days, the zone is automatically [purged](#purged).
+After being deleted for seven days, zones are automatically [purged](#purged).
 
 ## Purged
 
