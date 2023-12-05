@@ -78,6 +78,13 @@ The WAF's [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-m
 
 {{</Aside>}}
 
+## DNS Services
+
+Cloudflare may provide more services than HTTP/HTTPS, such as DNS services (port 53), so it is expected that they are open on [Cloudflare IPs](https://www.cloudflare.com/ips).
+
+More information in: [​​How to block traffic on additional ports](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#how-to-block-traffic-on-additional-ports)
+
+
 ## Related resources
 
 - [Managing DNS records at Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/)
