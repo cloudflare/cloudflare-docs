@@ -14,7 +14,7 @@ You must have a Pages project set up on your local machine or deployed on the Cl
 
 ## Create a Function
 
-To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project. 
+To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project.
 
 {{<Aside type="note" header="Advanced mode">}}
 
