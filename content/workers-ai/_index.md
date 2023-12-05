@@ -46,6 +46,8 @@ Supporting multiple classes of models, here are some AI tasks you can unlock wit
 * **Computer Vision** - image classification, object detection
 * **Audio** - Automatic speech recognition (ASR)
 
+See the [Models](/workers-ai/models/) section for our catalog's complete list of tasks and models.
+
 ### Runs on a global network of GPUs
 
 With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to its global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
