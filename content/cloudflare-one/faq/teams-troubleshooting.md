@@ -119,7 +119,7 @@ This error occurs when `cloudflared` does not recognize the SSL/TLS certificate 
 ```txt
 ingress:
   - hostname: test.example.com
-    service: https://localhost:8080
+    service: https://localhost:443
     originRequest:
       originServerName: test.example.com
 ```
