@@ -830,57 +830,7 @@
     },
     "grpc": {
       "title": "gRPC",
-      "link": "/support/network/understanding-cloudflare-grpc-support/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "http2": {
-      "title": "HTTP/2",
-      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "customization": {
-          "title": "Can customize",
-          "summary": "Only Enterprise can customize",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Yes"
-        }
-      }
-    },
-    "http2_to_origin": {
-      "title": "HTTP/2 to Origin",
-      "link": "/cache/concepts/enable-http2-to-origin/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "http3": {
-      "title": "HTTP/3 (with QUIC)",
-      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
+      "link": "/network/grpc-connections/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -894,7 +844,7 @@
     },
     "ip_geolocation": {
       "title": "IP Geolocation",
-      "link": "/support/network/configuring-ip-geolocation/",
+      "link": "/network/ip-geolocation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -908,7 +858,7 @@
     },
     "ipv6": {
       "title": "IPv6 Compatibility",
-      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/",
+      "link": "/network/ipv6-compatibility/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -952,7 +902,7 @@
     },
     "onion_routing": {
       "title": "Onion Routing",
-      "link": "/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/",
+      "link": "/network/onion-routing/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -966,7 +916,7 @@
     },
     "pseudo_ipv4": {
       "title": "Pseudo IPv4",
-      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
+      "link": "/network/pseudo-ipv4/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -980,7 +930,7 @@
     },
     "response_buffering": {
       "title": "Response buffering",
-      "link": "https://support.cloudflare.com/hc/articles/206049798",
+      "link": "/network/response-buffering/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -994,7 +944,7 @@
     },
     "true_client_ip_header": {
       "title": "True Client IP Header",
-      "link": "/fundamentals/reference/http-request-headers/",
+      "link": "/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1008,7 +958,7 @@
     },
     "websockets": {
       "title": "WebSockets",
-      "link": "/support/network/using-cloudflare-with-websockets/",
+      "link": "/network/websockets/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1160,7 +1110,7 @@
     },
     "page_rules": {
       "title": "Page Rules",
-      "link": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
+      "link": "/rules/page-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1965,6 +1915,56 @@
           "title": "Availability",
           "summary": "Pro and above",
           "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http2": {
+      "title": "HTTP/2",
+      "link": "/speed/optimization/protocol/http2/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "customization": {
+          "title": "Can customize",
+          "summary": "Free customers cannot disable",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http2_to_origin": {
+      "title": "HTTP/2 to Origin",
+      "link": "/speed/optimization/protocol/http2-to-origin/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "http3": {
+      "title": "HTTP/3 (with QUIC)",
+      "link": "/speed/optimization/protocol/http3/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"

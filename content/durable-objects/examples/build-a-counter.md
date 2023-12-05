@@ -168,7 +168,7 @@ export class Counter {
     // You do not have to worry about a concurrent request having modified the value in storage. 
     // "input gates" will automatically protect against unwanted concurrency. 
     // Read-modify-write is safe. 
-    await this.state.storage.put("value", value);
+    this.state.storage.put("value", value);
 
     return new Response(value.toString());
   }

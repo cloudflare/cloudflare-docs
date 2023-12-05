@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: 1ipRange;;2productName;;3productPathDash;;4ipSecProductPath;;5tunnelsPath;;6healthCheck;;7productPathProbe;;8antiReplayPagePath;;9BiVsUniHealthCheck
+inputParameters: 1ipRange;;2productName;;3productPathDash;;4ipSecProductPath;;5tunnelsPath;;6healthCheck;;7productPathProbe;;8antiReplayPagePath;;9BiVsUniHealthCheck;;10cniOnRampH2;;11cniOnRampText
 ---
 
 # Configure tunnel endpoints
@@ -37,6 +37,10 @@ Refer to [Tunnels and encapsulation]($5) to learn more about the technical requi
 If you use $2 and {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
 Refer to [Anti-replay protection]($8) for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
+
+$10
+
+$11
 
 ## Add tunnels
 

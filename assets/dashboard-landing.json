@@ -420,7 +420,7 @@
       "dashPath": "/:accountId/:zoneName/rules",
       "recommendations": [
         {
-          "url_path": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
+          "url_path": "/rules/page-rules/",
           "title": "Page Rules"
         },
         {

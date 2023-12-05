@@ -18,7 +18,7 @@ When using weak ETag headers, disable [Email Obfuscation](/support/more-dashboar
 
 ## Strong ETags
 
-Strong ETag headers ensure the resource in browser cache and on the web server are byte-for-byte identical. Domains on [Enterprise](https://www.cloudflare.com/pricing/) plans enable strong ETag headers via a **Respect Strong ETags** [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) and lower plans customers can enable strong ETag headers using [Cache Rules](/cache/how-to/cache-rules/).
+Strong ETag headers ensure the resource in browser cache and on the web server are byte-for-byte identical. Domains on [Enterprise](https://www.cloudflare.com/pricing/) plans enable strong ETag headers via a **Respect Strong ETags** [Page Rule](/rules/page-rules/) and lower plans customers can enable strong ETag headers using [Cache Rules](/cache/how-to/cache-rules/).
 
 ### Behavior with Respect Strong ETags enabled
 
