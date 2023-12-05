@@ -14,7 +14,7 @@ layout: example
 
 {{<Aside type="info">}}
 
-This example Worker makes use of the [Node.JS Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](http://localhost:5173/workers/runtime-apis/nodejs/#enable-nodejs-with-workers)
+This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](http://localhost:5173/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
 {{</Aside>}}
 
 You can both verify and generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
