@@ -89,13 +89,16 @@ For responses with error status codes, Cloudflare will only compress responses i
 
 Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
-{{<Aside type="warning" header="Minimum response size for compression">}}
+{{<Aside type="note" header="Notes about the response size and compression">}}
 
-Cloudflare will only apply compression to responses with a minimum size when sending them to website visitors:
-* For GZIP, responses must have a minimum size of 48 bytes.
-* For Brotli, responses must have a minimum size of 50 bytes.
+* Cloudflare will only apply compression to responses with a minimum size when sending them to website visitors:
 
-Smaller responses will not be compressed, regardless of their content type.
+    * For GZIP, responses must have a minimum size of 48 bytes.
+    * For Brotli, responses must have a minimum size of 50 bytes.
+
+    Smaller responses will not be compressed, regardless of their content type.
+
+* When using Brotli compression, Cloudflare may perform buffering up to 64 bytes to verify the correctness of the response.
 
 {{</Aside>}}
 
