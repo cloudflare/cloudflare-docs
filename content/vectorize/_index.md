@@ -52,7 +52,7 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 {{<resource header="Limits" href="/vectorize/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the open beta and how to work within them.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, join the `#vectorize-open-beta` channel to show what you are building, and discuss the platform with other developers.{{</resource>}}
 
