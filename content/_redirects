@@ -876,7 +876,9 @@
 
 # workers
 /workers/about/ /workers/learning/ 301
+/workers/learning/ /workers/reference/ 301
 /workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
+/workers/learning/how-workers-works/ /workers/reference/how-workers-works/ 301
 /workers/about/limits/ /workers/platform/limits/ 301
 /workers/about/metrics/ /workers/observability/metrics-and-analytics/ 301
 /workers/about/pricing/ /workers/platform/pricing/ 301
@@ -885,6 +887,7 @@
 /workers/about/tips/debugging/ /workers/observability/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
+/workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/api/resource-bindings/webassembly-modules/ /api/operations/worker-script-list-workers 301
@@ -1021,8 +1024,9 @@
 /workers/learning/using-durable-objects/ /durable-objects/ 301
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/learning/languages/ 301
+/workers/learning/languages/ /workers/reference/languages/ 301
 /workers/platform/protocols/ /workers/learning/protocols/ 301
-/workers/platform/storage-options/ /workers/learning/storage-options/ 301
+/workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
 /workers/platform/bindings/about-service-bindings/ /workers/configuration/bindings/about-service-bindings/ 301
@@ -1049,6 +1053,7 @@
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
+/workers/learning/migrate-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/tail-event/ /workers/runtime-apis/handlers/tail/ 301
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
@@ -1057,6 +1062,8 @@
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
+/workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
+/workers/learning/security-model/ /workers/reference/security-model/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
