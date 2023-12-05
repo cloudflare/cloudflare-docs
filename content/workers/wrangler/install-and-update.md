@@ -4,9 +4,6 @@ title: Install/Update Wrangler
 weight: 1
 meta:
   description: Get started by installing Wrangler, and update to newer versions by following this guide.
-outputs:
-  - html
-  - dash-sidebar
 ---
 
 # Install/Update Wrangler

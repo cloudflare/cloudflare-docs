@@ -4,9 +4,6 @@ pcx_content_type: get-started
 weight: 2
 meta:
   title: Get started guide
-outputs:
-  - html
-  - dash-sidebar
 ---
 
 # Get started 
