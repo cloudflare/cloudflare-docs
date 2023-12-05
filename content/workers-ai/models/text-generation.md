@@ -13,9 +13,9 @@ Family of generative text models, such as large language models (LLM), that can 
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Text Generation models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
@@ -25,6 +25,7 @@ List of available models in for this task type:
 | `@hf/thebloke/codellama-7b-instruct-awq`                   | CodeLlama 7B Instruct AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Code Llama variant.<br/><strong>Default max (sequence) tokens (stream)</strong>: 596<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-AWQ)<br/>  |
 
 ## Examples - chat style with system prompt (preferred)
+
 {{<tabs labels="streaming | worker | node | python | curl">}}
 {{<tab label="streaming" default="true">}}
 
@@ -151,26 +152,6 @@ Part of getting good results from text generation models is asking questions cor
 
 There are two ways to prompt text generation models with Workers AI:
 
-### Unscoped prompts
-
-Unscoped prompts send your raw data to the model pipeline, unchanged. You can use this method if you want to send a single string of text to the model, or if you're familiar with model internals and want to construct the model chat template manually.
-
-Here's an example of a simple question, without templating:
-
-```javascript
-{
-  prompt: "tell me a joke about cloudflare"
-};
-```
-
-Here's an input example of a [Mistral](https://docs.mistral.ai/llm/mistral-instruct-v0.1#chat-template) chat template prompt:
-
-```javascript
-{
-  prompt: "<s>[INST]comedian[/INST]</s>\n[INST]tell me a joke about cloudflare[/INST]"
-};
-```
-
 ### Scoped prompts
 
 This is the **recommended** method. With scoped prompts, Workers AI takes the burden of knowing and using different chat templates for different models and provides a unified interface to developers when building prompts and creating text generation tasks.
@@ -193,6 +174,42 @@ Here's an input example of a scoped prompt using system and user roles:
     { role: "system", content: "you are a very funny comedian and you like emojis" },
     { role: "user", content: "tell me a joke about cloudflare" },
   ],
+};
+```
+
+Here's a better example of a chat session using multiple iterations between the user and the assistant.
+
+```javascript
+{
+  messages: [
+    { role: "system", content: "you are a professional computer science assistant" },
+    { role: "user", content: "what is WASM?" },
+    { role: "assistant", content: "WASM (WebAssembly) is a binary instruction format that is designed to be a platform-agnostic" },
+    { role: "user", content: "does Python compile to WASM?" },
+    { role: "assistant", content: "No, Python does not directly compile to WebAssembly" },
+    { role: "user", content: "what about Rust?" },
+  ],
+};
+```
+
+Note that different LLMs are trained with different templates for different use cases. While Workers AI tries its best to abstract the specifics of each LLM template from the developer through a unified API, you should always refer to the model documentation for details (we provide links in the table above.) For example, instruct models like Codellama are fine-tuned to respond to a user-provided instruction, while chat models expect fragments of dialogs as input.
+
+### Unscoped prompts
+
+You can use unscoped prompts to send a single question to the model without worrying about providing any context. Workers AI will automatically convert your { prompt: } input to a reasonable default scoped prompt internally so that you get the best possible prediction.
+
+```javascript
+{
+  prompt: "tell me a joke about cloudflare"
+};
+```
+
+You can also use unscoped prompts to construct the model chat template manually. In this case, you can use the raw parameter. Here's an input example of a [Mistral](https://docs.mistral.ai/llm/mistral-instruct-v0.1#chat-template) chat template prompt:
+
+```javascript
+{
+  prompt: "<s>[INST]comedian[/INST]</s>\n[INST]tell me a joke about cloudflare[/INST]",
+  raw: true
 };
 ```
 
@@ -300,6 +317,10 @@ The following schema is based on [JSON Schema](https://json-schema.org/)
         "prompt": {
           "type": "string",
           "maxLength": 4096
+        },
+        "raw": {
+          "type": "boolean",
+          "default": false
         },
         "stream": {
           "type": "boolean",

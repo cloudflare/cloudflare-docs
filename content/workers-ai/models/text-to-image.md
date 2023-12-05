@@ -13,9 +13,9 @@ weight: 5
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Text-to-Image models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
