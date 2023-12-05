@@ -96,7 +96,7 @@ conn cloudflare-ipsec
     leftupdown=/etc/strongswan.d/ipsec-vti.sh
 ```
 
-2. Now, you need to create a virtual tunnel interface (VTI) with the IP we configured earlier as the target for Cloudflare’s health checks (`172.64.240.252`) to route IPsec packets. Go to `/etc/strongswan.d/`
+2. Now, you need to create a virtual tunnel interface (VTI) with the IP we configured earlier as the target for Cloudflare’s health checks (`172.64.240.252`) to route IPsec packets. Go to `/etc/strongswan.d/`.
 
 3. Create a script called `ipsec-vti.sh` and add the following:
 

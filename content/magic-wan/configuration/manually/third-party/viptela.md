@@ -20,7 +20,7 @@ Before setting up a connection between Cisco SD-WAN and Cloudflare, you must hav
 
 {{<Aside type="note" header="Note">}}
 
-The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router.  For connectivity, GRE tunnels were used.
+The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router. For connectivity, GRE tunnels were used.
 
 {{</Aside>}}
 
