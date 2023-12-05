@@ -17,9 +17,6 @@ A few examples include (but are not limited to):
 * [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
 * [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`). This endpoint returns a `204` HTTP status code.
 
-{{<Aside type="note">}}
-Please note that the `/cdn-cgi/rum` endpoints returns an HTTP 204 status code. This is expected.
-{{</Aside>}}
 
 ## Recommended exclusions
 
