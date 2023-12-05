@@ -6,6 +6,6 @@ weight: 1
 
 # How to
 
-You can run the following tasks for your Magic WAN configuration:
+To configure Magic WAN manually, start by setting up your tunnel endpoints, static routes and health alerts.
 
 {{<directory-listing>}}
