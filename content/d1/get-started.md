@@ -34,7 +34,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 

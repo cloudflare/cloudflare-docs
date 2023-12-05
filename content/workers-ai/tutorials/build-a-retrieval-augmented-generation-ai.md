@@ -375,7 +375,7 @@ To do more:
 
 * Review Cloudflare's [AI documentation](/workers-ai).
 * Review [Tutorials](/workers/tutorials/) to build projects on Workers.
-* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Learning](/workers/learning/).
+* Explore [Examples](/workers/examples/) to experiment with copy-and-paste Worker code.
 * Learn about Workers features and functionality in [Platform](/workers/platform/).
 * Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
+* Review more topics on how Workers works in [Reference](/workers/reference/).
