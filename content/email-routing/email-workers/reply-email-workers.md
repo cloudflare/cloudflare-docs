@@ -22,20 +22,20 @@ export default {
     const msg = createMimeMessage();
     msg.setHeader("In-Reply-To", message.headers.get("Message-ID"));
     msg.setSender({ name: "Thank you for you contact", addr: "<SENDER>@example.com" });
-    msg.setRecipient(message.from);
-    msg.setSubject("Email Routing Auto-reply");
+    msg.setRecipient("mary@domain.example");
+    msg.setSubject("An email generated in a worker");
     msg.addMessage({
       contentType: 'text/plain',
-      data: `We got your message, your ticket number is ${ ticket.id }`
+      data: `We got your message, your ticket number is ${ ticket }`
     });
 
-    var replyMessage = new EmailMessage(
+    const replyMessage = new EmailMessage(
       "<SENDER>@example.com",
       message.from,
       msg.asRaw()
     );
 
-    message.reply(replyMessage);
+    await message.reply(replyMessage);
   }
 }
 ```
