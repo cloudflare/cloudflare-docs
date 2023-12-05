@@ -1,7 +1,7 @@
 ---
 title: Agentless access to private web services
 pcx_content_type: overview
-weight: 6
+weight: 5
 layout: learning-module
 ---
 
@@ -15,6 +15,5 @@ Performing these tasks in this order makes sure your private application is neve
 
 By the end of this module, you will be able to:
 
-- 
-- 
-- 
+- Secure your application using a Cloudflare Access policy
+- After protecting your route with an Access policy, you can create a publicly accessible route

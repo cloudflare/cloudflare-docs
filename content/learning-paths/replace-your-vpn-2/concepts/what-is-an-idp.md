@@ -1,5 +1,5 @@
 ---
-title: What is an IDP?
+title: What is an IdP?
 pcx_content_type: overview
 weight: 5
 layout: learning-unit

@@ -6,4 +6,3 @@ layout: learning-unit
 ---
 
 {{<render file="_choose-team-name.md" productFolder="cloudflare-one" >}}
-_idp-integration

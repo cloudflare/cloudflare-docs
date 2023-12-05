@@ -1,11 +1,13 @@
 ---
 title: Application services dashboard setup
 pcx_content_type: overview
-weight: 3
+weight: 2
 layout: learning-module
 ---
 
 # Application services dashboard setup
+
+Creating an account and onboarding a domain is the first step to securely onboarding a self-hosted application. 
 
 ## Objectives
 

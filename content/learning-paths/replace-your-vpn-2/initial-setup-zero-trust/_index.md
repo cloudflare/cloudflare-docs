@@ -1,11 +1,13 @@
 ---
 title: Zero Trust services dashboard setup
 pcx_content_type: overview
-weight: 4
+weight: 3
 layout: learning-module
 ---
 
 # Zero Trust services dashboard setup
+
+The next step to securely onboarding your self-hosted application is to initialize and configure your Zero Trust services dashboard. 
 
 ## Objectives
 

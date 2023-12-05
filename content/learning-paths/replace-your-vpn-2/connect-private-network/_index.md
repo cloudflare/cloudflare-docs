@@ -1,7 +1,7 @@
 ---
 title: Connect your private network to Cloudflare
 pcx_content_type: overview
-weight: 5
+weight: 4
 layout: learning-module
 ---
 
@@ -15,5 +15,5 @@ Cloudflare Tunnel connects applications and services to Cloudflare’s network. 
 By the end of this module, you will be able to:
 
 - Create a Cloudflare Tunnel
-- Understand Public and Private network routes for your Tunnel
+- Understand private network routes for your Tunnel
 - Deploy your first Zero Trust policies to secure access to your internal network

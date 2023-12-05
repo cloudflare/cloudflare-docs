@@ -6,7 +6,7 @@ weight: 2
 
 # Add a self-hosted application
 
-{{<render file="access/self-hosted-app-intro.md" productFolder="cloudflare-one">}}
+{{<render file="access/_self-hosted-app-intro.md" productFolder="cloudflare-one">}}
 
 ## Prerequisites
 

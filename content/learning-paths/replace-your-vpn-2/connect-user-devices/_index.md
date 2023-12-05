@@ -1,7 +1,7 @@
 ---
 title: Connect user devices to Cloudflare
 pcx_content_type: overview
-weight: 7
+weight: 6
 layout: learning-module
 ---
 
@@ -17,4 +17,3 @@ By the end of this module, you will be able to:
 
 - You will be able to define which users can connect devices to your Zero Trust organization
 - Download and deploy WARP 
-- 
