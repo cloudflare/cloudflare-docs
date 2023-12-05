@@ -1023,9 +1023,9 @@
 /workers/platform/triggers/custom-domains/ /workers/configuration/routing/custom-domains/ 301
 /workers/learning/using-durable-objects/ /durable-objects/ 301
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
-/workers/platform/languages/ /workers/learning/languages/ 301
+/workers/platform/languages/ /workers/reference/languages/ 301
 /workers/learning/languages/ /workers/reference/languages/ 301
-/workers/platform/protocols/ /workers/learning/protocols/ 301
+/workers/platform/protocols/ /workers/reference/protocols/ 301
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
