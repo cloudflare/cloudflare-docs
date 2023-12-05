@@ -15,7 +15,7 @@ A few examples include (but are not limited to):
 * [JavaScript detection](/bots/reference/javascript-detections/) used by Cloudflare bot products (`example.com/cdn-cgi/challenge-platform/`)
 * [Image resizing](/images/image-resizing/url-format/) in the new URLs you would use for images (`example.com/cdn-cgi/image/`)
 * [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
-* [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`)
+* [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`). This endpoint returns a `204` HTTP status code.
 
 {{<Aside type="note">}}
 Please note that the `/cdn-cgi/rum` endpoints returns an HTTP 204 status code. This is expected.
