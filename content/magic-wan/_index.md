@@ -27,7 +27,7 @@ Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps
 Use Magic WAN Connector to automatically connect, steer, and shape any IP traffic.
 {{</feature>}}
 
-{{<feature header="Connect with third-party device" href="/magic-wan/configuration/manual/" cta="Use a third-party device">}}
+{{<feature header="Connect with third-party device" href="/magic-wan/configuration/manually/" cta="Use a third-party device">}}
 Magic WAN is compatible with a host of third-party devices. If you do not have Magic WAN Connector, start here to learn how to set up Magic WAN manually.
 {{</feature>}}
 
@@ -39,7 +39,7 @@ Magic WAN sends health check probes to monitor network status and the health of 
 Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 
-{{<feature header="Network analytics" href="/magic-wan/configuration/manual/how-to/view-analytics/">}}
+{{<feature header="Network analytics" href="/magic-wan/configuration/manually/how-to/view-analytics/">}}
 Network analytics allows you to check traffic patterns and DDoS attacks in near real-time, to troubleshoot IP traffic issues.
 {{</feature>}}
 

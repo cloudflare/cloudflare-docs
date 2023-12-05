@@ -46,19 +46,19 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ### Magic IPsec Tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels). The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels). The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
 - `172.64.240.253`: Use with the primary IPsec tunnel.
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
 
-{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
+{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
 
 
 #### Add IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/configuration/manual/how-to/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
     - **Tunnel name**: `SFO_IPSEC_TUN01`
     - **Interface address**: `10.252.2.96/31`
     - **Customer endpoint**: `203.0.113.254`
@@ -103,7 +103,7 @@ After creating your IPsec tunnels, the Cloudflare dashboard will list them under
 
 If you refer to the [Environment section](#environment), you will notice there is one subnet within `Trust_L3_Zone`: `10.1.100.0/24`.
 
-Create a [static route](/magic-wan/configuration/manual/how-to/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
+Create a [static route](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
 
 #### Tunnel 01
 

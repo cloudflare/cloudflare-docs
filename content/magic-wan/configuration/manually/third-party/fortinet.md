@@ -7,7 +7,7 @@ title: Fortinet
 
 This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
 
-The FortiGate configuration settings presented here support [bidirectional health checks](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels) as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
+The FortiGate configuration settings presented here support [bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
 
 ## Testing Environment
 
@@ -28,14 +28,14 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to  to **Magic WAN** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
-4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
+4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
     - **Customer Endpoint**: Enter your external/egress interface of the firewall.
     - **Cloudflare Endpoint**: Enter the first of your two Anycast IPs.
     - **Health check rate**: _Low_.
     - **Health check type**: _Reply_.
     - **Health check target**: _Custom_.
     - **Target address**: The target address for the first tunnel is always `172.64.240.253`.
-    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/configuration/manual/how-to/configure-tunnels/#add-tunnels) for more information.
+    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for more information.
 
     ![The first IPsec tunnel should have the values mentioned above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
 
@@ -55,7 +55,7 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration**.
 3. From the **Static Routes** tab, select **Create**.
-4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manual/how-to/configure-static-routes/) to learn about settings not mentioned here):
+4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) to learn about settings not mentioned here):
     - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
     - **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
     - **Priority**: Leave the default value (`100`).

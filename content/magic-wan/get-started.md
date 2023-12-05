@@ -17,4 +17,4 @@ Refer to [Configure with Connector](/magic-wan/configuration/connector/) for mor
 
 ## Set up manually through a third-party device
 
-Refer to [Prerequisites](/magic-wan/prerequisites/) before following the steps in [Manual configuration](/magic-wan/configuration/manual/).
+Refer to [Prerequisites](/magic-wan/prerequisites/) before following the steps in [Manual configuration](/magic-wan/configuration/manually/).

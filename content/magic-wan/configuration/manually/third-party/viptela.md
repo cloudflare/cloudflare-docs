@@ -76,13 +76,13 @@ Because the template was created to add GRE tunnels, you only need to update the
 
 ## 3. Create tunnels in Cloudflare
 
-Refer to [Configure tunnel endpoints](/magic-wan/configuration/manual/how-to/configure-tunnels/) for more information on creating a GRE tunnel.
+Refer to [Configure tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more information on creating a GRE tunnel.
 
 ![Established GRE tunne in Cloudflash dashboard](/images/magic-wan/third-party/viptela/viptela-gre-tunnel.png)
 
 ## 4. Define static routes
 
-Refer to [Configure static routes](/magic-wan/configuration/manual/how-to/configure-static-routes/) for more information on configuring your static routes.
+Refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) for more information on configuring your static routes.
 
 ![Established GRE static routes in Cloudflare dashboard](/images/magic-wan/third-party/viptela/viptela-gre-static-routes.png)
 
@@ -100,6 +100,6 @@ A matching blocked log line is visible from the Cloudflare logs.
 
 ## Add new tunnels using IPsec
 
-IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/configuration/manual/third-party/cisco-ios-xe/) for more information.
+IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/configuration/manually/third-party/cisco-ios-xe/) for more information.
 
 **Coming soon: IPsec tunnel creation in SD-WAN mode.**

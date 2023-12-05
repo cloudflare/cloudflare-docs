@@ -15,7 +15,7 @@ This tutorial shows you how to use Magic WAN with the following versions of the 
     - SFOS  Version 19.0 MR2-Build 472
     - SFOS  Version 19.5.1 MR1-Build 278
 
-You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/magic-wan/configuration/manual/how-to/configure-tunnels/) to Magic WAN.
+You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Magic WAN.
 
 ## IPsec connection
 
@@ -68,11 +68,11 @@ After setting up your IPsec tunnel, it will show up on the IPsec connections lis
 
 ### 3. Assign the XFRM interface address
 
-You must use an interface address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/configuration/manual/how-to/configure-tunnels/) on Magic WAN.
+You must use an interface address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) on Magic WAN.
 
 1. Go to **Configure** > **Network**.
 2. In **Interfaces**, select the corresponding interface to the IPsec tunnel you created in [step 2](#2-create-ipsec-connection-tunnel).
-3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/configuration/manual/how-to/configure-tunnels/). When you are finished, it should look similar to the following:
+3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/). When you are finished, it should look similar to the following:
 
 ![Configure a XFRM interface.](/images/magic-wan/third-party/sophos-firewall/3-xfrm-interface.png)
 
