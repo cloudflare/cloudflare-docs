@@ -205,7 +205,7 @@ export default <ExportedHandler<{ PASSWORD: string }>>{
 
 				const credentials = Buffer.from(encoded, 'base64').toString();
 
-				// The username & password are split by the first colon.
+				// The username and password are split by the first colon.
 				//=> example: "username:password"
 				const index = credentials.indexOf(':');
 				const user = credentials.substring(0, index);
