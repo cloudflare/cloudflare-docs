@@ -8,7 +8,7 @@ weight: 3
 
 ## Prerequisites
 
-You need to purchace [Magic WAN](https://www.cloudflare.com/magic-wan/) to be able to purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) to be able to purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
 Refer to the steps below to configure your Magic WAN Connector.
 
