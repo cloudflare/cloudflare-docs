@@ -1,7 +1,7 @@
 ---
 title: Storage options guide
 pcx_content_type: concept
-weight: 1
+weight: 3
 meta:
   title: Storage options guide
   description: Storage options available on Cloudflare's developer platform that can be used with Workers.

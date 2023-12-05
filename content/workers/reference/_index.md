@@ -1,11 +1,11 @@
 ---
 pcx_content_type: navigation
-title: Learning
-weight: 6
+title: Reference
+weight: 12
 ---
 
-# Learning
+# Reference
 
-Conceptual knowledge about how Workers works.
+More information on how Workers works.
 
 {{<directory-listing showDescriptions="true">}}
