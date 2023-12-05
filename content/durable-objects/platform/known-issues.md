@@ -25,6 +25,8 @@ The Workers editor in the [Cloudflare dashboard](https://dash.cloudflare.com/) a
 
 [`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the [Durable Object binding](/workers/configuration/bindings/#durable-object-bindings), then writes will affect persistent data. Wrangler will emit a warning in that case.
 
+In local development (`wrangler dev`), the [persisted state](/durable-objects/api/transactional-storage-api/) of a Durable Object is stored in the `.wrangler/state/v3/do` directory in the root of your project. If you need to clear this local state, delete this directory.
+
 ## Object location
 
 A Durable Object is instantiated close to where the initial `get()` is made. This may not be in the data center the user is connected to, but in most cases, it will be in close proximity.
