@@ -1298,7 +1298,6 @@
 # Workers
 /workers/recipes/vcl-conversion/* /workers/ 301
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
-/workers/reference/* /workers/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
 
 # Others
