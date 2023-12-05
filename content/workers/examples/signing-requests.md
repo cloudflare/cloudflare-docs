@@ -14,7 +14,7 @@ layout: example
 
 You can both verify and generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
 
-The following worker will:
+The following Worker will:
 * For request URLs beginning with `/generate/`, replace `/generate/` with `/verify/`, sign the resulting path with its timestamp, and return the full, signed URL in the response body.
 
 * For request URLs beginning with `/verify/`, verify the signed URL and allow the request through.
