@@ -16,7 +16,7 @@ Rules can have additional features through specific Cloudflare products. You may
 
 ## Rule evaluation
 
-When evaluating a rule in the context of an HTTP request, Cloudflare compares the values of request/response properties (obtained through [fields](/ruleset-engine/rules-language/fields/)) to those defined in the rule's filter expression.
+When evaluating a rule, Cloudflare compares the values of request/response properties or derived values (obtained through [fields](/ruleset-engine/rules-language/fields/)) to those defined in the rule's filter expression.
 
 If the entire expression evaluates to `true`, there is a rule match and Cloudflare triggers the [action](/ruleset-engine/rules-language/actions/) configured in the rule. If the expression evaluates to `false`, the rule does not match and its configured action is not applied.
 
