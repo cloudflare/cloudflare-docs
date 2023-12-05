@@ -9,13 +9,13 @@ This tutorial shows you how to use Magic WAN with the following versions of the 
 
 - **Sophos form factor tested:**
     - Sophos Firewall XGS and XG series hardware
-    - Sophos Firewall virtual appliance on VMware 
+    - Sophos Firewall virtual appliance on VMware
 
 - **Sophos software versions tested:**
     - SFOS  Version 19.0 MR2-Build 472
     - SFOS  Version 19.5.1 MR1-Build 278
 
-You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/magic-wan/get-started/configure-tunnels/) to Magic WAN.
+You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Magic WAN.
 
 ## IPsec connection
 
@@ -68,11 +68,11 @@ After setting up your IPsec tunnel, it will show up on the IPsec connections lis
 
 ### 3. Assign the XFRM interface address
 
-You must use an interface address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/) on Magic WAN.
+You must use an interface address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) on Magic WAN.
 
 1. Go to **Configure** > **Network**.
 2. In **Interfaces**, select the corresponding interface to the IPsec tunnel you created in [step 2](#2-create-ipsec-connection-tunnel).
-3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/). When you are finished, it should look similar to the following:
+3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/). When you are finished, it should look similar to the following:
 
 ![Configure a XFRM interface.](/images/magic-wan/third-party/sophos-firewall/3-xfrm-interface.png)
 
@@ -85,11 +85,11 @@ You must use an interface address from the `/31` subnet required to [configure t
 
 ### 5. Disable IPsec anti-replay
 
-You will have to disable IPsec Anti-Replay on your Sophos Firewall. Changing the anti-replay settings restarts the IPsec service, which causes tunnel-flap for all IPsec tunnels. This will also disable IPsec anti-replay protection for all VPN connections globally. Plan these changes accordingly. 
+You will have to disable IPsec Anti-Replay on your Sophos Firewall. Changing the anti-replay settings restarts the IPsec service, which causes tunnel-flap for all IPsec tunnels. This will also disable IPsec anti-replay protection for all VPN connections globally. Plan these changes accordingly.
 
 Below are instruction on how to achieve this on SFOS version 19 and SFOS version 19.5:
 
-#### SFOS 19.0 MR2-Build 472 or 19.5 MR1-Build278 or later versions: 
+#### SFOS 19.0 MR2-Build 472 or 19.5 MR1-Build278 or later versions:
 
 1. Sign in to the CLI.
 2. Enter **4** to choose **Device console**, and enter the following command:
@@ -110,7 +110,7 @@ Contact Sophos support.
 
 Start by configuring a GRE tunnel between SFOS and the Cloudflare Anycast IP address.
 
-1. Sign in to the CLI. 
+1. Sign in to the CLI.
 2. Enter **4** to choose **Device console**, and enter the following command:
 
     ```bash
@@ -140,13 +140,13 @@ To redirect traffic, you can add a static or an SD-WAN route.
 
 ### IPsec
 
-#### Static route 
+#### Static route
 
 Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-based route. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare_MWAN example from above).
 
 ![Go to static routes to add an XFRM interface-based route](/images/magic-wan/third-party/sophos-firewall/static-route.png)
 
-#### SD-WAN route 
+#### SD-WAN route
 
 1. Go to **Configure** > **Routing** > **Gateways** to create a custom gateway on the XFRM interface. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare_MWAN example from above).
 
@@ -164,7 +164,7 @@ Add a GRE or SD-WAN route or both.
 
 Add the route on the CLI.
 
-1. Sign in to the CLI. 
+1. Sign in to the CLI.
 2. Enter **4** to choose **Device console**, and enter the following command to create the tunnel:
 
 ```bash
@@ -173,7 +173,7 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ![Add the route on the CLI.](/images/magic-wan/third-party/sophos-firewall/gre-route-cli.png)
 
-#### SD-WAN route 
+#### SD-WAN route
 
 1. Add a custom gateway on GRE with the peer IP address (from the `/31` subnet you chose earlier) as the Gateway IP address, and disable **Health check**.
 
@@ -218,14 +218,14 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{
 Packet flow will look like the following:
 
 ```sh
-$ tcpdump -nn proto 1 
-tcpdump: verbose output suppressed, use -v or -vv for full protocol decode 
-listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes 
+$ tcpdump -nn proto 1
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes
 
-13:09:55.500453 xfrm1, IN: IP 172.70.51.31 > 172.64.240.252: ICMP echo request, id 33504, seq 0, length 64 
-13:09:55.500480 xfrm1, OUT: IP 172.64.240.252 > 172.70.51.31: ICMP echo reply, id 33504, seq 0, length 64 
+13:09:55.500453 xfrm1, IN: IP 172.70.51.31 > 172.64.240.252: ICMP echo request, id 33504, seq 0, length 64
+13:09:55.500480 xfrm1, OUT: IP 172.64.240.252 > 172.70.51.31: ICMP echo reply, id 33504, seq 0, length 64
 
-13:09:55.504669 xfrm1, IN: IP 172.71.29.66 > 172.64.240.252: ICMP echo request, id 60828, seq 0, length 64 
+13:09:55.504669 xfrm1, IN: IP 172.71.29.66 > 172.64.240.252: ICMP echo request, id 60828, seq 0, length 64
 13:09:55.504695 xfrm1, OUT: IP 172.64.240.252 > 172.71.29.66: ICMP echo reply, id 60828, seq 0, length 64
 ```
 
@@ -255,7 +255,7 @@ If a tunnel shows a connected status at both ends, but is not established:
 
 - Check if the IPsec profile configuration is correct.
 - Make sure the corresponding tunnel interfaces are up.
-- Make sure routing configuration and route precedence are correctly set on SFOS. 
+- Make sure routing configuration and route precedence are correctly set on SFOS.
 - Make sure a static back route is added on Cloudflare.
 - Firewall rules for specific zones and host or service must be added in SFOS. GRE and IPsec belong to the VPN zone.
 - Perform `tcpdump` to check if packets are going through the VPN or GRE tunnel as expected.

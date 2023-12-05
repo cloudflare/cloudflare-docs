@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Configure Magic Tunnel health alerts
+weight: 3
 meta:
     description: Use the API to set up and configure Magic Tunnel health alerts
 ---

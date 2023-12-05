@@ -20,7 +20,7 @@ Additionally, you also need to configure the necessary route table entries for t
 1. Go to **Transit gateways** > **Transit gateway attachments**, and select **Create transit gateway attachment**.
 2. Select the **Transit gateway ID** that you created previously from the dropdown.
 3. For **Attachment type**, select _VPN_.
-4. Under VPN attachment, select the following settings (you can leave settings not mentioned here with their default values): 
+4. Under VPN attachment, select the following settings (you can leave settings not mentioned here with their default values):
     1. **Customer Gateway**: Select **New**.
     2. **IP Address**: Enter your Cloudflare Anycast IP address.
     3. **Routing options**: Select **Static**.
@@ -38,8 +38,8 @@ Additionally, you also need to configure the necessary route table entries for t
     - **Phase 2 encryption algorithms**: `AES256-GCM-16`
     - **Phase 1 integrity algorithms**: `SHA2-256`
     - **Phase 2 integrity algorithms**: `SHA2-256`
-    - **Phase 1 DH group numbers**: `14` 
-    - **Phase 2 DH group numbers**: `14` 
+    - **Phase 1 DH group numbers**: `14`
+    - **Phase 2 DH group numbers**: `14`
     - **IKE Version**: `ikev2`
     - **Startup action**: **Start**
 7. Select **Save changes**.
@@ -54,7 +54,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 
 ### IPsec tunnels
 
-1. Refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
+1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
     - **Tunnel name**: `tunnel01`
     - **Interface address**: The `/30`CIDR block enforced by AWS. For example, `169.xx.xx.xx/30`.
     - **Customer endpoint**: The IP address from AWS’s VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
@@ -70,7 +70,7 @@ The static route in Magic WAN should point to the appropriate virtual machine (V
 
 To create a static route:
 
-1. Refer to [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) to learn how to create one.
+1. Refer to [Create a static route](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) to learn how to create one.
 2. In **Prefix**, enter the subnet for your VM. For example, `192.xx.xx.xx/24`.
 3. For the **Tunnel/Next hop**, choose the IPsec tunnel you created in the previous step.
 4. Repeat the steps above for the second IPsec tunnel you created.

@@ -20,16 +20,16 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
-4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) for information on settings not mentioned here):
+4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for information on settings not mentioned here):
     - **Tunnel name**: `FITEL-tunnel-1`
     - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
-    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/get-started/configure-tunnels/).
+    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/configuration/manually/how-to/configure-tunnels/).
     - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
     - **Pre-shared key**: Create a pre-shared key for your first tunnel.
 5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
     - **Tunnel name**: `FITEL-tunnel-2`
     - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
-    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/get-started/configure-tunnels/).
+    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/configuration/manually/how-to/configure-tunnels/).
     - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
     - **Pre-shared key**: Create a pre-shared key for your second tunnel.
 
@@ -72,7 +72,7 @@ crypto isakmp log sa
 crypto isakmp log session
 crypto isakmp log negotiation-fail
 crypto isakmp negotiation always-up-params interval 100 max-initiate 10 max-pending 10 delay 1
-crypto ipsec replay-check disable 
+crypto ipsec replay-check disable
 !
 crypto isakmp policy ISAKMP_POLICY
  authentication pre-share
@@ -138,7 +138,7 @@ crypto isakmp log sa
 crypto isakmp log session
 crypto isakmp log negotiation-fail
 crypto isakmp negotiation always-up-params interval 100 max-initiate 10 max-pending 10 delay 1
-crypto ipsec replay-check disable 
+crypto ipsec replay-check disable
 !
 crypto isakmp policy ISAKMP_POLICY
  authentication pre-share
@@ -167,7 +167,7 @@ exit
 !
 ```
 
-## Static route configuration 
+## Static route configuration
 
 To configure routes for east-west (branch to branch) connections, refer to the following settings.
 
@@ -176,7 +176,7 @@ To configure routes for east-west (branch to branch) connections, refer to the f
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration**.
 3. From the **Static Routes** tab, select **Create**.
-4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) to learn about settings not mentioned here):
+4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) to learn about settings not mentioned here):
   - **Prefix**: `192.168.0.0/24`
   - **Tunnel/Next hop**: _FITEL-tunnel-1 / 10.0.0.0_
 5. For the second route, ensure the following settings are defined:
@@ -207,7 +207,7 @@ ip route 192.168.1.0 255.255.255.0 tunnel 2
 
 ### IPsec status
 
-In the FITELnet router CLI, you can run `show crypto sa` to check the status of the IPsec security associations (SAs). `Total number of ISAKMP/IPSEC SA` shows the number of established SAs.  
+In the FITELnet router CLI, you can run `show crypto sa` to check the status of the IPsec security associations (SAs). `Total number of ISAKMP/IPSEC SA` shows the number of established SAs.
 
 ```txt
 show crypto sa
@@ -256,7 +256,7 @@ show crypto sa
   Total number of IPSEC SA 1
 ```
 
-### Route Status 
+### Route Status
 
 In the FITELnet router CLI, you can run `show ip route` to check the route information. A `*` in the route information indicates that the route information is valid.
 

@@ -63,7 +63,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 
 ### 1. IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) instructions to create the required IPsec tunnels with the following options:
     1. **Tunnel name**: Give your tunnel a descriptive name, like `Alibaba`.
     2. **Interface address**: Choose from the subnet in your Alibaba Cloud configuration. For example, if your Alibaba default configuration is `169.xx.xx.1/30`, you might want to choose `169.xx.xx.2/30` for your Magic WAN side of the IPsec tunnel.
     3. **Customer endpoint**: This is the IP address you entered for **Locali** in Alibaba's IPsec connection. For example, `47.xxx.xxx.xxx`.
@@ -74,5 +74,5 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 
 ### 2. Static route
 
-1. Follow the [Configure static routes](/magic-wan/get-started/configure-static-routes/#create-a-static-route) instructions to create a static route.
+1. Follow the [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) instructions to create a static route.
 2. In **Prefix**, enter the IP CIDR you used to create your virtual private cloud in the Alibaba Cloud interface. In our example we used `192.168.20.0/24`.

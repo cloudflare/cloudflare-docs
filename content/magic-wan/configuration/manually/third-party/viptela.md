@@ -15,12 +15,12 @@ Before setting up a connection between Cisco SD-WAN and Cloudflare, you must hav
 - Cloudflare provision Magic WAN and Secure Web Gateway.
 - Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
 - Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
-- A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. 
-- The software version for the Cisco SD-WAN edge device should be Cisco SD-WAN Release 20.6.2 or above. 
+- A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment.
+- The software version for the Cisco SD-WAN edge device should be Cisco SD-WAN Release 20.6.2 or above.
 
 {{<Aside type="note" header="Note">}}
 
-The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router.  For connectivity, GRE tunnels were used. 
+The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router. For connectivity, GRE tunnels were used.
 
 {{</Aside>}}
 
@@ -68,7 +68,7 @@ When creating the Feature Template, you can choose values that apply globally or
 
 ## 2. Create tunnels in vManage
 
-From vManage, select **Configuration** > **Templates**. You should see the newly created template where you will update the device values. 
+From vManage, select **Configuration** > **Templates**. You should see the newly created template where you will update the device values.
 
 Because the template was created to add GRE tunnels, you only need to update the device values. Note that **VPN0** is the default, and the WAN interface used to build the tunnel must be part of **VPN0**.
 
@@ -76,13 +76,13 @@ Because the template was created to add GRE tunnels, you only need to update the
 
 ## 3. Create tunnels in Cloudflare
 
-Refer to [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/) for more information on creating a GRE tunnel.
+Refer to [Configure tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more information on creating a GRE tunnel.
 
 ![Established GRE tunne in Cloudflash dashboard](/images/magic-wan/third-party/viptela/viptela-gre-tunnel.png)
 
 ## 4. Define static routes
 
-Refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) for more information on configuring your static routes.
+Refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) for more information on configuring your static routes.
 
 ![Established GRE static routes in Cloudflare dashboard](/images/magic-wan/third-party/viptela/viptela-gre-static-routes.png)
 
@@ -100,6 +100,6 @@ A matching blocked log line is visible from the Cloudflare logs.
 
 ## Add new tunnels using IPsec
 
-IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/third-party/cisco-ios-xe/) for more information. 
+IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/configuration/manually/third-party/cisco-ios-xe/) for more information.
 
 **Coming soon: IPsec tunnel creation in SD-WAN mode.**

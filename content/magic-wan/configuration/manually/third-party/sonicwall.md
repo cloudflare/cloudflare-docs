@@ -7,13 +7,13 @@ pcx_content_type: integration-guide
 
 This tutorial shows you how to use Magic WAN with the following versions of the SonicWall appliances:
 
-- **Hardware tested**: 
+- **Hardware tested**:
     - SonicWall NSv 470
     - SonicWal 3700
-- **Software versions tested**: 
+- **Software versions tested**:
     - SonicOS 7.0.1
 
-You can connect your SonicWall appliance through [IPsec tunnels](/magic-wan/get-started/configure-tunnels/) to Magic WAN. Generic Routing Encapsulation (GRE) is not supported on SonicWall.
+You can connect your SonicWall appliance through [IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Magic WAN. Generic Routing Encapsulation (GRE) is not supported on SonicWall.
 
 ## Topology
 
@@ -23,7 +23,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 ## 1. Create an IPsec tunnel on your Cloudflare account
 
-1. Start by [creating your IPsec tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) on Cloudflare. Name and describe the tunnels as needed, and add the following settings:
+1. Start by [creating your IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) on Cloudflare. Name and describe the tunnels as needed, and add the following settings:
     - **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
     - **Customer endpoint**: Enter the WAN IP address of your SonicWall device. In our example, this is `198.51.100.2`.
     - **Cloudflare endpoint**: Enter the IP address provided by Cloudflare. In our example, this is `1.2.3.4`.
@@ -44,7 +44,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there are two networks: `172.31.3.0/24` and the tunnel network `10.200.1.0/31`.
 
-1. [Create your static routes](/magic-wan/get-started/configure-static-routes/#create-a-static-route). Name and describe them as needed, and add the following settings:
+1. [Create your static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route). Name and describe them as needed, and add the following settings:
     - **First tunnel**: Following our example, add `10.200.1.0/31` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
     - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
 
@@ -103,7 +103,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 ## 4. Add a VPN tunnel interface
 
 SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
- 
+
 {{<Aside type="note">}}You will need to use a different IP pair for each tunnel/site.{{</Aside>}}
 
 1. Go to **Network** > **System** > **Interfaces**.
@@ -132,7 +132,7 @@ SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When cre
 
 Address objects are necessary for route policies. In our example, we have one other site that will be reached via Magic WAN. First, you need to create address objects for each network. Then, you need to create an address group that contains all the remote networks. This address group will be used in the next step to create the correct route policies.
 
-To add an address object: 
+To add an address object:
 
 1. Select **Object** > **Match Objects** > **Addresses**
 2. Select **Address Objects** > **Add**.
@@ -160,7 +160,7 @@ To add an address object:
 
 Add a route using the address object or group just created as the destination.
 
-1. Select **Policy** > **Rules and Policies** > **Routing Rules**. 
+1. Select **Policy** > **Rules and Policies** > **Routing Rules**.
 2. Select **Add** to add your route policy.
 3. The **Next Hop** should be the VPN tunnel interface that was previously created in the interface panel.
 
@@ -177,7 +177,7 @@ An additional access rule is required for Magic WAN health checks to work proper
 
 ## 8. Setup health checks
 
-You have to [configure Magic WAN health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) correctly. Here is an example of how to set up health checks: 
+You have to [configure Magic WAN health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) correctly. Here is an example of how to set up health checks:
 
 ```bash
 curl --request PUT \

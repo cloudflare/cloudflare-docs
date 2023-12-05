@@ -7,7 +7,7 @@ title: Fortinet
 
 This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
 
-The FortiGate configuration settings presented here support [bidirectional health checks](/magic-wan/get-started/configure-tunnels/#add-tunnels) as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
+The FortiGate configuration settings presented here support [bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
 
 ## Testing Environment
 
@@ -28,14 +28,14 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to  to **Magic WAN** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
-4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
+4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
     - **Customer Endpoint**: Enter your external/egress interface of the firewall.
     - **Cloudflare Endpoint**: Enter the first of your two Anycast IPs.
     - **Health check rate**: _Low_.
     - **Health check type**: _Reply_.
     - **Health check target**: _Custom_.
     - **Target address**: The target address for the first tunnel is always `172.64.240.253`.
-    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/get-started/configure-tunnels/#add-tunnels) for more information.
+    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for more information.
 
     ![The first IPsec tunnel should have the values mentioned above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
 
@@ -55,7 +55,7 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration**.
 3. From the **Static Routes** tab, select **Create**.
-4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) to learn about settings not mentioned here):
+4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) to learn about settings not mentioned here):
     - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
     - **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
     - **Priority**: Leave the default value (`100`).
@@ -451,7 +451,7 @@ Packet captures allow you to determine whether or not the policy-based routing r
 
 {{<Aside type="note">}}Due to the nature of the reply-style tunnel health checks, you will see ICMP Reply packets in both the ingress and egress direction. This is expected behavior.{{</Aside>}}
 
-The expected behavior should look like the examples below — traffic ingressing Tunnel 01 of 02 should egress the same tunnel. 
+The expected behavior should look like the examples below — traffic ingressing Tunnel 01 of 02 should egress the same tunnel.
 
 ```txt
 fortigate # diagnose sniffer packet any 'host 172.64.240.253' 4
@@ -492,14 +492,14 @@ Flow debugging can be helpful when it comes to determining whether or not traffi
 Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application’s requirements.
 
 ```txt
-fortigate # diagnose debug disable 
-fortigate # diagnose debug flow filter clear 
-fortigate # diagnose debug reset 
+fortigate # diagnose debug disable
+fortigate # diagnose debug flow filter clear
+fortigate # diagnose debug reset
 fortigate # diagnose debug flow filter addr 172.64.240.253
-fortigate # diagnose debug show flow show function-name enable 
-fortigate # diagnose debug config-error-log timestamps enable 
+fortigate # diagnose debug show flow show function-name enable
+fortigate # diagnose debug config-error-log timestamps enable
 fortigate # diagnose debug flow trace start 999
-fortigate # diagnose debug enable 
+fortigate # diagnose debug enable
 
 
 fortigate # 2023-08-01 09:27:26 id=20085 trace_id=2871 func=print_pkt_detail line=5844 msg="vd-root:0 received a packet(proto=1, 172.64.240.253:56968->172.70.121.28:0) tun_id=162.159.67.210 from MWAN_IPsec_Tun1. type=0, code=0, id=56968, seq=0."
@@ -525,5 +525,5 @@ The typical use of <kbd>CTRL</kbd> <kbd>C</kbd> will not stop Flow Debugging.
 You can disable Flow Debugging simply by typing the following at any point while the debug logs are scrolling by:
 
 ```txt
-fortigate # diagnose debug disable 
+fortigate # diagnose debug disable
 ```
