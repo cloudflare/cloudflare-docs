@@ -19,7 +19,7 @@ The following worker will:
 
 * For request URLs beginning with `/verify/`, verify the signed URL and allow the request through.
 
-It makes use of the [Node.JS Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/)
+This Worker makes use of the [Node.JS Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/)
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -48,7 +48,7 @@ export default {
 		const url = new URL(request.url);
 
 		// This is a demonstration Worker that allows unauthenticated access to both
-		// /generate and /verify. In a real application you'd want to make sure that
+		// /generate and /verify. In a real application you would want to make sure that
 		// users could only generate signed URLs when authenticated
 		if (url.pathname.startsWith('/generate/')) {
 			url.pathname = url.pathname.replace('/generate/', '/verify/');
@@ -59,7 +59,7 @@ export default {
 			const expiry = Date.now() + expirationMs;
 
 			// This array contains all the data about the request that you want to be able to verify
-			// Here we only sign the expiry and the pathname, but often you'll want to
+			// Here we only sign the expiry and the pathname, but often you will want to
 			// include more data (for instance, the URL hostname or query parameters)
 			const dataToAuthenticate = JSON.stringify([url.pathname, expiry]);
 
