@@ -13,8 +13,8 @@ There are two ways to set up Magic WAN:
 
 ## Set up through Magic WAN Connector (preferred)
 
-Refer to [Magic WAN Connector documentation](/magic-wan/configuration/connector/) for more information.
+Refer to [Configure with Connector](/magic-wan/configuration/connector/) for more information.
 
 ## Set up manually through a third-party device
 
-Refer to [Prerequisites](/magic-wan/prerequisites/) before following the steps in [Configure manually](/magic-wan/configuration/manual/).
+Refer to [Prerequisites](/magic-wan/prerequisites/) before following the steps in [Manual configuration](/magic-wan/configuration/manual/).
