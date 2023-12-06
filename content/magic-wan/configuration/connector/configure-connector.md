@@ -34,7 +34,7 @@ To add a site:
 8. Select **Next** to proceed.
 9. Create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/) under **WAN configuration**. Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}. Select **Create**, and define the following settings:
     1. **Network name**: Enter a descriptive name for your WAN.
-    2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
+    2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
     3. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudlfare calculates priorities.
     4. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
 
