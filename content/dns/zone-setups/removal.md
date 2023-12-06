@@ -1,12 +1,12 @@
 ---
-title: Domain removal
+title: Zone removal
 pcx_content_type: concept
 weight: 8
 ---
 
-# Domain removal
+# Zone removal
 
-If domains remain in the [Pending Nameserver Update](/dns/zone-setups/reference/domain-status/#pending) or [Moved](/dns/zone-setups/reference/domain-status/#moved) status for too long, Cloudflare automatically [removes them](/dns/zone-setups/troubleshooting/domain-deleted/) from your account and the Cloudflare network.
+If domains on Free zones remain in the [Pending](/dns/zone-setups/reference/domain-status/#pending) or [Moved](/dns/zone-setups/reference/domain-status/#moved) status for too long, Cloudflare automatically removes them from your account and the Cloudflare network. Refer to [zone statuses](/dns/zone-setups/reference/domain-status/) for more details.
 
 You can also [manually remove a domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 

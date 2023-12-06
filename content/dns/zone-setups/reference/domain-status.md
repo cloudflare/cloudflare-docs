@@ -10,7 +10,7 @@ Review information on the different statuses that your [zone](/dns/concepts/#zon
 
 If your zone status changes, you will receive an email at the address associated with your account.
 
-The following diagram gives you an overview of the different statuses applicable and how your zone may transition from one status to the other.
+The following diagram gives you an overview of the different statuses applicable and how your zone may transition from one status to the other. For zones with an active paid subscription, the time to automatic deletion or purge may not correspond to this diagram. Refer to the sections below for details.
 
 ```mermaid
 flowchart LR
@@ -48,19 +48,20 @@ If your zone is in **Setup** for over 28 days, it will be automatically [deleted
 
 ## Pending
 
+Your zone status is presented as **Pending Nameserver Update** on the Cloudflare dashboard.
+
 Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs, but your zone is still not active and is subject to the limitations listed below.
 
-Your zone status is presented as **Pending Nameserver Update** on the Cloudflare dashboard.
+If your domain is on the Free plan, it will be deleted automatically if not activated within 28 days. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
 
 ### Causes
 
-- [Full setup](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
-- [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated.
+- [Full setup](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated by Cloudflare.
+- [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
 
 ### Limitations
 
 - Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
-- If your domain is on the Free plan, it will be deleted automatically if not activated within 28 days. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
 
 ## Active
 
@@ -70,10 +71,10 @@ Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-set
 
 Your domain has failed multiple DNS checks, where either the Cloudflare nameservers are no longer present on your domain's `NS` records ([Full setup](/dns/zone-setups/full-setup/)) or no `SOA` record is returned for the zone ([Partial (CNAME) setup](/dns/zone-setups/partial-setup/)).
 
-Zones that do not have any active subscriptions and have been moved will be deleted automatically after 7 days.
+Zones that do not have any active paid subscriptions and have been moved will be deleted automatically after 7 days.
 
 {{<Aside type="warning">}}
-If you have an active subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/setup/manage-domains/remove-domain/).
+If you have an active paid subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/setup/manage-domains/remove-domain/).
 {{</Aside>}}
 
 ## Deleted
