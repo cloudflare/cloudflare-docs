@@ -30,7 +30,7 @@ Gather the following information:
 4.  Start time (example format: 1529171100)
 5.  End time (example format: 1529171100)
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 For the purposes of this tutorial, you can use the following website to
 convert times to Unix time: <https://www.epochconverter.com/>
 {{</Aside>}}

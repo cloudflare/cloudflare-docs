@@ -12,7 +12,7 @@ weight: 1001
 layout: example
 ---
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 
 This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](http://localhost:5173/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
 {{</Aside>}}

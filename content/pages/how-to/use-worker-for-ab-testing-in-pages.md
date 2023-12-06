@@ -30,7 +30,7 @@ Pages Functions have utility functions that can reuse chunks of logic which are 
 
 In your `/functions` directory, create a `_middleware.js` file.
 
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 
 When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/middleware/).
 
