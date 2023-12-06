@@ -1,0 +1,10 @@
+---
+title: Workers and APO
+pcx_content_type: reference
+weight: 15
+---
+
+#Using a worker route and APO on the same request
+
+APO is implemented as a first party worker.  This means that if there is a [worker route](/workers/configuration/routing/routes/) defined for the same request as APO, the APO worker will run first and then the worker as defined by the worker route will then run.
+Due to this, APO and a worker can both run on the same request.
