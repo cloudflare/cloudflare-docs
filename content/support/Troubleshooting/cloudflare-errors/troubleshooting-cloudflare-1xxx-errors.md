@@ -308,7 +308,7 @@ persist.
 -   If you are the site owner, review [Cloudflare Rate Limiting thresholds](/waf/reference/legacy/old-rate-limiting/) and adjust your Rate Limiting configuration.
 -   If your Rate Limiting blocks requests in a short time period (i.e. 1 second) try increasing the time period to 10 seconds.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If you expect a new Cloudflare Worker to exceed rate limits, refer to
 the [Workers
 documentation](/workers/platform/limits)

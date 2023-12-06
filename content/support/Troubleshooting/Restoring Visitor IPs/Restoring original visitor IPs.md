@@ -260,7 +260,7 @@ extforward.headers = ("CF-Connecting-IP")
 (repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If your origin connects to the Internet with IPv6,
 **\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
 ranges does not work when IPv6 is enabled. Using the above method will

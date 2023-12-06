@@ -21,7 +21,7 @@ Automatic Cache Management uses native hooks built into WordPress. The Cloudflar
 -   switch\_theme
 -   customize\_save\_after
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 This feature works great [when caching HTML on
 WordPress](https://support.cloudflare.com/hc/articles/236166048) with
 the Bypass Cache on Cookie setting.

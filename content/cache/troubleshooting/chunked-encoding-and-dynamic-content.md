@@ -1,29 +1,26 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200168386-Why-is-my-dynamic-content-being-sent-with-chunked-encoding-
-title: Chunked encoding and Dynamic content
+title: Chunked encoding and dynamic content
 ---
 
-# Chunked encoding and Dynamic content
+# Chunked encoding and dynamic content
 
-## Overview
+When something is sent with chunked encoding, Cloudflare will not send along a `Content-Length` header because it will be ignored by default ([RFC 2616, Section 4.4](https://www.rfc-editor.org/rfc/rfc2616#section-4.4)).
 
-If you have resources that do not have a file extension that [Cloudflare caches](/cache/concepts/default-cache-behavior/) we treat that resource as dynamic HTML. We don't cache it by default, and Cloudflare's system will send that resource gzipped and with chunked encoding.  
+Cloudflare applies chunked encoding and gzipping to all dynamic HTML, which applies to any [file extension that is not cached by Cloudflare](/cache/concepts/default-cache-behavior/).
 
-**Note** -- it isn't possible to have chunked encoding and content-length at the same time so this would explain why content-length would not be sent with these dynamic resource passing through Cloudflare.
+{{<Aside type="note">}}
 
-**Note --** Another reason you would not see a content-length header would be if you are sending HTTP 1.1 from your web server. For version 1.1 of the HTTP protocol, the chunked transfer mechanism is considered to be always acceptable, even if not listed in the TE request header field, and when used with other transfer mechanisms, should always be applied last to the transferred data and never more than one time. (Source: [Wikipedia "Chunked Encoding"](http://en.wikipedia.org/wiki/Chunked_transfer_encoding)).  So in this case you will need to make sure you are sending HTTP 1.0 as the protocol from your web server if you specifically need the content-length header.
+Another reason you would not see a `Content-Length` header would be if you are sending HTTP 1.1 from your web server. For version 1.1 of the HTTP protocol, the chunked transfer mechanism is considered to be always acceptable, even if not listed in the TE request header field, and when used with other transfer mechanisms, should always be applied last to the transferred data and never more than one time. So in this case you will need to make sure you are sending HTTP 1.0 as the protocol from your web server if you specifically need the `Content-Length` header.
 
-___
-
-## The Solution/Workaround
-
-If you add a file extension to the resource so that it matches our list of supported file extensions so `http://example.com/test/dynamicallyimage.php?size=3**` becomes `http://example.com/dynamicallyimage.jpg*` Cloudflare's system will then send it with the content-length header as long as you're also sending HTTP 1.0 as the protocol.
-
-Alternatively, you can create a Page Rule in the Cloudflare dashboard by clicking **Rules** > click **Create Page Rule >** select _Cache Level_ in the _Pick a Setting_ dropdown and select _Cache Everything_ in the _Select Cache Level_ dropdown. This will force our system to cache `http://example.com/test/dynamicallyimage.php?size=3` even though it doesn't have one of our usual file extensions -- in this case the content-length will also be preserved.
+{{</Aside>}}
 
 ___
 
-## Related Resources
+## Solution
 
-[Customizing Cloudflare's Cache](/cache/concepts/customize-cache/)
+If you need the `Content-Length` header, you could take one of the following approaches:
+
+- Add a file extension to the resource so that it matches our list of supported file extensions (as long as you are also using `HTTP 1.0` as the protocol).
+- Create a [Page Rule](/rules/page-rules/) to **Cache Everything**, which even caches content that does not use a [default file extension](/cache/concepts/default-cache-behavior/).

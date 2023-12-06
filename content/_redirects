@@ -764,7 +764,6 @@
 /support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
 /support/troubleshooting/performance/http2-and-enhanced-http2-prioritization-options-may-affect-content-loading-on-iossafari-devices/ /speed/optimization/protocol/troubleshooting/enhanced-http2-prioritization-ios-safari/ 301
 /support/troubleshooting/performance/ /speed/optimization/ 301
-/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
 /support/page-rules/ /rules/page-rules/ 301
 /support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/ /rules/page-rules/how-to/url-forwarding/ 301
 /support/page-rules/how-do-i-include-or-exclude-a-specific-url-from-cloudflares-page-rules/ /rules/page-rules/reference/wildcard-matching/ 301
@@ -781,6 +780,7 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/ /waf/tools/scrape-shield/email-address-obfuscation/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection-rss-feed/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
+/support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
@@ -1031,7 +1031,6 @@
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/learning/languages/ 301
 /workers/platform/protocols/ /workers/learning/protocols/ 301
-/workers/platform/storage-options/ /workers/learning/storage-options/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
 /workers/platform/bindings/about-service-bindings/ /workers/configuration/bindings/about-service-bindings/ 301
@@ -1050,6 +1049,7 @@
 /workers/platform/sites/start-from-worker/ /workers/configuration/sites/start-from-worker/ 301
 /workers/platform/sites/configuration/ /workers/configuration/sites/configuration/ 301
 /workers/platform/deploy-button/ /workers/configuration/deploy-button/ 301
+/workers/configuration/deploy-button/ /workers/tutorials/deploy-button/ 301
 /workers/platform/deployments/ /workers/configuration/deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
