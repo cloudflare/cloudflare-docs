@@ -28,14 +28,16 @@ If you’re using WordPress, for example, ensure you’re on the most recent ver
 
 If you’re using plugins or extensions on your website or CMS, keep them updated.
 
-#### Activate Cloudflare’s [WAF managed rules](https://www.cloudflare.com/waf)
+#### Activate Cloudflare’s [WAF managed rules](https://www.cloudflare.com/application-services/products/waf/)
 
 Customers on a paid Cloudflare plan can activate WAF managed rules to challenge or block known malicious behavior.
 
 #### Secure your admin login
 
-Many hacks are due to brute force attacks on login pages. Review services like [Rublon](https://rublon.com/) or [Jetpack](https://jetpack.com/features/security/) to help secure your site from attacks designed to target CMS platforms like WordPress.
+Many hacks are due to brute force attacks on login pages. Utilize Cloudflare security offerings to ensure you secure your admin login area.
+
+Explore options available in the [WAF](https://developers.cloudflare.com/waf/)
 
 #### Backup your site
 
-If your site becomes hacked, avoid losing valid content by using a service like [CodeGuard](https://www.cloudflare.com/apps/codeguard) to restore your site from a backup.
+If your site becomes hacked, avoid losing valid content by using a backup service to restore your site from a backup.
