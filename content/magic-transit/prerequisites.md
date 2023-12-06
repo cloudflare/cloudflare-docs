@@ -24,7 +24,7 @@ Draft a [Letter of Agency (LOA)](/byoip/concepts/loa/) - sometimes referred to a
 
 If you are an Internet service provider (ISP) and advertising {{<glossary-tooltip term_id="prefix">}}prefixes{{</glossary-tooltip>}} on behalf of a customer, an LOA is required for the ISP and for the customer.
 
-If you are using a [Cloudflare IP address](/magic-transit/cloudflare-ips/), you do not need to submit an LOA. 
+If you are using a [Cloudflare IP address](/magic-transit/cloudflare-ips/), you do not need to submit an LOA.
 
 {{<Aside type="note" header="Note">}}
 
@@ -44,8 +44,8 @@ You can also use the Resource Public Key Infrastructure (RPKI) as an additional 
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
-{{<render file="_maximum-segment-size.md" withParameters="Magic Transit;;To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.">}}
+{{<render file="prerequisites/_maximum-segment-size.md" withParameters="Magic Transit;;To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.">}}
 
-{{<render file="_clear-dont-fragment.md">}}
+{{<render file="prerequisites/_clear-dont-fragment.md">}}
 
-{{<render file="_router-vendor-guidelines-mss-settings-origin.md">}}
+{{<render file="prerequisites/_router-vendor-guidelines-mss-settings-origin.md">}}
