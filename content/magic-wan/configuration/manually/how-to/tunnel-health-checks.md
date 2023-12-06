@@ -6,4 +6,4 @@ weight: 4
 
 # Update health check frequency
 
-{{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/tunnel-health-checks/;;/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels" >}}
+{{<render file="tunnel-health/_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/tunnel-health-checks/;;/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels" >}}
