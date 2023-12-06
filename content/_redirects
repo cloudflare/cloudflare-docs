@@ -813,6 +813,9 @@
 /r2/examples/boto3/ /r2/examples/aws/boto3/ 301
 /r2/buckets/data-location/ /r2/reference/data-location/ 301
 
+# style-guide
+/style-guide/formatting/symbols-in-ui-element-names/ /style-guide/formatting/ui-elements/ 301
+
 # tenant_redirects
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
 /tenant/get-started/provisioning-resources/ /tenant/how-to/manage-accounts/ 301
