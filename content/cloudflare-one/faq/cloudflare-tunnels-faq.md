@@ -99,7 +99,7 @@ Named Tunnels can be routed via DNS records, in which case we use CNAME records 
 
 No. When using Cloudflare Tunnel, all requests to the origin are made internally between `cloudflared` and the origin.
 
-To log external visitor IPs, you will need to [configure an alternative method](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
+To log external visitor IPs, you will need to [configure an alternative method](/fundamentals/basic-tasks/restoring-original-visitor-ip/).
 
 {{</faq-answer>}}
 {{</faq-item>}}

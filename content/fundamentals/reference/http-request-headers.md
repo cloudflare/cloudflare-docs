@@ -19,7 +19,7 @@ For incoming requests, the value of this header will always be set to `accept-en
 `CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
 This header will only be sent on the traffic from Cloudflare's edge to your origin web server.
 
-For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
+For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](/fundamentals/basic-tasks/restoring-original-visitor-ip/).
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 

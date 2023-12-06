@@ -23,7 +23,7 @@ When you [set up Cloudflare](/fundamentals/setup/), you may experience the follo
 
 ## Behavior
 
-- [Why are Cloudflare's IPs in my origin web server logs?](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/)
+- [Why are Cloudflare's IPs in my origin web server logs?](/fundamentals/basic-tasks/restoring-original-visitor-ip/)
 - [Is Cloudflare attacking me?](#is-cloudflare-attacking-me)
 - [Cannot add domain to Cloudflare](/dns/zone-setups/troubleshooting/cannot-add-domain/)
 - [My domain’s email stopped working](/dns/troubleshooting/email-issues/)
@@ -46,7 +46,7 @@ When you [set up Cloudflare](/fundamentals/setup/), you may experience the follo
 
 There are two common scenarios where Cloudflare is falsely perceived to attack your site:
 
-- Unless you [restore the original visitor IP addresses](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/), Cloudflare IP addresses appear in your server logs for all proxied requests.
+- Unless you [restore the original visitor IP addresses](/fundamentals/basic-tasks/restoring-original-visitor-ip/), Cloudflare IP addresses appear in your server logs for all proxied requests.
 - The attacker is spoofing Cloudflare's IPs. Cloudflare only [sends traffic to your origin web server over a few specific ports](/fundamentals/reference/network-ports/) unless you use [Cloudflare Spectrum](/spectrum/).
 
 Ideally, because Cloudflare is a reverse proxy, your hosting provider observes attack traffic connecting from [Cloudflare IP addresses](https://www.cloudflare.com/ips/). In contrast, if you notice connections from IP addresses that do not belong to Cloudflare, the attack is direct to your origin web server. Cloudflare cannot stop attacks directly to your origin IP address because the traffic bypasses Cloudflare’s network.

@@ -6,11 +6,9 @@ title: Restoring original visitor IPs
 
 # Restoring original visitor IPs
 
-
-
 ## Overview
 
-When your [website traffic is routed through the Cloudflare network](https://support.cloudflare.com/hc/articles/205177068), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
+When your [website traffic is routed through the Cloudflare network](/fundamentals/concepts/how-cloudflare-works/), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
 
 For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [_CF-Connecting-IP_](/fundamentals/reference/http-request-headers/). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
 
@@ -25,34 +23,34 @@ The diagram below illustrates the different ways that IP addresses are handled w
 ![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 {{<Aside type="warning">}}
-Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+Cloudflare no longer updates and supports *mod_cloudflare*, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[*mod_remoteip*](#mod_remoteip)
 for customers using Apache web servers. Customers who are interested in
-building the *mod\_cloudflare* package can [download the
+building the *mod_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
 ___
 
-## mod\_remoteip
+## mod_remoteip
 
 ### Overview
 
-Cloudflare no longer updates and supports _mod\_cloudflare._ However, if you are using an Apache web server with an operating system such as **Ubuntu Server 18.04** and **Debian 9 Stretch**, you can use _mod\_remoteip_ to log your visitor’s original IP address.
+Cloudflare no longer updates and supports _mod_cloudflare._ However, if you are using an Apache web server with an operating system such as **Ubuntu Server 18.04** and **Debian 9 Stretch**, you can use _mod_remoteip_ to log your visitor’s original IP address.
 
 **As this module was created by an outside party, we can't provide technical support for issues related to the plugin.**
 
-To install _mod\_remoteip_ on your Apache web server:
+To install _mod_remoteip_ on your Apache web server:
 
-1\. Enable _mod\_remoteip_ by issuing the following command:
+1. Enable _mod_remoteip_ by issuing the following command:
 
 ```sh
 $ sudo a2enmod remoteip
 ```
 
-2\. Update the site configuration to include _RemoteIPHeader CF-Connecting-IP_, e.g. `/etc/apache2/sites-available/000-default.conf`
+2. Update the site configuration to include _RemoteIPHeader CF-Connecting-IP_, e.g. `/etc/apache2/sites-available/000-default.conf`
 
 ```
 ServerAdmin webmaster@localhost
@@ -63,7 +61,7 @@ ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
 ```
 
-3\. Update combined _LogFormat_ entry in `apache.conf`, replacing _%h_ with _%a in_ `/etc/apache2/apache2.conf.` For example, if your current _LogFormat_ appeared as follows
+3. Update combined _LogFormat_ entry in `apache.conf`, replacing _%h_ with _%a in_ `/etc/apache2/apache2.conf.` For example, if your current _LogFormat_ appeared as follows
 
 ```
 LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
@@ -75,7 +73,7 @@ you would update _LogFormat_ to the following:
 LogFormat "%a %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
 ```
 
-4\. Define trusted proxy addresses by creating `/etc/apache2/conf-available/remoteip.conf` by entering the following code and [Cloudflare IPs](https://www.cloudflare.com/ips/):
+4. Define trusted proxy addresses by creating `/etc/apache2/conf-available/remoteip.conf` by entering the following code and [Cloudflare IPs](https://www.cloudflare.com/ips/):
 
 ```
 RemoteIPHeader CF-Connecting-IP
@@ -84,7 +82,7 @@ RemoteIPTrustedProxy 192.0.2.2 (example IP address)
 (repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
 
-5\. Enable Apache configuration:
+5. Enable Apache configuration:
 
 ```sh
 $ sudo a2enconf remoteip
@@ -93,47 +91,47 @@ To activate the new configuration, you need to run:
 service apache2 reload
 ```
 
-6\. Test Apache configuration:
+6. Test Apache configuration:
 
 ```sh
 $ sudo apache2ctl configtest
 Syntax OK
 ```
 
-7\. Restart Apache:
+7. Restart Apache:
 
 ```sh
 $ sudo systemctl restart apache2
 ```
 
 {{<Aside type="note">}}
-For more information on *mod\_remoteip*, refer to the [Apache
+For more information on *mod_remoteip*, refer to the [Apache
 documentation](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html "Apache Module mod_remoteip").
 {{</Aside>}}
 
 ___
 
-## mod\_cloudflare
+## mod_cloudflare
 
 {{<Aside type="warning">}}
-Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+Cloudflare no longer updates and supports *mod_cloudflare*, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[*mod_remoteip*](#mod_remoteip)
 for customers using Apache web servers. Customers who are interested in
-building the *mod\_cloudflare* package can [download the
+building the *mod_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
-There are two methods for installing mod\_cloudflare: by downloading the Apache extension from GitHub or by adding code to your origin web server.
+There are two methods for installing mod_cloudflare: by downloading the Apache extension from GitHub or by adding code to your origin web server.
 
 ### Downloading packets or scripts from GitHub
 
-If you are using an Apache web server, you can download mod\_cloudflare from [GitHub](https://github.com/cloudflare/mod_cloudflare).
+If you are using an Apache web server, you can download mod_cloudflare from [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adding code to your origin web server
 
-If you can't install mod\_cloudflare, or if there is no Cloudflare plugin available for your content management system platform to restore original visitor IP, add this code to your origin web server in or before the <body> tag on any page that needs the original visitor IPs:
+If you can't install mod_cloudflare, or if there is no Cloudflare plugin available for your content management system platform to restore original visitor IP, add this code to your origin web server in or before the <body> tag on any page that needs the original visitor IPs:
 
 ```php
 <?php if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];?>
@@ -143,28 +141,28 @@ This command will only make the IP address available to scripts that need it. It
 
 ### Apache
 
-To remove _mod\_cloudflare_, you should comment out the Apache config line that loads _mod\_cloudflare_.
+To remove _mod_cloudflare_, you should comment out the Apache config line that loads _mod_cloudflare_.
 
 This varies based on your Linux distribution, but for most people, if you look `in /etc/apache2`, you should be able to search to find the line:
 
 `LoadModule cloudflare_module`
 
-Comment or remove this line, then restart apache, and _mod\_cloudflare_ should be gone.
+Comment or remove this line, then restart apache, and _mod_cloudflare_ should be gone.
 
 If you are running Ubuntu or Debian, you should see.
 
 `file/etc/apache2/mods-enabled/cloudflare.load`
 
-delete this file to remove _mod\_cloudflare_, then restart Apache.
+delete this file to remove _mod_cloudflare_, then restart Apache.
 
 ### Nginx
 
-Mod\_cloudflare is installed by modifying [the nginx configuration file](http://nginx.org/en/docs/http/ngx_http_realip_module.html) `nginx.conf` with the `ngx_http_realip_module`.
+Mod_cloudflare is installed by modifying [the nginx configuration file](http://nginx.org/en/docs/http/ngx_http_realip_module.html) `nginx.conf` with the `ngx_http_realip_module`.
 
-To remove _mod\_cloudflare_ you should comment or remove this line, then restart nginx, and _mod\_cloudflare_ should be gone_._
+To remove _mod_cloudflare_ you should comment or remove this line, then restart nginx, and _mod_cloudflare_ should be gone_._
 
 {{<Aside type="note">}}
-To remove *mod\_cloudflare* from other web server types, consult your
+To remove *mod_cloudflare* from other web server types, consult your
 web server documentation for how to remove modules.
 {{</Aside>}}
 
@@ -175,19 +173,19 @@ ___
 Refer below for instructions on how to configure your web server to log original visitor IPs based on your web server type:
 
 {{<Aside type="warning">}}
-Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+Cloudflare no longer updates and supports *mod_cloudflare*, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[*mod_remoteip*](#mod_remoteip)
 for customers using Apache web servers. Customers who are interested in
-building the *mod\_cloudflare* package can [download the
+building the *mod_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
 1.  Make sure the following is installed:
     -   Red Hat/Fedora`sudo yum install httpd-devel libtool git`
     -   Debian/Ubuntu`sudo apt-get install apache2-dev libtool git`
-2.  Clone the following for the most recent build of _mod\_cloudflare_:
+2.  Clone the following for the most recent build of _mod_cloudflare_:
     -   Red Hat/Fedora/Debian/Ubuntu:`git clone https://github.com/cloudflare/mod_cloudflare.git; cd mod_cloudflare`
 3.  Use the Apache extension tool to convert the .c file into a module:
     -   Red Hat/Fedora/Debian/Ubuntu:`apxs -a -i -c mod_cloudflare.c`
@@ -220,24 +218,24 @@ That list of prefixes needs to be updated regularly, and we publish the full lis
 
 {{<Aside type="note">}}
 To Include the original visitor IP in your logs, add the variables
-\$http\_cf\_connecting\_ip and \$http\_x\_forwarded\_for in the
-log\_format directive.
+\$http_cf_connecting_ip and \$http_x_forwarded_for in the
+log_format directive.
 {{</Aside>}}
 
 Also refer to: [Cloudflare and NGINX](https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/).
 
 {{<Aside type="warning">}}
-Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+Cloudflare no longer updates and supports *mod_cloudflare*, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[*mod_remoteip*](#mod_remoteip)
 for customers using Apache web servers. Customers who are interested in
-building the *mod\_cloudflare* package can [download the
+building the *mod_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
-1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
-2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
+1.  Run the following script to install mod_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
+2.  Upon installing, you will need to recompile your Apache with the new mod_cloudflare plugin.
 
 When using [Railgun](/railgun/) (deprecated) or other reverse proxy software such as Varnish, user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
 
@@ -247,7 +245,7 @@ When using [Railgun](/railgun/) (deprecated) or other reverse proxy software suc
 
 To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.
 
-1.  Open your **lighttpd.conf** file and add _mod\_extforward_ to the _server.modules_ list. It must come **after** _mod\_accesslog_ to show the real IP in the access logs
+1.  Open your **lighttpd.conf** file and add _mod_extforward_ to the _server.modules_ list. It must come **after** _mod_accesslog_ to show the real IP in the access logs
 2.  Add the following code block anywhere in the **lighttpd.conf** file after the server modules list and then restart Lighttpd
 
 ```
@@ -319,7 +317,7 @@ Log into your IPB installation's ACP.
 
 If your network environment means requests are handled through a proxy (such as in an intranet situation in an office or university, or on a load-balanced server cluster), you may need to enable this setting so that the correct IP address is used. However, when enabled, a malicious user can abuse the system to provide a fake IP address. In most environments, this setting should be left off.
 
-If you are using an Apache server, then we would recommend installing [mod\_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) to restore the visitor IP back to your logs.
+If you are using an Apache server, then we would recommend installing [mod_remoteip](#mod_remoteip) to restore the visitor IP back to your logs.
 
 If you do not have access to your server to install a mod, then you may be able to [modify the core](https://www.phpbb.com/community/viewtopic.php?p=13936406#p13936406).
 
@@ -382,15 +380,15 @@ As this plugin was created by an outside party, we can't provide technical suppo
 
 If you use the hosting control panel VestaCP, you have both Nginx and Apache running on your server. Requests are proxied through Nginx before going to Apache.
 
-Because of this Nginx proxy, you actually need to the instructions to configure Nginx to return the real visitor IP address. [Mod\_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) for Apache is not needed unless you disable the Nginx server for some requests. Adding [mod\_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) to Apache will not conflict with the Nginx server configuration.
+Because of this Nginx proxy, you actually need to the instructions to configure Nginx to return the real visitor IP address. [mod_remoteip](#mod_remoteip) for Apache is not needed unless you disable the Nginx server for some requests. Adding [mod_remoteip](#mod_remoteip) to Apache will not conflict with the Nginx server configuration.
 
-An outside developer has created a module to restore visitor IP called [node\_cloudflare.](https://github.com/keverw/node_CloudFlare)
+An outside developer has created a module to restore visitor IP called [node_cloudflare.](https://github.com/keverw/node_CloudFlare)
 
 ___
 
 ## Restoring original visitor IP with HAProxy
 
-In order to extract the original client IP in the X\_FORWARDD\_FOR header, you need to use the following configuration in HAProxy:
+In order to extract the original client IP in the X_FORWARDD_FOR header, you need to use the following configuration in HAProxy:
 
 1.  Create a text file CF`_ips.lst` containing all IP ranges from https://www.cloudflare.com/en-gb/ips/
 2.  Ensure to disable `option forwardfor` in HAProxy

@@ -13,7 +13,7 @@ To augment these default analytics and gather more information about potential D
 
 When traffic [proxied through Cloudflare](/learning-paths/prevent-ddos-attacks/baseline/proxy-dns-records/) reaches your origin server, it will come from Cloudflare's IP addresses.
 
-If needed, you can [restore the original visitor's IP address](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/) so you can have that information in your server logs.
+If needed, you can [restore the original visitor's IP address](/fundamentals/basic-tasks/restoring-original-visitor-ip/) so you can have that information in your server logs.
 
 ## Cloudflare Logs
 
