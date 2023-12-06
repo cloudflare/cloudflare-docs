@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: 1ipRange
+inputParameters: ipRange
 ---
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Cloudflare will assign two Cloudflare endpoint addresses shortly after your onboarding kickoff call that you can use as the tunnel destinations on your network location's routers/endpoints.

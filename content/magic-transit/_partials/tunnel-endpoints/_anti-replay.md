@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: 2productName;;8antiReplayPagePath;;
+inputParameters: productName;;antiReplayPagePath
 ---
 
 If you use $1 and {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.

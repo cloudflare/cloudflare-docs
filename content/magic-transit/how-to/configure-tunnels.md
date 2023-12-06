@@ -16,7 +16,7 @@ meta:
 
 ### Anti-replay protection
 
-{{<render file="tunnel-endpoints/_anti-replay.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/;;">}}
+{{<render file="tunnel-endpoints/_anti-replay.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/">}}
 
 ## Network Interconnect (CNI)
 

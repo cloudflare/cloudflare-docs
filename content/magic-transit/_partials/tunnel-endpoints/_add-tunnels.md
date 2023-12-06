@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: 2productName - 1 - ;;3productPathDash - 2 -;;6healthCheck - 3 -;;7productPathProbe - 4 - ;;8antiReplayPagePath - 5 - ;;9BiVsUniHealthCheck - 6 -
+inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe;;5antiReplayPagePath;;6BiVsUniHealthCheck
 ---
 
 {{<render file="_icmp-mfirewall.md" productFolder="magic-transit">}}

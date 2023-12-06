@@ -16,7 +16,7 @@ meta:
 
 ### Anti-replay protection
 
-{{<render file="tunnel-endpoints/_anti-replay.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/anti-replay-protection/;;">}}
+{{<render file="tunnel-endpoints/_anti-replay.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/anti-replay-protection/">}}
 
 ## Add tunnels
 
