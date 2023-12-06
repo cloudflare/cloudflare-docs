@@ -1,5 +1,5 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/200170036-What-does-Server-Side-Excludes-SSE-do-
 title: Server-side Excludes (SSE)
 weight: 2
@@ -9,29 +9,51 @@ weight: 2
 
 If there is sensitive content on your website that you want visible to real visitors, but that you want to hide from suspicious visitors, wrap the content with Cloudflare Server-side Excludes (SSE) tags.
 
-## Enable Server-side Excludes
+## Set up
 
-To enable Server-side on your website:
+### Enable
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To enable **Server-side Excludes** in the dashboard:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Select your account and website.
 3.  Go to **Scrape Shield**.
 4.  For **Server-side**, switch the toggle to **On**.
 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To enable **Server-side Excludes** with the API, send a [`PATCH`](/api/operations/zone-settings-change-server-side-exclude-setting) request with the `value` parameter set to `"on"`.
+
+{{</tab>}}
+{{</tabs>}}
+
 {{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
-Then, to exclude content from suspicious visitors, wrap the content in the following SSE tags:
+### Exclude content
+
+Once you have enabled **Server-side Excludes**, you need to wrap your content in specific SSE tags.
 
 ```
 <!--sse--><!--/sse-->
 ```
 
-For example: `<!--sse-->` Bad visitors won't see my phone number, 555-555-5555 `<!--/sse-->`
+```
+<!--sse-->Bad visitors cannot see my phone number, 555-555-5555<!--/sse-->
+```
 
 {{<Aside type="note">}}
-SSE only will work with HTML. If you have HTML minification enabled, you
-won't see the SSE tags in your HTML source when it's served through
-Cloudflare. SSE will still function in this case, as Cloudflare's HTML
-minification and SSE functionality occur on-the-fly as the resource
+
+If you use [HTML minification](/speed/optimization/content/auto-minify/), you may not be able to see the SSE tags in your HTML source code.
+
+However, SSE will still function correctly since Cloudflare applies both it and minification as the resource
 moves through our network to the visitor's computer.
+
 {{</Aside>}}
+
+## Limitations
+
+SSE only works with HTML.

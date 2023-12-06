@@ -778,7 +778,7 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/ /waf/tools/scrape-shield/server-side-excludes/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/ /waf/tools/scrape-shield/email-address-obfuscation/ 301
-/support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection-rss-feed/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
 
