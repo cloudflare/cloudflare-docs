@@ -10,6 +10,12 @@ When something is sent with chunked encoding, Cloudflare will not send along a `
 
 Cloudflare applies chunked encoding and gzipping to all dynamic HTML, which applies to any [file extension that is not cached by Cloudflare](/cache/concepts/default-cache-behavior/).
 
+{{<Aside type="note">}}
+
+Another reason you would not see a `Content-Length` header would be if you are sending HTTP 1.1 from your web server. For version 1.1 of the HTTP protocol, the chunked transfer mechanism is considered to be always acceptable, even if not listed in the TE request header field, and when used with other transfer mechanisms, should always be applied last to the transferred data and never more than one time. So in this case you will need to make sure you are sending HTTP 1.0 as the protocol from your web server if you specifically need the `Content-Length` header.
+
+{{</Aside>}}
+
 ___
 
 ## Solution
