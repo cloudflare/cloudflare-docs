@@ -775,6 +775,9 @@
 /support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
+/support/cloudflare-client-api/cloudflare-php-api-binding/ /api/ 301
+/support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ /automatic-platform-optimization/ 301
+/support/ssl-tls/origin-server/validating-a-lets-encrypt-certificate-on-a-site-already-active-on-cloudflare/ /ssl/reference/certificate-authorities/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
