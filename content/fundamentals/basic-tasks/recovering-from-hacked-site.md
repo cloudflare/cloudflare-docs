@@ -6,38 +6,25 @@ title: Recovering from a hacked site
 
 # Recovering from a hacked site
 
-## Overview
-
 If your website has been hacked recently, review the recommended steps below to recover a hacked website and prevent future hacks.
 
-### Recovering from an attack
+## Recovering from an attack
 
--   Request details about the hack from your hosting provider including how they believe the site was hacked.
--   Request your hosting provider remove the malicious content placed on your website.
--   Resolve site warnings in [Google Webmaster Tools](https://www.google.com/webmasters/tools) and resubmit your site for Google’s review once the hack has been resolved.
+To recover from an attack, reach out to your hosting provider to request:
 
-### Preventing and mitigating the risks of a future hack
+- Details about the hack, including how they believe the site was hacked.
+- That your hosting provider remove any malicious content placed on your website.
 
-To reduce the probability of future hack, take the following actions:
+Once the hack has been resolved, you should resolve site warnings in [Google Webmaster Tools](https://www.google.com/webmasters/tools) and resubmit your site for Google’s review.
 
-#### Always update your Content Management System (CMS)
+---
 
-If you’re using WordPress, for example, ensure you’re on the most recent version of WordPress. CMS platforms push out updates to address known vulnerabilities. Always upgrade to the latest version when it becomes available.
+## Preventing and mitigating the risks of a future hack
 
-#### Ensure your plugins are updated
+To prevent the risk of a hacked site:
 
-If you’re using plugins or extensions on your website or CMS, keep them updated.
-
-#### Activate Cloudflare’s [WAF managed rules](https://www.cloudflare.com/application-services/products/waf/)
-
-Customers on a paid Cloudflare plan can activate WAF managed rules to challenge or block known malicious behavior.
-
-#### Secure your admin login
-
-Many hacks are due to brute force attacks on login pages. Utilize Cloudflare security offerings to ensure you secure your admin login area.
-
-Explore options available in the [WAF](https://developers.cloudflare.com/waf/)
-
-#### Backup your site
-
-If your site becomes hacked, avoid losing valid content by using a backup service to restore your site from a backup.
+- Activate Cloudflare's [WAF managed rules](/waf/managed-rules/) so they can challenge or block known malicious behavior.
+- If you use a Content Management System (CMS), make sure you have the most recent version installed (CMS platforms push out updates to address known vulnerabilities).
+- If you use plugins, make sure they are updated.
+- If you have an admin login page, protect it with Cloudflare's [Rate limiting rules](/waf/rate-limiting-rules/) or a [Cloudflare Access policy](/cloudflare-one/policies/access/).
+- Use a backup service so you can avoid losing valid content. 
