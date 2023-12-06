@@ -1,8 +1,10 @@
 ---
-pcx_content_type: concept
-title: Deploy button
-meta:
-  description: Deploy an application from a set of ready-made Cloudflare templates or make deploy buttons for your own applications to make sharing your work easier.
+updated: 2023-08-01
+difficulty: Beginner
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Create a deploy button with GitHub Actions
+layout: single
 ---
 
 # Deploy button
