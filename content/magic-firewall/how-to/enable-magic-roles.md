@@ -4,4 +4,4 @@ title: Enable Magic user roles
 weight: 8
 ---
 
-{{<render file="_magic-user-role.md" productFolder="how-to/magic-transit" >}}
+{{<render file="how-to/_magic-user-role.md" productFolder="magic-transit" >}}
