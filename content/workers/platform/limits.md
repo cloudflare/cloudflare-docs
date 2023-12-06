@@ -13,7 +13,7 @@ meta:
 
 | Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) and [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model))      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#standard-usage-model))|
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
@@ -61,7 +61,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#unbound-usage-model)|
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#example-pricing-unbound-usage-model)|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
@@ -91,7 +91,7 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 {{<table-wrap>}}
 
-| Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) | [Standard](/workers/platform/pricing/#standard-usage-model)  |
+| Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) | [Standard](workers/platform/pricing/#example-pricing-standard-usage-model)  |
 | ----------------------------- | ------------- | ------- | ------- | ------- | 
 | [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  | 512 MB  |
 | [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   | 1,000   |
