@@ -6,25 +6,15 @@ title: Troubleshooting missing images
 
 # Troubleshooting missing images
 
-## Overview
+If images are missing from your website, other Cloudflare features may be interferring with those images.
 
-If images are missing from your website, perform the following steps while retesting the image load in a private browser tab after each step:
+To troubleshoot:
 
--   [Purge cache for the URL](/cache/how-to/purge-cache) of the missing image file.
--   [Temporarily pause Cloudflare](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/).
--   In the Cloudflare dashboard:
-    -   Disable **Rocket Loader** in the **Speed app** > **Optimization**. Scroll down until you find **Rocket Loader**.
-    -   Disable **Mirage** in the **Speed app** > **Optimization**. Scroll down until you find **Mirage**.
-
-{{<Aside type="note">}}
-**Mirage** is only available for domains on a paid Cloudflare plan.
-{{</Aside>}}
-
--   [Inform Cloudflare support](/support/contacting-cloudflare-support/) of the issue and request assistance.
-
-___
-
-## Related resources
-
--   [What does Rocket Loader do?](/speed/optimization/content/rocket-loader/)
--   [What does Mirage do?](/speed/optimization/images/mirage/)
+1. Perform one of the following actions:
+    
+    - [Purge cache](/cache/how-to/purge-cache) for the URL of the missing image file.
+    - [Temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
+    - Disable [Rocket Loader](/speed/optimization/content/rocket-loader/enable/).
+    - Disable [Mirage](/speed/optimization/images/mirage/#enable-mirage).
+2. Retest the image load in a private browser tab.
+3. If the issue is not fixed, try another of the actions suggested in Step 1.
