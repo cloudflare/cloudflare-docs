@@ -18,7 +18,7 @@ The Cloudflare account team creates the Service Key and sends it to you via emai
 
 3.  Search for and select the provider. The destination ports for the service provider appear.
 
-4.  Select a destination port. Typically, you should select the destination port closest to your Port.
+4.  Select a destination port. Typically, you should select the destination port closest to your port.
 
 5.  Click **Next**.
 
