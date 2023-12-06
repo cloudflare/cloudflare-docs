@@ -7,6 +7,8 @@ _build:
 
 The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
 
+The SNI domain selector only applies to traffic on port `443`.
+
 | UI name    | API example                       |
 | ---------- | --------------------------------- |
 | SNI Domain | `net.sni.domains == "example.com"` |
