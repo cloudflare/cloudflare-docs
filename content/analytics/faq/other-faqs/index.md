@@ -1,13 +1,16 @@
 ---
 pcx_content_type: faq
 title: Other FAQs
-layout: single
 weight: 8
+structured_data: true
 ---
 
 # Other FAQs
 
-## Why do I see a large amount of traffic from CLOUDFLARENET ASN 13335 in Analytics? Does this indicate a DDoS attack?
+{{<faq-item>}}
+{{<faq-question level=2 text="Why do I see a large amount of traffic from CLOUDFLARENET ASN 13335 in Analytics? Does this indicate a DDoS attack?" >}}
+
+{{<faq-answer>}}
 
 There is a number of different types of traffic which may originate from **CLOUDFLARENET ASN 13335**; just because there is a lot of traffic from this AS, it likely does not indicate a DDoS attack.
 
@@ -18,5 +21,5 @@ Some sources of traffic from ASN13335 include:
 * [Cloudflare Privacy Proxy](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/)
 * Other Cloudflare features like [Health Checks](/health-checks/
 )
-
-
+{{</faq-answer>}}
+{{</faq-item>}}
