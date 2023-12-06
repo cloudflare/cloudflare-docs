@@ -206,7 +206,7 @@ When troubleshooting HTTP errors in responses from Cloudflare, test whether your
 $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If you have multiple origin web servers, test each one to ensure there
 are no response differences. If you observe the issue when connecting
 directly to your origin web server, contact your hosting provider for
@@ -239,7 +239,7 @@ curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
 
 [Explanation of this timing output](https://blog.cloudflare.com/a-question-of-timing/) is found on the Cloudflare blog.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 As demonstrated in the preceding example, cleaner results are achieved
 by denoting a new line with **\\n** before each variable. Otherwise, all
 metrics are displayed together on a single line.
@@ -271,7 +271,7 @@ The following cURL command shows the SSL certificate served by Cloudflare during
 $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 2*\>&1 \| egrep -v \"\^{.*\$\|\^}.*\$\|\^* http.\*\$\" \*cleans and
 parses the TLS handshake and certificate information.
 {{</Aside>}}
@@ -303,7 +303,7 @@ ___
 
 Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the _traceroute_ command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](/support/contacting-cloudflare-support/), ensure to provide output from a traceroute.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 Timeouts are possible for ping results because Cloudflare limits ping
 requests.
 {{</Aside>}}
