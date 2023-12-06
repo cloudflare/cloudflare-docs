@@ -1,7 +1,7 @@
 ---
 title: Storage options guide
 pcx_content_type: concept
-weight: 1
+weight: 3
 meta:
   title: Storage options guide
   description: Storage options available on Cloudflare's developer platform that can be used with Workers.
@@ -79,45 +79,7 @@ To get started with Durable Objects:
 * Get started with [Durable Objects](/durable-objects/get-started/).
 * Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
-## D1
-
-[D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
-
-D1 is ideal for:
-
-* Persistent, relational storage for user data, account data, and other structured datasets.
-* Use-cases that require querying across your data ad-hoc (using SQL).
-* Workloads with a high ratio of reads to writes (most web applications).
-
-To get started with D1:
-
-* Read [the documentation](/d1)
-* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-* Learn the [D1 client API](/d1/platform/client-api/).
-
-## Queues
-
-{{<Aside type="note">}}
-
-Queues is currently in [public (open) beta](/workers/platform/betas/).
-
-{{</Aside>}}
-
-Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
-
-Queues is ideal for:
-
-* Offloading work from a request to schedule later.
-* Send data from Worker to Worker (inter-Service communication).
-* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](/queues/examples/send-errors-to-r2/)
-
-To get started with Queues:
-
-* [Set up your first queue](/queues/get-started/)
-* Learn more [about how Queues works](/queues/learning/how-queues-works/)
-
-
-## Comparison
+### Comparison
 
 The following table highlights the primary differences and behaviours of KV, R2 and DO as primary storage mechanisms:
 
@@ -144,4 +106,41 @@ The following table highlights the primary differences and behaviours of KV, R2 
 <sup>2</sup> A Durable Object namespace is a logical container for as many Durable Objects as you need and is backed by a class implementing the logic all those Durable Objects will share.
 <sup>3</sup> The overall throughput a single Durable Object can sustain strongly correlates to the compute and storage operations a Durable Object performs. A `get()` and/or `put()` workload may allow up to 2,000 requests/sec, whereas writing multiple values and serializing a large JSON response may only support 800 - 1,000 requests/sec. Offloading compute operations that do not rely on state within your Durable Object to the calling Worker can improve per-object throughput in many cases.
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+{{<render file="_limits_increase.md">}}
+
+## D1
+
+[D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+
+D1 is ideal for:
+
+* Persistent, relational storage for user data, account data, and other structured datasets.
+* Use-cases that require querying across your data ad-hoc (using SQL).
+* Workloads with a high ratio of reads to writes (most web applications).
+
+To get started with D1:
+
+* Read [the documentation](/d1)
+* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
+* Review the [D1 client API](/d1/platform/client-api/).
+
+## Queues
+
+{{<Aside type="note">}}
+
+Queues is currently in [public (open) beta](/workers/platform/betas/).
+
+{{</Aside>}}
+
+Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
+
+Queues is ideal for:
+
+* Offloading work from a request to schedule later.
+* Send data from Worker to Worker (inter-Service communication).
+* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](/queues/examples/send-errors-to-r2/)
+
+To get started with Queues:
+
+* [Set up your first queue](/queues/get-started/)
+* Learn more [about how Queues works](/queues/learning/how-queues-works/)

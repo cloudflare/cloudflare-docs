@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
-weight: 12
+weight: 1
 meta:
   description: Workers plans and pricing information.
 ---

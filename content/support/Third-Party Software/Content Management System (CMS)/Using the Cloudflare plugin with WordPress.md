@@ -53,7 +53,7 @@ After installing the Cloudflare WordPress plugin, to configure plugin settings,
 2.  Enter your Cloudflare login credentials, including your email and Cloudflare **API key**, then click **Save API Credentials**.
     -   For more information about the API key and how to retrieve it, review our [documentation](https://support.cloudflare.com/hc/articles/200167836-Managing-API-Tokens-and-Keys#h12345682).
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 To ensure that the Cloudflare plugin works optimally on your WordPress
 site, apply the default plugin settings by clicking **Apply** in
 **Settings**.
