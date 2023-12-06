@@ -72,6 +72,12 @@ Challenges are not supported by Microsoft Internet Explorer.
 
 If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
 
+{{<Aside type="note">}}
+
+Modifying the browser's default User-Agent might lead to unpassable challenge loops due to the request deviating from expected browser behavior.
+
+{{</Aside>}}
+
 ### Mobile browsers
 
 Challenges are not supported for desktop mode on mobile browsers or mobile mode on desktop browsers.
