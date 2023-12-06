@@ -920,7 +920,6 @@
 /workers/recipes/random-content-cookies/ /workers/examples/ab-testing/ 301
 /workers/recipes/signed-requests/ /workers/examples/signing-requests/ 301
 /workers/recipes/streaming-responses/ /workers/ 301
-/workers/reference/ /workers/ 301
 /workers/reference/apis/ /workers/runtime-apis/ 301
 /workers/reference/apis/cache/ /workers/runtime-apis/cache/ 301
 /workers/reference/apis/environment-variables/ /workers/platform/environment-variables/ 301
