@@ -16,5 +16,6 @@ To troubleshoot:
     - [Temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
     - Disable [Rocket Loader](/speed/optimization/content/rocket-loader/enable/).
     - Disable [Mirage](/speed/optimization/images/mirage/#enable-mirage).
+    
 2. Retest the image load in a private browser tab.
 3. If the issue is not fixed, try another of the actions suggested in Step 1.
