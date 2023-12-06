@@ -50,8 +50,8 @@ Enable Logpush to R2 via the dashboard.
 
 If you want to use Logpush via API, create a Cloudflare API token with the following permissions:
 
-- Zone scope, logs edit permissions
-- Account scope, R2 edit permissions
+- Zone scope, logs edit permissions.
+- Account scope, R2 edit permissions.
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
