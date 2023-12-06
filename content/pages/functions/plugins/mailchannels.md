@@ -142,7 +142,7 @@ You can choose any value as the selector, as long as it is permitted as a DNS ho
 
 5. Add the content of your `dkim_record.txt` file in the content field.
 
-![Follow the instructions above to add DKIM credentials to your DNS records](/images/pages/platform/functions/mailchannel_DKIM_DNS_setup.png)
+![Follow the instructions above to add DKIM credentials to your DNS records](/images/pages/functions/mailchannel_DKIM_DNS_setup.png)
 
 ## Add DKIM fields to personalization object
 

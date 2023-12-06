@@ -1608,9 +1608,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
 - `--r2` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
+  - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
 - `--d1` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
+  - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
 - `--do` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: false){{</prop-meta>}}

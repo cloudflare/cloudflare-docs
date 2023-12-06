@@ -48,7 +48,7 @@ Function invocation statuses indicate whether a Function executed successfully o
 1. The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a script exceeding startup time or free tier limits.
 2. The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Function code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review www.cloudflarestatus.com.
 
-To further investigate exceptions, refer to [Debugging and Logging](/pages/platform/functions/debugging-and-logging)
+To further investigate exceptions, refer to [Debugging and Logging](/pages/functions/debugging-and-logging)
 
 ### CPU time per execution
 

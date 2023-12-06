@@ -30,7 +30,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
 
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/platform/functions/) are available as an equivalent to Netlify's Serverless Functions.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
 ## Custom Domains
 
@@ -49,7 +49,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Pages Functions
 
-- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
+- [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
