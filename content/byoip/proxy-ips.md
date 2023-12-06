@@ -6,7 +6,7 @@ weight: 5
 
 # Proxy IPs
 
-The Address Map is a data structure enabling customers with BYOIP prefixes or account-level Static IPs to specify which IP addresses should be mapped to a zone's DNS records when they are proxied through Cloudflare.
+The {{<glossary-tooltip term_id="address map">}}Address Map{{</glossary-tooltip>}} is a data structure enabling customers with BYOIP prefixes or account-level Static IPs to specify which IP addresses should be mapped to a zone's DNS records when they are proxied through Cloudflare.
 
 For an Address Map to take effect, DNS records within the mapped zone must be set to proxied or orange-clouded. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the Address Map. Address Maps do not change how Cloudflare reaches the configured origin, the IP addresses under Records on the zone-level DNS tab continue to instruct Cloudflare how to reach the origin.
 
