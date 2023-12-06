@@ -66,6 +66,8 @@ If you need to read accurate results for that subgroup, we suggest that you add 
 {{<faq-item>}}
 {{<faq-question level=3 text="Can I trust sampled data? Are my results accurate?" >}}
 
+{{<faq-answer>}}
+
 Sampled data is highly reliable, particularly when a carefully selected index is used.
 
 Admittedly, it is difficult at present to prove that the results returned by ABR queries are within a certain error bound. As a rule of thumb, it is good to check the number of rows read by using count() — think of this like the count of pixels in your image. A higher number of rows read will result in more accurate results. (The flipside is that the `_sample_interval` field does not tell you very much about whether your results are accurate). If you are extrapolating from only one or two rows, it is unlikely you have a representative result; if you are extrapolating from thousands of rows, it is very likely that your results are quite accurate.
@@ -78,6 +80,8 @@ In the near future, we plan to expose the [margin of error](https://en.wikipedia
 {{<faq-item>}}
 {{<faq-question level=3 text="How are bursts handled?" >}}
 
+{{<faq-answer>}}
+
 Equitable sampling exists both to normalize differences between groups, and also to handle large spikes of traffic to a given index. Equalization happens every few seconds; if you are writing many events very close in time, then it is expected that they will be sampled at write time.  The sample interval for a given index will vary from moment to moment, based on the current rate of data being written.
 
 {{</faq-answer>}}
@@ -85,6 +89,8 @@ Equitable sampling exists both to normalize differences between groups, and also
 
 {{<faq-item>}}
 {{<faq-question level=3 text="How much traffic will trigger sampling?" >}}
+
+{{<faq-answer>}}
 
 There is no fixed rule determining when sampling will be triggered.
 

@@ -156,6 +156,8 @@ If you have a DNS-only domain, you will have to do a [manual setup] instead.
 {{<faq-item>}}
 {{<faq-question level=3 text="Can I see server-side analytics by URL?" >}}
 
+{{<faq-answer>}}
+
 Web Analytics only displays client-side analytics. All Cloudflare customers who proxy their traffic also get analytics based on traffic at their edge.
 
 Currently, users on Pro, Business, and Enterprise plans get advanced HTTP traffic analytics, which is the only way to see features like a breakdown of traffic by URL based on server-side analytics.
@@ -166,6 +168,8 @@ Currently, users on Pro, Business, and Enterprise plans get advanced HTTP traffi
 {{<faq-item>}}
 {{<faq-question level=3 text="Can I use Web Analytics with AMP?" >}}
 
+{{<faq-answer>}}
+
 Not yet, but we plan to support AMP soon.
 
 {{</faq-answer>}}
@@ -174,6 +178,7 @@ Not yet, but we plan to support AMP soon.
 {{<faq-item>}}
 {{<faq-question level=3 text="What is the period of time I can access data in Web Analytics?" >}}
 
+{{<faq-answer>}}
 
 Currently, you can access data for the previous six months.
 
@@ -182,6 +187,8 @@ Currently, you can access data for the previous six months.
 
 {{<faq-item>}}
 {{<faq-question level=3 text="Does Cloudflare Web Analytics support UTM parameters?" >}}
+
+{{<faq-answer>}}
 
 Not yet. UTM parameters are special query string parameters that can help track where traffic is coming from.
 Currently, Cloudflare Web Analytics do not log query strings to avoid collecting potentially sensitive data, but we may add support for this in the future.
@@ -192,6 +199,8 @@ Currently, Cloudflare Web Analytics do not log query strings to avoid collecting
 {{<faq-item>}}
 {{<faq-question level=3 text="Does Web Analytics support custom events?" >}}
 
+{{<faq-answer>}}
+
 Not yet, but we may add support for this in the future.
 
 {{</faq-answer>}}
@@ -200,6 +209,8 @@ Not yet, but we may add support for this in the future.
 {{<faq-item>}}
 {{<faq-question level=3 text="Can I track more than one website with Web Analytics?" >}}
 
+{{<faq-answer>}}
+
 Yes. Right now there is a soft limit of ten sites per account, but that can be adjusted by contacting Cloudflare support.
 
 {{</faq-answer>}}
@@ -207,6 +218,8 @@ Yes. Right now there is a soft limit of ten sites per account, but that can be a
 
 {{<faq-item>}}
 {{<faq-question level=3 text="When does the beacon send metrics to the `/cdn-cgi/rum/` endpoint?" >}}
+
+{{<faq-answer>}}
 
 For traditional websites, not Single Page Applications (SPAs), the Web Analytics beacon reports to the `/cdn-cgi/rum/` endpoint when the page has finished loading (load event) and when the user leaves the page. For Single Page Applications, additional metrics are sent for every route change to capture the page load event.
 
