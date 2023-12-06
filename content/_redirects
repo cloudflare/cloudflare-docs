@@ -774,6 +774,7 @@
 /support/page-rules/using-resolve-override-in-page-rules/ /rules/page-rules/how-to/override-url-or-ip-address/ 301
 /support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
+/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/troubleshooting/chunked-encoding-and-dynamic-content/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
 
 # r2
@@ -1307,3 +1308,4 @@
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
 /fundamentals/notifications/* /notifications/:splat 301
 /support/other-languages/* /support/ 301
+/support/speed/* /speed/ 301
