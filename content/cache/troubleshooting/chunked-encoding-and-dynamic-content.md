@@ -1,12 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200168386-Why-is-my-dynamic-content-being-sent-with-chunked-encoding-
-title: Why is my dynamic content being sent with chunked encoding
+title: Chunked encoding and Dynamic content
 ---
 
-# Why is my dynamic content being sent with chunked encoding?
-
-
+# Chunked encoding and Dynamic content
 
 ## Overview
 
@@ -28,4 +26,4 @@ ___
 
 ## Related Resources
 
-[Customizing Cloudflare's Cache](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache#3LcXQoq6gZgwis25wO4d2o)
+[Customizing Cloudflare's Cache](/cache/concepts/customize-cache/)
