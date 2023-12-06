@@ -6,4 +6,4 @@ meta:
     description: You can determine which users have, or do not have, configuration edit access for Magic products.
 ---
 
-{{<render file="_magic-user-role.md">}}
+{{<render file="how-to/_magic-user-role.md">}}
