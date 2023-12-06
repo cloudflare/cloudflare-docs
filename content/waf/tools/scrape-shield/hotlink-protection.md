@@ -1,10 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170026-Understanding-Cloudflare-Hotlink-Protection
-title: Understanding Cloudflare Hotlink Protection
+title: Hotlink Protection
+weight: 3
 ---
 
-# Understanding Cloudflare Hotlink Protection
+# Hotlink Protection
 
 Hotlink Protection prevents your images from being used by other sites. This can reduce the bandwidth consumed by your origin server.
 
@@ -49,5 +50,5 @@ ___
 
 ## Related resources
 
--   [Email Address Obfuscation](https://support.cloudflare.com/hc/articles/200170016)
--   [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036)
+-   [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
+-   [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/)

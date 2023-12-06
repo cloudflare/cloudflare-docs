@@ -1,12 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200169316-Why-doesn-t-my-RSS-feed-show-images-
-title: Why doesn't my RSS feed show images?
+title: Hotlink Protection and RSS feeds
+weight: 4
 ---
 
 # Why doesn't my RSS feed show images?
-
-
 
 ## Overview
 

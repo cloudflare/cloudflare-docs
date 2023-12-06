@@ -1,10 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170016-What-is-Email-Address-Obfuscation-
-title: What is Email Address Obfuscation?
+title: Email Address Obfuscation
+weight: 1
 ---
 
-# What is Email Address Obfuscation?
+# Email Address Obfuscation
 
 Email harvesters and other bots roam the Internet looking for email addresses to add to lists that target recipients for spam. This trend results in an increasing amount of unwanted email.
 
@@ -53,7 +54,11 @@ ___
 
 To prevent Cloudflare from obfuscating emails, you can:
 
--   Add the following comment in the page HTML code:  `<!--email_off-->``_your_` `_email addresses go here_``<!--/email_off-->`
+-   Add the following comment in the page HTML code:  
+
+```
+<!--email_off-->_your__email addresses go here_<!--/email_off-->
+```
 
 -   Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of "application/json".
 

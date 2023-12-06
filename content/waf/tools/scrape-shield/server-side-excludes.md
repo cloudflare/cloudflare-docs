@@ -1,10 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170036-What-does-Server-Side-Excludes-SSE-do-
-title: What does Server-side Excludes (SSE) do?
+title: Server-side Excludes (SSE)
+weight: 2
 ---
 
-# What does Server-side Excludes (SSE) do?
+# Server-side Excludes (SSE)
 
 If there is sensitive content on your website that you want visible to real visitors, but that you want to hide from suspicious visitors, wrap the content with Cloudflare Server-side Excludes (SSE) tags.
 
