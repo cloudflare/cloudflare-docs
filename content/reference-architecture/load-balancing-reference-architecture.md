@@ -61,7 +61,7 @@ Steering is a load balancer’s main function — the process of handling, sendi
 
 #### Layer 7
 
-[Layer 7](https://www.cloudflare.com/learning/ddos/what-is-layer-7/) of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), also known as the Application Layer, is where protocols such as SSH, FTP, NTP, SMTP, and HTTP(S) reside. When this document refers to layer 7 or layer 7 load balancers, it means HTTP(S)-based services. The Cloudflare layer 7 stack allows Cloudflare to apply services like DDoS protection, Bot Management. WAF, CDN, load balancing and more to a customer's website to improve performance, availability, and security.
+[Layer 7](https://www.cloudflare.com/learning/ddos/what-is-layer-7/) of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), also known as the application layer, is where protocols such as SSH, FTP, NTP, SMTP, and HTTP(S) reside. When this document refers to layer 7 or layer 7 load balancers, it means HTTP(S)-based services. The Cloudflare layer 7 stack allows Cloudflare to apply services like DDoS protection, Bot Management. WAF, CDN, Load Balancing and more to a customer's website to improve performance, availability, and security.
 
 
 #### Layer 4
