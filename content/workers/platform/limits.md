@@ -14,7 +14,7 @@ meta:
 
 | Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) and [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model))      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
@@ -93,7 +93,7 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 {{<table-wrap>}}
 
 | Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) | [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)  |
-| ----------------------------- | ------------- | ------- | ------- | ------- | 
+| ----------------------------- | ------------- | ------- | ------- | ------- |
 | [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  | 512 MB  |
 | [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   | 1,000   |
 | [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    | 5 GB    | 5 GB    |
@@ -256,7 +256,7 @@ When configuring [routing](/workers/configuration/routing/), the maximum number 
 
 ---
 
-## Image Resizing with Workers 
+## Image Resizing with Workers
 
 When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
 

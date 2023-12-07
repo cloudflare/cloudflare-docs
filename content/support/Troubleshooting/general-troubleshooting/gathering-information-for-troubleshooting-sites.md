@@ -10,7 +10,7 @@ title: Gathering information for troubleshooting sites
 
 ## Overview
 
-It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](/support/contacting-cloudflare-support/#h_7b55d494-b84d-439b-8e60-e291a9fd3d16). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
+It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](/support/contacting-cloudflare-support/). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
 
 {{<Aside type="note">}}
 Cloudflare support cannot make configuration changes on behalf of
