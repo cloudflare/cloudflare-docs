@@ -44,7 +44,7 @@ Next, export the metrics to Prometheus and Grafana in order to visualize and que
 | `cloudflared_tunnel_concurrent_requests_per_tunnel` | Concurrent number of requests proxied through each tunnel. | GAUGE |  |
 | `cloudflared_tunnel_ha_connections` | Number of active HA connections. | GAUGE |  |
 | `cloudflared_tunnel_request_errors` | Number of errors proxying to origin. | COUNTER |  |
-| `cloudflared_tunnel_server_locations` | Where each tunnel is connected to. 1 means current location, 0 means previous locations. | GAUGE | `connection_id`, `edge_location` |
+| `cloudflared_tunnel_server_locations` | Where each tunnel is connected to. `1` means current location, `0` means previous locations. | GAUGE | `connection_id`, `edge_location` |
 | `cloudflared_tunnel_timer_retries` | Unacknowledged heart beats count. | GAUGE |  |
 | `cloudflared_tunnel_total_requests` | Number of requests proxied through all tunnels. | COUNTER |  |
 | `cloudflared_tunnel_tunnel_authenticate_success` | Number of successful tunnel authentication events. | COUNTER |  |
