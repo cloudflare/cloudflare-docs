@@ -6,7 +6,7 @@ weight: 7
 
 # Tunnel metrics
 
-Tunnel metrics show a Cloudflare Tunnel's traffic data and resource usage over time. When you run a tunnel, you can configure `cloudflared` to spin up a Prometheus metrics endpoint — an HTTP server that exposes metrics in [Prometheus](https://prometheus.io/docs/introduction/overview/) format. You can then use the Prometheus toolkit on a remote machine to scrape metrics data from the `cloudflared` server.
+Tunnel metrics show a Cloudflare Tunnel's throughput and resource usage over time. When you run a tunnel, you can configure `cloudflared` to spin up a Prometheus metrics endpoint — an HTTP server that exposes metrics in [Prometheus](https://prometheus.io/docs/introduction/overview/) format. You can then use the Prometheus toolkit on a remote machine to scrape metrics data from the `cloudflared` server.
 
 ## Start the metrics server
 
@@ -36,7 +36,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 | ---- | ----------- | ---- | ------ |
 | `build_info` | Build and version information. | GAUGE | `goversion`, `revision`, `type`, `version` |
 | `cloudflared_config_local_config_pushes` | Number of local configuration pushes to Cloudflare. | COUNTER |  |
-| `cloudflared_config_local_config_pushes_errors` | Number of errors occurred during local configuration pushes. | COUNTER |  |
+| `cloudflared_config_local_config_pushes_errors` | Number of errors that occurred during local configuration pushes. | COUNTER |  |
 | `cloudflared_orchestration_config_version` | Configuration version. | GAUGE |  |
 | `cloudflared_tcp_active_sessions` | Concurrent number of TCP sessions that are being proxied to any origin. | GAUGE |  |
 | `cloudflared_tcp_total_sessions` | Total number of TCP sessions that have been proxied to any origin. | COUNTER |  |
@@ -58,7 +58,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 | `quic_client_min_rtt` | Lowest RTT measured on a connection in ms. | GAUGE | `conn_index` |
 | `quic_client_packet_too_big_dropped` | Number of packets received from origin that are too big to send to Cloudflare and are dropped as a result. | COUNTER |  |
 | `quic_client_smoothed_rtt` | Smoothed RTT calculated for a connection in ms. | GAUGE | `conn_index` |
-| `quic_client_total_connections` |	Number of connections initiated. For all QUIC metrics, client means the side initiating the connection. |	COUNTER	|
+| `quic_client_total_connections` |	Number of connections initiated. For all QUIC metrics, client means the side initiating the connection. |	COUNTER	| |
 
 {{</table-wrap>}}
 
