@@ -776,6 +776,7 @@
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 /support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/troubleshooting/chunked-encoding-and-dynamic-content/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-missing-images/ /speed/optimization/images/troubleshooting/troubleshooting-missing-images/ 301
 /support/cloudflare-client-api/cloudflare-php-api-binding/ /api/ 301
 /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ /automatic-platform-optimization/ 301
 /support/ssl-tls/origin-server/validating-a-lets-encrypt-certificate-on-a-site-already-active-on-cloudflare/ /ssl/reference/certificate-authorities/ 301
