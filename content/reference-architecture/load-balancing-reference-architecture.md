@@ -66,7 +66,7 @@ Steering is a load balancer’s main function — the process of handling, sendi
 
 #### Layer 4
 
-Layer 4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) — also called the Transport Layer — is responsible for end-to-end communication between two devices. Network services that operate at layer 4 can support a much broader set of services and protocols. Cloudflare’s public layer 4 load balancers are enabled by a product called Spectrum, which works as a layer 4 reverse proxy. In addition to offering load balancing, Spectrum provides protection from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) and can conceal origin IP addresses.
+Layer 4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) — also called the transport layer — is responsible for end-to-end communication between two devices. Network services that operate at layer 4 can support a much broader set of services and protocols. Cloudflare’s public layer 4 load balancers are enabled by a product called Spectrum, which works as a layer 4 reverse proxy. In addition to offering load balancing, Spectrum provides protection from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) and can conceal origin IP addresses.
 
 
 #### SSL/TLS Offloading
