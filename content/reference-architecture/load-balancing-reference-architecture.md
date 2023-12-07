@@ -527,7 +527,7 @@ Individual origins are defined within origin pools, and the origin pool allows f
 
 
 
-* The _origin name _is primarily used for reference, reporting, and analytics; it does not affect the function of the load balancer or origin pool. 
+* The _origin name_ is primarily used for reference, reporting, and analytics; it does not affect the function of the load balancer or origin pool. 
 * The _origin address_, however, defines a resource that the load balancer can use to handle a request or connection. 
     * Origins within an origin pool must be accessible over port 80 or 443. If the origin is not listening on port 80 or 443, then either a proxy service or network port forwarding device needs to be placed in front of the origin to map port 80 or 443 to the port that the service is actually listening on. 
     * Another method for mapping ports of origins to 80 or 443 is to connect to the origin service using [Cloudflare Tunnel](#cloudflare-tunnel), and then use the hostname created through that process as the origin address. This will automatically map the intended origin port to port 443.
