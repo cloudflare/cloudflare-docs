@@ -84,7 +84,7 @@ You can leave the domain **In Progress** and Cloudflare will wait until after th
 
 {{<faq-answer>}}
 
-If you have an [unverified email address](https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg), you might experience issues when initiating a domain transfer.
+If you have an [unverified email address](/fundamentals/setup/account-setup/verify-email-address/), you might experience issues when initiating a domain transfer.
 
 {{</faq-answer>}}
 {{</faq-item>}}
