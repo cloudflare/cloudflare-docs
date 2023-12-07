@@ -106,7 +106,9 @@ On the Prometheus and Grafana server (`192.168.1.2`):
 5. Open a browser and go to `http://localhost:9090/`. You should see the Prometheus dashboard.
 6. To verify that Prometheus is fetching tunnel metrics, enter `cloudflared_tunnel_total_requests` into the expression console and select **Execute**.
 
-![Prometheus dashboard showing tunnel metrics data](/images/cloudflare-one/secure-origin-connections/monitor-tunnels/Prometheus-dashboard.png)
+    ![Prometheus dashboard showing tunnel metrics data](/images/cloudflare-one/secure-origin-connections/monitor-tunnels/Prometheus-dashboard.png)
+
+Refer to [this list](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to see what other metrics are available.
 
 {{</tutorial-step>}}
 
