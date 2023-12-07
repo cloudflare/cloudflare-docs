@@ -329,8 +329,7 @@ Random steering is available for both traffic steering and origin steering. Rand
 
 ##### Hash steering
 
-Hash steering is an origin steering algorithm that uses origin weight and the request’s source  \
-IP address to select an origin. The result is that every request from the same IP address will always steer to the same origin. It’s important to note that altering the order of origins or adding or removing origins from the origin pool could result in different outcomes when using the hash algorithm. 
+Hash steering is an origin steering algorithm that uses origin weight and the request’s source IP address to select an origin. The result is that every request from the same IP address will always steer to the same origin. It’s important to note that altering the order of origins or adding or removing origins from the origin pool could result in different outcomes when using the hash algorithm. 
 
 
 ##### Geo steering
