@@ -219,9 +219,9 @@ A Cloudflare load balancer, often referred to as a Virtual IP (VIP), is configur
 _Figure 11: The basic process flow through a Cloudflare load balancer_
 
 The definition of a Cloudflare load balancer is divided into three main components:
-1. Health monitors: these components are responsible for observing the health of origins and categorizing them as healthy or critical (unhealthy)
-2. Origin pools: this is where origins are defined and where health monitors and origin steering are applied
-3. Load balancers: in this component, lists of origin pools and traffic steering policies are applied
+1. Health monitors: these components are responsible for observing the health of origins and categorizing them as healthy or critical (unhealthy).
+2. Origin pools: this is where origins are defined and where health monitors and origin steering are applied.
+3. Load balancers: in this component, lists of origin pools and traffic steering policies are applied.
 
 The following sections detail the options available and considerations for configuring a Cloudflare load balancer, starting with steering, which is utilized in both origin pool and load balancer configurations.
 
