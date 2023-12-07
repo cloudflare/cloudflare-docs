@@ -562,10 +562,10 @@ Origin pools allow for the host header to be modified before dispatching a reque
 Within a layer 7 load balancer where requests are HTTP(S)-based, the Host header tells the origin which website is being requested, as a single origin may host several different web domains. When an origin is specifically configured to host a web domain, it may either not respond or send a failure response to a request for a resource, if it does not believe it is hosting the resource requested in the Host header (i.e., if there are mismatched Host headers).
 
 For example: 
-* Say a user tries to reach `www.example.com`. The load balancer will be configured with the hostname of `www.example.com `to receive all the requests
-* Since the origins can’t have the same public hostname in DNS, its hostname is `origin1.example.com`
-* When the user makes a request to `www.example.com,` the Host header will be set to` www.example.com,` as well. The origin will need to be configured to respond to Host headers of `www.example.com`
-* In some cases (such as with certain cloud or SaaS applications), however, origins aren’t configurable in that manner, so the origin may receive a request with an unknown Host header and fail to respond appropriately
+* Say a user tries to reach `www.example.com`. The load balancer will be configured with the hostname of `www.example.com `to receive all the requests.
+* Since the origins can’t have the same public hostname in DNS, its hostname is `origin1.example.com`.
+* When the user makes a request to `www.example.com,` the Host header will be set to` www.example.com,` as well. The origin will need to be configured to respond to Host headers of `www.example.com`.
+* In some cases (such as with certain cloud or SaaS applications), however, origins aren’t configurable in that manner, so the origin may receive a request with an unknown Host header and fail to respond appropriately.
 * In this example, in the origin configuration, setting the Host header for the origin to the origin address of `origin1.example.com` will replace the Host header of `www.example.com` with `origin1.example.com`, and will allow the origin server to properly respond to this request. 
 
 Figure 21 highlights the potential problem of mismatched Host headers:
