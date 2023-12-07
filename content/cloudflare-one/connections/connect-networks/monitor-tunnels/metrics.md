@@ -26,7 +26,7 @@ If you plan to fetch metrics from another machine on the local network, you can 
 
 2. Verify that the metrics server is running by going to `http://localhost:60123/metrics`. This will only work if you configured a localhost IP (`127.0.0.1` or `0.0.0.0`).
 
-Next, export the metrics to Prometheus and Grafana in order to visualize and query the data. Refer to our tutorial for instructions on getting started with these tools.
+You can now export the metrics to Prometheus and Grafana in order to visualize and query the data. Refer to our [tutorial](/cloudflare-one/tutorials/grafana/) for instructions on getting started with these tools.
 
 ## Available metrics
 
