@@ -74,7 +74,7 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 ### Browser extensions
 
-If you have browser extensions installed, they might lead to unpassable challenge loops. To fix, disable your extensions and reload the page.
+If you have browser extensions, they might lead to unpassable challenge loops. To fix, disable your extensions and reload the page.
 
 {{<Aside type="note">}}
 
