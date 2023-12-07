@@ -25,7 +25,7 @@ Make sure you have:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies**.
 2. Select **Add a policy**.
-3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for the following [identity conditions](/cloudflare-one/policies/gateway/identity-selectors/):
+3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for [identity conditions](/cloudflare-one/policies/gateway/identity-selectors/):
 
     | Selector         | Operator | Value                                         |
     | ---------------- | -------- | --------------------------------------------- |
@@ -36,7 +36,7 @@ Make sure you have:
     | Selector                    | Operator | Value                                             | Logic |
     | --------------------------- | -------- | ------------------------------------------------- | ----- |
     | Passed Device Posture Check | is       | `CrowdStrike Overall ZTA score (Crowdstrike s2s)` | And   |
-    | Passed Device Posture Check | is       | `AppCheckMac - Required SW (Application)`         |       |
+    | Passed Device Posture Check | is       | `AppCheckMac - Required Software (Application)`   |       |
 
 4. Enable **Use dedicated Cloudflare egress IPs**. Select your desired IPv4 and IPv6 addresses. For example:
 
