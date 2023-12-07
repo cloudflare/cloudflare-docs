@@ -37,10 +37,10 @@ Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare
 Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
 
 Those who read this reference architecture will learn:
-* How Cloudflare load balancing can address both local traffic management and global traffic management use cases
-* How Cloudflare’s global network enhances the functionality of Cloudflare load balancing
-* The capabilities of Cloudflare load balancers, and how they apply to various use cases
-* The structure of Cloudflare load balancers and their various configurations
+* How Cloudflare load balancing can address both local traffic management and global traffic management use cases.
+* How Cloudflare’s global network enhances the functionality of Cloudflare load balancing.
+* The capabilities of Cloudflare load balancers, and how they apply to various use cases.
+* The structure of Cloudflare load balancers and their various configurations.
 
 
 ## Handling dynamic workloads in modern applications
