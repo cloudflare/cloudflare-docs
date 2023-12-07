@@ -45,7 +45,7 @@ Those who read this reference architecture will learn:
 ## Handling dynamic workloads in modern applications
 
 
-### Concepts and Terminology
+### Concepts and terminology
 
 
 #### Origin
