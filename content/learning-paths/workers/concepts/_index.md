@@ -5,12 +5,14 @@ weight: 1
 layout: learning-module
 ---
 
-# Workers concepts
+## Workers concepts
 
 Learn the concepts behind what makes Cloudflare Workers reliable, scalable and fast.
 
 ## Objectives
 
+- Understand serverless computing.
 - Understand how Workers works.
+- Learn about 
 
 

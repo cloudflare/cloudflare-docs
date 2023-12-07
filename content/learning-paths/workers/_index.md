@@ -9,4 +9,4 @@ meta:
     description: Build applications or augment existing ones without configuring or maintaining infrastructure.
 ---
  
-{{<learning-path file="prevent-ddos-attacks.json">}}
+{{<learning-path file="workers.json">}}
