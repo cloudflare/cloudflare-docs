@@ -108,7 +108,7 @@ On the Prometheus and Grafana server (`192.168.1.2`):
 
     ![Prometheus dashboard showing tunnel metrics data](/images/cloudflare-one/secure-origin-connections/monitor-tunnels/Prometheus-dashboard.png)
 
-Refer to [this list](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to see what other metrics are available.
+Refer to [Available metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to check what other metrics are available.
 
 {{</tutorial-step>}}
 
