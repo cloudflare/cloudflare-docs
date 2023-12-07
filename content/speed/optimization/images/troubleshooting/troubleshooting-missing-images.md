@@ -1,10 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200169906-Troubleshooting-missing-images
-title: Troubleshooting missing images
+title: Troubleshoot missing images
 ---
 
-# Troubleshooting missing images
+# Troubleshoot missing images
 
 If images are missing from your website, other Cloudflare features may be interferring with those images.
 
