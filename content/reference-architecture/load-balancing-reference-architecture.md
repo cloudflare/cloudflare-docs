@@ -516,7 +516,7 @@ This subnet then gets added to the virtual network inside of Cloudflare where th
 Within the origin pool, there are several configuration options. This section details what these configuration options are and how they alter the behavior of a Cloudflare load balancer.
 
 
-##### Origin Steering
+##### Origin steering
 
 The first configuration, besides defining a name and description of the origin pool, is to determine the origin steering method. Origin steering is responsible for ultimately selecting the origin or endpoint that will receive the request or connection attempt. (Please refer to the [Steering methods](#steering-methods) section for a detailed description of each method.)
 
