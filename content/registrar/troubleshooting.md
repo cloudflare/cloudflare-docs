@@ -1,17 +1,15 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4424747060109-Registrar-troubleshoot-stalled-domain-transfers
-title: Troubleshooting
+title: Troubleshoot failed domain transfers
 weight: 8
 ---
 
 # Troubleshoot failed domain transfers
 
-## Overview
-
 After you start the transfer process to Cloudflare Registrar, your previous registrar has five days to release the domain after a successful transfer request. If your transfer has not been completed within that time frame, something has likely gone wrong.
 
-Most issues with a stalled transfer can be solved by checking the following details and restarting the transfer from your Cloudflare dashboard.
+Most issues with a stalled transfer can be solved by checking the following details and [restarting the transfer](#restart-your-transfer).
 
 ## Registrar lock reapplied
 
@@ -36,7 +34,7 @@ Your auth code (also referred to as authentication code and authorization code) 
 
 Some registrars may prohibit transfer requests if you have WHOIS privacy services enabled. You need to first disable those services at your current registrar before you can proceed with the transfer process.
 
-## Restarting your transfer
+## Restart your transfer
 
 1.  Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2.  In the **Overview** app for your domain, scroll down to **Domain Registration.**
