@@ -573,7 +573,7 @@ Figure 21 highlights the potential problem of mismatched Host headers:
 ![Mismatched Host headers may result in the origin rejecting the request](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-21.png)
 _Figure 21: How the load balancer can rewrite the Host header to match the origin_
 
-Also, at the origin pool, GPS coordinates for the pool (which are used with proximity traffic steering) can be defined. If proximity steering is not being used, then these coordinates are not required. (Please refer to the [Proximity Steering](https://docs.google.com/document/d/1LaB02sJmkkO3SWwTVGCor7nVKNAgl5jpajOcTGBCDoI/edit#heading=h.w0w866qxr9gd) section for more information.)
+Also, at the origin pool, GPS coordinates for the pool (which are used with proximity traffic steering) can be defined. If proximity steering is not being used, then these coordinates are not required. (Please refer to the [Proximity Steering](#proximity-steering)
 
 
 ##### Load shedding
