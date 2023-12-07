@@ -6,36 +6,41 @@ weight: 6
 
 # Metadata Filtering
 
-In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/learning/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, i.e., `filter` is applied first then `topK` results taken from the filtered set. 
+In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/learning/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, meaning that  `filter` is applied first, and `topK` results are taken from the filtered set. 
 
 By using metadata filtering to limit the scope of a query, you can filter by specific customer IDs, tenant, product category or any other metadata you associate with your vectors.
 
 ## Supported operations
 
-Optional `filter` property on `query()` method specifies metadata filter.
-- Operators: `$eq` (equals), `$ne` (not equals)
-- `filter` must be non-empty object whose compact JSON representation must be less than 2048 bytes
-- `filter` object keys cannot be empty, contain `" | .` (dot is reserved for nesting), start with `$`, or be longer than 512 characters
-- `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values
+Optional `filter` property on `query()` method specifies metadata filter:
 
-Valid `filter` examples:
+- Operators: `$eq` (equals), `$ne` (not equals).
+- `filter` must be non-empty object whose compact JSON representation must be less than 2048 bytes.
+- `filter` object keys cannot be empty, contain `" | .` (dot is reserved for nesting), start with `$`, or be longer than 512 characters.
+- `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values.
 
-Implicit `$eq` operator
+### Valid `filter` examples
+
+#### Implicit `$eq` operator
+
 ```json
 { "streaming_platform": "netflix" }
 ```
 
-Explicit operator
+#### Explicit operator
+
 ```json
 { "someKey": { "$ne": true } }
 ```
 
-Implicit logical `AND` with multiple keys
+#### Implicit logical `AND` with multiple keys
+
 ```json
 { "pandas.nice": 42, "someKey": { "$ne": true } }
 ```
 
-Keys define nesting with `.` (dot)
+#### Keys define nesting with `.` (dot)
+
 ```json
 { "pandas.nice": 42 } // looks for { "pandas": { "nice": 42 } }
 ```
