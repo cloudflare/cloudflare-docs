@@ -317,9 +317,9 @@ Weights are most useful when one origin pool might have more resources than anot
 #### Steering methods
 
 
-##### Off - Failover
+##### Off - failover
 
-Off - Failover is the most basic of traffic steering policies. It uses the order of the origin pools as a priority list for selecting which pool to direct traffic towards. If the first pool in the list is healthy and able to receive traffic, that is the pool that will be selected. Since Off - Failover isn’t available for origin steering, another steering method will be used to select an origin. Off - Failover is commonly used in Active/Passive failover scenarios where a primary data center or group of origins is used to handle traffic, and only under failure conditions, is traffic steered towards a backup origin pool. 
+Off - failover is the most basic of traffic steering policies. It uses the order of the origin pools as a priority list for selecting which pool to direct traffic towards. If the first pool in the list is healthy and able to receive traffic, that is the pool that will be selected. Since off - failover isn’t available for origin steering, another steering method will be used to select an origin. Off - failover is commonly used in active/passive failover scenarios where a primary data center or group of origins is used to handle traffic, and only under failure conditions, is traffic steered towards a backup origin pool. 
 
 
 ##### Random steering
