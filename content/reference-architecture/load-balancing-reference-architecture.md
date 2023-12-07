@@ -198,7 +198,7 @@ _Figure 7: Some of the processes a HTTP request passes through in the Cloudflare
 
 Cloudflare also has a [network optimization service](https://blog.cloudflare.com/orpheus-saves-internet-requests-while-maintaining-speed/) that is constantly running at all data centers to ensure that Cloudflare provides the best path between Cloudflare data centers and also track all the available paths to origins. This allows Cloudflare to ensure that origins can always be reached and reroute traffic to alternate Cloudflare data centers, if necessary, to reach an origin. After the load balancer has made a decision on which origin to steer the traffic, the traffic is then forwarded to Cloudflare’s network optimization service to determine the best path to reach the destination. The path can be affected by a feature called Argo Smart Routing which, when enabled, uses timed TCP connections to find the Cloudflare data center with the fastest RTT to the origin server. Figure 8 shows how Argo Smart Routing can help improve connection time to origins.
 
-![Argo Smart Routing finds the fastest path between requestor and origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-8.png)
+![Argo Smart Routing finds the fastest path between requester and origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-8.png)
 _Figure 8: Argo Smart Routing reduces latency to origins_
 
 Another way traffic flow can be affected is by the use of Cloudflare Tunnels. This document covers Cloudflare Tunnels in depth in the following section. Because Cloudflare Tunnels connect origins to specific Cloudflare data centers, traffic destined for those origins must traverse those data centers to reach the origin. Figure 9 shows how connections to private origins connected via Cloudflare Tunnel must pass through the data center where the tunnel terminates.
@@ -229,7 +229,7 @@ The following sections detail the options available and considerations for confi
 
 Steering is the core function of a load balancer and steering methods ultimately determine which origin is going to be selected when a load balancer is engaged. From the load balancer’s perspective, steering can be applied in two key areas. 
 
-The first is called ‘traffic steering’, and it is responsible for determining which origin pool will handle incoming requests, typically based on proximity or geographic region of the requestor. The concept of traffic steering closely aligns with the idea of global traffic management. 
+The first is called ‘traffic steering’, and it is responsible for determining which origin pool will handle incoming requests, typically based on proximity or geographic region of the requester. The concept of traffic steering closely aligns with the idea of global traffic management. 
 
 The second area where steering is applied is after a region, data center, or origin pool has been selected. At this point, the load balancer needs to select the single origin responsible for handling the request or connection, referred to as ‘origin steering’. Steering at both of these levels is done by applying steering methods tailored to the specific needs of the customer deploying the load balancer. There are several different algorithms to choose from, but not all algorithms are applicable to both steering types.
 
@@ -346,7 +346,7 @@ Dynamic steering is a traffic steering algorithm available to enterprise plan cu
 
 Proximity steering is a traffic steering algorithm available to enterprise plan customers that steers traffic to the closest physical data center based on where the request originated.
 
-Cloudflare determines the requestor’s physical location using the following methods, in this order:
+Cloudflare determines the requester’s physical location using the following methods, in this order:
 1. [EDNS Client Subnet](https://developers.google.com/speed/public-dns/docs/ecs) information, if provided in the DNS request
 2. GeoIP information of the resolver used to reach Cloudflare
 3. GPS location of the Cloudflare data center handling the request
@@ -681,7 +681,7 @@ Please note that DNS-only load balancers have a few limitations compared to prox
 
 For more information on additional steering methods, please refer to the [Steering](#steering) section.
 
-There are also client and resolver DNS cache considerations when using DNS-only load balancers. The cache life is determined by the DNS server answering the request. The [Time-to-Live (TTL)](https://www.cloudflare.com/learning/cdn/glossary/time-to-live-ttl/) value tells a DNS requestor how long the response is valid before the client should send a new DNS request to see if the destination has changed. The TTL is calculated in seconds, so — for example — a TTL value of 3600 equates to a TTL of one hour. However, standard DNS TTL values are usually either 12 or 24 hours or 43200 and 86400 respectively. 
+There are also client and resolver DNS cache considerations when using DNS-only load balancers. The cache life is determined by the DNS server answering the request. The [Time-to-Live (TTL)](https://www.cloudflare.com/learning/cdn/glossary/time-to-live-ttl/) value tells a DNS requester how long the response is valid before the client should send a new DNS request to see if the destination has changed. The TTL is calculated in seconds, so — for example — a TTL value of 3600 equates to a TTL of one hour. However, standard DNS TTL values are usually either 12 or 24 hours or 43200 and 86400 respectively. 
 
 The TTL of a DNS-only load balancer is set to 30 (seconds). This ensures that as origin health changes or origins are added or deleted, the DNS-only load balancer is queried more often to provide the most accurate list of available origins possible.
 
