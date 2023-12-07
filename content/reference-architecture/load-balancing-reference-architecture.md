@@ -3,7 +3,7 @@ title: Load Balancing
 pcx_content_type: reference-architecture
 weight: 1
 ---
-# Cloudflare Load Balancing Reference Architecture
+# Cloudflare Load Balancing reference architecture
 
 ## Introduction
 
