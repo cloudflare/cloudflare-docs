@@ -12,7 +12,7 @@ Tunnel metrics show a Cloudflare Tunnel's traffic data and resource usage over t
 
 Perform these steps on the `cloudflared` server.
 
-1. Us the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag to create a metrics endpoint at the specified IP address and port. Here is an example command for a locally-managed tunnel:
+1. Use the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag to create a metrics endpoint at the specified IP address and port. Here is an example command for a locally-managed tunnel:
     ```sh
     $ cloudflared tunnel --metrics 127.0.0.1:60123 run my-tunnel
     ```
