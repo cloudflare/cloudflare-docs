@@ -31,7 +31,7 @@ Next, export the metrics to Prometheus and Grafana in order to visualize and que
 
 ### cloudflared metrics
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 87%">}}
 | Name | Description | Type | Labels |
 | ---- | ----------- | ---- | ------ |
 | `build_info` | Build and version information. | GAUGE | `goversion`, `revision`, `type`, `version` |
