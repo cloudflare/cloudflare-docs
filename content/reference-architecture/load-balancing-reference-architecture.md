@@ -7,7 +7,7 @@ weight: 1
 
 ## Introduction
 
-Cloudflare load balancing is a SaaS offering that allows organizations to host applications for a global user base while vastly reducing concerns of maintenance, failover, resiliency, and scalability. Using Cloudflare load balancing allows organizations to address the following challenges:
+Cloudflare Load Balancing is a SaaS offering that allows organizations to host applications for a global user base while vastly reducing concerns of maintenance, failover, resiliency, and scalability. Using Cloudflare Load Balancing allows organizations to address the following challenges:
 
 * Efficiently handling large volumes of incoming traffic, especially during unexpected surges or spikes.
 * Ensuring applications and services remain accessible to users.
@@ -15,7 +15,7 @@ Cloudflare load balancing is a SaaS offering that allows organizations to host a
 * Adapting to changing traffic demands and ensuring the infrastructure can accommodate growth.
 * Helping applications and services resist Distributed Denial of Service (DDoS) attacks.
 
-Cloudflare load balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable secure any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
+Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable secure any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
 As a result, Cloudflare operates within ~50 ms of ~95% of the world’s Internet-connected population. And since all Cloudflare services are designed to run across every network location, all requests are routed, inspected, and filtered close to their source, resulting in strong performance and consistent user experiences.
 
@@ -37,10 +37,10 @@ Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare
 Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
 
 Those who read this reference architecture will learn:
-* How Cloudflare load balancing can address both local traffic management and global traffic management use cases.
-* How Cloudflare’s global network enhances the functionality of Cloudflare load balancing.
-* The capabilities of Cloudflare load balancers, and how they apply to various use cases.
-* The structure of Cloudflare load balancers and their various configurations.
+* How Cloudflare Load Balancing can address both local traffic management and global traffic management use cases.
+* How Cloudflare’s global network enhances the functionality of Cloudflare Load Balancing.
+* The capabilities of Cloudflare Load Balancers, and how they apply to various use cases.
+* The structure of Cloudflare Load Balancers and their various configurations.
 
 
 ## Handling dynamic workloads in modern applications
@@ -169,14 +169,14 @@ There are two main load balancer architectures:
 Each approach has advantages and disadvantages. On-premises load balancers usually exist inside of private networks completely controlled by the organization. These load balancers are collocated with the origins they are load balancing, so latency and RTT time should be minimal. The disadvantage of these on-premises load balancers is that they are restricted to a single physical location. Which means traffic from other regions can have long RTT and high latency in responses. Also, adding another data center requires purchasing and deploying all new equipment. On-premises load balancers also typically require cloud-based load balancers for geographic traffic steering to get requests routed by a geographically local or region-appropriate data center. The advantages of cloud-based load balancers is that they can operate in almost any geographic region without concern for rack space, power, cooling, or maintenance and can scale without concern for new chassis, modules, or larger network connections. Cloud-based load balancers do however increase latency and RTT between the load balancer and the origin servers as they are not typically colocated with the origins they are steering traffic toward.
 
 
-## Cloudflare load balancing architecture and design
+## Cloudflare Load Balancing architecture and design
 
-Cloudflare has offered cloud-based GTM since 2016 and started adding LTM capabilities in 2023. This section will review the entire Cloudflare load balancing architecture and dive deep into the different configurations and options available. First, however, it's important to understand the benefits that Cloudflare load balancers have simply by running on Cloudflare’s global network.
+Cloudflare has offered cloud-based GTM since 2016 and started adding LTM capabilities in 2023. This section will review the entire Cloudflare Load Balancing architecture and dive deep into the different configurations and options available. First, however, it's important to understand the benefits that Cloudflare Load Balancers have simply by running on Cloudflare’s global network.
 
 
 ### Inherent advantages in the Cloudflare architecture
 
-Cloudflare load balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
+Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
 As a result, Cloudflare operates within ~50 ms of ~95% of the world’s Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
@@ -211,19 +211,19 @@ Usually, GTM and LTM load balancers are either separate hardware or separate Saa
 ![Combining GTM and LTM load balancing functions into a single load balancer configuration](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-10.png)
 _Figure 10: Cloudflare combines the function of GTM and LTM load balancing_
 
-### The structure of a Cloudflare load balancer
+### The structure of a Cloudflare Load Balancer
 
-A Cloudflare load balancer, often referred to as a Virtual IP (VIP), is configured with an entrypoint . Typically, this entrypoint is a DNS record. The load balancer first applies a defined traffic steering algorithm to select an origin pool, which is a group of origins selected based on function, geographic area, or region. A load balancer configuration can have one or multiple origin pools, and each origin pool can have one or many origins. After selecting an origin pool, the load balancer applies an origin steering algorithm to the list of origins and selects an origin to steer the traffic towards. Figure 11 shows the basic steps from client request to origin within a Cloudflare load balancer.
+A Cloudflare Load Balancer, often referred to as a Virtual IP (VIP), is configured with an entrypoint . Typically, this entrypoint is a DNS record. The load balancer first applies a defined traffic steering algorithm to select an origin pool, which is a group of origins selected based on function, geographic area, or region. A load balancer configuration can have one or multiple origin pools, and each origin pool can have one or many origins. After selecting an origin pool, the load balancer applies an origin steering algorithm to the list of origins and selects an origin to steer the traffic towards. Figure 11 shows the basic steps from client request to origin within a Cloudflare Load Balancer.
 
-![The steps within a Cloudflare load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-11.png)
-_Figure 11: The basic process flow through a Cloudflare load balancer_
+![The steps within a Cloudflare Load Balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-11.png)
+_Figure 11: The basic process flow through a Cloudflare Load Balancer_
 
-The definition of a Cloudflare load balancer is divided into three main components:
+The definition of a Cloudflare Load Balancer is divided into three main components:
 1. Health monitors: these components are responsible for observing the health of origins and categorizing them as healthy or critical (unhealthy).
 2. Origin pools: this is where origins are defined and where health monitors and origin steering are applied.
 3. Load balancers: in this component, lists of origin pools and traffic steering policies are applied.
 
-The following sections detail the options available and considerations for configuring a Cloudflare load balancer, starting with steering, which is utilized in both origin pool and load balancer configurations.
+The following sections detail the options available and considerations for configuring a Cloudflare Load Balancer, starting with steering, which is utilized in both origin pool and load balancer configurations.
 
 ### Steering types and methods
 
@@ -358,7 +358,7 @@ Proximity steering requires providing GPS coordinates for all origin pools, allo
 
 Least outstanding request steering (LORS) is available to enterprise plan customers and can be used for both traffic and origin steering.
 
-LORS uses the number of unanswered HTTP requests to influence steering and is only functional when used with Cloudflare Layer 7 proxied Cloudflare load balancers. If LORS is assigned to any other type of load balancer, its behavior will be equivalent to random steering. LORS uses the counts of open requests, along with weight, to create a new transformed weight that is used for the steering decision.
+LORS uses the number of unanswered HTTP requests to influence steering and is only functional when used with Cloudflare Layer 7 proxied Cloudflare Load Balancers. If LORS is assigned to any other type of load balancer, its behavior will be equivalent to random steering. LORS uses the counts of open requests, along with weight, to create a new transformed weight that is used for the steering decision.
 
 Equation for LORS transformed weight:
 
@@ -476,7 +476,7 @@ As mentioned in the “HTTP(S) Load Balancing” section above, load balancing i
 ![Load balancing is the last process before dispatching to the origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-19.png)
 _Figure 19: Differences in the Layer 7 paths between load balancer and origin_
 
-There are very few differences from a load balancer perspective when it comes to what type of origin is defined as part of an origin pool. Once the traffic and origin steering policies and the load balancer rules are applied, the Cloudflare load balancing service instructs the L7 stack where to forward the incoming request or connection . This request is sent directly to the origin. Depending on the type of connection to the origin, there may be a different path. Features like Argo Smart Routing or tunnel-connected origins that are terminated at different Cloudflare data centers will route traffic differently rather than sending the request out of the Cloudflare edge, over the internet, directly to the origin. Regardless of the path, however, load balancing is the last process in the stack and this means that traffic doesn’t receive any additional treatment. So while the connection to origin can change the path from Cloudflare to the origin, the treatment or processing doesn’t change once an origin is selected.
+There are very few differences from a load balancer perspective when it comes to what type of origin is defined as part of an origin pool. Once the traffic and origin steering policies and the load balancer rules are applied, the Cloudflare Load Balancing service instructs the L7 stack where to forward the incoming request or connection . This request is sent directly to the origin. Depending on the type of connection to the origin, there may be a different path. Features like Argo Smart Routing or tunnel-connected origins that are terminated at different Cloudflare data centers will route traffic differently rather than sending the request out of the Cloudflare edge, over the internet, directly to the origin. Regardless of the path, however, load balancing is the last process in the stack and this means that traffic doesn’t receive any additional treatment. So while the connection to origin can change the path from Cloudflare to the origin, the treatment or processing doesn’t change once an origin is selected.
 
 
 ##### Cloudflare Tunnel
@@ -501,7 +501,7 @@ When configured via the Dashboard, Cloudflare automatically creates a CNAME reco
 
 Another option is to create these tunnels and services on the host running cloudflared. This is called a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/). When working with locally-managed tunnels, the CNAME entry is not created automatically however, so the organization would have to configure this manually, after the tunnel and service is defined.
 
-From a load balancer perspective, it's very important to understand how these tunnels can be used as an origin. An origin can only be defined by using the cfargotunnel.com hostname. Using a public CNAME record that points to the cfargotunnel.com address will not work properly and is not supported. This is especially important for origin services that don’t operate on ports 80 or 443. Cloudflare load balancers default to these two ports to access the services running on the origins. If an organization has services running on other ports, they will need to configure a Cloudflare Tunnel with a [catch-all rule](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#how-traffic-is-matched) to reach that port. This configuration allows a Cloudflare load balancer to reach the service via port 443 while having Cloudflare tunnel proxy the connection to the desired port on the origin.
+From a load balancer perspective, it's very important to understand how these tunnels can be used as an origin. An origin can only be defined by using the cfargotunnel.com hostname. Using a public CNAME record that points to the cfargotunnel.com address will not work properly and is not supported. This is especially important for origin services that don’t operate on ports 80 or 443. Cloudflare Load Balancers default to these two ports to access the services running on the origins. If an organization has services running on other ports, they will need to configure a Cloudflare Tunnel with a [catch-all rule](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#how-traffic-is-matched) to reach that port. This configuration allows a Cloudflare Load Balancer to reach the service via port 443 while having Cloudflare tunnel proxy the connection to the desired port on the origin.
 
 
 ###### Private IP
@@ -513,7 +513,7 @@ This subnet then gets added to the virtual network inside of Cloudflare where th
 
 #### Origin pool details
 
-Within the origin pool, there are several configuration options. This section details what these configuration options are and how they alter the behavior of a Cloudflare load balancer.
+Within the origin pool, there are several configuration options. This section details what these configuration options are and how they alter the behavior of a Cloudflare Load Balancer.
 
 
 ##### Origin steering
@@ -597,7 +597,7 @@ Health monitors are attached to origins at the origin pool as well as health thr
 
 Load balancing within Cloudflare combines both GTM and LTM load balancing into a single load balancer configuration. While certain features or terms may align more with GTM or LTM load balancers, for Cloudflare customers, both are combined into a single, easy-to-manage instance. 
 
-Depending on their specific use case, organizations can leverage different types of Cloudflare load balancers. The following section highlights the main differences between the deployment models, and articulates when each type of load balancer should be implemented. 
+Depending on their specific use case, organizations can leverage different types of Cloudflare Load Balancers. The following section highlights the main differences between the deployment models, and articulates when each type of load balancer should be implemented. 
 
 Figure 22 highlights all the possible combinations of load balancers and origins supported by Cloudflare: 
 
@@ -649,7 +649,7 @@ Cloudflare’s DNS-only load balancer is an unproxied load balancer. This means 
 
 Because all the traffic between the client and the origin will travel directly between the two and not through Cloudflare’s layer 7 stack, any type of IP traffic can be supported by a DNS-only load balancer.
 
-![The orange cloud icon represents a proxied Layer 7 Cloudflare load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-24.png)
+![The orange cloud icon represents a proxied Layer 7 Cloudflare Load Balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-24.png)
 _Figure 24: A proxied load balancer configuration_
 
 ![The gray cloud icon represents an unproxied (DNS-only) load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-25.png)
@@ -698,7 +698,7 @@ The TTL of a DNS-only load balancer is set to 30 (seconds). This ensures that as
 
 Cloudflare also offers another ingress method via the [Spectrum](/spectrum/) product. 
 
-Where the layer 7 stack only supported HTTP(S) and WebSockets, Spectrum offers support for any TCP- or UDP-based protocol. A Cloudflare load balancer using Spectrum as an ingress for traffic operates at layer 4, where both TCP and UDP protocols exist. Any service that utilizes TCP or UDP for transport can leverage Spectrum with a Cloudflare load balancer including SSH, FTP, NTP, SMTP, and more. 
+Where the layer 7 stack only supported HTTP(S) and WebSockets, Spectrum offers support for any TCP- or UDP-based protocol. A Cloudflare Load Balancer using Spectrum as an ingress for traffic operates at layer 4, where both TCP and UDP protocols exist. Any service that utilizes TCP or UDP for transport can leverage Spectrum with a Cloudflare Load Balancer including SSH, FTP, NTP, SMTP, and more. 
 
 Given the breadth of services and protocols this represents, the treatment provided is more generalized than what is offered with the layer 7 HTTP(S) stack. For example, Cloudflare Spectrum supports features such as TLS/SSL offloading, DDoS protection, IP Access lists, Argo Smart Routing, and session persistence with our layer 4 load balancers.
 
@@ -762,7 +762,7 @@ Origin draining is a subfeature of session affinity. It allows for sessions to g
 The origin drain TTL is the amount of time that origins will be allowed to maintain active sessions before being forcefully terminated. Once the origin drain TTL is set, origin draining is started by disabling an origin (or multiple origins) within an origin pool. As seen in the below image, administrators can monitor the time remaining on an origin drawing operation from the load balancer UI.
 
 ![Origin draining in process from web user interface](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-30.png)
-_Figure 30: Origin draining occurring within a Cloudflare load balancer_
+_Figure 30: Origin draining occurring within a Cloudflare Load Balancer_
 
 Origin draining is only applicable for session affinity because without session affinity, subsequent requests or connections are not guaranteed to be steered to the same origin. Thus, disabling an origin does not have an impact on user experience.
 
@@ -823,7 +823,7 @@ If the default behavior of a load balancer is not covered in the documents liste
 
 #### Inherent security
 
-All Cloudflare load balancer deployment models come with inherent protections. The following section briefly highlights the default security Cloudflare provides, as well as optional protections that can be added in front of Cloudflare Load Balancers:
+All Cloudflare Load Balancer deployment models come with inherent protections. The following section briefly highlights the default security Cloudflare provides, as well as optional protections that can be added in front of Cloudflare Load Balancers:
 
 
 
@@ -857,6 +857,6 @@ Cloudflare offers additional security layers that can be used in conjunction wit
 
 The Cloudflare global Anycast network is a powerful platform for load balancing. A load balancing configuration in Cloudflare is accessible in over 310 cities across the world and has virtually unlimited capacity and bandwidth.
 
-These load balancers operate within approximately 50ms of about 95% of the Internet-connected population, including origin servers that allow Cloudflare load balancers to perform both GTM and LTM load balancing. Cloudflare now combines these two distinct load balancing concepts into a single load balancer. This helps enable organizations to steer traffic to geographically-relevant data centers, then select the proper origin to handle the request.
+These load balancers operate within approximately 50ms of about 95% of the Internet-connected population, including origin servers that allow Cloudflare Load Balancers to perform both GTM and LTM load balancing. Cloudflare now combines these two distinct load balancing concepts into a single load balancer. This helps enable organizations to steer traffic to geographically-relevant data centers, then select the proper origin to handle the request.
 
-With Cloudflare Tunnel, origins can be located within private networks and still be utilized by Cloudflare load balancers. Cloudflare offers public layer 7 load balancers — that supports both HTTP(S) and WebSockets, as well as public layer 4 load balancers that can steer any TCP or UDP traffic. This means that Cloudflare can offer load balancing services to all organizations and users, no matter their location, use cases, or existing configurations.
+With Cloudflare Tunnel, origins can be located within private networks and still be utilized by Cloudflare Load Balancers. Cloudflare offers public layer 7 load balancers — that supports both HTTP(S) and WebSockets, as well as public layer 4 load balancers that can steer any TCP or UDP traffic. This means that Cloudflare can offer load balancing services to all organizations and users, no matter their location, use cases, or existing configurations.
