@@ -675,8 +675,8 @@ Figure 27 shows how the defined weight within an origin pool can affect how a DN
 _Figure 27: How weight affects the DNS response from a DNS-only load balancer_
 
 Please note that DNS-only load balancers have a few limitations compared to proxied load balancers: 
-* The load balancer no longer hides the origin’s IP address from the client as it is sent back to the client directly
-* They do not have the built-in layer 7 stack services mentioned in the previous model; i.e., DNS-only load balancers do not include caching, WAF, DDoS protection, or Zero Trust support
+* The load balancer no longer hides the origin’s IP address from the client as it is sent back to the client directly.
+* They do not have the built-in layer 7 stack services mentioned in the previous model; i.e., DNS-only load balancers do not include caching, WAF, DDoS protection, or Zero Trust support.
 * Session affinity is limited to `ip_cookie`, which will select an origin deterministically and then map that origin to the client IP address for all subsequent requests. 
 * Finally, because connections are not proxied through the load balancer for DNS only, certain steering methods will not work either. For example, [LORS](#least-outstanding-requests-steering-lors) will not work since Cloudflare will not be aware of the connections to the origins. These steering methods will revert to random weighted steering.
 
