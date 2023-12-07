@@ -7,7 +7,7 @@ weight: 1
 
 ## Introduction
 
-Cloudflare load balancing is a SaaS offering that allows organizations to host applications for a global user base while vastly reducing concerns of maintenance, failover, resiliency, and scalability. Using Cloudflare load balancing allows organizations to address the following challenges:
+Cloudflare Load Balancing is a SaaS offering that allows organizations to host applications for a global user base while vastly reducing concerns of maintenance, failover, resiliency, and scalability. Using Cloudflare load balancing allows organizations to address the following challenges:
 
 * Efficiently handling large volumes of incoming traffic, especially during unexpected surges or spikes.
 * Ensuring applications and services remain accessible to users.
