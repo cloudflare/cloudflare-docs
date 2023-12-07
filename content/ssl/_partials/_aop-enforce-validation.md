@@ -23,4 +23,4 @@ ssl_verify_client on;
 
 {{</details>}}
 
-After completing the process, you can use `curl` to send requests directly to your origin IPs, verifying that the requests fail due to certificate validation being enforced.
+After completing the process, you can use `curl` to send requests directly to your origin IPs, verifying that the [requests fail due to certificate validation being enforced](/ssl/origin-configuration/authenticated-origin-pull/explanation/#comparison-diagrams).
