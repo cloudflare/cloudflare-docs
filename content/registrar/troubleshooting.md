@@ -1,12 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4424747060109-Registrar-troubleshoot-stalled-domain-transfers
-title: Registrar troubleshoot stalled domain transfers
+title: Troubleshooting
+weight: 8
 ---
 
-# Registrar: troubleshoot stalled domain transfers
-
-
+# Troubleshoot failed domain transfers
 
 ## Overview
 
@@ -14,13 +13,9 @@ After you start the transfer process to Cloudflare Registrar, your previous regi
 
 Most issues with a stalled transfer can be solved by checking the following details and restarting the transfer from your Cloudflare dashboard.
 
-___
-
 ## Registrar lock reapplied
 
 You have reapplied the registrar lock at your current registrar since requesting the transfer. You will need to remove it again to restart the transfer process.
-
-___
 
 ## Transfer rejected
 
@@ -33,19 +28,13 @@ Your transfer has been rejected by your previous registrar. There are several re
 
 You will need to restart the transfer and approve the request or contact your current registrar to solve this issue.
 
-___
-
 ## Auth code invalid
 
 Your auth code (also referred to as authentication code and authorization code) has since changed or been deprecated, and Cloudflare cannot complete the transfer. Confirm the code with your current registrar again. To avoid mistakes, copy and paste the auth code provided by your current registrar.
 
-___
-
 ## WHOIS Guard / privacy protection
 
 Some registrars may prohibit transfer requests if you have WHOIS privacy services enabled. You need to first disable those services at your current registrar before you can proceed with the transfer process.
-
-___
 
 ## Restarting your transfer
 
