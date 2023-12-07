@@ -10,17 +10,19 @@ meta:
 
 {{<render file="tunnel-endpoints/_tunnel-endpoints.md" withParameters="`169.254.244.0/20`">}}
 
-## GRE and IPsec tunnels
+## Ways to onboard traffic to Cloudflare
+
+### GRE and IPsec tunnels
 
 {{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/">}}
 
-### Anti-replay protection
+#### Anti-replay protection
 
 {{<render file="tunnel-endpoints/_anti-replay.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/">}}
 
-## Network Interconnect (CNI)
+### Network Interconnect (CNI)
 
-{{<render file="tunnel-endpoints/_cni.md">}}
+{{<render file="tunnel-endpoints/_cni.md" withParameters="Magic Transit;;[Network Interconnect and Magic Transit](/magic-transit/network-interconnect/)">}}
 
 ## Add tunnels
 
