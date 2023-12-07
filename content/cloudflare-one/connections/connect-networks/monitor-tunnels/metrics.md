@@ -17,8 +17,7 @@ Perform these steps on the `cloudflared` server.
     $ cloudflared tunnel --metrics 127.0.0.1:60123 run my-tunnel
     ```
 
-    To learn how to add the `--metrics` flag to a remotely-managed tunnel, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters
-    ).
+    To learn how to add the `--metrics` flag to a remotely-managed tunnel, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters).
 
 {{<Aside type="note">}}
 If you plan to fetch metrics from another machine on the local network, you can replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`.
@@ -32,7 +31,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 
 ### cloudflared metrics
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 87%">}}
 | Name | Description | Type | Labels |
 | ---- | ----------- | ---- | ------ |
 | `build_info` | Build and version information. | GAUGE | `goversion`, `revision`, `type`, `version` |
@@ -45,7 +44,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 | `cloudflared_tunnel_concurrent_requests_per_tunnel` | Concurrent number of requests proxied through each tunnel. | GAUGE |  |
 | `cloudflared_tunnel_ha_connections` | Number of active HA connections. | GAUGE |  |
 | `cloudflared_tunnel_request_errors` | Number of errors proxying to origin. | COUNTER |  |
-| `cloudflared_tunnel_server_locations` | Where each tunnel is connected to. 1 means current location, 0 means previous locations. | GAUGE | `connection_id`, `edge_location` |
+| `cloudflared_tunnel_server_locations` | Where each tunnel is connected to. `1` means current location, `0` means previous locations. | GAUGE | `connection_id`, `edge_location` |
 | `cloudflared_tunnel_timer_retries` | Unacknowledged heart beats count. | GAUGE |  |
 | `cloudflared_tunnel_total_requests` | Number of requests proxied through all tunnels. | COUNTER |  |
 | `cloudflared_tunnel_tunnel_authenticate_success` | Number of successful tunnel authentication events. | COUNTER |  |

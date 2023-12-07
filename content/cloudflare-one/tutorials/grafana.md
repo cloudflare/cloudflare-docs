@@ -41,7 +41,7 @@ If your tunnel was created via the CLI, run the following command on the `cloudf
 $ cloudflared tunnel --metrics 192.168.1.1:60123 run my-tunnel
 ```
 
-If your tunnel was created via the dashboard, the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag must be added to your `cloudflared` system service configuration. Refer to [this page](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters) for instructions on how to do this.
+If your tunnel was created via the dashboard, the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag must be added to your `cloudflared` system service configuration. Refer to [Add tunnel run parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters) for instructions on how to do this.
 
 {{</tutorial-step>}}
 
@@ -103,12 +103,12 @@ On the Prometheus and Grafana server (`192.168.1.2`):
     ```
     You can optionally configure Prometheus to run as a service so that it does not need to be manually started if the machine reboots.
 
-5. Open a browser and go to `http://localhost:9090/`. You should see the Prometheus dashboard.
+5. Open a browser and go to `http://localhost:9090/`. You should be able to access the Prometheus dashboard.
 6. To verify that Prometheus is fetching tunnel metrics, enter `cloudflared_tunnel_total_requests` into the expression console and select **Execute**.
 
     ![Prometheus dashboard showing tunnel metrics data](/images/cloudflare-one/secure-origin-connections/monitor-tunnels/Prometheus-dashboard.png)
 
-Refer to [this list](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to see what other metrics are available.
+Refer to [Available metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to check what other metrics are available.
 
 {{</tutorial-step>}}
 
