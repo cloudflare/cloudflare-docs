@@ -24,7 +24,7 @@ flowchart LR
   end
 ```
 
-This tutorial covers how to create the metrics endpoint, set up the Prometheus server, and view the data in Grafana. As shown in the diagram above, this example assumes that you will be accessing metrics from a machine (`192.168.1.2`) that is on the same private network as the `cloudflared` server (`192.168.1.1`).
+This tutorial covers how to create the metrics endpoint, set up the Prometheus server, and view the data in Grafana.
 
 {{<tutorial>}}
 
@@ -36,7 +36,7 @@ This tutorial covers how to create the metrics endpoint, set up the Prometheus s
 
 {{<tutorial-step title="Create the metrics endpoint">}}
 
-If your tunnel was created via the CLI, run the following command on the `cloudflared` server:
+If your tunnel was created via the CLI, run the following command on the `cloudflared` server (`192.168.1.1`):
 ```sh
 $ cloudflared tunnel --metrics 192.168.1.1:60123 run my-tunnel
 ```
