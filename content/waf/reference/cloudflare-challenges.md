@@ -72,6 +72,16 @@ Challenges are not supported by Microsoft Internet Explorer.
 
 If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
 
+### Browser extensions
+
+If you have browser extensions installed, they might lead to unpassable challenge loops. To fix, disable your extensions and reload the page.
+
+{{<Aside type="note">}}
+
+This behavior occurs because some extensions modify your browser's default `User-Agent` value.
+
+{{</Aside>}}
+
 ### Mobile browsers
 
 Challenges are not supported for desktop mode on mobile browsers or mobile mode on desktop browsers.
