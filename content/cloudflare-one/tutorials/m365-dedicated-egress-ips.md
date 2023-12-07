@@ -1,5 +1,5 @@
 ---
-updated: 2023-11-13
+updated: 2023-12-08
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
