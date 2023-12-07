@@ -552,7 +552,7 @@ The use of the _virtual network_ option is reserved for private IP resources. Th
 
 ##### Origin weight
 
-_Origin weight_ is only used for the random, hash, and least outstanding request steering methods; it must always be defined as part of the origin definition. (Please refer to the [Weighted Steering](https://docs.google.com/document/d/1LaB02sJmkkO3SWwTVGCor7nVKNAgl5jpajOcTGBCDoI/edit#heading=h.6p3ygdw372ja) section for more information on how weights are used for origin selection.)
+_Origin weight_ is only used for the random, hash, and least outstanding request steering methods; it must always be defined as part of the origin definition. (Please refer to the [Weighted Steering](#weighted-steering) section for more information on how weights are used for origin selection.)
 
 
 ##### Host header modification
