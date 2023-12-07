@@ -83,7 +83,8 @@ entries:
 - term: mTLS (mutual TLS)
   general_definition: |-
     mTLS is a common security practice that uses client TLS certificates to provide an additional layer of protection, allowing to cryptographically verify the client information.
-  associated_products: []
+  associated_products: 
+    - API Shield
   related_terms:
     - TLS
   cloudflare_specific: false

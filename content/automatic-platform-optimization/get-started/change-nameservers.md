@@ -18,16 +18,6 @@ Domain registrars can take up to 24 hours to process the nameserver updates. You
 
 We recommend keeping this browser tab or window open and opening a new tab or window for the next section.
 
-## Create the custom nameserver with Cloudflare
-
-1.  In a new browser tab or window, log in to your [Cloudflare dashboard](https://dash.cloudflare.com).
-2.  Select your domain from the dropdown.
-3.  Go to **DNS** > **Records**.
-4.  From the **Custom Nameservers** section, select **Add Custom Nameservers**.
-5.  Enter the nameserver information from Step 3 of Lookup domain name registration. Cloudflare assigns an IPv4 or IPv6 to your nameservers.
-
-We recommend keeping this browser tab or window open and opening a new tab or window for the next section.
-
 ## Update your nameserver with your domain registrar
 
 1.  Log in to the administrator account for your domain registrar.
