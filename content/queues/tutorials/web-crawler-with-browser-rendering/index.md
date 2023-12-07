@@ -36,7 +36,7 @@ To set up KV namespaces:
 2. Go to **Workers & Pages** > **KV**. 
 3. Select **Create a namespace**, enter `crawler_links`, and select **Add**. Repeat to create another KV namespace called `crawler_screenshots`.
 
-![Creating a KV namespace named crawler_links](/queues/examples/web-crawler-with-browser-rendering/create-kv-namespaces.png)
+![Creating a KV namespace named crawler_links](/queues/tutorials/web-crawler-with-browser-rendering/create-kv-namespaces.png)
 
 ### Set up a Queue
 To set up a Queue:
@@ -45,7 +45,7 @@ To set up a Queue:
 3. Select **Create queue**.
 4. Enter a queue name and select **Create queue**.
 
-![Creating a queue named queues-web-crawler](/queues/examples/web-crawler-with-browser-rendering/create-queue.png)
+![Creating a queue named queues-web-crawler](/queues/tutorials/web-crawler-with-browser-rendering/create-queue.png)
 
 ## 2. Create a Worker 
 
@@ -100,7 +100,7 @@ kv_namespaces = [
 
 To find the KV namespace IDs in the [Cloudflare dashboard](https://dash.cloudflare.com/), select **Workers & Pages** > **KV**. The namespace IDs are shown to the right of each KV namespace.
 
-![List namespace IDs](/queues/examples/web-crawler-with-browser-rendering/list-namespace-id.png)
+![List namespace IDs](/queues/tutorials/web-crawler-with-browser-rendering/list-namespace-id.png)
 
 Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
