@@ -20,7 +20,7 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 {{<faq-answer>}}
 
-Domain transfers sometimes fail. Refer to [Registrar: troubleshoot stalled domain transfers](https://support.cloudflare.com/hc/articles/4424747060109) for more information on what might have happened and how to solve the issue.
+Domain transfers sometimes fail. Refer to [Registrar: troubleshoot stalled domain transfers](/registrar/troubleshooting/) for more information on what might have happened and how to solve the issue.
 
 If you cannot solve the issue, open a support ticket or contact your account team.
 
@@ -84,7 +84,7 @@ You can leave the domain **In Progress** and Cloudflare will wait until after th
 
 {{<faq-answer>}}
 
-If you have an [unverified email address](https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg), you might experience issues when initiating a domain transfer.
+If you have an [unverified email address](/fundamentals/setup/account-setup/verify-email-address/), you might experience issues when initiating a domain transfer.
 
 {{</faq-answer>}}
 {{</faq-item>}}

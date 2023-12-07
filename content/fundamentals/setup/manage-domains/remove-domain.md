@@ -22,7 +22,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
 * When you remove a domain from Cloudflare, it also prevents your domain from using Cloudflare for DNS resolution. To avoid DNS errors, update your nameservers at your domain registrar to use nameservers not owned by Cloudflare.
 
-    * Refer to [Check if your nameservers are pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605) to confirm that your nameservers no longer point to Cloudflare.
+    * Refer to [Check if your nameservers are pointing to Cloudflare](/dns/zone-setups/full-setup/setup/#verify-changes) to confirm that your nameservers no longer point to Cloudflare.
 
 * At your registrar, make sure you do not have a **DS** DNS record. This record enables [DNSSEC](/dns/dnssec/) and could prevent your DNS records from being changed.
 
