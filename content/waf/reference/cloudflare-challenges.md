@@ -78,7 +78,7 @@ If you have browser extensions installed, they might lead to unpassable challeng
 
 {{<Aside type="note">}}
 
-This behavior commonly occurs because some extensions modify your browser's default `User-Agent` value.
+This behavior commonly occurs because an extensions modifies your browser's default `User-Agent` value.
 
 {{</Aside>}}
 
