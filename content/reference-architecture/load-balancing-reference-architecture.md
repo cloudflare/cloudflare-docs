@@ -324,7 +324,7 @@ Off - Failover is the most basic of traffic steering policies. It uses the order
 
 ##### Random steering
 
-Random steering is available for both traffic steering and origin steering. Random spreads traffic across resources based on the weight defined at both the load balancer configuration and within the origin pool. The weight values set at the load balancer for each origin pool can differ from the weight value set per origin within that origin pool. For example, within a load balancer configuration, 70% of traffic can be sent to one of two origin pools, then within that origin pool, the traffic can be evenly distributed across four origins. The previous section, [Weighted steering](#weighted-steering), provides a detailed explanation of how weight is used and the calculations that determine the selection of an origin pool or origin.
+Random steering is available for both traffic steering and origin steering. Random spreads traffic across resources based on the weight defined at both the load balancer configuration and within the origin pool. The weight values set at the load balancer for each origin pool can differ from the weight value set per origin within that origin pool. For example, within a load balancer configuration, 70% of traffic can be sent to one of two origin pools, then within that origin pool, the traffic can be evenly distributed across four origins. The previous section, [weighted steering](#weighted-steering), provides a detailed explanation of how weight is used and the calculations that determine the selection of an origin pool or origin.
 
 
 ##### Hash steering
