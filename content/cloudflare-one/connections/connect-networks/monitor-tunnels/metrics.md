@@ -64,7 +64,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 
 ### Prometheus metrics
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 87%">}}
 | Name | Description | Type | Labels |
 | ---- | ----------- | ---- | ------ |
 | `promhttp_metric_handler_requests_in_flight` | Current number of scrapes being served. | GAUGE |  |
@@ -73,12 +73,12 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 
 ### Go runtime metrics
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 87%">}}
 | Name | Description | Type | Labels |
 | ---- | ----------- | ---- | ------ |
 | `go_gc_duration_seconds` | A summary of the pause duration of garbage collection cycles. | SUMMARY |  |
 | `go_goroutines` | Number of goroutines that currently exist. | GAUGE |  |
-| `go_info` | Information about the Go environment. | GAUGE | version |
+| `go_info` | Information about the Go environment. | GAUGE | `version` |
 | `go_memstats_alloc_bytes` | Number of bytes allocated and still in use. | GAUGE |  |
 | `go_memstats_alloc_bytes_total` | Total number of bytes allocated, even if freed. | COUNTER |  |
 | `go_memstats_buck_hash_sys_bytes` | Number of bytes used by the profiling bucket hash table. | GAUGE |  |
