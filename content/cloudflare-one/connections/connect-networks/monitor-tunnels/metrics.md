@@ -20,7 +20,7 @@ Perform these steps on the `cloudflared` server.
     To learn how to add the `--metrics` flag to a remotely-managed tunnel, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters).
 
 {{<Aside type="note">}}
-If you plan to fetch metrics from another machine on the local network, you can replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`.
+If you plan to fetch metrics from another machine on the local network, replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`.
 {{</Aside>}}
 
 2. Verify that the metrics server is running by going to `http://localhost:60123/metrics`. This will only work if you configured a localhost IP (`127.0.0.1` or `0.0.0.0`).
