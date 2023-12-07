@@ -71,13 +71,11 @@ Your policy will block access for your selected users from any location except t
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Test your egress policy" optional="true">}}
+{{<tutorial-step title="Test your policies">}}
 
-1. Connect to your Zero Trust as your user with [WARP](/cloudflare-one/connections/connect-devices/warp/).
-2. Access any Microsoft 365 app within your organization. Microsoft should allow access.
-3. Disconnect WARP. Microsoft should block access to any Microsoft 365 apps.
-
-As soon as posture check fails, access to the M365 apps will be blocked.
+1. Using [WARP](/cloudflare-one/connections/connect-devices/warp/), sign in to your Zero Trust organization with a user's account.
+2. Access any Microsoft 365 app within your organization. Entra ID should allow access.
+3. Disconnect WARP from your Zero Trust organization. Entra ID should block access to any Microsoft 365 apps.
 
 {{</tutorial-step>}}
 
