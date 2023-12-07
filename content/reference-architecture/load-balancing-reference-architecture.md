@@ -136,8 +136,8 @@ As mentioned, load balancing for global applications and services comes in two l
 
 A Global Traffic Manager is responsible for routing requests, generally from the Internet, to the proper region or data center. Many GTM load balancers operate at the DNS layer, allowing them to:
 
-* Resolve a DNS request to an IP address based on geographic region or physical location
-* Provide the IP of the origin or service closest to the client, so it can connect
+* Resolve a DNS request to an IP address based on geographic region or physical location.
+* Provide the IP of the origin or service closest to the client, so it can connect.
 
 Figure 4 shows how a GTM load balancer is used to select a data center based on the client location or region.
 
