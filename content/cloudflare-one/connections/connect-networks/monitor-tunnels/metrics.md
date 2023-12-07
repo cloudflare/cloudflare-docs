@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
-title: Tunnel metrics
+title: Metrics
 weight: 7
+meta:
+    title: Tunnel metrics
 ---
 
 # Tunnel metrics
