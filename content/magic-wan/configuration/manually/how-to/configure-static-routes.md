@@ -7,6 +7,6 @@ meta:
 ---
 
 
-{{<render file="_static-routes1.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/tunnels/;;/magic-wan/reference/traffic-steering/;;">}}
+{{<render file="static-routes/_static-routes1.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/tunnels/;;/magic-wan/reference/traffic-steering/;;">}}
 
-{{<render file="_static-routes3.md" productFolder="magic-transit" withParameters="**Magic WAN** > **Configuration**;;/magic-wan/configuration/manually/how-to/configure-tunnels/">}}
+{{<render file="static-routes/_static-routes3.md" productFolder="magic-transit" withParameters="**Magic WAN** > **Configuration**;;/magic-wan/configuration/manually/how-to/configure-tunnels/">}}

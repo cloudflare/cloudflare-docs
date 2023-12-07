@@ -22,6 +22,6 @@ Magic WAN relies on {{<glossary-tooltip term_id="GRE tunnel" link="/magic-wan/re
 - Support {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} clamping.
 - Support the configuration parameters for IPsec mentioned in [IPsec tunnels](/magic-wan/reference/tunnels/#supported-configuration-parameters).
 
-{{<render file="_maximum-segment-size.md" productFolder="magic-transit" withParameters="Magic WAN;;To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces).">}}
+{{<render file="prerequisites/_maximum-segment-size.md" productFolder="magic-transit" withParameters="Magic WAN;;To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces).">}}
 
-{{<render file="_router-vendor-guidelines-mss-settings-origin.md" productFolder="magic-transit">}}
+{{<render file="prerequisites/_router-vendor-guidelines-mss-settings-origin.md" productFolder="magic-transit">}}

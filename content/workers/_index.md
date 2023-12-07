@@ -90,7 +90,7 @@ Create a global, low-latency, key-value data storage.
 
 {{<resource header="HTMLRewriter" href="/workers/runtime-apis/html-rewriter/" icon="reference-architecture">}}Parse and transform HTML from inside a Worker.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

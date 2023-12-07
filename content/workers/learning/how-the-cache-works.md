@@ -12,7 +12,7 @@ By allowing developers to write to the cache, Workers provide a way to customize
 
 Cloudflare Workers can run before and after the cache but can also be utilized to modify assets once they are returned from the cache. Modifying assets returned from cache allows for the ability to sign or personalize responses while also reducing load on an origin and reducing latency to the end user by serving assets from a nearby location.
 
-## Interacting with the Cloudflare Cache
+## Interact with the Cloudflare Cache
 
 Conceptually, there are two ways to interact with Cloudflare’s Cache using a Worker:
 
@@ -57,7 +57,7 @@ A("You have a Worker script that runs on <code>https://example.com/hello</code> 
     E -- No --> H(Sorry, you can not purge the asset. <br> Only the owner of <code>notexample.com</code> can purge it.)
 ```
 
-### Purging assets stored with the Cache API
+### Purge assets stored with the Cache API
 
 Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) operations can be purged in a couple of ways:
 
@@ -115,3 +115,7 @@ This [template](/workers/examples/cache-api/) shows ways to use the cache API. F
 {{<Aside type="warning" header="Tiered caching and the Cache API">}}
 Cache API within Workers does not support tiered caching. Tiered Cache concentrates connections to origin servers so they come from a small number of data centers rather than the full set of network locations. Cache API is local to a data center, this means that `cache.match` does a lookup, `cache.put` stores a response, and `cache.delete` removes a stored response only in the cache of the data center that the Worker handling the request is in. Because these methods apply only to local cache, they will not work with tiered cache.
 {{</Aside>}}
+
+## Related resources
+
+- [Cache API](/workers/runtime-apis/cache/)

@@ -146,7 +146,7 @@ header: API configuration example
 
 ## Hotlink Protection
 
-Enable or disable [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) [^7] for matching requests.
+Enable or disable [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) [^7] for matching requests.
 
 {{<details header="API information">}}
 
