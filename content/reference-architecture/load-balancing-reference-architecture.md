@@ -8,11 +8,11 @@ pcx_content_type: reference-architecture
 
 Cloudflare load balancing is a SaaS offering that allows organizations to host applications for a global user base while vastly reducing concerns of maintenance, failover, resiliency, and scalability. Using Cloudflare load balancing allows organizations to address the following challenges:
 
-* Efficiently handling large volumes of incoming traffic, especially during unexpected surges or spikes
-* Ensuring applications and services remain accessible to users
-* Maintaining quick response times and optimal performance for all users, especially during high traffic periods
-* Adapting to changing traffic demands and ensuring the infrastructure can accommodate growth
-* Helping applications and services resist Distributed Denial of Service (DDoS) attacks
+* Efficiently handling large volumes of incoming traffic, especially during unexpected surges or spikes.
+* Ensuring applications and services remain accessible to users.
+* Maintaining quick response times and optimal performance for all users, especially during high traffic periods.
+* Adapting to changing traffic demands and ensuring the infrastructure can accommodate growth.
+* Helping applications and services resist Distributed Denial of Service (DDoS) attacks.
 
 Cloudflare load balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable secure any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
