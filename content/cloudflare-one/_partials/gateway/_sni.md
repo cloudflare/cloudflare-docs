@@ -7,7 +7,7 @@ _build:
 
 The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
 
-The SNI selector only applies to traffic on port `443`.
+This selector only applies to traffic on port `443`.
 
 | UI name | API example                         |
 | ------- | ----------------------------------- |
