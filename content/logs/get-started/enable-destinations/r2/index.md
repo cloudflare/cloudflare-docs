@@ -48,7 +48,7 @@ Enable Logpush to R2 via the dashboard.
 
 ## Manage via API
 
-If you want to use Logpush via API, create a Cloudflare API token with the following permissions:
+In order to set up a Logpush job for sending your logs to R2 via API, you will need to generate an [API token](https://dash.cloudflare.com/profile/api-tokens). Make sure that the generated token has the following permissions before integrating it into your request:
 
 - Zone scope, logs edit permissions.
 - Account scope, R2 edit permissions.
