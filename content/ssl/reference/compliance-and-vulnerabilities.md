@@ -1,12 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/205043158-PCI-compliance-and-Cloudflare-SSL-TLS
-title: PCI compliance and Cloudflare SSLTLS
+title: PCI compliance and Cloudflare SSL/TLS
 ---
 
 # PCI compliance and Cloudflare SSL/TLS
-
-
 
 ## Overview
 
@@ -16,21 +14,17 @@ PCI standards recommend using TLS 1.2 or higher.
 
 Also refer to [mitigations Cloudflare implements against vulnerabilities](#cloudflare-mitigations-against-known-tls-vulnerabilities) for TLS 1.0 and 1.1.
 
-___
-
 ## Set Minimum TLS Version to 1.2
 
 To configure your Cloudflare domain to only allow connections using TLS 1.2 or newer protocols:
 
-1\. Log in to the Cloudflare dashboard.
+1. Log in to the Cloudflare dashboard.
 
-2\. Click the appropriate Cloudflare account and application.
+2. Click the appropriate Cloudflare account and application.
 
-4\. Navigate to **SSL/TLS** > **Edge Certificates**.
+4. Navigate to **SSL/TLS** > **Edge Certificates**.
 
-5\. For **Minimum TLS Version**, select **TLS 1.2** or higher.
-
-___
+5. For **Minimum TLS Version**, select **TLS 1.2** or higher.
 
 ## Cloudflare mitigations against known TLS vulnerabilities
 

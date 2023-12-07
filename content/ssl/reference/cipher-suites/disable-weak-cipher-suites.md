@@ -6,21 +6,15 @@ title: Disabling Weak Cipher Suites
 
 # Disabling Weak Cipher Suites
 
-
-
-## Problem
+## Overview
 
 Some Cipher Suites are listed as weak in third-party testing tools.
-
-___
 
 ## Root Cause
 
 Cipher Suites is a combination of ciphers used to negotiate security settings during the SSL/TLS handshake and not directly related to TLS version.
 
 The _default Cipher Suites_ provided with Universal SSL certificates are meant for a _balance of security and compatibility_. Some of which, are deemed _weak_ by third-party testing tools such as SSL Labs's SSL Server Test. You can find the list of [Cloudflare-supported Cipher Suites](/ssl/reference/cipher-suites/)
-
-___
 
 ## Solution
 
@@ -65,11 +59,11 @@ To revert to the default Cipher Suites, you can send an empty array as the value
   --data '{"value": []}'
 ```
 
-Learn more about API Tokens and Keys here: [Managing API Tokens and Keys](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys)
+Learn more about API Tokens and Keys here: [Managing API Tokens and Keys](/fundamentals/api/get-started/)
 
 ___
 
 ## Additional Resources
 
--   [Understanding Advanced Certificate Manager](https://support.cloudflare.com/hc/en-us/articles/360044797871-Understanding-Advanced-Certificate-Manager)
--   [Cloudflare SSL cipher, browser, and protocol support](https://support.cloudflare.com/hc/en-us/articles/203041594-Cloudflare-SSL-cipher-browser-and-protocol-support)
+-   [Understanding Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)
+-   [Cloudflare SSL cipher, browser, and protocol support](/ssl/reference/)

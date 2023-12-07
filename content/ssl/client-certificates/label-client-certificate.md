@@ -4,21 +4,15 @@ source: https://support.cloudflare.com/hc/en-us/articles/4567119364749-How-to-la
 title: How to label Client Certificates
 ---
 
-# How to label Client Certificates?
-
-## Problem Description
+## Overview
 
 **Applies to:** Free ✅ / Pro ✅ / Business ✅ / Enterprise ✅
 
 When [generating Client Certificates at Cloudflare](/ssl/client-certificates/create-a-client-certificate) for use with [API Shield™](/api-shield/security/mtls/configure/) to protect your API or web application, it's hard to differentiate the generated certificates.
 
-___
-
 ## Root Cause
 
 The option to generate private key and CSR with Cloudflare is meant for simpler cases and the certificates will be generated with just "CN=Cloudflare, C=US" 
-
-___
 
 ## Solution
 
@@ -49,8 +43,6 @@ Those additional info will be included in the Certificate Subject, allowing you 
 Here's an example on how it will look (with Country, Organization Name, and Organizational Unit Name) in Cloudflare Dashboard:
 
 ![](/images/support/chrome_mQRJVOpkTQ.png)
-
-___
 
 ## Additional Information
 
