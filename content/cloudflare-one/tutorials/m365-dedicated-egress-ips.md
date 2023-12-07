@@ -48,10 +48,13 @@ Make sure you have:
 
 {{<tutorial-step title="Create a named IP range location in Microsoft Entra ID">}}
 
-1. In the [Microsoft Azure portal](https://aka.ms/azureportal), go to **Entra ID** > **Security** > **Named locations**.
-2. Select **IP ranges location**.
-3. Name your location, then add the IP addresses from your Cloudflare dedicated egress IP policy.
-4. Select **Upload**.
+1. In the [Microsoft Azure portal](https://aka.ms/azureportal), select **Microsoft Entra ID** in the sidebar.
+2. Go to **Security** > **Named locations**.
+3. Select **IP ranges location**.
+4. Name your location, then add the IP addresses from your Cloudflare dedicated egress IP policy.
+5. Select **Upload**.
+
+This named location corresponds with the locations of your dedicated egress IPs.
 
 {{</tutorial-step>}}
 
@@ -59,7 +62,7 @@ Make sure you have:
 
 1. In **Protect**, go to **Conditional Access**.
 2. Select **Create new policy**.
-3. Configure which users you want to limit access for, and which traffic, apps, or actions you want to protect.
+3. Configure which Entra ID users you want to limit access for, and which traffic, apps, or actions you want to protect.
 4. In **Conditions**, select **Locations**. Enable **Configure**.
 5. In **Include**, select _Any location_. In **Exclude**, select the named location you created.
 6. In **Access controls**, go to **Grant**. Enable _Block access_.
@@ -68,7 +71,7 @@ Your policy will block access for your selected users from any location except t
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Test your policy" optional="true">}}
+{{<tutorial-step title="Test your egress policy" optional="true">}}
 
 1. Connect to your Zero Trust as your user with [WARP](/cloudflare-one/connections/connect-devices/warp/).
 2. Access any Microsoft 365 app within your organization. Microsoft should allow access.
