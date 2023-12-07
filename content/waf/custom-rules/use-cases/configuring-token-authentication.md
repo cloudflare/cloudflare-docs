@@ -10,8 +10,6 @@ Cloudflare Token Authentication allows you to restrict access to documents, file
 
 There are two options to configure Token Authentication, via Cloudflare Workers or WAF custom rules.
 
-___
-
 ## Option 1: Configure using Cloudflare Workers
 
 Review the following Cloudflare Workers documentation to configure Token Authentication:
@@ -21,7 +19,7 @@ Review the following Cloudflare Workers documentation to configure Token Authent
 
 {{<Aside type="warning">}}
 The Auth with Headers template code contains a generic header key and
-value of \'X-Custom-PS and \'mypresharedkey\'. To best protect your
+value of 'X-Custom-PS and 'mypresharedkey'. To best protect your
 resources, change the header key and value in the Workers editor prior
 to saving your code.
 {{</Aside>}}

@@ -411,7 +411,7 @@ and is composed of these parentheses-delimited expressions:
   </tbody>
 </table>
 
-For details on generating a MessageMAC, refer to [Implement token creation](/support/firewall/learn-more/configuring-token-authentication/#implement-token-creation).
+For details on generating a MessageMAC, refer to [Implement token creation](/waf/custom-rules/use-cases/configuring-token-authentication/#implement-token-creation/#implement-token-creation).
 
 ## HMAC validation examples
 
