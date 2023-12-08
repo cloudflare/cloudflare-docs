@@ -159,7 +159,6 @@ If you do not have access to your 2FA account or backup codes and cannot current
    - For security reasons, you must wait three to five days after completing verification to receive your temporary access code.
     3. Errors like "Device verification failed" are usually a results of missing cookies, so sure that you have your browser set to save cookies and     not to clear cookies on exit or after browser and OS Upgrades.
     - You may be using anti-malware or other software that automatically clears your browser cookies and makes your device unregognizable by Cloudflare's Dashboard.
-    device unregognizable by Cloudflare's Dashboard
 
 8. If at this point you are still unable to successfully enter the Cloudflare Dashboard due to a 2FA issue please **Contact Support**
 https://dash.cloudflare.com/login-help
