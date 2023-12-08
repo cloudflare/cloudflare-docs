@@ -8,7 +8,15 @@ title: Protect access to Microsoft 365 with dedicated egress IPs
 
 # Protect access to Microsoft 365 with dedicated egress IPs
 
-This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. You can combine Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
+{{<Aside type="note">}}
+
+Only available on Zero Trust Enterprise plans.
+
+{{</Aside>}}
+
+This tutorial covers how to secure access to your Microsoft 365 applications with Cloudflare Gateway dedicated egress IPs.
+
+You can map a named location in Microsoft Entra ID to a location associated with your dedicated egress IPs. Traffic will egress from Cloudflare with these IP addresses. If users attempt to access your Microsoft applications without these IPs, Entra ID will block access.
 
 {{<tutorial>}}
 
