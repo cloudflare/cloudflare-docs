@@ -48,11 +48,12 @@ Make sure you have:
 
 {{<tutorial-step title="Create a named IP range location in Microsoft Entra ID">}}
 
-1. In the [Microsoft Azure portal](https://aka.ms/azureportal), select **Microsoft Entra ID** in the sidebar.
-2. Go to **Security** > **Named locations**.
-3. Select **IP ranges location**.
-4. Name your location, then add the IP addresses from your Cloudflare dedicated egress IP policy.
-5. Select **Upload**.
+1. Log in to the [Microsoft Azure portal](https://aka.ms/azureportal).
+2. In the sidebar, select **Microsoft Entra ID**.
+3. Go to **Security** > **Named locations**.
+4. Select **IP ranges location**.
+5. Name your location, then add the IP addresses used in your Cloudflare dedicated egress IP policy.
+6. Select **Upload**.
 
 This named location corresponds with the locations of your dedicated egress IPs.
 
@@ -74,7 +75,7 @@ Your policy will block access for your selected users from any location except t
 {{<tutorial-step title="Test your policies">}}
 
 1. Using [WARP](/cloudflare-one/connections/connect-devices/warp/), sign in to your Zero Trust organization with a user's account.
-2. Access any Microsoft 365 app within your organization. Entra ID should allow access.
+2. Go to any Microsoft 365 app within your organization. Entra ID should allow access.
 3. Disconnect WARP from your Zero Trust organization. Entra ID should block access to any Microsoft 365 apps.
 
 {{</tutorial-step>}}
