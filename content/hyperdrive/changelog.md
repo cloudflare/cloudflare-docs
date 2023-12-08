@@ -6,6 +6,13 @@ rss: file
 ---
 
 # Changelog
+
+## 2023-12-08
+
+### Dashboard and query analytics
+
+Hyperdrive now supports configuration [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), as well as query analytics that provide cache hit rate and response byte metrics.
+
 ## 2023-09-28
 
 ### Hyperdrive now available
