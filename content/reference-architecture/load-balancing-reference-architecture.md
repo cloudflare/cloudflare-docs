@@ -723,7 +723,7 @@ In addition to being public, Spectrum load balancers are always proxied. The pro
 |---|---|---|---|---|
 |Layer 7 HTTP(S)|X|X|7|HTTP(S)|
 |DNS-Only|X||7 (DNS)|IP-Based|
-|Spectrum|X|C|4|TCP/UDP|
+|Spectrum|X|X|4|TCP/UDP|
 
 #### Load balancer details
 
