@@ -2,28 +2,28 @@
 pcx_content_type: how-to
 title: Provision with SCIM
 weight: 4
-updated: 2023-12-03
+updated: 2023-12-08
 ---
 
 # Provision Cloudflare with SCIM
 
-By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis.
+By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis, mastered from your identity provider (IdP)
 
-Currently, we only provide SCIM support for Microsoft Entra and Okta in Self-Hosted Access applications.
+Currently, we only provide SCIM support for Enterprise customers, and for Microsoft Entra and Okta. If you are interested in setting up SCIM support, contact your account team and ask for dashboard SCIM.
 
 For more information about SCIM support, refer to the [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/) blog post.
 
 ## Limitations
 
-- You cannot update [user attributes](/cloudflare-one/policies/gateway/identity-selectors/) from the identity provider.
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
-- Currently, Cloudflare does not support Okta Integration Network (OIN) integration. This integration is in review.
+- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles), and does not support Domain-scoped Roles provisioning via SCIM. We are working on this limitation.
+- Cloudflare does not currently allow custom group names to leave space for future development.
 
 ## Prerequisites
 
 - Cloudflare provisioning with SCIM is only available to Enterprise customers and requires a Cloudflare-specific feature flag. Contact your account team for more information.
-- In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
-- In other identity providers (IdP), access to the `Create groups` and `Manage applications` [permissions](https://help.okta.com/en-us/Content/Topics/Security/custom-admin-role/about-role-permissions.htm).
+- In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account.
+- In your identity provider, the ability to create applications and groups.
 
 ---
 
@@ -38,26 +38,12 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
    | User    | Memberships      | Read       |
    | User    | Memberships      | Edit       |
 
-2. Add the following under **Account Resources**:
-
-   | Action  | Account          |
-   | ------- | ---------------- |
-   | Include | \<account name\> |
-
-3. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu.
-4. Select **Continue to summary**.
-5. Validate the permissions and select **Create Token**.
-6. Copy the token value.
+2. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu.
+3. Select **Continue to summary**.
+4. Validate the permissions and select **Create Token**.
+5. Copy the token value.
 
 ---
-
-## Provision with Okta
-
-1. Log in the Okta Admin dashboard and go to **Directory** > **Groups**.
-2. Select **Add group** and name your group. Select **Save**.
-3. Select the group you created.
-4. Select **Assign people** and assign all Cloudflare Users to it.
-5. Select **Done**.
 
 ### Set up your Okta SCIM application.
 
@@ -77,7 +63,7 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 
 1. In your integration page, go to **Provisioning** > **Configure API Integration**.
 2. Enable **Enable API Integration**.
-3. In SCIM 2.0 Base Url, enter: `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
+3. In SCIM 2.0 Base URL, enter: `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
 4. In OAuth Bearer Token, enter your API token value.
 5. Disable **Import Groups**.
 6. Select **Save**.
@@ -88,56 +74,55 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
    2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
    3. In the integration page, go to **Assignments** > **Assign** > **Assign to Groups**.
    4. Assign users to your Cloudflare SCIM group.
-   5. Select **Done**.
+   5. Select **Done**. 
+   
+This will provision all of the users affected to your Cloudflare account with "minimal account access".
+
 
 ### Configure user permissions on Okta
 
-1. In the tab bar, go to **Provisioning**. Select **Edit**.
-2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
-3. Select **Add group** and add groups with the following names:
-
-   - `Administrator Read Only`
-   - `Administrator`
-   - `Billing`
-   - `Super Administrator - All Privileges`
-
-4. Go to **Push Groups** and select the gear icon.
-5. Disable **Rename groups**. Select **Save**.
-6. Within the **Push Groups** tab, select **Push Groups**.
-7. Add the groups you created.
-8. Select **Save**.
+1. Go to **Directory** > **Groups** > **Add group** and add groups with the following names:
+   `CF-<your_account_ID> - <Role_Name>`
+   {{<Aside type="note">}}
+   Refer to the list of available [Roles](/fundamentals/setup/manage-members/roles/) for more details
+   {{</Aside>}}
+2. In the Application object, go to **Provisioning** and select **Edit**.
+3. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+5. Go to **Push Groups** and make sure the appropriate group matches the existing group of the same name on Cloudflare
+6. Disable **Rename groups**. Select **Save**.
+7. Within the **Push Groups** tab, select **Push Groups**.
+8. Add the groups you created.
+9. Select **Save**.
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
 
-Refer to [Roles](/fundamentals/setup/manage-members/roles/) more details.
-
 ---
 
-## Provision using Microsoft Entra
+## Provision using Microsoft Entra ID
 
-### Set up the Microsoft Entra Enterprise application.
+### Set up the Microsoft Entra ID Enterprise application.
 
-   1. Go to your Microsoft Entra instance > Enterprise Applications.
+   1. Go to your Microsoft Entra ID instance and select **Enterprise Applications**.
    2. Select **Create your own application** and name your application.
    3. Select **Integrate any other application you don’t find in the gallery (Non-gallery)**.
    4. Select **Create**.
 
-### Provision the Microsoft Entra Enterprise application.
+### Provision the Microsoft Entra ID Enterprise application.
 
    1. Under **Manage** on the sidebar menu, select **Provisioning**.
    2. Select **Automatic** on the dropdown menu for the Provisioning Mode.
    3. Enter your API token value and the tenant URL: `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
    4. Select **Test Connection**, then select **Save**.
 
-### Configure user permissions in Microsoft Entra 
+### Configure user permissions in Microsoft Entra ID
 
 Currently, groups need to match a specific format to provision specific Cloudflare account-level roles. Cloudflare is in the process of adding Cloudflare Groups, which can take in freeform group names in the future.
 
-These permissions work on an exact string match with the prefix `CF-<your_account_id> - <roleName>`
+These permissions work on an exact string match with the form `CF-<your_account_ID> - <Role_Name>`
 
-Refer to [Roles](/fundamentals/setup/manage-members/roles/) more details.
+Refer to the list of [Roles](/fundamentals/setup/manage-members/roles/) for more details.
 
-1. To ensure that only required groups are provisioned, go to your Microsoft Entra instance.
+1. To ensure that only required groups are provisioned, go to your Microsoft Entra ID instance.
 2. Under Manage on the sidebar menu, select **Provisioning**.
 3. Select **Provision Entra Groups** in Mappings.
 4. Select **All records** under Source Object Scope.
