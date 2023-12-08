@@ -63,7 +63,7 @@ This named location corresponds with the locations of your dedicated egress IPs.
 
 1. In **Protect**, go to **Conditional Access**.
 2. Select **Create new policy**.
-3. Configure which Entra ID users you want to limit access for, and which traffic, apps, or actions you want to protect.
+3. Configure which Entra ID users you want to limit access for, and which traffic, applications, or actions you want to protect.
 4. In **Conditions**, select **Locations**. Enable **Configure**.
 5. In **Include**, select _Any location_. In **Exclude**, select the named location you created.
 6. In **Access controls**, go to **Grant**. Enable _Block access_.
@@ -76,7 +76,7 @@ Your policy will block access for your selected users from any location except t
 
 1. Using [WARP](/cloudflare-one/connections/connect-devices/warp/), sign in to your Zero Trust organization with a user's account.
 2. Go to any Microsoft 365 app within your organization. Entra ID should allow access.
-3. Disconnect WARP from your Zero Trust organization. Entra ID should block access to any Microsoft 365 apps.
+3. Disconnect WARP from your Zero Trust organization. Entra ID should block access to any Microsoft 365 applications.
 
 {{</tutorial-step>}}
 
