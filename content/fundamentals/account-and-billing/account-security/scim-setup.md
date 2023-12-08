@@ -7,7 +7,7 @@ updated: 2023-12-08
 
 # Provision Cloudflare with SCIM
 
-By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis, mastered from your identity provider (IdP)
+By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis, through your identity provider (IdP)
 
 Currently, we only provide SCIM support for Enterprise customers, and for Microsoft Entra and Okta. If you are interested in setting up SCIM support, contact your account team and ask for dashboard SCIM.
 
@@ -16,7 +16,7 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 ## Limitations
 
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
-- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles), and does not support Domain-scoped Roles provisioning via SCIM. We are working on this limitation.
+- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM. We are working on this limitation.
 - Cloudflare does not currently allow custom group names to leave space for future development.
 
 ## Prerequisites
@@ -78,14 +78,14 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
    4. Assign users to your Cloudflare SCIM group.
    5. Select **Done**. 
    
-This will provision all of the users affected to your Cloudflare account with "minimal account access".
+This will provision all of the users affected to your Cloudflare account with "minimal account access."
 
 ### Configure user permissions on Okta
 
 1. Go to **Directory** > **Groups** > **Add group** and add groups with the following names:
    `CF-<your_account_ID> - <Role_Name>`
    {{<Aside type="note">}}
-   Refer to the list of available [Roles](/fundamentals/setup/manage-members/roles/) for more details
+   Refer to the list of available [Roles](/fundamentals/setup/manage-members/roles/) for more details.
    {{</Aside>}}
 2. In the Application object, go to **Provisioning** and select **Edit**.
 3. Enable **Create Users** and **Deactivate Users**. Select **Save**.
