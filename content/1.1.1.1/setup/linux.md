@@ -13,7 +13,7 @@ Take note of any DNS addresses you might have set up, and save them in a safe pl
 
 1. > sudo nano /etc/systemd/resolved.conf
 2. Uncomment the "DNs=" Line
-3. Write like "DNS=1.1.1." for example
+3. Write like "DNS=1.1.1.1" for example
 4. You can use 1.1.1.1 or 1.0.0.1 for normal cloudflare dns
 5. You can use 1.1.1.2 or 1.0.0.2 for blocking malware
 6. You can use 1.1.1.3 or 1.0.0.3 blocking malware and adult content.
