@@ -1,14 +1,14 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200172706-Configuring-Custom-Pages-Error-and-Challenge-
-title: Configuring Custom Pages (Error and Challenge)
+title: Custom Pages (Error and Challenge)
 ---
 
 # Configuring Custom Pages (Error and Challenge)
 
 ## Overview
 
-Cloudflare uses a wide range of [error codes](https://support.cloudflare.com/hc/en-us/sections/200820298-Error-Pages) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
+Cloudflare uses a wide range of [error codes](/support/troubleshooting/cloudflare-errors/) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
 
 If you are on the Pro, Business, or Enterprise plan you can customize and brand these pages for your whole account or for specific domains. You can design custom error pages to appear during a security challenge or when an error occurs.
 
@@ -23,9 +23,7 @@ Alternatively, Enterprise customers can customize 5XX error pages at their origi
 Enable Origin Error Pages excludes errors 520 to 527.
 {{</Aside>}}
 
-___
-
-## Step 1: Create a custom page
+### Step 1: Create a custom page
 
 Before adding a custom error page to your Cloudflare account, you will need to design, code, and host that page on your own web server.
 
@@ -47,7 +45,7 @@ You can use the following custom error template to start building your page:
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
 
-### Custom Page example
+#### Custom Page example
 
 Here is sample code for a 5XX custom error page without styling: 
 
@@ -65,9 +63,7 @@ Here is sample code for a 5XX custom error page without styling: 
 </html>
 ```
 
-___
-
-## Step 2: Select your custom error tokens
+### Step 2: Select your custom error tokens
 
 When designing your custom error page, you must include one page-specific custom error token.  Each custom error token provides diagnostic information that appears on the error page. 
 
@@ -94,7 +90,7 @@ Only one page-specific custom error token can be used per page.
 
 ___
 
-## Step 3: Style your custom page
+### Step 3: Style your custom page
 
 Each custom error token has a default look and feel. However, you can use CSS to stylize each custom error tag using each tag's class ID. If you are familiar with CSS styling, you can customize the look and feel of the error page using each tag’s class ID. Please keep in mind that all the external resources like images, CSS, and scripts will be inlined during the process. As such, all external resources need to be available (i.e. return a 200 OK) otherwise an error will be thrown.
 
@@ -102,7 +98,7 @@ You can check if your page is fine using the following tool: [Collapsify](https:
 
 ___
 
-## Step 4: Publish your custom page
+### Step 4: Publish your custom page
 
 After customizing your custom error page, there are two options for adding the page to Cloudflare:
 
@@ -115,7 +111,7 @@ If Cloudflare cannot load your site or you have blocked the United States (US) v
 A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
 {{</Aside>}}
 
-### Account-level custom error page
+#### Account-level custom error page
 
 To publish an account level custom error page:
 
@@ -125,7 +121,7 @@ To publish an account level custom error page:
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
 5.  Enter the URL of the custom error page you customized in your origin server, then click **Publish.**
 
-### Domain level custom error page
+#### Domain level custom error page
 
 To publish a domain level custom error page:
 
@@ -135,7 +131,7 @@ To publish a domain level custom error page:
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
 5.  Enter the URL of the custom error page you customized in your origin server, then click **Publish.**
 
-### Update custom error page after publishing
+#### Update custom error page after publishing
 
 After successfully publishing the custom error page in the **Custom Pages** app, you can remove the page from your origin server. 
 

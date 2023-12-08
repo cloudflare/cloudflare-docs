@@ -5,21 +5,13 @@ title: Troubleshooting crawl errors
 ---
 
 # Troubleshooting crawl errors
-
-
-
 ## Overview
 
 Cloudflare allows search engine crawlers and bots. If you observe crawl issues or Cloudflare challenges presented to the search engine crawler or bot, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the information you gather when troubleshooting the crawl errors via the methods outlined in this guide.
 
-___
-
 ## Disable Anti-bot modules
 
 Search engine crawlers' requests, when proxied through Cloudflare, can be blocked by anti-bot modules installed on your origin server. Try disabling any anti-bot modules to prevent your origin from blocking these requests.
-
-
-___
 
 ## Adjust Google and Bing crawl rates
 
@@ -29,8 +21,6 @@ To optimize CDN performance, Google and Bing assign special crawl rates to websi
 -   Change your Bing crawl rate via guidance from Bing’s documentation:
     -   [Bing Crawl Control](https://www.bing.com/webmasters/help/?topicid=55a30303)
     -   [Crawl Delay and the Bing Crawler](https://blogs.bing.com/webmaster/2009/08/10/crawl-delay-and-the-bing-crawler-msnbot)
-
-___
 
 ## Prevent crawl errors
 
@@ -60,9 +50,7 @@ Errors for cdn-cgi do not impact site rankings.
 {{</Aside>}}
 
 -   Ensure your [robots.txt file allows the AdSense crawler](http://support.google.com/webmasters/bin/answer.py?hl=en&answer=1061943).
--   [Restore original visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786) in your server logs.
-
-___
+-   [Restore original visitor IP addresses](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/) in your server logs.
 
 ## Troubleshoot crawl errors
 
@@ -70,11 +58,11 @@ Troubleshooting steps for the most commonly reported crawl errors are mentioned 
 
 ### HTTP 4XX Errors
 
-[HTTP 4XX errors](https://support.cloudflare.com/hc/articles/115003014512) are the most common type of crawl error. Cloudflare delivers these errors from your web server to Google. These errors are caused for various reasons such as a missing page on your web server or a malformed link in your HTML. The solution depends upon the problem encountered.
+[HTTP 4XX errors](/support/troubleshooting/http-status-codes/4xx-client-error/) are the most common type of crawl error. Cloudflare delivers these errors from your web server to Google. These errors are caused for various reasons such as a missing page on your web server or a malformed link in your HTML. The solution depends upon the problem encountered.
 
 ### HTTP 5XX Errors
 
-[HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431) indicate that either Cloudflare or your origin web server experienced an internal error. To correlate occurrences of crawl errors with site outages, monitor your origin web server’s health. Monitoring your website health both through Cloudflare and directly to your origin web server IPs determines whether errors occurred due to Cloudflare or your origin web server.
+[HTTP 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) indicate that either Cloudflare or your origin web server experienced an internal error. To correlate occurrences of crawl errors with site outages, monitor your origin web server’s health. Monitoring your website health both through Cloudflare and directly to your origin web server IPs determines whether errors occurred due to Cloudflare or your origin web server.
 
 ### DNS Errors
 
@@ -94,7 +82,7 @@ Once you’ve confirmed how your domain was setup with Cloudflare, proceed with 
 
 **CNAME**
 
-Contact your hosting provider to investigate DNS errors and provide the date Google encountered DNS errors. Additionally, review the [Cloudflare System Status](http://www.cloudflare.com/system-status) page for any network outages on the date the errors were encountered by Google.
+Contact your hosting provider to investigate DNS errors and provide the date Google encountered DNS errors. Additionally, review the [Cloudflare System Status](https://www.cloudflarestatus.com/) page for any network outages on the date the errors were encountered by Google.
 
 **Full**
 
@@ -108,8 +96,6 @@ If the above troubleshooting steps do not resolve your crawl errors, follow the 
 2.  Click **Crawl Errors** in the left hand navigation.
 3.  Click **Download** to export the list of errors as a .csv file.
 4.  Provide the downloaded .csv file to Cloudflare support.
-
-___
 
 ## Related resources
 

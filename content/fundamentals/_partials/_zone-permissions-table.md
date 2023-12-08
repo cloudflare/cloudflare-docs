@@ -26,8 +26,8 @@ inputParameters: editWord
 | Config Rules $1                | Grants write access to [Configuration Rules](/rules/configuration-rules/).                                                                 |
 | Custom Error Rules Read          | Grants read access to [Custom Error Rules](/rules/custom-error-responses/).                                                                |
 | Custom Error Rules $1          | Grants write access to [Custom Error Rules](/rules/custom-error-responses/).                                                               |
-| Custom Pages Read                | Grants read access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).  |
-| Custom Pages $1                | Grants write access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/). |
+| Custom Pages Read                | Grants read access to [Custom Pages](/waf/tools/custom-error-pages/).  |
+| Custom Pages $1                | Grants write access to [Custom Pages](/waf/tools/custom-error-pages/). |
 | DMARC Management Read            | Grants read access to [DMARC Management](/dmarc-management/).                                                                              |
 | DMARC Management $1            | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
 | DNS Read                         | Grants read access to [DNS](/dns/).                                                                                                        |

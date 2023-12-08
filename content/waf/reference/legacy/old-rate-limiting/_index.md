@@ -138,7 +138,7 @@ For more information on challenge actions, refer to [Cloudflare challenges](/waf
 
 Setting a timeout shorter than the threshold causes the API to automatically increase the timeout to equal the threshold.
 
-Visitors hitting a rate limit receive a default HTML page if a [custom error page](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) is not specified. In addition, Business and Enterprise customers can specify a response in the rule itself. Refer to [Configure Advanced Response](#task-3-configure-advanced-response-only-business-and-enterprise-plans) for details.
+Visitors hitting a rate limit receive a default HTML page if a [custom error page](/waf/tools/custom-error-pages/) is not specified. In addition, Business and Enterprise customers can specify a response in the rule itself. Refer to [Configure Advanced Response](#task-3-configure-advanced-response-only-business-and-enterprise-plans) for details.
 
 ___
 

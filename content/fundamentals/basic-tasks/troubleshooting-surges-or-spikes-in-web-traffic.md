@@ -6,8 +6,6 @@ title: Troubleshooting surges or spikes in web traffic
 
 # Troubleshooting surges or spikes in web traffic
 
-
-
 ## Overview
 
 There are many ways to protect and prepare your domain to handle spikes in traffic. We recommend the following strategies detailed below:
@@ -17,23 +15,21 @@ There are many ways to protect and prepare your domain to handle spikes in traff
 -   use Cloudflare IP addresses to your advantage
 -   ensure Cloudflare IPs are allowed
 
-___
-
 ## Use Cloudflare Page Rules to customize caching
 
 By default Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) like images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Page Rules](/rules/page-rules/).
 
 ### Cache everything
 
-1\. Log in to your Cloudflare account
+1. Log in to your Cloudflare account
 
-2\. Go to **Rules >** **Page Rules**. 
+2. Go to **Rules >** **Page Rules**. 
 
-3\. Select **Create Page Rule**.
+3. Select **Create Page Rule**.
 
 4.  For the url, enter either your entire website or a section of your site.
 
-5\. For **Settings**, select **Cache Level** and then **Cache Everything**. Cloudflare will now fully cache HTML at our Edge network, instead of making roundtrips to your origin web server.
+5. For **Settings**, select **Cache Level** and then **Cache Everything**. Cloudflare will now fully cache HTML at our Edge network, instead of making roundtrips to your origin web server.
 
 6. To control how long Cloudflare caches resources, add another setting for **Edge Cache TTL** and select a time duration.
 
@@ -47,11 +43,9 @@ Before a visitor adds something to their shopping cart, logs in, or adds a comme
 
 There are multiple tutorials available on how you can do this:
 
--   [Caching Anonymous Page Views with WordPress or WooCommerce](https://support.cloudflare.com/hc/en-us/articles/236166048)
--   [Caching Anonymous Page Views with Magento 1 and Magento 2](https://support.cloudflare.com/hc/en-us/articles/236168808)
--   [Caching static HTML](https://support.cloudflare.com/hc/articles/202775670)
-
-___
+-   [Caching Anonymous Page Views with WordPress or WooCommerce](/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/)
+-   [Caching Anonymous Page Views with Magento 1 and Magento 2](/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/)
+-   [Caching static HTML](/cache/concepts/customize-cache/)
 
 ## Contact your hosting provider to understand the limits of your hosting plan
 
@@ -59,21 +53,15 @@ Cloudflare offsets most of the load to your website via caching and request filt
 
 Once you are aware of your plan limits, you can use a feature like [Rate Limiting](/waf/rate-limiting-rules/) to restrict how many times anyone user can make a request to your website.
 
-___
-
 ## Use Cloudflare IP addresses to your advantage
 
 Take action to prevent attacks to your site during peak season by configuring your firewall to only accept traffic from Cloudflare IP addresses during the holidays. If you only accept [Cloudflare IPs](https://www.cloudflare.com/ips), you can prevent attackers from getting to your original IP address and knocking your site offline.
 
-Another option would be to [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786) and add _DenyAllButCloudFlare_ to your Apache configuration.
-
-___
+Another option would be to [restore visitor IP addresses](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/) and add _DenyAllButCloudFlare_ to your Apache configuration.
 
 ## Ensure Cloudflare IPs are allowed
 
 Cloudflare operates as a reverse proxy to your site so all connections come from Cloudflare IPs, so restricting our IPs can cause issues for visitors trying to access your site. The list of Cloudflare IPs can be found here: [https://www.cloudflare.com/ips](https://www.cloudflare.com/ips).
-
-___
 
 ## What information do I need when submitting a support ticket?
 
@@ -101,8 +89,6 @@ Before the high traffic event occurs, you must [open a Support ticket](/support
 -   Protocol
 -   Max packet/bit rate
 -   Contact in case of emergency
-
-___
 
 ## Related resources
 

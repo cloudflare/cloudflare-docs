@@ -348,6 +348,9 @@
 /support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /support/firewall/settings/understanding-the-cloudflare-security-level/ /waf/tools/security-level/ 301
 /support/firewall/settings/using-privacy-pass-with-cloudflare/ /waf/tools/privacy-pass/ 301
+/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/ /waf/tools/custom-error-pages/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-crawl-errors/ /fundamentals/basic-tasks/troubleshooting-crawl-errors/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-surges-or-spikes-in-web-traffic/ /fundamentals/basic-tasks/troubleshooting-surges-or-spikes-in-web-traffic/ 301
 
 # fundamentals revamp
 /fundamentals/global-configurations/lists/link-bulk-redirect-lists/ /rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists 301

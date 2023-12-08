@@ -30,7 +30,7 @@ To prevent scanner errors, omit the `/cdn-cgi/` endpoint from your security scan
 
 `/cdn-cgi/` also can cause issues with various web crawlers. 
 
-Search engine crawlers can encounter [errors when crawling these endpoints](/support/troubleshooting/general-troubleshooting/troubleshooting-crawl-errors/) and — though these errors do not impact site rankings — they may surface in your webmaster dashboard.
+Search engine crawlers can encounter [errors when crawling these endpoints](/fundamentals/basic-tasks/troubleshooting-crawl-errors/) and — though these errors do not impact site rankings — they may surface in your webmaster dashboard.
 
 SEO and other web crawlers may also mistakenly crawl these endpoints, thinking that they are part of your site's content.
 

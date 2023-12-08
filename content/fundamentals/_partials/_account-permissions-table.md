@@ -26,8 +26,8 @@ inputParameters: editWord
 | Access: SSH Auditing Read                                    | Grants read access to [SSH Auditing](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).                                                    |
 | Access: SSH Auditing $1                                    | Grants write access to [SSH Auditing](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).                                                   |
 | Account Analytics Read                                       | Grants read access to [account analytics](/analytics/account-and-zone-analytics/account-analytics/).                                                     |
-| Account Custom Pages Read                                    | Grants read access to account-level [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).  |
-| Account Custom Pages $1                                    | Grants write access to account-level [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/). |
+| Account Custom Pages Read                                    | Grants read access to account-level [Custom Pages](/waf/tools/custom-error-pages/).  |
+| Account Custom Pages $1                                    | Grants write access to account-level [Custom Pages](/waf/tools/custom-error-pages/). |
 | Account Filter Lists Read                                    | Grants read access to Account Filter Lists.                                                                                                              |
 | Account Filter Lists $1                                    | Grants write access to Account Filter Lists.                                                                                                             |
 | Account Firewall Access Rules Read                           | Grants read access to account firewall access rules.                                                                                                     |

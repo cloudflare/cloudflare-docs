@@ -24,7 +24,7 @@ When contacting your hosting provider, give them the following information:
 
 The error cause is not always found in the origin server error logs. Check logs of all load balancers, caches, proxies, or firewalls between Cloudflare and the origin web server.
 
-Additional details to provide to your hosting provider or site administrator are listed within each error description below. Cloudflare [Custom Error Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) change the appearance of default error pages discussed in this article.
+Additional details to provide to your hosting provider or site administrator are listed within each error description below. Cloudflare [Custom Error Pages](/waf/tools/custom-error-pages/) change the appearance of default error pages discussed in this article.
 
 ## Error analytics
 
@@ -443,6 +443,6 @@ ___
 
 -   [Gathering information to troubleshoot site issues](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites)
 -   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
--   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
+-   [Customizing Cloudflare error pages](/waf/tools/custom-error-pages/)
 -   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
 -   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)

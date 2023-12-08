@@ -54,7 +54,7 @@ If you notice SEO issues, make sure your:
 - [Rate limiting rules](/waf/rate-limiting-rules/) are allowing **Verified Bots**.
 - [Bot protection](/bots/concepts/bot/#verified-bots) settings are not blocking **Verified Bots**.
 
-If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](/support/troubleshooting/general-troubleshooting/troubleshooting-crawl-errors/).
+If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](/fundamentals/basic-tasks/troubleshooting-crawl-errors/).
 
 ## Common misconceptions
 
