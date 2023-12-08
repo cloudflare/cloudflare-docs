@@ -45,6 +45,8 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
 
 ---
 
+## Provision with Okta 
+
 ### Set up your Okta SCIM application.
 
 1. In the Okta dashboard, go to **Applications** > **Applications**.
@@ -77,7 +79,6 @@ For more information about SCIM support, refer to the [Announcing SCIM support f
    5. Select **Done**. 
    
 This will provision all of the users affected to your Cloudflare account with "minimal account access".
-
 
 ### Configure user permissions on Okta
 
