@@ -99,7 +99,7 @@ Adding any users to these groups will grant them the role. Removing the users fr
 
 ---
 
-## Provision using Microsoft Entra ID
+## Provision with Microsoft Entra ID
 
 ### Set up the Microsoft Entra ID Enterprise application.
 
