@@ -152,7 +152,7 @@ If you do not have access to your 2FA account or backup codes and cannot current
 3. Select **Begin recovery**.
 4. A 6-digit access code will be sent to the email address associated with your Cloudflare account.
 5. Enter the temporary access code into the Cloudflare Dashboard and select **Verify email**.
-6. You will now be asked to verify your device using a device that you have logged in from before by clicking on "Verify device"
+6. Select **Verify device**. This checks whether you are using a device that has previously logged into your account.
 7. If you receive a "Device verification failed" message:
 
     - If you clear your cookies often or are logging in from a different IP address, you have wiped Cloudflare's memory of your device and will need to use a different device to verify.
