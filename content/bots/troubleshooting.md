@@ -115,7 +115,7 @@ These fields are available via [WAF custom rules](/waf/custom-rules/) and other 
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="What is `cf.bot\_management.verified\_bot`?" >}}
+{{<faq-question level=2 text="What is `cf.bot_management.verified_bot`?" >}}
 
 {{<faq-answer>}}
 
@@ -147,7 +147,7 @@ The JA3 Fingerprint can be null or empty in some cases. The most common case is 
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="I run a good bot and want for it to be added to the allowlist (`cf.bot\_management.verified\_bot`). What should I do?" >}}
+{{<faq-question level=2 text="I run a good bot and want for it to be added to the allowlist (cf.bot_management.verified_bot). What should I do?" >}}
 
 {{<faq-answer>}}
 
