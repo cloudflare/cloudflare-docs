@@ -46,7 +46,7 @@ Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniq
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 
-To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Durable Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Durable Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](/support/contacting-cloudflare-support/).
 
 ### Your account is doing too many concurrent storage operations. Please back off and try again later.
 

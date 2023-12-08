@@ -1,6 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Changelog
+weight: 4
 meta:
     description: Review recent changes to Cloudflare Workers.
 sidebar_toc: true

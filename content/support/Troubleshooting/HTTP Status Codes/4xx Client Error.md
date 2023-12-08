@@ -168,7 +168,7 @@ nginx specific response code to indicate when the connection has been closed by 
 
 -   This will be shown in [Cloudflare Logs](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-REST-API) and status code analytics for Enterprise customers.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 Since Cloudflare was built on nginx, we also have a 499 HTTP code in Cloudflare Logs
 and analytics for connections which are terminated before we have finished
 processing the request. It is expected behavior to see these in your

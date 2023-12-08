@@ -90,7 +90,7 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
-Add the [`CF-Ray` header to your origin web server logs](https://support.cloudflare.com/hc/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) to match requests proxied to Cloudflare to requests in your server logs.
+Add the [`CF-Ray` header to your origin web server logs](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) to match requests proxied to Cloudflare to requests in your server logs.
 
 Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
@@ -123,7 +123,7 @@ Currently, this header is a JSON object, containing only one key called “schem
 
 The `CF-Worker` request header is added to an edge Worker subrequest that identifies the host that spawned the subrequest. This is useful when you want to protect yourself against cross-zone worker subrequests. For example: `CF-Worker: example.com`.
 
-You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](https://support.cloudflare.com/hc//articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
+You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
 
 `CF-Worker` is added to all Worker subrequests sent via `fetch()`. It is set to the name of the zone which owns the Worker making the subrequest. For example, a Worker script on route for `foo.example.com/*` from `example.com` will have all subrequests with the header:
 

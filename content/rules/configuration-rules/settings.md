@@ -146,7 +146,7 @@ header: API configuration example
 
 ## Hotlink Protection
 
-Enable or disable [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) [^7] for matching requests.
+Enable or disable [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) [^7] for matching requests.
 
 {{<details header="API information">}}
 
@@ -167,7 +167,7 @@ header: API configuration example
 
 ## Email Obfuscation
 
-Enable or disable [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016) [^8] for matching requests.
+Enable or disable [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) [^8] for matching requests.
 
 {{<details header="API information">}}
 
@@ -297,7 +297,7 @@ header: API configuration example
 
 ## Server Side Excludes
 
-Enable or disable [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036) [^14] for matching requests.
+Enable or disable [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) [^14] for matching requests.
 
 {{<details header="API information">}}
 

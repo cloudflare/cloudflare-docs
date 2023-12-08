@@ -21,5 +21,4 @@ Beyond [creating a simple load balancer](/load-balancing/load-balancers/create-l
 
 ## Integrate with 3rd parties
 
-*   [Deploy containerized applications](/load-balancing/additional-options/deploy-containerized-applications/) across multiple clouds
 *   Increase visibility by [sending health monitor notifications to Pagerduty](/load-balancing/additional-options/pagerduty-integration/)

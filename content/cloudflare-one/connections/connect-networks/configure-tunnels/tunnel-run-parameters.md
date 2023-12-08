@@ -80,7 +80,7 @@ Specifies the verbosity of logging. The default `info` level does not produce mu
 | --------------- | ------------ | -------------------- |
 | `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>`| `localhost:` | `TUNNEL_METRICS`     |
 
-Exposes a Prometheus endpoint on the specified IP address/port, which you can then query for usage metrics. For <IP>, enter the local address of the server running `cloudflared` (for example, `127.0.0.1` or `0.0.0.0`).
+Exposes a Prometheus endpoint on the specified IP address/port, which you can then query for [usage metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/).
 
 ## `no-autoupdate`
 

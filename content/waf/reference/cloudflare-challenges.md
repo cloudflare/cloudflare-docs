@@ -72,6 +72,16 @@ Challenges are not supported by Microsoft Internet Explorer.
 
 If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
 
+### Browser extensions
+
+If you have browser extensions, they might lead to unpassable challenge loops. To fix, disable your extensions and reload the page.
+
+{{<Aside type="note">}}
+
+This behavior commonly occurs because an extension modifies your browser's default `User-Agent` value.
+
+{{</Aside>}}
+
 ### Mobile browsers
 
 Challenges are not supported for desktop mode on mobile browsers or mobile mode on desktop browsers.
@@ -164,5 +174,4 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 Cloudflare challenges cannot support the following:
 
 * Implementations where a domain serves a challenge page originally requested for another domain.
-* Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
-* Forward proxies that can be abused to steal clearances.
+* Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to. For example, if you receive the challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a challenge loop.

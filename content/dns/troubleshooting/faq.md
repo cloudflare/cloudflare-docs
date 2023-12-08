@@ -194,7 +194,7 @@ Third-party tools can sometimes fail to return correct DNS results if a recursiv
 
 -   [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
 -   [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
--   [Purging your DNS cache locally](https://documentation.cpanel.net/display/CKB/How%2BTo%2BClear%2BYour%2BDNS%2BCache)
+-   [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
 
 ___
 

@@ -33,9 +33,9 @@ Unlike other serverless providers which use [containerized processes](https://ww
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
-- resource limitations on the machine.
-- a suspicious script - anything seen as trying to break out of the Isolate sandbox.
-- individual [resource limits](/workers/platform/limits/).
+- Resource limitations on the machine.
+- A suspicious script - anything seen as trying to break out of the Isolate sandbox.
+- Individual [resource limits](/workers/platform/limits/).
 
 Because of this, it is generally advised that you not store mutable state in your global scope unless you have accounted for this contingency.
 
@@ -43,7 +43,7 @@ If you are interested in how Cloudflare handles security with the Workers runtim
 
 ## Compute per request
 
-Most Workers scripts are a variation on the default Workers flow:
+Most Workers are a variation on the default Workers flow:
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -69,19 +69,19 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/handlers/fetch/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the point of the `respondWith` call all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
+For Workers written in [ES modules syntax](/workers/learning/migrate-to-module-workers/), when a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's data centers, the request invokes the `fetch()` handler defined in your Worker code with the given request. You can respond to the request by returning a [`Response`](/workers/runtime-apis/response/) object.
+
+For Workers written in Service Worker syntax, when a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's data centers, the Worker is passed a [`FetchEvent`](/workers/runtime-apis/handlers/fetch/) argument to the event handler defined in the Worker. From there, you can return a response by returning a `Response` object.
 
 ## Distributed execution
 
-Isolates are resilient and continuously available for the duration of a request, but in rare instances isolates may be evicted. When a script hits official [limits](/workers/platform/limits/) or when resources are exceptionally tight on the machine the request is running on, the runtime will selectively evict isolates after their events are properly resolved.
+Isolates are resilient and continuously available for the duration of a request, but in rare instances isolates may be evicted. When a Worker hits official [limits](/workers/platform/limits/) or when resources are exceptionally tight on the machine the request is running on, the runtime will selectively evict isolates after their events are properly resolved.
   
 Like all other JavaScript platforms, a single Workers instance may handle multiple requests including concurrent requests in a single-threaded event loop. That means that other requests may (or may not) be processed during awaiting any `async` tasks (such as `fetch`) if other requests come in while processing a request. 
-Because there is no guarantee that any two user requests will be routed to the same or a different instance of your Worker, we recommend you do not use or mutate global state.
+Because there is no guarantee that any two user requests will be routed to the same or a different instance of your Worker, Cloudflare recommends you do not use or mutate global state.
 
 ## Related resources
 
-Learn more about:
-
-- [FetchEvents](/workers/runtime-apis/handlers/fetch/)
-- [Request context](/workers/runtime-apis/request/)
-- [Runtime limitations](/workers/platform/limits/)
+- [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) - Review how incoming HTTP requests to a Worker are passed to the `fetch()` handler.
+- [Request](/workers/runtime-apis/request/) - Learn how incoming HTTP requests are passed to the `fetch()` handler.
+- [Workers limits](/workers/platform/limits/) - Learn about Workers limits including Worker size, startup time, and more.
