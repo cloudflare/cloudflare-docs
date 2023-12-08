@@ -156,7 +156,7 @@ If you do not have access to your 2FA account or backup codes and cannot current
 7. If you receive a "Device verification failed" message:
 
     - If you clear your cookies often or are logging in from a different IP address, you have wiped Cloudflare's memory of your device and will need to use a different device to verify.
-    2. For security reasons, you must wait three to five days after completing verification to receive your temporary access code, so please wait 5      days after successful verification before reaching out directly to Cloudflare for support with your 2FA issue
+   - For security reasons, you must wait three to five days after completing verification to receive your temporary access code.
     3. Errors like "Device verification failed" are usually a results of missing cookies, so sure that you have your browser set to save cookies and     not to clear cookies on exit or after browser and OS Upgrades.
     4. Make sure that you don't have any other software such as anti-malware that may be automatically clearing your browser cookies and making your 
     device unregognizable by Cloudflare's Dashboard
