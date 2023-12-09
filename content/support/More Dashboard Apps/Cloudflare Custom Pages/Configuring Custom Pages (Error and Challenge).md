@@ -41,7 +41,7 @@ You can use the following custom error template to start building your page:
 ```
 
 {{<Aside type="warning" header="Warnings">}}
-* Your custom error page should include a page specific custom error token if aplicable and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
 * Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
