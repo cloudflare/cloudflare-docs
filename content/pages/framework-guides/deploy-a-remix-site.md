@@ -61,15 +61,9 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Create and add a binding to your Remix application
-
-To add a binding to your Remix application, refer to [Bindings](/pages/functions/bindings/).
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
-
-## Use bindings in your Nuxt application
+## Use bindings in your Remix application
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
-
 
 To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
 
@@ -87,7 +81,7 @@ highlight: [4]
 ---
 // ...
 
-export const loader = async ({context }: LoaderFunctionArgs) => {
+export const loader = async ({ context }: LoaderFunctionArgs) => {
   const myKv = context.env.MY_KV;
 
   return (
@@ -105,8 +99,9 @@ $ npm install --save-dev @cloudflare/workers-types
 
 Afterwords use its types to augment the `remix.env.d.ts` file:
 ```typescript
+---
 filename: remix.env.d.ts
-highlight: [3-10]
+highlight: [9]
 ---
 /// <reference types="@remix-run/dev" />
 /// <reference types="@remix-run/cloudflare" />
@@ -115,7 +110,6 @@ import type { KVNamespace } from '@cloudflare/workers-types';
 
 declare module "@remix-run/cloudflare" {
   interface AppLoadContext {
-    // IMPORTANT: this interface depends on the getLoadContext defined in server.ts
     env: {
       MY_KV: KVNamespace;
     };
@@ -125,7 +119,8 @@ declare module "@remix-run/cloudflare" {
 
 Then access the binding directly from a loader's `context`:
 
-```javascript
+```typescript
+---
 filename: app/routes/_index.tsx
 highlight: [4]
 ---
