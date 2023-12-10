@@ -224,7 +224,7 @@ Then create a new `env.d.ts` file and declare a [binding](/pages/functions/bindi
 ```typescript
 ---
 filename: env.d.ts
-highlight: [1, 7]
+highlight: [7]
 ---
 import type { KVNamespace }  from '@cloudflare/workers-types';
 
