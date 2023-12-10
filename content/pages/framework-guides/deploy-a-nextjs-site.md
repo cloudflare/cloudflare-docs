@@ -200,7 +200,7 @@ The following code examples show how to access a KV binding called `MY_KV` in Ne
 
 ### Javascript example
 
-Simply access the binding directly from `process.env`:
+Access the binding directly from `process.env`:
 
 ```javascript
 ---

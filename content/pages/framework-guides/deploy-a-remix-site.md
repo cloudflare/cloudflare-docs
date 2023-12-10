@@ -78,7 +78,7 @@ The following code examples show how to access a KV binding called `MY_KV` in Re
 
 ### Javascript example
 
-Simply access the binding directly from a loader's `context`:
+Access the binding directly from a loader's `context`:
 
 ```javascript
 ---

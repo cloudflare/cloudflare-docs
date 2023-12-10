@@ -72,7 +72,7 @@ The following code examples show how to access a KV binding called `MY_KV` in Nu
 
 ### Javascript example
 
-Simply access the binding directly from `event.context.cloudflare.env`:
+Access the binding directly from `event.context.cloudflare.env`:
 
 ```javascript
 ---

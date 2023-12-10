@@ -130,7 +130,7 @@ export default defineConfig({
 
 ### Javascript example
 
-Simply access the binding in the SolidStart provided `env` object. For example, in a [`createServerData$`](https://start.solidjs.com/api/createServerData) loader:
+Access the binding in the SolidStart provided `env` object. For example, in a [`createServerData$`](https://start.solidjs.com/api/createServerData) loader:
 
 ```javascript
 ---

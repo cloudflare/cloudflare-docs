@@ -66,7 +66,7 @@ The following code examples show how to access a KV binding called `MY_KV` in Qw
 
 ### Javascript example
 
-Simply access the binding directly from the `platform` object:
+Access the binding directly from the `platform` object:
 
 ```javascript
 ---

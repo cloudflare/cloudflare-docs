@@ -144,7 +144,7 @@ export default defineConfig({
 
 ### Javascript example
 
-Simply access the binding directly from `locals` in API endpoints:
+Access the binding directly from `locals` in API endpoints:
 
 ```javascript
 ---
