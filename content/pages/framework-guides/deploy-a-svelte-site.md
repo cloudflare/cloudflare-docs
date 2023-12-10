@@ -62,41 +62,6 @@ const config = {
 export default config;
 ```
 
-3. (Needed if you are using TypeScript) Include support for environment variables. The `env` object, containing KV namespaces and other storage objects, is passed to SvelteKit via the platform property along with context and caches, meaning you can access it in hooks and endpoints. For example:
-
-```diff
----
-filename:  src/app.d.ts
----
-
-declare namespace App {
-    interface Locals {}
-
-+   interface Platform {
-+       env: {
-+           COUNTER: DurableObjectNamespace;
-+       };
-+       context: {
-+           waitUntil(promise: Promise<any>): void;
-+       };
-+       caches: CacheStorage & { default: Cache }
-+   }
-
-    interface Session {}
-
-    interface Stuff {}
-}
-
-```
-
-4. Access the added KV or Durable objects (or generally any [binding](/pages/functions/bindings/)) in your endpoint with `env`:
-
-```js
-export async function post(context) {
-  const counter = context.platform.env.COUNTER.idFromName("A");
-}
-```
-
 {{<Aside type="note">}}
 
 In addition to the Cloudflare adapter, review other adapters you can use in your project:
@@ -177,9 +142,9 @@ For more information about SvelteKit API Routes, refer to the [SvelteKit documen
 
 ## Use bindings in your Nuxt application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In SvelteKit, add server-side code via standard API routes as mentioned above or by via [Server Loaders](https://kit.svelte.dev/docs/load). In both cases you can access Cloudflare bindings via a `platform` object which SvelteKit exposes to you.
+In SvelteKit, add server-side code via standard API routes as mentioned above, via [Server Loaders](https://kit.svelte.dev/docs/load) and more. In all cases you can access Cloudflare bindings via a `platform` object that SvelteKit exposes to you.
 
 The following code examples show how to access a KV binding called `MY_KV` in SvelteKit applications written in JavaScript and TypeScript respectively.
 
@@ -208,6 +173,7 @@ $ npm install --save-dev @cloudflare/workers-types
 
 Augment the `app.d.ts` file with by declaring the `MY_KV` binding:
 ```typescript
+---
 filename: server/api.get.ts
 highlight: [7]
 ---
