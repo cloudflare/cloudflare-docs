@@ -123,7 +123,7 @@ First of all before using the KV namespace binding we want to configure it in th
 ```diff
 ---
 filename: astro.config.mjs
-highlights: [11]
+highlight: [11]
 ---
 // ...
 
@@ -168,8 +168,8 @@ filename: src/pages/index.astro
 highlight: [2, 3]
 ---
 ---
-const myKV = Astro.locals.runtime.env.MY_KV;
-const value = await myKV.get("key");
+const myKv = Astro.locals.runtime.env.MY_KV;
+const value = await myKv.get("key");
 ---
 <div>{value}</div>
 ```
@@ -186,12 +186,12 @@ Afterwords use its types to augment the `env.d.ts` file:
 ```typescript
 ---
 filename: src/env.d.ts
+highlight: [5]
 ---
 /// <reference types="astro/client" />
 
 type KVNamespace = import("@cloudflare/workers-types").KVNamespace;
 type ENV = {
-  // replace `MY_KV` with your KV namespace
   MY_KV: KVNamespace;
 };
 
