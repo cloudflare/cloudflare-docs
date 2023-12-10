@@ -7,6 +7,17 @@ pcx_content_type: configuration
 
 {{<render file="_keys.md">}}<br>
 
+The code presented in this document was written for the following version of the AWS Go SDK (put this in your go.mod file):
+
+```
+require (
+	github.com/aws/aws-sdk-go-v2 v1.18.0
+	github.com/aws/aws-sdk-go-v2/config v1.18.18
+	github.com/aws/aws-sdk-go-v2/credentials v1.13.17
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.29.0
+)
+```
+
 This example uses version 2 of the [aws-sdk-go](https://github.com/aws/aws-sdk-go-v2) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
 ```go
