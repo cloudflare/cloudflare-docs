@@ -112,11 +112,76 @@ export default defineConfig({
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-Use bindings in Astro components and API routes by using `context.local` from [Astro Middleware](https://docs.astro.build/en/guides/middleware/) to access the Cloudflare runtime which amongst other fields contains the Cloudflare's environment and consecutively any bindings set for your application.
+Use bindings in Astro components and API routes by using Astro's [`context.locals` API](https://docs.astro.build/en/reference/api-reference/#contextlocals).
 
-Refer to the following example of how to access a KV namespace with TypeScript.
+The following code examples show how to access a KV binding called `MY_KV` in Astro applications written in JavaScript and TypeScript respectively.
 
-First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`:
+### Local setup
+
+First of all before using the KV namespace binding we want to configure it in the `astro.config.mjs`, this allows us to be able to access such binding locally when running the Astro dev server:
+
+```diff
+---
+filename: astro.config.mjs
+highlights: [11]
+---
+// ...
+
+export default defineConfig({
+  output: "server",
+-  adapter: cloudflare()
++  adapter: cloudflare({
++    runtime: {
++      mode: 'local',
++      type: 'pages',
++      bindings: {
++        MY_KV: { type: 'kv' },
++      },
++    }
++  })
+});
+```
+
+### Javascript example
+
+Simply access the binding directly from `locals` in API endpoints:
+
+```javascript
+---
+filename: src/pages/my-endpoint.js
+highlight: [2]
+---
+export async function GET({ locals }) {
+  const myKv = locals.runtime.env.MY_KV;
+
+  return {
+    // ...
+  };
+};
+```
+
+Or from `Astro.locals` in Astro components:
+
+```javascript
+---
+filename: src/pages/index.astro
+highlight: [2, 3]
+---
+---
+const myKV = Astro.locals.runtime.env.MY_KV;
+const value = await myKV.get("key");
+---
+<div>{value}</div>
+```
+
+### Typescript example
+
+Firstly, install the `@cloudflare/workers-types` package:
+```sh
+$ npm install --save-dev @cloudflare/workers-types
+```
+
+Afterwords use its types to augment the `env.d.ts` file:
 
 ```typescript
 ---
@@ -131,7 +196,7 @@ type ENV = {
 };
 
 // Depending on your adapter mode
-// use `AdvancedRuntime<ENV>` for advance runtime mode
+// use `AdvancedRuntime<ENV>` for advance runtime mode (the default)
 // use `DirectoryRuntime<ENV>` for directory runtime mode
 type Runtime = import("@astrojs/cloudflare").AdvancedRuntime<ENV>;
 declare namespace App {
@@ -139,18 +204,17 @@ declare namespace App {
 }
 ```
 
-You can then access your KV from an API endpoint in the following way:
+Finally the binding can be accessed directly from `locals` in API endpoints:
 
 ```typescript
 ---
 filename: src/pages/my-endpoint.ts
-highlight: [3, 4, 5]
+highlight: [4]
 ---
 import type { APIContext } from "astro";
 
-export async function get({locals}: APIContext) => {
-  // the type KVNamespace comes from the @cloudflare/workers-types package
-  const { MY_KV } = locals.runtime.env;
+export async function GET({ locals }: APIContext) {
+  const myKv = locals.runtime.env.MY_KV;
 
   return {
     // ...
@@ -158,9 +222,9 @@ export async function get({locals}: APIContext) => {
 };
 ```
 
-Besides endpoints, you can also use bindings directly from your Astro components:
+Or from `Astro.locals` in Astro components:
 
-```typescript
+```javascript
 ---
 filename: src/pages/index.astro
 highlight: [2, 3]
@@ -172,6 +236,6 @@ const value = await myKV.get("key");
 <div>{value}</div>
 ```
 
-To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
+To learn more about the Astro Cloudflare runtime, refer to the [relevant Astro documentation](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#cloudflare-runtime).
 
 {{<render file="_learn-more.md" withParameters="Astro">}}

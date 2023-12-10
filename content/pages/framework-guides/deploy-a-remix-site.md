@@ -30,7 +30,6 @@ The `functions/[[path]].js` will not function as expected if you attempt to depl
 After setting up your project, change the directory and render your project by running the following command:
 
 ```sh
-# choose Cloudflare Pages
 $ cd my-remix-app
 $ npm run dev
 ```
@@ -67,74 +66,79 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 To add a binding to your Remix application, refer to [Bindings](/pages/functions/bindings/).
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
-### Binding resources to your Remix application
+## Use bindings in your Nuxt application
+
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+
 
 To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
 
-The following example uses a KV namespace called `PRODUCTS_KV` [bound to a Pages Function](/pages/functions/bindings/#kv-namespaces). The `PRODUCTS_KV` binding is accessible on the `context` parameter passed to a `LoaderFunction` as `context.env.<BINDING_NAME>`.
+The following code examples show how to access a KV binding called `MY_KV` in Remix applications written in JavaScript and TypeScript respectively, making the assumption that your loader function is: `(context) => ({ env: context.env })`.
 
-The following example shows a Remix `LoaderFunction` accessing a KV namespace in Remix:
 
-```typescript
+### Javascript example
+
+Simply access the binding directly from a loader's `context`:
+
+```javascript
 ---
-filename: app/routes/products/$productId.tsx
-highlight: 9-13,17,24
+filename: app/routes/_index.jsx
+highlight: [4]
 ---
-import type { LoaderArgs } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+// ...
 
-// Define the bindings associated with our Function
-// so that they are typed
-interface Env {
-  PRODUCTS_KV: KVNamespace;
-}
-
-export const loader: LoaderFunction = async ({
-  context,
-  params,
-}) => {
-  // Bindings are accessible on context.env
-  let env = context.env as Env
-  return json(
-    await env.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
-      type: "json",
-    })
-  );
-};
-
-export default function Product() {
-  const product = useLoaderData<typeof loader>();
-
-  if (!product) throw new Response(null, { status: 404 })
+export const loader = async ({context }: LoaderFunctionArgs) => {
+  const myKv = context.env.MY_KV;
 
   return (
-    <div>
-      <p>Product</p>
-      {product.name}
-      <p>Products</p>
-      {/* ... */}
-    </div>
+    // ...
   );
-}
-```
-
-Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-loading) to learn more about data loading within a Remix application.
-
-#### Durable Objects
-
-Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
-
-```ts
-export const loader = async ({ context, params }: LoaderArgs) => {
-  const id = context.PRODUCTS_DO.idFromName(params.productId);
-  const stub = context.PRODUCTS_DO.get(id);
-  const response = await stub.fetch(request);
-  const data = (await response.json()) as { name: string };
-  return json(data);
 };
 ```
 
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/durable-objects/).
+### Typescript example
+
+Firstly, if it's not already installed, install the `@cloudflare/workers-types` package:
+```sh
+$ npm install --save-dev @cloudflare/workers-types
+```
+
+Afterwords use its types to augment the `remix.env.d.ts` file:
+```typescript
+filename: remix.env.d.ts
+highlight: [3-10]
+---
+/// <reference types="@remix-run/dev" />
+/// <reference types="@remix-run/cloudflare" />
+
+import type { KVNamespace } from '@cloudflare/workers-types';
+
+declare module "@remix-run/cloudflare" {
+  interface AppLoadContext {
+    // IMPORTANT: this interface depends on the getLoadContext defined in server.ts
+    env: {
+      MY_KV: KVNamespace;
+    };
+  }
+}
+```
+
+Then access the binding directly from a loader's `context`:
+
+```javascript
+filename: app/routes/_index.tsx
+highlight: [4]
+---
+// ...
+
+export const loader = async ({context }: LoaderFunctionArgs) => {
+  const myKv = context.env.MY_KV;
+
+  return (
+    // ...
+  );
+};
+```
+
 
 {{<render file="_learn-more.md" withParameters="Remix">}}

@@ -175,4 +175,71 @@ export const GET = (({ url }) => {
 For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 {{</Aside>}}
 
+## Use bindings in your Nuxt application
+
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+
+In SvelteKit, add server-side code via standard API routes as mentioned above or by via [Server Loaders](https://kit.svelte.dev/docs/load). In both cases you can access Cloudflare bindings via a `platform` object which SvelteKit exposes to you.
+
+The following code examples show how to access a KV binding called `MY_KV` in SvelteKit applications written in JavaScript and TypeScript respectively.
+
+### Javascript example
+
+Simply access the binding directly from the `platform` object:
+
+```javascript
+---
+filename: src/routes/+page.server.js
+highlight: [2]
+---
+export function load({ platform }) {
+  const myKv = platform!.env.MY_KV;
+
+  // ...
+};
+```
+
+### Typescript example
+
+Firstly, install the `@cloudflare/workers-types` package:
+```sh
+$ npm install --save-dev @cloudflare/workers-types
+```
+
+Augment the `app.d.ts` file with by declaring the `MY_KV` binding:
+```typescript
+filename: server/api.get.ts
+highlight: [7]
+---
+import type { ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
+
+declare global {
+  namespace App {
+    interface Platform {
+      env: {
+        MY_KV: KVNamespace;
+      };
+      context: ExecutionContext;
+      caches: CacheStorage & { default: Cache }
+    }
+  }
+}
+```
+
+Then access the binding directly from the `platform` object:
+
+```typescript
+---
+filename: src/routes/+page.server.ts
+highlight: [4]
+---
+import type { PageServerLoadEvent } from "./$types";
+
+export async function load({ platform }: PageServerLoadEvent) {
+  const myKv = platform!.env.MY_KV;
+
+  // ...
+};
+```
+
 {{<render file="_learn-more.md" withParameters="Svelte">}}

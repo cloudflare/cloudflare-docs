@@ -68,21 +68,71 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 
 In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.com/docs/guide/directory-structure/server#server-directory). The `defineEventHandler()` method is used to define your API endpoints in which you can access Cloudflare's context via the provided `context` field. The `context` field allows you to access any bindings set for your application.
 
-The following code block shows an example of accessing a KV namespace in Nuxt.
+The following code examples show how to access a KV binding called `MY_KV` in Nuxt applications written in JavaScript and TypeScript respectively.
+
+### Javascript example
+
+Simply access the binding directly from `event.context.cloudflare.env`:
+
+```javascript
+---
+filename: app/api/hello/route.js
+highlight: [4]
+---
+// ...
+
+export default defineEventHandler((event) => {
+  const myKv = event.context.cloudflare.env.MY_KV;
+
+  return new Response(
+    // ...
+  );
+};
+```
+
+### Typescript example
+
+Firstly, install the `@cloudflare/workers-types` package:
+```sh
+$ npm install --save-dev @cloudflare/workers-types
+```
+
+Create an `env.d.ts` file with the following content:
+```typescript
+filename: server/api.get.ts
+highlight: [2, 3]
+---
+import type { Request, ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
+
+declare module 'h3' {
+  interface H3EventContext {
+    cloudflare: {
+      request: Request;
+      context: ExecutionContext;
+      env: {
+        MY_KV: KVNamespace;
+      }
+    }
+  }
+}
+```
+
+Then access the binding directly from `event.context.cloudflare.env`:
 
 ```typescript
 ---
-filename: src/my-endpoint.get.ts
-highlight: [2, 3]
+filename: app/api/hello/route.ts
+highlight: [4]
 ---
-export default defineEventHandler(({ context }) => {
-  // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const MY_KV: KVNamespace = context.cloudflare.env.MY_KV;
+// ...
 
-  return {
+export default defineEventHandler((event) => {
+  const myKv = event.context.cloudflare.env.MY_KV;
+
+  return new Response(
     // ...
-  };
-});
+  );
+};
 ```
 
 {{<render file="_learn-more.md" withParameters="Nuxt">}}

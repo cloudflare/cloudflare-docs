@@ -196,34 +196,55 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers), and [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props). Then, access bindings set for your application by accessing them in your code via `process.env`.
 
-The following code shows an example of accessing a KV namespace in a TypeScript Next.js project.
+The following code examples show how to access a KV binding called `MY_KV` in Next.js applications written in JavaScript and TypeScript respectively.
 
-First, create a new `env.d.ts` file and declare a [binding](/pages/functions/bindings/):
+### Javascript example
+
+Simply access the binding directly from `process.env`:
+
+```javascript
+---
+filename: app/api/hello/route.js
+highlight: [4]
+---
+// ...
+
+export async function GET(request) {
+  const myKv = process.env.MY_KV;
+
+  return new Response(
+    // ...
+  );
+};
+```
+
+### Typescript example
+
+Firstly, install the `@cloudflare/workers-types` package:
+```sh
+$ npm install --save-dev @cloudflare/workers-types
+```
+
+Then create a new `env.d.ts` file and declare a [binding](/pages/functions/bindings/):
 
 ```typescript
 ---
 filename: env.d.ts
-highlight: [5-11]
+highlight: [1, 7]
 ---
+import type { KVNamespace }  from '@cloudflare/workers-types';
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
       [key: string]: string | undefined;
-      // The KV Namespace binding type used here comes
-      // from `@cloudflare/workers-types`, in order to
-      // use it like so, make sure that you have installed
-      // the package as a dev dependency and you have added
-      // it to your `tsconfig.json` file under
-      // `compilerOptions.types`.
       MY_KV: KVNamespace;
     }
   }
 }
-
-export {};
 ```
 
-Then, the binding can be accessed directly from `process.env`:
+Finally the binding can be accessed directly from `process.env`:
 
 ```typescript
 ---
