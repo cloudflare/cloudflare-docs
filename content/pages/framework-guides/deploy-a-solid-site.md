@@ -100,7 +100,7 @@ Every time you commit new code to your Solid repository, Cloudflare Pages will a
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-To add a binding in your SolidStart application, add the binding to the Cloudflare adapter. This allows you to access your bindings during development, and test your application before deploying it.
+In SolidStart, add server-side code via [API Routes](https://start.solidjs.com/core-concepts/api-routes), [Data Loaders](https://start.solidjs.com/core-concepts/data-loading) and more. In all cases you can access Cloudflare bindings via an `env` object that SolidStart exposes to you.
 
 The following code examples show how to access a KV binding called `MY_KV` in SolidStart applications written in JavaScript and TypeScript respectively.
 
@@ -111,6 +111,7 @@ First of all before using the KV namespace binding we want to configure it in th
 ```diff
 ---
 filename: vite.config.ts
+highlight: [10]
 ---
 import solid from "solid-start/vite";
 import { defineConfig } from "vite";
@@ -135,7 +136,7 @@ Access the binding in the SolidStart provided `env` object. For example, in a [`
 ```javascript
 ---
 filename: src/routes/index.jsx
-highlight: [2]
+highlight: [3]
 ---
 export function routeData() {
   return createServerData$(async (_, { env }) => {
@@ -156,8 +157,9 @@ $ npm install --save-dev @cloudflare/workers-types
 
 Afterwords use its types to augment the `global.d.ts` file:
 ```diff
+---
 filename: global.d.ts
-highlight: [2-11]
+highlight: [6]
 ---
 /// <reference types="solid-start/env" />
 +import { type KVNamespace } from '@cloudflare/workers-types'
@@ -174,14 +176,13 @@ Then access the binding directly from the solid `env` object:
 ```typescript
 ---
 filename: src/routes/index.tsx
-highlight: [4]
+highlight: [5]
 ---
 // ...
 
 export default function Page() {
   const data = createServerData$(async (_, { env }) => {
     const myKv = env.MY_KV;
-
     // ...
   });
 
@@ -195,7 +196,7 @@ You can then access the binding in the SolidStart provided `env` object. For exa
 ```typescript
 ---
 filename: src/routes/index.tsx
-highlight: [2]
+highlight: [3]
 ---
 export function routeData() {
   return createServerData$(async (_, { env }) => {
