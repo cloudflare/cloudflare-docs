@@ -72,7 +72,7 @@ The following code examples show how to access a KV binding called `MY_KV` in Nu
 
 ### Javascript example
 
-Access the binding directly from `event.context.cloudflare.env`:
+Access the binding directly from `context.cloudflare.env`:
 
 ```javascript
 ---
@@ -81,8 +81,8 @@ highlight: [4]
 ---
 // ...
 
-export default defineEventHandler((event) => {
-  const myKv = event.context.cloudflare.env.MY_KV;
+export default defineEventHandler(({ context }) => {
+  const myKv = cloudflare.env.MY_KV;
 
   return new Response(
     // ...
@@ -99,8 +99,9 @@ $ npm install --save-dev @cloudflare/workers-types
 
 Create an `env.d.ts` file with the following content:
 ```typescript
+---
 filename: server/api.get.ts
-highlight: [2, 3]
+highlight: [9]
 ---
 import type { Request, ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
 
@@ -117,7 +118,7 @@ declare module 'h3' {
 }
 ```
 
-Then access the binding directly from `event.context.cloudflare.env`:
+Then access the binding directly from `context.cloudflare.env`:
 
 ```typescript
 ---
@@ -126,8 +127,8 @@ highlight: [4]
 ---
 // ...
 
-export default defineEventHandler((event) => {
-  const myKv = event.context.cloudflare.env.MY_KV;
+export default defineEventHandler(({ context }) => {
+  const myKv = context.cloudflare.env.MY_KV;
 
   return new Response(
     // ...
