@@ -7,10 +7,10 @@ title: Deploy a Next.js site
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 
-This guide will instruct you how to deploy a:
+This guide will instruct you how to deploy either a:
 
 * Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
-* Static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
+* or Static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -39,12 +39,6 @@ $ cd my-next-app
 ```
 
 ### Configure the application to use the Edge Runtime
-
-{{<Aside type="note">}}
-
-If you created your project using `create-cloudflare`, you can skip this step.
-
-{{</Aside>}}
 
 The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (for example, API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
 
