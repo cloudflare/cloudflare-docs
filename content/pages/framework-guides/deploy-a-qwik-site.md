@@ -60,7 +60,7 @@ Every time you commit new code to your Qwik site, Cloudflare Pages will automati
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In QwikCity, add server-side code via [routeLoaders](https://qwik.builder.io/qwikcity/route-loader/), [actions](https://qwik.builder.io/qwikcity/action/) and more. In all cases you can access Cloudflare bindings via a `platform` object which QwikCity exposes to you.
+In QwikCity, add server-side code via [routeLoaders](https://qwik.builder.io/qwikcity/route-loader/), [actions](https://qwik.builder.io/qwikcity/action/) and more. In all cases you can access Cloudflare bindings via a `platform` object that QwikCity exposes to you.
 
 The following code examples show how to access a KV binding called `MY_KV` in QwikCity applications written in JavaScript and TypeScript respectively.
 
@@ -89,6 +89,7 @@ $ npm install --save-dev @cloudflare/workers-types
 
 Augment the `entry.cloudflare-pages.tsx` file with by declaring the `MY_KV` binding:
 ```diff
+---
 filename: src/entry.cloudflare-pages.tsx
 highlight: [9]
 ---
@@ -115,7 +116,7 @@ Then access the binding directly from the `platform` object:
 filename: src/routes/greet/index.ts
 highlight: [4]
 ---
-import { type RequestHandler } from '@builder.io/qwik-city';
+import type { RequestHandler } from '@builder.io/qwik-city';
 
 export const onGet: RequestHandler = ({ platform }) => {
   const myKv = platform.env.MY_KV;
