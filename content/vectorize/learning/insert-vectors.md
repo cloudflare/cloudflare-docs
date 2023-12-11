@@ -22,6 +22,8 @@ In most cases, a `number[]` array is the easiest when dealing with other APIs, a
 
 Metadata is an optional set of key-value pairs that can be attached to a vector on insert or upsert, and allows you to embed or co-locate data about the vector itself.
 
+Metadata keys cannot be empty, contain the dot character (.), contain the double-quote character ("), or start with the dollar character ($).
+
 Metadata can be used to:
 
 - Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
