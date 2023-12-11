@@ -793,6 +793,32 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 {{<render file="_types-bindings.md" productFolder="/email-routing/">}}
 
+### AI
+
+[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
+whether that be from Workers, Pages, or anywhere via REST API.
+
+Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
+even in local development.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+filename: wrangler.toml
+---
+[ai]
+binding = "AI" # i.e. available in your Worker on env.AI
+```
+
 ## Bundling
 
 You can bundle assets into your Worker using the `rules` key, making these assets available to be imported when your Worker is invoked. The `rules` key will be an array of the below object.
