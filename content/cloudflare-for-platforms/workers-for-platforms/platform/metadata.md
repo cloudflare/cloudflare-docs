@@ -17,6 +17,16 @@ filename: metadata.json
   "main_module": "main.js",
   "bindings": [
     {
+      "type": "plain_text",
+      "name": "<VAR_NAME>”,
+      “text”: "<VAR_VALUE>”
+    },
+    {
+    "type": "secret_text",
+    "name": "<SECRET_NAME>",
+    "text": "<SECRET_VALUE>"
+    },
+    {
       "type": "service",
       "name": "<TEST_SERVICE>",
       "service": "<TEST_SERVICE_NAME>",
