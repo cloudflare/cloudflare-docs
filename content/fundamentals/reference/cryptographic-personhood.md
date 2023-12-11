@@ -1,24 +1,18 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/4406889048077-FAQs-for-Cryptographic-Attestation-of-Personhood
-title: FAQs for Cryptographic Attestation of Personhood
+title: Cryptographic Attestation of Personhood
 ---
 
-# FAQs for Cryptographic Attestation of Personhood
+# Cryptographic Attestation of Personhood
 
-
-
-## Overview
-
-Cloudflare recently released an [alternative](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/) to CAPTCHA authentication, the Cryptographic Attestation of Personhood (CAP).
+Cloudflare developed an [alternative](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/) to CAPTCHA authentication, the Cryptographic Attestation of Personhood (CAP).
 
 CAP lets you prove that you are a legitimate website visitor by touching a hardware key, instead of solving a CAPTCHA puzzle.
 
 This article provides answers to common questions about usability and privacy concerns.
 
-You can also test out CAP by going to the [demo site](https://cloudflarechallenge.com/).
-
-___
+You can also test CAP by going to the [demo site](https://cloudflarechallenge.com/).
 
 ## Privacy questions
 
@@ -37,11 +31,11 @@ Yes, Cloudflare does collect a limited amount of data about your key. We store t
 
 Some self-signed keys and keys from certain manufacturers have been found to [not meet this requirement](https://www.chromium.org/security-keys) and should be avoided if you are minimizing your online privacy risk.
 
-___
+---
 
 For more details on how we set up Cryptographic Attestation of Personhood, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/).
 
-___
+---
 
 ## What devices are and are not allowed?
 
@@ -67,21 +61,15 @@ Most combinations of of web browsers and WebAuthn-capable authenticators will wo
 
 We are updating this list as the ecosystem evolves and as we continue to test different combinations.
 
-___
-
 ## Can hackers bypass the Cryptographic Attestation of Personhood?
 
 CAP is one of many techniques to identify and block bots. To date, we have seen some attempts to test CAP’s security system, such as [one thoughtfully-executed, well-documented test](https://betterappsec.com/building-a-webauthn-click-farm-are-captchas-obsolete-bfab07bb798c). The blog post discussing the test specifically calls out that this method does not break the Cloudflare threat model.
 
 This does not mean that CAP is broken, but rather shows that it raises the cost of an attack over the current CAPTCHA model.
 
-___
-
 ## What happens if I lose my key?
 
 If you do not have the necessary hardware (such as a Yubikey), you can still solve a regular CAPTCHA challenge (e.g., selecting pictures).
-
-___
 
 ## What are the common error codes and what do they mean?
 
@@ -90,9 +78,7 @@ ___
     -   _Solution:_ If this error occurs during [zero-knowledge version of CAP](https://blog.cloudflare.com/introducing-zero-knowledge-proofs-for-private-web-attestation-with-cross-multi-vendor-hardware/), you will automatically be redirected to the basic CAP flow. If basic CAP fails, try a different combination of supported hardware device and browser or opt for a CAPTCHA.
 -   **Unsupported\_issuer**:
     -   _Cause_: Your key is currently not supported.
-    -   _Solution_: Use a [supported key](https://support.cloudflare.com/hc/articles/4406889048077#allowed-devices).
-
-___
+    -   _Solution_: Use a [supported key](#allowed-devices).
 
 ## Related resources
 
