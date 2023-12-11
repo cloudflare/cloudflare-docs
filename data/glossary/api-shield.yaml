@@ -7,7 +7,7 @@ entries:
 
 - term: API endpoint
   general_definition: |-
-    The location where API calls or requests are fulfilled.
+    The API endpoint is the location where API calls or requests are fulfilled. API Shield defines endpoints as a host, method, and path tuple.
 
 - term: API schema 
   general_definition: |-
@@ -15,12 +15,12 @@ entries:
 
 - term: session identifier
   general_definition: |-
-    A unique number that a website assigns to identify a specific user for the duration of their visit.
+    A session identifier is a unique number that a website assigns to identify a specific user for the duration of their visit.
     
 - term: source endpoint
   general_definition: |-
-    The endpoint managed by API Shield in Endpoint Management.
+    The source endpoint is the endpoint managed by API Shield in Endpoint Management by its routing feature.
 
 - term: target endpoint
   general_definition: |-
-    The ultimate destination that a request is sent to by API Shield's routing feature.
+    The target endpoint is the ultimate destination that a request is sent to by API Shield's routing feature.
