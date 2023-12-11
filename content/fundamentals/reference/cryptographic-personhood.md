@@ -12,7 +12,7 @@ CAP lets you prove that you are a legitimate website visitor by touching a hardw
 
 This article provides answers to common questions about usability and privacy concerns.
 
-You can also test out CAP by going to the [demo site](https://cloudflarechallenge.com/).
+You can also test CAP by going to the [demo site](https://cloudflarechallenge.com/).
 
 ## Privacy questions
 
