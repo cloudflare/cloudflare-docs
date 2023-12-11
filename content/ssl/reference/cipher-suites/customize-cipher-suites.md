@@ -1,7 +1,7 @@
 ---
 title: Customize cipher suites
 pcx_content_type: how-to
-weight: 2
+weight: 1
 meta:
   title: Customize cipher suites
 ---
