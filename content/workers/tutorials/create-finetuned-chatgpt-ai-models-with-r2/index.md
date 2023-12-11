@@ -52,10 +52,10 @@ Note that bucket names must be lowercase and can only contain dashes.
 $ wrangler r2 bucket create <BUCKET_NAME>
 ```
 
-Next, upload a file using `npx wrangler r2 put`. `<PATH>` is the combined bucket and file path of the file you want to upload -- for example, `finetune.jsonl`. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
+Next, upload a file using `npx wrangler r2 object put`. `<PATH>` is the combined bucket and file path of the file you want to upload -- for example, `finetune.jsonl`. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
 
 ```sh
-$ npx wrangler r2 put <PATH> -f <FILE_NAME>
+$ npx wrangler r2 object put <PATH> -f <FILE_NAME>
 ```
 
 ## 3. Initialize your Worker application
