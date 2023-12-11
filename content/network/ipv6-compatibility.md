@@ -62,8 +62,8 @@ ___
 
 Provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/) if you experience issues with IPv6 connectivity:
 
--   A [traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) that demonstrates the IPv6 connection issues,
--   the [Cloudflare data center serving your request](https://support.cloudflare.com/hc/articles/203118044#h_22b01241-01a5-4bed-a897-6e97cff5c288) when the IPv6 issues occur, and
--   confirmation of whether disabling [IPv6 Compatibility](https://support.cloudflare.com/hc/articles/229666767#h_2fa0b554-3fd2-44a3-9a77-ee116c31b8c3) resolves the issue.
+-   A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) that demonstrates the IPv6 connection issues,
+-   the [Cloudflare data center serving your request](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request) when the IPv6 issues occur, and
+-   confirmation of whether [disabling IPv6 Compatibility](#disable-ipv6-compatibility) resolves the issue.
 
 

@@ -77,7 +77,7 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
 The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the response passed or promised to `event.respondWith()`). Workers can customize browser cache behavior by setting this header on the response.
 
-Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page rules and Cloudflare cache settings. Refer to the [How to Control Cloudflare’s cache support article](https://support.cloudflare.com/hc/en-us/articles/202775670) if you wish to avoid writing JavaScript with still some granularity of control.
+Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page rules and Cloudflare cache settings. Refer to the [How to customize Cloudflare’s cache](/cache/concepts/customize-cache/) if you wish to avoid writing JavaScript with still some granularity of control.
 
 {{<Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">}}
 

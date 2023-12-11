@@ -100,7 +100,7 @@ If you want to take control of migrating your certificates and choose a particul
 
 #### DCV - Full zones
 
-For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
+For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](/dns/zone-setups/full-setup/setup/#verify-changes).
 
 {{<render file="_full-zone-acm-dcv.md">}}
 <br/>

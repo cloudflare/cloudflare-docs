@@ -130,6 +130,12 @@ For additional help, refer to [our FAQ for Challenges](/waf/troubleshooting/faq/
 
 ---
 
+## Proxied hostnames
+
+{{<render file="_proxied-hostnames.md" productFolder="turnstile" >}}
+{{<render file="_challenge-behavior.md" productFolder="turnstile" >}}
+
+---
 ## Multi-language support
 
 Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser user interface. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
@@ -174,5 +180,4 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 Cloudflare challenges cannot support the following:
 
 * Implementations where a domain serves a challenge page originally requested for another domain.
-* Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to.
-* Forward proxies that can be abused to steal clearances.
+* Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to. For example, if you receive the challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a challenge loop.
