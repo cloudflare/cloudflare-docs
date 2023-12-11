@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: ECH Protocol (beta)
-weight: 9
+weight: 10
 ---
 
 {{<heading-pill style="beta">}}ECH protocol{{</heading-pill>}}

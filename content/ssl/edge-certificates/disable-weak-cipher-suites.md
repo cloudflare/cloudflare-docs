@@ -2,14 +2,14 @@
 pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/360061998911-Disabling-Weak-Cipher-Suites
 title: Disable weak cipher suites
-weight: 12
+weight: 7
 ---
 
 # Disable weak cipher suites
 
 {{<render file="_cipher-suites-definition.md">}}
 
-Refer to [Cipher suites](/ssl/reference/cipher-suites/) for reference content and to the sections below to understand how cipher suites work with the different Cloudflare edge certificates.
+Refer to the sections below to understand how cipher suites work with the different Cloudflare edge certificates. For more details and reference content, refer to [Cipher suites](/ssl/reference/cipher-suites/).
 
 ## Cipher suites and edge certificates
 
