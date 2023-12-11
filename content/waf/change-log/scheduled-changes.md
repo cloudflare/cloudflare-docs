@@ -23,13 +23,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
+      <td>2023-12-11</td>
+      <td>2023-12-18</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>No updates scheduled</td>
+      <td>...76abfd64</td>
+      <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892, CVE:CVE-2022-31474, BETA</td>
+      <td>This rule will replace ...1bc977d1</td>
     </tr>
   </tbody>
 </table>
