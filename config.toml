@@ -22,9 +22,9 @@ token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"
 tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 
 [outputs]
-  home = ['html', 'dash-sidebar', 'dash-sidebar2']
-  page = ['html', 'dash-sidebar', 'dash-sidebar2']
-  section = ['html', 'dash-sidebar', 'dash-sidebar2']
+  home = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sidebar3']
+  page = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sidebar3']
+  section = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sideba3']
 
 [outputFormats]
   [outputFormats.DashSidebar]
@@ -36,6 +36,11 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
     name = 'dash-sidebar2'
     mediaType = 'text/html'
     path = '_docs-dash-sidebar2'
+    isHTML = true
+  [outputFormats.DashSidebar3]
+    name = 'dash-sidebar3'
+    mediaType = 'text/html'
+    path = '_docs-dash-sidebar3'
     isHTML = true
 
 [sitemap]
