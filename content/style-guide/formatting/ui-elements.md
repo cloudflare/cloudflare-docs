@@ -5,18 +5,20 @@ title: UI elements
 
 # UI elements
 
-UI elements are the interactive parts we use to build the products. When describing UI elements in writing, we focus on what users need to do without focusing on the UI. To clarify instructions for complex interfaces, you may need to identify elements by name.
+UI elements are the interactive parts we use to build the products. When describing UI elements in writing, we focus on what users need to do without focusing on the UI.
 
-| UI element                                                | Example                                                                              | Visual                                                       | Notes |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------ | ----- |
-| Button                                                    | Select **Add a Site**.                                                               | ![button](/images/style-guide/ui-elements/button.png)        |       |
-| Checkboxes and radio buttons                              | Enable **Set as Default DNS Location**.                                              | ![button](/images/style-guide/ui-elements/checkbox.png)      |       |
-| Commands                                                  | Go to **File**, then select **Delete**.                                              | ![button](/images/style-guide/ui-elements/command.png)       |       |
-| Error message                                             | If you receive the error message `Invalid IP`, start the process from the beginning. | ![button](/images/style-guide/ui-elements/error-message.png) |       |
-| Menu                                                      | In the menu, go to **Websites**.                                                     | ![button](/images/style-guide/ui-elements/menu.png)          | Use `go to`.      |
-| Tab                                                       | Go to **Action**.                                                                    | ![button](/images/style-guide/ui-elements/tab.png)           |       |
-| Toggle                                                    | Enable **Admin override**.                                                           | ![button](/images/style-guide/ui-elements/toggle.png)        |       |
-| Containers (windows, screens, pages, sections, and cards) | Refer to your site's traffic statistics for more information.                        | ![button](/images/style-guide/ui-elements/container.png)     |       |
+To clarify instructions for complex interfaces, you may need to identify elements by name.
+
+| UI element                                                | Usage                                                                                | Notes                                                 | Example                                                      |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| Button                                                    | Select **Add a Site**.                                                               |                                                       | ![button](/images/style-guide/ui-elements/button.png)        |
+| Checkboxes and radio buttons                              | Enable **Set as Default DNS Location**.                                              |                                                       | ![button](/images/style-guide/ui-elements/checkbox.png)      |
+| Commands                                                  | Go to **File**, then select **Delete**.                                              |                                                       | ![button](/images/style-guide/ui-elements/command.png)       |
+| Error message                                             | If you receive the error message `Invalid IP`, start the process from the beginning. |                                                       | ![button](/images/style-guide/ui-elements/error-message.png) |
+| Menu                                                      | In the menu, go to **Websites**.                                                     |                                                       | ![button](/images/style-guide/ui-elements/menu.png)          |
+| Tab                                                       | Go to **Action**.                                                                    |                                                       | ![button](/images/style-guide/ui-elements/tab.png)           |
+| Toggle                                                    | Turn **AV inspection** on.                                                           | Use `turn on`/`off` instead of `enable` or `disable`. | ![button](/images/style-guide/ui-elements/toggle.png)        |
+| Containers (windows, screens, pages, sections, and cards) | Refer to your site's traffic statistics for more information.                        |                                                       | ![button](/images/style-guide/ui-elements/container.png)     |
 
 ## Symbols in UI element names
 
