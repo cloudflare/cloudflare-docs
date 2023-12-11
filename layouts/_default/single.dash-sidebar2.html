@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <script>
+    function open(href) {
+      window.location = new URL(href, window.location.href).toString();
+    }
+
+    function openInDashboard(href) {
+      alert("here")
+
+      window.parent.postMessage({ type: "dashboard-nav", url: href }, window.location.origin);
+    
+    }
+  </script>
+  <script>(() => {
+    console.log(window.parent)
+    window.parent.postMessage({ type: "nav", url: window.location.href }, window.location.origin);
+  })()
+  </script>
+  <style>a[data-dashboard-link] .DocsMarkdown--link-external-icon { display: none; }</style>
+  <div class="DocsPage">
+    <main>
+      <div class="DocsContent" id="main" page-type="document">
+        <article class="DocsMarkdown">
+          {{- .Content -}}
+        </article>
+      </div>
+    </main>
+  </div>
+{{ end }}

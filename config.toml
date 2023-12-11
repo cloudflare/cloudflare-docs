@@ -22,15 +22,20 @@ token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"
 tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 
 [outputs]
-  home = ['html', 'dash-sidebar']
-  page = ['html', 'dash-sidebar']
-  section = ['html', 'dash-sidebar']
+  home = ['html', 'dash-sidebar', 'dash-sidebar2']
+  page = ['html', 'dash-sidebar', 'dash-sidebar2']
+  section = ['html', 'dash-sidebar', 'dash-sidebar2']
 
 [outputFormats]
   [outputFormats.DashSidebar]
     name = 'dash-sidebar'
     mediaType = 'text/html'
     path = '_docs-dash-sidebar'
+    isHTML = true
+  [outputFormats.DashSidebar2]
+    name = 'dash-sidebar2'
+    mediaType = 'text/html'
+    path = '_docs-dash-sidebar2'
     isHTML = true
 
 [sitemap]
