@@ -160,7 +160,7 @@ If you do not have access to your 2FA account or backup codes and cannot current
     - Your browser may be set to clear cookies on exit or after browser or OS upgrades. This interferes with the device verification process.
     - You may be using anti-malware or other software that automatically clears your browser cookies and makes your device unregognizable by Cloudflare's Dashboard.
 
-If at this point you are still unable to successfully enter the Cloudflare Dashboard, [contact Support](/support/contacting-cloudflare-support/).
+If you are still unable to verify your device, [contact Support](/support/contacting-cloudflare-support/).
 
 ___
 
