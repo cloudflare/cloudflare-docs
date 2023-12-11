@@ -366,7 +366,7 @@ http.host == "download.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-For examples of rules that use HMAC validation, refer to [Require a valid HMAC token](/waf/custom-rules/use-cases/require-valid-hmac-token/) in the WAF documentation.
+For examples of rules that use HMAC validation, refer to [Configure token authentication](/waf/custom-rules/use-cases/configure-token-authentication/) in the WAF documentation.
 
 ### MessageMAC
 
