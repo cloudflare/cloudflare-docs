@@ -18,8 +18,8 @@ filename: metadata.json
   "bindings": [
     {
       "type": "plain_text",
-      "name": "<VAR_NAME>”,
-      “text”: "<VAR_VALUE>”
+      "name": "<VAR_NAME>",
+      “text”: "<VAR_VALUE>"
     },
     {
     "type": "secret_text",
