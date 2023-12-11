@@ -70,8 +70,9 @@ If you find emails in your Area 1 account that are actually false positives, you
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
-3. Search for the message that you want to report as a false negative, and select **Report as false negative**.
+3. Search for the message that you want to report as a false negative, and select **Report as False Negative**.
   ![The link to submit false negatives, in the search results](/images/email-security/phish-submissions/false-negative.png)
 
-4. From the list, choose the type of email you think this false negative is. The options are _Bulk_, _Malicious_, _Spam_, _Suspicious_ and _Spoof_.
-5. Select **Report False Negative**.
+4. (Optional) You can also select emails in bulk to report as false negatives. Select all emails that apply > **Report as False Negative**.
+5. In the next screen, choose from the list the type of email you think this false negative is. The options are _Bulk_, _Malicious_, _Spam_, _Suspicious_ and _Spoof_.
+6. Select **Report False Negative**.
