@@ -1,22 +1,21 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/4567119364749-How-to-label-Client-Certificates-
-title: How to label Client Certificates
+title: Label client certificates
+weight: 7
 ---
 
-## Overview
+# Label client certificates
 
-**Applies to:** Free ✅ / Pro ✅ / Business ✅ / Enterprise ✅
-
-When [generating Client Certificates at Cloudflare](/ssl/client-certificates/create-a-client-certificate) for use with [API Shield™](/api-shield/security/mtls/configure/) to protect your API or web application, it's hard to differentiate the generated certificates.
+After [creating client certificates](/ssl/client-certificates/) at Cloudflare, it may be hard to differentiate the generated certificates.
 
 ## Root Cause
 
-The option to generate private key and CSR with Cloudflare is meant for simpler cases and the certificates will be generated with just "CN=Cloudflare, C=US" 
+The option to generate private key and CSR with Cloudflare is meant for simpler cases and the certificates will be generated with just "CN=Cloudflare, C=US".
 
 ## Solution
 
-If you need to differentiate client certificates for your clients on a "per organization" basis, I would recommend you to generate your own private key and CSR. When you generate private key and CSR, you can then enter information that will be incorporated into your certificate request.
+If you need to differentiate client certificates for your clients on a per-organization basis, you can generate your own private key and CSR. When you generate the private key and CSR, you can then enter information that will be incorporated into your certificate request.
 
 For example, if you run the following command (with OpenSSL installed):
 
@@ -36,16 +35,10 @@ Common Name (eg, fully qualified host name) []:
 Email Address []:
 ```
 
-Probably, adding Country Name and Organization Name will be enough, but you can provide as much info as you need or want.
+Usually, adding `Country Name` and `Organization Name` is enough, but you can provide as much information as you need or want.
 
-Those additional info will be included in the Certificate Subject, allowing you to easily identify which certificate belongs to which client, and making it easy to, for example, revoke a specific certificate, if and when needed.
+The additional information will be included in the **Certificate Subject**, allowing you to easily identify which certificate belongs to which client. This can also make it easier to revoke a specific certificate when needed.
 
-Here's an example on how it will look (with Country, Organization Name, and Organizational Unit Name) in Cloudflare Dashboard:
+The following image displays an example of how a certificate with with `Country Name`, `Organization Name`, and `Organizational Unit Name` will look like on the Cloudflare dashboard:
 
 ![](/images/support/chrome_mQRJVOpkTQ.png)
-
-## Additional Information
-
-References:
-
--   [Introducing API Shield](https://blog.cloudflare.com/introducing-api-shield/)
