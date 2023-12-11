@@ -15,7 +15,7 @@ The Cache API is available globally but the contents of the cache do not replica
 
 {{<Aside type="warning" header="Tiered caching">}}
 
-The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interacting-with-the-cloudflare-cache).
+The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interact-with-the-cloudflare-cache).
 
 {{</Aside>}}
 
@@ -206,7 +206,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 {{<Aside type="warning" header="Global purges">}}
 
-The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/learning/how-the-cache-works/#purging-assets-stored-with-the-cache-api).
+The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/learning/how-the-cache-works/#purge-assets-stored-with-the-cache-api).
 
 {{</Aside>}}
 
