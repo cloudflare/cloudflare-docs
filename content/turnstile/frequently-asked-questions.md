@@ -252,6 +252,7 @@ No, Turnstile only works on `http://` and `https://` URI schemes. Other protocol
 {{<faq-question level=2 text="Why do I see a challenge on my proxied hostnames?" >}}
 {{<faq-answer>}}
 
+{{<render file="_proxied-hostnames.md">}}
 {{<render file="_challenge-behavior.md">}}
 
 {{</faq-answer>}}
