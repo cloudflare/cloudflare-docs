@@ -30,10 +30,10 @@ For information on physical inputs, refer to [Keyboard keys](/style-guide/format
 
 ### Icons or non-alphabetic characters
 
-Button names and the labels of other UI elements may include icons or symbols that are not alphabetical or numerical. For example, a button named **+ Add element** starts with a plus sign. When writing these names or labels in procedural instructions, do not include these symbols. They are usually redundant and can be safely removed.
+The names or labels on buttons and other UI elements may include icons or symbols. For example, a button named **+ Add element** includes a plus sign. When writing these names or labels in procedures, do not include symbols. They are usually redundant and can be removed safely.
 
-If an element has no text other than the symbol (for example, just `+`), you can keep the symbol in the instructions. This especially applies to instructions in UIs of third-party products.
+If an element has no text other than the symbol (for example, just `+`), you can keep the symbol in the instructions. This especially applies to instructions in interfaces for third-party products.
 
 ### Ellipses
 
-An ellipsis is a set of three dots (`...`) that might be used as a variable or wildcard. For example, a **Save As...** menu item might display a dialog box where you can save a file in different places. If you refer to a menu item or button that has ellipses, do not include the ellipsis. Always leave it out. In text, ellipses can be distracting.
+An ellipsis is a set of three dots (`...`) that might be used as a variable or wildcard. For example, a **Save As...** menu item might display a dialog box where you can save a file in different places. If you refer to a menu item or button that has an ellipsis, do not include the ellipsis. In text, ellipses can be distracting.
