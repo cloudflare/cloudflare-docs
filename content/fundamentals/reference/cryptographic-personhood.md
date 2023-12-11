@@ -1,15 +1,12 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/4406889048077-FAQs-for-Cryptographic-Attestation-of-Personhood
 title: Cryptographic Attestation of Personhood
-weight: 4
 ---
 
 # Cryptographic Attestation of Personhood
 
-## Overview
-
-Cloudflare recently released an [alternative](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/) to CAPTCHA authentication, the Cryptographic Attestation of Personhood (CAP).
+Cloudflare developed an [alternative](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/) to CAPTCHA authentication, the Cryptographic Attestation of Personhood (CAP).
 
 CAP lets you prove that you are a legitimate website visitor by touching a hardware key, instead of solving a CAPTCHA puzzle.
 
@@ -34,11 +31,11 @@ Yes, Cloudflare does collect a limited amount of data about your key. We store t
 
 Some self-signed keys and keys from certain manufacturers have been found to [not meet this requirement](https://www.chromium.org/security-keys) and should be avoided if you are minimizing your online privacy risk.
 
-___
+---
 
 For more details on how we set up Cryptographic Attestation of Personhood, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/).
 
-___
+---
 
 ## What devices are and are not allowed?
 
