@@ -8,7 +8,7 @@ inputParameters: param1
 
 <div class="special-class" markdown="1">
 
-To evaluate multiple conditions in an expression, select the **Add** logical operator. These expressions can be compared further with the **Or** logical operator.
+To evaluate multiple conditions in an expression, select the **And** logical operator. These expressions can be compared further with the **Or** logical operator.
 
 | Operator | Meaning                                       |
 | -------- | --------------------------------------------- |
