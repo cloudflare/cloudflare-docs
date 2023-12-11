@@ -1,30 +1,34 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/360061998911-Disabling-Weak-Cipher-Suites
-title: Disabling Weak Cipher Suites
+title: Disable weak cipher suites
 ---
 
-# Disabling Weak Cipher Suites
+# Disable weak cipher suites
 
-## Overview
+{{<render file="_cipher-suites-definition.md">}}
 
-Some Cipher Suites are listed as weak in third-party testing tools.
+Refer to [Cipher suites](/ssl/reference/cipher-suites/) for reference content and to the sections below to understand how cipher suites work with the different Cloudflare edge certificates.
 
-## Root Cause
+## Cipher suites and edge certificates
 
-Cipher Suites is a combination of ciphers used to negotiate security settings during the SSL/TLS handshake and not directly related to TLS version.
+While the default cipher suites provided with [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) are are meant for a balance of security and compatibility, some of them might be considered weak by third-party testing tools, such as the [Qualys SSL Labs test](https://www.ssllabs.com/ssltest/).
 
-The _default Cipher Suites_ provided with Universal SSL certificates are meant for a _balance of security and compatibility_. Some of which, are deemed _weak_ by third-party testing tools such as SSL Labs's SSL Server Test. You can find the list of [Cloudflare-supported Cipher Suites](/ssl/reference/cipher-suites/)
+If the Universal SSL offering does not meet your business requirements, you can use Cloudflare [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to restrict the cipher suites used in connections between Cloudflare and your visitor’s browser.
 
-## Solution
+After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting).
 
-If the Universal SSL _does not meet your business requirements_, we would recommend using our _Advanced Certificate Manager_. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
+{{<Aside>}}
+Currently, restricting cipher suites is only possible via API and is not available via the Cloudflare dashboard.
+{{</Aside>}}
 
-You could restrict the Cipher Suites used for TLS using our [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager). After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting). Currently, restricting cipher suites could only be done via API and not available via Cloudflare Dashboard. Assuming this is just a one-time change, you could trigger the API call using curl. **Step-by-step guide:**
+## Setup
+
+Assuming this is just a one-time change, you can trigger the API call using curl.
 
 1.  Get/view Global API Key _(or create Token)_ from: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
 2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
-3.  Decide which Cipher Suites you would like to allow from [the list](/ssl/reference/cipher-suites/).
+3.  Decide which cipher suites you would like to allow from [the list](/ssl/reference/cipher-suites/supported-cipher-suites/).
 
 Here is an example value (list of cipher suites) which you can use to replace <cipher\_suites> in the commands below:
 
@@ -32,7 +36,7 @@ Here is an example value (list of cipher suites) which you can use to replace <c
 ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-ECDSA-CHACHA20-POLY1305","ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-CHACHA20-POLY1305","ECDHE-ECDSA-AES256-GCM-SHA384","ECDHE-RSA-AES256-GCM-SHA384"]
 ```
 
-Run the command to do the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
+Run the command to make the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
 
 ```bash
 curl -X PATCH \
@@ -53,13 +57,13 @@ curl -X PATCH \
   --data '{"value": <cipher_suites>}'
 ```
 
-To revert to the default Cipher Suites, you can send an empty array as the value, like:
+To revert to the default cipher suites, you can send an empty array as the value, as in the following example.
 
 ```bash
   --data '{"value": []}'
 ```
 
-Learn more about API Tokens and Keys here: [Managing API Tokens and Keys](/fundamentals/api/get-started/)
+Refer to [Managing API Tokens and Keys](/fundamentals/api/get-started/) to learn more about API tokens and keys.
 
 ___
 
