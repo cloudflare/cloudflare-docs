@@ -108,4 +108,4 @@ example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
 example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```
 
-Refer to the [Certification Authority Authorization (CAA) FAQ](https://support.cloudflare.com/hc/en-us/articles/115000310832-Certification-Authority-Authorization-CAA-FAQ) for more information.
+Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certificates/troubleshooting/caa-records/) for more information.

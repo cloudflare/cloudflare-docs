@@ -33,7 +33,3 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
     Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection managed ruleset.
 
 * **Advanced TCP Protection**. Available to all [Magic Transit](/magic-transit/) customers.
-
-## Related resources
-
-* [Using Cloudflare Logs to investigate DDoS traffic (Enterprise Only)](/support/troubleshooting/website-under-attack/using-cloudflare-logs-els-to-investigate-ddos-traffic-enterprise-only/)

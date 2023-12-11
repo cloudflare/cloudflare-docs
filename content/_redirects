@@ -617,6 +617,7 @@
 /queues/javascript-apis/ /queues/platform/javascript-apis/ 301
 /queues/limits/ /queues/platform/limits/ 301
 /queues/pricing/ /queues/platform/pricing/ 301
+/queues/examples/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-rendering/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
@@ -752,10 +753,11 @@
 /support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-add-a-wordpress.com-custom-domain-mapping-site-to-cloudflare/ /support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/ 301
-/support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ 301
+/support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /automatic-platform-optimization/ 301
 /support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
-/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /support/more-dashboard-apps/cloudflare-scrape-shield/ 301
-/support/third-party-software/others/how-do-i-get-cloudflare-to-work-with-vaultpress/ /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ 301
+/support/third-party-software/content-management-system-cms/using-cloudflare-with-wix-website-builder/ /dns/manage-dns-records/reference/vendor-specific-records/#wix 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /waf/tools/scrape-shield/ 301
+/support/third-party-software/others/how-do-i-get-cloudflare-to-work-with-vaultpress/ /automatic-platform-optimization/ 301
 /support/third-party-software/others/how-to-configure-matomo-for-use-with-cloudflare/ /support/third-party-software/ 301
 /support/third-party-software/others/can-i-use-cloudflare-and-varnish-together/ /rules/snippets/ 301
 /support/third-party-software/others/does-cloudflare-support-signalr/ /network/websockets/ 301
@@ -775,8 +777,30 @@
 /support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 /support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/troubleshooting/chunked-encoding-and-dynamic-content/ 301
+/support/more-dashboard-apps/cloudflare-registrar/ /registrar/
+/support/more-dashboard-apps/cloudflare-registrar/icloud-custom-email-domains/ /registrar/account-options/icloud-domains/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/ /waf/tools/scrape-shield/hotlink-protection/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/ /waf/tools/scrape-shield/server-side-excludes/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/ /waf/tools/scrape-shield/email-address-obfuscation/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
 /support/firewall/learn-more/configuring-token-authentication/ /waf/custom-rules/use-cases/configuring-token-authentication/ 301
+/support/about-cloudflare/better-internet-initiatives/faqs-for-cryptographic-attestation-of-personhood/ /fundamentals/reference/cryptographic-personhood/ 301
+/support/troubleshooting/general-troubleshooting/registrar-troubleshoot-stalled-domain-transfers/ /registrar/troubleshooting/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-issues-sharing-to-facebook/ /waf/troubleshooting/facebook-sharing/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-missing-images/ /speed/optimization/images/troubleshooting/troubleshooting-missing-images/ 301
+/support/cloudflare-client-api/cloudflare-php-api-binding/ /api/ 301
+/support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ /automatic-platform-optimization/ 301
+/support/ssl-tls/origin-server/validating-a-lets-encrypt-certificate-on-a-site-already-active-on-cloudflare/ /ssl/reference/certificate-authorities/ 301
+/support/ssl-tls/client-certificates/how-to-label-client-certificates/ /ssl/client-certificates/label-client-certificate/ 301
+/support/ssl-tls/client-certificates/ /ssl/client-certificates/ 301
+/support/ssl-tls/edge-certificates-ssl-tls-configuration/pci-compliance-and-cloudflare-ssltls/ /ssl/reference/compliance-and-vulnerabilities/ 301
+/support/ssl-tls/faq-and-reference/cloudflare-and-cve-2019-1559/ /ssl/reference/cloudflare-and-cve-2019-1559/ 301
+/support/ssl-tls/edge-certificates-ssl-tls-configuration/disabling-weak-cipher-suites/ /ssl/edge-certificates/disable-weak-cipher-suites/ 301
+/support/ssl-tls/edge-certificates-ssl-tls-configuration/ /ssl/edge-certificates/ 301
+/support/ssl-tls/faq-and-reference/match-ssl-cipher-names-from-ssl-labs-to-cloudflare-naming-conventions/ /ssl/reference/cipher-suites/troubleshooting/ 301
+/support/ssl-tls/faq-and-reference/ /ssl/reference/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
@@ -1144,6 +1168,7 @@
 /cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
+/cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
 /cloudflare-one/connections/connect-networks/use_cases/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301

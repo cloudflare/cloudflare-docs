@@ -1723,7 +1723,7 @@
     "title": "Scrape Shield",
     "email_obfuscation": {
       "title": "Email Address Obfuscation",
-      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/",
+      "link": "/waf/tools/scrape-shield/email-address-obfuscation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1737,7 +1737,7 @@
     },
     "hotlink_protection": {
       "title": "Hotlink Protection",
-      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/",
+      "link": "/waf/tools/scrape-shield/hotlink-protection/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1751,7 +1751,7 @@
     },
     "server_side_excludes": {
       "title": "Server-side Excludes",
-      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/",
+      "link": "/waf/tools/scrape-shield/server-side-excludes/",
       "properties": {
         "availability": {
           "title": "Availability",
