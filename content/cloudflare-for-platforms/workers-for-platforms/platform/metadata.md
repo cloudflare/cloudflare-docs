@@ -22,9 +22,9 @@ filename: metadata.json
       "text": "<VAR_VALUE>"
     },
     {
-    "type": "secret_text",
-    "name": "<SECRET_NAME>",
-    "text": "<SECRET_VALUE>"
+      "type": "secret_text",
+      "name": "<SECRET_NAME>",
+      "text": "<SECRET_VALUE>"
     },
     {
       "type": "service",
