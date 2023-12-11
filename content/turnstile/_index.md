@@ -51,6 +51,10 @@ Assess the number of challenges issued, evaluate the challenge solve rate, and v
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 {{</related>}}
 
+{{<related header="WAF" href="/waf/" product="waf">}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</related>}}
+
 ---
 
 ## Availability
