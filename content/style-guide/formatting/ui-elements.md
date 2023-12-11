@@ -22,7 +22,7 @@ To clarify instructions for complex interfaces, you may need to identify element
 
 ## Interactions
 
-When describing navigation elements, such as menus, use `go to` instead of `navigate`. When describing elements you can toggle, such as checkboxes and toggles, use `turn on` or `turn off` instead of `enable` or `disable`.
+When describing navigation elements, such as menus, use `go to` instead of `navigate`. When describing elements you can activate, such as checkboxes and toggles, use `turn on`/`turn off` instead of `enable`/`disable`.
 
 For information on physical inputs, refer to [Keyboard keys](/style-guide/formatting/keyboard-keys/).
 
