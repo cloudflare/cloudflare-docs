@@ -19,7 +19,7 @@ filename: metadata.json
     {
       "type": "plain_text",
       "name": "<VAR_NAME>",
-      "text”: "<VAR_VALUE>"
+      "text": "<VAR_VALUE>"
     },
     {
     "type": "secret_text",
