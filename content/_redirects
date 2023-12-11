@@ -777,13 +777,17 @@
 /support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 /support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/troubleshooting/chunked-encoding-and-dynamic-content/ 301
+/support/more-dashboard-apps/cloudflare-registrar/ /registrar/
+/support/more-dashboard-apps/cloudflare-registrar/icloud-custom-email-domains/ /registrar/account-options/icloud-domains/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/ /waf/tools/scrape-shield/server-side-excludes/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/ /waf/tools/scrape-shield/email-address-obfuscation/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
+/support/about-cloudflare/better-internet-initiatives/faqs-for-cryptographic-attestation-of-personhood/ /fundamentals/reference/cryptographic-personhood/ 301
 /support/troubleshooting/general-troubleshooting/registrar-troubleshoot-stalled-domain-transfers/ /registrar/troubleshooting/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-issues-sharing-to-facebook/ /waf/troubleshooting/facebook-sharing/ 301
 /support/troubleshooting/general-troubleshooting/troubleshooting-missing-images/ /speed/optimization/images/troubleshooting/troubleshooting-missing-images/ 301
 /support/cloudflare-client-api/cloudflare-php-api-binding/ /api/ 301
 /support/third-party-software/content-management-system-cms/using-the-cloudflare-plugin-with-wordpress/ /automatic-platform-optimization/ 301
