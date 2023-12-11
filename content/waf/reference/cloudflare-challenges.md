@@ -130,6 +130,12 @@ For additional help, refer to [our FAQ for Challenges](/waf/troubleshooting/faq/
 
 ---
 
+## Proxied hostnames
+
+{{<render file="_proxied-hostnames.md" productFolder="turnstile" >}}
+{{<render file="_challenge-behavior.md" productFolder="turnstile" >}}
+
+---
 ## Multi-language support
 
 Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser user interface. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
