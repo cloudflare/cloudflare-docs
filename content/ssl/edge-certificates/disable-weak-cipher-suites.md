@@ -2,6 +2,7 @@
 pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/360061998911-Disabling-Weak-Cipher-Suites
 title: Disable weak cipher suites
+weight: 12
 ---
 
 # Disable weak cipher suites
