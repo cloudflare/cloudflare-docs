@@ -140,7 +140,7 @@ export const GET = (({ url }) => {
 For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 {{</Aside>}}
 
-## Use bindings in your Nuxt application
+## Use bindings in your Svelte application
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
