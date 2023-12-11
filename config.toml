@@ -24,7 +24,7 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 [outputs]
   home = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sidebar3']
   page = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sidebar3']
-  section = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sideba3']
+  section = ['html', 'dash-sidebar', 'dash-sidebar2', 'dash-sidebar3']
 
 [outputFormats]
   [outputFormats.DashSidebar]
