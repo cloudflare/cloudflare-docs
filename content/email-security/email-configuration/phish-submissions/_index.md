@@ -42,7 +42,7 @@ If there is a phishing email that is repeatedly sent to users despite being subm
 
 ### Phish Submission Response (beta)
 
-Phish Submission Response (PSR) is an additional layer of protection. When you enable PSR, Area 1 will automatically retract messages reported by users which are also deemed malicious by Area 1 after analysis. This feature uses machine learning margin scores by adding the user as an additional neuron into Area 1's neural network. 
+Phish Submission Response (PSR) is an additional layer of protection. When you enable PSR, Area 1 will automatically retract messages reported by users which are also deemed malicious by Area 1 after analysis. This feature uses machine learning margin scores by adding the user as an additional neuron into Area 1's neural network.
 
 To enable PSR:
 
@@ -63,3 +63,15 @@ If you find emails in your Area 1 account that are actually false positives, you
 2. Select the **Search** bar.
 3. Search for the message that you want to report as a false positive, and select **Report as false positive**.
 4. (Optional) You can also select emails in bulk to report as false positives. Select all emails that apply > **Report as False Positive**.
+
+## False negatives
+
+[Area 1 administrators](/email-security/account-setup/permissions/) can also submit false negatives directly from the dashboard.
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+2. Select the **Search** bar.
+3. Search for the message that you want to report as a false negative, and select **Report as false negative**.
+  ![The link to submit false negatives, in the search results](/images/email-security/phish-submissions/false-negative.png)
+
+4. From the list, choose the type of email you think this false negative is. The options are _Bulk_, _Malicious_, _Spam_, _Suspicious_ and _Spoof_.
+5. Select **Report False Negative**.
