@@ -20,6 +20,12 @@ To clarify instructions for complex interfaces, you may need to identify element
 | Toggle                                                    | Turn **AV inspection** on.                                                           | ![Toggle to turn anti-virus inspection on.](/images/style-guide/ui-elements/toggle.png)          |
 | Containers (windows, screens, pages, sections, and cards) | Refer to your site's traffic statistics for more information.                        | ![Information container with website statistics.](/images/style-guide/ui-elements/container.png) |
 
+## Interactions
+
+When describing navigation elements, such as menus, use `go to` instead of `navigate`. When describing elements you can toggle, such as checkboxes and toggles, use `turn on` or `turn off` instead of `enable` or `disable`.
+
+For information on physical inputs, refer to [Keyboard keys](/style-guide/formatting/keyboard-keys/).
+
 ## Symbols in UI element names
 
 ### Icons or non-alphabetic characters
