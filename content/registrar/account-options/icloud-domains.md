@@ -1,12 +1,10 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/6701306098829-iCloud-Custom-Email-Domains
 title: iCloud Custom Email Domains
 ---
 
 # iCloud Custom Email Domains
-
-## Overview
 
 With [iCloud Custom Email Domain](https://support.apple.com/kb/HT212514), you can now purchase a custom domain right from iCloud Settings through Cloudflare and have it automatically set up with your iCloud Mail account. It’s great if you want to create a custom email domain for you or your family, such as @examplefamily.com.
 
@@ -14,7 +12,9 @@ You will need an active iCloud+ subscription to add a custom email domain.
 
 ## Purchase custom email domain
 
-If you want to buy a custom email domain, go to your [iCloud](https://www.icloud.com/settings/) settings and scroll down to “Custom Email Domain”.
+If you want to buy a custom email domain, go to your [iCloud](https://www.icloud.com/settings/) settings and scroll down to **Custom Email Domain**.
+
+---
 
 ## Log in to Cloudflare
 
@@ -27,6 +27,8 @@ If you had signed up with Apple, signing into Cloudflare is as easy as clicking 
 ### Signing in with Cloudflare
 
 If you had signed up with Cloudflare, signing into Cloudflare can be done with your email and password.
+
+---
 
 ## Billing information
 
@@ -46,6 +48,8 @@ Users may see a price estimate in both U.S. Dollars and a local currency. This i
 
 The final payment will be charged in US dollars.
 
+---
+
 ## Email issues
 
 ### Email issues
@@ -59,6 +63,8 @@ If you are not receiving emails intended for your new email address, review your
 ![Your iCloud custom email domain should have a specific set of records created by default.](/images/support/icloud-custom-domain-dns-example.png)
 
 If your domain has records similar to those listed above and you are still experiencing problems with your new email address, contact [Apple Support](https://support.apple.com/).
+
+---
 
 ## Domain website
 
@@ -89,6 +95,8 @@ If you do not want to have Landing Page enabled:
 You now have Landing Page disabled. The page can also be re-enabled through the same process.
 
 {{<Aside type="note">}}
+
 Customers must disable the landing page before they can add DNS records
 to point to a new website.
+
 {{</Aside>}}
