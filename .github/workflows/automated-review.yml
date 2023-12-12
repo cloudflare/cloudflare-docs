@@ -20,7 +20,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Check for existing comment
+      - name: Check for existing comment (if not create a new one)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -29,7 +29,7 @@ jobs:
               "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
               jq '.[] | select(.user.id == 41898282) | select(.body | contains("TEST")) | .id')
 
-            comment_body=$(jq -n --arg body "TEST" '{body: $body}')
+            comment_body=$(jq -n --arg body "TEST\n<!-- MODIFIED_CONTENT_LINKING_COMMENT -->" '{body: $body}')
             # If a comment exists, update it. Otherwise, post a new comment.
             if [ ! -z "$existing_comment_id" ]; then
               curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
