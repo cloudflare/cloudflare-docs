@@ -27,6 +27,7 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 | Maximum arguments per SQL function                 | 32                                           |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes                               |
 | Maximum bindings per Workers script                 | Approximately 5,000 <sup>1</sup>     |
+| Maximum SQL query duration                    | 30 seconds                        |
 
 {{<Aside type="note">}}
 
