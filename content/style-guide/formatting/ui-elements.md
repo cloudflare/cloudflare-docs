@@ -5,7 +5,7 @@ title: UI elements
 
 # UI elements
 
-UI elements are the interactive parts we use to build the products. When describing UI elements in writing, we focus on what users need to do without focusing on the UI.
+UI elements are the interactive parts of a product. They are used to build the software's interface. When describing UI elements in writing, we focus on what users need to do without focusing on the UI.
 
 To clarify instructions for complex interfaces, you may need to identify elements by name.
 
@@ -24,7 +24,7 @@ To clarify instructions for complex interfaces, you may need to identify element
 
 When describing navigation elements, such as menus, use `go to` instead of `navigate`. When describing elements you can activate, such as checkboxes and toggles, use `turn on`/`turn off` instead of `enable`/`disable`.
 
-For information on physical inputs, refer to [Keyboard keys](/style-guide/formatting/keyboard-keys/).
+For information on physical inputs, such as mouse buttons, refer to [Keyboard keys](/style-guide/formatting/keyboard-keys/).
 
 ## Symbols in UI element names
 
