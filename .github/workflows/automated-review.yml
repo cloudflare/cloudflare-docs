@@ -71,7 +71,7 @@ jobs:
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Case Police
-        run: case-police ${{ env.CHANGED_FILES }} --disable DoS > case_police_output.txt || echo "Case Police failed"
+        run: case-police ${{ env.CHANGED_FILES }} --disable DoS > case_police_output.txt
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Case Police fails
