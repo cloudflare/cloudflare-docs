@@ -20,7 +20,7 @@ A country challenge can block a Facebook IP address. Facebook is known to crawl 
 To resolve issues sharing to Facebook, do one of the following:
 
 - Remove the corresponding IP, ASN, or country custom rule that challenges or blocks Facebook IPs.
-- Create a [skip rule](/waf/custom-rules/skip/) in the WAF for ASNs `AS32934` and `AS63293` (use the _Skip_ action and configure the rule to skip **Security Level**).
+- Create a [skip rule](/waf/custom-rules/skip/) for ASNs `AS32934` and `AS63293` (use the _Skip_ action and configure the rule to skip **Security Level**).
 - Review existing configuration rules and page rules and make sure they are not affecting requests from Facebook IPs.
 
 If you experience issues with Facebook sharing, you can re-scrape pages via the **Fetch New Scrape Information** option on Facebook's Object Debugger. Facebook [provides an API](https://developers.facebook.com/docs/sharing/opengraph/using-objects) to help update a large number of resources.
