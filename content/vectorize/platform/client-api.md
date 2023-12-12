@@ -91,6 +91,7 @@ Retrieves the configuration of a given index directly, including its configured 
 A vector represents the vector embedding output from a machine learning model.
 
 - `id` - a unique `string` identifying the vector in the index. This should map back to the ID of the document, object or database identifier that the vector values were generated from.
+- `namespace` - an optional partition key within a index. Operations are performed per-namespace, so this can be used to create isolated segments within a larger index.
 - `values` - an array of `number`, `Float32Array`, or `Float64Array` as the vector embedding itself. This must be a dense array, and the length of this array must match the `dimensions` configured on the index.
 - `metadata` - an optional set of key-value pairs that can be used to store additional metadata alongside a vector.
 
@@ -102,6 +103,7 @@ let vectorExample = {
         "key": "value",
         "hello": "world",
         "url": "r2://bucket/some/object.json"
+    }
 }
 ```
 
