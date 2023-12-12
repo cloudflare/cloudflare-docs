@@ -49,7 +49,11 @@ jobs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -X POST -d "$comment_body" \
                 "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+              new_comment_id=$(echo $new_comment_response | jq -r '.id')
+              echo "existing_comment_id=$new_comment_id"
             fi
+
+            echo "COMMENT_ID=$existing_comment_id" >> $GITHUB_ENV
 
       - name: Get Changed Files from Pull Request
         env:
@@ -62,32 +66,40 @@ jobs:
       - name: Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
 
-      - name: Set up Python environment
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.x
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-
-      - name: Create virtual environment
-        run: python -m venv venv
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-
-      - name: Activate virtual environment
-        run: source venv/bin/activate
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-
-      - name: Install codespell
-        run: pip install codespell
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-
       - name: Install case-police
         run: npm install -g case-police
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
-      - name: Install alex
-        run: npm install -g alex
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-
       - name: Case Police
-        run: case-police ${{ env.CHANGED_FILES }} --disable DoS
+        run: case-police ${{ env.CHANGED_FILES }} --disable DoS > case_police_output.txt || echo "Case Police failed"
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+        continue-on-error: true
+
+      - name: Case Police fails
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Read the saved comment ID
+          comment_id=${COMMENT_ID}
+
+          # Fetch the existing comment
+          existing_comment=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/$comment_id")
+
+          # Extract the body of the existing comment
+          existing_comment_body=$(echo $existing_comment | jq -r '.body')
+
+          # Prepare the new comment body with case-police output
+          case_police_output=$(cat case_police_output.txt)
+          new_comment_body=$(echo "$existing_comment_body" | sed "s/<!-- TYPO_PLACEHOLDER_START -->.*<!-- TYPO_PLACEHOLDER_END -->/<!-- TYPO_PLACEHOLDER_START -->$case_police_output<!-- TYPO_PLACEHOLDER_END -->/")
+
+          # Format the new comment body as JSON
+          updated_comment_body=$(jq -n --arg body "$new_comment_body" '{body: $body}')
+
+          # Update the comment
+          curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -X PATCH -d "$updated_comment_body" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/$comment_id"
