@@ -32,7 +32,7 @@ Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a
 
 ## Why is my device not connecting to a public Wi-Fi?
 
-The Wi-Fi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily disable WARP. After you login to the captive portal through your browser, you can re-enable WARP to access corporate resources.
+The Wi-Fi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily turn off WARP. After you login to the captive portal through your browser, you can turn WARP back on to access corporate resources.
 
 For more information, refer to [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/).
 
