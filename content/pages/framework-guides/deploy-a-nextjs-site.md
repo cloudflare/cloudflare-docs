@@ -224,14 +224,13 @@ Then create a new `env.d.ts` file and declare a [binding](/pages/functions/bindi
 ```typescript
 ---
 filename: env.d.ts
-highlight: [7]
+highlight: [6]
 ---
 import type { KVNamespace }  from '@cloudflare/workers-types';
 
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      [key: string]: string | undefined;
       MY_KV: KVNamespace;
     }
   }
