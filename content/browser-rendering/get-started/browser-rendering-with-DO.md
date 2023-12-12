@@ -203,8 +203,8 @@ export class Browser {
 		  console.log(`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`);
 		  await this.storage.setAlarm(Date.now() + 10 * 1000);
 		  // You could ensure the ws connection is kept alive by requesting something
-		  // or just let it close automatically when there's no work to be done
-          // eg. await this.browser.version()
+		  // or just let it close automatically when there  is no work to be done
+          // for example, `await this.browser.version()`
 		} else {
 			console.log(`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`);
 			if (this.browser) {
