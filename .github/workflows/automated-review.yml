@@ -1,0 +1,44 @@
+name: Automated review
+
+# **What it does**: Adds a comment to highlight potential issues and fixes.
+# **Why we have it**: Makes contributing and reviewing easier.
+# **Who does it impact**: All contributors.
+
+on:
+  pull_request:
+    branches:
+      - production
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Check for existing comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
+              jq '.[] | select(.user.id == 41898282) | select(.body | contains("TEST")) | .id')
+
+            comment_body="TEST"
+            # If a comment exists, update it. Otherwise, post a new comment.
+            if [ ! -z "$existing_comment_id" ]; then
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -X PATCH -d "$comment_body" \
+                "https://api.github.com/repos/${{ github.repository }}/issues/comments/$existing_comment_id"
+            else
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -X POST -d "$comment_body" \
+                "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+            fi
