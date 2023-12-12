@@ -1,23 +1,25 @@
 ---
 pcx_content_type: reference
-title: Let's Encrypt chain change
+title: Let's Encrypt chain update
 weight: 1
 meta:
   description: Review notes on the expiration of ISRG Root X1 cross-signed with DST Root CA X3, and how it may affect Cloudflare customers that use Let’s Encrypt.
 ---
 
-# Let's Encrypt chain change
+# Let's Encrypt chain update
 
 Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust).
 
 As the IdenTrust cross-sign (DST Root CA X3) expires on **September 30, 2024**, the self-signed ISRG Root X1 will be the only chain used for RSA certificates issued through Let's Encrypt.
+
+This means that, if visitors to your website or application are using older devices (e.g. Android 7.0 and earlier), or if their systems rely solely on the cross-signed chain, they may see warning messages or fail to connect to your services.
 
 ## Important dates
 
 - **May 15, 2024**: Cloudflare will stop issuing certificates with the cross-signed chain.
 - **September 30, 2024**: The cross-signed chain will expire.
 
-## What is happening
+## Background
 
 Let’s Encrypt has been issuing RSA certificates through two chains: the self-signed ISRG Root X1 chain, and the ISRG Root X1 chain cross-signed by IdenTrust’s DST Root CA X3.
 
@@ -44,7 +46,7 @@ Once the change is rolled out, it is recommended that you monitor your support c
 
 ### Change certificate authority
 
-If your visitors are interacting with your website or application via older devices, and you expect or notice their experience is impacted, you can consider using [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to choose a different certificate authority, or you can [upload a certificate](/ssl/edge-certificates/custom-certificates/) from the CA of your choice.
+If visitors are interacting with your website or application via older devices, and you expect or notice their experience is impacted, you can consider using [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to choose a different certificate authority (CA), or you can [upload a certificate](/ssl/edge-certificates/custom-certificates/) from the CA of your choice.
 
 ### Update trust store
 
