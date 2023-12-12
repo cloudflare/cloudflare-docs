@@ -54,9 +54,9 @@ To switch to a different organization:
 
 2. Select the gear icon.
 
-3. Select **Configurations**. The menu will show the organizations that the admin has configured for your device.
+3. Select **Switch configurations**. The menu will show the organizations that the admin has configured for your device.
 
-4. Choose the organization that you want to connect to.
+4. Select the organization that you want to connect to.
 
 {{<Aside type="note">}}
 Only admins can [add additional organizations](#mdm-file-format) to the WARP GUI. To connect to an organization that is not displayed in the GUI, go to **Preferences** > **Account** to manually log out of the old organization and log into the new organization.
