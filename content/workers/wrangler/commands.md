@@ -68,7 +68,7 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager. 
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
 
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
@@ -2043,6 +2043,8 @@ wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
 
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the deployment you wish to view.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
     {{</definitions>}}
