@@ -66,7 +66,7 @@ If you find emails in your Area 1 account that are actually false positives, you
 
 ## False negatives
 
-[Area 1 administrators](/email-security/account-setup/permissions/) can also submit false negatives directly from the dashboard.
+[Area 1 administrators](/email-security/account-setup/permissions/) can also submit false negatives directly from the dashboard:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
