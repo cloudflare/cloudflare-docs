@@ -27,10 +27,14 @@ jobs:
             existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
               "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
-              jq '.[] | select(.user.id == 41898282) | select(.body | contains("TEST")) | .id')
+              jq '.[] | select(.user.id == 41898282) | select(.body | contains("Automatically generated comment")) | .id')
 
-            comment_body_unformatted="TEST
-            <!-- MODIFIED_CONTENT_LINKING_COMMENT -->"
+            comment_body_unformatted="## Automatically generated comment
+            **This comment is automatically generated and will be overwritten every time changes are committed to this branch.**
+            ---
+            ### Typo and language issues (non-blocking)
+            <!-- TYPO_PLACEHOLDER_START -->
+            <!-- TYPO_PLACEHOLDER_END -->"
 
             comment_body=$(jq -n --arg body "$comment_body_unformatted" '{body: $body}')
             # If a comment exists, update it. Otherwise, post a new comment.
