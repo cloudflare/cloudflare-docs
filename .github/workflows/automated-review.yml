@@ -73,7 +73,6 @@ jobs:
       - name: Case Police
         run: case-police ${{ env.CHANGED_FILES }} --disable DoS > case_police_output.txt || echo "Case Police failed"
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
-        continue-on-error: true
 
       - name: Case Police fails
         if: failure()
