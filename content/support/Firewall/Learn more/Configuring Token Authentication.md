@@ -122,9 +122,11 @@ Implementing the token creation requires the following code entered at your orig
 
 ```php
 <?php
-// Generate valid URL token$secret = "thisisasharedsecret";
+// Generate valid URL token
+$secret = "thisisasharedsecret";
 $time   = time();
-$token  = $time . "-" . urlencode(base64_encode(hash_hmac("sha256", "/download/private.jpg$time", $secret, true)));param   = "verify=" . $token;
+$token  = $time . "-" . urlencode(base64_encode(hash_hmac("sha256", "/download/cat.jpg$time", $secret, true)));
+$param  = "verify=" . $token;
 ?>
 ```
 

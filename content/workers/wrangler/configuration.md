@@ -347,7 +347,7 @@ watch_dir = "build_watch_dir"
 
 ## Limits
 
-You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#standard-usage-model). Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
+You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model). Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
 
 Limits have some built-in flexibility to allow for cases where your Worker infrequently runs over the configured limit. If your Worker starts hitting the limit consistently, its execution will be terminated according to the limit configured.
 
@@ -792,6 +792,32 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 {{</definitions>}}
 
 {{<render file="_types-bindings.md" productFolder="/email-routing/">}}
+
+### AI
+
+[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
+whether that be from Workers, Pages, or anywhere via REST API.
+
+Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
+even in local development.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+filename: wrangler.toml
+---
+[ai]
+binding = "AI" # i.e. available in your Worker on env.AI
+```
 
 ## Bundling
 
