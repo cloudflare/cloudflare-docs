@@ -178,7 +178,7 @@ export class Browser {
 			await this.env.BUCKET.put(folder + "/"+ fileName + ".jpg", sc);
 		}
 
-		// close tab when there's no more work to be done on the page
+		// Close tab when there is no more work to be done on the page
 		await page.close();
 
 		// Reset keptAlive after performing tasks to the DO.
