@@ -226,7 +226,7 @@ Then create a new `env.d.ts` file and declare a [binding](/pages/functions/bindi
 filename: env.d.ts
 highlight: [6]
 ---
-import type { KVNamespace }  from '@cloudflare/workers-types';
+import type { KVNamespace } from '@cloudflare/workers-types';
 
 declare global {
   namespace NodeJS {
