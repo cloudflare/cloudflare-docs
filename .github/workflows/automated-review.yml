@@ -30,9 +30,9 @@ jobs:
               jq '.[] | select(.user.id == 41898282) | select(.body | contains("Automatically generated comment")) | .id')
 
             comment_body_unformatted="## Automatically generated comment
-            
-            This comment is automatically generated and will be overwritten every time changes are committed to this branch.
-            ---
+
+            **This comment is automatically generated and will be overwritten every time changes are committed to this branch.**
+          
             ### Typo and language issues (non-blocking)
             <!-- TYPO_PLACEHOLDER_START -->
             <!-- TYPO_PLACEHOLDER_END -->"
