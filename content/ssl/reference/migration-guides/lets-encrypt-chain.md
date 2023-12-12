@@ -32,7 +32,7 @@ As of late 2023, the number of Android devices trusting the self-signed ISRG Roo
 The expiration of the cross-signed chain will primarily affect:
 
 - older devices (e.g. Android 7.0 and earlier)
-- systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their trust store
+- systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their [trust store](/ssl/concepts/#trust-store)
 
 {{<Aside type="note">}}
 This change only affects RSA certificates. ECDSA certificates should maintain their current level of compatibility.
