@@ -15,7 +15,7 @@ entries:
 
 - term: error page
   general_definition: |-
-    an error page is a web page displayed to users when a requested webpage or resource cannot be accessed due to a server error, broken link, or other issues, providing information about the error and potential solutions. 
+    an error page is a web page displayed to users when a requested web page or resource cannot be accessed due to a server error, broken link, or other issues, that provides information about the error and potential solutions. 
 
 - term: non-browser traffic
   general_definition: |-
