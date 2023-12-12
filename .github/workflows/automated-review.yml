@@ -50,3 +50,44 @@ jobs:
                 -X POST -d "$comment_body" \
                 "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
             fi
+
+      - name: Get Changed Files from Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # get file names and separate them with space ' '
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ' ')
+          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
+
+      - name: Output Changed Files
+        run: echo ${{ env.CHANGED_FILES }}
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+
+      - name: Create virtual environment
+        run: python -m venv venv
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+
+      - name: Activate virtual environment
+        run: source venv/bin/activate
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+
+      - name: Install codespell
+        run: pip install codespell
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+
+      - name: Install case-police
+        run: npm install -g case-police
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+
+      - name: Install alex
+        run: npm install -g alex
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+
+      - name: Case Police
+        run: case-police ${{ env.CHANGED_FILES }} --disable DoS
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
