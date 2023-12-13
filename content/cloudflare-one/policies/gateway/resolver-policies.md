@@ -23,15 +23,19 @@ Resolver policies support TCP and UDP connections. Custom resolvers can point to
 
 You can protect your authoritative nameservers from DDoS attacks by enabling [DNS Firewall](/dns/dns-firewall/).
 
+{{<Aside type="note">}}
+To enable connections to a private resolver connected to Cloudflare via [Magic WAN](/magic-wan/), contact your account team.
+{{</Aside>}}
+
 ### Available endpoints
 
-Resolver policies can route DNS queries for resolution from the following endpoints:
+Resolver policies can route queries for resolution from the following DNS endpoints:
 
 - IPv4
 - IPv6
 - [DNS over HTTPS (DoH)](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/)
 - [DNS over TLS (DoT)](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/)
-- Cloudflare [Browser Isolation](/cloudflare-one/policies/browser-isolation/) and [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/)
+- Cloudflare [Browser Isolation](/cloudflare-one/policies/browser-isolation/), including [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/)
 - [Proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)
 
 Gateway will filter, log, and resolve your queries regardless of endpoint.
