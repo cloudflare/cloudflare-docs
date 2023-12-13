@@ -73,7 +73,7 @@ entries:
     - Pages functions are now GA. For more information, refer to the [blog post](https://blog.cloudflare.com/pages-function-goes-ga/).
     - We also made the following updates to Functions:
       - [Functions metrics](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/analytics/production) are now available in the dashboard.
-      - [Functions billing](/pages/platform/functions/pricing) is now available.
+      - [Functions billing](/pages/functions/pricing/) is now available.
       - The [Unbound usage model](/workers/platform/limits/#response-limits) is now available for Functions.
       - [Secrets](/pages/platform/functions/bindings/#secrets) are now available.
       - Functions tailing is now available via the [dashboard](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/functions) or with Wrangler (`wrangler pages deployment tail`).
