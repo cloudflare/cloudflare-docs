@@ -609,21 +609,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 ]'
 ```
 
-## How it works
-
-### Acting on JWT Validation
-
-JWT Validation manages the Cloudflare Web Application Firewall (WAF) on your behalf. There is no need to manually create custom rules with JWT validation properties. Your token validation configuration applies to the entire zone.
-
-There are three properties in a token validation configuration that control how the WAF is configured: `enabled`, `action`, and `allow_absent_token`. Refer to the [required information for setup](/api-shield/security/jwt-validation/configure/#required-information) for example values of these fields.
-
-| Property | Description |
-| --- | --- |
-| `enabled` | This acts as a global on/off switch. |
-| `allow_absent_token` | This enables a hybrid mode in which the WAF will not act on requests that completely lack a JWT. |
-| `action` | This allows to either block a request or log the request. |
-
-### Performing JWT Validation
+## Performing JWT Validation
 
 Here is an overview of how JWT Validation processes incoming requests:
 
