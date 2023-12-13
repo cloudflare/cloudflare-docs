@@ -110,4 +110,4 @@ Click **Configure** on the Cloudflare Pages application. Under **Repository acce
 
 ### `There is an internal issue with your Cloudflare Pages Git installation.`
 
-This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/platform/git-integration/#reinstall-a-git-installation), but if the issue persists, contact support.
+This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/platform/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).
