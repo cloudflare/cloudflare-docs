@@ -24,6 +24,10 @@ For example, to isolate `www.example.com`, users would visit `https://<your-team
 
 If `<url>` is not provided, users are presented with a Cloudflare Zero Trust landing page where they can input a target URL or search for a website.
 
+## Filter DNS queries
+
+DNS queries for RBI and clientless RBI sessions are filtered and resolved via Gateway DNS policies. Because of this, they can resolve domains available only on private resolvers.
+
 ## Optional configurations
 
 ### Allow or block websites
