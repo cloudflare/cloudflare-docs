@@ -29,7 +29,7 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 
 ## 1. Create a Worker
 
@@ -238,7 +238,7 @@ From here, deploy your Worker to make your project accessible on the Internet. T
 $ npx wrangler deploy
 ```
 
-Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`. 
+Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`.
 
 ## 7. Query your index
 
@@ -252,7 +252,7 @@ With the URL for your deployed Worker (for example,`https://embeddings-tutorial.
 This should return the following JSON:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.896888444,"vectorId":"1"}]}}
+{"matches":{"count":1,"matches":[{"score":0.896888444,"id":"1"}]}}
 ```
 
 Extend this example by:

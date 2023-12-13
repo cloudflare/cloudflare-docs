@@ -190,7 +190,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 2.  Clone the following for the most recent build of _mod\_cloudflare_:
     -   Red Hat/Fedora/Debian/Ubuntu:`git clone https://github.com/cloudflare/mod_cloudflare.git; cd mod_cloudflare`
 3.  Use the Apache extension tool to convert the .c file into a module:
-    -   Red Hat/Fedora/Debain/Ubuntu:`apxs -a -i -c mod_cloudflare.c`
+    -   Red Hat/Fedora/Debian/Ubuntu:`apxs -a -i -c mod_cloudflare.c`
 4.  Restart and verify the module is active:
     -   Red Hat/Fedora`service httpd restart; httpd -M|grep cloudflare`
     -   Debian/Ubuntu:`sudo apachectl restart; apache2ctl -M|grep cloudflare`
@@ -260,7 +260,7 @@ extforward.headers = ("CF-Connecting-IP")
 (repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If your origin connects to the Internet with IPv6,
 **\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
 ranges does not work when IPv6 is enabled. Using the above method will

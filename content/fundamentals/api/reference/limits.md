@@ -14,4 +14,4 @@ Some specific API calls have their own limits and are documented separately, suc
 - [GraphQL APIs](/analytics/graphql-api/limits/)
 - [Rulesets APIs](/ruleset-engine/rulesets-api/#limits)
 
-Enterprise customers can also [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to raise the limit to a higher value.
+Enterprise customers can also [contact Cloudflare Support](/support/contacting-cloudflare-support/) to raise the limit to a higher value.

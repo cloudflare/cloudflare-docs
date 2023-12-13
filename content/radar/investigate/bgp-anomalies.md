@@ -240,7 +240,7 @@ export default {
 ```
 
 In our example, we use the `env` variables to get the runtime variables like the TOKEN and ASN of interest, and Cloudflare
-KV bindings. We do not use of the `contorller` and `ctx` variables in this example.
+KV bindings. We do not use the `controller` and `ctx` variables in this example.
 
 First, we will need to learn about what are the new events. We define new events as the events the app has not yet processed.
 We use the Cloudflare KV bucket previously created and defined (`HIJACKS_KV`) to save and retrieve the most recent

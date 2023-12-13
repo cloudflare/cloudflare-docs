@@ -41,8 +41,8 @@ You can use the following custom error template to start building your page:
 ```
 
 {{<Aside type="warning" header="Warnings">}}
-* Your custom error page must include a custom error token and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
-* Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/): `<meta name="referrer" (...) />`
+* Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
@@ -110,7 +110,7 @@ After customizing your custom error page, there are two options for adding the p
 -   Domain level: the custom error page will apply to only one domain associated with your account.
 
 {{<Aside type="note">}}
-If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work. 
+If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work.
 
 A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
 {{</Aside>}}
@@ -178,7 +178,7 @@ ___
 ## Related resources
 
 -   [WAF custom rules](/waf/custom-rules/)
--   [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/)
+-   [Cloudflare challenges](/waf/reference/cloudflare-challenges/)
 -   [Troubleshooting Cloudflare errors](/support/troubleshooting/cloudflare-errors/)
 -   [IP Access rules](/waf/tools/ip-access-rules/)
 -   [Rate limiting rules](/waf/rate-limiting-rules/)

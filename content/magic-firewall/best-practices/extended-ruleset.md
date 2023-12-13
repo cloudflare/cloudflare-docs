@@ -8,7 +8,7 @@ meta:
 
 # Extended suggested ruleset
 
-If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user-groups that reside on your MT prefixes, for example:
+If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user groups that reside on your Magic Transit prefixes. For example:
 
 - [Endpoints (user devices)](#endpoints-user-devices)
 - [Internal routers](#internal-routerfirewall-ip-addresses)

@@ -37,7 +37,7 @@ Because your origin server will receive Cloudflare IP addresses instead of visit
 
 If you want sampled logs of visitor IP addresses and are on an Enterprise plan, we recommend that you use [Cloudflare Logs](/logs/about/).
 
-Alternatively, if you want non-sampled logs directly from your server or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786). 
+Alternatively, if you want non-sampled logs directly from your server or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/). 
 
 ### IP range updates
 

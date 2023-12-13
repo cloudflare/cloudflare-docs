@@ -23,14 +23,14 @@ meta:
     </tr>
   </thead>
   <tbody>
-<tr>
-      <td>2023-11-10</td>
-      <td>2023-11-20</td>
-      <td>...254da96a</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #58).</td>
-      <td>log</td>
-      <td>block</td>
-      <td></td>
+    <tr>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

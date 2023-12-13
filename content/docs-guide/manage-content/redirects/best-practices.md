@@ -28,4 +28,4 @@ You can redirect a page to a fragment, however (`/page1/` to `/page2/#fragment`)
 
 Particularly in an open-source environment, use automation to identify changes that might require redirects. We built a [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/comment-changed-filenames.yml) specifically for this use case.
 
-You should apply a similar process to infinite redirects (where two redirect rules point to each other), if possible. We have a [dedicated script](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/find-infinite-redirects.ts) to check for this situation in our Pages project.
+You should apply a similar process to infinite redirects (where two redirect rules point to each other), if possible, and redirects containing a source URL fragment, which are invalid. We have a [dedicated script](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/validate-redirects.ts) to check for these situations in our Pages project.

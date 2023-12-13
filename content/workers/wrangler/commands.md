@@ -68,11 +68,71 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-All commands can be run with your choice of package manager. For example, to run the `wrangler deploy` command with npm, run:
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager. 
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
-$ npx wrangler deploy
+$ npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
+
+```json
+{
+  ...
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+  ...
+}
+```
+
+You can then run them using your package manager of choice:
+
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm run deploy
+```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn run deploy
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm run deploy
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -578,7 +638,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - IP address to listen on, defaults to `*` (all interfaces).
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1448,7 +1508,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-
+  
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1603,7 +1663,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-
+  
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.

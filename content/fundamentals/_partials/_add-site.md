@@ -28,8 +28,4 @@ Additionally, Cloudflare requires your `apex domain` to be one level below a val
     3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
     4. Click **Continue**.
 
-6. Go through the **Quick Start Guide**, which allows you to:
-    
-    - **Improve security**: Make sure that your site enforces HTTPS connections using **Always Use HTTPS** and **Automatic HTTPS Rewrites**. For more help, refer to our [detailed guide](/ssl/edge-certificates/encrypt-visitor-traffic/).
-    - **Optimize performance**: Speed up your site by enabling [Auto Minify](/speed/optimization/content/auto-minify/) and [Brotli compression](/speed/optimization/content/brotli/).
-7. When you have finished the **Quick Start Guide**, click **Finish**.
+6. Go through the **Quick Start Guide** and when you have finished, click **Finish**.

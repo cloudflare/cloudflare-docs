@@ -29,7 +29,7 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
 
 ### Develop locally using remote resources and bindings
 
@@ -39,11 +39,13 @@ Developing against remote resources will count towards billable usage. `wrangler
 
 {{</Aside>}}
 
-`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote flag`:
+`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote` flag:
 
 ```sh
 $ npx wrangler dev --remote
 ```
+
+Remote resources to use during `wrangler dev --remote` are specified with preview ID/names such as `preview_id` or `preview_bucket name`. Preview resources can be resources separate from production resources to prevent changing production data in development. `wrangler dev --remote` only supports preview ID/names for storage resources such as KV, R2, and D1. To change production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of the production resource.
 
 ### Customize `wrangler dev`
 

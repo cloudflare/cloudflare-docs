@@ -12,6 +12,14 @@ Cloudflare recommends that you enable the rules whose tags correspond to your te
 
 Cloudflare’s [WAF changelog](/waf/change-log/) allows you to monitor ongoing changes to the WAF's managed rulesets.
 
+{{<Aside type="note">}}
+
+Some rules in the Cloudflare Managed Ruleset are disabled by default, intending to strike a balance between providing the right protection and reducing the number of false positives.
+
+It is not recommended that you enable all the available rules using overrides, since it may affect legitimate traffic, unless you are running a proof of concept (PoC) to understand what kind of requests the WAF can block.
+
+{{</Aside>}}
+
 ## Configure in the dashboard
 
 You can configure the following settings of the Cloudflare Managed Ruleset in the Cloudflare dashboard:

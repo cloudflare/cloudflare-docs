@@ -15,7 +15,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Incremental builds are currently not supported in Cloudflare Pages.
 
-- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#using-functions)).
+- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#functions)).
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
@@ -99,7 +99,7 @@ As a workaround, review the following steps to delete all deployments in your Pa
 4. In the `delete-all-deployments` directory, run `npm install` to install dependencies.
 5. Review the following commands to decide which deletion you would like to proceed with:
 
-* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases)): 
+* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases)):
 
 ```sh
 $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> npm start

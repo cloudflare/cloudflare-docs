@@ -1,6 +1,7 @@
 ---
 title: Multi-Vendor Architecture
 pcx_content_type: reference-architecture
+weight: 1
 ---
 
 # Multi-vendor Application Security and Performance

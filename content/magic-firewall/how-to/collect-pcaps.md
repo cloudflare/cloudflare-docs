@@ -16,7 +16,7 @@ This feature is available for Advanced Magic Firewall users. For access, contact
 
 ## Send a packet capture request
 
-Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured, and the system is `magic-transit`.
+Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured. The default API field for this is `"system": "magic-transit"`, both for the request and response.
 
 Cloudflare supports two types of packet captures:
 

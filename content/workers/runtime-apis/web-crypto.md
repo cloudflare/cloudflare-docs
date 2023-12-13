@@ -1,13 +1,15 @@
 ---
 pcx_content_type: configuration
 title: Web Crypto
+meta:
+  description: A set of low-level functions for common cryptographic tasks.
 ---
 
 # Web Crypto
 
 ## Background
 
-The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers Runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
+The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
 
 Performing cryptographic operations using the Web Crypto API is significantly faster than performing them purely in JavaScript. If you want to perform CPU-intensive cryptographic operations, you should consider using the Web Crypto API.
 

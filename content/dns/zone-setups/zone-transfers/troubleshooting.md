@@ -28,4 +28,4 @@ ___
 
 ## Solution
 
-The Cloudflare engineering team needs to be engaged [through Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to make sure the nameserver gets registered again manually at Verisign.
+The Cloudflare engineering team needs to be engaged [through Support](/support/contacting-cloudflare-support/) to make sure the nameserver gets registered again manually at Verisign.
