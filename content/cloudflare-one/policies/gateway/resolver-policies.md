@@ -7,7 +7,7 @@ meta:
   title: Gateway resolver policies
 ---
 
-# Resolver policies
+{{<heading-pill style="beta">}}Resolver policies{{</heading-pill>}}
 
 {{<Aside type="note">}}
 Only available on Enterprise plans.
