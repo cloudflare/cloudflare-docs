@@ -12,7 +12,7 @@ Our connector, `cloudflared`, was designed to be lightweight and flexible enough
 
 For most use cases, we recommend the following baseline configuration:
 - Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
-- Size each host with minimum 8GB of RAM and 6 CPU cores.
+- Size each host with minimum 4GB of RAM and 4 CPU cores.
 - Allocate 50,000 [ports](#number-of-ports) to the `cloudflared` process on each host.
 
 This setup is usually sufficient to handle traffic from 8,000 WARP users (4,000 per host). The actual amount of resources used by `cloudflared` will depend on many variables, including the number of requests per second, bandwidth, network path and hardware. As additional users are onboarded, or if network traffic increases beyond your existing [tunnel capacity](#estimated-throughput), you can scale your tunnel by adding an additional `cloudflared` host in that location.
