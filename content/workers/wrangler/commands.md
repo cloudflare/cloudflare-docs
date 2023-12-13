@@ -163,6 +163,8 @@ wrangler init [<NAME>] [OPTIONS]
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+- `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
@@ -174,7 +176,7 @@ wrangler init [<NAME>] [OPTIONS]
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 and will be removed in a future version.
+This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
 
 {{</Aside>}}
 
