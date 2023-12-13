@@ -6,7 +6,7 @@ weight: 2
 
 # Client errors
 
-This page lists the error codes that can appear in the WARP client GUI. If you do not see your error below, refer to [common issues](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/) or [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+This page lists the error codes that can appear in the WARP client GUI. If you do not see your error below, refer to [common issues](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 <div class="medium-img">
 

@@ -12,9 +12,9 @@ In the latter half of 2023, Cloudflare will begin deprecating DigiCert as a Cert
 
 {{<Aside type="warning">}}
 
-The offboarding for advanced certificate renewals has been postponed and will start gradually rolling out on October 26, 2023.
+The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023.
 
-SSL for SaaS renewals offboarding is postponed until November 1, 2023.
+The SSL for SaaS renewals offboarding has been postponed and started gradually rolling out on November 1, 2023.
 
 {{</Aside>}}
 

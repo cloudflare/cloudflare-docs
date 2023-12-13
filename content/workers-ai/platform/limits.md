@@ -21,3 +21,5 @@ During the open beta, the following limits are in place:
  - [@cf/baai/bge-base-en-v1.5](/workers-ai/models/text-embeddings/) - 6000 reqs/min
 
 Note that these limits are estimates, subject to change, and will vary by location while in Open Beta.
+
+Model inferences in local mode using Wrangler will also count towards these limits.

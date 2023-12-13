@@ -19,6 +19,7 @@
 /content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
+/data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
@@ -30,7 +31,7 @@
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
-/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
@@ -40,6 +41,7 @@
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /content/hyperdrive/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/data/changelogs/hyperdrive.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing

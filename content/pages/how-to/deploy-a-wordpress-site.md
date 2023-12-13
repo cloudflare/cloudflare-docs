@@ -43,7 +43,7 @@ With your ZIP file downloaded, deploy your site to Pages:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Upload assets**.
 3. Name your project > **Create project**.
-4. Drag and drop your ZIP file or select it from your computer.
+4. Drag and drop your ZIP file (or unzipped folder of assets) or select it from your computer.
 5. After your files have been uploaded, select **Deploy site**.
 
 Your WordPress site will now be live on Pages.

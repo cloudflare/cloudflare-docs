@@ -13,28 +13,28 @@ meta:
 
 {{<plan type="enterprise">}}
 
-Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks. 
+Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
 
 ---
 
 ## Features
 
-{{<feature header="Tunnel health checks" href="/magic-transit/reference/tunnel-health-checks/">}}
+{{<feature header="Tunnel health checks" href="/magic-transit/reference/tunnel-health-checks/" cta="Learn about health checks">}}
 Magic Transit sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
-{{<feature header="Traffic steering" href="/magic-transit/reference/traffic-steering/">}}
+{{<feature header="Traffic steering" href="/magic-transit/reference/traffic-steering/" cta="Learn about traffic steering">}}
 Magic Transit steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 
 {{<feature header="Cloudflare IPs" href="/magic-transit/cloudflare-ips/">}}
-Use Cloudflare-managed IP addresses if you want to protect a smaller network and do not meet Magic Transit's `/24` prefix length requirements.
+Use Cloudflare-owned IP addresses if you want to protect a smaller network and do not meet Magic Transit's `/24` prefix length requirements.
 {{</feature>}}
 
 ---
 
 ## Related products
- 
+
 {{<related header="Magic Firewall" href="/magic-firewall/" product="magic-firewall">}}
 Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, scalable protection.
 {{</related>}}
@@ -48,13 +48,13 @@ Cloudflare DDoS protection secures websites, applications, and entire networks w
 {{</related>}}
 
 ---
- 
+
 ## More resources
- 
+
 {{<resource-group>}}
- 
+
 {{<resource header="Reference Architecture" href="/reference-architecture/magic-transit-reference-architecture/" icon="reference-architecture">}}
 Deep dive into the key architecture, functionalities, and network deployment options of Cloudflare Magic Transit.
 {{</resource>}}
- 
+
 {{</resource-group>}}

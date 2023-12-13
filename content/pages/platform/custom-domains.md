@@ -39,7 +39,7 @@ If you are deploying to a subdomain, it is not necessary for your site to be a C
 
 {{<Aside type="note">}}
 
-If the zone is on the Enterprise plan, make sure that the you [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
+If the zone is on the Enterprise plan, make sure that you [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
 
 {{</Aside>}}
 
@@ -108,4 +108,4 @@ example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
 example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```
 
-Refer to the [Certification Authority Authorization (CAA) FAQ](https://support.cloudflare.com/hc/en-us/articles/115000310832-Certification-Authority-Authorization-CAA-FAQ) for more information.
+Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certificates/troubleshooting/caa-records/) for more information.

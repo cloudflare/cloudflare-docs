@@ -84,7 +84,7 @@ export default handler;
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type= "Note">}}
+{{<Aside type="note">}}
 This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 {{</Aside>}}
 
@@ -116,7 +116,7 @@ async function handlePost(request) {
     if (!outcome.success) {
         return new Response('The provided Turnstile token was not valid!', { status: 401 });
     }
-    // The Turnstile token was successfuly validated. Proceed with your application logic.
+    // The Turnstile token was successfully validated. Proceed with your application logic.
     // Validate login, redirect user, etc.
     return await fetch(request)
 }

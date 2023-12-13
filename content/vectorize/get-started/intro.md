@@ -22,7 +22,7 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 
 ## 1. Create a Worker
 
@@ -236,7 +236,7 @@ export default {
 		// return Response.json({text: "nothing to do... yet"}, { status: 404 })
 
 		// In a real application, you would take a user query. For example, "what is a
-		// vector database" - and transform it into a vector emebedding first.
+		// vector database" - and transform it into a vector embedding first.
 		//
 		// In this example, you will construct a vector that should
 		// match vector id #5
@@ -246,7 +246,7 @@ export default {
 		// IDs with their similarity score.
 		//
 		// By default, vector values are not returned, as in many cases the
-		// vectorId and scores are sufficient to map the vector back to the
+		// vector id and scores are sufficient to map the vector back to the
 		// original content it represents.
 		const matches = await env.VECTORIZE_INDEX.query(queryVector, { topK: 3, returnValues: true, returnMetadata: true });
 
@@ -293,7 +293,7 @@ Subsequent visits will return `count:0` as you cannot `insert()` the same vector
 
 2. Query your index - expect your query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` by visiting the root path of `/` . This query will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
 
-You will notice that `vectorId: 5` has a `score` of `0.999909486`. Because you are using `cosine` as our distance metric, the closer the score to `1.0`, the closer your vectors are.
+You will notice that `id: 5` has a `score` of `0.999909486`. Because you are using `cosine` as our distance metric, the closer the score to `1.0`, the closer your vectors are.
 
 ```json
 // https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/

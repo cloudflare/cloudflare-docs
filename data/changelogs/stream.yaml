@@ -2,6 +2,14 @@
 link: "/stream/changelog/"
 productName: Stream
 entries:
+- publish_date: '2023-11-07'
+  title: HLS improvements for on-demand TS output
+  description: |-
+    HLS output from Cloudflare Stream on-demand videos that use Transport Stream file format now includes a 10 second offset to timestamps. This will have no impact on most customers. A small percentage of customers will see improved playback stability. Caption files were also adjusted accordingly.
+- publish_date: '2023-10-10'
+  title: SRT Audio Improvements
+  description: |-
+    In some cases, playback via SRT protocol was missing an audio track regardless of existence of audio in the broadcast. This issue is now resolved.
 - publish_date: '2023-09-25'
   title: LL-HLS Beta
   description: |-

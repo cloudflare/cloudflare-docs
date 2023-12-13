@@ -16,6 +16,37 @@ The last mile is the path from a user to the first point of ingress to the resou
 
 ![The last mile diagram, showing the steps involved in delivering data to a customer](/images/network-error-logging/last-mile.png)
 
+## How NEL affects requests
+
+The Report-To header is present in all requests to Cloudflare zones that have NEL enabled:  
+
+```txt
+report-to: {"group":"cf-nel","max_age":31536000,"endpoints":[{"url":"`[`https://a.nel.cloudflare.com/report?lkg-colo=lhr&lkg-time=1600338181`](https://gcp.nel.cloudflare.com/report?lkg-colo=lhr&lkg-time=1600338181&lkg-ip=1.1.1.1)`"}]}
+```
+
+A sample Network Error Report payload appears as follows:
+
+
+```json
+{
+  "age": 20,
+  "type": "network-error",
+  "url": "https://example.com/previous-page",
+  "body": {
+    "elapsed_time": 18,
+    "method": "POST",
+    "phase": "dns",
+    "protocol": "http/1.1",
+    "referrer": "https://example.com/previous-page",
+    "sampling_fraction": 1,
+    "server_ip": "",
+    "status_code": 0,
+    "type": "dns.name_not_resolved",
+    "url": "https://example-host.com/"
+  }
+}
+```
+
 ## Privacy
 
 Cloudflare uses geolocation lookups to extract the following information from every client IP in a NEL report:
@@ -26,4 +57,6 @@ Cloudflare uses geolocation lookups to extract the following information from ev
 
 Cloudflare uses internal lookups to associate the above data with a customer domain and customer account.
 
-Cloudflare does not store any PII or user-specific data, and any IP data is only kept for the duration of the request as it is processed. After the report is processed through the NEL pipeline, all PII data is purged from the system. For more information, refer to [Understanding Network Error Logging](https://support.cloudflare.com/hc/en-us/articles/360050691831-Understanding-Network-Error-Logging).
+Cloudflare does not store any PII or user-specific data, and any IP data is only kept for the duration of the request as it is processed. After the report is processed through the NEL pipeline, all PII data is purged from the system.
+
+The client IP address is only stored in volatile memory for the lifetime of the request to Cloudflare’s NEL endpoint (order of milliseconds) and is dropped immediately after the request completes. Cloudflare does not log the client IP address anywhere in the Network Error Logging pipeline. Customers can opt out of having their end users consume the NEL headers by emailing Cloudflare support.

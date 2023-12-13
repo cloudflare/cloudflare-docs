@@ -6,7 +6,7 @@ weight: 1
 
 # Configure a remotely-managed tunnel
 
-If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), the tunnel runs as a service on your OS.  
+If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), the tunnel runs as a service on your OS.
 
 ## Add tunnel run parameters
 
@@ -36,7 +36,7 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    [Service]
    TimeoutStartSec=0
    Type=notify
-   ExecStart=/usr/local/bin/cloudflared tunnel --loglevel debug --logfile <PATH>  run --token <TOKEN VALUE>
+   ExecStart=/usr/local/bin/cloudflared tunnel --loglevel debug --logfile <PATH> run --token <TOKEN VALUE>
    Restart=on-failure
    RestartSec=5s
    ```
@@ -70,14 +70,14 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
            <key>ProgramArguments</key>
            <array>
                <string>/opt/homebrew/bin/cloudflared</string>
+               <string>tunnel</string>
                <string>--logfile</string>
                <string><PATH></string>
                <string>--loglevel</string>
                <string>debug</string>
-               <string>tunnel</string>
                <string>run</string>
                <string>--token</string>
-               <string>TOKEN VALUE </string>
+               <string><TOKEN VALUE> </string>
            </array>
    ```
 
@@ -105,9 +105,9 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 3. Double-click **ImagePath**.
 
 4. Modify **Value data** with the desired configuration flag. For example,
-   
+
    ```txt
-   C:\Program Files (x86)\cloudflared\.\cloudflared.exe --loglevel debug --logfile <PATH>  tunnel run --token <TOKEN VALUE>
+   C:\Program Files (x86)\cloudflared\.\cloudflared.exe tunnel --loglevel debug --logfile <PATH> run --token <TOKEN VALUE>
    ```
 
 ![Modify cloudflared service in the Registry Editor](/images/cloudflare-one/connections/connect-apps/remote-management-windows.png)

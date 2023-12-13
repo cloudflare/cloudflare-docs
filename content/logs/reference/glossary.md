@@ -86,7 +86,7 @@ The bad browser score indicates that the source of the request was not legitimat
 
 #### Blocked hotlink score
 
-The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
+The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
 
 #### Bad IP
 
