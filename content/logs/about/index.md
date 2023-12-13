@@ -22,6 +22,13 @@ Users without an Enterprise plan can still access [Workers Trace Events Logpush]
 
 {{</Aside>}}
 
+## User Permissions
+
+To manage the Cloudflare Logs the user need *editing*  permissions.
+It's necessary to be Administrator or Super Administrator to control the Logpush jobs. Find more details [here](https://developers.cloudflare.com/fundamentals/setup/manage-members/roles/), or use a [API token](https://developers.cloudflare.com/fundamentals/api/reference/permissions/#account-permissions) with *Logs Edit* permissions for the Logpush management.
+
+
+
 ## Next steps
 
 {{<button-group>}}
