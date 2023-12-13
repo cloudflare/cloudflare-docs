@@ -284,6 +284,7 @@ export function toggleSidebar() {
 export function zarazTrackDocEvents() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
   const dropdowns = document.getElementsByTagName("details")
+  const glossaryTooltips = document.getElementsByClassName("glossary-tooltip")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
@@ -307,6 +308,16 @@ export function zarazTrackDocEvents() {
         });
     }
   }
+  if (glossaryTooltips.length > 0) {
+    for (const tooltip of glossaryTooltips as any) { 
+      tooltip.addEventListener("pointerleave", () => {
+        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
+      });
+      tooltip.addEventListener("blur", () => {
+        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
+      });
+  }
+}
   });
 }
 
@@ -316,6 +327,10 @@ function $zarazLinkEvent(type: string, link: Element) {
 
 function $zarazDropdownEvent(summary: string) {
   zaraz.track('dropdown click', {text: summary.innerText})
+}
+
+function $zarazGlossaryTooltipEvent(term: string) {
+  zaraz.track('glossary definition view', {term: term})
 }
 
 export function zarazTrackHomepageLinks() {
