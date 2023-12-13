@@ -8,6 +8,8 @@ weight: 3
 
 Context for tutorial, intended audience (optional)
 
+{{<render file="_components-knowledge-callout.md">}}<br />
+
 {{<tutorial>}}
 
 {{<tutorial-prereqs>}}

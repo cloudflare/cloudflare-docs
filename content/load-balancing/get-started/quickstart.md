@@ -8,6 +8,8 @@ weight: 2
 
 Get up and running quickly with Load Balancing. For more in-depth explanations, refer to the [Learning path](/learning-paths/load-balancing/).
 
+{{<render file="_components-knowledge-callout.md">}}<br />
+
 ---
 
 {{<tutorial>}}
