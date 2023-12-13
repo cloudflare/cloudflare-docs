@@ -5,7 +5,7 @@ layout: home
 new_learning_path: true
 pcx_content_type: learning-path
 meta:
-    title: Zero Trust Web Acess
+    title: Zero Trust Web Access
     description: Secure access to clientless web applications.
 ---
 
