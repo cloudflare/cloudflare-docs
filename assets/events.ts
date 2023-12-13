@@ -330,7 +330,7 @@ function $zarazDropdownEvent(summary: string) {
 }
 
 function $zarazGlossaryTooltipEvent(term: string) {
-  zaraz.track('glossary definition view', {term: term})
+  zaraz.track('glossary tooltip view', {term: term})
 }
 
 export function zarazTrackHomepageLinks() {
