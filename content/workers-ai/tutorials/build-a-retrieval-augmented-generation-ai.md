@@ -240,22 +240,22 @@ app.post('/notes', async (c) => {
   const { text } = await c.req.json()
   if (!text) {
 			return c.text("Missing text", 400);
-  } 
+  }
 
   const { results } = await c.env.DB.prepare("INSERT INTO notes (text) VALUES (?) RETURNING *")
     .bind(text)
     .run()
 
   const record = results.length ? results[0] : null
-  
-  if (!record) {			
+
+  if (!record) {
 			return c.text("Failed to create note", 500);
 	}
 
   const { data } = await ai.run('@cf/baai/bge-base-en-v1.5', { text: [text] })
   const values = data[0]
-  
-  if (!values) {			
+
+  if (!values) {
 			return c.text("Failed to generate vector embedding", 500);
 	}
 
@@ -316,7 +316,7 @@ app.get('/', async (c) => {
   const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 1 });
   const vecIds = vectorQuery.matches
     .filter(vec => vec.score > SIMILARITY_CUTOFF)
-    .map(vec => vec.vectorId)
+    .map(vec => vec.id)
 
   let notes = []
   if (vecIds.length) {
