@@ -17,6 +17,4 @@ new and changes the behavior of the `Headers` class key/value iterators there is
 existing code. To mitigate this risk, the new behavior will be opt-in via a compatibility flag
 that became the default on March 1, 2023.
 
-Without this flag, the iterator on the `Headers` object will improperly combine the values of
-`Set-Cookie` headers into a single item. With the flag enabled, the iterator appropriately keeps
-`Set-Cookie` headers separate while continuing to combine other headers.
+Without `http_headers_getsetcookie` flag, the iterator on the `Headers` object will improperly combine the values of `Set-Cookie` headers into a single item. With the flag enabled, the iterator appropriately keeps `Set-Cookie` headers separate while continuing to combine other headers.
