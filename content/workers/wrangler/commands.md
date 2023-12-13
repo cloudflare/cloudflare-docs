@@ -638,7 +638,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - IP address to listen on, defaults to `*` (all interfaces).
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1508,7 +1508,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-
+  
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1663,7 +1663,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-
+  
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.

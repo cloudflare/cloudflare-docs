@@ -84,7 +84,7 @@ export default handler;
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type= "Note">}}
+{{<Aside type="note">}}
 This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 {{</Aside>}}
 

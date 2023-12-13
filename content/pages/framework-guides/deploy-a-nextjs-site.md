@@ -196,22 +196,48 @@ A [binding](/pages/platform/functions/bindings/) allows your application to inte
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers), and [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props). Then, access bindings set for your application by accessing them in your code via `process.env`.
 
-The following code block shows an example of accessing a KV namespace in Next.js.
+The following code shows an example of accessing a KV namespace in a TypeScript Next.js project.
+
+First, create a new `env.d.ts` file and declare a [binding](/pages/platform/functions/bindings/):
 
 ```typescript
 ---
-filename: app/api/hello/route.js
-highlight: [4, 5]
+filename: env.d.ts
+highlight: [5-11]
+---
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      [key: string]: string | undefined;
+      // The KV Namespace binding type used here comes
+      // from `@cloudflare/workers-types`, in order to
+      // use it like so, make sure that you have installed
+      // the package as a dev dependency and you have added
+      // it to your `tsconfig.json` file under
+      // `compilerOptions.types`.
+      MY_KV: KVNamespace;
+    }
+  }
+}
+
+export {};
+```
+
+Then, the binding can be accessed directly from `process.env`:
+
+```typescript
+---
+filename: app/api/hello/route.ts
+highlight: [4]
 ---
 // ...
 
 export async function GET(request: Request) {
-  // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (process.env as { MY_KV: KVNamespace });
+  const myKv = process.env.MY_KV;
 
   return new Response(
     // ...
-	);
+  );
 };
 ```
 

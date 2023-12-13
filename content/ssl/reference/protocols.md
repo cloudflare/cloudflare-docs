@@ -37,6 +37,6 @@ It is not recommended to set the minimum TLS to 1.3, unless there is a specific 
 
 ## Related resources
 
-- [PCI compliance and Cloudflare SSL/TLS](https://support.cloudflare.com/hc/en-us/articles/205043158)
+- [PCI compliance and vulnerabilities mitigation](/ssl/reference/compliance-and-vulnerabilities/)
 - [Transport Layer Security](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/)
 - [PCI Security Standards Council](https://www.pcisecuritystandards.org/)

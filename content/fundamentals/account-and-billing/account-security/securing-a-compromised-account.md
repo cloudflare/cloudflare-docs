@@ -1,7 +1,7 @@
 ---
 title: Secure compromised account
 pcx_content_type: tutorial
-weight: 5
+weight: 4
 ---
 
 # Secure compromised account
@@ -10,7 +10,7 @@ If you observe suspicious activity within your Cloudflare account, secure your a
 
 ## Step 1 - Change your password
 
-For more guidance on changing your password, refer to [Change email address or password](https://support.cloudflare.com/hc/en-us/articles/203471284#12345679).
+For more guidance on changing your password, refer to [Change email address or password](/fundamentals/account-and-billing/account-billing/change-password-or-email/).
 
 ## Step 2 - Revoke active account sessions
 

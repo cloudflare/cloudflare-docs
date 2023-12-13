@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Backup certificates
-weight: 8
+weight: 9
 ---
 
 # Backup certificates

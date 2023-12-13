@@ -23,7 +23,7 @@ If you are a [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/) user, 
 All standard features are included with the purchase of the advanced features below.
 
 - Customizable IP lists.
-- Managed threat intelligence IP lists (Malware, Botnet, Anonymizer).
+- Managed threat intelligence IP lists (Anonymizer, Botnet, Malware, Open Proxies, VPNs).
 - Geoblocking based on user location by country.
 - Block or allow packets based on Autonomous System Number (ASN).
 - Packet captures on demand for network troubleshooting.

@@ -29,12 +29,6 @@ Before getting started:
 
     - R2 write, Logshare Edit.
 
-- Alternatively, create a Cloudflare API token with the following permissions:
-
-    - Zone scope, logs edit permissions.
-
-    - Account scope, R2 write permissions.
-
 ## Manage via the Cloudflare dashboard
 
 Enable Logpush to R2 via the dashboard.
