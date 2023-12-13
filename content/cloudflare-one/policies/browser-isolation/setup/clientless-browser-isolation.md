@@ -10,7 +10,13 @@ Clientless Web Isolation allows users to securely browse high risk or sensitive 
 
 ## Set up Clientless Web Isolation
 
-{{<render file="/_clientless-browser-isolation.md">}} 3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+{{<render file="/_clientless-browser-isolation.md">}}
+
+3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+
+## Filter DNS queries
+
+Gateway filters and resolves DNS queries for isolated sessions via [DNS policies](/cloudflare-one/policies/gateway/dns-policies/). Enterprise users can resolve domains available only through private resolvers by creating [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
 
 ## Use the remote browser
 
@@ -23,10 +29,6 @@ https://<your-team-name>.cloudflareaccess.com/browser/<URL>
 For example, to isolate `www.example.com`, users would visit `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/` in their preferred browser.
 
 If `<url>` is not provided, users are presented with a Cloudflare Zero Trust landing page where they can input a target URL or search for a website.
-
-## Filter DNS queries
-
-DNS queries for RBI and clientless RBI sessions are filtered and resolved via Gateway DNS policies. Because of this, they can resolve domains available only on private resolvers.
 
 ## Optional configurations
 
