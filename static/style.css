@@ -3518,7 +3518,7 @@ code .DocsMarkdown--prop-meta {
   top: 0.05em;
   left: -0.8em;
   display: inline-block;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 2em;
   line-height: 1;
