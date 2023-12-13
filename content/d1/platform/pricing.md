@@ -7,7 +7,7 @@ title: Pricing
 
 {{<Aside type="note" header="D1 public beta">}}
 
-D1 is currently free to use during the public beta. Billing is expected to be enabled on December 1st, 2023 for developers using D1 on the Workers paid plan.
+D1 is currently free to use during the public beta. Billing is expected to be enabled in February 2024 for developers using D1 on the Workers paid plan.
 
 Developers using the Workers Free plan and D1's Free plan will not be charged.
 
