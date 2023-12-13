@@ -83,4 +83,6 @@ To calculate your tunnel capacity:
 4. In your private DNS resolver, obtain the average **Private DNS requests per second**.
 5. Input your values into our sizing calculator:
 
+{{<calculation file="tunnel-capacity">}}
+
 You can use these results to determine if your tunnel is appropriately sized. To increase your tunnel capacity, add identical host machines running [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas).
