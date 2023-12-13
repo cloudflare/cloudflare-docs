@@ -4,8 +4,8 @@
       "name": "Customer Setup Information",
       "fields": [
         {
-          "key": "ephemeral_ports_per_host",
-          "title": "Available ephemeral ports per host",
+          "key": "available_ports_per_host",
+          "title": "Available ports per host",
           "value": 50000,
           "editable": true
         },
@@ -22,9 +22,9 @@
           "editable": false
         },
         {
-          "key": "max_sessions_timeouts_per_min",
-          "title": "Maximum session timeouts per minute",
-          "value": 12,
+          "key": "avg_non_dns_udp_session_timeout",
+          "title": "Average non-DNS UDP session timeout (seconds)",
+          "value": 60,
           "editable": false
         }
       ]
@@ -35,19 +35,19 @@
         {
           "key": "tcp_per_sec",
           "title": "TCP requests per second",
-          "value": 4000,
-          "editable": true
-        },
-        {
-          "key": "private_dns_req_per_sec",
-          "title": "Private DNS requests per second (filter UDP:53)",
-          "value": 0,
+          "value": 50000,
           "editable": true
         },
         {
           "key": "non_dns_udp_req_per_sec",
           "title": "Non-DNS UDP requests per second",
-          "value": 1,
+          "value": 0,
+          "editable": true
+        },
+        {
+          "key": "private_dns_req_per_sec",
+          "title": "Private DNS requests per second",
+          "value": 0,
           "editable": true
         }
       ]
@@ -56,13 +56,18 @@
   "calculations": [
     {
       "key": "percent_capacity_per_replica",
-      "title": "Percent capacity per replica by inputs",
-      "formula": "round(((((non_dns_udp_req_per_sec * 60) + (private_dns_req_per_sec * dns_udp_timeout_in_sec)) / (ephemeral_ports_per_host - tcp_per_sec)) * 100), 4)"
+      "title": "Percent capacity per replica",
+      "formula": "(((non_dns_udp_req_per_sec * avg_non_dns_udp_session_timeout) + (private_dns_req_per_sec * dns_udp_timeout_in_sec) + tcp_per_sec) / available_ports_per_host) * 100"
+    },
+    {
+      "key": "percent_capacity_across_all_replicas",
+      "title": "Percent capacity across all replicas",
+      "formula": "(((non_dns_udp_req_per_sec * avg_non_dns_udp_session_timeout) + (private_dns_req_per_sec * dns_udp_timeout_in_sec) + tcp_per_sec) / (available_ports_per_host * cloudflared_replicas)) * 100"
     },
     {
       "key": "max_dns_request_per_min",
       "title": "Maximum DNS requests per minute across all replicas",
-      "formula": "ephemeral_ports_per_host * cloudflared_replicas * max_sessions_timeouts_per_min"
+      "formula": "(available_ports_per_host * cloudflared_replicas / dns_udp_timeout_in_sec) * 60"
     }
   ]
 }
