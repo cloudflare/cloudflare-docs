@@ -134,7 +134,17 @@ If a year is not added to your registration, you have effectively paid twice for
 
 {{<faq-answer>}}
 
-Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. 
+In summary, here is what will happen after a domain expires:
+
+- **Day 0**: Expiration Date.
+- **Day 1 - 30**: Grace Period (domain resolves normally).
+- **Day 31 - 40**: Suspension Period (domains resolves to suspension page).
+- **Day 41 - 70**: Redemption Period.
+- **Day 71 - 75**: Pending Delete Period.
+
+Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). 
+
+During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. 
 
 The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
 
@@ -211,14 +221,6 @@ In rare cases the domain may be successfully restored but the renewal fails. We 
 {{<faq-answer>}}
 
 No. Once a restore has been completed it can not be reversed. It may be possible to delete the domain again but there are no refunds.
-
-In summary, here is what will happen after a domain expires:
-
-- **Day 0:** Expiration Date.
-- **Day 1 - 30:** Grace Period (domain resolves normally).
-- **Day 31 - 40:** Suspension Period (domains resolves to suspension page).
-- **Day 41 - 70:** Redemption Period.
-- **Day 71 - 75:** Pending Delete Period.
 
 {{<Aside type="note" header="Note">}}
 
