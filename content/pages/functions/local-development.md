@@ -54,4 +54,4 @@ $ NODE_EXTRA_CA_CERTS=<PATH_TO_CERTIFICATE> npx wrangler pages dev --local-proto
 
 ## Attach bindings to local development
 
-To attach a binding to local development, refer to [Bindings](/pages/platform/functions/bindings/) and find the resource you would like to work with.
+To attach a binding to local development, refer to [Bindings](/pages/functions/bindings/) and find the resource you would like to work with.

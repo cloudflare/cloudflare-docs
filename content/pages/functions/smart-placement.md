@@ -5,7 +5,7 @@ title: Smart Placement (beta)
 
 {{<heading-pill style="beta">}}Smart Placement{{</heading-pill>}}
 
-By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Pages Function, it may be more performant to run that Pages Function closer to your back-end infrastructure rather than the end user. Smart Placement (beta) automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
+By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Pages Function, it may be more performant to run that Pages Function closer to your back-end infrastructure rather than the end user. Smart Placement (beta) automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
 
 You may benefit from Smart Placement if you are making multiple round trips to a centralized database, API or origin server in a Pages Function.
 
@@ -17,7 +17,7 @@ Smart Placement on Pages currently has some caveats. While assets are always mea
 
 1. If using middleware for every request (`functions/_middleware.js`) when Smart Placement is enabled, all assets will be served from a location closest to your back-end infrastructure. This may result in an unexpected increase in latency as a result. 
 
-2. When using [`env.ASSETS.fetch`](https://developers.cloudflare.com/pages/platform/functions/advanced-mode/), assets served via the `ASSETS` fetcher from your Pages Function are served from the same location as your Function. This could be the location closest to your back-end infrastructure and not the user. 
+2. When using [`env.ASSETS.fetch`](https://developers.cloudflare.com/pages/functions/advanced-mode/), assets served via the `ASSETS` fetcher from your Pages Function are served from the same location as your Function. This could be the location closest to your back-end infrastructure and not the user. 
 
 
 {{<Aside type= "note">}}
