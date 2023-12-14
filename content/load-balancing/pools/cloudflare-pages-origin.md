@@ -30,11 +30,12 @@ Make sure you:
 
 Although you can create all the components in the load balancer workflow, using the **Manage Monitors** and **Manage Pools** sections separatly make it easier to test and troubleshoot the configurations of each of these components before bringing them together in a load balancer.
 
-Health monitors define the criteria based on which an origin will be considered healthy or not. Start by setting a monitor up as follows, so that it is already available when creating the origin pools.
+Health monitors define the criteria based on which an origin will be considered healthy or not. Start by setting up a monitor as follows.
 
-1. Go to **Traffic** > **Load Balancing**.
-2. Select **Manage Monitors** and then **Create**.
-3. Give the monitor a descriptive name and confirm the other fields are filled in as the following:
+1. Log in to your Cloudflare account and select your domain.
+2. Go to **Traffic** > **Load Balancing**.
+3. Select **Manage Monitors** and then **Create**.
+4. Give the monitor a descriptive name and confirm the other fields are filled in as the following:
 
 {{<table-wrap>}}
 
@@ -46,12 +47,14 @@ Health monitors define the criteria based on which an origin will be considered 
 
 {{</table-wrap>}}
 
-4. Under **Advanced health check settings**, keep the default values and enable the **Follow redirects** option.
+5. Under **Advanced health check settings**, keep the default values and enable the **Follow redirects** option.
 
     When you are using a service like Cloudflare Pages, it is possible that requests from the health monitor - as well as the ones from your visitors - are redirected before reaching their destination. Enabling this option prevents the monitor from reporting an unhealthy origin when it actually has only been redirected (with a `301` code, for example).
 
 {{<Aside type="note" header="Tip">}}
-You can name the monitor after the parameters you have defined, in this example: `HTTP - 200 - Follow Redirects`
+You can name the monitor after the parameters you have defined. For example: `HTTP - 200 - Follow Redirects`.
+
+This way you can easily remember the criteria a certain monitor is using when you decide to attach it to other origins as well.
 {{</Aside>}}
 
 {{</tutorial-step>}}
