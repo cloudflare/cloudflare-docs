@@ -20,7 +20,7 @@ To get started with generating a Pages Function, create a `/functions` directory
 
 {{<Aside type="note" header="Advanced mode">}}
 
-For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/platform/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
+For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
 
 {{</Aside>}}
 
@@ -37,11 +37,11 @@ export function onRequest(context) {
 }
 ```
 
-In the above example code, the `onRequest` handler takes a request [`context`](/pages/platform/functions/api-reference/#eventcontext) object. The handler must return a `Response` or a `Promise` of a `Response`.
+In the above example code, the `onRequest` handler takes a request [`context`](/pages/functions/api-reference/#eventcontext) object. The handler must return a `Response` or a `Promise` of a `Response`.
 
 This Function will run on the `/helloworld` route and returns `"Hello, world!"`. The reason this Function is available on this route is because the file is named `helloworld.js`. Similarly, if this file was called `howdyworld.js`, this function would run on `/howdyworld`.
 
-Refer to [Routing](/pages/platform/functions/routing/) for more information on route customization.
+Refer to [Routing](/pages/functions/routing/) for more information on route customization.
 
 ### Runtime features
 
@@ -54,7 +54,7 @@ Set these configurations by passing an argument to your [Wrangler](/workers/wran
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Configure your Production and Preview compatibility flags as needed.
 
-Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) and [R2](/r2/) from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/).
+Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) and [R2](/r2/) from within your Pages project by configuring [bindings](/pages/functions/bindings/).
 
 ## Deploy your Function
 
@@ -69,6 +69,6 @@ After you have set up your Function, deploy your Pages project. Deploy your proj
 
 ## Related resources
 
-- Customize your [Function's routing](/pages/platform/functions/routing/)
-- Review the [API reference](/pages/platform/functions/api-reference/)
-- Learn how to [debug your Function](/pages/platform/functions/debugging-and-logging/)
+- Customize your [Function's routing](/pages/functions/routing/)
+- Review the [API reference](/pages/functions/api-reference/)
+- Learn how to [debug your Function](/pages/functions/debugging-and-logging/)

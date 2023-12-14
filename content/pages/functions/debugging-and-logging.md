@@ -20,8 +20,8 @@ Logs provide detailed information about events and can give insight into:
 
 There are two ways to start a logging session:
 
-1. Run `wrangler pages deployment tail` [in your terminal](/pages/platform/functions/debugging-and-logging/#view-logs-with-wrangler).
-2. Use the [Cloudflare dashboard](/pages/platform/functions/debugging-and-logging/#view-logs-in-the-cloudflare-dashboard).
+1. Run `wrangler pages deployment tail` [in your terminal](/pages/functions/debugging-and-logging/#view-logs-with-wrangler).
+2. Use the [Cloudflare dashboard](/pages/functions/debugging-and-logging/#view-logs-in-the-cloudflare-dashboard).
 
 ## Add custom logs
 
@@ -96,5 +96,5 @@ The following limits apply to Functions logs:
 
 * Logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 * Logs will not display if the Function’s requests per second are over 100 for the last five minutes.
-* Logs from any [Durable Objects](/pages/platform/functions/bindings/#durable-object-namespaces) your Functions bind to will show up in the Cloudflare dashboard.
+* Logs from any [Durable Objects](/pages/functions/bindings/#durable-object-namespaces) your Functions bind to will show up in the Cloudflare dashboard.
 * A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.

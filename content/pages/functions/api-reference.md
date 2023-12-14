@@ -61,7 +61,7 @@ The following are the properties on the `context` object which are passed throug
   
   - {{<code>}}passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
   
-      Refer to [`passThroughOnException` documentation](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) for more information. Note that this will not work on an [advanced mode project](/pages/platform/functions/advanced-mode/).
+      Refer to [`passThroughOnException` documentation](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) for more information. Note that this will not work on an [advanced mode project](/pages/functions/advanced-mode/).
   
   - {{<code>}}next(input?{{<param-type>}}Request | string{{</param-type>}}, init?{{<param-type>}}RequestInit{{</param-type>}}){{</code>}} {{<type>}}Promise&lt;Response&gt;{{</type>}}
   
@@ -70,7 +70,7 @@ The following are the properties on the `context` object which are passed throug
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
   - `params` {{<type>}}Params&lt;P&gt;{{</type>}}
 
-      Holds the values from [dynamic routing](/pages/platform/functions/routing/#dynamic-routes).
+      Holds the values from [dynamic routing](/pages/functions/routing/#dynamic-routes).
 
       In the following example, you have a dynamic path that is `/users/[user].js`. When you visit the site on `/users/nevi` the `params` object would look like:
 
