@@ -51,7 +51,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-- {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
+- {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the `Map` will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
 
@@ -133,7 +133,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### list
 
-- {{<code>}}list(){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
+- {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
   - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings. 
   
@@ -192,7 +192,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### deleteAll
 
-- {{<code>}}deleteAll(){{</code>}} : {{<type>}}Promise{{</type>}}
+- {{<code>}}deleteAll{{</code>}}(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) : {{<type>}}Promise{{</type>}}
 
   - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
 
@@ -214,6 +214,14 @@ The `put()` method returns a `Promise`, but most applications can discard this p
     
     - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
+### sync
+
+- {{<code>}}sync(){{</code>}} : {{<type>}}Promise{{</type>}}
+
+  - Synchronizes any pending writes to disk.
+
+  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed()`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+
 ### getAlarm
 
 - {{<code>}}getAlarm(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<Number | null>{{</type>}}
@@ -222,7 +230,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 #### Supported options
 
-  - By default, the system will pause delivery of I/O events to the Object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
+- Same options as [`get()`](/durable-objects/api/transactional-storage-api/#get), but without `noCache()`.
 
 ### setAlarm
 
@@ -232,16 +240,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     <br/> If `setAlarm()` is called with a time equal to or before `Date.now()`, the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
 
-#### Supported options
-
-- {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
-
-    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. 
-    
-    - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
-    
-    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
-
 ### deleteAlarm
 
 - {{<code>}}deleteAlarm(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
@@ -250,21 +248,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 #### Supported options
 
-- {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
-
-    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. 
-    
-    - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
-    
-    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
-
-### sync
-
-- {{<code>}}sync(){{</code>}} : {{<type>}}Promise{{</type>}}
-
-  - Synchronizes any pending writes to disk.
-
-  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed()`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+- `setAlarm()` and `deleteAlarm()` support the same options as [`put()`](/durable-objects/api/transactional-storage-api/#put), but without `noCache()`.
 
 {{</definitions>}}
 
