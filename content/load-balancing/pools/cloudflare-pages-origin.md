@@ -41,7 +41,7 @@ Monitors define the criteria based on which an origin will be considered healthy
 
 | Field            | Value     |
 |------------------|-----------|
-| Pool             | HTTP      |
+| Type             | HTTP      |
 | Path             | /         |
 | Port             | 80        |
 
