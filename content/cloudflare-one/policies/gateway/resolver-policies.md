@@ -38,7 +38,7 @@ Resolver policies can route queries for resolution from the following DNS endpoi
 - Cloudflare [Browser Isolation](/cloudflare-one/policies/browser-isolation/), including [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/)
 - [Proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)
 
-Gateway will filter, log, and resolve your queries regardless of endpoint.
+Gateway will filter, resolve, and log your queries regardless of endpoint.
 
 ## Create a resolver policy
 
