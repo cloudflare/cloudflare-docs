@@ -10,7 +10,7 @@ Cloudflare converted existing [firewall rules](/firewall/) into [WAF custom rule
 
 {{<Aside type="warning" header="Deprecation notice">}}
 
-**Cloudflare Firewall Rules are now deprecated.** The Firewall Rules API and Filters API, as well as the `cloudflare_firewall_rule` and `cloudflare_filter` Terraform resources, will only be available until 2024-05-01. If you have any automation based on these APIs and resources, you must migrate to the new APIs and resources before 2024-05-01 to avoid any issues.
+**Cloudflare Firewall Rules is now deprecated.** The Firewall Rules API and Filters API, as well as the `cloudflare_firewall_rule` and `cloudflare_filter` Terraform resources, will only be available until 2024-05-01. If you have any automation based on these APIs and resources, you must migrate to the new APIs and resources before 2024-05-01 to avoid any issues.
 
 On 2024-05-01, the APIs and resources mentioned above will stop working. Any remaining active firewall rules will be disabled, and the **Firewall rules** tab in the dashboard will be removed.
 
