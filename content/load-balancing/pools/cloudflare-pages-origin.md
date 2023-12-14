@@ -6,9 +6,9 @@ weight: 3
 
 # Use Cloudflare Pages as origin
 
-This tutorial is intended as an introductory example of how you can leverage Cloudflare Load Balancing global traffic management capabilities.
+This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management capabilities.
 
-While demonstrating the use of [Cloudflare Pages](/pages/) as an origin where your traffic can be distributed or fail over to, the following steps also go into details about the Load Balancing dashboard workflow, and some important field values and troubleshooting.
+The following sections will guide you through setting up an [active-passive failover](/load-balancing/load-balancers/common-configurations/) load balancer with [Cloudflare Pages](/pages/) as one of the origins, while also going into details about the Load Balancing dashboard workflow, and some important field values and troubleshooting.
 
 ## Use cases
 
