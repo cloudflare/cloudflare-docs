@@ -12,7 +12,5 @@ Learn the concepts behind what makes Cloudflare Workers reliable, scalable and f
 ## Objectives
 
 - Understand serverless computing.
-- Understand how Workers works.
-- Learn about 
-
-
+- Review how Workers works.
+- Learn about how Workers interacts with the Cloudflare cache.
