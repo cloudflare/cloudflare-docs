@@ -138,31 +138,77 @@ Cloudflare currently offers a 40-day grace period for most top-level domains (TL
 
 The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
 
-If the domain is in a state where it can be restored, the Manage Domain page in the Registrar section of dash will display a message indicating the domain is restorable. You will then will be able to initiate the restore process directly from the dashboard. \
+If the domain is in a state where it can be restored, the Manage Domain page in the Registrar section of dash will display a message indicating the domain is restorable. You will then will be able to initiate the restore process directly from the dashboard.
 
-Questions about Domain Restoration
+{{</faq-answer>}}
+{{</faq-item>}}
 
-Which domains are eligible to be restored?
+## Domain restoration
 
-Domains that are in the Redemption Period and have an EPP status of redemptionPeriod may be restored. For most TLDs this will include domains that are between 40 and 70 days past expiration. Currently .uk domains cannot be restored using this process. We are working on an alternative process for .uk domains and will provide additional information at a later date.
+{{<faq-item>}}
+{{<faq-question level=3 text="Which domains are eligible to be restored?" >}}
 
-Is there a fee to restore a domain?
+{{<faq-answer>}}
 
-Yes, in most cases there is a restore fee. The amount varies depending on the TLD. The restore fee is separate from the renewal fee. You will be presented with both the restore and renewal fees before confirming they wish to proceed.
+Domains that are in the Redemption Period and have an EPP status of redemptionPeriod may be restored. For most TLDs this will include domains that are between 40 and 70 days past expiration. 
 
-Will the domain be renewed after the restore has completed?
+Currently `.uk` domains cannot be restored using this process. We are working on an alternative process for `.uk` domains and will provide additional information at a later date.
 
-Yes. We will attempt to renew the domain after the restore has been completed. While not common, it is possible for the renewal transaction to fail. In the event of a failure, we will make several retry attempts. If we are unable to process the renewal after several retries, you will be presented with a message that you should contact support for assistance.
+{{</faq-answer>}}
+{{</faq-item>}}
 
-How long does the restore process take?
+{{<faq-item>}}
+{{<faq-question level=3 text="Is there a fee to restore a domain?" >}}
 
-The entire process can take a few minutes to complete. There are multiple steps to the restore process, and each step must be completed in a specific sequence. These steps are performed automatically by the system. The UI will continue to poll for an updated status and will provide feedback as each step completes.
+{{<faq-answer>}}
 
-What happens if the domain renewal fails?
+Yes, in most cases there is a restore fee. 
 
-The restore and the renewal are two distinct processes that happen sequentially. In rare cases the domain may be successfully restored but the renewal fails. We will make several attempts to renew the domain. However, should all the renewals fail the customer may attempt to manually renew the domain or contact support so we may investigate the cause of the failure.
+The amount varies depending on the TLD. The restore fee is separate from the renewal fee. You will be presented with both the restore and renewal fees before confirming they wish to proceed.
 
-Can a restore be reversed or refunded?
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Will the domain be renewed after the restore has completed?" >}}
+
+{{<faq-answer>}}
+
+Yes. We will attempt to renew the domain after the restore has been completed. While not common, it is possible for the renewal transaction to fail. 
+
+In the event of a failure, we will make several retry attempts. If we are unable to process the renewal after several retries, you will be presented with a message that you should contact support for assistance.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="How long does the restore process take?" >}}
+
+{{<faq-answer>}}
+
+The entire process can take a few minutes to complete. 
+
+There are multiple steps to the restore process, and each step must be completed in a specific sequence. These steps are performed automatically by the system. The UI will continue to poll for an updated status and will provide feedback as each step completes.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="What happens if the domain renewal fails?" >}}
+
+{{<faq-answer>}}
+
+The restore and the renewal are two distinct processes that happen sequentially. 
+
+In rare cases the domain may be successfully restored but the renewal fails. We will make several attempts to renew the domain. However, should all the renewals fail the customer may attempt to manually renew the domain or contact support so we may investigate the cause of the failure.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Can a restore be reversed or refunded?" >}}
+
+{{<faq-answer>}}
 
 No. Once a restore has been completed it can not be reversed. It may be possible to delete the domain again but there are no refunds.
 
@@ -174,11 +220,13 @@ In summary, here is what will happen after a domain expires:
 - **Day 41 - 70:** Redemption Period.
 - **Day 71 - 75:** Pending Delete Period.
 
+{{<Aside type="note" header="Note">}}
+
+Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.
+
+{{</Aside>}}
+
 {{</faq-answer>}}
-
-{{<Aside type="note" header="Note">}}Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.{{</Aside>}}
-
-
 {{</faq-item>}}
 
 ---
