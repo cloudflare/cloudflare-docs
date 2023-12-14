@@ -148,7 +148,7 @@ Once you use a backup code, it becomes invalid.
 If you do not have access to your 2FA account or backup codes and cannot currently generate a 2FA code, use a verified device that you have logged in from before to request a temporary access code.
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. On the **Two-Factor Authentication** page, select **Try recovery** on **Lost all 2FA devices and backup codes?*.
+2. On the **Two-Factor Authentication** page, select **Try recovery** on **Lost all 2FA devices and backup codes?**.
 3. Select **Begin recovery**.
 4. A 6-digit access code will be sent to the email address associated with your Cloudflare account.
 5. Enter the temporary access code into the Cloudflare Dashboard and select **Verify email**.
