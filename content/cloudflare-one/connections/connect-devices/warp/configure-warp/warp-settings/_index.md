@@ -87,11 +87,9 @@ This setting is primarily used to enable site-to-site connectivity with [WARP co
 
 {{<render file="warp/_all-systems-modes-plans.md">}}
 
-Captive portal detection is the ability for the WARP client to detect a third-party onboarding flow before Internet access is obtained. Captive portals typically occur in places such as airports, cafes, and hotels.
+When `Enabled`, the WARP client will automatically turn off when it detects a {{<glossary-tooltip term_id="captive portal">}}captive portal{{</glossary-tooltip>}}, and it will automatically turn back on after the **Timeout** duration.
 
-When `Enabled`, the WARP client will automatically turn off when it detects a captive portal, and it will automatically turn back on after the **Timeout** duration.
-
-Since captive portal implementations vary, WARP may not detect all captive portals. If captive portal detection does not work, you can provide end users with a temporary [admin override](#admin-override) code. For more information, refer to the [FAQ](/cloudflare-one/faq/teams-devices-faq/#why-is-my-device-not-connecting-to-a-public-wi-fi).
+Since captive portal implementations vary, WARP may not detect all captive portals. For more information, refer to [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/).
 
 ### Mode switch
 
@@ -122,7 +120,7 @@ Allows the user to turn off the WARP switch and disconnect the client.
 - `Disabled`: (default) The user is able to turn the switch on or off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
 - `Enabled`: The user is prevented from turning off the switch. The WARP client will always start in the connected state.
 
-On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
+On MDM deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
 ### Allow device to leave organization
 
