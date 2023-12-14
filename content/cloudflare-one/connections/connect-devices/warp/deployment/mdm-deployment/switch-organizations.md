@@ -15,9 +15,9 @@ In Cloudflare WARP, users can quickly switch between multiple Zero Trust organiz
 
 ## MDM file format
 
-To enable multiple organizations, administrators need to modify their [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to take an array. Each element of the array corresponds to a configuration that will display to users in the WARP client GUI. Because configuration names are listed in the same order as they appear in the MDM file, we recommend putting the most used configurations at the top of the file.
+To enable multiple organizations, administrators need to modify their [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to take an array. Each element of the array corresponds to a configuration that will display to users in the WARP client GUI. Because configuration names are listed in the same order as they appear in the MDM file, we recommend putting the most used configurations at the top of the file. When a user opens the WARP client for the first time, they will be prompted to log into the first configuration in the list.
 
-An MDM file supports a maximum of five configurations. Here is an example MDM file with three configurations:
+An MDM file supports a maximum of 25 configurations. Here is an example MDM file with three configurations:
 
 ```xml
 <array>
@@ -25,13 +25,13 @@ An MDM file supports a maximum of five configurations. Here is an example MDM fi
     <key>organization</key>
     <string>mycompany</string>
     <key>display_name</key>
-    <string>Global Anycast network</string>
+    <string>Production environment</string>
 </dict>
 <dict>
     <key>organization</key>
     <string>mycompany</string>
     <key>override_warp_endpoint</key>
-    <string>162.159.204.1:2408</string>
+    <string>203.0.113.0:500</string>
     <key>display_name</key>
     <string>Cloudflare China network</string>
 </dict>
@@ -46,20 +46,15 @@ An MDM file supports a maximum of five configurations. Here is an example MDM fi
 
 ## Switch organizations in WARP
 
-When a user opens the WARP client for the first time, if the MDM file contains multiple configurations they will be asked to choose an organization to log into. Users can switch between these organizations at any time without needing to log out of the old organization.
+{{<tabs labels="macOS, Windows, and Linux | iOS and Android">}}
+{{<tab label="macos, windows, and linux" no-code="true">}}
 
-To switch to a different organization:
+{{<render file="warp/_switch-orgs.md" withParameters="Select the gear icon.;;**Preferences** > **Account**" >}}
 
-1. Open the WARP client on your device.
+{{</tab>}}
+{{<tab label="ios and android" no-code="true">}}
 
-2. Select the gear icon.
+{{<render file="warp/_switch-orgs.md" withParameters="Go to **Settings** > **Advanced**.;; **Settings** > **Account**" >}}
 
-3. Select **Switch configurations**. The menu will show the organizations that the admin has configured for your device.
-
-4. Select the organization that you want to connect to.
-
-{{<Aside type="note">}}
-Only admins can [add additional organizations](#mdm-file-format) to the WARP GUI. To connect to an organization that is not displayed in the GUI, go to **Preferences** > **Account** to manually log out of the old organization and log into the new organization.
-{{</Aside>}}
-
-5. If prompted, complete the authentication steps required for the new organization.
+{{</tab>}}
+{{</tabs>}}

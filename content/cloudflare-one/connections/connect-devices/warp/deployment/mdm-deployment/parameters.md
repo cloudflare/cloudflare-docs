@@ -141,7 +141,7 @@ This functionality is intended for use with a Cloudflare China local network par
 
 **Value Type:** `string`
 
-**Value:** `1.2.3.4:500` — Redirect all WARP traffic to `1.2.3.4` on port `500`.
+**Value:** `203.0.113.0:500` — Redirect all WARP traffic to `203.0.113.0` on port `500`.
 
 The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
 
