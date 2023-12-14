@@ -56,6 +56,6 @@ Gateway will filter, log, and resolve your queries regardless of endpoint.
 7. (Optional) Enter a custom port for each IP address.
 8. Select **Create policy**.
 
-Custom resolvers are saved to your account for future use. When users first connect to Zero Trust, Gateway will send a query to all resolvers listed, returning and caching the first response for use in subsequent queries. Resolvers are cached per user per data center.
+Custom resolvers are saved to your account for future use. When users first connect to Zero Trust, Gateway will send a query to all resolvers listed, returning and caching the first response for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.
 
 For more information on creating a DNS policy, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
