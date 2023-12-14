@@ -1611,6 +1611,15 @@
           "biz": 0,
           "ent": 0,
           "ent_plus": 3
+        },
+        "l_logpush_jobs": {
+          "title": "Number of Logpush jobs",
+          "summary": "Enterprise with add-on",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 0,
+          "ent_plus": 4
         }
       }
     },
