@@ -1,9 +1,9 @@
 ---
-title: Microsoft Report Message
+title: Microsoft Report Message (not compatible)
 pcx_content_type: concept
 ---
 
-# Microsoft Report Message
+# Microsoft Report Message (not compatible)
 
 Due to changes in the flow of submission messages, Microsoft no longer honors mail flow rules for the Microsoft Report Message button. Therefore, Area 1 is not compatible with this tool anymore.
 
