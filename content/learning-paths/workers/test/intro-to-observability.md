@@ -7,7 +7,7 @@ layout: learning-unit
 
 ## Local development and logs
 
-You learned how to write tests in the [Get started guide](/workers/get-started/guide/). Now, you learn how to locally develop and log from your Worker.
+You learned how to write tests in the [Get started guide](/workers/get-started/guide/). Now, you will learn how to locally develop and log from your Worker.
 
 ### Local development
 

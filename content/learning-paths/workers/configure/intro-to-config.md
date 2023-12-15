@@ -15,7 +15,7 @@ Set your Worker to run on a specific path by learning which routing option is ri
 
 ### Cron Triggers
 
-Configure your Worker to run on a schedule with [Cron Triggers](/workers/configuration/cron-triggers/). As you read in module 1, Workers execute when a request invokes the `fetch()` handler defined in your Worker code. Cron Triggers allows your Worker to execute on a schedule set by you, rather than being invoked by requests. This is ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data.
+Configure your Worker to run on a schedule with [Cron Triggers](/workers/configuration/cron-triggers/). As you read in module 1, Workers execute when a request invokes the `fetch()` handler defined in your Worker code. Cron Triggers allows your Worker to execute on a schedule set by you, rather than being invoked by a web request. This is ideal for running periodic jobs, such as maintenance windows or calling third-party APIs to collect up-to-date data.
 
 ### Deployments
 
