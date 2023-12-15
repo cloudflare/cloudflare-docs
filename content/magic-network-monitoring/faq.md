@@ -51,7 +51,7 @@ For example, you create a MNM rule with the following parameters:
 "duration": "1m0s"
 ```
 
-With this rule, your network needs to receive a throughput greater than 50,000,000 bits per second (50 Gigabits per second or Gbps) for 60 seconds. If both of these conditions are met, then MNM will send an alert to you.
+With this rule, your network needs to receive a throughput greater than 50,000,000 bits per second (50 Gigabits per second or Gbps) for 60 seconds. If both of these conditions are met, then MNM will send you an alert.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -79,7 +79,7 @@ GraphQL analytics is retained for 90 days for enterprise customers. For non-ente
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Can I send NetFlow / sFlow data to Cloudflare in a secure, encrypted way?" >}}
+{{<faq-question level=2 text="Can I send NetFlow/sFlow data to Cloudflare in a secure, encrypted way?" >}}
 
 {{<faq-answer>}}
 
@@ -88,7 +88,7 @@ Yes. Enterprise customers with Magic Transit or Magic WAN are able to send encry
 1. Configuring your [NetFlow](/magic-network-monitoring/routers/netflow-ipfix-config/) or [sFlow](/magic-network-monitoring/routers/sflow-config/) data to be sent to Cloudflare’s network for parsing.
 2. Directing that network flow data to be sent over a [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnels/) or [Magic WAN IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Cloudflare's network.
 
-Cloudflare's network will then identify this traffic via the destination IP address / port, and direct the network flow traffic to Magic Network Monitoring for parsing.
+Cloudflare's network will then identify this traffic via the destination IP address/port, and direct the network flow traffic to Magic Network Monitoring for parsing.
 
 This feature is not available to Magic Network Monitoring free customers.
 
