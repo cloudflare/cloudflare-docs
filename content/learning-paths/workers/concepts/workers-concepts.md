@@ -15,7 +15,7 @@ Read this Cloudflare Learning Center article on [serverless computing](https://w
 
 ### Workers
 
-Explore Cloudflare Workers developer documentation by starting with [How Workers works](/workers/learning/how-workers-works/), and learn the difference between the Workers runtime versus traditional browsers and Node.js.
+Explore Cloudflare Workers developer documentation by starting with [How Workers works](/workers/learning/how-workers-works/), and learn the difference between the Workers runtime versus traditional browsers and Node.js. If you are a Node.js user, review [Node.js compatibility](/workers/runtime-apis/nodejs/) in the Workers documentation.
 
 ### The cache
 
@@ -23,9 +23,9 @@ Learn how Workers interacts with the Cloudflare cache by reading [How the cache 
 
 ### Developer Platform
 
-Cloudflare Workers is part of the [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/). You will explore this topic in module 5, .
+Cloudflare Workers is part of the [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/). You will explore this topic in [module 5](/learning-paths/workers/#build-applications-with-cloudflares-developer-platform).
 
-### Additional resources
+### Related resources
 
 The Cloudflare blog offers updates and further insights to developers on the Cloudflare developer platform, which includes Workers. Explore some curated blog posts below on Workers speed, and scalability.
 

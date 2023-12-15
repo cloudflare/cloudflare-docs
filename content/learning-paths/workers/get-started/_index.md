@@ -7,7 +7,7 @@ layout: learning-module
 
 ## Build your first Worker
 
-Create your first Worker using the Cloudflare CLIs.
+Create your first Worker.
 
 ## Objectives
 
