@@ -35,7 +35,7 @@ You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/
 
 ### DNS policies
 
-Regional Services controls where Cloudlare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
+Regional Services controls where Cloudflare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
 
 Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings) section below for more information.
 
