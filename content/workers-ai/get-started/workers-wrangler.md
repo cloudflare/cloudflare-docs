@@ -127,11 +127,14 @@ After configuring your Worker, you can test your project locally before you depl
 
 ## 5. Develop locally with Wrangler
 
-While in your project directory, test Workers AI locally by running. Note, you will be prompted to login at this time:
+While in your project directory, test Workers AI locally by running. 
 
 ```sh
 $ npx wrangler dev --remote
 ```
+
+Note, you will be prompted to login at this time. You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+
 
 {{<Aside type="warning">}}
 Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev environment is not currently capable of running them locally.
@@ -140,23 +143,11 @@ Be sure to include the `--remote`. This proxies Workers AI requests to the Cloud
 When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
 
 ```json
-{
-  "result": {
-    "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
-  }
-}
+{"response":"Ah, a most excellent question, my dear human friend! *adjusts glasses*\n\nThe origin of the phrase \"Hello, World\" is a fascinating tale that spans several decades and multiple disciplines. It all began in the early days of computer programming, when a young man named Brian Kernighan was tasked with writing a simple program to demonstrate the basics of a new programming language called C.\nKernighan, a renowned computer scientist and author, was working at Bell Labs in the late 1970s when he created the program. He wanted to showcase the language's simplicity and versatility, so he wrote a basic \"Hello, World!\" program that printed the familiar greeting to the console.\nThe program was included in Kernighan and Ritchie's influential book \"The C Programming Language,\" published in 1978. The book became a standard reference for C programmers, and the \"Hello, World!\" program became a sort of \"Hello, World!\" for the programming community.\nOver time, the phrase \"Hello, World!\" became a shorthand for any simple program that demonstrated the basics"}
 ```
 
 
 ## 6. Deploy your AI Worker
-
-Before deploying your AI Worker globally, log in with your Cloudflare account by running:
-
-```sh
-$ npx wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
