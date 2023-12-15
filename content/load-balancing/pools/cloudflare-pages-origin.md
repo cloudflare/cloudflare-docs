@@ -117,9 +117,15 @@ Failing to do so may result in [response code mismatch error](/load-balancing/tr
 
 {{<tutorial-step title="Check the origins health status">}}
 
-Before setting up the load balancer, check if the status reported for the pools you created correspond to `healthy`. The basic principle is that, if both your production website and your Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
+Before setting up the load balancer:
 
-Revise your pools setup against the instructions above and refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy) if you still run into other issues.
+1. Go to **Traffic** > **Load Balancing** > **Manage Pools**.
+2. Find the origin pools you created in the list and check if their status is `healthy`.
+3. Expand each pool entry to see that the health status for origins within them is also `healthy`.
+
+The basic principle is that, if both your production website and your Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
+
+Revise your pools and monitor configuration to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
 
 {{</tutorial-step>}}
 
