@@ -131,7 +131,26 @@ Revise your pools and monitor configuration to confirm they followed the instruc
 
 {{<tutorial-step title="Create load balancer">}}
 
-Step content
+After confirming the origins and monitors are set up correctly and return the expected health status, create the load balancer:
+
+1. Go to **Traffic** > **Load Balancing** > **Create Load Balancer**.
+
+2. On the **Hostname** page, configure the following and select **Next**.
+    * Enter a **Hostname**, which is the DNS name at which the load balancer is available. Suggestion: for now, you can just add a temporary hostname such as `lb` (so the complete field value would look like `lb.<your_domain>`).
+    * Select your preferred option for [proxy mode](/load-balancing/understand-basics/proxy-modes/), [session affinity](/load-balancing/understand-basics/session-affinity/), and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
+
+3. On the **Add an Origin Pool**, configure the following and select **Next**.
+    * Select the first pool you created in Step 2 and select **Add Pool**.
+    * Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Pages pool would be the second (`secondary`).
+    * If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools). For the purposes of this tutorial, you can leave this pointing to your secondary pool.
+
+4. On the **Monitors** page, review the monitors attached to your pools and the expected health status, and select **Next**.
+
+5. On the **Traffic Steering** page, make sure **Off** is selected. This means the load balancer will follow the order established on the Origin Pools section, achieving an [Active - Passive Failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover) configuration.
+
+6. For the purposes of this tutorial, leave the [**Custom Rules**](/load-balancing/additional-options/load-balancing-rules/) option empty.
+
+7. On the **Review** page, review your configuration and select **Save as Draft**.
 
 {{</tutorial-step>}}
 
