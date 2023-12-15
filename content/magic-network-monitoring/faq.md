@@ -83,10 +83,10 @@ GraphQL analytics is retained for 90 days for enterprise customers. For non-ente
 
 {{<faq-answer>}}
 
-Yes. Enterprise customers with Magic Transit or Magic WAN are able to send encrypted network flow data via an IPSec tunnel to Cloudflare's network. You can achieve this by:
+Yes. Enterprise customers with Magic Transit or Magic WAN are able to send encrypted network flow data via an IPsec tunnel to Cloudflare's network. You can achieve this by:
 
 1. Configuring your [NetFlow](/magic-network-monitoring/routers/netflow-ipfix-config/) or [sFlow](/magic-network-monitoring/routers/sflow-config/) data to be sent to Cloudflare’s network for parsing.
-2. Directing that network flow data to be sent over a [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnels/) or [Magic WAN IPSec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Cloudflare's network.
+2. Directing that network flow data to be sent over a [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnels/) or [Magic WAN IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Cloudflare's network.
 
 Cloudflare's network will then identify this traffic via the destination IP address / port, and direct the network flow traffic to Magic Network Monitoring for parsing.
 
