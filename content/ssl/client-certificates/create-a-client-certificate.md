@@ -15,7 +15,7 @@ To create a client certificate in the Cloudflare dashboard:
     {{<Aside type="warning">}}
 By default, client certificates are issued by a Cloudflare Managed CA. Cloudflare generates a unique CA for each account.
 
-If you need to use certificates issued by another CA, you can use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca-api-shield/).
+If you need to use certificates issued by another CA, use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca-api-shield/).
 {{</Aside>}}
 
 4.  For **Private key type**, select a value.
