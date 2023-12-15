@@ -11,7 +11,7 @@ The `Request` interface represents an HTTP request and is part of the Fetch API.
 
 ## Background
 
-The most common way you will encounter a `Request` object is as a property of an incoming `FetchEvent`.
+The most common way you will encounter a `Request` object is as a property of an incoming request:
 
 ```js
 ---

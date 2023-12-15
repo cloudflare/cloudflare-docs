@@ -113,3 +113,7 @@ Only select **Encrypt** if your environment variable is a [secret](/workers/conf
 {{</Aside>}}
 
 {{<render file="_env_and_secrets.md">}}
+
+## Related resources
+
+* Learn how to access environment variables in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.
