@@ -13,5 +13,3 @@ Create your first Worker.
 
 - Understand the difference between C3 (create-cloudflare-cli) and Wrangler.
 - Build your first Worker.
-
-

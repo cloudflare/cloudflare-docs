@@ -14,7 +14,3 @@ The Cloudflare Developer Platform allows you to build fullstack applications wit
 - Understand what a binding is and how it is configured.
 - Explore the storage options available to your Worker.
 - Review database integrations.
-
-
-
-

@@ -13,5 +13,3 @@ Learn how to test and debug your Worker.
 
 - Learn how to use `wrangler dev` to test your Worker locally.
 - Review Worker logs with `wrangler tail` or the Cloudflare dashboard.
-
-

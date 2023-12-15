@@ -24,4 +24,3 @@ Review your deployments and rollback to a previous version of your Worker with [
 ### Related resources
 
 * Review projects you can build with Workers in [Tutorials](/workers/tutorials/).
-

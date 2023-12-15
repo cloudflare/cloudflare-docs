@@ -12,7 +12,3 @@ Customize your Worker by exploring features such as routing and Cron Triggers.
 ## Objectives
 
 - Understand the feature options available to your Worker.
-
-
-
-

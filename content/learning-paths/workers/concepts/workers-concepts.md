@@ -7,6 +7,8 @@ layout: learning-unit
 
 ## Workers concepts
 
+Cloudflare Workers allow you to build web functions and applications without configuring or maintaining infrastructure. Workers are deployed globally to over 300+ data centers around the world on Cloudflare’s global network.
+
 Before you begin building with Workers, review the following reference material to understand how Workers works.
 
 ### Serverless computing
@@ -30,3 +32,4 @@ Cloudflare Workers is part of the [Cloudflare Developer Platform](https://www.cl
 The Cloudflare blog offers updates and further insights to developers on the Cloudflare developer platform, which includes Workers. Explore some curated blog posts below on Workers speed, and scalability.
 
 * [Cloudflare Workers versus Lambda versus Lambda@Edge](https://blog.cloudflare.com/serverless-performance-comparison-workers-lambda/)
+* [Cloudflare blog posts related to Workers](https://blog.cloudflare.com/tag/workers/)
