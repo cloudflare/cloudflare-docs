@@ -83,12 +83,12 @@ Create a global, low-latency, key-value data storage.
 ## More resources
  
 {{<resource-group>}}
+
+{{<resource header="Learning Path" href="/learning-paths/workers/" icon="reference-architecture">}}New to Workers? Get started with the Workers Learning Path.{{</resource>}}
  
 {{<resource header="Plans" href="/workers/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
  
 {{<resource header="Limits" href="/workers/platform/limits/" icon="documentation-clipboard">}}Learn about plan limits (Free plans get 100,000 requests per day).{{</resource>}}
-
-{{<resource header="HTMLRewriter" href="/workers/runtime-apis/html-rewriter/" icon="reference-architecture">}}Parse and transform HTML from inside a Worker.{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/learning/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
