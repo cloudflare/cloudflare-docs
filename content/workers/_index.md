@@ -90,7 +90,7 @@ Create a global, low-latency, key-value data storage.
  
 {{<resource header="Limits" href="/workers/platform/limits/" icon="documentation-clipboard">}}Learn about plan limits (Free plans get 100,000 requests per day).{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
 
