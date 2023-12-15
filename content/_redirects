@@ -1118,6 +1118,7 @@
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
+/workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
