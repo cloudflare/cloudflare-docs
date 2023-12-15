@@ -1,7 +1,7 @@
 ---
 title: Configure your Worker
 pcx_content_type: overview
-weight: 4
+weight: 3
 layout: learning-module
 ---
 
