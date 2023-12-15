@@ -13,7 +13,7 @@ Before you begin building with Workers, review the following reference material 
 
 ### Serverless computing
 
-Read this Cloudflare Learning Center article on [serverless computing](https://www.cloudflare.com/learning/serverless/what-is-serverless/), [containers](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) and the [difference between service workers and Cloudflare Workers](https://www.cloudflare.com/learning/serverless/serverless-javascript/#:~:text=One%20of%20the%20key%20differences,of%20the%20Internet%2C%20effectively%20running) to understand the fundamentals of Workers technology.
+To understand the fundamentals of Workers technology, refer to these Cloudflare Learning Center articles on [serverless computing](https://www.cloudflare.com/learning/serverless/what-is-serverless/), [containers](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) and [serverless JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/).
 
 ### Workers
 
