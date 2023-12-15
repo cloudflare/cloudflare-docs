@@ -129,7 +129,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 {{<Aside type="note">}}
 
-To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/troubleshooting/nameservers/).
+To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/full-setup/troubleshooting/).
 
 {{</Aside>}}
 
@@ -156,7 +156,7 @@ nslookup <DOMAIN_NAME> 8.8.8.8
 
 {{<Aside type="note">}}
 
-If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/troubleshooting/nameservers/) and check with your domain registrar.
+If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/full-setup/troubleshooting/) and check with your domain registrar.
 
 {{</Aside>}}
 

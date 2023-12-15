@@ -2,11 +2,11 @@
 pcx_content_type: how-to
 title: Setup
 weight: 2
-meta: 
+meta:
     title: Set up a child domain - Subdomain setup
 ---
 
-# Set up a child domain 
+# Set up a child domain
 
 When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to create a child domain depend on the parent domain's setup and whether the child domain already exists.
 
@@ -36,6 +36,11 @@ When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to 
 | [Partial](/dns/zone-setups/partial-setup/) | [Full](/dns/zone-setups/full-setup/) | Yes |
 | [Partial](/dns/zone-setups/partial-setup/) | [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | Yes |
 | [Partial](/dns/zone-setups/partial-setup/) | [Partial](/dns/zone-setups/partial-setup/) | Yes |
+
+{{<Aside type="note">}}
+This table assumes zones are in an active [status](/dns/zone-setups/reference/domain-status/). If you need to add the parent zone to Cloudflare when its child zone already exists in a Partial setup, for example, you can [convert the parent zone to Partial](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) while it is still in pending status.
+{{</Aside>}}
+
 ---
 
 ## Parent domain on full setup
@@ -87,7 +92,7 @@ If you have already created a DNS record covering your child domain in the paren
 
     For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
 
-    | **Type** | **Name** | **Content** | 
+    | **Type** | **Name** | **Content** |
     | --- | --- | --- |
     | `NS` | www | john.ns.cloudflare.com |
 
@@ -107,22 +112,22 @@ If you have not yet created a DNS record covering your child domain in the paren
 
 {{<tabs labels="Child is Full or Secondary | Child is Partial">}}
 {{<tab label="child is full or secondary" no-code="true">}}
- 
+
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain’s Cloudflare account or another account.
 2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 3. After creating the DNS records on the child zone, add the Cloudflare nameservers as `NS` records at your external DNS provider.
 4. Within a short period of time, the child domain should be active.
- 
+
 {{</tab>}}
 {{<tab label="child is partial" no-code="true">}}
- 
+
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain’s Cloudflare account or another account.
 2. Convert the child zone to [a partial setup](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare).
 3. Create the various [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for your child domain.
 4. [Add the TXT verification record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) at your authoritative DNS provider.
 5. Within a short period of time, the child domain should be active.
 6. Add a [`CNAME` record](/dns/zone-setups/partial-setup/setup/#add-dns-records) at your authoritative DNS provider.
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -144,9 +149,9 @@ If you have already created a DNS record covering your child domain in the paren
 5. Get the Cloudflare nameservers for the child domain and add them as `NS` records at your external DNS provider.
 6. Within a short period of time, the child domain should be active.
 7. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the child domain or any of its deeper subdomains.
- 
+
 {{</tab>}}
-{{<tab label="child is partial" no-code="true">}} 
+{{<tab label="child is partial" no-code="true">}}
 
 1. [Add the child domain](/fundamentals/setup/account-setup/add-site/) to the parent domain’s Cloudflare account or another account.
 2. Convert the child zone to [a partial setup](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare).
@@ -160,7 +165,7 @@ If you have already created a DNS record covering your child domain in the paren
 6. [Add the TXT verification record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) at your authoritative DNS provider.
 7. Within a short period of time, the child domain should be active.
 8. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any previous `A`, `AAAA`, or `CNAME` records referencing the child domain or any of its deeper subdomains, and [add the Cloudflare `CNAME` record](/dns/zone-setups/partial-setup/setup/#add-dns-records).
- 
+
 {{</tab>}}
 {{</tabs>}}
 

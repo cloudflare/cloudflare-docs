@@ -2,6 +2,7 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115003687931-Warning-about-exposing-your-origin-IP-address-via-DNS-records
 title: Exposed IP addresses
+weight: 12
 ---
 
 # Exposed IP addresses

@@ -5,6 +5,7 @@
 {{- $folderPlaceholder := "" -}}
 {{ $rssFeed := "" }}
 {{ $rssIconDescription := "" -}}
+{{- $githubURL := "https://github.com/cloudflare/cloudflare-docs" -}}
 
 <div class="DocsToolbar--tools">
   <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
@@ -73,10 +74,13 @@
 
   <div class="DocsToolbar--tools-spacer"></div>
 
+  {{- with .File -}} {{- $githubURL = (printf
+    "https://github.com/cloudflare/cloudflare-docs/blob/production/content/%s"
+    (replace .Path "\\" "/")) -}} {{- end -}}
   <div class="DocsToolbar--tools-icon-item">
     <div class="Tooltip---root">
       <div class="DocsToolbar--tools-icon-item-content">
-        <a class="Link Link-without-underline" href="https://github.com/cloudflare/cloudflare-docs" target="_blank">
+        <a class="Link Link-without-underline" href="{{$githubURL}}" target="_blank">
           <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-6991762763429039"
             xmlns="http://www.w3.org/2000/svg">
             <title id="title-6991762763429039">GitHub icon</title>
@@ -88,7 +92,7 @@
       </div>
 
       <span class="Tooltip" role="tooltip" position="bottom-end">
-        Visit {{ $title }} on GitHub
+        Edit this page on GitHub
       </span>
     </div>
   </div>

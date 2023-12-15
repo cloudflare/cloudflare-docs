@@ -52,7 +52,7 @@ Customize the behavior of your website or application using short pieces of Java
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
 
-{{<feature header="Page Rules" href="/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/">}}
+{{<feature header="Page Rules" href="/rules/page-rules/">}}
 Trigger certain actions when a request matches a URL pattern.
 {{</feature>}}
 

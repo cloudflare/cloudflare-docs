@@ -12,7 +12,7 @@ A false negative is a lack of identification. In the case of DDoS protection, th
 
 To address a false negative:
 
-- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating rate limiting rules and WAF custom rules as needed.
+- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating {{<glossary-tooltip term_id="rate limiting">}}rate limiting{{</glossary-tooltip>}} rules and WAF custom rules as needed.
 
 - If you are a Magic Transit customer, [use Magic Firewall rules](/magic-firewall/how-to/add-rules/) to help mitigate the attack.
 
@@ -33,19 +33,16 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     {{<details header="For WAF/CDN customers">}}
 
-    1. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
-
-    2. Go to **Security** > **Events**.
-
-    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+1. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
+2. Go to **Security** > **Events**.
+3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
     {{</details>}}
 
     {{<details header="For Magic Transit and Spectrum customers">}}
 
-    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
-
-    2. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+2. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
     {{</details>}}
 
@@ -65,7 +62,7 @@ Once saved, the rule takes effect within one or two minutes. The rule adjustment
 
 ### Alternate procedure
 
-If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for assistance, providing the following details:
+If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](/support/contacting-cloudflare-support/) for assistance, providing the following details:
 
 - Time period of the attack (UTC timestamp)
 - Domain/path being targeted (zone name/ID)

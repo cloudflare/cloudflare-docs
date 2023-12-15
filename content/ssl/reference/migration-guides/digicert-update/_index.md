@@ -12,15 +12,15 @@ In the latter half of 2023, Cloudflare will begin deprecating DigiCert as a Cert
 
 {{<Aside type="warning">}}
 
-The offboarding for advanced certificate renewals has been postponed and will start gradually rolling out on October 26, 2023.
+The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023.
 
-SSL for SaaS renewals offboarding is postponed until November 1, 2023.
+The SSL for SaaS renewals offboarding has been postponed and started gradually rolling out on November 1, 2023.
 
 {{</Aside>}}
 
 ## Scope
 
-This migration only affects [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) certificates where the certificate has been provisionned by Cloudflare using DigiCert as certificate authority.
+This migration only affects [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) certificates where the certificate has been provisioned by Cloudflare using DigiCert as certificate authority.
 
 Also, this change will not impact existing certificates issued from DigiCert that Cloudflare is currently serving, but it will impact new certificate orders and renewals.
 
@@ -28,7 +28,7 @@ Consider each specific migration guide for actions you might have to take and re
 
 {{<Aside type="warning" header="Not affected">}}
 
-Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudlfare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
+Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudflare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
 
 {{</Aside>}}
 

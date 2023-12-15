@@ -55,6 +55,10 @@ Example manifest.txt:<br/>
 
 The manifest file should contain URIs, protocol-relative URLs or full URLs, separated by new lines. These files must be on your websites that are on Cloudflare. If you reference HTML pages, only the HTML page itself will be pre-fetched - any sub-requests from that HTML will not be fetched unless they are also defined explicitly in your manifest.
 
+{{<Aside type="note" header="Note">}}
+The IP address used to make the prefetch request to the manifest file is logged as `127.0.0.1` in your Cloudflare logs.
+{{</Aside>}}
+
 ## Limitations
 
 - Cloudflare will only prefetch files listed in the manifest file if the resources are those [cached by default](/cache/concepts/default-cache-behavior/#default-cached-file-extensions).

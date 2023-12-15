@@ -12,7 +12,7 @@ layout: example
 ## Installation
 
 There's a few options to choose from when getting started with Vidstack, follow any of the links
-below to get setup. You can replace the player `src` with `https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8` to test Cloudflare Stream.
+below to get setup. You can replace the player `src` with `https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8` to test Cloudflare Stream.
 
 - [Angular](https://www.vidstack.io/docs/player/getting-started/installation/angular?provider=video)
 - [React](https://www.vidstack.io/docs/player/getting-started/installation/react?provider=video)

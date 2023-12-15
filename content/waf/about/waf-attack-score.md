@@ -78,4 +78,4 @@ If you are an Enterprise customer and you created a rule with _Log_ action, chan
 
 ## Additional remarks
 
-The WAF Attack Score is different from Threat Score and Bot Score. WAF Attack Score identifies variation of attacks that WAF Managed Rules do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
+The WAF Attack Score is different from {{<glossary-tooltip term_id="threat score">}}Threat Score{{</glossary-tooltip>}} and Bot Score. WAF Attack Score identifies variation of attacks that WAF Managed Rules do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.

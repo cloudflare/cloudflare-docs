@@ -5,7 +5,7 @@ pcx_content_type: reference
 
 # Verify IRR entries
 
-Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefixes Cloudflare advertises for you match the correct autonomous system numbers (ASNs).
+Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefixes Cloudflare advertises for you match the correct {{<glossary-tooltip term_id="autonomous system numbers (ASNs)">}}autonomous system numbers (ASNs){{</glossary-tooltip>}}.
 
 Each IRR entry record must include the following information:
 

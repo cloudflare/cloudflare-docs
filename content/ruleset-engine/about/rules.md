@@ -14,7 +14,20 @@ For example, consider the following ruleset with four rules (R1, R2, R3, and R4)
 
 Rules can have additional features through specific Cloudflare products. You may have more fields available for rule expressions, perform different actions, or configure additional behavior in a given phase.
 
-## Rule evaluation and field values
+## Rule evaluation
+
+When evaluating a rule, Cloudflare compares the values of request/response properties or derived values (obtained through [fields](/ruleset-engine/rules-language/fields/)) to those defined in the rule's filter expression.
+
+If the entire expression evaluates to `true`, there is a rule match and Cloudflare triggers the [action](/ruleset-engine/rules-language/actions/) configured in the rule. If the expression evaluates to `false`, the rule does not match and its configured action is not applied.
+
+When you use `true` as the rule filter expression, this means "apply the rule to every incoming request" at the current [phase](/ruleset-engine/about/phases/) level, which can be zone or account.
+
+{{<Aside type="note" header="Notes">}}
+* A rule filter expression must evaluate to a boolean value (either `true` or `false`).
+* Rules of specific Cloudflare products, such as [Transform Rules](/rules/transform/), may include other expressions used to specify dynamic values. These expressions do not have to evaluate to a boolean value.
+{{</Aside>}}
+
+### Field values during rule evaluation
 
 While evaluating rules for a given request/response, the values of all request and response [fields](/ruleset-engine/rules-language/fields/) are immutable within each phase. However, field values may change between phases.
 

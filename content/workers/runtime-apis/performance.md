@@ -1,13 +1,15 @@
 ---
 pcx_content_type: configuration
 title: Performance and timers
+meta:
+  description: Measure timing, performance, and timing of subrequests and other operations.
 ---
 
 # Performance
 
 ## Background
 
-The Workers runtime supports a subset of the [`Performance` API](https://developer.mozilla.org/en-US/docs/Web/API/Performance), used to measure timing and performance and timing of subrequests and other operations.
+The Workers runtime supports a subset of the [`Performance` API](https://developer.mozilla.org/en-US/docs/Web/API/Performance), used to measure timing and performance, as well as timing of subrequests and other operations.
 
 ### `performance.now()`
 

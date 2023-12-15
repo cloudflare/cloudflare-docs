@@ -8,6 +8,24 @@ entries:
   scheduled: true
   individual_page: true
   link: '/ddos-protection/change-log/http/scheduled-changes/'
+- publish_date: '2023-12-14'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-12-14-emergency/'
+- publish_date: '2023-12-08'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-12-08-emergency/'
+- publish_date: '2023-11-29'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-11-29/'
+- publish_date: '2023-11-22'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-11-22/'
+- publish_date: '2023-11-13'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-11-13-emergency/'
+- publish_date: '2023-11-10'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2023-11-10-emergency/'
 - publish_date: '2023-10-19'
   individual_page: true
   link: '/ddos-protection/change-log/http/2023-10-19/'

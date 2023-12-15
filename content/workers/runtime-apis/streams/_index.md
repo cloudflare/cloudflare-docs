@@ -4,6 +4,7 @@ title: Streams
 layout: single
 meta:
   title: Streams - Runtime APIs
+  description: A web standard API that allows JavaScript to programmatically access and process streams of data.
 ---
 
 # Streams

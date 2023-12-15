@@ -8,7 +8,7 @@ inputParameters: productName;;greURL;;staticRoutesURL;;ipsecURL
 
 # Traffic steering
 
-$1 uses a static configuration to route traffic through Anycast tunnels using the [Generic Routing Encapsulation (GRE)]($2) and [Internet Protocol Security (IPsec)]($4) protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
+$1 uses a static configuration to route traffic through {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels using the {{<glossary-tooltip term_id="GRE tunnel" link="$2">}}GRE{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="$4">}}Internet Protocol Security (IPsec){{</glossary-tooltip>}} protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
 
 $1 steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 

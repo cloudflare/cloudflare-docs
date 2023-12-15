@@ -70,7 +70,7 @@ With an [inline deployment](/email-security/deployment/inline/), Area 1 evaluate
 
 ## Classification actions
 
-Area 1 recommends that you quarantine `MALICIOUS` and `SPAM` dispositions. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Area 1](/email-security/email-configuration/domains-and-routing/domains/).
+Area 1 recommends that you quarantine `MALICIOUS` and `SPAM` {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}}. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Area 1](/email-security/email-configuration/domains-and-routing/domains/).
 
 ## Message retraction
 
@@ -82,7 +82,7 @@ To add additional TLS requirements for emails coming from certain domains, you c
 
 ## Reports
 
-You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as [SIEM events](https://horizon.area1security.com/settings/email/routing/webhooks). For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Area 1 first.
+You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as {{<glossary-tooltip term_id="SIEM" link="https://horizon.area1security.com/settings/email/routing/webhooks">}}SIEM events{{</glossary-tooltip>}}. For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Area 1 first.
 
 ## Whitelisting and blocklisting senders
 
@@ -90,7 +90,7 @@ If you need to whitelist of blocklist senders, refer to [Allow and block lists](
 
 ## Submitting false positives and false negatives
 
-There are several ways of dealing with missed phish or messages flagged as such that are not. Refer to [Phish submissions](/email-security/email-configuration/phish-submissions/) to learn more.
+There are several ways of dealing with missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} or messages flagged as such that are not. Refer to [Phish submissions](/email-security/email-configuration/phish-submissions/) to learn more.
 
 ## Best practices
 

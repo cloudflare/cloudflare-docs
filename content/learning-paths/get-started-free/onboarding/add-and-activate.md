@@ -58,4 +58,4 @@ If you cannot transfer your domain or want to keep your current registrar, your 
 
 ### Troubleshooting
 
-If you have issues activating your domain on Cloudflare, refer to our troubleshooting guides on [adding sites to Cloudflare](/dns/zone-setups/troubleshooting/cannot-add-domain/) and [changing nameservers](/dns/zone-setups/troubleshooting/nameservers/).
+If you have issues activating your domain on Cloudflare, refer to our troubleshooting guides on [adding sites to Cloudflare](/dns/zone-setups/troubleshooting/cannot-add-domain/) and [changing nameservers](/dns/zone-setups/full-setup/troubleshooting/).

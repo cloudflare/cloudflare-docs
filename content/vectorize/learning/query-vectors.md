@@ -10,7 +10,7 @@ Querying an index, or vector search, enables you to search an index by providing
 
 ## Example query
 
-To pass a vector as a query to an index, use the `.query()` method on the index itself.
+To pass a vector as a query to an index, use the `query()` method on the index itself.
 
 A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/learning/insert-vectors/), a query vector does not need an ID or metadata.
 
@@ -22,7 +22,7 @@ let matches = await env.YOUR_INDEX.query(queryVector);
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
 
 ```json
-{"matches":{"count":3,"matches":[{"score":0.999909486,"vectorId":"5"},{"score":0.789848214,"vectorId":"4"},{"score":0.720476967,"vectorId":"4444"}]}}
+{"matches":{"count":3,"matches":[{"score":0.999909486,"id":"5"},{"score":0.789848214,"id":"4"},{"score":0.720476967,"id":"4444"}]}}
 ```
 
 You can optionally change the number of results returned and/or whether results should include metadata and values:
@@ -36,14 +36,14 @@ let matches = await env.YOUR_INDEX.query(queryVector, { topK: 1, returnValues: t
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.999909486,"vectorId":"5","vector":{"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}}]}}
+{"matches":{"count":1,"matches":[{"score":0.999909486,"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}]}}
 ```
 
 Refer to the [Workers Client API documentation](/vectorize/platform/client-api/) for additional examples.
 
 ## Workers AI
 
-If you are generating embeddings from a [Workers AI](/workers-ai/models/embedding/) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
+If you are generating embeddings from a [Workers AI](/workers-ai/models/text-embeddings/) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
 
 ```ts
 interface EmbeddingResponse {
@@ -60,13 +60,15 @@ const queryVector: EmbeddingResponse = await ai.run(
 );
 ```
 
-When passing the vector to the `.query()` method of a Vectorize index, ensure you are passing only the vector embedding itself on the `.data` sub-object, and not the top-level response. For example:
+When passing the vector to the `query()` method of a Vectorize index, pass only the vector embedding itself on the `.data` sub-object, and not the top-level response.
+
+For example:
 
 ```ts
 let matches = await env.TEXT_EMBEDDINGS.query(queryVector.data[0], { topK: 1 });
 ```
 
-Passing `queryVector` or `queryVector.data` will cause `.query()` to return an error.
+Passing `queryVector` or `queryVector.data` will cause `query()` to return an error.
 
 ## OpenAI
 

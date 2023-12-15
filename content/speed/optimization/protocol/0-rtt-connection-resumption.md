@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: how-to
 title: 0-RTT Connection Resumption
 weight: 5
 ---

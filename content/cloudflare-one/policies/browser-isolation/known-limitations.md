@@ -23,6 +23,16 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 - Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
 - Internet Explorer 11 and below is unsupported.
 
+## Gateway selectors
+
+Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
+
+- [Destination Continent IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-country)
+- [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip)
+
+You cannot use these selectors to isolate traffic, and isolation matches for these selectors will not appear in your Gateway logs.
+
 ## File download size
 
 When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total size of files downloaded per session is shared with the amount of memory available to the remote browser. We recommend a maximum individual file size of 512MB.

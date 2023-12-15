@@ -24,20 +24,17 @@ This integration supports the following Sentry features:
 If there are more configuration options that you would like to see, leave us feedback on the [Cloudflare Developer Discord](https://discord.gg/wCzAmkNF) (channel name: integrations). 
 {{</Aside>}}
 
-
 ## Set up an integration with Sentry
 
-To set up an integration with Sentry:
+To set up an integration with Sentry, you need to have an existing Sentry project to connect to. [Create a Sentry project](https://docs.sentry.io/product/sentry-basics/integrate-frontend/create-new-project), or use an existing project for this integration. Then add the Sentry integration to your Worker.
 
-1. You need to have an existing Sentry project to connect to. [Create a Sentry project](https://docs.sentry.io/product/sentry-basics/integrate-frontend/create-new-project), or use an existing project for this integration.
+To add the Sentry integration to your Worker:
 
-2. Add the Sentry integration to your Worker:
-
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    2. In **Account Home**, select **Workers & Pages**.
-    3. In **Overview**, select your Worker.
-    4. Select **Integrations** > **Sentry**. 
-    5. Follow the setup flow.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+3. In **Overview**, select your Worker.
+4. Select **Integrations** > **Sentry**. 
+5. Follow the setup flow.
 
 Once installed, the integration will automatically start forwarding matching events to Sentry. To learn more about Sentry, refer to [Sentry's official documentation](https://docs.sentry.io/).
 

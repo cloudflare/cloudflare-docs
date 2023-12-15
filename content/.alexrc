@@ -1,0 +1,16 @@
+{
+  "allow": [
+    "actors-actresses",
+    "attacks",
+    "attack",
+    "hooks",
+    "host-hostess",
+    "hostesses-hosts",
+    "invalid",
+    "just",
+    "period",
+    "remains",
+    "special"
+  ],
+  "profanitySureness": 2
+}

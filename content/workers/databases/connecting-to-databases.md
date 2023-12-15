@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Connect to databases
 weight: 1
+meta:
+  description: Learn about the different kinds of database integrations Cloudflare supports.
 ---
 
 # Connect to databases
@@ -67,5 +69,5 @@ For services that require mTLS authentication, use [mTLS certificates](/workers/
 ## Next steps
 
 * Learn how to connect to [an existing PostgreSQL database](/hyperdrive/) with Hyperdrive.
-* Discover [other storage options available](/workers/learning/storage-options/) for use with Workers.
+* Discover [other storage options available](/workers/platform/storage-options/) for use with Workers.
 * [Create your first database](/d1/get-started/) with Cloudflare D1.

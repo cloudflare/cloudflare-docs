@@ -98,7 +98,7 @@ Every time you commit new code to your Solid repository, Cloudflare Pages will a
 
 ## Use bindings in your Solid application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 To add a binding in your SolidStart, add the binding to the Cloudflare adapter. This allows you to access your bindings during development, and test your application before deploying it.
 
@@ -141,6 +141,6 @@ The Cloudflare adapter accepts the same options as [Miniflare](https://miniflare
 
 {{</Aside>}}
 
-After setting up the binding locally, you only need to set the binding in the Cloudflare dashboard as well and it will be available for your Solid application on your next deployment. To add the binding there, refer to [Bindings](/pages/platform/functions/bindings/).
+After setting up the binding locally, you only need to set the binding in the Cloudflare dashboard as well and it will be available for your Solid application on your next deployment. To add the binding there, refer to [Bindings](/pages/functions/bindings/).
 
 {{<render file="_learn-more.md" withParameters="Solid">}}

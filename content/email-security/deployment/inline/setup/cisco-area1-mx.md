@@ -1,6 +1,6 @@
 ---
 title: Cisco - Area 1 as MX Record
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 3
 layout: single
 meta:
