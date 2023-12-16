@@ -150,9 +150,9 @@ Exactly one of `VALUE` or `--path` is required.
 - `--path` {{<prop-meta>}}optional{{</prop-meta>}}
   - When defined, the value is loaded from the file at `--path` rather than reading it from the `VALUE` argument. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the KV namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the KV namespace, as stored in the `wrangler.toml` file, to write the key-value pair.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the KV namespace to delete.
+  - The ID of the KV namespace to write the key-value pair.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -210,11 +210,11 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The key value to get.
+  - The key's value to get.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get the key's value from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to get the key's value from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -244,9 +244,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{<definitions>}}
 
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to list all keys from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to list all keys from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -287,11 +287,11 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The key value to get.
+  - The key value to delete.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete the key from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to delete the key from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -327,9 +327,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The JSON file containing an array of key-value pairs to write to the namespace.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to write the array of key-value pairs.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to write the array of key-value pairs.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -349,8 +349,16 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 ]
 ```
 
-KV namespace values can only store strings. In order to save complex a value, stringify it to JSON:
+KV namespace values can only store strings. In order to save complex a value, stringify it to JSON.
 
+**Example**: storing the following value for key `test_key`:
+```json
+{
+  "name": "test_value"
+}
+```
+
+After stringify:
 ```json
 [
   {
@@ -409,9 +417,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The JSON file containing an array of keys to delete from the namespace.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete the array of keys from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to delete the array of keys from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
