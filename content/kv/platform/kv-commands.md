@@ -349,16 +349,16 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 ]
 ```
 
-KV namespace values can only store strings. In order to save complex a value, stringify it to JSON.
+KV namespace values can only store strings. In order to save a complex value, stringify it to JSON.
 
-**Example**: storing the following value for key `test_key`:
+**Example**: To store the following value for key `test_key`:
 ```json
 {
   "name": "test_value"
 }
 ```
 
-After stringify:
+After stringifying, it becomes:
 ```json
 [
   {
