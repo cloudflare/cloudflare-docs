@@ -109,3 +109,11 @@ example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignht
 ```
 
 Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certificates/troubleshooting/caa-records/) for more information.
+
+### Zone Holds
+
+A [Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/) will prevent Pages from adding a Custom Domain for a hostname under a Zone Hold.
+
+To add a Custom Domain for a hostname with a Zone Hold, please temporarly [release the Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the Custom Domain setup process.
+
+Once the Custom Domain has been successfully completed, you may [reinstate the Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#enable-zone-holds).
