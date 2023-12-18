@@ -7,7 +7,7 @@ entries:
   description: |-
     Databases using D1's legacy alpha backend will no longer run automated [hourly backups](/d1/learning/backups/). You may still choose to take manual backups of these databases.
 
-  We recommend moving to D1's new [production backend](/d1/changelog/#the-d1-public-beta-is-here), which will require you to export & import your existing data. D1's production backend is substantially faster than the original alpha backend. The new backend also supports [Time Travel](/d1/learning/time-travel/), which allows you to restore your database to any minute in the past 30 days without relying on hourly or manual snapshots.
+  The D1 team recommends moving to D1's new [production backend](/d1/changelog/#the-d1-public-beta-is-here), which will require you to export and import your existing data. D1's production backend is faster than the original alpha backend. The new backend also supports [Time Travel](/d1/learning/time-travel/), which allows you to restore your database to any minute in the past 30 days without relying on hourly or manual snapshots.
 
 - publish_date: '2023-10-03'
   title: Create up to 50,000 D1 databases 
