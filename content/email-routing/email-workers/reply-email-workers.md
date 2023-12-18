@@ -29,13 +29,13 @@ export default {
       data: `We got your message, your ticket number is ${ ticket.id }`
     });
 
-    var replyMessage = new EmailMessage(
+    const replyMessage = new EmailMessage(
       "<SENDER>@example.com",
       message.from,
       msg.asRaw()
     );
 
-    message.reply(replyMessage);
+    await message.reply(replyMessage);
   }
 }
 ```

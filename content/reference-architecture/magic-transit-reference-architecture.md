@@ -1,6 +1,7 @@
 ---
 title: Magic Transit
 pcx_content_type: reference-architecture
+weight: 1
 ---
 # Magic Transit Use Cases and Reference Architecture
 

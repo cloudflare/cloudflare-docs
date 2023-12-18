@@ -6,7 +6,7 @@ weight: 5
 
 # JSON Web Tokens Validation
 
-JSON Web Tokens (JWTs) are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
+{{<glossary-tooltip term_id="JSON web token (JWT)">}}JSON web tokens (JWT){{</glossary-tooltip>}} are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
 
 API Shield’s JWT Validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT Validation will also stop requests with expired tokens or tokens that are not yet valid.
 
@@ -21,7 +21,7 @@ Currently, the following limitations are in place while we operate the closed be
 2. JWT Validation only operates on JWTs sent in client request headers. If your clients send in JWTs in cookies or `POST` bodies, direct that feedback to your account team.
 3. There can only be a single JWT Validation configuration per zone.
 We intend to remove these limitations in the near future.
-4. JWT Validation only operates for endpoints (host, method, and path) added to [Endpoint Management](/api-shield/management-and-monitoring/). 
+4. JWT Validation only operates for {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (host, method, and path) added to [Endpoint Management](/api-shield/management-and-monitoring/). 
 
 {{<Aside type="note">}}
 Refer to [configuring JWT Validation](/api-shield/security/jwt-validation/configure/) for more specific limitations around JWT claim support and supported encryption algorithms.

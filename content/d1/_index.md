@@ -21,7 +21,7 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 D1 is Cloudflare’s native serverless database. D1 allows you to build applications that handle large amounts of users at no extra cost. With D1, you can restore your database to any minute within the last 30 days.
 
-Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/learning/importing-data/), and how to [query your database](/d1/platform/client-api/) directly from [Workers](/workers/) or [Pages](/pages/platform/functions/bindings/#d1-databases).
+Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/learning/importing-data/), and how to [query your database](/d1/platform/client-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
 
 {{<Aside type="note" header="D1 is in public beta">}}
 
@@ -75,7 +75,7 @@ Deploy dynamic front-end applications in record time.
 
 {{<resource header="Community projects" href="/d1/platform/community-projects/" icon="reference-architecture">}}Browse what developers are building with D1.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

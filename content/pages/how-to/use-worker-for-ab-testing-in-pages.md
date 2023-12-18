@@ -5,7 +5,7 @@ title: Use Pages Functions for A/B testing
 
 # Use Pages Functions for A/B testing
 
-In this guide, you will learn how to use [Pages Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a web page or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
+In this guide, you will learn how to use [Pages Functions](/pages/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a web page or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
 
 ## Overview
 
@@ -17,7 +17,7 @@ To ensure that a user remains in the group you have given, you will set and stor
 
 ## Set up your Pages Function
 
-In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project.
+In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/functions/). Pages Functions allows you to handle server logic from within your Pages project.
 
 To begin:
 
@@ -26,13 +26,13 @@ To begin:
 
 ## Add middleware logic
 
-Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/middleware/). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
+Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/functions/middleware/). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
 
 In your `/functions` directory, create a `_middleware.js` file.
 
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 
-When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/middleware/).
+When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/functions/middleware/).
 
 {{</Aside>}}
 

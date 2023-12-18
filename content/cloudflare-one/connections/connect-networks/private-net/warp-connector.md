@@ -54,7 +54,7 @@ All WARP connector and WARP client devices in your Zero Trust organization have 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Warp-to-Warp**.
 3. Next, go to **Settings** > **WARP Client**.
-4. Enable **Override local interface IP**.
+4. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
 
 Each device is randomly assigned an IP address from the `100.96.0.0/12` range. You can view the CGNAT IP address for a device on its **My Team** > **Devices** page.
 

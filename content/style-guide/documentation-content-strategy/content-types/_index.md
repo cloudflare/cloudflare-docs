@@ -7,7 +7,7 @@ weight: 2
 
 # Content types
 
-The content sections are in prioritized order and should be applied to all new [developers.cloudflare.com](https://developers.cloudflare.com/) products.
+The content sections are in prioritized order and should be applied to all new [developers.cloudflare.com](https://developers.cloudflare.com/) products. Templates for each content type are also available in our [Cloudflare-docs GitHub repository](https://github.com/cloudflare/cloudflare-docs/tree/production/static/_templates).
 
 <table>
     <tr>

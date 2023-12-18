@@ -7,7 +7,7 @@ meta:
   title: Gateway resolver policies
 ---
 
-# Resolver policies
+{{<heading-pill style="beta">}}Resolver policies{{</heading-pill>}}
 
 {{<Aside type="note">}}
 Only available on Enterprise plans.
@@ -22,6 +22,23 @@ You may use resolver policies if you require access to non-publicly routed domai
 Resolver policies support TCP and UDP connections. Custom resolvers can point to the Internet via IPv4 or IPv6, or to a private network service, such as a [Magic tunnel](/magic-transit/how-to/configure-tunnels/). Policies default to port `53`. You can change which port your resolver uses by customizing it in your policy.
 
 You can protect your authoritative nameservers from DDoS attacks by enabling [DNS Firewall](/dns/dns-firewall/).
+
+{{<Aside type="note">}}
+To enable connections to a private resolver connected to Cloudflare via [Magic WAN](/magic-wan/), contact your account team.
+{{</Aside>}}
+
+### Available endpoints
+
+Resolver policies can route queries for resolution from the following DNS endpoints:
+
+- IPv4
+- IPv6
+- [DNS over HTTPS (DoH)](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/)
+- [DNS over TLS (DoT)](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/)
+- Cloudflare [Browser Isolation](/cloudflare-one/policies/browser-isolation/), including [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/)
+- [Proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)
+
+Gateway will filter, resolve, and log your queries regardless of endpoint.
 
 ## Create a resolver policy
 
@@ -39,6 +56,6 @@ You can protect your authoritative nameservers from DDoS attacks by enabling [DN
 7. (Optional) Enter a custom port for each IP address.
 8. Select **Create policy**.
 
-Gateway will send a query to all resolvers listed, returning the first response. Custom resolvers are saved to your account for future use.
+Custom resolvers are saved to your account for future use. When users first connect to Zero Trust, Gateway will send a query to all resolvers listed, returning and caching the first response for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.
 
 For more information on creating a DNS policy, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).

@@ -25,7 +25,7 @@ Cloudflare Pages is super fast, always up to date. Deploy your project by connec
 
 ## Features
 
-{{<feature header="Pages Functions" href="/pages/platform/functions/">}}
+{{<feature header="Pages Functions" href="/pages/functions/">}}
 
 Use Pages Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
 

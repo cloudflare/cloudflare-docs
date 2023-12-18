@@ -56,6 +56,11 @@ filename: metadata.json
       "type": "mtls_certificate",
       "name": "<TEST_MTLS>",
       "certificate_id": "<TEST_CERTIFICATE_ID>"
+    },
+    {
+      "type": "plain_text",
+      "name": "<VAR_NAME>",
+      "text": "<VAR_VALUE>"
     }
   ]
 }

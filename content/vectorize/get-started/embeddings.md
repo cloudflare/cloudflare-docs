@@ -238,7 +238,7 @@ From here, deploy your Worker to make your project accessible on the Internet. T
 $ npx wrangler deploy
 ```
 
-Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`. 
+Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`.
 
 ## 7. Query your index
 
@@ -252,7 +252,7 @@ With the URL for your deployed Worker (for example,`https://embeddings-tutorial.
 This should return the following JSON:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.896888444,"vectorId":"1"}]}}
+{"matches":{"count":1,"matches":[{"score":0.896888444,"id":"1"}]}}
 ```
 
 Extend this example by:

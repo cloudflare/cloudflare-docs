@@ -22,7 +22,7 @@ Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-va
 | --- | --- | --- | --- |
 |  `token type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. |
 | `title` | A human-readable name for the configuration that allows to quickly identify the purpose of the configuration. | Production JWT configuration |
-| `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all endpoints in endpoint management and checks the JWT in the authorization header.|
+| `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} in endpoint management and checks the JWT in the authorization header.|
 | `action` | How we should configure the firewall to act on the validation result. | `block` | possible: `log` or `block` |
 | `enabled` | This enables or disables acting on the validation result. | `true` | possible: `true` or `false` |
 | `allow_absent_token` | How API Shield should handle requests that do not have a JWT present. Setting this to `true` allows hybrid endpoints where JWTs, if present, must be valid, but JWTs are still allowed to be absent. | `true` | possible: `true` or `false` |
@@ -119,7 +119,7 @@ The input to updating the keys is the same as when creating a configuration wher
 {{<Aside type="note">}}
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support.
 
-It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
+It is highly recommended to validate the output of the {{<glossary-tooltip term_id="API call">}}API call{{</glossary-tooltip>}} to check that the resulting keys appear as intended.
 {{</Aside>}}
 
 Use the `PUT` command to update keys.

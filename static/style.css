@@ -111,11 +111,11 @@ html {
 }
 
 html {
-  --sans-serif-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+  --sans-serif-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
-  --monospace-font-family: Menlo, "SF Mono", "Andale Mono", "Roboto Mono",
-    Monaco, monospace;
+  --monospace-font-family: ui-monospace, Menlo, "SF Mono", "Andale Mono", "Cascadia Code", "Source Code Pro", "Roboto Mono",
+    Monaco, Consolas, "DejaVu Sans Mono", monospace;
   --font-family: var(--sans-serif-font-family);
   --cloudflare-logo-gray-rgb: 64, 64, 65;
   --cloudflare-logo-orange-rgb: 243, 128, 32;
@@ -3518,7 +3518,7 @@ code .DocsMarkdown--prop-meta {
   top: 0.05em;
   left: -0.8em;
   display: inline-block;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 2em;
   line-height: 1;
@@ -3968,6 +3968,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsMarkdown blockquote> :last-child,
 .DocsMarkdown details> :last-child,
 .DocsMarkdown details summary+div> :last-child,
+.DocsMarkdown details summary+div> :last-child pre.CodeBlock,
 .DocsMarkdown li> :not(ul):not(ol):not(pre):not(figure):not(table):last-child,
 .DocsMarkdown ol> :last-child,
 .DocsMarkdown ul> :last-child {
@@ -4191,10 +4192,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 
   @media not all and (min-resolution: 0.001dpcm) {
-    @media {
-      .DocsSearch .algolia-autocomplete {
-        background: rgba(var(--background-color-rgb), 1);
-      }
+    .DocsSearch .algolia-autocomplete {
+      background: rgba(var(--background-color-rgb), 1);
     }
   }
 }
@@ -5494,7 +5493,8 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 .tutorialPreReqs {
-  padding-left: 2em;
+  padding-top: 0.5em;
+  padding-inline: 2em;
   border: 2px solid gray;
   border-radius: 15px;
 }
