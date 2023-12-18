@@ -3,7 +3,7 @@ link: "/d1/changelog/"
 productName: D1
 entries:
 - publish_date: '2023-12-18'
-  title: Legacy alpha automatex backups disabled
+  title: Legacy alpha automated backups disabled
   description: |-
   Databases using D1's legacy alpha backend will no longer run automated [hourly backups](/d1/learning/backups/). You may still choose to take manual backups of these databases.
 
