@@ -33,6 +33,10 @@ While evaluating rules for a given request/response, the values of all request a
 
 For example:
 
-- If a [Rewrite URL Rule](/rules/transform/url-rewrite/) #1 updates the URI path or the query string of a request, Rewrite URL Rule #2 will not take these earlier changes into consideration.
-- If a [HTTP Request Header Modification Rule](/rules/transform/request-header-modification/) #1 sets the value of a request header, HTTP Request Header Modification Rule #2 will not be able to read or evaluate this new value.
-- If a Rewrite URL Rule updates the URI path or query string of a request, the `http.request.uri`, `http.request.uri.*`, and `http.request.full_uri` fields will have a different value in phases after the `http_request_transform` phase (where Rewrite URL Rules are executed).
+- If a [rewrite URL rule](/rules/transform/url-rewrite/) #1 updates the URI path or the query string of a request, Rewrite URL Rule #2 will not take these earlier changes into consideration.
+- If an [HTTP request header modification rule](/rules/transform/request-header-modification/) #1 sets the value of a request header, HTTP request header modification rule #2 will not be able to read or evaluate this new value.
+- If a rewrite URL rule updates the URI path or query string of a request, the `http.request.uri`, `http.request.uri.*`, and `http.request.full_uri` fields will have a different value in phases after the `http_request_transform` phase (where rewrite URL rules are executed).
+
+{{<Aside type="note">}}
+If you want to use the original field values in rules evaluated later, you can use raw fields (for example, `raw.http.request.uri.path`) in their expressions. These special fields are immutable during the entire request evaluation workflow. For a list of raw fields, refer to [Fields](/ruleset-engine/rules-language/fields/).
+{{</Aside>}}
