@@ -33,7 +33,12 @@ Overrides can apply to all {{<glossary-tooltip term_id="data packet">}}packets{{
 
 ## Availability
 
-The Network-layer DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans. However, only Magic Transit and Spectrum customers on an Enterprise plan can customize the managed ruleset.
+The Network-layer DDoS Attack Protection managed ruleset is available in all Cloudflare plans for:
+* Zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/) (zones with their traffic routed through the Cloudflare network)
+* IP applications onboarded to [Spectrum](/spectrum/)
+* IP prefixes onboarded to [Magic Transit](/magic-transit/)
+
+However, only Magic Transit and Spectrum customers on an Enterprise plan can customize the managed ruleset.
 
 ## Related Cloudflare products
 
