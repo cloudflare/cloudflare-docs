@@ -1257,6 +1257,7 @@
     "ddos": {
       "title": "DDoS protection",
       "link": "/ddos-protection/",
+      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1264,7 +1265,16 @@
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
-          "ent": "Yes"
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "b_unmetered_protection": {
+          "title": "Unmetered DDoS protection<br />(layers 3-7)",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
         },
         "http_ddos": {
           "title": "HTTP DDoS attack protection",
@@ -1272,15 +1282,34 @@
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
-          "ent": "Yes"
+          "ent": "Yes",
+          "ent_plus": "Yes"
         },
         "network_ddos": {
-          "title": "Network-layer (L3/4) DDoS attack protection",
+          "title": "Network-layer (L3/4)<br />DDoS attack protection",
           "link": "/ddos-protection/managed-rulesets/network/",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
-          "ent": "Yes"
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "o_managed_customization": {
+          "title": "Managed rules customization",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes, with Log action",
+          "ent_plus": "Expression fields & multi-rule support"
+        },
+        "p_adaptive_protection": {
+          "title": "Adaptive DDoS protection",
+          "link": "/ddos-protection/managed-rulesets/adaptive-protection/",
+          "free": "High error rates",
+          "pro": "High error rates",
+          "biz": "High error rates & traffic history",
+          "ent": "High error rates & traffic history",
+          "ent_plus": "All features"
         },
         "tcp_protection": {
           "title": "Advanced TCP Protection",
@@ -1288,7 +1317,25 @@
           "free": "Available to [Magic Transit](/magic-transit/) customers",
           "pro": "Available to [Magic Transit](/magic-transit/) customers",
           "biz": "Available to [Magic Transit](/magic-transit/) customers",
-          "ent": "Available to [Magic Transit](/magic-transit/) customers"
+          "ent": "Available to [Magic Transit](/magic-transit/) customers",
+          "ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
+        },
+        "u_alerts": {
+          "title": "Alerts",
+          "link": "/ddos-protection/reference/alerts/",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Advanced alerts with filtering"
+        },
+        "v_proactive_false_positive_detection": {
+          "title": "Proactive false positive<br />detection on new rules",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
         }
       }
     },
