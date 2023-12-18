@@ -32,7 +32,7 @@ Additionally, you also need to configure the necessary route table entries for t
 2. From the **VPN tunnel outside IP address** drop-down menu, choose one of tunnels.
 3. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
 4. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**.  You will need it to create the IPsec tunnel on Cloudflare’s side.
-5. In **Inside IPv4 CIDR**, there should be a size `/30` IP block. This IP address will be assigned as the internal IPsec tunnel interface. For this example, we will use `169.254.244.0/30` as the CIDR block for the IPsec tunnel: `169.254.244.1` will be the IP address for the AWS side of the tunnel, and `169.254.244.2` will be the IP for the Cloudflare side of the tunnel.
+5. In **Inside IPv4 CIDR**, there should be a size `/30` IP block. This IP address will be assigned as the internal IPsec tunnel interface. For this example, we will use `169.254.240.0/30` as the CIDR block for the IPsec tunnel: `169.254.240.1` will be the IP address for the AWS side of the tunnel, and `169.254.240.2` will be the IP for the Cloudflare side of the tunnel.
 6. Configure the following settings for the IPsec tunnel. Note that the **Startup action** needs to be set to **Start**, which means the AWS side will initiate IPsec negotiation. Settings not mentioned here can be left at their default settings:
     - **Phase 1 encryption algorithms**: `AES256-GCM-16`
     - **Phase 2 encryption algorithms**: `AES256-GCM-16`
