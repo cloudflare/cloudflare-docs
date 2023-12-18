@@ -10,7 +10,7 @@ weight: 2
 layout: example
 ---
 
-Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) easily from Remix with Remix's [data loading](https://remix.run/docs/en/main/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data) hook.
+Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) from Remix using Remix's [data loading](https://remix.run/docs/en/main/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data) hook.
 
 To set up a new Remix site on Cloudflare Pages that can query D1:
 
