@@ -17,7 +17,7 @@ In Cloudflare WARP, users can switch between multiple Zero Trust organizations (
 
 To enable multiple organizations, administrators need to modify their [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to take an array. Each element of the array corresponds to a configuration that will display to users in the WARP client GUI. Because configuration names are listed in the same order as they appear in the MDM file, we recommend putting the most used configurations at the top of the file. When a user opens the WARP client for the first time, they will be prompted to log into the first configuration in the list.
 
-An MDM file supports a maximum of 25 configurations. Here is an example MDM file with three configurations:
+An MDM file supports a maximum of 25 configurations. The following is an example MDM file with three configurations:
 
 ```xml
 <array>
