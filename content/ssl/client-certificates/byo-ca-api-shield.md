@@ -37,6 +37,10 @@ This is especially useful if you already have mTLS implemented and client certif
 
   {{</definitions>}}
 
+  {{<Aside type="warning">}}
+  In the `X509v3 Basic Constraints` certificate setting, the value for `CA` must be set to **TRUE**.
+  {{</Aside>}}
+
 2. Take note of the certificate ID (`id`) that is returned in the API response.
 3. Use the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations) to enable mTLS in each hostname that should use the CA for mTLS validation. Use the following parameters:
 
