@@ -39,4 +39,4 @@ To use certain Cloudflare features, however, you may need to update the headers 
 | [Bot products](/bots/) | Refer to [JavaScript detections and CSPs](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp).|
 | [Page Shield](/page-shield/) | Refer to [Page Shield CSP Header format](/page-shield/reference/csp-header/). |
 | [Zaraz](/zaraz/) | No updates required ([details](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).|
-| [Turnstile](/turnstile/) | Refer to [Turnstile FAQ](/turnstile/frequently-asked-questions/#how-does-content-security-policy-need-to-be-configured-for-turnstile).|
+| [Turnstile](/turnstile/) | Refer to [Turnstile CSP](/turnstile/reference/content-security-policy/).|
