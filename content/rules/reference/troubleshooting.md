@@ -19,7 +19,7 @@ For example, define a compound expression for your rule using the `and` operator
 <OTHER_RULE_CONDITIONS> and not starts_with(http.request.uri, "/cdn-cgi/challenge-platform/")
 ```
 
-## URL rewrites affect other Rules features executing later
+## URL rewrites affect other Rules features executed later
 
 If you rewrite a URI path using a [URL rewrite](/rules/transform/url-rewrite/), this may affect other Rules features executed later — such as [Origin Rules](/rules/origin-rules/) — if they include the URI path in their filter expression.
 
