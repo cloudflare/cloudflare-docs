@@ -23,8 +23,7 @@ filename: metadata.json
     },
     {
       "type": "secret_text",
-      "name": "<SECRET_NAME>",
-      "text": "<SECRET_VALUE>"
+      "name": "<SECRET_NAME>"
     },
     {
       "type": "service",
@@ -97,6 +96,13 @@ At a minimum, the `main_module` key is required to publish a user Worker.
 
 Analogue to regular Workers, user Workers can also interact with other Cloudflare resources using Bindings. Refer to [metadata.json example](#sample-metadatajson) and the [Wrangler configuration documentation](/workers/wrangler/configuration/#bindings) for more information.
 
+### Secrets
+
+To add secrets to user Workers:
+
+1. Use the [PATCH API](https://developers.cloudflare.com/api/operations/namespace-worker-patch-script-settings) to add the secret. If you have existing bindings, you first need to [GET the current list of bindings](https://developers.cloudflare.com/api/operations/namespace-worker-get-script-settings) and then PATCH with your secret(s) added.
+
+2. Add the secret to [metadata.json](#sample-metadatajson). 
 
 
 
