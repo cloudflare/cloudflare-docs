@@ -8,7 +8,7 @@ meta:
 
 # Configure tunnel endpoints
 
-{{<render file="tunnel-endpoints/_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.244.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address))">}}
+{{<render file="tunnel-endpoints/_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.240.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address))">}}
 
 ## Ways to onboard traffic to Cloudflare
 
