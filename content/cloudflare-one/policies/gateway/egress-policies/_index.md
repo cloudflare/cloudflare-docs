@@ -49,49 +49,49 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Destination Continent
 
-{{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-continent.md" withParameters="net.dst">}}
 
 ### Destination Country
 
-{{<render file="gateway/_destination-country.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-country.md" withParameters="net.dst">}}
 
 ### Destination IP
 
-{{<render file="gateway/_destination-ip.md">}}
+{{<render file="gateway/selectors/_destination-ip.md">}}
 
 ### Destination Port
 
-{{<render file="gateway/_destination-port.md">}}
+{{<render file="gateway/selectors/_destination-port.md">}}
 
 ### Device Posture
 
-{{<render file="gateway/_device-posture.md">}}
+{{<render file="gateway/selectors/_device-posture.md">}}
 
 ### Protocol
 
-{{<render file="gateway/_protocol.md">}}
+{{<render file="gateway/selectors/_protocol.md">}}
 
 ### Proxy Endpoint
 
-{{<render file="gateway/_proxy-endpoint.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### Source Continent
 
 The continent of the user making the request.
-{{<render file="gateway/_source-continent.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="net.src">}}
 
 ### Source Country
 
 The country of the user making the request.
-{{<render file="gateway/_source-country.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="net.src">}}
 
 ### Source IP
 
-{{<render file="gateway/_source-ip-net.md">}}
+{{<render file="gateway/selectors/_source-ip-net.md">}}
 
 ### Source Port
 
-{{<render file="gateway/_source-port.md">}}
+{{<render file="gateway/selectors/_source-port.md">}}
 
 ### Users
 
@@ -99,7 +99,7 @@ The country of the user making the request.
 
 ### Virtual Network
 
-{{<render file="gateway/_virtual-network.md">}}
+{{<render file="gateway/selectors/_virtual-network.md">}}
 
 ## Comparison operators
 
