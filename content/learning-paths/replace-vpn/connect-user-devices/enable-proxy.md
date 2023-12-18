@@ -5,7 +5,7 @@ weight: 3
 layout: learning-unit
 ---
 
-{{<render file="gateway/_gateway-proxy-description.md" productFolder="cloudflare-one">}}
+{{<render file="gateway/_proxy.md" productFolder="cloudflare-one">}}
 
 ## Enable the proxy
 
