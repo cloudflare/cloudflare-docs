@@ -165,10 +165,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   
   - Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/durable-objects/platform/limits/). If that is a concern, pass options to `list` as documented below.
 
-- {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
-
-  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options Object.
-
 #### Supported options
 
 - {{<code>}}start{{</code>}}{{<param-type>}}string{{</param-type>}}
