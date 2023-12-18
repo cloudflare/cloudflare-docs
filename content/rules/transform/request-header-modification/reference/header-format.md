@@ -12,6 +12,10 @@ The **name** of the HTTP request header you want to set or remove can only conta
 
 {{<render file="transform/_header-valid-names.md">}}
 
+{{<Aside type="warning">}}
+Cloudflare may remove HTTP request headers with names considered invalid [according to NGINX](https://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers) — for example, header names containing a `.` (dot) character.
+{{</Aside>}}
+
 The **value** of the HTTP request header you want to set can only contain:
 
 {{<render file="transform/_header-valid-values.md">}}
