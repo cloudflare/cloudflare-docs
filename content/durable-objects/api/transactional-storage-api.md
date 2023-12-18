@@ -131,6 +131,30 @@ The `put()` method returns a `Promise`, but most applications can discard this p
     
     - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
+### deleteAll
+
+- {{<code>}}deleteAll{{</code>}}(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) : {{<type>}}Promise{{</type>}}
+
+  - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
+
+#### Supported options
+
+- {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
+
+    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. 
+    
+    - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
+    
+    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
+
+- {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
+
+    - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. 
+    
+    - Use `noCache()` if the key will not be used again in the near future. `noCache()` will never change the semantics of your code, but it may affect performance. 
+    
+    - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
+
 ### list
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
@@ -189,30 +213,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 - {{<code>}}txn{{</code>}}
 
   - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `state.storage` Object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
-
-### deleteAll
-
-- {{<code>}}deleteAll{{</code>}}(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) : {{<type>}}Promise{{</type>}}
-
-  - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
-
-#### Supported options
-
-- {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
-
-    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. 
-    
-    - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
-    
-    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
-
-- {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
-
-    - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. 
-    
-    - Use `noCache()` if the key will not be used again in the near future. `noCache()` will never change the semantics of your code, but it may affect performance. 
-    
-    - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
 ### sync
 
