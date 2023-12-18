@@ -26,7 +26,7 @@ When authorizing Cloudflare Pages to access a GitHub account, you can specify ac
 
 {{<Aside type="note">}}
 
-A Github account should only point to one Cloudflare Pages account, independent of which Cloudflare user/member is interacting with that account. So it would not be possible for example to link the same GitHub account to a Dev and a Prod Cloudflare account at the same time, but would be possible for multiple Cloudflare account members to interact with it once linked. 
+A GitHub account should only point to one Cloudflare account. It is not possible, for example, to link the same GitHub account to two different Cloudflare accounts, such as a Cloudflare account for testing and another for production, but would be possible for multiple Cloudflare account members to interact with the Cloudflare account once linked. 
 
 {{</Aside>}}
 
