@@ -16,7 +16,7 @@ There are two ways for searching emails:
 - **Fielded Search**: Presents you with fields where you can enter search terms.
 - **Freeform Search**: Has one search field where you can construct your own search query, like `My great products`.
 
-{{<Aside>}} {{<render file="_timestamp.md">}} {{</Aside>}}
+{{<Aside type="note">}} {{<render file="_timestamp.md">}} {{</Aside>}}
 
 ## Search terms
 
