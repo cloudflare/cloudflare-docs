@@ -41,7 +41,8 @@ For publicly trusted certificates, Cloudflare partners with different certificat
 #### Limitations
 
 * Hostname on certificate can contain up to 10 levels of subdomains.
-* Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week.
+* Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week. The solution to overcome this it's waiting for the end of that week, or use a new Certificate Authority, such as Google Trust Services.
+  
 
 #### Browser compatibility
 
