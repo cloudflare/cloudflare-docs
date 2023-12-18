@@ -29,7 +29,7 @@ The login page is now updated for all of your Access applications.
 ## Block page
 
 {{<Aside type="note">}}
-Only available on Enterprise plans.
+Only available on Paid plans.
 {{</Aside>}}
 
 You can display a custom block page when users fail to authenticate to an Access application.
