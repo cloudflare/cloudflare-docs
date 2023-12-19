@@ -1,12 +1,12 @@
 ---
-title: 1 –  Hello World with Pulumi
+title: 2 –  Deploy a Hello World app
 pcx_content_type: tutorial
 weight: 2
 meta:
-  title: Hello World with Pulumi
+  title:  Deploy a Hello World app
 ---
 
-# Deploy a Hello World web application using Cloudflare Workers and Pulumi
+# Deploy a Hello World app using Cloudflare Workers and Pulumi
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi so that you can become familiar with the resource management lifecycle. In particular, you will create a worker, add a route, and add a DNS record to access the application before cleaning up all the resources.
 
@@ -22,7 +22,10 @@ This tutorial will provision resources that qualify under free tier offerings fo
 
 The full solution of this tutorial can be found under [this Pulumi repo and branch](https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end). To deploy the final version, run:
 ```sh
+$ mkdir serverless-cloudflare && cd serverless-cloudflare 
 $ pulumi new https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end
+$ npm install
+$ pulumi up --yes
 ```
 
 {{</Aside>}}
