@@ -831,6 +831,8 @@
 /support/ssl-tls/edge-certificates-ssl-tls-configuration/ /ssl/edge-certificates/ 301
 /support/ssl-tls/faq-and-reference/match-ssl-cipher-names-from-ssl-labs-to-cloudflare-naming-conventions/ /ssl/reference/cipher-suites/troubleshooting/ 301
 /support/ssl-tls/faq-and-reference/ /ssl/reference/ 301
+/support/account-management-billing/account-privacy-and-security/understanding-samesite-cookie-interaction-with-cloudflare/ /waf/troubleshooting/samesite-cookie-interaction/ 301
+/support/account-management-billing/account-privacy-and-security/ /support/account-management-billing/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
