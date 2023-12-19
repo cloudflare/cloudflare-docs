@@ -4,7 +4,7 @@ title: Resolver policies
 layout: single
 weight: 6
 meta:
-  title: Gateway resolver policies
+  title: Resolver policies
 ---
 
 {{<heading-pill style="beta">}}Resolver policies{{</heading-pill>}}
@@ -61,6 +61,46 @@ Custom resolvers are saved to your account for future use. When users first conn
 For more information on creating a DNS policy to further filter traffic, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
 
 ## Selectors
+
+### Content Categories
+
+{{<render file="gateway/selectors/_content-categories.md">}}
+
+### DNS Resolver IP
+
+{{<render file="gateway/selectors/_dns-resolver-ip.md">}}
+
+### DoH Subdomain
+
+{{<render file="gateway/selectors/_doh-subdomain.md">}}
+
+### Domain
+
+{{<render file="gateway/selectors/_domain.md" withParameters=" ">}}
+
+### Host
+
+{{<render file="gateway/selectors/_host.md" withParameters=" ">}}
+
+### Location
+
+{{<render file="gateway/selectors/_location.md">}}
+
+### Query Record Type
+
+{{<render file="gateway/selectors/_query-record-type.md" withParameters=" ">}}
+
+### Security Categories
+
+{{<render file="gateway/selectors/_security-categories.md">}}
+
+### source continent IP geolocation
+
+### source country IP geolocation
+
+### Source IP
+
+{{<render file="gateway/selectors/_source-ip-dns.md">}}
 
 ## Comparison operators
 
