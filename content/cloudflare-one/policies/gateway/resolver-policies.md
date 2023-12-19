@@ -94,9 +94,15 @@ For more information on creating a DNS policy to further filter traffic, refer t
 
 {{<render file="gateway/selectors/_security-categories.md">}}
 
-### source continent IP geolocation
+### Source Continent
 
-### source country IP geolocation
+Use this selector to filter based on the continent where the query arrived to Gateway from.
+{{<render file="gateway/selectors/_source-continent.md" withParameters="dns.src">}}
+
+### Source Country
+
+Use this selector to filter based on the country where the query arrived to Gateway from.
+{{<render file="gateway/selectors/_source-country.md" withParameters="dns.src">}}
 
 ### Source IP
 
