@@ -24,7 +24,7 @@ layout: list
       <td>HTTP requests with unusual HTTP headers or URI path (signature #31).</td>
       <td>block</td>
       <td>block</td>
-      <td>Add more characteristics to the unusual HTTP headers or URI path</td>
+      <td>Add more characteristics to the unusual HTTP headers or URI path.</td>
     </tr>
 <tr>
       <td>...22807318</td>
