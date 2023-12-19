@@ -12,7 +12,7 @@ This information provides additional context to your employees, which can help t
 - **Subject prefixes**: Can tell recipients which category the message is in. Subject prefixes always state the final [disposition](/email-security/reference/dispositions-and-attributes/) of the message.
 - **Body prefixes**: Provide more context about why the message was added to a specific category. Body prefixes include all the detections that were triggered. This information depends on the [prefixes you enable](#update-text-add-ons).
 
-For example, an email might have the dispositions `EXTERNAL MALICIOUS` in the subject, and `EXTERNAL MALICIOUS SUSPICOUS UCE` in its body.
+For example, an email might have the dispositions `EXTERNAL MALICIOUS` in the subject, and `EXTERNAL MALICIOUS SUSPICIOUS UCE` in its body.
 
 {{<Aside type="note">}}
 
