@@ -47,6 +47,8 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
+- Once a Custom domain is setup, if you change the DNS entry to point to something else (e.g. your origin) the custom domain will become inactive.  If you then change that DNS entry to point back at your custom domain anybody using that DNS entry to visit your website will get errors until it becomes active again.  If you want to re-direct traffic away from your pages project temporarily instead of changing the DNS entry it would be better to use an [Origin rule](/rules/origin-rules/) or a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) instead.
+
 ## Pages Functions
 
 - [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
