@@ -11,6 +11,6 @@ ignorecase: true
 link: https://docs.gitlab.com/ee/development/documentation/styleguide/index.html#text-for-links
 scope: raw
 nonword: true
-tokens:
-  - \[here\]\(.*\)
+raw:
+  - \[(?:here|this page)\]\(.*\)
 
