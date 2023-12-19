@@ -13,6 +13,8 @@ meta:
 Detect and mitigate distributed denial-of-service (DDoS) attacks automatically.
 {{</description>}}
 
+{{<plan type="all">}}
+
 Cloudflare automatically detects and mitigates {{<glossary-tooltip term_id="distributed denial-of-service (DDoS) attack" link="https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/">}}distributed denial-of-service (DDoS) attacks{{</glossary-tooltip>}} via our autonomous DDoS systems.
 
 These systems include multiple dynamic mitigation rules exposed as [DDoS attack protection managed rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
