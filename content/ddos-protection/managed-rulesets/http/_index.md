@@ -11,7 +11,7 @@ layout: single
 
 The Cloudflare HTTP DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at layer 7 (application layer) on the Cloudflare global network. The rules match known attack patterns and tools, suspicious patterns, protocol violations, requests causing large amounts of origin errors, excessive traffic hitting the origin/cache, and additional attack vectors at the application layer.
 
-Cloudflare updates the list of rules in the managed ruleset on a regular basis.
+Cloudflare updates the list of rules in the managed ruleset on a regular basis. Refer to the [changelog](/ddos-protection/change-log/http/) for more information on recent and upcoming changes.
 
 The HTTP DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
