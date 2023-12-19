@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and structure as JSON
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | awk '{printf "\"%s\",", $0}' | sed 's/,$//' | awk '{print "[",$0,"]"}' | sed "s/ /'/g")
+          files=$(echo '['$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | awk '{printf "\"%s\",", $0}' | sed 's/,$//')']' | sed "s/[][],[]/['&']/")
 
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
