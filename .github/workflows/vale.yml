@@ -32,6 +32,6 @@ jobs:
         uses: errata-ai/vale-action@reviewdog
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
         with:
-          files: ${{ env.CHANGED_FILES }}
+          files: echo ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
           separator: ","
