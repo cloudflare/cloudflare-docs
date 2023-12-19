@@ -1,13 +1,34 @@
 name: reviewdog
-on: [pull_request]
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   vale:
-    name: runner / vale
+  - name: Get Changed Files from Pull Request
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    run: |
+      # get file names and separate them with comma ','
+      files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ',')
+      echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
+
+  - name: Output Changed Files
+    run: echo ${{ env.CHANGED_FILES }}
+
+  - name: runner / vale
     runs-on: ubuntu-latest
+    if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
     steps:
       - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog
         with:
-          files: content
+          files: ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
+          separator: ","
