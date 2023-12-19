@@ -10,24 +10,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  vale:
-  - name: Get Changed Files from Pull Request
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    run: |
-      # get file names and separate them with comma ','
-      files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ',')
-      echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
-
-  - name: Output Changed Files
-    run: echo ${{ env.CHANGED_FILES }}
-
-  - name: runner / vale
+  spell-check:
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: errata-ai/vale-action@reviewdog
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files from Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # get file names and separate them with comma ','
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ',')
+          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
+
+      - name: Output Changed Files
+        run: echo ${{ env.CHANGED_FILES }}
+
+      - name: Vale
+        uses: errata-ai/vale-action@reviewdog
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
         with:
           files: ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
