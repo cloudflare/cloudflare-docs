@@ -1,0 +1,15 @@
+---
+# Warning: gitlab.MeaningfulLinkWords
+#
+# Checks for the presence of semantically unhelpful words in link text.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+extends: existence
+message: "Improve SEO and accessibility by rewriting the link text for '%s'."
+level: warning
+ignorecase: true
+link: https://docs.gitlab.com/ee/development/documentation/styleguide/index.html#text-for-links
+nonword: true
+raw:
+  - \[(?:here|this page)\]\(.*\)
+
