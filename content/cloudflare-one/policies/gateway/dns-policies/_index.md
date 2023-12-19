@@ -123,9 +123,7 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-Use this selector to block domains belonging to specific [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories). When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).
-
-{{<render file="gateway/selectors/_content-categories.md">}}
+{{<render file="gateway/selectors/_content-categories.md" withParameters="When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).">}}
 
 ### DNS CNAME Record
 

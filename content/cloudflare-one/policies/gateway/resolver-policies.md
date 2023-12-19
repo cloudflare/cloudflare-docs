@@ -64,7 +64,7 @@ For more information on creating a DNS policy to further filter traffic, refer t
 
 ### Content Categories
 
-{{<render file="gateway/selectors/_content-categories.md">}}
+{{<render file="gateway/selectors/_content-categories.md" withParameters=" ">}}
 
 ### DNS Resolver IP
 
