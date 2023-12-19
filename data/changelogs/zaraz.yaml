@@ -2,6 +2,10 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-12-19'
+  title:
+  description: |-
+    * **GA4 Managed Component**: Fix GA4 average engagement time metric.
 - publish_date: '2023-11-13'
   title:
   description: |-
