@@ -347,7 +347,7 @@ for (const message of batch.messages) {
 
 ## 7. Deploy your Worker 
 
-To deploy your Worker, run  the following command:
+To deploy your Worker, run the following command:
 
 ```sh
 $ npx wrangler deploy
