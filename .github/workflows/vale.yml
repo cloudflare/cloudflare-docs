@@ -33,3 +33,4 @@ jobs:
         with:
           files: 'content/1.1.1.1/_index.md,./content/1.1.1.1/check.md'
           filter_mode: diff_context
+          separator: ","
