@@ -43,7 +43,11 @@ Protect against DNS-based DDoS attacks, specifically sophisticated and fully ran
 
 ## Availability
 
+<div style="font-size:87%">
+
 {{<feature-table id="security.ddos">}}
+
+</div>
 
 ---
 

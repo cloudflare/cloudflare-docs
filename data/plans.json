@@ -1314,11 +1314,19 @@
         "q_adaptive_protection": {
           "title": "Adaptive DDoS protection",
           "link": "/ddos-protection/managed-rulesets/adaptive-protection/",
-          "free": "High error rates",
-          "pro": "High error rates",
-          "biz": "High error rates & traffic history",
-          "ent": "High error rates & traffic history",
-          "ent_plus": "All features"
+          "free": "Only error adaptive rules",
+          "pro": "Only error adaptive rules",
+          "biz": "Only error adaptive rules",
+          "ent": "Only error adaptive rules",
+          "ent_plus": "All adaptive rules"
+        },
+        "r_adaptive_protection_details": {
+          "title": "Traffic profiling signals for<br/>adaptive DDoS protection",
+          "free": "Error rates only",
+          "pro": "Error rates only",
+          "biz": "Error rates & historical trends",
+          "ent": "Error rates & historical trends",
+          "ent_plus": "Error rates & historical trends, client country, user agent, query string, ML-scores"
         },
         "tcp_protection": {
           "title": "Advanced TCP Protection",
