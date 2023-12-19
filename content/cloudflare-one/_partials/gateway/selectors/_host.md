@@ -3,10 +3,9 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: example
 ---
 
-Use this selector to match against only the hostname specified. $1
+Use this selector to match against only the hostname specified. For example, you can match `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example                      | Evaluation phase      |
 | ------- | -------------------------------- | --------------------- |

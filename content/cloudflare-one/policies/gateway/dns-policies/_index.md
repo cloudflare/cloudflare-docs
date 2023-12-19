@@ -107,7 +107,7 @@ This setup ensures users will be blocked from accessing offensive sites using DN
 
 ## Selectors
 
-Gateway matches DNS traffic against the following selectors, or criteria:
+Gateway matches DNS queries against the following selectors, or criteria:
 
 ### Application
 
@@ -171,11 +171,11 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 ### Domain
 
-{{<render file="gateway/selectors/_domain.md" withParameters="For example, you can block `example.com` and subdomains such as `www.example.com`.">}}
+{{<render file="gateway/selectors/_domain.md">}}
 
 ### Host
 
-{{<render file="gateway/selectors/_host.md" withParameters="For example, you can block `test.example.com` but not `example.com` or `www.test.example.com`.">}}
+{{<render file="gateway/selectors/_host.md">}}
 
 ### Indicator Feed
 
@@ -187,7 +187,7 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 ### Query Record Type
 
-{{<render file="gateway/selectors/_query-record-type.md" withParameters="For example, you can choose to block `A` records for a domain but not `MX` records.">}}
+{{<render file="gateway/selectors/_query-record-type.md">}}
 
 ### Resolved Continent
 

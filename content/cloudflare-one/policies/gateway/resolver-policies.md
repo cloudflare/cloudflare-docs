@@ -76,11 +76,11 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Domain
 
-{{<render file="gateway/selectors/_domain.md" withParameters=" ">}}
+{{<render file="gateway/selectors/_domain.md">}}
 
 ### Host
 
-{{<render file="gateway/selectors/_host.md" withParameters=" ">}}
+{{<render file="gateway/selectors/_host.md">}}
 
 ### Location
 
@@ -88,7 +88,7 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Query Record Type
 
-{{<render file="gateway/selectors/_query-record-type.md" withParameters=" ">}}
+{{<render file="gateway/selectors/_query-record-type.md">}}
 
 ### Security Categories
 

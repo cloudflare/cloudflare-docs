@@ -3,10 +3,9 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: example
 ---
 
-Use this selector to match against a domain and all subdomains. $1
+Use this selector to match against a domain and all subdomains. For example, you can match `example.com` and its subdomains, such as `www.example.com`.
 
 | UI name | API example                            | Evaluation phase      |
 | ------- | -------------------------------------- | --------------------- |

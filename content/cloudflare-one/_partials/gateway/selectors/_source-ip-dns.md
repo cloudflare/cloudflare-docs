@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Use this selector to apply policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway.
+Use this selector to apply policies to a specific source IP address that queries arrive to Gateway from. For example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway.
 
 | UI name   | API example                  | Evaluation phase      |
 | --------- | ---------------------------- | --------------------- |
