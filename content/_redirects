@@ -187,6 +187,7 @@
 /support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
 /support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
 /support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
+/cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -620,7 +621,6 @@
 /pages/platform/functions/plugins/vercel-og/ /pages/functions/plugins/vercel-og/ 301
 /pages/platform/functions/metrics/ /pages/functions/metrics/ 301
 /pages/platform/functions/debugging-and-logging/ /pages/functions/debugging-and-logging/ 301
-/pages/platform/functions/pricing/ /pages/functions/pricing/ 301
 /pages/platform/functions/module-support/ /pages/functions/module-support/ 301
 /pages/platform/functions/smart-placement/ /pages/functions/smart-placement/ 301
 
@@ -806,7 +806,7 @@
 /support/page-rules/using-resolve-override-in-page-rules/ /rules/page-rules/how-to/override-url-or-ip-address/ 301
 /support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
-/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/troubleshooting/chunked-encoding-and-dynamic-content/ 301
+/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/how-to/cache-rules/ 301
 /support/more-dashboard-apps/cloudflare-registrar/ /registrar/
 /support/more-dashboard-apps/cloudflare-registrar/icloud-custom-email-domains/ /registrar/account-options/icloud-domains/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/ /waf/tools/scrape-shield/hotlink-protection/ 301

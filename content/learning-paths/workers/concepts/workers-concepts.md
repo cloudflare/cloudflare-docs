@@ -31,5 +31,6 @@ Cloudflare Workers is part of the [Cloudflare Developer Platform](https://www.cl
 
 The Cloudflare blog offers updates and further insights to developers on the Cloudflare developer platform, which includes Workers. Explore some curated blog posts below on Workers speed, and scalability.
 
+* Learn about the Workers security model, supported languages and more in the [Learning](/workers/learning/) section of the Workers documentation.
 * [Cloudflare Workers versus Lambda versus Lambda@Edge](https://blog.cloudflare.com/serverless-performance-comparison-workers-lambda/)
 * [Cloudflare blog posts related to Workers](https://blog.cloudflare.com/tag/workers/)

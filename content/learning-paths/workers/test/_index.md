@@ -1,7 +1,7 @@
 ---
 title: Test and debug
 pcx_content_type: overview
-weight: 3
+weight: 4
 layout: learning-module
 ---
 

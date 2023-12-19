@@ -111,7 +111,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 ### Application
 
-{{<render file="gateway/_application.md" withParameters="DNS">}}
+{{<render file="gateway/selectors/_application.md" withParameters="DNS">}}
 
 ### Authoritative Nameserver IP
 
@@ -207,7 +207,7 @@ Use this selector to match against only the hostname specified — for example,
 
 ### Indicator Feed
 
-{{<render file="gateway/_indicator-feed.md" withParameters="dns">}}
+{{<render file="gateway/selectors/_indicator-feed.md" withParameters="dns">}}
 
 ### Query Record Type
 
@@ -261,12 +261,12 @@ Use this selector to block domains (and optionally, [IP addresses](/cloudflare-o
 ### Source Continent
 
 Use this selector to filter based on the continent where the query arrived to Gateway from.
-{{<render file="gateway/_source-continent.md" withParameters="dns.src">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="dns.src">}}
 
 ### Source Country
 
 Use this selector to filter based on the country where the query arrived to Gateway from.
-{{<render file="gateway/_source-country.md" withParameters="dns.src">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="dns.src">}}
 
 ### Source IP
 

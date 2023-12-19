@@ -50,6 +50,10 @@ To explore possible database integrations, refer to [Databases](/workers/databas
 
 To configure a database integration through the Cloudflare dashboard with a supported third-party (such as Turso, Neon and more), refer to [Database Integrations](/workers/databases/native-integrations/).
 
+### Related resources
+
+Review projects you can build with Workers in [Tutorials](/workers/tutorials/).
+
 ### Feedback
 
 If your learning journey was hindered by inaccurate or missing documentation, [file an issue on GitHub](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) so we can update the documentation with accurate and helpful instructions.

@@ -17,6 +17,6 @@ The continent where the request is destined. Geolocation is determined from the 
 - SA – South America
 - T1 – Tor network
 
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
+| UI name                              | API example                |
+| ------------------------------------ | -------------------------- |
 | Destination Continent IP Geolocation | `$1.geo.continent == "EU"` |

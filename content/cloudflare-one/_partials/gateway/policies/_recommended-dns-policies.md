@@ -16,7 +16,7 @@ This policy allows users to access official corporate domains. By deploying the 
 ## Block security threats
 
 Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
-{{<render file="gateway/_block-security-categories.md">}}
+{{<render file="gateway/policies/_block-security-categories.md">}}
 
 ## Block content categories
 
@@ -26,7 +26,7 @@ The categories included in this policy are not always a security threat, but blo
 | ------------------ | -------- | --------------------------------------------------------- | ------ |
 | Content Categories | in       | `Questionable Content`, `Security Risks`, `Miscellaneous` | Block  |
 
-{{<render file="gateway/_block-applications.md">}}
+{{<render file="gateway/policies/_block-applications.md">}}
 
 ## Block banned countries
 
@@ -74,7 +74,6 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 ## CIPA Filter
 
 The CIPA Filter is a collection of subcategories that encompass a wide range of topics that could be harmful or inappropriate for minors. It is used as a part of [Project Cybersafe Schools](/fundamentals/reference/policies-compliances/cybersafe/) to block access to unwanted or harmful online content.
-
 
 | Selector           | Operator | Value         | Action |
 | ------------------ | -------- | ------------- | ------ |
