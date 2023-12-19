@@ -21,7 +21,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and separate them with comma ','
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c "echo \"'./{}'\"" | tr '\n' ',')
+          files=$(echo "'$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | tr '\n' ',' | sed 's/,$//')'")
+
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
       - name: Output Changed Files
@@ -31,6 +32,6 @@ jobs:
         uses: errata-ai/vale-action@reviewdog
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
         with:
-          files: 'content/1.1.1.1/_index.md,./content/1.1.1.1/check.md'
+          files: ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
           separator: ","
