@@ -4,8 +4,10 @@ summary: Connect Hyperdrive to a Google Cloud SQL database instance.
 pcx_content_type: configuration
 title: Connect to Google Cloud SQL
 weight: 10
-layout: example
+layout: tutorial
 ---
+
+# Connect to Google Cloud SQL
 
 This example shows you how to connect Hyperdrive to a Google Cloud SQL PostgreSQL database instance.
 

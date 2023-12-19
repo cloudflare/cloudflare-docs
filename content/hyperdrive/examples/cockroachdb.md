@@ -4,8 +4,10 @@ summary: Connect Hyperdrive to a CockroachDB database.
 pcx_content_type: configuration
 title: Connect to CockroachDB
 weight: 9
-layout: example
+layout: tutorial
 ---
+
+# Connect to CockroachDB
 
 This example shows you how to connect Hyperdrive to a [CockroachDB](https://www.cockroachlabs.com/) database cluster. CockroachDB is a PostgreSQL-compatible distributed SQL database with strong consistency guarantees.
 
