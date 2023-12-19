@@ -22,19 +22,19 @@ These systems include multiple dynamic mitigation rules exposed as [DDoS attack 
 ## Features
 
 {{<feature header="Managed rulesets" href="/ddos-protection/managed-rulesets/">}}
-Comprehensive protection against a variety of DDoS attacks across L3/4 (network layer) and L7 (application layer) of the OSI model.
+Protect against a variety of DDoS attacks across layers 3/4 (network layer) and layer 7 (application layer) of the OSI model.
 {{</feature>}}
 
 {{<feature header="Adaptive DDoS protection" href="/ddos-protection/managed-rulesets/adaptive-protection/">}}
-Increased protection against sophisticated DDoS attacks on layer 7 and layers 3/4.
+Get increased protection against sophisticated DDoS attacks on layer 7 and layers 3/4.
 {{</feature>}}
 
 {{<feature header="Advanced TCP protection" href="/ddos-protection/tcp-protection/">}}
-Detects and mitigates sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods, or SYN and SYN-ACK floods.
+Detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods, or SYN and SYN-ACK floods.
 {{</feature>}}
 
 {{<feature header="Advanced DNS protection (beta)" href="/ddos-protection/dns-protection/">}}
-Protects against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as random prefix attacks.
+Protect against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as random prefix attacks.
 {{</feature>}}
 
 ---
@@ -53,4 +53,8 @@ Provides security and acceleration for any TCP or UDP based application.
 
 {{<related header="Magic Transit" href="/magic-transit/" product="magic-transit">}}
 A network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
+{{</related>}}
+
+{{<related header="Web Application Firewall (WAF)" href="/waf/" product="waf">}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
 {{</related>}}
