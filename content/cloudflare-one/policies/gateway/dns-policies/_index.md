@@ -244,7 +244,7 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ## Comparison operators
 

@@ -108,6 +108,10 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 {{<render file="gateway/selectors/_source-ip-dns.md">}}
 
+### Users
+
+{{<render file="gateway/selectors/_users.md">}}
+
 ## Comparison operators
 
 {{<render file="gateway/_comparison-operators.md">}}
