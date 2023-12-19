@@ -1269,7 +1269,7 @@
           "ent_plus": "Yes"
         },
         "b_unmetered_protection": {
-          "title": "Unmetered DDoS protection<br />(layers 3-7)",
+          "title": "Standard, unmetered DDoS<br/>protection (layers 3-7)",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1302,7 +1302,16 @@
           "ent": "Yes, with Log action",
           "ent_plus": "Expression fields & multi-rule support"
         },
-        "p_adaptive_protection": {
+        "p_proactive_false_positive_detection": {
+          "title": "Proactive false positive<br />detection for new rules",
+          "link": "/ddos-protection/managed-rulesets/#proactive-false-positive-detection-for-new-rules",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "q_adaptive_protection": {
           "title": "Adaptive DDoS protection",
           "link": "/ddos-protection/managed-rulesets/adaptive-protection/",
           "free": "High error rates",
@@ -1320,7 +1329,16 @@
           "ent": "Available to [Magic Transit](/magic-transit/) customers",
           "ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
         },
-        "u_alerts": {
+        "u_dns_protection": {
+          "title": "Advanced TCP Protection",
+          "link": "/ddos-protection/tcp-protection/",
+          "free": "Available to [Magic Transit](/magic-transit/) customers",
+          "pro": "Available to [Magic Transit](/magic-transit/) customers",
+          "biz": "Available to [Magic Transit](/magic-transit/) customers",
+          "ent": "Available to [Magic Transit](/magic-transit/) customers",
+          "ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
+        },
+        "v_alerts": {
           "title": "Alerts",
           "link": "/ddos-protection/reference/alerts/",
           "free": "Yes",
@@ -1328,14 +1346,6 @@
           "biz": "Yes",
           "ent": "Yes",
           "ent_plus": "Advanced alerts with filtering"
-        },
-        "v_proactive_false_positive_detection": {
-          "title": "Proactive false positive<br />detection on new rules",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes",
-          "ent_plus": "Yes"
         }
       }
     },
