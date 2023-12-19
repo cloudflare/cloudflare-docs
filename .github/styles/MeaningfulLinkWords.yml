@@ -13,5 +13,4 @@ scope: raw
 nonword: true
 tokens:
   - \[here\]\(.*\)
-  - \[this page\]\(.*\)
 
