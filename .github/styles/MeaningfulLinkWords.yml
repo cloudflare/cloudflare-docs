@@ -1,15 +1,21 @@
----
-# Warning: gitlab.MeaningfulLinkWords
-#
-# Checks for the presence of semantically unhelpful words in link text.
-#
-# For a list of all options, see https://vale.sh/docs/topics/styles/
-extends: existence
-message: "Improve SEO and accessibility by rewriting the link text for '%s'."
-level: warning
+extends: substitution
+message: "Avoid vague text in links like '%s' unless you can pair it with more descriptive text."
+link: 'https://github.com/DataDog/documentation/blob/master/CONTRIBUTING.md#links'
 ignorecase: true
-link: https://docs.gitlab.com/ee/development/documentation/styleguide/index.html#text-for-links
+scope: raw
 nonword: true
-raw:
-  - \[(?:here|this page)\]\(.*\)
+level: warning
+
+swap:
+# For the word 'here' in Markdown links
+  '\[here\]\(.*?\)': 'here'
+
+# For the word 'this' in Markdown links
+  '\[this\]\(.*?\)': 'this'
+
+# For the word 'page' in Markdown links
+  '\[page\]\(.*?\)': 'page'
+
+# For the phrase 'this page' in Markdown links
+  '\[this page\]\(.*?\)': 'this page'
 
