@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  spell-check:
+  vale:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and separate them with comma ','
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ',')
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"/{}\""' | tr '\n' ',')
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
       - name: Output Changed Files
