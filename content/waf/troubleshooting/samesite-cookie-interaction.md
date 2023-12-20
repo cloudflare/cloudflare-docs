@@ -47,7 +47,7 @@ The `Auto` value for the `secure` attribute will have the following behavior:
 
 If you set `samesite` to `None` in your API request, you cannot set `secure` to `Never`.
 
-If you require a specific `SameSite` configuration in your session affinity cookies, Cloudflare recommendeds that you provide values for `samesite` and `secure` different from `Auto`, instead of relying on the default behavior. This way, the value of the `SameSite` cookie attribute will not change due to configuration changes (namely **Always Use HTTPS**).
+If you require a specific `SameSite` configuration in your session affinity cookies, Cloudflare recommends that you provide values for `samesite` and `secure` different from `Auto`, instead of relying on the default behavior. This way, the value of the `SameSite` cookie attribute will not change due to configuration changes (namely **Always Use HTTPS**).
 
 ___
 
