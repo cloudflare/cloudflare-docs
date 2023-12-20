@@ -7,15 +7,15 @@ layout: single
 
 # DNSSEC
 
-{{<render file="_dnssec-definition.md">}}
+{{<render file="_dnssec-definition.md" productFolder="dns">}}
 
 ---
 
 ## Disable DNSSEC
 
-{{<render file="_disable_dnssec.md">}}
+{{<render file="_disable_dnssec.md" productFolder="dns">}}
 
-{{<render file="_dnssec-enabled-migration.md">}}
+{{<render file="_dnssec-enabled-migration.md" productFolder="dns">}}
 
 ---
 
@@ -25,17 +25,13 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 ### Step 1 - Activate DNSSEC in Cloudflare
 
-{{<render file="_dnssec-cloudflare-steps.md">}}
+{{<render file="_dnssec-cloudflare-steps.md" productFolder="dns">}}
 
 ### Step 2 — Add DS record to your registrar
 
-{{<render file="_dnssec-registrar-steps.md">}}
+{{<render file="_dnssec-registrar-steps.md" productFolder="dns">}}
 
-{{<Aside type="note" header="Note:">}}
-
-Cloudflare automatically adds **DS** records for domains using Cloudflare Registrar or those using `.ch` and `.cz` top-level domains.
-
-{{</Aside>}}
+{{<render file="_dnssec-auto-add.md" productFolder="dns">}}
 
 ---
 
