@@ -28,7 +28,7 @@ Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/
 ```javascript
 ---
 header: ES Modules
-highlight: [3,4,5,6,7]
+highlight: [3-7]
 ---
 export default {
   async fetch(request) {
