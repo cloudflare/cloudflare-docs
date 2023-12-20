@@ -152,3 +152,4 @@ Using any other type of `ReadableStream` as the body of a response will result i
 - [Examples: Modify response](/workers/examples/modify-response/)
 - [Examples: Conditional response](/workers/examples/conditional-response/)
 - [Reference: `Request`](/workers/runtime-apis/request/)
+- Write your Worker code in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.

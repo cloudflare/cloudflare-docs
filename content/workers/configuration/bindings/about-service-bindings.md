@@ -128,7 +128,7 @@ In this setup, only the `gateway` Worker is exposed to the Internet and privatel
 
 ### Authentication Workers Service
 
-The following authentication Worker code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke `FetchEvent` on the target Worker.
+The following authentication Worker code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) on the target Worker.
 
 ```js
 export default {
@@ -148,4 +148,5 @@ This `auth` Worker does not need to have a `*.workers.dev` or other public endpo
 ## Related resources
 
 - [Runtime API documentation](/workers/runtime-apis/service-bindings)
+- [Migrate from Service Workers to ES Modules](/workers/learning/migrate-to-module-workers/)
 - [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)

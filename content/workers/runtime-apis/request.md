@@ -24,7 +24,7 @@ export default {
 };
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming request parameter is immutable.
 
 ```js
 export default {
@@ -400,6 +400,7 @@ Using any other type of `ReadableStream` as the body of a request will result in
 
 ## Related resources
 
-*   [Examples: Modify request property](/workers/examples/modify-request-property/)
-*   [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
-*   [Reference: `Response`](/workers/runtime-apis/response/)
+* [Examples: Modify request property](/workers/examples/modify-request-property/)
+* [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
+* [Reference: `Response`](/workers/runtime-apis/response/)
+* Write your Worker code in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.
