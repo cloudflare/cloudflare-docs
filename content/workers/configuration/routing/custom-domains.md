@@ -15,7 +15,7 @@ Custom Domains are recommended if you want to connect your Worker to the Interne
 
 Custom Domains can stack on top of each other. For example, if you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
 
-![Custom Domains can stack on top of each other, like any external dependencies](/images/workers/reference/custom-domains-subrequest.png)
+![Custom Domains can stack on top of each other, like any external dependencies](/images/workers/learning/custom-domains-subrequest.png)
 
 Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
 
