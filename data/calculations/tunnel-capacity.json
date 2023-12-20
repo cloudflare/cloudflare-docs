@@ -1,7 +1,7 @@
 {
   "fieldsets": [
     {
-      "name": "Customer Setup Information",
+      "name": "System configuration",
       "fields": [
         {
           "key": "available_ports_per_host",
@@ -17,7 +17,7 @@
         },
         {
           "key": "dns_udp_timeout_in_sec",
-          "title": "DNS UDP Session Timeout (in seconds)",
+          "title": "DNS UDP session timeout (in seconds)",
           "value": 5,
           "editable": false
         },
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "name": "Information from Tunnel Metrics",
+      "name": "Metrics",
       "fields": [
         {
           "key": "tcp_per_sec",
