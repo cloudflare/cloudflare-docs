@@ -45,7 +45,7 @@ services = [
 ```
 The `wrangler.toml` options are:
 
-* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [ES modules format](/workers/learning/migrate-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
+* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [ES modules format](/workers/reference/migrate-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
 * `service`: Name of the target Worker you would like to communicate with. This Worker should be on your account.
 
 ### `wrangler.toml` example

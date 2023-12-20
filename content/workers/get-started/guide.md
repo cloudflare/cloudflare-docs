@@ -72,7 +72,7 @@ You will be asked if you would like to deploy the project to Cloudflare.
 In your project directory, C3 has generated the following:
 
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
+2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
@@ -197,7 +197,7 @@ To do more:
 
 * Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Learning](/workers/learning/).
+* Understand how Workers works in [Learning](/workers/reference/).
 * Learn how to set up different Workers features in [Configuration](/workers/configuration/).
 * Set up a database to use within your Workers project in [Databases](/workers/databases/).
 * Learn about Workers limits, betas and pricing in [Platform](/workers/platform/).

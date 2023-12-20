@@ -23,7 +23,7 @@ For more details, refer to [this talk](https://www.infoq.com/presentations/cloud
 Beginning with a quick overview of the Workers runtime architecture:
 
 <div class="security-page-workers-architecture-diagram">
-  <img alt="Workers runtime architecture demonstrating design of Cloudflare's HTTP proxy and V8 isolates. Read below for more information." src="/workers/learning/security-model/media/Workers-architecture.svg">
+  <img alt="Workers runtime architecture demonstrating design of Cloudflare's HTTP proxy and V8 isolates. Read below for more information." src="/workers/reference/security-model/media/Workers-architecture.svg">
 </div>
 
 <style>

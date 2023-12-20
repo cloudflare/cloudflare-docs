@@ -149,7 +149,7 @@ export default {
 };
 ```
 
-The `env` and `ctx` fields are as [documented in the Workers documentation](/workers/learning/migrate-to-module-workers/).
+The `env` and `ctx` fields are as [documented in the Workers documentation](/workers/reference/migrate-to-module-workers/).
 
 Or alternatively, a queue consumer can be written using service worker syntax:
 
