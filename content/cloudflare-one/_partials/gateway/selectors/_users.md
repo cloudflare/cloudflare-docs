@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Identity-based selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in the organization via the WARP client. Identity-based selectors include:
+Identity-based selectors include:
 
 - **SAML Attributes**
 - **User Email**
@@ -14,4 +14,4 @@ Identity-based selectors require Gateway with WARP mode to be enabled in the Zer
 - **User Group Names**
 - **User Name**
 
-For more information, refer to [Identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/).
+To use identity-based selectors, enable **Gateway with WARP** in the Zero Trust WARP client and enroll your user in your organization. For more information, refer to [Identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/).
