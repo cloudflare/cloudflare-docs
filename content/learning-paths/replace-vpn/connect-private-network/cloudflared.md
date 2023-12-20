@@ -9,8 +9,8 @@ Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any 
 
 ## Before you start
 
-- Choose the [right VM or hardware]() on which to install `cloudflared`.
-- In your on-premise or cloud firewall, allow egress traffic to the [`cloudflared` ports and IPs](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
+- Choose the [right VM or hardware](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/#recommendations) on which to install `cloudflared`.
+- In your on-premise or cloud firewall, allow the host to egress to the Internet on the [required ports](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
 
 ## Create a tunnel
 
@@ -28,6 +28,7 @@ All internal applications and services in this IP range are now connected to Clo
 
 - Segregate production and staging traffic among different Cloudflare tunnels.
 - When possible, distribute access to critical services (for example, private DNS, Active Directory, and other critical systems) across different tunnels for blast-radius reduction in the event of a server-side outage.
+- Add a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) to another host machine for an additional point of availability.
 - [Enable notifications](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/) in the Cloudflare dashboard to monitor tunnel health.
 - [Monitor performance metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) to identify potential bottlenecks.
 - [Update `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/) regularly.

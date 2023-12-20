@@ -26,7 +26,7 @@ WARP connector is a more flexible and advanced option to connect your network tr
 | IPv4 | ✅ | ✅ |
 | IPv6 |  ✅  | ❌  |
 | OSI layer | L4 | L3 |
-| Protocol | QUIC | WireGuard |
+| Protocol | QUIC or HTTP/2 | WireGuard |
 
 ## Best practices
 
