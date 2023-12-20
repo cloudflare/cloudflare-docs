@@ -1,10 +1,9 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Google Cloud SQL database instance.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to Google Cloud SQL
 weight: 10
-layout: tutorial
 ---
 
 # Connect to Google Cloud SQL

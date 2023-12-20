@@ -1,10 +1,9 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Timescale time-series database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to Timescale
 weight: 6
-layout: tutorial
 ---
 
 # Connect to Timescale

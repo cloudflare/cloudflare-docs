@@ -1,10 +1,9 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Materialize streaming database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to Materialize
 weight: 8
-layout: tutorial
 ---
 
 # Connect to Materialize

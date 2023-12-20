@@ -1,10 +1,9 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Neon Postgres database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to Neon
 weight: 4
-layout: tutorial
 ---
 
 # Connect to Neon

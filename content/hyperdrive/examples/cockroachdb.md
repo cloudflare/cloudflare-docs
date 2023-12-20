@@ -1,10 +1,9 @@
 ---
 type: example
 summary: Connect Hyperdrive to a CockroachDB database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to CockroachDB
 weight: 9
-layout: tutorial
 ---
 
 # Connect to CockroachDB
