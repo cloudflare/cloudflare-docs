@@ -97,6 +97,7 @@ Removes the `X-Powered-By` HTTP response header that provides information about 
 ### Add security headers
 
 Adds several security-related HTTP response headers. The added response headers and values are the following:
+
 - `x-content-type-options: nosniff`
 - `x-xss-protection: 1; mode=block`
 - `x-frame-options: SAMEORIGIN`
