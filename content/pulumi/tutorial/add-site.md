@@ -8,11 +8,11 @@ meta:
 
 # Add a site to Cloudflare with Pulumi IaC
 
-In this tutorial, you will go through step-by-step instructions to bring an existing site to Cloudflare using Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Zone and add a DNS record to resolve your newly added site. This tutorial adopts the IaC principle to complete the steps listed in the [Add a Site tutorial](https://developers.cloudflare.com/fundamentals/setup/account-setup/add-site/). 
+In this tutorial, you will go through step-by-step instructions to bring an existing site to Cloudflare using Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Zone and a DNS record to resolve your newly added site. This tutorial adopts the IaC principle to complete the steps listed in the [Add a Site tutorial](https://developers.cloudflare.com/fundamentals/setup/account-setup/add-site/). 
 
 {{<Aside type="note">}}
 
-This tutorial will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
+You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
 
 {{</Aside>}}
 
@@ -25,7 +25,7 @@ Ensure you have:
 * A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 * A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
 * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and the [Pulumi CLI](https://developers.cloudflare.com/pulumi/installing/) installed on your machine.
-* A registered domain name.
+* A registered domain name. You may use `example.com` to complete the tutorial partially.
 
 {{</tutorial-prereqs>}}
 
@@ -108,9 +108,15 @@ Hurray!
 
 {{<tutorial-step title="Add a Zone">}}
 
-You will now add a Cloudflare Zone to the Pulumi stack. A domain is known as a Zone in Cloudflare.
+{{<Aside type="note">}}
 
-### a. Add a Cloudflare Zone
+A domain, or site, is known as a Zone in Cloudflare.
+
+{{</Aside>}}
+
+You will now add a Cloudflare Zone to the Pulumi stack. 
+
+### a. Modify the program
 
 Replace the contents of your `index.ts` file with the following:
 
@@ -137,15 +143,13 @@ const zone = new cloudflare.Zone("my-zone", {
 export const zoneId = zone.id;
 ```
 
-### b. Install the Pulumi Cloudflare provider
+### b. Install dependencies
 
 ```sh
 $ npm install @pulumi/cloudflare
 ```
 
 ### c. Apply the changes
-
-To apply the stack changes, run:
 
 ```sh
 $ pulumi up --yes
@@ -164,11 +168,11 @@ d8fcb6d731fe1c2d75e2e8d6ad63fad5
 
 {{<tutorial-step title="Update your nameservers">}}
 
-Once you have added a domain (also known as a zone) to Cloudflare, that domain will receive two assigned authoritative nameservers. 
+Once you have added a domain to Cloudflare, that domain will receive two assigned authoritative nameservers. 
 
 {{<Aside type="note">}}
 
-This process makes Cloudflare your authoritative DNS provider, allowing your DNS queries and web traffic to be served from and protected by our network. 
+This process makes Cloudflare your authoritative DNS provider, allowing your DNS queries and web traffic to be served from and protected by the Cloudflare network. 
 
 [Learn more about pending domains](https://developers.cloudflare.com/dns/zone-setups/reference/domain-status/)
 {{</Aside>}}
@@ -184,13 +188,11 @@ export const status = zone.status;
 
 ### b. Apply the changes
 
-To apply the stack changes, run:
-
 ```sh
 $ pulumi up --yes
 ```
 
-### c. Retrieve the nameservers
+### c. Obtain the nameservers
 
 Review the value of `nameservers` to retrieve the assigned nameservers:
 
@@ -200,6 +202,11 @@ $ pulumi stack output nameservers
 ```
 
 ### d. Update your registrar
+
+{{<Aside type="note">}}
+If you use `example.com` as your site, skip to the next step: [Add a DNS record](#add-a-dns-record).
+
+{{</Aside>}}
 
 Update the nameservers at your registrar to activate Cloudflare services for your domain. Instructions are registrar-specific. You may be able to find guidance under [this consolidated list of common registrars](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/#update-your-registrar).
 
@@ -224,7 +231,7 @@ active
 
 You will now add a DNS record to your domain.
 
-### a. Add a DNS record
+### a. Modify your program
 
 Replace the contents of your `index.ts` file with the following:
 
@@ -267,9 +274,7 @@ const record = new cloudflare.Record("my-record", {
 
 ```
 
-### b. Apply the stack changes
-
-To apply the stack changes, run:
+### b. Apply the changes
 
 ```sh
 $ pulumi up --yes
@@ -277,13 +282,21 @@ $ pulumi up --yes
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Verify setup">}}
+{{<tutorial-step title="Verify your setup">}}
+
+You will run two `nslookup` commands against the Cloudflare-assigned nameservers. 
 
 To test your site, run:
 
 ```sh
-$ nslookup $(pulumi config get domain)
+$ DOMAIN=$(pulumi config get domain)
+$ NS1=$(pulumi stack output nameservers | jq '.[0]' -r)
+$ NS2=$(pulumi stack output nameservers | jq '.[1]' -r)
+$ nslookup $DOMAIN $NS1
+$ nslookup $DOMAIN $NS2
 ```
+
+Confirm your response returns IP address(es) for your site. 
 
 {{</tutorial-step>}}
 
@@ -305,6 +318,11 @@ $ pulumi stack rm dev
 
 {{</tutorial-step>}}
 
-<!-- TODO -->
-<!-- You have incrementally defined Cloudflare resources needed to add a site to Cloudflare. After each new resource, you apply the changes to your stack via the `pulumi up` command. The resources were defined TypeScript and letting Pulumi handle the rest. -->
+{{<tutorial-step title="Next steps">}}
+
+You have incrementally defined Cloudflare resources needed to add a site to Cloudflare. After each new resource, you apply the changes to your stack via the `pulumi up` command. You declare the resources in TypeScript and let Pulumi handle the rest. 
+
+Follow the [Hello World tutorial](../hello-world/) next to deploy your first app with Pulumi!
+{{</tutorial-step>}}
+
 {{</tutorial>}}
