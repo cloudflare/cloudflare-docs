@@ -23,19 +23,31 @@ The `SameSite` cookie attribute has three different modes:
 | `cf_clearance`    | `SameSite=None; Secure` | Yes        |
 | `__cflb`          | `SameSite=Lax`          | No         |
 
-## SameSite in session affinity cookies
+## SameSite attribute in session affinity cookies
 
-Currently, to configure the `SameSite` attribute on the [`__cflb` session affinity cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#__cflb-cookie-for-cloudflare-load-balancer-session-affinity) you must use the Cloudflare API (for example, the [Create Load Balancer](/api/operations/load-balancers-create-load-balancer) operation).
+Currently, to configure the `SameSite` attribute on [session affinity cookies](/load-balancing/understand-basics/session-affinity/) you must use the Cloudflare API (for example, the [Create Load Balancer](/api/operations/load-balancers-create-load-balancer) operation).
 
-To configure the `SameSite` cookie attribute for the session affinity cookie via API, include the `samesite` JSON attribute in your HTTP request, inside the `session_affinity_attributes` object. The value `Auto` is translated to `Lax` if **Always Use HTTPS** is enabled, or `None` if **Always Use HTTPS** is disabled. When using the value `None`, the `secure` JSON attribute cannot be set to `Never`.
+To configure the value of the `SameSite` cookie attribute, include the `samesite` and `secure` JSON attributes in your HTTP request, inside the `session_affinity_attributes` object.
 
-**`samesite` attribute**
-- Default value: `Auto`
-- Valid values: `Auto`, `Lax`, `None`, `Strict`.
+The available values for these two attributes are the following:
 
-**`secure` attribute**
-- Default value: `Auto`
-- Valid values: `Auto`, `Always`, `Never`.
+**`samesite` attribute:**
+- Valid values: `Auto` (default), `Lax`, `None`, `Strict`.
+
+**`secure` attribute:**
+- Valid values: `Auto` (default), `Always`, `Never`.
+
+The `Auto` value for the `samesite` attribute will have the following behavior:
+- If **Always Use HTTPS** is enabled, session affinity cookies will use the `Lax` SameSite mode.
+- If **Always Use HTTPS** is disabled, session affinity cookies will use the `None` SameSite mode.
+
+The `Auto` value for the `secure` attribute will have the following behavior:
+- If **Always Use HTTPS** is enabled, session affinity cookies will include `Secure` in the SameSite attribute.
+- If **Always Use HTTPS** is disabled, session affinity cookies will not include `Secure` in the SameSite attribute.
+
+If you set `samesite` to `None` in your API request, you cannot set `secure` to `Never`.
+
+If you require a specific `SameSite` configuration in your session affinity cookies, Cloudflare recommendeds that you provide values for `samesite` and `secure` different from `Auto`, instead of relying on the default behavior. This way, the value of the `SameSite` cookie attribute will not change due to configuration changes (namely **Always Use HTTPS**).
 
 ___
 
