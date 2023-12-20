@@ -71,7 +71,7 @@ When choosing the Block action, turn the **Display custom block page** setting o
 
 #### WARP client block notifications
 
-Turn the **Display block notification for WARP client** setting on to display notifications for block events. Blocked users will receive an operating system notification from the WARP client. You can use the default notification message, or enter a custom message and URL to direct users to support.
+{{<render file="gateway/_client-notifications_.md">}}
 
 ### Override
 

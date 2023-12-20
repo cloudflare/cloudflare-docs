@@ -64,6 +64,10 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 | ---------------- | -------- | ----- | ------ |
 | Destination Port | In       | `443` | Block  |
 
+#### WARP client block notifications
+
+{{<render file="gateway/_client-notifications_.md">}}
+
 ### Network Override
 
 API value: `l4_override`

@@ -66,6 +66,10 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 | Application      | in            | `Google Drive` | And   | Block  |
 | Upload Mime Type | matches regex | `.*`           |       |        |
 
+#### WARP client block notifications
+
+{{<render file="gateway/_client-notifications_.md">}}
+
 ### Isolate
 
 API value: `isolate`
