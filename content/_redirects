@@ -187,6 +187,7 @@
 /support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
 /support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
 /support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
+/cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -205,7 +206,7 @@
 
 # d1
 /d1/client-api/ /d1/platform/client-api/ 301
-/d1/learning/using-d1-from-pages/ /pages/platform/functions/bindings/#d1-databases 301
+/d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/migrations/ /d1/platform/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 
@@ -591,8 +592,37 @@
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
 /pages/platform/direct-upload/ /pages/get-started/direct-upload/ 301
-/pages/platform/functions/billing/ /pages/platform/functions/pricing/ 301
+/pages/platform/functions/billing/ /pages/functions/pricing/ 301
+/pages/platform/functions/pricing/ /pages/functions/pricing/ 301
 /pages/tutorials/build-an-api-with-workers/ /pages/tutorials/build-an-api-with-pages-functions/ 301
+/pages/platform/functions/ /pages/functions/ 301
+/pages/platform/functions/get-started/ /pages/functions/get-started/ 301
+/pages/platform/functions/routing/ /pages/functions/routing/ 301
+/pages/platform/functions/api-reference/ /pages/functions/api-reference/ 301
+/pages/platform/functions/examples/ /pages/functions/examples/ 301
+/pages/platform/functions/examples/ab-testing/ /pages/functions/examples/ab-testing/ 301
+/pages/platform/functions/examples/cors-headers/ /pages/functions/examples/cors-headers/ 301
+/pages/platform/functions/middleware/ /pages/functions/middleware/ 301
+/pages/platform/functions/local-development/ /pages/functions/local-development/ 301
+/pages/platform/functions/bindings/ /pages/functions/bindings/ 301
+/pages/platform/functions/typescript/ /pages/functions/typescript/ 301
+/pages/platform/functions/advanced-mode/ /pages/functions/advanced-mode/ 301
+/pages/platform/functions/plugins/ /pages/functions/plugins/ 301
+/pages/platform/functions/plugins/cloudflare-access/ /pages/functions/plugins/cloudflare-access/ 301
+/pages/platform/functions/plugins/google-chat/ /pages/functions/plugins/google-chat/ 301
+/pages/platform/functions/plugins/graphql/ /pages/functions/plugins/graphql/ 301
+/pages/platform/functions/plugins/hcaptcha/ /pages/functions/plugins/hcaptcha/ 301
+/pages/platform/functions/plugins/honeycomb/ /pages/functions/plugins/honeycomb/ 301
+/pages/platform/functions/plugins/mailchannels/ /pages/functions/plugins/mailchannels/ 301
+/pages/platform/functions/plugins/sentry/ /pages/functions/plugins/sentry/ 301
+/pages/platform/functions/plugins/static-forms/ /pages/functions/plugins/static-forms/ 301
+/pages/platform/functions/plugins/stytch/ /pages/functions/plugins/stytch/ 301
+/pages/platform/functions/plugins/community-plugins/ /pages/functions/plugins/community-plugins/ 301
+/pages/platform/functions/plugins/vercel-og/ /pages/functions/plugins/vercel-og/ 301
+/pages/platform/functions/metrics/ /pages/functions/metrics/ 301
+/pages/platform/functions/debugging-and-logging/ /pages/functions/debugging-and-logging/ 301
+/pages/platform/functions/module-support/ /pages/functions/module-support/ 301
+/pages/platform/functions/smart-placement/ /pages/functions/smart-placement/ 301
 
 # partners
 /partners/ /fundamentals/reference/partners/ 301
@@ -776,7 +806,7 @@
 /support/page-rules/using-resolve-override-in-page-rules/ /rules/page-rules/how-to/override-url-or-ip-address/ 301
 /support/page-rules/why-isnt-a-page-rule-working/ /rules/page-rules/troubleshooting/general/ 301
 /support/page-rules/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
-/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/troubleshooting/chunked-encoding-and-dynamic-content/ 301
+/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/ /cache/how-to/cache-rules/ 301
 /support/more-dashboard-apps/cloudflare-registrar/ /registrar/
 /support/more-dashboard-apps/cloudflare-registrar/icloud-custom-email-domains/ /registrar/account-options/icloud-domains/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/ /waf/tools/scrape-shield/hotlink-protection/ 301
@@ -1088,6 +1118,7 @@
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
+/workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
@@ -1155,6 +1186,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/ /cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/grafana/ /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ 301
+/cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ 301
 /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
 /cloudflare-one/connections/connect-networks/private-net/create-private-networks/ /cloudflare-one/connections/connect-networks/private-net/warp-to-warp/ 301
 /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301

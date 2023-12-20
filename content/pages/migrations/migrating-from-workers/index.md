@@ -12,7 +12,7 @@ In this tutorial, you will learn how to migrate an existing [Cloudflare Workers 
 
 As a prerequisite, you should have a Cloudflare Workers Sites project, created with [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).
 
-Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behavior in your Worker — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/platform/functions/). This enables an easy-to-use, file-based routing system. You can also migrate your custom headers and redirects to Pages. 
+Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behavior in your Worker — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/functions/). This enables an easy-to-use, file-based routing system. You can also migrate your custom headers and redirects to Pages. 
 
 You may already have a reasonably complex Worker and/or it would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project. 
 
@@ -46,7 +46,7 @@ Make sure that static redirects are before dynamic redirects in your `_redirects
 
 {{</Aside>}}
 
-In addition to a `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/platform/redirects/#surpass-_redirects-limits), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
+In addition to a `_redirects` file, Cloudflare also offers [Bulk Redirects](/pages/platform/redirects/#surpass-_redirects-limits), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
 
 Your custom headers can also be moved into a `_headers` file in your output directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 

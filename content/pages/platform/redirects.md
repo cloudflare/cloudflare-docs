@@ -139,7 +139,7 @@ For example, if you have added `/about/faq/* /about/faqs 200` to your `_redirect
 
 ## Surpass `_redirects` limits
 
-A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Use [Bulk Redirects (beta)](/rules/url-forwarding/bulk-redirects/) to handle redirects that surpasses the 2,100 redirect rules limit set by Pages.
+A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to handle redirects that surpasses the 2,100 redirect rules limit set by Pages.
 
 {{<Aside type="note">}}
 

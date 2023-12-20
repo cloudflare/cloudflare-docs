@@ -240,7 +240,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 {{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing](/images/image-resizing/url-format/).{{</Aside>}}
 
-The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. Cloudflare will default to JPEG when possible due to the large size of PNG files.
 
 Workers integration supports:
 - `avif`: Generate images in AVIF format if possible (with WebP as a fallback).

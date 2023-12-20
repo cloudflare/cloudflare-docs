@@ -8,6 +8,8 @@ weight: 5
 
 Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/learning/create-indexes/#distance-metrics).
 
+Optionally, you can apply [metadata filters](/vectorize/learning/metadata-filtering/) or a [namespace](/vectorize/learning/insert-vectors/#namespaces) to narrow the vector search space.
+
 ## Example query
 
 To pass a vector as a query to an index, use the `query()` method on the index itself.

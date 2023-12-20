@@ -51,7 +51,7 @@ Cloudflare Pages Functions also provides middleware that can handle any logic yo
 
 ### Functions syntax
 
-Netlify functions export an async event handler that accepts an event and a context as arguments. In the case of Pages Functions, you will have to export a single `onRequest` function that accepts a `context` object. The `context` object contains all the information for the request such as `request`, `env`, `params`, and returns a new Response. Learn more about [writing your first function](/pages/platform/functions/get-started/)
+Netlify functions export an async event handler that accepts an event and a context as arguments. In the case of Pages Functions, you will have to export a single `onRequest` function that accepts a `context` object. The `context` object contains all the information for the request such as `request`, `env`, `params`, and returns a new Response. Learn more about [writing your first function](/pages/functions/get-started/)
 
 Hello World with Netlify functions:
 

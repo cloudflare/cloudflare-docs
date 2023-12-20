@@ -96,5 +96,6 @@ The Streams API is only available inside of the [Request context](/workers/runti
 
 ## Related resources
 
-- [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
-- [Streams API spec](https://streams.spec.whatwg.org/)
+* [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+* [Streams API spec](https://streams.spec.whatwg.org/)
+* Write your Worker code in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.

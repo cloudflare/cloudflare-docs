@@ -33,7 +33,7 @@ Turnstile [widget types](/turnstile/reference/widget-types/) include:
 
 ## Accessibility
 
-Turnstile is WCAG 2.1 AA compliant. Visually or motorically impaired visitors are able to solve Turnstile widgets by obtaining a pre-clearance token via an external service. 
+Turnstile is WCAG 2.1 AA compliant. 
 
 ---
 

@@ -15,7 +15,7 @@ The following diagram gives you an overview of the different statuses applicable
 ```mermaid
 flowchart LR
 accTitle: Zone status flow
-accDescr: Diagram of the different statuses applicable to Clouflare zones and the transitions from one status to the other.
+accDescr: Diagram of the different statuses applicable to Cloudflare zones and the transitions from one status to the other.
 
 A[Initializing]
 B[Pending]
