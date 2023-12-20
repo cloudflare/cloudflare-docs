@@ -5,9 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-There are multiple ways to onramp traffic from your private networks to Cloudflare. This page will focus on the two software-based methods that are commonly used for a VPN replacement use case: Cloudflare Tunnel via cloudflared and Cloudflare Tunnel via WARP connector. Both of these methods involve installing lightweight software — either `cloudflared` or Cloudflare WARP — on a host machine in your network. The software creates a secure tunnel, called a Cloudflare Tunnel, to connect services and applications to Cloudflare’s global network.
-
-For an overview of other connection methods, refer to our [reference architecture](/reference-architecture/sase-reference-architecture/#connecting-networks).
+There are [multiple ways]((/reference-architecture/sase-reference-architecture/#connecting-networks)) to onramp traffic from your private networks to Cloudflare. This page will focus on the two software-based methods that are commonly used for a VPN replacement use case: Cloudflare Tunnel via cloudflared and Cloudflare Tunnel via WARP connector. Both of these methods involve installing lightweight software — either `cloudflared` or Cloudflare WARP — on a host machine in your network. The software creates a secure tunnel, called a Cloudflare Tunnel, to connect services and applications to Cloudflare’s global network.
 
 ## Cloudflare Tunnel via cloudflared
 
@@ -19,9 +17,16 @@ WARP connector is a more flexible and advanced option to connect your network tr
 
 ## Comparison table
 
-| `cloudflared` | WARP connector |
-| ------------- | -------------- |
-| - No bidirectional traffic flow </br> - Source IP NATs to local host machine | - Does not currently support high availability and failover scenarios </br> - Only available for AMD Linux </br> - Does not support IPv6 routes </br>  |
+|     | cloudflared | WARP connector |
+| --- | ------------- | -------------- |
+| High availability and failover | ✅  | ❌  |
+| Bidirectional traffic |  ❌    |       ✅    |
+| Source IP of request| `cloudflared` host machine | Device that made the request |
+| Host machine | Linux, macOS, Windows | AMD Linux |
+| IPv4 | ✅ | ✅ |
+| IPv6 |  ✅  | ❌  |
+| OSI layer | L4 | L3 |
+| Protocol | QUIC | WireGuard |
 
 ## Best practices
 
