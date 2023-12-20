@@ -87,3 +87,4 @@ async function eventHandler(event) {
 - [Example: Fetch HTML](/workers/examples/fetch-html/)
 - [Example: Fetch JSON](/workers/examples/fetch-json/)
 - [Example: cache using Fetch](/workers/examples/cache-using-fetch/)
+- Write your Worker code in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.

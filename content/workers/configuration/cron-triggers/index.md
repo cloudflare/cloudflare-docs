@@ -173,3 +173,4 @@ Renewable energy can be purchased in a number of ways, including through on-site
 ## Related resources
 
 * [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
+* Learn how to access Cron Triggers in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.
