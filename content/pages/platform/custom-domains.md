@@ -114,6 +114,6 @@ Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certifi
 
 A [Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/) will prevent Pages from adding a Custom Domain for a hostname under a Zone Hold.
 
-To add a Custom Domain for a hostname with a Zone Hold, please temporarly [release the Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the Custom Domain setup process.
+To add a Custom Domain for a hostname with a Zone Hold, please temporarily [release the Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the Custom Domain setup process.
 
 Once the Custom Domain has been successfully completed, you may [reinstate the Zone Hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#enable-zone-holds).
