@@ -76,7 +76,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 - {{<code>}}max_retries{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
-  - Defaults to `3`
+  - Defaults to `3` retries.
 
 - {{<code>}}dead_letter_queue{{</code>}} {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
