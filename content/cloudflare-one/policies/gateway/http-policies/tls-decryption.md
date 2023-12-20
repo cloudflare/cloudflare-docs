@@ -19,15 +19,11 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 Gateway does not support TLS decryption for applications which use:
 
-- [TLS decryption](#tls-decryption)
-  - [Enable TLS decryption](#enable-tls-decryption)
-  - [Limitations](#limitations)
-    - [Incompatible certificates](#incompatible-certificates)
-    - [Google Chrome automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
-    - [ESNI and ECH](#esni-and-ech)
-  - [FIPS compliance](#fips-compliance)
-    - [Limitations](#limitations-1)
-    - [Cipher suites](#cipher-suites)
+- [Embedded certificates](#incompatible-certificates)
+- [Self-signed certificates](#incompatible-certificates)
+- [Mutual TLS (mTLS) authentication](#incompatible-certificates)
+- [ESNI and ECH handshake encryption](#esni-and-ech)
+- [Automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
 
 ### Incompatible certificates
 
