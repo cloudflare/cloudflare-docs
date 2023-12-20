@@ -282,7 +282,7 @@ The country of the user making the request.
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ## Comparison operators
 
