@@ -1,11 +1,11 @@
 ---
-title: Configure device agent
+title: Configure the device agent
 pcx_content_type: overview
 weight: 5
 layout: learning-module
 ---
 
-# Configure device agent
+# Configure the device agent
 
 The WARP client encrypts designated traffic from a user's device to Cloudflare's edge. It can run alongside other VPN clients so long as there are no route conflicts.
 
