@@ -57,7 +57,7 @@ Valid options for the `options` object include: {{<definitions>}}
 {{<definitions>}}
 
 - `response.body` {{<type-link href="/runtime-apis/streams">}}Readable Stream{{</type-link>}}
-  - A simple getter to get the body contents.
+  - A getter to get the body contents.
 - `response.bodyUsed` {{<type>}}boolean{{</type>}}
   - A boolean indicating if the body was used in the response.
 - `response.encodeBody` {{<type>}}string{{</type>}}

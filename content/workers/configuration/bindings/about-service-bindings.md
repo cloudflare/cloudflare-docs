@@ -75,7 +75,7 @@ To review Workers bound to your Worker in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select your **Worker**.
-3. Go to **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
+3. Go to **Triggers** > **Bound Services**. Your team can view cross-service dependencies in this manner.
 
 ![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers & Pages > your Worker > Triggers](/images/workers/platform/bindings/service-bindings-triggers.png)
 
