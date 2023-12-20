@@ -14,7 +14,7 @@ Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundament
 
 ## Add True-Client-IP Header
 
-The recommended procedure to access client IP information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/). 
+The recommended procedure to access client IP information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/#add-visitor-location-headers).
 
 {{<Aside type="note">}}
 
