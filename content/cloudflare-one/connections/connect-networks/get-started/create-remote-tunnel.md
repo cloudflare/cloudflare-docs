@@ -32,7 +32,7 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 3. Under **Additional application settings**, specify any [parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/) you would like to add to your tunnel configuration.
 
-4. Select **Save `<tunnel-name>`**.
+4. Select **Save tunnel**.
 
 ## 3. Connect a network
 
@@ -40,7 +40,7 @@ Follow these steps to connect a private network through your tunnel.
 
 1. In the **Private Networks** tab, add an IP or CIDR.
 
-2. Select **Save `<tunnel-name>`**.
+2. Select **Save tunnel**.
 
 ## 4. View your tunnel
 
