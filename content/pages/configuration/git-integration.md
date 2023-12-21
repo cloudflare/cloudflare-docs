@@ -11,9 +11,9 @@ Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab reposi
 
 Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to  **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button. You can change the production branch to any other branch in the dropdown menu under **production branch**.
 
-You can also use [preview deployments](/pages/configuration/preview-deployments/) to preview how the new version of your project looks before merging into `production`. In addition, Pages allows you to configure which of your preview branches are built and deployed by using [branch build controls](/pages/platform/branch-build-controls/).
+You can also use [preview deployments](/pages/configuration/preview-deployments/) to preview how the new version of your project looks before merging into `production`. In addition, Pages allows you to configure which of your preview branches are built and deployed by using [branch build controls](/pages/configuration/branch-build-controls/).
 
-To configure this in your Pages project go to **Settings** > **Builds & deployments** > **Configure preview deployment** and select **Custom branches**. Here you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [branch build controls](/pages/platform/branch-build-controls/) documentation.
+To configure this in your Pages project go to **Settings** > **Builds & deployments** > **Configure preview deployment** and select **Custom branches**. Here you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [branch build controls](/pages/configuration/branch-build-controls/) documentation.
 
 
 ## Organizational access
@@ -86,11 +86,11 @@ To resolve any errors displayed in the Cloudflare Pages dashboard, follow the st
 
 ### `This project is disconnected from your Git account, this may cause deployments to fail.`
 
-To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/platform/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
+To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/configuration/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
 
 ### `Cloudflare Pages is not properly installed on your Git account, this may cause deployments to fail.`
 
-To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/platform/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
+To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/configuration/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
 
 ### `The Cloudflare Pages installation has been suspended, this may cause deployments to fail.`
 
@@ -116,4 +116,4 @@ Click **Configure** on the Cloudflare Pages application. Under **Repository acce
 
 ### `There is an internal issue with your Cloudflare Pages Git installation.`
 
-This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/platform/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).
+This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/configuration/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).

@@ -43,7 +43,7 @@ If your GitHub Pages repository already has a `Gemfile` and `Gemfile.lock` prese
 
 {{</Aside>}}
 
-Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/pages/platform/build-configuration/).
+Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/pages/configuration/build-configuration/).
 
 Specifically, you will need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 

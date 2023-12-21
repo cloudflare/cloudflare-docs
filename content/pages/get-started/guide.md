@@ -71,7 +71,7 @@ You do not need a framework to deploy with Cloudflare Pages. You can continue wi
 
 {{</Aside>}}
 
-The dashboard provides a number of framework-specific presets. These presets provide the default build command and build output directory values for the selected framework. If you are unsure what the correct values are for this section, refer to [Build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
+The dashboard provides a number of framework-specific presets. These presets provide the default build command and build output directory values for the selected framework. If you are unsure what the correct values are for this section, refer to [Build configuration](/pages/configuration/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
 ![Build setting fields that need to be filled in](/images/pages/get-started/build-settings.png)
 
@@ -87,7 +87,7 @@ The build directory is generated from the build command. Each framework has its 
 
 The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
-Refer to [Build configuration](/pages/platform/build-configuration/) for more information.
+Refer to [Build configuration](/pages/configuration/build-configuration/) for more information.
 
 {{</details>}}
 
