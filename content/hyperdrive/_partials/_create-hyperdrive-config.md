@@ -100,4 +100,4 @@ export default {
 
 - Learn more about [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/).
 - Refer to the [troubleshooting guide](/hyperdrive/learning/troubleshooting/) to debug common issues.
-- Understand more about other [storage options](/workers/learning/storage-options/) available to Cloudflare Workers.
+- Understand more about other [storage options](/workers/platform/storage-options/) available to Cloudflare Workers.

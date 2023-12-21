@@ -41,6 +41,6 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 
 {{<Aside type="note" header="Note">}}
 
-For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#single-file-purge--assets-cached-by-a-worker).
+For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/reference/how-the-cache-works/#single-file-purge--assets-cached-by-a-worker).
 
 {{</Aside>}}

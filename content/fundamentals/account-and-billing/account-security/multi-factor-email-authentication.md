@@ -32,7 +32,7 @@ Cloudflare emails are sometimes flagged as spam by the recipient's email service
 
 Other times, emails are rejected by the recipient email service. Cloudflare will try again it will flag your email address after several attempts and no further emails will be sent.
 
-If you still do not receive an email after ensuring your email service is not flagging Cloudflare, contact [Cloudflare Support.](https://support.cloudflare.com/requests/new)
+If you still do not receive an email after ensuring your email service is not flagging Cloudflare, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ___
 

@@ -8,6 +8,8 @@ weight: 5
 
 Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/learning/create-indexes/#distance-metrics).
 
+Optionally, you can apply [metadata filters](/vectorize/learning/metadata-filtering/) or a [namespace](/vectorize/learning/insert-vectors/#namespaces) to narrow the vector search space.
+
 ## Example query
 
 To pass a vector as a query to an index, use the `query()` method on the index itself.
@@ -22,7 +24,7 @@ let matches = await env.YOUR_INDEX.query(queryVector);
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
 
 ```json
-{"matches":{"count":3,"matches":[{"score":0.999909486,"vectorId":"5"},{"score":0.789848214,"vectorId":"4"},{"score":0.720476967,"vectorId":"4444"}]}}
+{"matches":{"count":3,"matches":[{"score":0.999909486,"id":"5"},{"score":0.789848214,"id":"4"},{"score":0.720476967,"id":"4444"}]}}
 ```
 
 You can optionally change the number of results returned and/or whether results should include metadata and values:
@@ -36,7 +38,7 @@ let matches = await env.YOUR_INDEX.query(queryVector, { topK: 1, returnValues: t
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.999909486,"vectorId":"5","vector":{"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}}]}}
+{"matches":{"count":1,"matches":[{"score":0.999909486,"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}]}}
 ```
 
 Refer to the [Workers Client API documentation](/vectorize/platform/client-api/) for additional examples.
@@ -60,7 +62,7 @@ const queryVector: EmbeddingResponse = await ai.run(
 );
 ```
 
-When passing the vector to the `query()` method of a Vectorize index, pass only the vector embedding itself on the `.data` sub-object, and not the top-level response. 
+When passing the vector to the `query()` method of a Vectorize index, pass only the vector embedding itself on the `.data` sub-object, and not the top-level response.
 
 For example:
 

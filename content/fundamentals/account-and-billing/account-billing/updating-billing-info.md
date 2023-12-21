@@ -8,7 +8,7 @@ weight: 2
 
 To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
 
-If Cloudflare is unable to process your payment, review [Troubleshooting failed payments](https://support.cloudflare.com/hc/en-us/articles/218344877).
+If Cloudflare is unable to process your payment, review [Troubleshooting failed payments](/fundamentals/account-and-billing/account-billing/troubleshooting-failed-payments/).
 
 ---
 

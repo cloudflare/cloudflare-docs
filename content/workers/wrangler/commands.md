@@ -11,7 +11,7 @@ meta:
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -153,7 +153,7 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-Create a skeleton Wrangler project, including the `wrangler.toml` file.
+Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
 wrangler init [<NAME>] [OPTIONS]
@@ -174,7 +174,13 @@ wrangler init [<NAME>] [OPTIONS]
 
 ## `generate`
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+{{<Aside type="note">}}
+
+This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
+
+{{</Aside>}}
+
+Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```txt
 wrangler generate [<NAME>] [TEMPLATE]
@@ -638,7 +644,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - IP address to listen on, defaults to `*` (all interfaces).
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1308,6 +1314,67 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `sippy enable`
+{{<Aside type="note">}}
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+{{</Aside>}}
+
+Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy enable <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to enable Sippy.
+- `--bucket` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of your AWS S3 bucket.
+- `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+- `--secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+- `--r2-key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Access Key ID. Requires read and write access.
+- `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Secret Access Key. Requires read and write access.
+- `--region` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+
+{{</definitions>}}
+
+### `sippy disable`
+
+Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy disable <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to disable Sippy.
+
+{{</definitions>}}
+
+### `sippy get`
+
+Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get the status of Sippy.
+
+{{</definitions>}}
 ---
 
 ## `r2 object`
@@ -1508,7 +1575,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-
+  
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1608,9 +1675,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
 - `--r2` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
+  - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
 - `--d1` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
+  - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
 - `--do` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -1663,7 +1730,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-
+  
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.

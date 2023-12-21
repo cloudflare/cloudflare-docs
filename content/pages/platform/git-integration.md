@@ -24,6 +24,12 @@ You can deploy projects to Cloudflare Pages from your open-source team, company,
 
 When authorizing Cloudflare Pages to access a GitHub account, you can specify access to your individual account or an organization that you belong to on GitHub. In order to be able to add the Cloudflare Pages installation to that organization, your user account must be an owner or have the appropriate role within the organization (that is, the GitHub Apps Manager role). More information on these roles can be seen on [GitHub's documentation](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#github-app-managers).
 
+{{<Aside type="note">}}
+
+A GitHub account should only point to one Cloudflare account. It is not possible, for example, to link the same GitHub account to two different Cloudflare accounts, such as a Cloudflare account for testing and another for production, but would be possible for multiple Cloudflare account members to interact with the Cloudflare account once linked. 
+
+{{</Aside>}}
+
 ### GitLab
 
 By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow access to organizations, groups, and namespaces your GitLab account can access for use by Cloudflare Pages. Managing access to these organizations and groups is handled by GitLab.
@@ -110,4 +116,4 @@ Click **Configure** on the Cloudflare Pages application. Under **Repository acce
 
 ### `There is an internal issue with your Cloudflare Pages Git installation.`
 
-This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/platform/git-integration/#reinstall-a-git-installation), but if the issue persists, contact support.
+This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/platform/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).

@@ -17,6 +17,10 @@ entries:
   general_definition: |-
     backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/account-and-billing/account-security/2fa/). A backup code becomes invalid after use.
 
+- term: CIDR
+  general_definition: |-
+    CIDR stands for Classless Inter-Domain Routing. CIDR often refers to CIDR notation, which is an IP address represented as a series of four 8-bit octets, separated by dots (e.g., 192.168.1.1). Additionally, CIDR notation includes a suffix that indicates the number of bits used for the network portion of the address. The format is typically written as "/X," where X is the number of bits in the network portion.
+
 - term: cloud
   general_definition: |-
     a network of remote servers used to store and maintain data.

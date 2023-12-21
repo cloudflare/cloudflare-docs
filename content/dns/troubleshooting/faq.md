@@ -188,13 +188,15 @@ ___
 
 In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
 
+___
+
 ## Why are DNS queries returning incorrect results?
 
 Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh. In this circumstance, purge your public DNS cache via these methods:
 
 -   [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
 -   [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
--   [Purging your DNS cache locally](https://documentation.cpanel.net/display/CKB/How%2BTo%2BClear%2BYour%2BDNS%2BCache)
+-   [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
 
 ___
 
@@ -226,3 +228,14 @@ ___
 The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk` TLDs. Use the Cloudflare Dashboard for managing such TLDs.
 
 Enterprise customer can [contact Cloudflare Support](/support/contacting-cloudflare-support/) to remove this limitation.
+
+___
+
+## How to configure records on local DNS servers?
+
+You can create CNAME records pointing to `cdn.cloudflare.net` in your local DNS to locally resolve hostnames through Cloudflare.
+For example, if you need to resolve `example.com` through Cloudflare in your local DNS server, you need to create a CNAME record such as:
+
+```txt
+example.com CNAME example.com.cdn.cloudflare.net
+```

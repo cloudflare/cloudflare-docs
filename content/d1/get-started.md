@@ -34,7 +34,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 
@@ -126,7 +126,7 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 {{</Aside>}}
 
-You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#d1-databases).
+You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#d1-databases).
 
 ## 5. Run a query against your D1 database
 

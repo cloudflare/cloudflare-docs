@@ -64,6 +64,22 @@ $ warp-cli settings
 | Managed network          | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device                              | Any mode           |
 | SAML Attributes |  Attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp)| Gateway with WARP |
 
+## Comparison operators
+
+| Operator                 | Meaning                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| is                       | equals the defined value                                                         |
+| in                       | matches at least one of the defined values                                       |
+
+## Logical operators
+
+To evaluate multiple conditions in an expression, select a logical operator:
+
+| Operator | Meaning                                       |
+| -------- | --------------------------------------------- |
+| And      | match all of the conditions in the expression |
+| Or       | match any of the conditions in the expression |
+
 ## Order of precedence
 
 Profiles are evaluated from top to bottom as shown in the UI and follows the first match principle — once a device matches a profile, evaluation stops and no subsequent profiles can override the decision.

@@ -11,7 +11,7 @@ The `Request` interface represents an HTTP request and is part of the Fetch API.
 
 ## Background
 
-The most common way you will encounter a `Request` object is as a property of an incoming `FetchEvent`.
+The most common way you will encounter a `Request` object is as a property of an incoming request:
 
 ```js
 ---
@@ -24,7 +24,7 @@ export default {
 };
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming request parameter is immutable.
 
 ```js
 export default {
@@ -105,7 +105,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *    Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/articles/200172266). Defaults to `false`.
+    *    Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). Defaults to `false`.
         This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheKey` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -118,7 +118,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheTtlByStatus` {{<type>}}{ \[key: string]: number }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -400,6 +400,7 @@ Using any other type of `ReadableStream` as the body of a request will result in
 
 ## Related resources
 
-*   [Examples: Modify request property](/workers/examples/modify-request-property/)
-*   [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
-*   [Reference: `Response`](/workers/runtime-apis/response/)
+* [Examples: Modify request property](/workers/examples/modify-request-property/)
+* [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
+* [Reference: `Response`](/workers/runtime-apis/response/)
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

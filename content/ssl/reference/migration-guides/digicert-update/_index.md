@@ -28,7 +28,7 @@ Consider each specific migration guide for actions you might have to take and re
 
 {{<Aside type="warning" header="Not affected">}}
 
-Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudlfare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
+Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudflare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
 
 {{</Aside>}}
 
