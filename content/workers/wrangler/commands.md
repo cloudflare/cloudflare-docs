@@ -1310,7 +1310,7 @@ wrangler r2 bucket list
 
 ### `sippy enable`
 {{<Aside type="note">}}
-This feature is currently in beta. To report bugs or request features, fill out our [feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
 {{</Aside>}}
 
 Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
