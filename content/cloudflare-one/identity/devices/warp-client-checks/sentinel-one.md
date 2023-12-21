@@ -8,13 +8,12 @@ meta:
 
 # SentinelOne
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 Cloudflare Zero Trust can check if [SentinelOne](https://www.sentinelone.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
 ## Prerequisites
 
-Before you start, make sure SentinelOne is installed on your machine.
+- SentinelOne agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure the SentinelOne check
 
@@ -37,4 +36,4 @@ Before you start, make sure SentinelOne is installed on your machine.
    4. **Signing certificate thumbprint (recommended)**: Enter the thumbprint of the publishing certificate used to sign the binary. This proves the binary came from SentinelOne and is the recommended way to validate the process.
    5. **SHA-256 (optional)**: Enter a SHA-256 value. This is used to validate the SHA256 signature of the binary and ensures the integrity of the binary file on the device. Note: do not fill out this field unless you strictly control updates to SentinelOne, as this will change between versions.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the SentinelOne check is returning the expected results.
+Next, go to **Logs** > **Posture** and verify that the SentinelOne check is returning the expected results.

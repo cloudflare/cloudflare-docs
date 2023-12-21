@@ -1,13 +1,15 @@
 ---
 pcx_content_type: configuration
 title: Web Crypto
+meta:
+  description: A set of low-level functions for common cryptographic tasks.
 ---
 
 # Web Crypto
 
 ## Background
 
-The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers Runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
+The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
 
 Performing cryptographic operations using the Web Crypto API is significantly faster than performing them purely in JavaScript. If you want to perform CPU-intensive cryptographic operations, you should consider using the Web Crypto API.
 
@@ -29,7 +31,7 @@ console.log(new Uint8Array(myDigest));
 Some common uses include [signing requests](/workers/examples/signing-requests/).
 
 {{<Aside type="warning">}}
-The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
+The Web Crypto API differs significantly from the [Node.js Crypto API](/workers/runtime-apis/nodejs/crypto/). If you are working with code that relies on the Node.js Crypto API, you can use it by enabling the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/).
 {{</Aside>}}
 
 ---

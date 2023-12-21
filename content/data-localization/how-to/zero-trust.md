@@ -35,7 +35,7 @@ You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/
 
 ### DNS policies
 
-Regional Services controls where Cloudlare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
+Regional Services controls where Cloudflare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
 
 Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings) section below for more information.
 
@@ -57,7 +57,7 @@ To ensure that all reverse proxy requests for applications protected by Cloudfla
 
 ## Cloudflare Tunnel
 
-You can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
+You can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
 
 ## WARP settings
 

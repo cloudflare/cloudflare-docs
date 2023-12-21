@@ -4,6 +4,11 @@ pcx_content_type: concept
 weight: 1
 meta:
   title: Changelog for the Network-layer DDoS managed ruleset
+layout: changelog
+changelog_file_name: [ddos-network]
+outputs:
+    - html
+    - rss
 ---
 
 # Changelog for the Network-layer DDoS managed ruleset

@@ -6,6 +6,8 @@ rss: https://github.com/cloudflare/cloudflare-docs/commits/production/content/wo
 outputs:
   - html
   - json
+meta:
+  description: Opt into a specific version of the Workers runtime for your Workers project.
 ---
 
 # Compatibility dates

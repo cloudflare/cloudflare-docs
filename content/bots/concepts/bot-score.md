@@ -8,7 +8,7 @@ weight: 2
 
 {{<render file="_bot-score-definition.md">}}
 
-Bot scores are available to be used in Firewall fields and with Workers to customize application behavior. For more details, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
+Bot scores are available to be used in rule expressions and with Workers to customize application behavior. For more details, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
 {{<Aside type="note">}}
 Granular bot scores are only available to Enterprise customers who have purchased Bot Management. All other customers can only access this information through [bot groupings](#bot-groupings) in Bot Analytics.
@@ -21,7 +21,7 @@ Customers with a Pro plan or higher can automatically see bot traffic divided in
 {{<render file="_bot-groupings.md">}}
 
 {{<Aside type="note">}}
-Bot scores are not computed for requests to paths that are handled by Cloudflare and will never be blocked or forwarded to the origin. 
+Bot scores are not computed for requests to paths that are handled by Cloudflare and will never be blocked or forwarded to the origin.
 {{</Aside>}}
 
 ## How Cloudflare generates bot scores
@@ -47,4 +47,4 @@ The following detection engines only apply to Enterprise Bot Management. For spe
 
 ## Comparison to Threat Score
 
-Bot Score is different from Threat Score. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by relying on bot scores and avoiding IP reputation entirely.
+Bot Score is different from {{<glossary-tooltip term_id="threat score">}}Threat Score{{</glossary-tooltip>}}. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by relying on bot scores and avoiding IP reputation entirely.

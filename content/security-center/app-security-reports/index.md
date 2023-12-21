@@ -6,7 +6,7 @@ meta:
   title: Application security reports
 ---
 
-{{<beta>}} Application security reports {{</beta>}}
+{{<heading-pill style="beta">}} Application security reports {{</heading-pill>}}
 
 {{<Aside type="note">}}
 Currently, this feature is only available to Enterprise customers.
@@ -18,7 +18,7 @@ These reports allow you to get insights and analyze trends for all the zones in 
 
 Cloudflare automatically generates a report every month, usually within the first five days of the month.
 
-To dive deeper into the mitigations performed by Cloudflare security products, use the [Security Analytics](/waf/security-analytics/) dashboard.
+To dive deeper into the mitigations performed by Cloudflare security products, use the [Security Analytics](/waf/analytics/security-analytics/) dashboard.
 
 ## Download a report
 
@@ -28,11 +28,15 @@ To download a monthly application security report:
 2. Go to **Security Center** > **Security Reports**.
 3. For a given month and year, select **Download** to download the report for that particular month.
 
+{{<Aside type="warning">}}
+Due to limitations in the current reporting solution, some customers do not have access to reports from the past few months. We are working on a new version of app security reports without the current limitations.
+{{</Aside>}}
+
 ---
 
 ## Required roles
 
-A Cloudflare user must have one of the following [roles](/fundamentals/account-and-billing/members/roles/) to download application security reports:
+A Cloudflare user must have one of the following [roles](/fundamentals/setup/manage-members/roles/) to download application security reports:
 
 * Super Administrator
 * Administrator

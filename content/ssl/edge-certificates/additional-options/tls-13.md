@@ -29,55 +29,48 @@ TLS 1.3 requires a two-step activation: in the Cloudflare dashboard and in the b
 
 To enable TLS 1.3 in the dashboard:
 
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Go to **SSL/TLS** > **Edge Certificates**.
-3.  For **TLS 1.3**, switch the toggle to **On**.
- 
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2. Go to **SSL/TLS** > **Edge Certificates**.
+3. For **TLS 1.3**, switch the toggle to **On**.
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 To adjust your TLS 1.3 settings with the API, send a [`PATCH`](/api/operations/zone-settings-change-tls-1.-3-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
- 
+
 {{</tab>}}
 {{</tabs>}}
 
-
 ### Enable TLS 1.3 in the browser
 
-<details>
-<summary>Chrome</summary>
-<div>
+{{<details header="Chrome">}}
 
-1.  In the address bar, enter `chrome://flags` and press **Enter**.
-2.  Scroll to locate the **TLS 1.3 Early Data** entry, and set it to _Enabled_. A message saying that the change will take effect the next time you relaunch Chrome will appear.
-3.  Select **RELAUNCH NOW** to restart Chrome.
+1. In the address bar, enter `chrome://flags` and press **Enter**.
+2. Scroll to locate the **TLS 1.3 Early Data** entry, and set it to _Enabled_. A message saying that the change will take effect the next time you relaunch Chrome will appear.
+3. Select **RELAUNCH NOW** to restart Chrome.
 
 After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 
-1.  Open Chrome **Developer Tools**.
-2.  Select the **Security** tab.
-3.  Reload the page (Command-R in macOS, Ctrl-R in Windows).
-4.  Select the site under **Main origin**.
-5.  Under **Connection**, confirm that the protocol is **TLS 1.3**.
+1. Open Chrome **Developer Tools**.
+2. Select the **Security** tab.
+3. Reload the page (Command-R in macOS, Ctrl-R in Windows).
+4. Select the site under **Main origin**.
+5. Under **Connection**, confirm that the protocol is **TLS 1.3**.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Firefox</summary>
-<div>
+{{<details header="Firefox">}}
 
-1.  In the address bar, enter `about:config` and select to accept the warranty warning.
-2.  Search for `security.tls.version.max` and change the value from `3` (the default) to `4`.
+1. In the address bar, enter `about:config` and select to accept the warranty warning.
+2. Search for `security.tls.version.max` and change the value from `3` (the default) to `4`.
 
 After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 
-1.  Select the lock icon in the address bar.
-2.  Select **Connection secure** > **More information**.
-3.  Under **Technical Details**, verify that the TLS version is TLS 1.3.
+1. Select the lock icon in the address bar.
+2. Select **Connection secure** > **More information**.
+3. Under **Technical Details**, verify that the TLS version is TLS 1.3.
 
-</div>
-</details>
+{{</details>}}
 
 ### Troubleshooting
 

@@ -9,13 +9,13 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Builds and deployment
 
-- GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct uploads](/pages/platform/direct-upload/) allow you to integrate your own build platform or upload from your local computer.
+- GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct Upload](/pages/get-started/direct-upload/) allows you to integrate your own build platform or upload from your local computer.
 
-- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Uploads](/pages/platform/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
+- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Upload](/pages/get-started/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
 
 - Incremental builds are currently not supported in Cloudflare Pages.
 
-- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
+- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#functions)).
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
@@ -30,7 +30,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
 
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/platform/functions/) are available as an equivalent to Netlify's Serverless Functions.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
 ## Custom Domains
 
@@ -49,7 +49,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Pages Functions
 
-- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
+- [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
@@ -99,7 +99,7 @@ As a workaround, review the following steps to delete all deployments in your Pa
 4. In the `delete-all-deployments` directory, run `npm install` to install dependencies.
 5. Review the following commands to decide which deletion you would like to proceed with:
 
-* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases)): 
+* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases)):
 
 ```sh
 $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> npm start
@@ -113,4 +113,4 @@ $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_N
 
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
 
-To find your Account ID, refer to [Find your zone and account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).

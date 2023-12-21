@@ -5,7 +5,7 @@ weight: 5
 layout: single
 ---
 
-{{<beta>}} Geo Key Manager {{</beta>}}
+{{<heading-pill style="beta">}} Geo Key Manager {{</heading-pill>}}
 
 {{<description>}}
 Restrict where the private keys used for TLS certificates are stored and managed.

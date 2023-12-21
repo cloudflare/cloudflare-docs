@@ -149,7 +149,7 @@ $ sudo apt-get install ca-certificates
 3. Copy the certificate to the system, changing the file extension to `.crt`.
 
 ```sh
-$ sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
+$ sudo cp Cloudflare_CA.pem /usr/share/ca-certificates/Cloudflare_CA.crt
 ```
 
 4. Import the certificate.
@@ -448,9 +448,7 @@ If you use Kaniko with Google Cloud SDK, you must install the Cloudflare certifi
 
 To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
-<details>
-<summary>macOS</summary>
-<div>
+{{<details header="macOS">}}
 
 1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
 2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
@@ -472,12 +470,9 @@ You can verify the update with the following command.
 $ defaults read /Library/Preferences/com.google.drivefs.settings
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Windows</summary>
-<div>
+{{<details header="Windows">}}
 
 1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
 2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
@@ -499,8 +494,7 @@ You can verify the update with the following command.
 $ reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
@@ -536,6 +530,121 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 - [PyCharm](https://www.jetbrains.com/help/pycharm/settings-tools-server-certificates.html)
 - [Rider](https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html)
 - [WebStorm](https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html)
+
+### Eclipse
+
+To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to the Java virtual machine (JVM) used by Eclipse.
+
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
+2. Find the `java.home` value for your Eclipse installation.
+
+   1. In Eclipse, go to **Eclipse** > **About Eclipse** (or **Help** > **About Eclipse IDE** on Windows and Linux)
+   2. Select **Installation Details**, then go to **Configuration**.
+   3. Search for `java.home`, then locate the value. For example:
+
+   ```txt
+   ---
+   highlight: 2
+   ---
+   *** System properties:
+   java.home=/Users/<username>/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_17.0.8.v20230831-1047/jre
+   ```
+
+   4. Copy the full path after `java.home=`.
+
+3. Add the Cloudflare certificate to Eclipse's JVM.
+
+{{<details header="macOS and Linux">}}
+
+1. In a terminal, add the `java.home` value you copied as an environment variable.
+
+   ```sh
+   $ export JAVA_HOME=$(echo /path/to/java.home)
+   ```
+
+2. Run `keytool` to install and trust the Cloudflare certificate.
+
+   ```sh
+   $ "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
+   ```
+
+3. Restart Eclipse.
+
+{{</details>}}
+
+{{<details header="Windows">}}
+
+1. In a terminal, add the `java.home` value you copied as an environment variable.
+
+```bash
+set JAVA_HOME="\path\to\java.home"
+```
+
+2. Run `keytool` to install and trust the Cloudflare certificate.
+
+```bash
+"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+```
+
+3. Restart Eclipse.
+
+{{</details>}}
+
+For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
+
+### RubyGems
+
+To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+
+{{<details header="macOS and Linux">}}
+
+1. Install [OpenSSL](https://www.openssl.org/).
+2. In a terminal, format the Cloudflare certificate for Ruby.
+
+   ```sh
+   $ openssl x509 -inform DER -in ~/Downloads/Cloudflare_CA.pem -out ruby-root-ca.crt
+   ```
+
+3. Add your RubyGems directory as an environment variable.
+
+   ```sh
+   $ export RUBY_DIR=$(gem which rubygems)
+   ```
+
+4. Copy the Cloudflare certificate to your RubyGems certificate store.
+
+    ```sh
+    $ cp ~/Downloads/ruby-root-ca.crt $RUBY_DIR/ssl_cert/rubygems.org
+    ```
+
+5. Restart RubyGems.
+
+{{</details>}}
+
+{{<details header="Windows">}}
+
+1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
+2. In a terminal, format the Cloudflare certificate for Ruby.
+
+   ```bash
+   openssl x509 -inform DER -in %UserProfile%\Downloads\Cloudflare_CA.pem -out ruby-root-ca.crt
+   ```
+
+3. Add your RubyGems directory as an environment variable.
+
+   ```bash
+   set RUBY_DIR=gem which rubygems
+   ```
+
+4. Copy the Cloudflare certificate to your RubyGems certificate store.
+
+    ```bash
+    copy %UserProfile%\Downloads\ruby-root-ca.crt %RUBY_DIR%\ssl_cert\rubygems.org
+    ```
+
+5. Restart RubyGems.
+
+{{</details>}}
 
 ### Minikube
 

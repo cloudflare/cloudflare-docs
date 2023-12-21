@@ -1,13 +1,11 @@
 ---
 pcx_content_type: concept
 title: Interacting with Cloudflare
-aliases:
-- /fundamentals/get-started/basic-tasks/interact-with-cloudflare/
 ---
 
 # How to interact with Cloudflare
 
-Once you [set up an account](/fundamentals/account-and-billing/account-setup/), you have several ways to interact with Cloudflare.
+Once you [set up an account](/fundamentals/setup/account-setup/), you have several ways to interact with Cloudflare.
 
 ## Without code
 

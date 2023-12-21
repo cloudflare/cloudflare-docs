@@ -76,64 +76,53 @@ EDNS Client Subnet (ECS) is an extension forwarded by recursive resolvers and co
 
 ### Threats
 
-#### Threat score
-
-A threat is any event that can potentially cause serious damage and lead to site attacks. In the Cloudflare dashboard, in addition to visualizing threat analytics, you can monitor search engine crawlers visiting your websites. Cloudflare uses the IP reputation of a visitor to decide whether to present a challenge. A Cloudflare internal algorithm calculates an IP’s reputation and assigns a threat score that ranges from 0 to 100.
-
-The security levels and the challenge display criteria are:
-
-- **High** - for scores greater than 0
-- **Medium** - for scores greater than 14
-- **Low** - for scores greater than 24
-- **Essentially off** - for scores greater than 49
-
 #### Total Threats Stopped
 
 Total threats stopped indicates the number of suspicious and bad requests aimed at your site.
 
 #### Bad browser score
 
-The bad browser score indicates that the source of the request was not legitimate or that the request itself was malicious. This value results from the [Cloudflare Browser Integrity Check (BIC)](/fundamentals/security/browser-integrity-check/) feature. Users would see a Cloudflare error `1010` page in their browser. Cloudflare’s Browser Integrity Check looks for common HTTP headers used most often by spammers, and blocks access to your page. It also challenges visitors that do not have a user agent or use a non-standard user agent (commonly used by bots, crawlers, or visitors).
+The bad browser score indicates that the source of the request was not legitimate or that the request itself was malicious. This value results from the [Cloudflare Browser Integrity Check (BIC)](/waf/tools/browser-integrity-check/) feature. Users would see a Cloudflare error `1010` page in their browser. Cloudflare’s Browser Integrity Check looks for common HTTP headers used most often by spammers, and blocks access to your page. It also challenges visitors that do not have a user agent or use a non-standard user agent (commonly used by bots, crawlers, or visitors).
 
 #### Blocked hotlink score
 
-The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
+The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
 
 #### Bad IP
 
-A Bad IP is the classification for a request that came from an IP address that is not trusted by Cloudflare based on the [Threat Score](/logs/reference/glossary/#threat-score).
+A Bad IP is the classification for a request that came from an IP address that is not trusted by Cloudflare based on the [Threat Score](/analytics/account-and-zone-analytics/threat-types/#bad-ip).
 
 #### Country block
 
-Country block is the classification for a request from countries that were blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+Country block is the classification for a request from countries that were blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IP block (user)
 
-​​IP block (user) is the classification for a request from a specific IP address that was blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+​​IP block (user) is the classification for a request from a specific IP address that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IP range block (/16)
 
-A /16 IP range that was blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+A /16 IP range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IP range block (/24)
 
-A /24 IP range that was blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+A /24 IP range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 block (user)
 
-Requests from specific IPv6 addresses that were blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+Requests from specific IPv6 addresses that were blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 range block (/64)
 
-A /64 IPv6 range that was blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+A /64 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 range block (/48)
 
-A /48 IPv6 range that was blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+A /48 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### IPv6 range block (/32)
 
-A /32 IPv6 range that was blocked based on the user configuration set in [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+A /32 IPv6 range that was blocked based on the user configuration set in [WAF custom rules](/waf/custom-rules/).
 
 #### Captcha Error
 
@@ -141,7 +130,7 @@ A /32 IPv6 range that was blocked based on the user configuration set in [Cloudf
 
 #### New Captcha (user)
 
-​​New Captcha (user) is a challenge based on user configurations set for visitor’s IP in either the [Web Application Firewall (WAF)](/waf/) or [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/).
+​​New Captcha (user) is a challenge based on user configurations set for visitor’s IP in the [Web Application Firewall (WAF)](/waf/).
 
 ### Traffic
 
@@ -167,4 +156,4 @@ The value `Tor` indicates that the request was made using a Tor browser.
 
 #### WAF Events
 
-WAF Events are events that have been triggered based on [Web Applications Firewall rules](/waf/).
+WAF Events are events that have been triggered based on [Web Application Firewall (WAF) rules](/waf/).

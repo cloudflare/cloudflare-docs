@@ -2,14 +2,12 @@
 pcx_content_type: tutorial
 title: Create billing profile
 weight: 3
-aliases:
-- /fundamentals/account-and-billing/account-setup/create-billing-profile/
 updated: 2022-08-24
 ---
 
 # Create billing profile
 
-After you [create a new account](/fundamentals/account-and-billing/account-setup/create-account/), you might want to create your billing profile.
+After you [create a new account](/fundamentals/setup/account-setup/create-account/), you might want to create your billing profile.
 
 {{<tutorial>}}
 {{<tutorial-step title="Add primary payment method">}}
@@ -33,7 +31,7 @@ A backup payment method is used if the primary payment method fails. To add a ba
 
 {{<tutorial-step title="Set up billing notifications">}}
 
-If you have a [usage-based product](https://support.cloudflare.com/hc/articles/115004555148) like Rate Limiting or Load Balancing, set up Billing notifications to monitor usage and avoid surprises on your bill.
+If you have a [usage-based product](https://www.cloudflare.com/plans/) like Rate Limiting or Load Balancing, set up Billing notifications to monitor usage and avoid surprises on your bill.
 
 These notifications do not set a cap on usage, but rather alert you when your usage might be reaching a threshold.
 

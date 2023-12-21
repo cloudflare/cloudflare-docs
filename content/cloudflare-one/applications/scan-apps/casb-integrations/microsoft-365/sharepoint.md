@@ -35,3 +35,9 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 | Microsoft File Shared Company Wide Read Only        | Medium   |
 | Microsoft Folder Shared Company Wide Read and Write | Medium   |
 | Microsoft Folder Shared Company Wide Read Only      | Medium   |
+
+### Data Loss Prevention (optional)
+
+{{<render file="casb/_data-loss-prevention.md">}}
+
+{{<render file="casb/_m365-dlp-findings.md">}}

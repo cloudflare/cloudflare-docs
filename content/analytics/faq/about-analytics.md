@@ -4,8 +4,6 @@ title: About Cloudflare Analytics
 weight: 1
 meta:
     title: A quick overview of Cloudflare Analytics
-aliases:
-- /fundamentals/data-products/about-analytics/
 ---
 
 # About Cloudflare Analytics
@@ -14,7 +12,7 @@ In an effort to make analytics an ubiquitous component of all Cloudflare's produ
 
 You can access root-level analytics that give you an overview of metadata related to your Cloudflare account, analytics related to specific properties and products, and the GraphQL API that gives you more control over how you visualize the analytics and log information available on the Cloudflare dashboard.
 
-Refer to [Types of analytics](/fundamentals/data-products/types-of-analytics/) for more information regarding this subject.
+Refer to [Types of analytics](/analytics/types-of-analytics/) for more information regarding this subject.
 
 ## How Cloudflare captures and processes analytics data
 
@@ -22,8 +20,8 @@ The underlying datasets that Cloudflare Analytics captures and processes share t
 
 * All metrics reflect traffic proxied through the Cloudflare network (also known as orange-clouded), as configured via DNS records in the Cloudflare DNS app. Note that for a [CNAME setup](/dns/zone-setups/partial-setup/), Cloudflare is unable to offer DNS metrics.
 * Cloudflare does not count traffic for unproxied DNS records. However, if your site is not proxied through Cloudflare but Cloudflare is your authoritative DNS server, then we are able to collect DNS metrics.
-* Cloudflare can only proxy information for traffic targeting [specific ports](/fundamentals/get-started/reference/network-ports/).
-* In determining the originating country, Cloudflare uses the IP address associated with each request. Learn about [Configuring Cloudflare IP Geolocation](https://support.cloudflare.com/hc/articles/200168236).
+* Cloudflare can only proxy information for traffic targeting [specific ports](/fundamentals/reference/network-ports/).
+* In determining the originating country, Cloudflare uses the IP address associated with each request. Learn about [Configuring Cloudflare IP Geolocation](/network/ip-geolocation/).
 
 ## Apparent data discrepancies
 

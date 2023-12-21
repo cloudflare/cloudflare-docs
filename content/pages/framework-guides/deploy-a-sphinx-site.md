@@ -212,7 +212,7 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 

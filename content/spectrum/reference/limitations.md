@@ -8,6 +8,10 @@ weight: 0
 
 The following limitations apply to different protocols supported by Spectrum.
 
+## HTTPS
+
+At the moment, HTTPS applications do not support HTTP/3.
+
 ## UDP
 
 At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge.

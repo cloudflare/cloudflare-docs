@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-To create a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) based on your current filters and exclusions, select **Create firewall rule** in **Security Events**.
+To create a [custom rule](/waf/custom-rules/create-dashboard/) based on your current filters and exclusions, select **Create custom rule** in **Security Events**.

@@ -6,6 +6,7 @@ product:
   title: Constellation
   url: /constellation/
   group: Developer platform
+  show: false
 
 meta:
   title: Constellation docs

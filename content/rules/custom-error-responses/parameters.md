@@ -34,7 +34,7 @@ Custom error responses have the following parameters:
 
 {{<Aside type="warning">}}
 
-If you create an HTML error response, make sure the `referrer` meta tag is not present in the HTML code since it will disrupt [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/):
+If you create an HTML error response, make sure the `referrer` meta tag is not present in the HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/):
 
 `<meta name="referrer" (...) />`
 

@@ -107,10 +107,22 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
+1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#6-run-the-tunnel)).
 
 For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
+
+## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
+
+This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
+
+```txt
+ingress:
+  - hostname: test.example.com
+    service: https://localhost:443
+    originRequest:
+      originServerName: test.example.com
+```
 
 ## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
 
@@ -118,7 +130,7 @@ This error will appear if a certificate has not been generated for the Access ap
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
-These mobile applications may use [certificate pinning](/cloudflare-one/glossary/#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
+These mobile applications may use {{<glossary-tooltip term_id="certificate pinning">}}certificate pinning{{</glossary-tooltip>}} Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
 ## My tunnel fails to authenticate.
@@ -161,7 +173,7 @@ If `cloudflared` returns error `error="remote error: tls: handshake failure"`, c
 
 ## Tunnel connections fail with `Too many open files` error.
 
-If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
+If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/#ulimits) on the machine running `cloudflared`.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
@@ -186,40 +198,24 @@ $ sudo systemctl restart systemd-resolved.service
 
 ## Windows incorrectly shows `No Internet access` when WARP is enabled.
 
-Windows runs network connectivity checks that can sometimes fail due to how the WARP client configures the local DNS proxy on the device. This can result in a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. However, some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
+[NCSI](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-overview) is a Windows feature for determining network quality and connectivity. When WARP is enabled, NCSI checks can sometimes fail and cause a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. Some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
 
-There are two options to resolve the issue:
+To resolve the issue, you will need to edit two Windows registry keys:
 
-- **Option 1**: In Windows, configure the Network Connectivity Status Indicator (NCSI) to detect the WARP DNS server.
-  {{<tabs labels="Registry key | Group policy">}}
-  {{<tab label="registry key" no-code="true">}}
-
-To fix the issue with a registry key:
-
-```bash
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator" /v UseGlobalDNS /t REG_DWORD /d 1 /f
-```
-
-{{</tab>}}
-{{<tab label="group policy" no-code="true">}}
-
-To fix the issue with a local group policy:
-
-1. Open `gpedit.msc`.
-2. Go to **Computer Configuration** > **Administrative Templates** > **Network** > **Network Connectivity Status Indicator**.
-3. Enable **Specify Global DNS**.
-4. Update group policy settings on the device:
-
-```bash
-gpupdate /force
-```
-
-5. Reboot the device.
-
-{{</tab>}}
-{{</tabs>}}
-
-- **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.
+1. Configure NCSI to detect WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
+    ```txt
+    HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator
+    Type: DWORD
+    Value: UseGlobalDNS
+    Data: 1
+    ```
+2. Configure NCSI to use active probing mode, as WARP may be obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
+    ```txt
+    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet
+    Type: DWORD
+    Value: EnableActiveProbing
+    Data: 1
+    ```
 
 ## I see Storage Partitioned Error.
 
@@ -236,4 +232,31 @@ To disable third-party storage partitioning:
 1. Go to `chrome://flags/#third-party-storage-partitioning`.
 2. Set **Experimental third-party storage partitioning** to _Disabled_.
 3. Select **Relaunch** to apply the change.
+
+## I see `failed to sufficiently increase receive buffer size` in my cloudflared logs.
+
+This buffer size increase is reported by the [quic-go library](https://github.com/quic-go/quic-go) leveraged by [cloudflared](https://github.com/cloudflare/cloudflared). You can learn more about the log message in the [quic-go repository](https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes). This log message is generally not impactful and can be safely ignored when troubleshooting. However, if you have deployed `cloudflared` within a unique, high-bandwidth environment then buffer size can be manually overridden for testing purposes.
+
+To set the maximum receive buffer size on Linux:
+
+1. Create a new file under `/etc/sysctl.d/`:
+
+  ```sh
+  $ sudo vi 98-core-rmem-max.conf
+  ```
+
+2. In the file, define the desired buffer size:
+
+  ```txt
+  net.core.rmem_max=2500000
+  ```
+
+3. Reboot the host machine running `cloudflared`.
+
+4. To validate that these changes have taken effect, use the `grep` command:
+
+  ```sh
+  $ sudo sysctl -a | grep net.core.rmem_max
+  net.core.rmem_max = 2500000
+  ```
 

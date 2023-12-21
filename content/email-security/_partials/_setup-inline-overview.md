@@ -7,7 +7,7 @@ _build:
 
 With an **Inline deployment** for your [Area 1 setup](/email-security/deployment/), Area 1 evaluates email messages before they reach a user's inbox.
 
-More technically, Area 1 becomes a hop in the SMTP processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
+More technically, Area 1 becomes a hop in the {{<glossary-tooltip term_id="SMTP">}}SMTP{{</glossary-tooltip>}} processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
 
 ![With inline deployment, messages travel through Area 1's email filter before reaching your users.](/images/email-security/deployment/inline-setup/inline-deployment-diagram.png)
 
@@ -19,7 +19,7 @@ When you choose an inline deployment, you get the following benefits:
 - Your deployment is simpler, because any complex processing can happen downstream and without modification.
 - Area 1 can [modify delivered messages](/email-security/email-configuration/email-policies/text-addons/), adding subject or body mark-ups.
 - Area 1 can offer high availability and adaptive message pooling.
-- You can set up advanced handling downstream for non-quarantined messages with [added X-headers](/email-security/reference/dispositions-and-attributes/).
+- You can set up advanced handling downstream for non-quarantined messages with [added `X-headers`](/email-security/reference/dispositions-and-attributes/).
 
 ## Limitations
 

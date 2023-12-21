@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Rocket Loader
-weight: 4
+weight: 7
 ---
 
 # Rocket Loader

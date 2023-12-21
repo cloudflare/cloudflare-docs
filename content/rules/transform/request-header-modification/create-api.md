@@ -15,9 +15,9 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP request hea
 
 When creating an HTTP request header modification rule via API, make sure you:
 
-*   Set the rule action to `rewrite`.
-*   Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set or remove header).
-*   Deploy the rule to the `http_request_late_transform` phase at the zone level.
+* Set the rule action to `rewrite`.
+* Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set or remove header).
+* Deploy the rule to the `http_request_late_transform` phase at the zone level.
 
 ## Procedure
 
@@ -27,9 +27,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 ## Example requests
 
-<details>
-<summary>Example: Add an HTTP request header with a static value</summary>
-<div>
+{{<details header="Example: Add an HTTP request header with a static value">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -101,12 +99,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Add an HTTP request header with a dynamic value</summary>
-<div>
+{{<details header="Example: Add an HTTP request header with a dynamic value">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a dynamic value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -178,12 +173,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Remove an HTTP request header</summary>
-<div>
+{{<details header="Example: Remove an HTTP request header">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — removing an HTTP request header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset):
 
@@ -253,8 +245,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

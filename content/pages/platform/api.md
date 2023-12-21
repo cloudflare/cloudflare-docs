@@ -15,7 +15,7 @@ To create an API token:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select the user icon on the top right of your dashboard > **My Profile**.
-3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**. 
+3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**.
 4. You can go to **Edit Cloudflare Workers** template > **Use template** or go to **Create Custom Token** > **Get started**. If you create a custom token, you will need to make sure to add the **Cloudflare Pages** permission with **Edit** access.
 
 ### Make requests
@@ -27,7 +27,7 @@ $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/project
   -H 'Authorization: Bearer {API_token}'
 ```
 
-Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for more information.
+Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/setup/find-account-and-zone-ids/) for more information.
 
 ## Examples
 
@@ -47,7 +47,7 @@ export default {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
         // We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/#secret
-        "Authorization": env.API_TOKEN,
+        "Authorization": `Bearer ${env.API_TOKEN}`,
       },
     };
 
@@ -72,7 +72,7 @@ export default {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
         // We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/#secret
-        "Authorization": env.API_TOKEN,
+        "Authorization": `Bearer ${env.API_TOKEN}`,
       },
     };
 
@@ -87,7 +87,7 @@ export default {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Authorization": env.API_TOKEN,
+            "Authorization": `Bearer ${env.API_TOKEN}`,
           },
         });
       }
@@ -114,7 +114,7 @@ export default {
       headers: {
         "content-type": "application/json;charset=UTF-8",
         // We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/#secret
-        "Authorization": env.API_TOKEN,
+        "Authorization": `Bearer ${env.API_TOKEN}`,
       },
     };
 

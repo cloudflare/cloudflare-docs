@@ -4,11 +4,11 @@ title: Changelog
 layout: changelog
 meta:
   description: Review recent changes to Cloudflare Radar.
-changelog_file_name: radar
+changelog_file_name: [radar]
 outputs:
     - html
     - rss
-weight: 7
+weight: 8
 ---
 
 # Changelog

@@ -21,7 +21,7 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.page.url` | URL | [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) Object containing information about the current URL |
 | `system.page.referrer` | String | Current page referrer from `document.referrer`. |
 | `system.page.encoding` | String | Current page character encoding from `document.characterSet`. |
-| `system.cookies` | Object | Key-Value object containg all present cookies. |
+| `system.cookies` | Object | Key-Value object containing all present cookies. |
 | `system.device.ip` | String | Visitor incoming IP address. |
 | `system.device.resolution` | String | Screen resolution for device. |
 | `system.device.viewport` | String | Visible web page area in user’s device. |

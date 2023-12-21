@@ -64,6 +64,7 @@ export const langs: Record<string, string> = {
   gql: 'graphql',
   svelte: 'html',
   javascript: 'js',
+  jsonc: 'json',
   typescript: 'ts',
   plaintext: 'txt',
   text: 'txt',

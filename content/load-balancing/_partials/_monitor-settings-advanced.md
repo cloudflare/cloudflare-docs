@@ -15,7 +15,8 @@ _build:
     *   Looks for a case-insensitive substring in the response body.
     *   Make sure that the value is relatively static and within the first 100 MB of the HTML page.
 *   **Simulate Zone**:
-    *   Pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration.
+    *   Pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration using the zone specified.
+    *   It is recommended to use the same zone in which the Load Balancer exists.
     *   Ensures health monitor requests are compatible with features like [authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/) and [Argo Smart Routing](/argo-smart-routing/).
 *   **Follow Redirects**:
     *   Instead of reporting a `301` or `302` code as unhealthy, the health monitor request follows redirects to the final endpoint.

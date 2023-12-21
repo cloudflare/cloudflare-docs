@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Quickstart
-weight: 1
+weight: 2
 ---
 
 # Quickstart
@@ -17,14 +17,14 @@ Get up and running quickly with Load Balancing. For more in-depth explanations, 
 Make sure you:
 
 - Have access to multiple servers, either physical or cloud-based.
-- Have access to Load Balancing, available as an [add-on](/load-balancing/how-to/enable-load-balancing/) for any type of account.
-- Have test and production hostnames that are covered by [SSL/TLS certificates](/load-balancing/reference/dns-records/#ssltls-coverage).
+- Have access to Load Balancing, available as an [add-on](/load-balancing/get-started/enable-load-balancing/) for any type of account.
+- Have test and production hostnames that are covered by [SSL/TLS certificates](/load-balancing/load-balancers/dns-records/#ssltls-coverage).
 
 {{</tutorial-prereqs>}}
 
 {{<tutorial-step title="Create a monitor">}}
 
-{{<render file="_monitor-definition.md">}}
+{{<glossary-definition term_id="monitor">}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -56,7 +56,7 @@ Make sure you:
 
 {{<tutorial-step title="Create pools">}}
 
-{{<render file="_pool-definition.md">}}
+{{<glossary-definition term_id="origin pool">}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

@@ -6,4 +6,6 @@ weight: 9
 
 # Observability
 
-{{<directory-listing>}}
+Test and debug your Worker projects.
+
+{{<directory-listing showDescriptions="true">}}

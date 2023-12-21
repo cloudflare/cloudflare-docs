@@ -19,7 +19,7 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 Before you start this tutorial, ensure you have:
 
 - All the [prerequisites](/waiting-room/about/#prerequisites) completed.
-- For this tutorial, we will use an open source tool from Apache, [JMeter](https://jmeter.apache.org/). You can download the binary from [JMeter's website](https://jmeter.apache.org/download_jmeter.cgi). 
+- For this tutorial, we will use an open source tool from Apache, [JMeter](https://jmeter.apache.org/). You can download the binary from [JMeter's website](https://jmeter.apache.org/download_jmeter.cgi).
 
 ---
 
@@ -41,8 +41,8 @@ Before running the sample plan, edit the waiting room in the test plan to point 
 
 Field | Value
 ------| -----
-Protocol | https 
-Server Name or IP | www.example.com
+Protocol | https
+Server Name or IP | <www.example.com>
 Path | deals/summer
 
 ![Update the HTTP Request section](/images/waiting-room/http-request-section.png)
@@ -70,11 +70,7 @@ Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/tes
 
 To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test.
 
-
-
-<details>
-  <summary>Example Curl Statement</summary>
-  <div>
+{{<details header="Example Curl Statement">}}
 
 ```bash
 echo '{
@@ -92,12 +88,11 @@ echo '{
   -X POST
 ```
 
-</div>
-</details>
+{{</details>}}
 
 From our test, we got the following results (these are extracted from results of the query for readability):
 
-- 15:35:00 UTC              
+- 15:35:00 UTC
   - `"totalActiveUsers": 137,`
   - `"totalActiveUsersConfig": 300,`
   - `"totalQueuedUsers": 0`

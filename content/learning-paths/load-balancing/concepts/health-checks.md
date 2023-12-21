@@ -17,6 +17,6 @@ That's where another part of the load balancing equation comes in: monitors and 
 
 A monitor issues health checks periodically to evaluate the health of a each server within a pool.
 
-{{<render file=_health-check-definition.md productFolder="load-balancing">}}
+{{<glossary-definition term_id="health check" prepend="These health checks are ">}}
 
 This system of request and response ensures that a load balancer knows which servers can handle incoming requests.

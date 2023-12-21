@@ -92,7 +92,7 @@ using Cloudflare nameservers.
 
 3\. From the Home screen of the Cloudflare section, turn on Automatic Platform Optimization.
 
-For more details, refer to [Understanding Automatic Platform Optimization (APO) with WordPress](https://support.cloudflare.com/hc/en-us/articles/360049822312-Understanding-Automatic-Platform-Optimization-APO-with-WordPress#h_01EEXXJ3TS1J0Z7151CSBM9BYP).
+For more details, refer to [Understanding Automatic Platform Optimization (APO) with WordPress](/automatic-platform-optimization/).
 
 ___
 

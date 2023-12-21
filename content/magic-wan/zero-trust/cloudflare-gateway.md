@@ -26,7 +26,7 @@ By default, the following traffic routed through Magic WAN tunnels and destined 
 
 Traffic destined to public IPs will be routed over the public Internet, unless explicitly specified otherwise. If you want to configure specific public IP ranges to be routed through your Magic WAN tunnels instead of over the public Internet after filtering, contact your account team.
 
-This traffic will egress from Cloudflare according to the [egress policies](/cloudflare-one/policies/gateway/egress-policies/) you define in Cloudflare Gateway. By default, it will egress from a shared [Cloudflare public IP range](https://cloudflare.com/ips).
+This traffic will egress from Cloudflare according to the [egress policies](/cloudflare-one/policies/gateway/egress-policies/) you define in Cloudflare Gateway. By default, it will egress from a shared Cloudflare public IP range.
 
 ## Private traffic
 

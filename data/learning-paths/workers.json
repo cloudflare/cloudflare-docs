@@ -1,9 +1,9 @@
 {
-    "title": "Intro to Cloudflare Workers",
+    "title": "Build applications with Cloudflare Workers",
     "uid": "workers-intro",
-    "path": "https://egghead.io/courses/introduction-to-cloudflare-workers-5aa3",
+    "path": "/learning-paths/workers/",
     "priority": 4,
-    "description": "Cloudflare Workers is a powerful platform, and this course serves as a great introduction for what it can do.",
+    "description": "Deploy serverless code, globally with exceptional performance, reliability, and scale.",
     "products": [
       "Workers"
     ],

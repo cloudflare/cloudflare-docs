@@ -111,11 +111,11 @@ html {
 }
 
 html {
-  --sans-serif-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+  --sans-serif-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
-  --monospace-font-family: Menlo, "SF Mono", "Andale Mono", "Roboto Mono",
-    Monaco, monospace;
+  --monospace-font-family: ui-monospace, Menlo, "SF Mono", "Andale Mono", "Cascadia Code", "Source Code Pro", "Roboto Mono",
+    Monaco, Consolas, "DejaVu Sans Mono", monospace;
   --font-family: var(--sans-serif-font-family);
   --cloudflare-logo-gray-rgb: 64, 64, 65;
   --cloudflare-logo-orange-rgb: 243, 128, 32;
@@ -3518,7 +3518,7 @@ code .DocsMarkdown--prop-meta {
   top: 0.05em;
   left: -0.8em;
   display: inline-block;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 2em;
   line-height: 1;
@@ -3968,6 +3968,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsMarkdown blockquote> :last-child,
 .DocsMarkdown details> :last-child,
 .DocsMarkdown details summary+div> :last-child,
+.DocsMarkdown details summary+div> :last-child pre.CodeBlock,
 .DocsMarkdown li> :not(ul):not(ol):not(pre):not(figure):not(table):last-child,
 .DocsMarkdown ol> :last-child,
 .DocsMarkdown ul> :last-child {
@@ -4191,10 +4192,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 
   @media not all and (min-resolution: 0.001dpcm) {
-    @media {
-      .DocsSearch .algolia-autocomplete {
-        background: rgba(var(--background-color-rgb), 1);
-      }
+    .DocsSearch .algolia-autocomplete {
+      background: rgba(var(--background-color-rgb), 1);
     }
   }
 }
@@ -4442,6 +4441,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocSearch-Button-Key > svg {
   height: unset !important;
   width: unset !important;
+}
+
+.DocSearch-Help a {
+  text-decoration: underline;
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+  color: var(--docsearch-highlight-color);
+  font-weight: 600;
 }
 
 .DocsMobileHeader {
@@ -5154,6 +5164,11 @@ pre {
   align-items: center;
 }
 
+.inline-pill {
+  display: inline !important;
+  margin-left: 4px;
+}
+
 .DocsMarkdown--pill {
   display: flex;
   flex-direction: row;
@@ -5371,6 +5386,10 @@ pre {
   color: var(--color);
 }
 
+.littlefoot__wrapper {
+  max-width: 100% !important;
+}
+
 .littlefoot__content {
   width: 100% !important;
 }
@@ -5474,7 +5493,8 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 .tutorialPreReqs {
-  padding-left: 2em;
+  padding-top: 0.5em;
+  padding-inline: 2em;
   border: 2px solid gray;
   border-radius: 15px;
 }
@@ -5549,4 +5569,103 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 
 .footnote-backref {
   visibility: hidden;
+}
+
+/* glossary styling */
+.viewMoreContainer {
+  width: 100%;
+}
+
+.viewMoreButton {
+  margin: auto;
+  width: 12em;
+  height: 2em;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.viewMoreButton:hover {
+  text-decoration: underline;
+  transition: text-decoration 0.5s ease-in-out;
+}
+
+.selectorDropdowns {
+  display: flex;
+  justify-content: flex-start;
+  border-top: 1px solid #242628;
+  border-bottom: 1px solid #242628;
+  padding: .5em 0 .5em 0;
+}
+
+@media (max-width:950px) {
+  .selectorDropdowns {
+      flex-direction: column;
+  }
+}
+
+[theme=dark] .selectorDropdowns {
+  border-top: 1px solid #f3f3f4;
+  border-bottom: 1px solid #f3f3f4;
+}
+
+.selectorDropdowns div {
+  margin-right: 2em;
+  display: flex;
+  flex-direction: column;
+  padding: .75em;
+  justify-content: center;
+}
+
+.selectorDropdowns div label {
+  padding-bottom: .3em;
+}
+
+.selectorDropdowns div select {
+  width: 15em;
+  height: 2.25em;
+}
+
+.searchInput input {
+  height: 2.25em;
+  width: 15em;
+  padding-left: .5em
+}
+
+.glossary-tooltip {
+  border-bottom: 1px dotted rgba(var(--orange-rgb)); /* If you want dots under the hoverable text */
+  color: inherit;
+}
+
+[data-title] {
+  position: relative;
+}
+
+[data-title]:after {
+  content: attr(data-title);
+  color: inherit;
+  background-color: #f5f5f5;
+  padding: 1em;
+  z-index: 99999;
+  visibility: hidden;
+  position: absolute;
+  left: 0%;
+  bottom: 120%;
+  width: 15em;
+  border: .75px solid gray;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+          box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+[theme="dark"] [data-title]:after {
+  background-color: #242628;
+}
+
+[data-title]:hover:after, [data-title]:focus:after {
+  opacity: 1;
+  -webkit-transition: all 0.1s ease 0.1s;
+  transition: all 0.1s ease 0.1s;
+  visibility: visible;
 }

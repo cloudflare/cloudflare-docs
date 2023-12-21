@@ -1,16 +1,18 @@
 ---
 pcx_content_type: navigation
-title: Routing
+title: Routes and domains
 layout: single
+meta:
+  description: Connect your Worker to an external endpoint (via Routes, Custom Domains or a `workers.dev` subdomain) such that it can be accessed by the Internet.
 ---
 
-# Routing
+# Routes and domains
 
 To allow a Worker to receive inbound HTTP requests, you must connect it to an external endpoint such that it can be accessed by the Internet.
 
 There are three types of routes:
 
-* [Custom Domains](/workers/configuration/routing/custom-domains): Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
+* [Custom Domains](/workers/configuration/routing/custom-domains): Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
 
 * [Routes](/workers/configuration/routing/routes/): Routes that are set within a Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
 

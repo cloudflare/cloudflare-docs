@@ -70,6 +70,8 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 API value: `isolate`
 
+[Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) do not support isolation.
+
 For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Isolate
@@ -116,7 +118,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 ### Application
 
-{{<render file="gateway/_application.md" withParameters="HTTP">}}
+{{<render file="gateway/selectors/_application.md" withParameters="HTTP">}}
 
 {{<Aside type="warning" header="Multiple API selectors required for Terraform">}}
 
@@ -138,7 +140,7 @@ For more information, refer to our list of [content categories](/cloudflare-one/
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 {{</Aside>}}
 
-{{<render file="gateway/_destination-continent.md" withParameters="http.dst_ip">}}
+{{<render file="gateway/selectors/_destination-continent.md" withParameters="http.dst_ip">}}
 
 ### Destination Country
 
@@ -146,7 +148,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 {{</Aside>}}
 
-{{<render file="gateway/_destination-country.md" withParameters="http.dst_ip">}}
+{{<render file="gateway/selectors/_destination-country.md" withParameters="http.dst_ip">}}
 
 ### Destination IP
 
@@ -222,7 +224,7 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 
 ### Device Posture
 
-{{<render file="gateway/_device-posture.md">}}
+{{<render file="gateway/selectors/_device-posture.md">}}
 
 ### Security Risks
 
@@ -235,16 +237,16 @@ For more information, refer to our list of [security categories](/cloudflare-one
 ### Source Continent
 
 The continent of the user making the request.
-{{<render file="gateway/_source-continent.md" withParameters="http.src_ip">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="http.src_ip">}}
 
 ### Source Country
 
 The country of the user making the request.
-{{<render file="gateway/_source-country.md" withParameters="http.src_ip">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="http.src_ip">}}
 
 ### Source Internal IP
 
-{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;http">}}
+{{<render file="gateway/selectors/_source-internal-ip.md" withParameters="HTTP;;http">}}
 
 ### Source IP
 
@@ -253,6 +255,8 @@ The country of the user making the request.
 | Source IP | `http.src.ip == "10.0.0.0/8"` |
 
 ### URL
+
+{{<render file="gateway/_url-slash.md">}}
 
 | UI name | API example                                             |
 | ------- | ------------------------------------------------------- |
@@ -278,7 +282,7 @@ The country of the user making the request.
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ## Comparison operators
 

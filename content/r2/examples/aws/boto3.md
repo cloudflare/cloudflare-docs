@@ -28,21 +28,22 @@ filename: main.py
 ---
 import boto3
 
-s3 = boto3.resource('s3',
-  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
-  aws_access_key_id = '<access_key_id>',
-  aws_secret_access_key = '<access_key_secret>'
+s3 = boto3.client(
+    service_name ="s3",
+    endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
+    aws_access_key_id = '<access_key_id>',
+    aws_secret_access_key = '<access_key_secret>',
+    region_name="<location>", # Must be one of: wnam, enam, weur, eeur, apac, auto
 )
 
-print('Buckets:')
-for bucket in s3.buckets.all():
-  print(' - ', bucket.name)
+# Get object information
+object_information = s3.head_object(Bucket=<R2_BUCKET_NAME>, Key=<FILE_KEY_NAME>)
 
-bucket = s3.Bucket('my-bucket-name')
+# Upload/Update single file
+s3.upload_fileobj(io.BytesIO(file_content), <R2_BUCKET_NAME>, <FILE_KEY_NAME>)
 
-print('Objects:')
-for item in bucket.objects.all():
-  print(' - ', item.key)
+# Delete object
+s3.delete_object(Bucket=<R2_BUCKET_NAME>, Key=<FILE_KEY_NAME>)
 ```
 
 ```sh

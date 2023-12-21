@@ -13,7 +13,7 @@ Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into a
 
 ![Turnstile Overview](/images/turnstile/turnstile-overview.png)
 
-Turnstile leverages the same technology behind our [Managed Challenge](https://blog.cloudflare.com/end-cloudflare-captcha/), but opens it to anyone not currently utilizing the Cloudflare network. In contrast to our Challenge page offerings, Turnstile allows the customer to run challenges anywhere on their site in a less-intrusive way without requiring the use of Cloudflare’s CDN.
+{{<render file="_challenge-behavior.md">}}
 
 Rather than try to unilaterally deprecate and replace CAPTCHA with a single alternative, we built a platform to test many alternatives and rotate new challenges in and out as they become more or less effective. 
 
@@ -31,6 +31,12 @@ Turnstile [widget types](/turnstile/reference/widget-types/) include:
 
 ---
 
+## Accessibility
+
+Turnstile is WCAG 2.1 AA compliant. 
+
+---
+
 ## Features
  
 {{<feature header="Turnstile Analytics" href="/turnstile/reference/turnstile-analytics/">}}
@@ -45,10 +51,12 @@ Assess the number of challenges issued, evaluate the challenge solve rate, and v
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 {{</related>}}
 
+{{<related header="WAF" href="/waf/" product="waf">}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</related>}}
+
 ---
 
 ## Availability
 
-Turnstile is currently in open beta and available as a free tool for all customers.
-
-For the beta, customers are limited to 1 million calls to the siteverify verification endpoint per month per site. Customers who need additional requests can upgrade to [Enterprise Bot Management](/bots/plans/bm-subscription/).
+Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.

@@ -31,6 +31,7 @@
   {{- range $index2, $item2 := (split $item.link "/") -}}
   {{- if gt (len $item2 ) 0 -}}
     {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item2).Path -}}
+    
     {{- $page := $.Site.GetPage $rellink -}}
     {{/* Add weight of current section to global page weight calculation: currPageWeight * 10^(8-index2) */}}
     {{- $allSectionsWeight = (add $allSectionsWeight (mul $page.Weight (math.Pow 10 (sub 8 $index2)))) -}}

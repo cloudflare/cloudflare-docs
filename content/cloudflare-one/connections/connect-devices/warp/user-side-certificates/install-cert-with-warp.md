@@ -20,7 +20,7 @@ This feature is available on Windows, macOS, and Linux using a client version of
 2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
 3. Enable **Install CA to system certificate store**.
 4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
-5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) in your Zero Trust organization.
+5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 
 If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the system keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
 
@@ -41,7 +41,7 @@ WARP only installs the system certificate — it does not install the certificat
 
 The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
 
-The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` for easy reference by scripts or tools.
+The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
 
 ### macOS
 
@@ -52,19 +52,33 @@ The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` 
     1. Select **Trust**.
     2. Set **When using this certificate** to _Always Trust_.
   
-The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for easy reference by scripts or tools.
-
+The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
 
 ### Linux
 
-On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `Cloudflare_CA.crt`.
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `managed-warp.pem`.
 
-If you do not see the certificate, run the following command to update the system store:
+If you do not see the certificate, run the following commands to update the system store:
 
-```sh
-$ update-ca-certificates
-```
-The certificate is also placed in `/var/lib/cloudflare-warp/installed_cert.pem` for easy reference by scripts or tools.
+1. Go to the system certificate store.
+
+    ```sh
+    $ cd /usr/local/share/ca-certificates
+    ```
+
+2. Rename the certificate, changing the file extension to `.crt`.
+
+    ```sh
+    $ sudo mv managed-warp.pem managed-warp.crt
+    ```
+
+3. Update your list of custom CA certificates.
+
+    ```sh
+    $ sudo update-ca-certificates
+    ```
+
+The certificate is also placed in `/var/lib/cloudflare-warp/installed_cert.pem` for reference by scripts or tools.
 
 ## Uninstall the certificate
 

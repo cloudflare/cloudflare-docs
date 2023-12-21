@@ -55,9 +55,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }'
 ```
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -94,8 +92,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation instead, like in the following example:
 
@@ -143,9 +140,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -203,8 +198,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

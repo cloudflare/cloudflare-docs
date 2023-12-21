@@ -2,6 +2,14 @@
 link: "/notifications/changelog/"
 productName: Notifications
 entries:
+- publish_date: '2023-10-06'
+  title: 
+  description: |-
+    * Added **Traffic Anomalies Alerts** to notify customers when traffic to their domain has an unexpected spike or drop.
+- publish_date: '2023-09-28'
+  title:
+  description: |-
+    * Added **[Incident Alerts](https://blog.cloudflare.com/incident-alerts/)**.
 - publish_date: '2023-08-23'
   title: 
   description: |-
@@ -9,12 +17,12 @@ entries:
 - publish_date: '2023-04-19'
   title: 
   description: |-
-    * Added **Maintenance Notification** alerts.
+    * Added **Maintenance Notification Alerts**.
 - publish_date: '2023-03-13'
   title: 
   description: |-
-    * Added **Pages** alerts.
+    * Added **Pages Alerts**.
 - publish_date: '2023-03-02'
   title: 
   description: |-
-    * Added **Brand Protection** alerts.
+    * Added **Brand Protection Alerts**.

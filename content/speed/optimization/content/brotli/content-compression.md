@@ -52,7 +52,7 @@ application/x-perl
 application/x-httpd-cgi
 text/xml
 application/xml
-application/xml+rss
+application/rss+xml
 application/vnd.api+json
 application/x-protobuf
 application/json
@@ -87,8 +87,16 @@ Cloudflare's global network can deliver content to website visitors using GZIP c
 
 For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
 
-{{<Aside type="note">}}
-Enterprise customers can use [Compression Rules](/rules/compression-rules/) to override Cloudflare's default compression behavior.
+Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
+
+{{<Aside type="warning" header="Minimum response size for compression">}}
+
+Cloudflare will only apply compression to responses with a minimum size when sending them to website visitors:
+* For GZIP, responses must have a minimum size of 48 bytes.
+* For Brotli, responses must have a minimum size of 50 bytes.
+
+Smaller responses will not be compressed, regardless of their content type.
+
 {{</Aside>}}
 
 ---

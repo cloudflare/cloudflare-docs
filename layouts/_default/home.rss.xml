@@ -1,6 +1,6 @@
 {{- $permalink := .Permalink -}}
 {{- $atomLink := print .Permalink "index.xml" -}}
-{{- $changelogData := index .Site.Data "changelogs" -}}
+{{- $changelogData := partial "full-changelog-data.html" -}}
 {{- $changelogRendered := slice -}}
 
 {{- range $index, $product := $changelogData -}}
@@ -20,20 +20,34 @@
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
     {{- range $changelogRendered -}}
+    {{- $entry := . -}}
     {{- $link := "" -}}
+    {{- $title := "" -}}
     {{- $rellink := .url -}}
     {{- $product := .product -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with .title -}}
+    {{ $title = printf "%s - %s" $product . }}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
     {{- else -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- $title = printf "%s - %s" $product .publish_date -}}
+    {{- end -}}
+    {{- with .link -}}
+    {{- if ne $product "Wrangler" -}}
+    {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- end -}}
+    {{- end -}}
+    {{- with .individual_page -}}
+    {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
+    {{- $description = $result.content -}}
+    {{- $title = printf "%s - %s" $product $result.title }}
     {{- end -}}
     <item>
-    <title>{{- with .title -}}{{ printf "%s · %s" $product . }}{{ else }}{{ printf "%s · %s" $product .publish_date }}{{ end }}</title>
+    <title>{{- $title -}}</title>
     <link>{{ $link }}</link>
-    <description>{{ $description }}</description>
+    <description>{{- $description -}}</description>
     <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
     <product>{{- $product -}}</product>
     </item>

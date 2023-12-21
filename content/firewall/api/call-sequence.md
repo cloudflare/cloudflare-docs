@@ -8,6 +8,8 @@ weight: 4
 
 The API call examples in this site illustrate the **recommended sequence** of calling the two APIs (the [Cloudflare Filters API](/firewall/api/cf-filters/) and the [Firewall Rules API](/firewall/api/cf-firewall-rules/)).
 
+{{<render file="_deprecation-notice.md">}}
+
 The image below depicts this sequence, which can be applied for creating and editing rules. The reverse would apply for delete operations.
 
 ![Recommended flow for calling the Cloudflare Filters API and Firewall Rules API when creating or editing rules](/images/firewall/recommended-flow.png)

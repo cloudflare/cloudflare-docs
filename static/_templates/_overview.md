@@ -5,7 +5,7 @@ layout: overview
 pcx_content_type: overview
 ---
  
-# Cloudflare <product name> (or {{<beta>}}Cloudflare <product name>{{</beta>}} for products in beta)
+# Cloudflare <product name> (or {{<heading-pill style="beta">}}Cloudflare <product name>{{</heading-pill>}} for products in beta)
  
 {{<description>}}
 

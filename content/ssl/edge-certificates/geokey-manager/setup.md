@@ -10,7 +10,7 @@ meta:
 
 # Setup
 
-{{<beta heading="h2">}} Geo Key Manager v2 {{</beta>}}
+{{<heading-pill style="beta" heading="h2">}} Geo Key Manager v2 {{</heading-pill>}}
 
 {{<Aside type="note">}}
 

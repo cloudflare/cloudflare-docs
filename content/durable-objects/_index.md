@@ -39,13 +39,13 @@ Learn how Durable Objects provide strongly consistent, serializable key-value st
 
 {{</feature>}}
 
-{{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/hibernatable-websockets-api/">}}
+{{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/websockets/">}}
 
 Learn how the Hibernatable WebSockets API allows you to manage the connections of multiple clients at scale.
 
 {{</feature>}}
 
-{{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms-in-durable-objects/">}}
+{{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms/">}}
 
 Learn how to use alarms to trigger a Durable Object and perform compute in the future at customizable intervals.
 
@@ -85,7 +85,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{<resource header="Pricing" href="/durable-objects/platform/pricing/" icon="reference-architecture">}}Learn about Durable Objects pricing.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about storage and database options you can build with Workers.{{</resource>}}
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about storage and database options you can build with Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

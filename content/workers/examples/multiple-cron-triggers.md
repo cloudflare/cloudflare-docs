@@ -17,7 +17,6 @@ export default {
   async scheduled(event, env, ctx) {
     // Write code for updating your API
     switch (event.cron) {
-      // You can set up to three schedules maximum.
       case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
@@ -44,7 +43,6 @@ const handler: ExportedHandler = {
   async scheduled(event, env, ctx) {
     // Write code for updating your API
     switch (event.cron) {
-      // You can set up to three schedules maximum.
       case "*/3 * * * *":
         // Every three minutes
         await updateAPI();

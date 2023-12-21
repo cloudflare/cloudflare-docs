@@ -15,7 +15,7 @@ Follow the steps below to enable SSL/TLS protection for your application.
 
 {{<tutorial-prereqs>}}
 
-- [Create an account and register an application](/fundamentals/get-started/setup/)
+- [Create an account and register an application](/fundamentals/setup/)
 
 {{</tutorial-prereqs>}}
 
@@ -27,7 +27,7 @@ As explained in the [concepts page](/ssl/concepts/#ssltls-certificate), edge cer
 
 Cloudflare offers a variety of options for your application's edge certificates:
 
-- [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<render file="_universal-ssl-definition.md">}}
+- [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<glossary-definition term_id="Universal SSL certificate">}}
 - [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): {{<render file="_acm-definition.md">}}
 - [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): {{<render file="_custom-certificates-definition.md">}}
 - [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): {{<render file="_keyless-ssl-definition.md">}}

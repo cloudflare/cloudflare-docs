@@ -2,8 +2,6 @@
 pcx_content_type: how-to
 title: Understand Cloudflare invoices
 weight: 3
-aliases:
-- /fundamentals/account-and-billing/account-maintenance/understand-invoices/
 ---
 
 # Understand Cloudflare invoices
@@ -14,7 +12,7 @@ You will receive an invoice in the **Billing** section of your Cloudflare accoun
 * Add a new domain to a Cloudflare account
 * Enable or renew a subscription or add-on service
 
-For any historical invoices not included in the **Billing** section, [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+For any historical invoices not included in the **Billing** section, [contact Cloudflare support](/support/contacting-cloudflare-support/).
 
 {{<Aside type="note">}}
 
@@ -85,7 +83,7 @@ Billing periods are 30 days. Payments for all recurring monthly costs are proces
 
 ### Cloudflare invoice without company name
 
-To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/account-and-billing/account-maintenance/updating-billing-info/).
+To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/account-and-billing/account-billing/updating-billing-info/).
 
 ### Inconsistent invoice and payment amounts
 

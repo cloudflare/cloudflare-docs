@@ -34,9 +34,7 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl --request PUT \
@@ -56,12 +54,9 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -92,8 +87,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Example - Deploy a ruleset
 
@@ -101,9 +95,7 @@ To deploy a ruleset, create a rule with `"action": "execute"` that executes the 
 
 The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone_id}`).
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl --request PUT \
@@ -124,12 +116,9 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -164,8 +153,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more information on deploying rulesets, refer to [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).
 
@@ -179,9 +167,7 @@ You cannot update the description or the rules in a managed ruleset. You can onl
 
 {{</Aside>}}
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl --request PUT \
@@ -193,14 +179,11 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset definition, including all the rules.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -222,5 +205,4 @@ The response includes the complete ruleset definition, including all the rules.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
