@@ -197,7 +197,7 @@ To do more:
 
 * Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Learning](/workers/reference/).
+* Understand how Workers works in [Reference](/workers/reference/).
 * Learn how to set up different Workers features in [Configuration](/workers/configuration/).
 * Set up a database to use within your Workers project in [Databases](/workers/databases/).
 * Learn about Workers limits, betas and pricing in [Platform](/workers/platform/).

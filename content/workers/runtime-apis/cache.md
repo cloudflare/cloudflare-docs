@@ -23,7 +23,7 @@ However, any Cache API operations in the Cloudflare Workers dashboard editor, [P
 
 {{<Aside type="note">}}
 
-This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the Cache Works](/workers/reference/how-the-cache-works/).
+This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the cache works](/workers/reference/how-the-cache-works/).
 
 {{</Aside>}}
 
@@ -227,7 +227,7 @@ The `cache.delete` method only purges content of the cache in the data center th
 
 ## Related resources
 
-- [How the Cache works](/workers/reference/how-the-cache-works/)
+- [How the cache works](/workers/reference/how-the-cache-works/)
 - [Configure your CDN](/workers/tutorials/configure-your-cdn/)
 - [Example: Cache using `fetch()`](/workers/examples/cache-using-fetch/)
 - [Example: using the Cache API](/workers/examples/cache-api/)
