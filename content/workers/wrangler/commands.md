@@ -11,7 +11,7 @@ meta:
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -153,7 +153,7 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-Create a skeleton Wrangler project, including the `wrangler.toml` file.
+Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
 wrangler init [<NAME>] [OPTIONS]
@@ -174,7 +174,13 @@ wrangler init [<NAME>] [OPTIONS]
 
 ## `generate`
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+{{<Aside type="note">}}
+
+This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
+
+{{</Aside>}}
+
+Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```txt
 wrangler generate [<NAME>] [TEMPLATE]
