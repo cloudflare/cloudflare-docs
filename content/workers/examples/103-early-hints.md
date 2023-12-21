@@ -10,12 +10,12 @@ weight: 1001
 layout: example
 ---
 
-103 Early Hints is an HTTP status code designed to speed up content delivery. When enabled, Cloudflare can cache the `Link` headers marked with preload and/or preconnect from HTML pages and serve them in a 103 Early Hints response before reaching the origin server. Browsers can use these hints to fetch linked assets while waiting for the origin’s final response, dramatically improving page load speeds.
+`103` Early Hints is an HTTP status code designed to speed up content delivery. When enabled, Cloudflare can cache the `Link` headers marked with preload and/or preconnect from HTML pages and serve them in a `103` Early Hints response before reaching the origin server. Browsers can use these hints to fetch linked assets while waiting for the origin’s final response, dramatically improving page load speeds.
 
-To ensure Early Hints are enabled on your Zone:
+To ensure Early Hints are enabled on your zone:
 
 1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
-2. Go to **Speed** -> **Optimization** > **Content Optimization**.
+2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
 
 {{<Aside type="note">}}
@@ -24,7 +24,7 @@ Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view 
 
 {{</Aside>}}
 
-You can return `Link` headers from a Worker running on your Zone to speed up your page load times.
+You can return `Link` headers from a Worker running on your zone to speed up your page load times.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
