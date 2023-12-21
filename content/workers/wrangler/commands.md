@@ -203,41 +203,65 @@ Interact with Cloudflare's D1 service.
 
 Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
 
-```txt
-wrangler d1 create <DATABASE_NAME> [OPTIONS]
+```sh
+$ npx wrangler d1 create <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
-- `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Use the new experimental storage backend for this database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Provide an optional [location hint](/d1/learning/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
 
+### `info`
+
+Get information about a D1 database, including the current database size and state.
+
+```sh
+$ npx wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to get information about.
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
+
 ### `list`
 
 List all D1 databases in your account.
 
-```txt
-wrangler d1 list
+```sh
+$ npx wrangler d1 list [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `delete`
 
 Delete a D1 database.
 
-```txt
-wrangler d1 delete <DATABASE_NAME>
+```sh
+$ npx wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to delete.
+- `-y, --skip-confirmation` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Skip deletion confirmation prompt.
 
 {{</definitions>}}
 
@@ -245,9 +269,15 @@ wrangler d1 delete <DATABASE_NAME>
 
 Execute a query on a D1 database.
 
-```txt
-wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```sh
+$ npx wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
+
+{{<Aside type="note">}} 
+
+You must provide either `--command` or `--file` for this command to run successfully.
+
+{{</Aside>}}
 
 {{<definitions>}}
 
@@ -257,15 +287,27 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
   - The SQL query you wish to execute.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to the SQL file you wish to execute.
-- Note that you must provide either `--command` or `--file` for this command to run successfully.
-  {{</definitions>}}
+- `-y, --yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Answer "yes" to any prompts.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a local database for use with [wrangler dev](#dev).
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ### `time-travel restore`
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
-```txt
-wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
+```sh
+$ npx wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -276,14 +318,17 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `time-travel info`
 
 Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
-```txt
-wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
+```sh
+$ npx wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -292,42 +337,47 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `backup create`
 
 Initiate a D1 backup.
 
-```txt
-wrangler d1 backup create <DATABASE_NAME>
+```sh
+$ npx wrangler d1 backup create <DATABASE_NAME>
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to backup.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup list`
 
 List all available backups.
 
-```txt
-wrangler d1 backup list <DATABASE_NAME>
+```sh
+$ npx wrangler d1 backup list <DATABASE_NAME>
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to list the backups of.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup restore`
 
 Restore a backup into a D1 database.
 
-```txt
-wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```sh
+$ npx wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -336,7 +386,8 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database to restore the backup into.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to restore.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup download`
 
@@ -348,8 +399,8 @@ This command will not work on databases that are created during the current beta
 
 Download existing data to your local machine.
 
-```txt
-wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
+```sh
+$ npx wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -358,7 +409,10 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database you wish to download the backup of.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
-    {{</definitions>}}
+- `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The .sqlite3 file to write to (defaults to `'<db-name>.<short-backup-id>.sqlite3'`).
+
+{{</definitions>}}
 
 ### `migrations create`
 
@@ -370,8 +424,8 @@ This will generate a new versioned file inside the `migrations` folder. Name you
 
 The filename will include a version number and the migration name you specify below.
 
-```txt
-wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
+```sh
+$ npx wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
 ```
 
 {{<definitions>}}
@@ -380,14 +434,15 @@ wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
   - The name of the D1 database you wish to create a migration for.
 - `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A descriptive name for the migration you wish to create.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `migrations list`
 
 View a list of unapplied migration files.
 
-```txt
-wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```sh
+$ npx wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -396,7 +451,12 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+
+{{</definitions>}}
 
 ### `migrations apply`
 
@@ -410,8 +470,8 @@ When running the apply command in a CI/CD environment or another non-interactive
 
 If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
 
-```txt
-wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```sh
+$ npx wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -420,7 +480,14 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to apply your migrations on.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ---
 
