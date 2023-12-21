@@ -589,7 +589,7 @@
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
 /pages/framework-guides/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
-/pages/platform/github-integration/ /pages/platform/git-integration/ 301
+/pages/platform/github-integration/ /pages/configuration/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
 /pages/platform/direct-upload/ /pages/get-started/direct-upload/ 301
 /pages/platform/functions/billing/ /pages/functions/pricing/ 301
@@ -623,6 +623,21 @@
 /pages/platform/functions/debugging-and-logging/ /pages/functions/debugging-and-logging/ 301
 /pages/platform/functions/module-support/ /pages/functions/module-support/ 301
 /pages/platform/functions/smart-placement/ /pages/functions/smart-placement/ 301
+/pages/platform/api/ /pages/configuration/api/ 301
+/pages/platform/branch-build-controls/ /pages/configuration/branch-build-controls/ 301
+/pages/platform/build-caching/ /pages/configuration/build-caching/ 301
+/pages/platform/build-configuration/ /pages/configuration/build-configuration/ 301
+/pages/platform/custom-domains/ /pages/configuration/custom-domains/ 301
+/pages/platform/debugging-pages/ /pages/configuration/debugging-pages/ 301
+/pages/platform/deploy-hooks/ /pages/configuration/deploy-hooks/ 301
+/pages/platform/early-hints/ /pages/configuration/early-hints/ 301
+/pages/platform/git-integration/ /pages/configuration/git-integration/ 301
+/pages/platform/headers/ /pages/configuration/headers/ 301
+/pages/platform/language-support-and-tools/ /pages/configuration/language-support-and-tools/ 301
+/pages/platform/preview-deployments/ /pages/configuration/preview-deployments/ 301
+/pages/platform/redirects/ /pages/configuration/redirects/ 301
+/pages/platform/rollbacks/ /pages/configuration/rollbacks/ 301
+/pages/platform/serving-pages/ /pages/configuration/serving-pages/ 301
 
 # partners
 /partners/ /fundamentals/reference/partners/ 301
