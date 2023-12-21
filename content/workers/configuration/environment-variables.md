@@ -116,4 +116,4 @@ Only select **Encrypt** if your environment variable is a [secret](/workers/conf
 
 ## Related resources
 
-* Learn how to access environment variables in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.
+* Learn how to access environment variables in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
