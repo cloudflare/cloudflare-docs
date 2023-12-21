@@ -960,14 +960,14 @@
 /workers/cli-wrangler/authentication/ /workers/wrangler/install-and-update/ 301
 /workers/cli-wrangler/webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
-/workers/deploying-workers/serverless/ /workers/learning/integrations/ 301
-/workers/deploying-workers/terraform/ /workers/learning/integrations/ 301
+/workers/deploying-workers/serverless/ /workers/configuration/integrations/ 301
+/workers/deploying-workers/terraform/ /workers/configuration/integrations/ 301
 /workers/examples/signed-request/ /workers/examples/signing-requests/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
 /workers/kv/writing-data/ /workers/platform/storage-options/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
-/workers/learning/profiling-workers/ /workers/learning/ 301
+/workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
 /workers/platform/scripts/ /api/operations/worker-script-list-workers 301
 /workers/platform/services/ /workers/configuration/bindings/about-service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
@@ -981,7 +981,6 @@
 /workers/recipes/random-content-cookies/ /workers/examples/ab-testing/ 301
 /workers/recipes/signed-requests/ /workers/examples/signing-requests/ 301
 /workers/recipes/streaming-responses/ /workers/ 301
-/workers/reference/ /workers/ 301
 /workers/reference/apis/ /workers/runtime-apis/ 301
 /workers/reference/apis/cache/ /workers/runtime-apis/cache/ 301
 /workers/reference/apis/environment-variables/ /workers/platform/environment-variables/ 301
@@ -1003,7 +1002,7 @@
 /workers/reference/storage/overview/ /workers/platform/storage-options/ 301
 /workers/reference/storage/reading-data/ /workers/platform/storage-options/ 301
 /workers/reference/tooling/ /workers/wrangler/ 301
-/workers/reference/workers-concepts/using-cache/ /workers/learning/how-the-cache-works/ 301
+/workers/reference/workers-concepts/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/sites/ /workers/platform/sites/ 301
 /workers/sites/start-from-scratch/ /workers/platform/sites/start-from-scratch/ 301
 /workers/starters/ /workers/get-started/quickstarts/ 301
@@ -1027,9 +1026,9 @@
 /workers/templates/snippets/post_data/ /workers/examples/read-post/ 301
 /workers/tooling/ /workers/wrangler/ 301
 /workers/tooling/api/bindings/ /workers/platform/bindings/ 301
-/workers/tooling/playground/ /workers/learning/playground/ 301
+/workers/tooling/playground/ /workers/playground/ 301
 /workers/learning/playground/ /workers/playground/ 301
-/workers/tooling/serverless/ /workers/learning/integrations/ 301
+/workers/tooling/serverless/ /workers/configuration/integrations/ 301
 /workers/tooling/wrangler/ /workers/wrangler/ 301
 /workers/tooling/wrangler/commands/ /workers/wrangler/commands/ 301
 /workers/tooling/wrangler/configuration/ /workers/wrangler/configuration/ 301
@@ -1047,7 +1046,7 @@
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
-/workers/writing-workers/debugging-tips/ /workers/learning/debugging-workers/ 301
+/workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -1059,7 +1058,7 @@
 /workers/wrangler-legacy/migration/ /workers/wrangler/migration/ 301
 /workers/wrangler/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler/migration/migrating-from-wrangler-1/ /workers/wrangler/migration/v1-to-v2/ 301
-/workers/learning/service-worker/ /workers/learning/migrate-to-module-workers/#service-worker-syntax/ 301
+/workers/learning/service-worker/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrating-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrate-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/durable-objects/ /durable-objects/ 301
@@ -1115,7 +1114,7 @@
 /workers/runtime-apis/email-event/ /email-routing/email-workers/runtime-api/ 301
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
-/workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
+/workers/runtime-apis/add-event-listener/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/tail-event/ /workers/runtime-apis/handlers/tail/ 301
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
