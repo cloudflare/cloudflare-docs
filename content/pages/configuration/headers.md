@@ -79,7 +79,7 @@ filename: _headers
 
 ### Match a path
 
-The same URL matching features that [`_redirects`](/pages/platform/redirects/) offers is also available to the `_headers` file. Note, however, that redirects are applied before headers, when a request matches both a redirect and a header, the redirect takes priority.
+The same URL matching features that [`_redirects`](/pages/configuration/redirects/) offers is also available to the `_headers` file. Note, however, that redirects are applied before headers, when a request matches both a redirect and a header, the redirect takes priority.
 
 #### Splats
 

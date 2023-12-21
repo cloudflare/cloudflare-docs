@@ -83,7 +83,7 @@ After completing these steps, your Pages project will only be accessible through
 
 To disable access to your project's provided `*.pages.dev` subdomain:
 
-1. Use Cloudflare Access over your previews (`*.{project}.pages.dev`). Refer to [Customize preview deployments access](/pages/platform/preview-deployments/#customize-preview-deployments-access).
+1. Use Cloudflare Access over your previews (`*.{project}.pages.dev`). Refer to [Customize preview deployments access](/pages/configuration/preview-deployments/#customize-preview-deployments-access).
 
 2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
 
@@ -93,7 +93,7 @@ To disable access to your project's provided `*.pages.dev` subdomain:
 
 Certification Authority Authorization (CAA) records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
 
-This can cause issues when adding a [custom domain](/pages/platform/custom-domains/) to your Pages project if you have CAA records that do not allow Cloudflare to issue a certificate for your custom domain.
+This can cause issues when adding a [custom domain](/pages/configuration/custom-domains/) to your Pages project if you have CAA records that do not allow Cloudflare to issue a certificate for your custom domain.
 
 To resolve this, add the necessary CAA records to allow Cloudflare to issue a certificate for your custom domain.
 

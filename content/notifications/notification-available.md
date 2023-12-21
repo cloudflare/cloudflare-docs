@@ -551,7 +551,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-For failed deployments, review our [debugging guide](/pages/platform/debugging-pages/#check-your-build-log).
+For failed deployments, review our [debugging guide](/pages/configuration/debugging-pages/#check-your-build-log).
 
 {{</details>}}
 

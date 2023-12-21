@@ -20,7 +20,7 @@ Early Hints can be created with either of the two methods detailed below.
 
 ### 1. Configure your `_headers` file
 
-Create custom headers using the [`_headers` file](/pages/platform/headers/). If you include a particular stylesheet on your `/blog/` section of your website, you would create the following rule:
+Create custom headers using the [`_headers` file](/pages/configuration/headers/). If you include a particular stylesheet on your `/blog/` section of your website, you would create the following rule:
 
 ```txt
 ---

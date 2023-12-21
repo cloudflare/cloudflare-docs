@@ -84,7 +84,7 @@ If you are experiencing errors on your custom domain but not on your `pages.dev`
 
 ## Domain stuck in verification
 
-If your [custom domain](/pages/platform/custom-domains/) has not moved from the **Verifying** stage in the Cloudflare dashboard, refer to the following debugging steps.
+If your [custom domain](/pages/configuration/custom-domains/) has not moved from the **Verifying** stage in the Cloudflare dashboard, refer to the following debugging steps.
 
 ### Blocked HTTP validation
 
