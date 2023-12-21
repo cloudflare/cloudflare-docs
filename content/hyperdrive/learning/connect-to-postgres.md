@@ -156,4 +156,4 @@ To identify active connections to your Postgres database server from Hyperdrive:
 
 - Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
 - Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
-- Understand the [protocols supported by Workers](/workers/learning/protocols/).
+- Understand the [protocols supported by Workers](/workers/reference/protocols/).

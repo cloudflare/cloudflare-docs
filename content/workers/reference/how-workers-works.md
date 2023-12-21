@@ -39,7 +39,7 @@ A given isolate has its own scope, but isolates are not necessarily long-lived. 
 
 Because of this, it is generally advised that you not store mutable state in your global scope unless you have accounted for this contingency.
 
-If you are interested in how Cloudflare handles security with the Workers runtime, you can [read more about how Isolates relate to Security and Spectre Threat Mitigation](/workers/learning/security-model/).
+If you are interested in how Cloudflare handles security with the Workers runtime, you can [read more about how Isolates relate to Security and Spectre Threat Mitigation](/workers/reference/security-model/).
 
 ## Compute per request
 
@@ -69,7 +69,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-For Workers written in [ES modules syntax](/workers/learning/migrate-to-module-workers/), when a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's data centers, the request invokes the `fetch()` handler defined in your Worker code with the given request. You can respond to the request by returning a [`Response`](/workers/runtime-apis/response/) object.
+For Workers written in [ES modules syntax](/workers/reference/migrate-to-module-workers/), when a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's data centers, the request invokes the `fetch()` handler defined in your Worker code with the given request. You can respond to the request by returning a [`Response`](/workers/runtime-apis/response/) object.
 
 For Workers written in Service Worker syntax, when a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's data centers, the Worker is passed a [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) argument to the event handler defined in the Worker. From there, you can return a response by returning a `Response` object.
 

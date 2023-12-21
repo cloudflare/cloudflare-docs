@@ -38,10 +38,10 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - An object containing the bindings associated with your Worker using [ES modules format](/workers/learning/migrate-to-module-workers/), such as KV namespaces and Durable Objects.
+  - An object containing the bindings associated with your Worker using [ES modules format](/workers/reference/migrate-to-module-workers/), such as KV namespaces and Durable Objects.
 
 - `ctx` {{<type>}}object{{</type>}}
-  - An object containing the context associated with your Worker using [ES modules format](/workers/learning/migrate-to-module-workers/). Currently, this object just contains the `waitUntil` function.
+  - An object containing the context associated with your Worker using [ES modules format](/workers/reference/migrate-to-module-workers/). Currently, this object just contains the `waitUntil` function.
 
 
 {{</definitions>}}
