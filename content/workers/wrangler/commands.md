@@ -1314,6 +1314,67 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `sippy enable`
+{{<Aside type="note">}}
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+{{</Aside>}}
+
+Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy enable <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to enable Sippy.
+- `--bucket` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of your AWS S3 bucket.
+- `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+- `--secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+- `--r2-key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Access Key ID. Requires read and write access.
+- `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Secret Access Key. Requires read and write access.
+- `--region` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+
+{{</definitions>}}
+
+### `sippy disable`
+
+Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy disable <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to disable Sippy.
+
+{{</definitions>}}
+
+### `sippy get`
+
+Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get the status of Sippy.
+
+{{</definitions>}}
 ---
 
 ## `r2 object`
