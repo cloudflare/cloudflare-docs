@@ -242,7 +242,7 @@ A Worker written in Service Worker syntax consists of two parts:
 1.  An event listener that listens for `FetchEvents`.
 2.  An event handler that returns a [Response](/workers/runtime-apis/response/) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s global network servers for a URL matching a Worker, Cloudflare's server passes the request to the Workers runtime. This dispatches a `FetchEvent` in the [isolate](/workers/learning/how-workers-works/#isolates) where the Worker is running.
+When a request is received on one of Cloudflare’s global network servers for a URL matching a Worker, Cloudflare's server passes the request to the Workers runtime. This dispatches a `FetchEvent` in the [isolate](/workers/reference/how-workers-works/#isolates) where the Worker is running.
 
 ```js
 ---
