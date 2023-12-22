@@ -93,7 +93,7 @@ Replace `username`, `password`, `host`, `port`, and `database` with the appropri
 Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
 
 ```sh
-$ wrangler secret put DB_URL
+$ npx wrangler secret put DB_URL
 ➜  wrangler secret put DB_URL
 -------------------------------------------------------
 ? Enter a secret value: › ********************
@@ -120,7 +120,7 @@ DB_NAME = "productsdb"
 To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
-$ wrangler secret put DB_PASSWORD
+$ npx wrangler secret put DB_PASSWORD
 -------------------------------------------------------
 ? Enter a secret value: › ********************
 ✨ Success! Uploaded secret DB_PASSWORD
