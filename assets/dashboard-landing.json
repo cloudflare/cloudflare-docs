@@ -218,11 +218,11 @@
           "title": "Get started with Pages"
         },
         {
-          "url_path": "/pages/platform/build-configuration/",
+          "url_path": "/pages/configuration/build-configuration/",
           "title": "Build configurations"
         },
         {
-          "url_path": "/pages/platform/custom-domains/",
+          "url_path": "/pages/configuration/custom-domains/",
           "title": "Custom domains"
         },
         {

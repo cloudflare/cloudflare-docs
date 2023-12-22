@@ -28,7 +28,7 @@ Only {{<glossary-tooltip term_id="API schema">}}API schemas{{</glossary-tooltip>
 
 ### Custom domains
 
-To create a vanity domain instead of using the pages.dev domain, refer to the [Pages custom domain documentation](/pages/platform/custom-domains/).
+To create a vanity domain instead of using the pages.dev domain, refer to the [Pages custom domain documentation](/pages/configuration/custom-domains/).
 
 ## Availability
 

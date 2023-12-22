@@ -37,7 +37,7 @@ Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/function
 
 {{</Aside>}}
 
-If no Function is matched, it will fall back to a static asset if there is one. Otherwise, the Function will fall back to the [default routing behavior](/pages/platform/serving-pages/) for Pages' static assets.
+If no Function is matched, it will fall back to a static asset if there is one. Otherwise, the Function will fall back to the [default routing behavior](/pages/configuration/serving-pages/) for Pages' static assets.
 
 ## Dynamic routes
 

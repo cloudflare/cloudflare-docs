@@ -9,7 +9,7 @@ Improve Pages build times by turning on build caching to restore dependencies an
 
 ## Requirements
 
-Build caching requires the [V2 build system](/pages/platform/language-support-and-tools/) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/platform/language-support-and-tools/#v2-build-system).
+Build caching requires the [V2 build system](/pages/configuration/language-support-and-tools/) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/configuration/language-support-and-tools/#v2-build-system).
 
 ## Configuration
 
@@ -34,7 +34,7 @@ The build cache can be cleared for a project if needed, such as when debugging b
 
 ## How build caching works
 
-When enabled, the build cache will automatically detect and cache data from each build. Refer to [Frameworks](/pages/platform/build-caching/#frameworks) to review what directories are automatically saved and restored from the build cache.
+When enabled, the build cache will automatically detect and cache data from each build. Refer to [Frameworks](/pages/configuration/build-caching/#frameworks) to review what directories are automatically saved and restored from the build cache.
 
 ### Package managers
 
