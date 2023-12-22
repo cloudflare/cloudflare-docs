@@ -40,5 +40,5 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
 
-* Setting the `set-cookie` header will result in overwriting any preexisting `set-cookie` headers, including those added by other Cloudflare products. This includes the header responsible for setting a cookie used by Bot Management.
+* Setting the `set-cookie` header will result in overwriting all preexisting `set-cookie` headers, including those added by other Cloudflare products (e.g. Bot Management).
   * Instead, use "Add" to add a new `set-cookie` header. (Note that only a string literal value is supported at this time). 
