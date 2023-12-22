@@ -12,7 +12,7 @@ weight: 3
 The `SameSite` cookie attribute has three different modes:
 
 - **Strict**: Cookies are created by the first party (the visited domain). For example, a first-party cookie is set by Cloudflare when visiting `cloudflare.com`.
-- **Lax**: Cookies are only sent to the domain {{<glossary-tooltip term_id="apex domain">}}apex{{</glossary-tooltip>}} (such as `example.com`). For example, if someone (`blog.example.net`) hotlinked an image (`img.example.com/bar.png`), the client does not send a cookie to `img.example.com` since it is neither the first-party nor apex context.
+- **Lax**: Cookies are only sent to the {{<glossary-tooltip term_id="apex domain">}}apex{{</glossary-tooltip>}} domain (such as `example.com`). For example, if someone (`blog.example.net`) hotlinked an image (`img.example.com/bar.png`), the client does not send a cookie to `img.example.com` since it is neither the first-party nor apex context.
 - **None**: Cookies are sent with all requests.
 
 `SameSite` settings for [Cloudflare cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/) include:
