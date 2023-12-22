@@ -1934,7 +1934,7 @@ wrangler login [OPTIONS]
   - List all the available OAuth scopes with descriptions.
 - `--scopes $SCOPES` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
-    for example, `$ wrangler login --scopes account:read user:read`.
+    for example, `$ npx wrangler login --scopes account:read user:read`.
 
 {{</definitions>}}
 
