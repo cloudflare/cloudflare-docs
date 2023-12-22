@@ -24,7 +24,7 @@ Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
-- [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
+- [Custom hostname](api/operations/custom-hostname-for-a-zone-edit-custom-hostname)(https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) (Cloudflare for SaaS zones only)
 
 When you customize cipher suites for a [zone](/fundamentals/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
