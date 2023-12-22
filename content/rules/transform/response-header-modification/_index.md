@@ -39,3 +39,5 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 * Any response header modifications will also apply to Cloudflare error pages and [custom error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).
 
 * Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
+
+* Modifying the `set-cookie` header will result in overwriting any preexisting `set-cookie` headers, including those added by other Cloudflare products. This includes the header responsible for setting a cookie used by Bot Management.
