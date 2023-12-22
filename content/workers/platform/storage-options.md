@@ -13,7 +13,7 @@ The Cloudflare Workers platform provides multiple storage options. This guide wi
 
 {{<Aside type="note" header="Pages Functions">}}
 
-Storage options can also be used by your front-end application built with Cloudflare Pages. For more information on available storage options for Pages applications, refer to the [Pages Functions Bindings documentation](/pages/functions/bindings/).
+Storage options can also be used by your front-end application built with Cloudflare Pages. For more information on available storage options for Pages applications, refer to the [Pages Functions bindings documentation](/pages/functions/bindings/).
 
 {{</Aside>}}
 
