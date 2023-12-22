@@ -11,6 +11,12 @@ meta:
 
 The Cloudflare Workers platform provides multiple storage options. This guide will inform you on which storage option is appropriate based on your project's use case.
 
+{{<Aside type="note" header="Pages Functions">}}
+
+Storage options can also be used by your front-end application built with Cloudflare Pages. For more information on available storage options for Pages applications, refer to the [Pages Functions bindings documentation](/pages/functions/bindings/).
+
+{{</Aside>}}
+
 Available storage and persistency products include:
 
 * [KV](#kv) for key-value storage.
