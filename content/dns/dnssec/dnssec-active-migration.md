@@ -80,7 +80,7 @@ $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_r
 API example:
 
 ```bash
-$ curl --request https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
+$ curl --request GET https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <KEY>'
 ```
