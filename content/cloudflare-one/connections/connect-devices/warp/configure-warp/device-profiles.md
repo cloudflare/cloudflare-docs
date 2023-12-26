@@ -7,7 +7,7 @@ layout: single
 
 # Device profiles
 
-A device profile defines WARP client settings for a specific set of devices in your organization. You can create multiple profiles and apply different settings based on the user's identity, the device's location, and other criteria.
+{{<render file="warp/_device-profiles-intro.md">}}
 
 ## Create a new profile
 
