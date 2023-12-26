@@ -66,7 +66,7 @@ An object containing properties that you want to apply to the request.
 
 {{<definitions>}}
 
-*   `cf` {{<type-link href="#cf">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `cf` {{<type-link href="#the-cf-property">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
@@ -89,7 +89,7 @@ An object containing properties that you want to apply to the request.
 
 {{</definitions>}}
 
-#### The `cf` property
+#### The `cf` property (`RequestInitCfProperties`)
 
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
