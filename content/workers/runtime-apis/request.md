@@ -7,7 +7,7 @@ meta:
 
 # Request
 
-The `Request` interface represents an HTTP request and is part of the Fetch API.
+The [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface represents an HTTP request and is part of the [Fetch API](/workers/runtime-apis/fetch/).
 
 ## Background
 
@@ -43,7 +43,7 @@ The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Requ
 ## Constructor
 
 ```js
-let request = new Request(input [, init])
+let request = new Request(input, options)
 ```
 
 ### Parameters
@@ -54,23 +54,25 @@ let request = new Request(input [, init])
 
     *   Either a string that contains a URL, or an existing `Request` object.
 
-*   `init` {{<type-link href="#requestinit">}}RequestInit{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `options` {{<type-link href="#options">}}options{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object that contains settings to apply to the `Request`.
 
 {{</definitions>}}
 
-#### `RequestInit`
+#### `options`
+
+An object containing properties that you want to apply to the request.
 
 {{<definitions>}}
 
-*   `cf` {{<type-link href="#requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `cf` {{<type-link href="#cf">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
 *   `method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The HTTP request method. The default is `GET`.
+    *   The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -79,6 +81,7 @@ let request = new Request(input [, init])
 *   `body` {{<type>}}string | ReadableStream | FormData | URLSearchParams{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   The request body, if any.
+    *   Note that a request using the GET or HEAD method cannot have a body.
 
 *   `redirect` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -86,7 +89,7 @@ let request = new Request(input [, init])
 
 {{</definitions>}}
 
-#### `RequestInitCfProperties`
+#### The `cf` property
 
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
