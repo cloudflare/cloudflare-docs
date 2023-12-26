@@ -7,16 +7,20 @@ meta:
 
 # Default Cache Behavior
 
-Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL page rule overrides the headers.
+Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL cache rule overrides the headers.
+
+{{<Aside type="warning">}}Page Rules will be deprecated, and you should instead use [Cache Rules](/cache/how-to/cache-rules/).{{</Aside>}}
 
 - Cloudflare **does not** cache the resource when:
   - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
   - The [`Set-Cookie` header](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) exists.
 - Cloudflare **does** cache the resource when:
-  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0. Note that Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl).
+  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0.
   - The `Expires` header is set to a future date.
 
-Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
+{{<Aside type="note">}}Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl).{{</Aside>}}
+
+{{<Aside type="note">}}If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.{{</Aside>}}
 
 For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
@@ -36,23 +40,19 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 | CLASS | EXE  | JS   | PICT | SWF  | XLS   |
 | CSS   | FLAC | MID  | PLS  | TAR  | XLSX  |
 
-To cache additional content, refer to [Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) to create a rule to cache everything.
+To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) to create a rule to cache everything.
 
 ## Customization options and limits
 
 Cloudflare’s CDN provides several cache customization options:
 
-- Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
-- Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
+- Caching behavior for individual URLs via [Cache Rules](/cache/how-to/cache-rules/)
+- Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
 ### Upload limits
 
-Cloudflare limits the upload size (HTTP POST request size) per plan type:
-
-- 100MB Free and Pro
-- 200MB Business
-- 500MB Enterprise by default. Contact [Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to request a limit increase.
+{{<feature-table id="network.max_upload_size">}}
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
 
@@ -101,7 +101,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
           <li>A Worker generated a response without sending any subrequests. In this case, the response did not come from cache, so the cache status will be <code>none/unknown</code>.
           <li>A Worker request made a subrequest (<code>fetch</code>). In this case, the subrequest will be logged with a cache status, while the main request will be logged with <code>none/unknown</code> status (the main request did not hit cache, since Workers sits in front of cache).</li>
           <li>A WAF custom rule was triggered to block a request. The response will come from the Cloudflare global network before it hits cache. Since there is no cache status, Cloudflare will log as <code>none/unknown</code>.</li>
-          <li>A redirect page rule caused the global network to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is <code>none/unknown</code>.</li>
+          <li>A redirect cache rule caused the global network to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is <code>none/unknown</code>.</li>
       </td>
     </tr>
     <tr>
@@ -157,7 +157,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
         explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
-        origin web server. Use <a href="/cache/how-to/edge-browser-cache-ttl/create-page-rules/">Page Rules</a> or <a href="/cache/how-to/cache-rules/">Cache Rules</a> to implement
+        origin web server. Use <a href="/cache/how-to/cache-rules/">Cache Rules</a> to implement
         custom caching options.
       </td>
     </tr>

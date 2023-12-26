@@ -194,8 +194,7 @@
 
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
-  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
-  {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
@@ -223,7 +222,6 @@
 
   <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.token }}" data-org="{{ $coveo.org }}"></script>
   {{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
-  {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
   <link rel="stylesheet preconnect" href="/tutorial-coveo.css" />
   <link rel="stylesheet preconnect"
     href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
@@ -244,12 +242,14 @@
 
   <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.tutorial_token }}"
     data-org="{{ $coveo.org }}"></script>
-  {{- else if $coveo -}}
-  {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
   {{- end -}}
 
   {{- if (in $.Context.RelPermalink "/learning-paths/") -}}
   <link rel="stylesheet preconnect" href="/learning-paths.css" />
+  {{- end -}}
+
+  {{- if or (eq $.Context.RelPermalink "/learning-paths/") (eq $.Context.RelPermalink "/learning-paths") -}}
+  {{- partial "script" (dict "src" "learning-paths.ts" "defer" true) -}}
   {{- end -}}
 
 

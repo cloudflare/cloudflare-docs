@@ -76,17 +76,6 @@ EDNS Client Subnet (ECS) is an extension forwarded by recursive resolvers and co
 
 ### Threats
 
-#### Threat score
-
-A threat is any event that can potentially cause serious damage and lead to site attacks. In the Cloudflare dashboard, in addition to visualizing threat analytics, you can monitor search engine crawlers visiting your websites. Cloudflare uses the IP reputation of a visitor to decide whether to present a challenge. A Cloudflare internal algorithm calculates an IP’s reputation and assigns a threat score that ranges from 0 to 100.
-
-The security levels and the challenge display criteria are:
-
-- **High** - for scores greater than 0
-- **Medium** - for scores greater than 14
-- **Low** - for scores greater than 24
-- **Essentially off** - for scores greater than 49
-
 #### Total Threats Stopped
 
 Total threats stopped indicates the number of suspicious and bad requests aimed at your site.
@@ -97,11 +86,11 @@ The bad browser score indicates that the source of the request was not legitimat
 
 #### Blocked hotlink score
 
-The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
+The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
 
 #### Bad IP
 
-A Bad IP is the classification for a request that came from an IP address that is not trusted by Cloudflare based on the [Threat Score](/logs/reference/glossary/#threat-score).
+A Bad IP is the classification for a request that came from an IP address that is not trusted by Cloudflare based on the [Threat Score](/analytics/account-and-zone-analytics/threat-types/#bad-ip).
 
 #### Country block
 

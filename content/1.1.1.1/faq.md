@@ -48,7 +48,7 @@ The resolver then asks the TLD’s servers where it can find the domain it is lo
 
 Once the resolver has the final IP address, it returns the answer to the computer that asked.
 
-This whole system is called the Domain Name System (DNS). This system includes the servers that host the information (called authoritative DNS) and the servers that seek the information (the DNS resolvers).
+This whole system is called the [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/). This system includes the servers that host the information (called [authoritative DNS](https://www.cloudflare.com/learning/dns/dns-server-types/)) and the servers that seek the information (the DNS resolvers).
 
 {{</faq-answer>}}
 {{</faq-item>}}

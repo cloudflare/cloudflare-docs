@@ -102,6 +102,39 @@ Users of wrangler `2.x` must use the `--persist` flag: previous versions of wran
 
 ## Test programmatically
 
+### Miniflare
+
+[Miniflare](https://miniflare.dev/) allows you to simulate a Workers and resources like D1 using the same underlying runtime and code as used in production.
+
+You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to create D1 databases you can use for testing:
+
+```toml
+---
+filename: wrangler.toml
+---
+[[d1_databases]]
+binding = "DB"
+database_name = "test-db"
+database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
+
+```js
+const mf = new Miniflare({
+  d1Databases: ["DB"],
+});
+```
+
+You can then use the `getD1Database()` method to retrieve the simulated database and run queries against it as if it were your real production D1 database:
+
+```js
+const db = await mf.getD1Database("DB");
+const { results } = await db.prepare("<Query>");
+
+console.log(await res.json(results));
+```
+
+### `unstable_dev`
+
 Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/platform/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
 
 Given the below `wrangler.toml` configuration:

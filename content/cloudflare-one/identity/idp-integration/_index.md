@@ -19,7 +19,7 @@ Cloudflare Zero Trust supports social identity providers that do not require adm
 
 ## Set up IdPs in Zero Trust
 
-{{<render file="_idp-integration.md">}}
+{{<render file="access/_idp-integration.md">}}
 
 Your IdP will now be listed in the **Login methods** card.
 

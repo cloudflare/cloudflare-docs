@@ -14,12 +14,11 @@ The Cloudflare account team creates the Service Key and sends it to you via emai
 
 1.  Log in to the [Megaport Portal](https://portal.megaport.com/).
 
-2.  Find the Megaport you want to use for the connection and click **+Connection**.
+2.  Select **Megaport Marketplace** as the destination type.
 
-3.  Under **Choose Destination Type**, click **Enter Service Key**.
+3.  Search for and select the provider. The destination ports for the service provider appear.
 
-4.  Under **Service Key** > **Megaport Service Key Id**, enter the service key.
-    Megaport validates the key and displays basic information about the key.
+4.  Select a destination port. Typically, you should select the destination port closest to your port.
 
 5.  Click **Next**.
 

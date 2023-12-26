@@ -13,7 +13,7 @@ layout: single
 In this tutorial, you will build a full stack Pages application. Your application will contain:
 
 * A front end, built using Cloudflare Pages and the [React framework](/pages/framework-guides/deploy-a-react-site/).
-* A JSON API, built with [Pages Functions](/pages/platform/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
+* A JSON API, built with [Pages Functions](/pages/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
 
 If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/).
 
@@ -234,7 +234,7 @@ export function onRequestGet(context) {
 }
 ```
 
-`[[id]].js` is a [dynamic route](/pages/platform/functions/routing#dynamic-routes) which is used to accept a blog post `id`.
+`[[id]].js` is a [dynamic route](/pages/functions/routing#dynamic-routes) which is used to accept a blog post `id`.
 
 ## Deploy
 
@@ -289,4 +289,4 @@ By completing this tutorial, you have created a full stack Pages application.
 
 ## Related resources
 
-* Learn about [Pages Functions routing](/pages/platform/functions/routing)
+* Learn about [Pages Functions routing](/pages/functions/routing)

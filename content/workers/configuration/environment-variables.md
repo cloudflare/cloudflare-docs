@@ -83,17 +83,30 @@ API_ACCOUNT_ID = "production_example_user"
 SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
 ```
 
+### Interact with environment variables locally
+
+When developing locally via `wrangler dev`, add environment variables by creating a `.dev.vars` file in the root directory of your project. Then add the following code snippet to `.dev.vars`:
+
+```
+---
+filename:  `.dev.vars`
+---
+ENVIRONMENT=development
+```
+
 ## Add environment variables via the dashboard
 
 To add environment variables via the dashboard:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings**.
-4. Under **Environment Variables**, select **Add variable**.
-5. Input a **Variable name** and its **value**, which will be made available to your Worker.
-6. (Optional) To add multiple environment variables, select **Add variable**.
-7. Select **Save** to implement your changes.
+3. In **Overview**, select your Worker.
+4. Select **Settings**.
+5. Select **Variables**.
+6. Under **Environment Variables**, select **Add variable**.
+7. Input a **Variable name** and its **Value**, which will be made available to your Worker.
+8. (Optional) To add multiple environment variables, select **Add variable**.
+9. Select **Save and deploy** to implement your changes.
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
@@ -102,3 +115,7 @@ Only select **Encrypt** if your environment variable is a [secret](/workers/conf
 {{</Aside>}}
 
 {{<render file="_env_and_secrets.md">}}
+
+## Related resources
+
+* Learn how to access environment variables in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

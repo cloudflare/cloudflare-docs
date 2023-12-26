@@ -16,7 +16,7 @@ Deploy dynamic front-end applications in record time.
 
 {{<plan type="all">}}
 
-Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Uploads](/pages/platform/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
@@ -25,19 +25,19 @@ Cloudflare Pages is super fast, always up to date. Deploy your project by connec
 
 ## Features
 
-{{<feature header="Pages Functions" href="/pages/platform/functions/">}}
+{{<feature header="Pages Functions" href="/pages/functions/">}}
 
 Use Pages Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
 
 {{</feature>}}
 
-{{<feature header="Rollbacks" href="/pages/platform/rollbacks/">}}
+{{<feature header="Rollbacks" href="/pages/configuration/rollbacks/">}}
 
 Rollbacks allow you to instantly revert your project to a previous production deployment.
 
 {{</feature>}}
 
-{{<feature header="Redirects" href="/pages/platform/redirects/">}}
+{{<feature header="Redirects" href="/pages/configuration/redirects/">}}
 
 Set up redirects for your Cloudflare Pages project.
 

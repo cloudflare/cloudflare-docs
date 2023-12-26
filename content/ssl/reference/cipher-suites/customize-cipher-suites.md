@@ -1,7 +1,7 @@
 ---
 title: Customize cipher suites
 pcx_content_type: how-to
-weight: 2
+weight: 1
 meta:
   title: Customize cipher suites
 ---
@@ -24,11 +24,17 @@ Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
-- [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
+- [Custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) (Cloudflare for SaaS zones only)
 
 When you customize cipher suites for a [zone](/fundamentals/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
+If you need to use a [per-hostname](/api/operations/per-hostname-tls-settings-put) cipher suite customization, ensure that the [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) specifies the hostname. It is not possible to restrict ciphers on a hostname if you only have a wildcard certificate.
+
+## Cipher suite selection
+
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
+
+ECDSA is prioritized over RSA and Cloudflare preserves the specified cipher suites in the order they are set. This means that, if both ECDSA and RSA are used, Cloudflare presents the ECDSA ciphers first - in the order they were set - and then the RSA ciphers, also in the order they were set.
 
 ## Cipher suite values
 

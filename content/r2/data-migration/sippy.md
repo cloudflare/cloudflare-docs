@@ -48,6 +48,12 @@ During the beta, Sippy can only be enabled on your R2 bucket by using the API. B
 
 The example below shows how to enable Sippy for an R2 bucket with cURL. For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
+{{<Aside type="note">}}
+
+If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions), you will need to pass a `cf-r2-jurisdiction` request header with that jurisdiction. For example, `cf-r2-jurisdiction: eu`.
+
+{{</Aside>}}
+
 ```bash
 curl -X PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/r2/buckets/{bucket_name}/sippy \
 --header "Authorization: Bearer <API_TOKEN>" \
@@ -167,3 +173,9 @@ To create credentials with the correct permissions:
 3. Create a new user and attach the created policy to that user.
 
 You can now use both the Access Key ID and Secret Access Key when enabling Sippy.
+
+## Caveats
+
+### ETags
+
+{{<render file="_migrator-etag-caveat.md" withParameters="Sippy">}}

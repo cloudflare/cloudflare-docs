@@ -7,7 +7,7 @@ weight: 5
 
 # Endpoint Management
 
-Monitor the health of your API endpoints by saving, updating, and monitoring performance metrics using API Shield’s Endpoint Management.
+Monitor the health of your {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} by saving, updating, and monitoring performance metrics using API Shield’s Endpoint Management.
 
 **Add endpoints** allows customers to save endpoints directly from [API Discovery](/api-shield/security/api-discovery/) or manually by method, path, and host.
 

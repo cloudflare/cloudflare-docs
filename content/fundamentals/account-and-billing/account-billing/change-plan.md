@@ -16,9 +16,9 @@ If you decide to downgrade or remove a domain, Cloudflare does not issue refunds
 
 Upgrades are processed immediately, but downgrades are not processed until the end of the billing period. When downgrading, you are allowed to continue using the higher plans' products until the new billing period begins.
 
-If you downgrade your plan, your plan may have access to [fewer Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/) if you do not want to be charged.
+If you downgrade your plan, your plan may have access to [fewer Page Rules](/rules/page-rules/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/) if you do not want to be charged.
 
-The Enterprise App Sec Advanced and Enterprise App Sec Core plans cannot be downgraded without [contacting Cloudflare](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+The Enterprise App Sec Advanced and Enterprise App Sec Core plans cannot be downgraded without [contacting Cloudflare](/support/contacting-cloudflare-support/).
 
 For additional help, refer to [this Community thread](https://community.cloudflare.com/t/communitytip-page-rules-best-practices-when-downgrading-pro-to-free/305725).
 

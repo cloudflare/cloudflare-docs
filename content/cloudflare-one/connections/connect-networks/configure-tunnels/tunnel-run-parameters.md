@@ -80,7 +80,7 @@ Specifies the verbosity of logging. The default `info` level does not produce mu
 | --------------- | ------------ | -------------------- |
 | `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>`| `localhost:` | `TUNNEL_METRICS`     |
 
-Exposes a Prometheus endpoint on the specified IP address/port, which you can then query for usage metrics. For <IP>, enter the local address of the server running `cloudflared` (for example, `127.0.0.1` or `0.0.0.0`).
+Exposes a Prometheus endpoint on the specified IP address/port, which you can then query for [usage metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/).
 
 ## `no-autoupdate`
 
@@ -118,7 +118,7 @@ Writes the application's process identifier (PID) to this file after the first s
 | ---------- | ------- | --------------------------- |
 | `cloudflared tunnel --protocol <VALUE> run <UUID or NAME>` | `auto`  | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, `h2mux`, and `quic`.
+Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, and `quic`.
 
 The `auto` value will automatically configure the `quic` protocol. If `cloudflared` is unable to establish UDP connections, it will fallback to using the `http2` protocol.
 

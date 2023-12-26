@@ -6,15 +6,11 @@ weight: 3
 
 # Device UUID
 
-{{<details header="Feature availability">}}
-
-| Operating Systems      | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ---------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| iOS, Android, ChromeOS | WARP with Gateway                                                                         | All plans                                                     |
-
-{{</details>}}
-
 Cloudflare Zero Trust allows you to build Zero Trust rules based on device UUIDs supplied in an MDM file. You can create these rules so that access to applications is granted only to users connecting from company devices.
+
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## 1. Assign UUIDs to devices
 

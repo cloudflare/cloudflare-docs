@@ -17,7 +17,7 @@ To use Queues, you will need:
 1. A [Cloudflare account](/fundamentals/setup/account-setup/), if you do not have one already.
 
 2. C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues. To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
-3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
+3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.17.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
 
 ## 1. Enable Queues
 

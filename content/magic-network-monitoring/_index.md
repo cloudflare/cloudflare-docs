@@ -11,13 +11,13 @@ meta:
 
 {{<description>}}
 
-Detect and receive notifications about attacks based on traffic flows
+Detect and receive notifications about attacks based on traffic flows.
 
 {{</description>}}
 
 {{<plan type="all">}}
 
-Magic Network Monitoring provides visibility into your network traffic by analyzing network flow data sent from a customer’s routers. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Magic Network Monitoring provides visibility into your network traffic by analyzing network {{<glossary-tooltip term_id="flow data">}}flow data{{</glossary-tooltip>}} sent from a customer’s routers. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
 Enterprise customers can use Magic Network Monitoring with [Magic Transit on-demand](/magic-transit/on-demand/) to monitor their network, identify volumetric DDoS attacks, and activate Magic Transit on-demand to mitigate those attacks.
 
@@ -27,13 +27,19 @@ Enterprise customers can use Magic Network Monitoring with [Magic Transit on-dem
 
 {{<feature header="Rules" href="/magic-network-monitoring/rules/">}}
 
-Create rules to configure the threshold for data flowing from your network. 
+Create rules to configure the threshold for data flowing from your network.
+
+{{</feature>}}
+
+{{<feature header="Magic Transit integration" href="/magic-network-monitoring/magic-transit-integration/">}}
+
+Magic Transit On Demand customers can use Magic Network Monitoring to enable DDoS mitigatios when a DDoS attack is detected.
 
 {{</feature>}}
 
 {{<feature header="Notifications" href="/magic-network-monitoring/notifications/">}}
 
-Set up notifications to learn about an attack. 
+Set up notifications to learn about an attack.
 
 {{</feature>}}
 
@@ -57,9 +63,9 @@ Connects your network infrastructure directly with Cloudflare – rather than us
 {{</related>}}
 
 ## More resources
- 
+
 {{<resource-group>}}
- 
+
 {{<resource header="Discord" href="https://discord.com/invite/cloudflaredev" icon="logo-Discord">}}Connect with the Magic Network Monitoring community on Discord to ask questions, and share feedback.{{</resource>}}
- 
+
 {{</resource-group>}}

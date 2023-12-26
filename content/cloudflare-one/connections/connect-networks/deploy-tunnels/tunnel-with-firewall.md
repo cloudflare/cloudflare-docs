@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Tunnel with firewall
-weight: 3
+weight: 1
 ---
 
 # Tunnel with firewall
@@ -12,18 +12,35 @@ You can implement a positive security model with Cloudflare Tunnel by blocking a
 
 The parameters below can be configured for egress traffic inside of a firewall.
 
-| Destination | Port | Protocols |
-| ----------- | -------- | --------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `api.cloudflare.com`        | 443  | TCP (HTTPS) |
-| `update.argotunnel.com`     | 443  | TCP (HTTPS) |
+### Required for tunnel operation
 
-{{<Aside type="note">}}
+`cloudflared` connects to Cloudflare's global network on port `7844`. To use Cloudflare Tunnel, your firewall must allow outbound connections to the following destinations on port `7844` (via UDP if using the `quic` protocol or TCP if using the `http2` protocol).
 
-Opening port 443 for connections to `update.argotunnel.com` is optional. Failure to do so will prompt a log error, but `cloudflared` will still run correctly.
+{{<table-wrap>}}
+| Destination | Port | Protocols |  Notes |
+| ----------- | -------- | --------- | ------- |
+| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) | |
+| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) | |
+| `cftunnel.com`              | 7844 | TCP/UDP (`http2`/`quic`) | Only required for firewalls that enforce SNI.|
+| `h2.cftunnel.com`           | 7844 | TCP (`http2`) | Only required for firewalls that enforce SNI. |
+| `quic.cftunnel.com`         | 7844 | UDP (`quic`) | Only required for firewalls that enforce SNI.|
 
-{{</Aside>}}
+{{</table-wrap>}}
+
+### Optional
+
+Opening port 443 enables some optional features. Failure to allow these connections may prompt a log error, but `cloudflared` will still run correctly.
+
+{{<table-wrap>}}
+
+| Destination | Port | Protocol |  Description |
+| ----------- | -------- | --------- | ------- |
+| `api.cloudflare.com`        | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
+| `update.argotunnel.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
+| `<your-team-name>.cloudflareaccess.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to validate the Access JWT.  Only required if the [`access`](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access) setting is enabled. |
+| `pqtunnels.cloudflareresearch.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudflare.com/post-quantum-tunnel/) errors to Cloudflare. |
+
+{{</table-wrap>}}
 
 ## Firewall configuration
 

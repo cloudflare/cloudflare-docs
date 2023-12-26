@@ -37,11 +37,11 @@ By default, Images are served from the `/cdn-cgi/imagedelivery/` path. You can u
 
 Free and Pro plans only support string matching rules that do not require regular expressions.
 
-This example lets you rewrite a request from `example.com/images` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT HASH>`.
+This example lets you rewrite a request from `example.com/images` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>`.
 
 To create a rule:
 
-1. Log in to the Cloudflare dashboard and select your account and website. 
+1. Log in to the Cloudflare dashboard and select your account and website.
 2. Select **Rules** > **Transform Rules**.
 3. Select **Create rule**.
 4. Under **When incoming requests match...**, select **Edit expression**
@@ -51,7 +51,7 @@ To create a rule:
 
 ```txt
 concat(
-  "/cdn-cgi/imagedelivery/<ACCOUNT HASH>",
+  "/cdn-cgi/imagedelivery/<ACCOUNT_HASH>",
   substring(http.request.uri.path, 7)
 )
 ```
@@ -66,11 +66,11 @@ This feature requires a Business or Enterprise plan to enable regex in Transform
 
 {{</Aside>}}
 
-This example lets you rewrite a request from `example.com/images/some-image-id/w100,h300` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT HASH>/some-image-id/width=100,height=300` and implies [Flexible variants](/images/cloudflare-images/transform/flexible-variants/) feature is turned on.
+This example lets you rewrite a request from `example.com/images/some-image-id/w100,h300` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/some-image-id/width=100,height=300` and implies [Flexible variants](/images/cloudflare-images/transform/flexible-variants/) feature is turned on.
 
 To create a rule:
 
-1. Log in to the Cloudflare dashboard and select your account and website. 
+1. Log in to the Cloudflare dashboard and select your account and website.
 2. Select **Rules** > **Transform Rules**.
 3. Select **Create rule**.
 4. Under **When incoming requests match...**, select **Edit expression**
@@ -80,9 +80,9 @@ To create a rule:
 
 ```txt
 regex_replace(
-  http.request.uri.path, 
+  http.request.uri.path,
   "^/images/(.*)\\?w([0-9]+)&h([0-9]+)$",
-  "/cdn-cgi/imagedelivery/<ACCOUNT HASH>/${1}/width=${2},height=${3}"
+  "/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/${1}/width=${2},height=${3}"
 )
 ```
 

@@ -19,7 +19,7 @@ If they update their [`CNAME` record](/cloudflare-for-platforms/cloudflare-for-s
 - The domain's traffic will not route through your custom hostname.
 - The custom hostname will enter into a **Moved** state.
 
-If the custom hostname is in a **Moved** state for seven days, it will be automatically deleted.
+If the custom hostname is in a **Moved** state for seven days, it will transition into a **Deleted** state.
 
 ## Domains not using Cloudflare
 

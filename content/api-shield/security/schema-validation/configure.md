@@ -13,7 +13,7 @@ meta:
 Schema Validation 2.0 API is currently in an experimental functionality and may change in future updates.
 {{</Aside>}}
 
-Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual endpoints and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints. 
+Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints. 
 
 {{<Aside type="note">}}
 [Classic Schema Validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only.
@@ -127,8 +127,9 @@ Schemas contain a set of servers, paths, and methods, which together define an o
 ---
 header: cURL command
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
---header "Authorization: Bearer <API_TOKEN>"
+curl --request GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&operation_status=new&page=1&per_page=5000" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header 'Content-Type: application/json' 
 ```
 
 ```json
@@ -137,47 +138,23 @@ header: Result
 ---
 {
     "result":
-    {
-        "existing_operations":
         [
-            {
-                "operation_id": "5c734fcd-455d-4040-9eaa-dbb3830526ae",
-                "method": "POST",
-                "host": "example.com",
-                "endpoint": "/pets",
-                "last_updated": "2023-04-04T16:07:37.575971Z",
-                "features":
-                {
-                    "schema_info":
-                    {
-                        "active_schema":
-                        {
-                            "id": "0bf58160-5da3-48ac-80a9-069f9642c1a0",
-                            "name": "example_schema",
-                            "created_at": "2023-04-04T12:52:05.036341Z",
-                            "is_learned": false,
-                            "mitigation_action": null
-                        },
-                        "learned_available": false
-                    }
-                }
-            }
-        ],
-        "new_operations":
-        [
-            {
-                "method": "GET",
-                "host": "example.com",
-                "endpoint": "/pets",
-            }
-        ]
-    },
+          {
+              "method": "GET",
+              "host": "example.com",
+              "endpoint": "/pets"
+          }
+     ],
     "success": true,
-    "errors":
-    [],
-    "messages":
-    []
-}
+    "errors": [],
+    "messages": [],
+    "result_info": {
+        "page": 1,
+        "per_page": 30,
+        "count": 1,
+        "total_count": 1
+    }
+} 
 ```
 
 To receive information about the configuration of existing operations, Cloudflare recommends passing the `?feature=schema_info` parameter.
@@ -228,11 +205,10 @@ You can add all operations in a schema that do not already exist in Endpoint Man
 ---
 header: cURL command
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
---header "Authorization: Bearer <API_TOKEN>" \
+curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
+--header "X-Auth-Email: <EMAIL>" --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data "(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
---header "Authorization: Bearer <API_TOKEN>" | jq ".result.new_operations")"
+--data "$(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=5000" \ --header "X-Auth-Email: <EMAIL>" / --header "X-Auth-Key: <API_KEY>" | jq ".result")"
 ```
 
 {{<Aside type="note">}}

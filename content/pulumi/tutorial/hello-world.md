@@ -406,7 +406,7 @@ In the Cloudflare Dashboard, you'll notice the Worker application now contains t
 3. Go to **Workers & Pages**.
 4. Select your application.
 5. For **Routes**, select **View** to verify the Worker Route details match your definition.
-![alt_text](/images/pulumi/hello-world-tutorial/sn4.png "Cloudflare Dashboard - Worker Route")
+![alt_text](/images/pulumi/hello-world-tutorial/sn5.png "Cloudflare Dashboard - Worker Route")
 
 {{</tutorial-step>}}
 

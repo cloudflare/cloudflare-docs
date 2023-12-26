@@ -42,7 +42,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
@@ -85,6 +85,8 @@ In most cases, a Cache Reserve miss will result in both one class A and one clas
     </tr>
   </tbody>
 </table>
+
+{{<render file="_cache-reserve-billing-note.md">}}
 
 ### Storage usage
 
@@ -131,7 +133,7 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 | **TOTAL**          |                                          |                   | **$19.86** |
 {{</table-wrap>}}
 
-(Note the billable quantity is rounded up to the nearest million.)
+{{<render file="_cache-reserve-billing-note.md">}}
 
 #### Example 2
 
@@ -149,6 +151,8 @@ the estimated cost for the month would be:
 | Storage            | (1,000,000 assets) * (1MB per asset)                |   1,000 GB-months |      $15.00 |
 | **TOTAL**          |                                                     |                   | **$171.60** |
 {{</table-wrap>}}
+
+{{<render file="_cache-reserve-billing-note.md">}}
 
 ## Tips and best practices
 

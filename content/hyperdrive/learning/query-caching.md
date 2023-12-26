@@ -6,13 +6,13 @@ weight: 4
 
 # Query caching
 
-Hyperdrive automatically caches the most popular queries executed against your database, reducing the need to go back to your database (incurring latency & database load) for every query.
+Hyperdrive automatically caches the most popular queries executed against your database, reducing the need to go back to your database (incurring latency and database load) for every query.
 
 ## What does Hyperdrive cache?
 
-Because Hyperdrive understands database protocols, it can understand whether a query is mutating (writes to the database) or non-mutating (read-only), allowing it to safely cache read queries (only).
+Because Hyperdrive uses database protocols, it can differentiate between a mutating query (a query that writes to the database) and a non-mutating query (a read-only query), allowing Hyperdrive to safely cache read-only queries.
 
-Note that Hyperdrive does not just attempt to determine the difference between a `SELECT` and an `INSERT`, but parses the database wire-protocol and uses it to concretely determine whether a query is read-only (non-mutating) or not
+Besides determining the difference between a `SELECT` and an `INSERT`, Hyperdrive also parses the database wire-protocol and uses it to differentiate between a mutating or non-mutating query.
 
 For example, a read query that populates the front page of a news site would be cached:
 
@@ -39,28 +39,29 @@ Hyperdrive will support configuring both the `max_age` and `stale_while_revalida
 
 {{</Aside>}}
 
-The default caching behaviour for Hyperdrive is defined below:
+The default caching behaviour for Hyperdrive is defined as below:
 
 - `max_age` = 60 seconds (1 minute)
 - `stale_while_revalidate` = 15 seconds
 
 The `max_age` setting determines the maximum lifetime a query response will be served from cache. Cached responses may be evicted from the cache prior to this time if they are rarely used.
 
-The `stale_while_revalidate` setting allows Hyperdrive to continue serving stale cache results for an additional period of time while it is revalidating the cache. In most cases, revalidation should happen very quickly.
+The `stale_while_revalidate` setting allows Hyperdrive to continue serving stale cache results for an additional period of time while it is revalidating the cache. In most cases, revalidation should happen rapidly.
 
 You can set a maximum `max_age` of 1 hour.
+
 ## Disable caching
 
-You can disable caching on a per-Hyperdrive basis using the [wrangler](/workers/wrangler/install-and-update/) CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/hyperdrive).
+Disable caching on a per-Hyperdrive basis using the [wrangler](/workers/wrangler/install-and-update/) CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/hyperdrive).
 
 For example:
 
 ```sh
 # wrangler v3.11 and above required
-$ wrangler hyperdrive update my-hyperdrive --disable-caching
+$ npx wrangler hyperdrive update my-hyperdrive --disable-caching
 ```
 
-You can also configure multiple Hyperdrive connections from a single application: one that enables caching for popular queries, and a second where you do not want to cache queries, but still benefit from Hyperdrive's latency benefits and connection pooling.
+You can also configure multiple Hyperdrive connections from a single application: one connection that enables caching for popular queries, and a second connection where you do not want to cache queries, but still benefit from Hyperdrive's latency benefits and connection pooling.
 
 For example, using the [Postgres.js](/hyperdrive/learning/connect-to-postgres/) driver:
 
@@ -77,6 +78,6 @@ const noCachingClient = new Client({
 
 ## Next steps
 
-- Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/)
-- How to [connect to PostgreSQL](/hyperdrive/learning/connect-to-postgres/) from Hyperdrive.
-- [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
+- Learn more about [How Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/).
+- Learn how to [Connect to PostgreSQL](/hyperdrive/learning/connect-to-postgres/) from Hyperdrive.
+- Review [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.

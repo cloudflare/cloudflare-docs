@@ -47,4 +47,4 @@ The following detection engines only apply to Enterprise Bot Management. For spe
 
 ## Comparison to Threat Score
 
-Bot Score is different from Threat Score. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by relying on bot scores and avoiding IP reputation entirely.
+Bot Score is different from {{<glossary-tooltip term_id="threat score">}}Threat Score{{</glossary-tooltip>}}. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by relying on bot scores and avoiding IP reputation entirely.

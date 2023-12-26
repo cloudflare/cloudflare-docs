@@ -5,25 +5,21 @@ weight: 3
 ---
 
 # Translation
-M2M100 is a multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation.
 
-* ID:  **@cf/meta/m2m100-1.2b** - used to `run` this model via SDK or API
-* Task: Translation
-* License type: MIT
-* [Terms + Information](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)
+Translation models convert a sequence of text from one language to another.
 
-## Supported languages
-The following languages are currently supported by the model: 
-*  english
-*  chinese
-*  french
-*  spanish
-*  arabic
-*  russian
-*  german
-*  japanese
-*  portuguese
-*  hindi
+* Task type: **translation**
+* TypeScript class: **AiTranslation**
+
+{{<render file="_npm-update.md">}}
+
+## Available Embedding Models
+
+List of available models in for this task type:
+
+| Model ID                        | Description                   |
+| ------------------------------- | ----------------------------- |
+| `@cf/meta/m2m100-1.2b`                   | Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation<br/><strong>languages</strong>: english, chinese, french, spanish, arabic, russian, german, japanese, portuguese, hindi<br/>[More information](https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100)<br/>[Terms and license](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)<br/>  |
 
 ## Examples
 {{<tabs labels="worker | node | python | curl">}}
@@ -43,7 +39,7 @@ export default {
     const response = await ai.run('@cf/meta/m2m100-1.2b', {
         text: "I'll have an order of the moule frites",
         source_lang: "english", // defaults to english
-        target_lang: "french" 
+        target_lang: "french"
       }
     );
 
@@ -91,11 +87,11 @@ headers = {"Authorization": "Bearer {API_TOKEN}"}
 def run(model, input):
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
-    
+
 output = run('@cf/meta/m2m100-1.2b', {
   "text": "I'll have an order of the moule frites",
   "source_lang": "english",
-  "target_lang": "french" 
+  "target_lang": "french"
 })
 
 print(output)
@@ -127,37 +123,47 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
 ```
 
 ## API schema
+
 The following schema is based on [JSON Schema](https://json-schema.org/)
+
+### Input
 
 ```json
 {
-    "task": "translation",
-    "tsClass": "AiTranslation",
-    "jsonSchema": {
-        "input": {
-            "type": "object",
-            "properties": {
-                "input_text": {
-                    "type": "string"
-                },
-                "source_lang": {
-                    "type": "string",
-                    "default" : "en"
-                },
-                "target_lang": {
-                    "type": "string"
-                }
-            },
-            "required": ["input_text", "target_lang"]
-        },
-        "output": {
-            "type": "object",
-            "properties": {
-                "translated_text": {
-                    "type": "string"
-                }
-            }
-        }
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string"
+    },
+    "source_lang": {
+      "type": "string",
+      "default": "en"
+    },
+    "target_lang": {
+      "type": "string"
     }
+  },
+  "required": [
+    "text",
+    "target_lang"
+  ]
 }
 ```
+
+TypeScript class: **AiTranslationInput**
+
+### Output
+
+```json
+{
+  "type": "object",
+  "contentType": "application/json",
+  "properties": {
+    "translated_text": {
+      "type": "string"
+    }
+  }
+}
+```
+
+TypeScript class: **AiTranslationOutput**

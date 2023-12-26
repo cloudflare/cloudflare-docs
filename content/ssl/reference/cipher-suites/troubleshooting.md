@@ -25,3 +25,19 @@ For example, if you have uploaded an RSA certificate, your cipher suite selectio
 ## TLS 1.3 settings
 
 {{<render file="_tls-1.3-cipher-limitations.md">}}
+
+## SSL Labs weak ciphers report
+
+If you try to [disable](/ssl/reference/cipher-suites/customize-cipher-suites/) all of the `WEAK` cipher suites according to what is listed on a [Qualys SSL Labs](https://www.ssllabs.com/ssltest/) report, you might notice that the naming conventions are not the same.
+
+This is because SSL Labs follows RFC cipher naming convention while Cloudflare follows OpenSSL cipher naming convention. The cipher suite names list in the [OpenSSL documentation](https://www.openssl.org/docs/man1.0.2/man1/ciphers.html) may help you map the names.
+
+## Warnings related to CVE-2019-1559
+
+Even though applications on Cloudflare are not vulnerable to [CVE-2019-1559](/ssl/reference/cloudflare-and-cve-2019-1559/), some security scanners may flag your application erroneously.
+
+To remove these warnings, refer to [Customize cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and exclude the following ciphers:
+
+- `ECDHE-ECDSA-AES256-SHA384`
+- `ECDHE-ECDSA-AES128-SHA256`
+- `ECDHE-RSA-AES256-SHA384`

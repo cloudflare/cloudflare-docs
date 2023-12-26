@@ -58,7 +58,7 @@ Parameter | Description
 `activation.heartbeat_interval` | Interval, in seconds, between heartbeats to activation server. Defaults to `0`/`off`.
 `memprofile.file` | Name of the file to which the heap profile will be written when `SIGUSR1` is received. There is no default value which means that the memory profile will not be created and memory profiling will be disabled.
 `cpuprofile.file` | Name of the file to which the CPU profile will be written when `SIGUSR1` is received. There is no default value which means that the CPU profile will not be created. Note that the `SIGUSR1` signal toggles profiling on and off and the file will be written on every transition to off.
-`cpuprofile.intial` | Whether to begin profiling immediately on startup. It is only valid when `cpuprofile.file` is set and valid. It is `0` by default, requiring an explicit signal to begin profiling.
+`cpuprofile.initial` | Whether to begin profiling immediately on startup. It is only valid when `cpuprofile.file` is set and valid. It is `0` by default, requiring an explicit signal to begin profiling.
 `memstats.file` | Name of the file to which information about current memory use will be written when `SIGUSR2` is received. This is intended for internal use.
 `ca.bundle` | Name of a file containing PEM-encoded CA root certificates that will be used for verifying connections to origin servers using TLS. Defaults to empty string which means use the system roots.
 `origin.idleconns` | Sets the number of idle TCP connections that will be kept open to the origin server for connection pooling. Defaults to `1`.
