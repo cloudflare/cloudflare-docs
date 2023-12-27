@@ -1,7 +1,7 @@
 ---
 title: Define Split Tunnel settings
 pcx_content_type: overview
-weight: 5
+weight: 4
 layout: learning-unit
 ---
 

@@ -28,7 +28,7 @@ To customize the default profile:
     | Support URL | Enabled | |
     | Service mode | Gateway with WARP | |
     | Local Domain Fallback | | Refer to [Resolve Private DNS] |
-    | Split Tunnels | Exclude IPs and domains | Refer to [Configure Split Tunnels] |
+    | Split Tunnels | Exclude IPs and domains | Refer to [Define Split Tunnels settings] |
     | Directly route Office 365 traffic | Disabled | |
 
 4. Save the profile.
