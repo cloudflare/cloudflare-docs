@@ -165,7 +165,7 @@ Hyperdrive is a service that accelerates queries you make to existing databases,
 
 Hyperdrive allows you to:
 
-* Connect to an existing database from Workers without connection overheads.
+* Connect to an existing database from Workers without connection overhead.
 * Cache frequent queries across Cloudflare's global network to reduce response times on highly trafficked content.
 * Reduce load on your origin database with connection pooling.
 
