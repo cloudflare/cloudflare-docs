@@ -35,7 +35,7 @@ Applications built on the Workers platform may combine one or more storage compo
 
 | Use-case                      | Product       | Ideal for              |
 | ----------------------------- | ------------- | ---------------------- |
-| Key-value storage             | [Workers KV](/workers-kv/) | Configuration data, service routing metadata, personalization (A/B testing) 
+| Key-value storage             | [Workers KV](/kv/) | Configuration data, service routing metadata, personalization (A/B testing) 
 | Object storage                | [R2](/r2/)    | User-facing web assets, images, machine learning and training datasets, analytics datasets, log and event data. |
 | SQL database                  | [D1](/d1/)    | Relational data, including user profiles, product listings and orders, and/or customer data. |
 | Global co-ordination          | [Durable Objects](/durable-objects/) | Building collaborative applications; global co-ordination across clients; strongly consistent, transactional storage. |
