@@ -1,5 +1,5 @@
 ---
-title: Distributed denial-of-service (DDoS)
+title: DDoS Protection
 pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit

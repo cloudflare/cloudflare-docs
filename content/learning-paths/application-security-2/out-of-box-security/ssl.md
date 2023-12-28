@@ -9,6 +9,8 @@ Cloudflare offers a range of SSL/TLS options. By default, Cloudflare offers Univ
 
 1. [**Universal SSL**](/ssl/edge-certificates/universal-ssl/): This option covers basic encryption requirements and certificate management needs.
 
+
+
 2. [**Total TLS**](/ssl/edge-certificates/additional-options/total-tls/): Automatically issues certificates for all subdomain levels, extending the protection offered by Universal SSL.
 
 3. [**Advanced Certificates**](/ssl/edge-certificates/advanced-certificate-manager/): Offers customizable certificate issuance and management, including options like choosing the certificate authority, certificate validity period, and removing Cloudflare branding from certificates.

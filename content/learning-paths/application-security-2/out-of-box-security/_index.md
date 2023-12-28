@@ -15,15 +15,3 @@ By the end of this module, you will be able to:
 
 - Understand the out-of-the-box DDoS security controls your site will have
 
-ddos, dns, app
-ddos overrides
-security level
-browser integrity
-dnssec
-ssl
-
-rules
-turnstile
-security center
-email address obfuscation
-secer-side excludes
