@@ -1,7 +1,7 @@
 ---
 title: Define Split Tunnel settings
 pcx_content_type: overview
-weight: 4
+weight: 5
 layout: learning-unit
 ---
 
@@ -19,4 +19,3 @@ If you intend to run in an equivalent ‘full tunnel’ mode when using Cloudfla
 ## Add a route
 
 {{<render file="warp/_add-split-tunnels-route.md" productFolder="cloudflare-one">}}
-

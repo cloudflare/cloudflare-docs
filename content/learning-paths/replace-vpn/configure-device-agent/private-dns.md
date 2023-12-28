@@ -1,7 +1,7 @@
 ---
 title: Resolve private DNS
 pcx_content_type: overview
-weight: 5
+weight: 6
 layout: learning-unit
 ---
 
