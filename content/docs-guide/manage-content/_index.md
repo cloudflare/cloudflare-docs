@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Manage content
-weight: 3
+weight: 4
 ---
 
 # Manage content
