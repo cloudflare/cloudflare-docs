@@ -30,27 +30,27 @@ Refer to [Log from Workers](https://developers.cloudflare.com/workers/observabil
 
 | Method                                                                                                         | Behavior
 |----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [`console.assert()`](https://developer.mozilla.org/en-US/docs/Web/API/console/assert_static)                   | ⚪ no op                                                           |
-| [`console.clear()`](https://developer.mozilla.org/en-US/docs/Web/API/console/clear_static)                     | 🟡 partial support                                                 |
-| [`console.count()`](https://developer.mozilla.org/en-US/docs/Web/API/console/count_static)                     | 🟡 partial support                                                 |
-| [`console.countReset()`](https://developer.mozilla.org/en-US/docs/Web/API/console/countreset_static)           | ⚪ no op                                                           |
-| [`console.createTask()`](https://developer.chrome.com/blog/devtools-modern-web-debugging/#linked-stack-traces) | 🔴 Will throw an exception in production, but works in local dev, Quick Editor, and remote preview  |
 | [`console.debug()`](https://developer.mozilla.org/en-US/docs/Web/API/console/debug_static)                     | ✅ supported                                                       |
-| [`console.dir()`](https://developer.mozilla.org/en-US/docs/Web/API/console/dir_static)                         | ⚪ no op                                                           |
-| [`console.dirxml()`](https://developer.mozilla.org/en-US/docs/Web/API/console/dirxml_static)                   | ⚪ no op                                                           |
 | [`console.error()`](https://developer.mozilla.org/en-US/docs/Web/API/console/error_static)                     | ✅ supported                                                       |
-| [`console.group()`](https://developer.mozilla.org/en-US/docs/Web/API/console/group_static)                     | 🟡 partial support                                                 |
-| [`console.groupCollapsed()`](https://developer.mozilla.org/en-US/docs/Web/API/console/groupcollapsed_static)   | ⚪ no op                                                           |
-| [`console.groupEnd`](https://developer.mozilla.org/en-US/docs/Web/API/console/groupend_static)                 | ⚪ no op                                                           |
 | [`console.info()`](https://developer.mozilla.org/en-US/docs/Web/API/console/info_static)                       | ✅ supported                                                       |
 | [`console.log()`](https://developer.mozilla.org/en-US/docs/Web/API/console/log_static)                         | ✅ supported                                                       |
+| [`console.warn()`](https://developer.mozilla.org/en-US/docs/Web/API/console/warn_static)                       | ✅ supported                                                       |
+| [`console.clear()`](https://developer.mozilla.org/en-US/docs/Web/API/console/clear_static)                     | 🟡 partial support                                                 |
+| [`console.count()`](https://developer.mozilla.org/en-US/docs/Web/API/console/count_static)                     | 🟡 partial support                                                 |
+| [`console.group()`](https://developer.mozilla.org/en-US/docs/Web/API/console/group_static)                     | 🟡 partial support                                                 |
+| [`console.table()`](https://developer.mozilla.org/en-US/docs/Web/API/console/table_static)                     | 🟡 partial support                                                 |
+| [`console.trace()`](https://developer.mozilla.org/en-US/docs/Web/API/console/trace_static)                     | 🟡 partial support                                                 |
+| [`console.assert()`](https://developer.mozilla.org/en-US/docs/Web/API/console/assert_static)                   | ⚪ no op                                                           |
+| [`console.countReset()`](https://developer.mozilla.org/en-US/docs/Web/API/console/countreset_static)           | ⚪ no op                                                           |
+| [`console.dir()`](https://developer.mozilla.org/en-US/docs/Web/API/console/dir_static)                         | ⚪ no op                                                           |
+| [`console.dirxml()`](https://developer.mozilla.org/en-US/docs/Web/API/console/dirxml_static)                   | ⚪ no op                                                           |
+| [`console.groupCollapsed()`](https://developer.mozilla.org/en-US/docs/Web/API/console/groupcollapsed_static)   | ⚪ no op                                                           |
+| [`console.groupEnd`](https://developer.mozilla.org/en-US/docs/Web/API/console/groupend_static)                 | ⚪ no op                                                           |
 | [`console.profile()`](https://developer.mozilla.org/en-US/docs/Web/API/console/profile_static)                 | ⚪ no op                                                           |
 | [`console.profileEnd()`](https://developer.mozilla.org/en-US/docs/Web/API/console/profileend_static)           | ⚪ no op                                                           |
-| [`console.table()`](https://developer.mozilla.org/en-US/docs/Web/API/console/table_static)                     | 🟡 partial support                                                 |
 | [`console.time()`](https://developer.mozilla.org/en-US/docs/Web/API/console/time_static)                       | ⚪ no op                                                           |
 | [`console.timeEnd()`](https://developer.mozilla.org/en-US/docs/Web/API/console/timeend_static)                 | ⚪ no op                                                           |
 | [`console.timeLog()`](https://developer.mozilla.org/en-US/docs/Web/API/console/timelog_static)                 | ⚪ no op                                                           |
 | [`console.timeStamp()`](https://developer.mozilla.org/en-US/docs/Web/API/console/timestamp_static)             | ⚪ no op                                                           |
-| [`console.trace()`](https://developer.mozilla.org/en-US/docs/Web/API/console/trace_static)                     | 🟡 partial support                                                 |
-| [`console.warn()`](https://developer.mozilla.org/en-US/docs/Web/API/console/warn_static)                       | ✅ supported                                                       |
+| [`console.createTask()`](https://developer.chrome.com/blog/devtools-modern-web-debugging/#linked-stack-traces) | 🔴 Will throw an exception in production, but works in local dev, Quick Editor, and remote preview  |
 
