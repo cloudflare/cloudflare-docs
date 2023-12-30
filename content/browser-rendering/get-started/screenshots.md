@@ -124,10 +124,10 @@ export default {
 Update `src/worker.ts` with your Worker code:
 
 ```ts
-import puppeteer from "@cloudflare/puppeteer";
+import puppeteer, { BrowserWorker } from "@cloudflare/puppeteer";
 
 interface Env {
-	MYBROWSER: Fetcher;
+	MYBROWSER: BrowserWorker;
 	BROWSER_KV_DEMO: KVNamespace;
 }
 
