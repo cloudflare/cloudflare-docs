@@ -1,5 +1,9 @@
-name: Issue Opened
-
+on:
+  push:
+    branches:
+    - main
+    - release/*
+name: Issue Opened 
 on:
   issues:
     types: [opened]
