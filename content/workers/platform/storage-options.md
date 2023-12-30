@@ -1,13 +1,13 @@
 ---
-title: Storage options guide
+title: Choosing a data or storage product
 pcx_content_type: concept
 weight: 3
 meta:
-  title: Storage options guide
-  description: Storage options available on Cloudflare's developer platform that can be used with Workers.
+  title: Choosing a data or storage product.
+  description: Storage and database options available on Cloudflare's developer platform.
 ---
 
-# Storage options guide
+# Choosing a data or storage product for your use-case
 
 Cloudflare Workers support a range of storage and database options for persisting different types of data across different use-cases, from key-value stores (like [Workers KV](/kv/)) through to SQL databases (such as [D1](/d1/)). This guide describes the use-cases suited to each storage option, as well as their performance and consistency properties.
 
