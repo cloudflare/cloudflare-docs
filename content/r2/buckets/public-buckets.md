@@ -18,7 +18,7 @@ Using a custom domain does not require enabling `r2.dev`.
 
 {{<Aside type="note">}}
 
-Public buckets do not let you list the contents of your buckets at the root of your (sub) domain currently.
+Currently, public buckets do not let you list the bucket contents at the root of your (sub) domain.
 
 {{</Aside>}}
 
