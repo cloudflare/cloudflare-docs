@@ -20,6 +20,6 @@ We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evalu
 
 ## With Pre-Clearance
 
-If you are using [Turnstile in pre-clearance mode](https://blog.cloudflare.com/integrating-turnstile-with-the-cloudflare-waf-to-challenge-fetch-requests), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endoint in [`/cdn-cgi/`](https://developers.cloudflare.com/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
+If you are using [Turnstile in pre-clearance mode](https://blog.cloudflare.com/integrating-turnstile-with-the-cloudflare-waf-to-challenge-fetch-requests), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endpoint in [`/cdn-cgi/`](https://developers.cloudflare.com/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
 
 For this request to succeed, your `connect-src` directive must include `'self'`.
