@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: mTLS
+meta:
+  description: Configure your Worker to present a client certificate to services that enforce an mTLS connection.
 ---
 
 # Client authentication with mTLS
@@ -26,7 +28,7 @@ The `wrangler mtls-certificate upload` command requires the [SSL and Certificate
 {{</Aside>}}
 
 ```sh
-$ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
+$ npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
 ```
 
 Then, update your Worker project's `wrangler.toml` file to create an mTLS certificate binding:

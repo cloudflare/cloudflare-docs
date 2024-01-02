@@ -345,7 +345,7 @@ The Cloudflare Rules language supports these standard fields:
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
          </p>
-         <p>This field has the same value as the <code>ip.geoip.asnum</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.asnum</code> field, which is deprecated. The <code>ip.geoip.asnum</code> field is still available for new and existing rules, but you should use the <code>ip.src.asnum</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-continent">
@@ -363,7 +363,7 @@ The Cloudflare Rules language supports these standard fields:
               <li>T1 &#8211; Tor network</li>
           </ul>
         </p>
-        <p>This field has the same value as the <code>ip.geoip.continent</code> field, which is still available.</p>
+        <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.continent</code> field, which is deprecated. The <code>ip.geoip.continent</code> field is still available for new and existing rules, but you should use the <code>ip.src.continent</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-country">
@@ -375,8 +375,7 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>In the WAF, the <code>ip.geoip.country</code> field (which is still available) is equivalent to <code>ip.src.country</code>.</p>
-         <p><code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.country</code> field, which is deprecated. The <code>ip.geoip.country</code> field is still available for new and existing rules, but you should use the <code>ip.src.country</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-subdivision-1-iso-code">
@@ -387,7 +386,7 @@ The Cloudflare Rules language supports these standard fields:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is deprecated. The <code>ip.geoip.subdivision_1_iso_code</code> field is still available for new and existing rules, but you should use the <code>ip.src.subdivision_1_iso_code</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-subdivision-2-iso-code">
@@ -400,15 +399,162 @@ The Cloudflare Rules language supports these standard fields:
          <code class="InlineCode">GB-SWK</code>
          </p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is still available.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is deprecated. The <code>ip.geoip.subdivision_2_iso_code</code> field is still available for new and existing rules, but you should use the <code>ip.src.subdivision_2_iso_code</code> field instead.</p>
       </td>
    </tr>
    <tr id="field-ip-src-is-in-european-union">
       <td valign="top"><code>ip.src.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
-         </p>
-         <p>This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is still available.</p>
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union (EU).</p>
+         <details>
+         <summary>Countries in EU (from geolocation data)</summary>
+         <div>
+          <table class="Small">
+            <tr>
+              <th>Country code</th>
+              <th>Country name</th>
+            </tr>
+            <tr>
+              <td><code>AT</code></td>
+              <td>Austria</td>
+            </tr>
+            <tr>
+              <td><code>AX</code></td>
+              <td>Åland Islands</td>
+            </tr>
+            <tr>
+              <td><code>BE</code></td>
+              <td>Belgium</td>
+            </tr>
+            <tr>
+              <td><code>BG</code></td>
+              <td>Bulgaria</td>
+            </tr>
+            <tr>
+              <td><code>CY</code></td>
+              <td>Cyprus</td>
+            </tr>
+            <tr>
+              <td><code>CZ</code></td>
+              <td>Czechia</td>
+            </tr>
+            <tr>
+              <td><code>DE</code></td>
+              <td>Germany</td>
+            </tr>
+            <tr>
+              <td><code>DK</code></td>
+              <td>Denmark</td>
+            </tr>
+            <tr>
+              <td><code>EE</code></td>
+              <td>Estonia</td>
+            </tr>
+            <tr>
+              <td><code>ES</code></td>
+              <td>Spain</td>
+            </tr>
+            <tr>
+              <td><code>FI</code></td>
+              <td>Finland</td>
+            </tr>
+            <tr>
+              <td><code>FR</code></td>
+              <td>France</td>
+            </tr>
+            <tr>
+              <td><code>GF</code></td>
+              <td>French Guiana</td>
+            </tr>
+            <tr>
+              <td><code>GP</code></td>
+              <td>Guadeloupe</td>
+            </tr>
+            <tr>
+              <td><code>GR</code></td>
+              <td>Greece</td>
+            </tr>
+            <tr>
+              <td><code>HR</code></td>
+              <td>Croatia</td>
+            </tr>
+            <tr>
+              <td><code>HU</code></td>
+              <td>Hungary</td>
+            </tr>
+            <tr>
+              <td><code>IE</code></td>
+              <td>Ireland</td>
+            </tr>
+            <tr>
+              <td><code>IT</code></td>
+              <td>Italy</td>
+            </tr>
+            <tr>
+              <td><code>LT</code></td>
+              <td>Lithuania</td>
+            </tr>
+            <tr>
+              <td><code>LU</code></td>
+              <td>Luxembourg</td>
+            </tr>
+            <tr>
+              <td><code>LV</code></td>
+              <td>Latvia</td>
+            </tr>
+            <tr>
+              <td><code>MF</code></td>
+              <td>Saint Martin</td>
+            </tr>
+            <tr>
+              <td><code>MQ</code></td>
+              <td>Martinique</td>
+            </tr>
+            <tr>
+              <td><code>MT</code></td>
+              <td>Malta</td>
+            </tr>
+            <tr>
+              <td><code>NL</code></td>
+              <td>The Netherlands</td>
+            </tr>
+            <tr>
+              <td><code>PL</code></td>
+              <td>Poland</td>
+            </tr>
+            <tr>
+              <td><code>PT</code></td>
+              <td>Portugal</td>
+            </tr>
+            <tr>
+              <td><code>RE</code></td>
+              <td>Réunion</td>
+            </tr>
+            <tr>
+              <td><code>RO</code></td>
+              <td>Romania</td>
+            </tr>
+            <tr>
+              <td><code>SE</code></td>
+              <td>Sweden</td>
+            </tr>
+            <tr>
+              <td><code>SI</code></td>
+              <td>Slovenia</td>
+            </tr>
+            <tr>
+              <td><code>SK</code></td>
+              <td>Slovakia</td>
+            </tr>
+            <tr>
+              <td><code>YT</code></td>
+              <td>Mayotte</td>
+            </tr>
+          </table>
+          <p>{{<markdown>}}This list was obtained from MaxMind's GeoIP2 database on 2023-12-05. This information is maintained by MaxMind. For details on obtaining up-to-date country information, refer to [MaxMind GeoLite2 Free Geolocation Data](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).{{</markdown>}}</p>
+         </div>
+         </details>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is deprecated. The <code>ip.geoip.is_in_european_union</code> field is still available for new and existing rules, but you should use the <code>ip.src.is_in_european_union</code> field instead.</p>
       </td>
   </tr>
   <tr id="field-raw-http-request-full-uri">
@@ -608,6 +754,17 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-tls_cipher">
+      <td><code>cf.tls_cipher</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>
+          The cipher for the connection to Cloudflare.
+        </p>
+        <p>Example:<br/>
+        <code>"AES128-SHA256"</code>
+        </p>
+      </td>
+    </tr>
     <tr id="field-cf-tls_client_auth-cert_revoked">
       <td><code>cf.tls_client_auth.cert_revoked</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
@@ -760,6 +917,16 @@ The Cloudflare Rules language supports these dynamic fields:
       <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
       </p></td>
     </tr>
+    <tr id="field-cf-tls_version">
+      <td><code>cf.tls_version</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The TLS version of the connection to Cloudflare.
+        </p>
+        <p>Example:<br/>
+        <code>"TLSv1.2"</code>
+        </p>
+      </td>
+    </tr>
     <tr id="field-cf-waf-score">
         <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
@@ -894,8 +1061,7 @@ The Cloudflare Rules language supports these dynamic fields:
             <code>GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will match on either source or destination address.</p>
-         <p> <code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
+         <p>For Magic Firewall, the <code>ip.geoip.country</code> field (which is deprecated) will match on either source or destination address. The <code>ip.geoip.country</code> field is still available for new and existing rules, but you should use the <code>ip.src.country</code> and/or <code>ip.dst.country</code> fields instead.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">

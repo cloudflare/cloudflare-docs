@@ -1,6 +1,6 @@
 ---
 title: 1 - Junk email and Area 1 Admin Quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 meta:
     title: Junk email and Area 1 Admin Quarantine - Office 365

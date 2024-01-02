@@ -52,11 +52,12 @@ let matches = await env.YOUR_INDEX.query(queryVector)
 
 Query an index with the provided vector, returning the score(s) of the closest vectors based on the configured distance metric.
 
-* Configure the number of returned matches by setting `topK` (default: 3) 
-* Return vector metadata and vector values by setting `returnVectors: true` (default: false) 
+* Configure the number of returned matches by setting `topK` (default: 3)
+* Return vector values by setting `returnValues: true` (default: false)
+* Return vector metadata by setting `returnMetadata: true` (default: false)
 
 ```ts
-let matches = await env.YOUR_INDEX.query(queryVector, { topK: 5, returnVectors: true })
+let matches = await env.YOUR_INDEX.query(queryVector, { topK: 5, returnValues: true, returnMetadata: true })
 ```
 
 ### Get vectors by ID
@@ -87,9 +88,10 @@ Retrieves the configuration of a given index directly, including its configured 
 
 ## Vectors
 
-A vector represents the vector embedding output from a machine learning model. 
+A vector represents the vector embedding output from a machine learning model.
 
 - `id` - a unique `string` identifying the vector in the index. This should map back to the ID of the document, object or database identifier that the vector values were generated from.
+- `namespace` - an optional partition key within a index. Operations are performed per-namespace, so this can be used to create isolated segments within a larger index.
 - `values` - an array of `number`, `Float32Array`, or `Float64Array` as the vector embedding itself. This must be a dense array, and the length of this array must match the `dimensions` configured on the index.
 - `metadata` - an optional set of key-value pairs that can be used to store additional metadata alongside a vector.
 
@@ -101,6 +103,7 @@ let vectorExample = {
         "key": "value",
         "hello": "world",
         "url": "r2://bucket/some/object.json"
+    }
 }
 ```
 

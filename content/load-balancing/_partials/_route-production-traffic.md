@@ -15,6 +15,6 @@ Now that you have set up your load balancer and verified everything is working c
 
 {{<Aside type="note">}}
 
-If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, set up an [Origin rule](/rules/origin-rules/features/#dns-record) or [Page rule](/support/page-rules/using-resolve-override-in-page-rules/).
+If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, set up an [Origin rule](/rules/origin-rules/features/#dns-record) or [Page rule](/rules/page-rules/how-to/override-url-or-ip-address/).
 
 {{</Aside>}}

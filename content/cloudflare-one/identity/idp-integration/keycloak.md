@@ -14,11 +14,13 @@ To set up Keycloak (SAML) as your identity provider:
 
 1. In Keycloak, select **Clients** in the navigation bar and create a new client.
 
-2. Under **Client ID**, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. Under **Client ID**, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
     ![SAML Client interface with team domain and callback in Client ID](/images/cloudflare-one/identity/keycloak/configure-client.png)
 

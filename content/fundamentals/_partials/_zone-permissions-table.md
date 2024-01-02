@@ -50,8 +50,8 @@ inputParameters: editWord
 | Managed Headers $1             | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                                            |
 | Origin Rules Read                | Grants read access to [Origin Rules](/rules/origin-rules/).                                                                                |
 | Origin Rules $1                | Grants write access to [Origin Rules](/rules/origin-rules/).                                                                               |
-| Page Rules Read                  | Grants read access to [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).          |
-| Page Rules $1                  | Grants write access to [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).         |
+| Page Rules Read                  | Grants read access to [Page Rules](/rules/page-rules/).          |
+| Page Rules $1                  | Grants write access to [Page Rules](/rules/page-rules/).         |
 | Page Shield Read                 | Grants read access to [Page Shield](/page-shield/).                                                                                        |
 | Page Shield $1                 | Grants write access to [Page Shield](/page-shield/).                                                                                       |
 | Response Compression Read        | Grants read access to [Response Compression](/rules/compression-rules/).                                                                   |

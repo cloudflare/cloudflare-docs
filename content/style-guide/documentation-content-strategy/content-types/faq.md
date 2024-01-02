@@ -29,7 +29,6 @@ An effective FAQ page should:
 + Receive frequent updates
 + Solve problems
 + Drive page views
-+ Fuel a blog post of other, deeper, content
 + Showcase expertise, trust, and authority
 
 ## What should you include in an FAQ page?
@@ -38,7 +37,7 @@ The FAQ should include a list of questions and answers to a particular topic, an
 
 Make sure each question includes the entire text of the question.
 
-Make sure the answer includes the entire answer.
+Make sure the answer includes the entire answer, and a direct response to the question (if the question is phrased in a Yes/No manner).
 
 ## Structure
 
@@ -89,6 +88,48 @@ Breadcrumbs back to the main FAQ page
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): corresponds to the section header from the Main FAQ page
 
 Questions, answers
+
+---
+
+## Template
+
+Due to some templating we have built into our site, FAQ pages can be further optimized with [structured data](https://developers.google.com/search/docs/appearance/structured-data/faqpage).
+
+```
+---
+header: /1.1.1.1/faq.md
+highlight: [4, 9-10, 12, 16-17]
+---
+
+---
+pcx_content_type: faq
+title: FAQ
+structured_data: true
+---
+
+# FAQ
+
+{{</*faq-item*/>}}
+{{</*faq-question level=2 text="What is 1.1.1.1?" */>}}
+ 
+{{</*faq-answer*/>}}
+ 
+1.1.1.1 is Cloudflare's fast and secure DNS resolver.....
+ 
+{{</*/faq-answer*/>}}
+{{</*/faq-item*/>}}
+
+```
+
+For these components to work, you need to adjust several pieces of the page content:
+
+- Frontmatter must have `structured_data: true` specified.
+- Each FAQ item must be wrapped in the following elements:
+    - `faq-item`: Overall wrapper.
+    - `faq-question level=<HEADING_LEVEL> text="<TITLE>"`: Wraps the question itself. Has an optional level parameter to control the level of the header. This is useful if you have a FAQ divided into different sections.
+    - `faq-answer`: Wraps the answer text.
+
+---
 
 ## Question types
 

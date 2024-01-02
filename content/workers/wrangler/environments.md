@@ -7,8 +7,6 @@ meta:
 
 # Environments
 
-{{<render file="_wrangler_survey.md">}}
-
 ## Background
 
 Wrangler allows you to deploy the same Worker application with different configuration for each environment. You must configure environments in your Worker application's `wrangler.toml` file.
@@ -131,7 +129,7 @@ Published my-worker-staging
 ```
 
 ```sh
-~/my-worker $ wrangler deploy --env production
+~/my-worker $ npx wrangler deploy --env production
 Uploaded my-worker-production
 Published my-worker-production
   example.com/*

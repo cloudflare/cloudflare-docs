@@ -69,15 +69,15 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTTL`, depending on how you want to specify the key’s expiration time. 
+The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtl`, depending on how you want to specify the key’s expiration time. 
 
-To use `expiration` or `expirationTTL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
+To use `expiration` or `expirationTtl`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 
 {{<definitions>}}
 
 - `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
 
-- `NAMESPACE.put(key, value, {expirationTTL: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 

@@ -43,7 +43,7 @@ The following example updates rule `{rule_id_1}` that executes the Cloudflare Ma
 ```bash
 ---
 header: Request
-highlight: 9-11
+highlight: 8-10
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zone/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_1}" \

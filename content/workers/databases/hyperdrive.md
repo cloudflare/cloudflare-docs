@@ -7,4 +7,7 @@ external_link: /hyperdrive/
 _build:
   publishResources: false
   render: never
+
+meta:
+  description: Use Workers to accelerate queries you make to existing databases.
 ---

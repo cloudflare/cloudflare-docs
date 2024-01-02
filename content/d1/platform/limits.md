@@ -27,16 +27,17 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 | Maximum arguments per SQL function                 | 32                                           |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes                               |
 | Maximum bindings per Workers script                 | Approximately 5,000 <sup>1</sup>     |
+| Maximum SQL query duration                    | 30 seconds                        |
 
 {{<Aside type="note">}}
 
 If you would like to explore other storage solutions for your application, Cloudflare also offers [Workers KV](/kv/api/), [Durable Objects](/durable-objects/), and [R2](/r2/get-started/). 
 
-Refer to the [Storage options guide](/workers/learning/storage-options/) to review which storage option is right for your use case.
+Refer to the [Storage options guide](/workers/platform/storage-options/) to review which storage option is right for your use case.
 
 {{</Aside>}}
 
-<sup>beta</sup> This is a beta-only limitation. The maximum storage per-database, storage per-account and number of databases will automatically increase for paid plans during the course of D1's public beta.
+<sup>beta</sup> This is a beta-only limitation. The D1 team will increase the maximum storage per-database, storage per-account and number of databases for Paid plans during the course of D1's public beta.
 
 <sup>1</sup> A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, environmental variable or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to ~5,000 D1 databases to a single Worker script.
 

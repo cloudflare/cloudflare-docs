@@ -8,7 +8,7 @@ meta:
 
 # Extended suggested ruleset
 
-If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user-groups that reside on your MT prefixes, for example:
+If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user groups that reside on your Magic Transit prefixes. For example:
 
 - [Endpoints (user devices)](#endpoints-user-devices)
 - [Internal routers](#internal-routerfirewall-ip-addresses)
@@ -72,7 +72,7 @@ Rule 10 in the example ruleset below is acting as a catch-all to block all traff
 
 Follow the best practices for internal routers or firewall interface IP addresses on your MT prefixes below.
 
-1.  Create [an IP list](/waf/tools/lists/custom-lists/), **Internal routers** for example, list your IP addresses.
+1.  Create [an IP list](/waf/tools/lists/custom-lists/#ip-lists), **Internal routers** for example, with your IP addresses.
 2.  Block ICMP if it is not needed.
 3.  Permit GRE/ESP as needed if the devices have GRE/IPsec tunnels via the Internet.
 
@@ -102,7 +102,7 @@ Where possible, permit the required destination IP addresses and ports for web s
 
 The following is an example of suggested rules, but you should only make changes based on your specific requirements. For example, if you are not proxied by Cloudflare Layer 7 protection and you expect traffic sourced from the web towards your web servers:
 
-1.  Create [an IP list](/waf/tools/lists/custom-lists/), **web servers** for example, to list IP addresses for your web servers.
+1.  Create [an IP list](/waf/tools/lists/custom-lists/#ip-lists), **web servers** for example, to list IP addresses for your web servers.
 2.  Permit traffic for the web server traffic inbound from the Internet.
 3.  Permit traffic for the infrastructure or client traffic flows from the Internet, for example DNS and NTP.
 4.  Block all other traffic destined for the web server IP addresses.

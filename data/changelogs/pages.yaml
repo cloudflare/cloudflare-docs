@@ -73,15 +73,15 @@ entries:
     - Pages functions are now GA. For more information, refer to the [blog post](https://blog.cloudflare.com/pages-function-goes-ga/).
     - We also made the following updates to Functions:
       - [Functions metrics](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/analytics/production) are now available in the dashboard.
-      - [Functions billing](/pages/platform/functions/pricing) is now available.
+      - [Functions billing](/pages/functions/pricing/) is now available.
       - The [Unbound usage model](/workers/platform/limits/#response-limits) is now available for Functions.
-      - [Secrets](/pages/platform/functions/bindings/#secrets) are now available.
+      - [Secrets](/pages/functions/bindings/#secrets) are now available.
       - Functions tailing is now available via the [dashboard](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/functions) or with Wrangler (`wrangler pages deployment tail`).
 - publish_date: '2022-11-15'
   title: Service bindings now available in Functions
   description: |-
     - Service bindings are now available in Functions. For more details,
-    refer to the [docs](/pages/platform/functions/bindings/#service-bindings).
+    refer to the [docs](/pages/functions/bindings/#service-bindings).
 - publish_date: '2022-11-03'
   title: Ansi color codes in build logs
   description: Build log now supports ansi color codes.
@@ -92,7 +92,7 @@ entries:
 - publish_date: '2022-09-12'
   title: Increased domain limits
   description: |-
-    Previously, all plans had a maximum of 10 [custom domains](/pages/platform/custom-domains/) per project.
+    Previously, all plans had a maximum of 10 [custom domains](/pages/configuration/custom-domains/) per project.
 
     Now, the limits are:
 
@@ -103,14 +103,14 @@ entries:
   title: Support for _routes.json
   description: |-
     - Pages now offers support for `_routes.json`. For more details, refer
-    to the [documentation](/pages/platform/functions/routing/#functions-invocation-routes).
+    to the [documentation](/pages/functions/routing/#functions-invocation-routes).
 - publish_date: '2022-08-25'
   title: Increased build log expiration time
   description: Build log expiration time increased from 2 weeks to 1 year.
 - publish_date: '2022-08-08'
   title: New bindings supported
   description: |-
-    - R2 and D1 [bindings](/pages/platform/functions/bindings/) are now supported.
+    - R2 and D1 [bindings](/pages/functions/bindings/) are now supported.
 - publish_date: '2022-07-05'
   title: Added support for .dev.vars in wrangler pages
   description: |-

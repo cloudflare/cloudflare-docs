@@ -26,7 +26,7 @@ If you use Homebrew on macOS, open a terminal and run the following commands:
 
 ```sh
 $ brew tap cloudflare/cloudflare
-$ brew install --cask cloudflare/cloudflare/cf-terraforming
+$ brew install cloudflare/cloudflare/cf-terraforming
 ```
 
 If you are using a different OS, [download the latest release](https://github.com/cloudflare/cf-terraforming/releases) from the `cf-terraforming` GitHub repository.

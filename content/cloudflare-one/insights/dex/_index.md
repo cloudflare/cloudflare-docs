@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Digital Experience Monitoring
-weight: 1
+weight: 2
 ---
 
 {{<heading-pill style="beta">}} Digital Experience Monitoring {{</heading-pill>}}

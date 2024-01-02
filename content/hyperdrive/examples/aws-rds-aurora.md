@@ -1,11 +1,12 @@
 ---
 type: example
 summary: Connect Hyperdrive to an AWS RDS or Aurora database instance.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to AWS RDS and Aurora
 weight: 11
-layout: example
 ---
+
+# Connect to AWS RDS and Aurora
 
 This example shows you how to connect Hyperdrive to an Amazon Relational Database Service (Amazon RDS) Postgres or Amazon Aurora database instance.
 
@@ -21,9 +22,9 @@ When creating or modifying an instance in the AWS console:
 
 1. Configure a **DB cluster identifier** and other settings you wish to customize.
 2. Under **Settings** > **Credential settings**, note down the **Master username** and **Master password**.
-2. Under the **Connectivity** header, ensure **Public access** is set to **Yes**.
-3. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `5432` for PostgreSQL instances).
-4. Select **Create database**.
+3. Under the **Connectivity** header, ensure **Public access** is set to **Yes**.
+4. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `5432` for PostgreSQL instances).
+5. Select **Create database**.
 
 {{<Aside type="warning">}}
 
@@ -32,7 +33,6 @@ You must ensure that the [VPC security group](https://docs.aws.amazon.com/vpc/la
 Refer to AWS' [database server rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-db-server) for details on how to configure rules specific to your RDS or Aurora database.
 
 {{</Aside>}}
-
 
 ### Retrieve the database endpoint (Aurora)
 
@@ -57,7 +57,6 @@ The endpoint will resemble `YOUR_DATABASE_NAME.cpuo5rlli58m.AWS_REGION.rds.amazo
 Once your database is created, you will need to create a user for Hyperdrive to connect as. Although you can use the **Master username** configured during initial database creation, best practice is to create a less privileged user.
 
 To create a new user, log in to the database and use the `CREATE ROLE` command:
-
 
 ```sh
 # Log in to the database

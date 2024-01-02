@@ -1,4 +1,5 @@
 {{ $DATA := (index $.Site.Data .Section) }}
+{{- $page := . -}}
 
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
@@ -54,11 +55,16 @@
         "url" $url) }} {{- end -}}
       </span>
 
+      {{- with .Params.pcx_content_type -}}
+      {{- if ne . "changelog" -}}
+
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-time">
-        Updated {{ partial "datetime" .Lastmod }}
+        Updated {{ partial "datetime" $page.Lastmod }}
       </span>
+      {{- end -}}
+      {{- end -}}
     </div>
   </div>
 </footer>

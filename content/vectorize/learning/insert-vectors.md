@@ -12,7 +12,7 @@ Vectorize indexes allow you to insert vectors at any point: Vectorize will optim
 
 Vectorize supports vectors in three formats:
 
-- An array of floating point numbers (converted into a JavaScript `number[]` array)
+- An array of floating point numbers (converted into a JavaScript `number[]` array).
 - A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
 - A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
 
@@ -22,11 +22,13 @@ In most cases, a `number[]` array is the easiest when dealing with other APIs, a
 
 Metadata is an optional set of key-value pairs that can be attached to a vector on insert or upsert, and allows you to embed or co-locate data about the vector itself.
 
-This can be used to:
+Metadata keys cannot be empty, contain the dot character (.), contain the double-quote character ("), or start with the dollar character ($).
 
-- Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents
-- The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content
-- Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated 
+Metadata can be used to:
+
+- Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
+- The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
+- Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
 
 For example, a vector embedding representing an image could include the path to the [R2 object](https://developers.cloudflare.com/r2/) it was generated from, the format, and a category lookup:
 
@@ -34,15 +36,59 @@ For example, a vector embedding representing an image could include the path to 
 { id: '1', values: [32.4, 74.1, 3.2], metadata: { path: 'r2://bucket-name/path/to/image.png', format: 'png', category: 'profile_image' } }
 ```
 
+## Namespaces
+
+Namespaces provide a way to segment the vectors within your index. For example, by customer, merchant or store ID.
+
+To associate vectors with a namespace, you can optionally provide a `namespace: string` value when performing an insert or upsert operation. When querying, you can pass the namespace to search within as an optional parameter to your query.
+
+A namespace can be up to 63 characters (bytes) in length and you can have up to 1000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
+
+When a namespace is provided, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
+
+To insert vectors with a namespace:
+
+```ts
+// Mock vectors
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+  {
+    id: "1",
+    values: [32.4, 74.1, 3.2],
+    namespace: "text",
+  },
+  {
+    id: "2",
+    values: [15.1, 19.2, 15.8],
+    namespace: "images",
+  },
+  {
+    id: "3",
+    values: [0.16, 1.2, 3.8],
+    namespace: "pdfs",
+  },
+];
+
+// Insert your vectors, returning a count of the vectors inserted and their vector IDs.
+let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+```
+
+To query vectors within a namespace:
+
+```ts
+// Your queryVector will be searched against vectors within the namespace (only)
+let matches = await env.TUTORIAL_INDEX.query(queryVector, { namespace: "images" })
+```
+
 ## Examples
 
 ### Workers API
 
-You can use the `.insert()` and `.upsert()` methods available on an index from within a Cloudflare Worker to insert vectors into the current index.
+Use the `insert()` and `upsert()` methods available on an index from within a Cloudflare Worker to insert vectors into the current index.
 
 ```ts
 // Mock vectors
-//
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
@@ -63,7 +109,7 @@ const sampleVectors: Array<VectorizeVector> = [
   },
 ];
 
-// Insert our vectors, returning a count of the vectors inserted and their vector IDs.
+// Insert your vectors, returning a count of the vectors inserted and their vector IDs.
 let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
 ```
 
@@ -71,11 +117,10 @@ Refer to the [Workers Client API documentation](/vectorize/platform/client-api/)
 
 ### wrangler CLI
 
-You can bulk upload vector embeddings directly
+You can bulk upload vector embeddings directly:
 
-- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
-- Vectors must be complete and include a unique string `id` per vector
--
+- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object. 
+- Vectors must be complete and include a unique string `id` per vector.
 
 An example NDJSON formatted file:
 

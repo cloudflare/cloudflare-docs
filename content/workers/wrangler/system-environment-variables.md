@@ -7,9 +7,7 @@ meta:
 
 # System environment variables
 
-{{<render file="_wrangler_survey.md">}}
-
-System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set system environment variables:
+System environment variables are local environment variables that can change Wrangler's behavior. There are three ways to set system environment variables:
 
 1. Create an `.env` file in your project directory. Set the values of your environment variables in your [`.env`](/workers/wrangler/system-environment-variables/#example-env-file) file. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
 

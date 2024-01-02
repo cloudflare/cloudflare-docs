@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: WebSockets
+meta:
+  description: Communicate in real time with your Cloudflare Workers.
 ---
 
 # WebSockets

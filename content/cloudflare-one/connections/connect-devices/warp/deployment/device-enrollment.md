@@ -10,7 +10,7 @@ Device enrollment permissions determine which users can connect new devices to y
 
 ## Set device enrollment permissions
 
-{{<render file="_device-enrollment.md">}}
+{{<render file="warp/_device-enrollment.md">}}
 
 Users can now [enroll their device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) by logging in to your identity provider. To prevent users from logging out of your organization after they enroll, disable [Allow devices to leave organization](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) in your WARP client settings.
 
@@ -22,7 +22,7 @@ Instead of requiring users to authenticate with their credentials, you can use a
 
 To enroll devices using a service token:
 
-{{<render file="_service-token-enrollment.md">}}
+{{<render file="warp/_service-token-enrollment.md">}}
 
 You can verify which devices have enrolled by going to **My Team** > **Devices**. Devices that enrolled using a service token (or any other Service Auth policy) will have the **Email** field show as `non_identity@<team-name>.cloudflareaccess.com`.
 
@@ -43,4 +43,4 @@ To check for an mTLS certificate:
 
 4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 
-When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) from the WARP client, their device must present a valid client certificate in order to connect.
+When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) from the WARP client, their device must present a valid client certificate in order to connect.

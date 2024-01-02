@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Cloudflare Exposed Credentials Check
+title: Cloudflare Exposed Credentials Check Managed Ruleset
 weight: 4
 ---
 
@@ -37,14 +37,14 @@ The managed ruleset contains an additional rule that blocks HTTP requests alread
 
 {{</Aside>}}
 
-For more information on exposed credentials checks, refer to [Automated exposed credentials check](/waf/exposed-credentials-check/).
+For more information on exposed credential checks, refer to [Check for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/).
 
 ## Configure in the dashboard
 
 You can configure the following settings of the Cloudflare Exposed Credentials Check Managed Ruleset in the dashboard:
 
 - **Set the action to perform.** When you define an action for the ruleset, you override the default action defined for each rule. The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_. To remove the action override, set the ruleset action to _Default_.
-- **Override the action performed by individual rules.** The available actions are: _Exposed-Credential-Check Header_, _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_. For more information, refer to [Available actions](/waf/exposed-credentials-check/#available-actions).
+- **Override the action performed by individual rules.** The available actions are: _Exposed-Credential-Check Header_, _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_. For more information, refer to [Available actions](/waf/managed-rules/check-for-exposed-credentials/#available-actions).
 - **Disable specific rules.**
 - **Customize the filter expression.** With a custom expression, the Cloudflare Managed Ruleset applies only to a subset of the incoming requests.
 - **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
@@ -66,6 +66,6 @@ For examples of creating overrides using the API, refer to [Override a managed r
 
 Besides activating the Exposed Credentials Check Managed Ruleset, you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials.
 
-For more information, refer to [Create a custom rule checking for exposed credentials](/waf/exposed-credentials-check/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
+For more information, refer to [Create a custom rule checking for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
 
 {{</Aside>}}

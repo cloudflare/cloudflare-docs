@@ -33,7 +33,7 @@ By default, only certain file types are cached. To cache all files in your bucke
 To restrict access to your custom domain's bucket, use Cloudflare's existing security products.
 
 - [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates.
-- [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S): Restricts access to documents, files, and media to selected users by providing them with an access token.
+- [Cloudflare WAF Token Authentication](/support/firewall/learn-more/configuring-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
 
 {{<Aside type="warning">}}
 

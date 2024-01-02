@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Cache
+meta:
+  description: Control reading and writing from the Cloudflare global network cache.
 ---
 
 # Cache
@@ -13,7 +15,7 @@ The Cache API is available globally but the contents of the cache do not replica
 
 {{<Aside type="warning" header="Tiered caching">}}
 
-The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interacting-with-the-cloudflare-cache).
+The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/reference/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/reference/how-the-cache-works/#interact-with-the-cloudflare-cache).
 
 {{</Aside>}}
 
@@ -21,7 +23,7 @@ However, any Cache API operations in the Cloudflare Workers dashboard editor, [P
 
 {{<Aside type="note">}}
 
-This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the Cache Works](/workers/learning/how-the-cache-works/).
+This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the cache works](/workers/reference/how-the-cache-works/).
 
 {{</Aside>}}
 
@@ -204,7 +206,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 {{<Aside type="warning" header="Global purges">}}
 
-The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/learning/how-the-cache-works/#purging-assets-stored-with-the-cache-api).
+The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/reference/how-the-cache-works/#purge-assets-stored-with-the-cache-api).
 
 {{</Aside>}}
 
@@ -225,7 +227,7 @@ The `cache.delete` method only purges content of the cache in the data center th
 
 ## Related resources
 
-- [How the Cache works](/workers/learning/how-the-cache-works/)
+- [How the cache works](/workers/reference/how-the-cache-works/)
 - [Configure your CDN](/workers/tutorials/configure-your-cdn/)
 - [Example: Cache using `fetch()`](/workers/examples/cache-using-fetch/)
 - [Example: using the Cache API](/workers/examples/cache-api/)

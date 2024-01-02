@@ -1,32 +1,47 @@
 ---
 pcx_content_type: configuration
 title: Fetch
+meta:
+  description: An interface for asynchronously fetching resources via HTTP requests inside of a Worker.
 ---
 
 # Fetch
 
 The [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provides an interface for asynchronously fetching resources via HTTP requests inside of a Worker.
 
-The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/fetch) for more information.
-
 {{<Aside type="note">}}
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `fetch()` handler. Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
+Asynchronous tasks such as `fetch` are not executed at the top level in a Worker and must be executed within a [handler](/workers/runtime-apis/handlers/). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
 {{</Aside>}}
 
 {{<Aside type="warning" header="Worker to Worker">}}
 
-Worker-to-Worker `fetch` requests are now possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
 
 {{</Aside>}}
 
+## Syntax
+
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
 ---
-
-## Constructor
-
-<!-- This code example needs more work -->
-
+highlight: [3-7]
+---
+export default {
+  async scheduled(event, env, ctx) {
+    return await fetch("https://example.com", {
+      headers: {
+        "X-Source": "Cloudflare-Workers",
+      },
+    });
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 ---
 highlight: [8]
@@ -42,8 +57,8 @@ async function eventHandler(event) {
   return resp;
 }
 ```
-
-<!-- Where do we have the return type in this format? -->
+{{</tab>}}
+{{</tabs>}}
 
 {{<definitions>}}
 
@@ -66,11 +81,10 @@ async function eventHandler(event) {
 
 {{</definitions>}}
 
----
-
 ## Related resources
 
 - [Example: use `fetch` to respond with another site](/workers/examples/respond-with-another-site/)
 - [Example: Fetch HTML](/workers/examples/fetch-html/)
 - [Example: Fetch JSON](/workers/examples/fetch-json/)
 - [Example: cache using Fetch](/workers/examples/cache-using-fetch/)
+- Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

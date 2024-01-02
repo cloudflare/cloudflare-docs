@@ -56,9 +56,11 @@ $ npm install @cloudflare/puppeteer --save-dev
 
 Create two R2 buckets, one for production, and one for development.
 
+Note that bucket names must be lowercase and can only contain dashes.
+
 ```sh
-$ wrangler r2 bucket create SCREENSHOTS
-$ wrangler r2 bucket create SCREENSHOTS-TEST
+$ wrangler r2 bucket create screenshots
+$ wrangler r2 bucket create screenshots-test
 ```
 
 To check that your buckets were created, run:
@@ -90,8 +92,8 @@ browser = { binding = "MYBROWSER" }
 # Bind an R2 Bucket
 [[r2_buckets]]
 binding = "BUCKET"
-bucket_name = "SCREENSHOTS"
-preview_bucket_name = "SCREENSHOTS-TEST"
+bucket_name = "screenshots"
+preview_bucket_name = "screenshots-test"
 
 # Binding to a Durable Object
 [[durable_objects.bindings]]
@@ -125,9 +127,8 @@ export default {
 
 		// Send a request to the Durable Object, then await its response.
 		let resp = await obj.fetch(request.url);
-		let count = await resp.text();
 
-		return new Response("success");
+		return resp;
 	}
 };
 
@@ -153,7 +154,7 @@ export class Browser {
 		var folder = roundedDate.split(" GMT")[0]
 
 		//if there's a browser session open, re-use it
-		if (!this.browser) {
+		if (!this.browser || !this.browser.isConnected()) {
 			console.log(`Browser DO: Starting new instance`);
 			try {
 			  this.browser = await puppeteer.launch(this.env.MYBROWSER);
@@ -172,13 +173,13 @@ export class Browser {
 			await page.setViewport({ width: width[i], height: height[i] });
 			await page.goto("https://workers.cloudflare.com/");
 			const fileName = "screenshot_" + width[i] + "x" + height[i]
-			const sc = await page.screenshot({
-				path: fileName + ".jpg"
-			}
-			);
+			const sc = await page.screenshot({ path: fileName + ".jpg" });
 
-			this.env.BUCKET.put(folder + "/"+ fileName + ".jpg", sc);
-		  }
+			await this.env.BUCKET.put(folder + "/"+ fileName + ".jpg", sc);
+		}
+
+		// Close tab when there is no more work to be done on the page
+		await page.close();
 
 		// Reset keptAlive after performing tasks to the DO.
 		this.keptAliveInSeconds = 0;
@@ -186,12 +187,11 @@ export class Browser {
 		// set the first alarm to keep DO alive
 		let currentAlarm = await this.storage.getAlarm();
 		if (currentAlarm == null) {
-		console.log(`Browser DO: setting alarm`);
-		const TEN_SECONDS = 10 * 1000;
-		this.storage.setAlarm(Date.now() + TEN_SECONDS);
+			console.log(`Browser DO: setting alarm`);
+			const TEN_SECONDS = 10 * 1000;
+			await this.storage.setAlarm(Date.now() + TEN_SECONDS);
 		}
 
-		await this.browser.close();
 		return new Response("success");
 	}
 
@@ -201,8 +201,17 @@ export class Browser {
 		// Extend browser DO life
 		if (this.keptAliveInSeconds < KEEP_BROWSER_ALIVE_IN_SECONDS) {
 		  console.log(`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`);
-		  this.storage.setAlarm(Date.now() + 10 * 1000);
-		} else console.log(`Browser DO: cxceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}. Browser DO will be shut down in 10 seconds.`);
+		  await this.storage.setAlarm(Date.now() + 10 * 1000);
+		  // You could ensure the ws connection is kept alive by requesting something
+		  // or just let it close automatically when there  is no work to be done
+          // for example, `await this.browser.version()`
+		} else {
+			console.log(`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`);
+			if (this.browser) {
+				console.log(`Closing browser.`);
+				await this.browser.close();
+			}
+		}
 	  }
 
   }

@@ -194,7 +194,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Use a specific or newer Hugo version
 
@@ -204,7 +204,7 @@ For example, `HUGO_VERSION`: `0.115.4`.
 
 {{<Aside type="note">}}
 
-If you plan to use [preview deployments](/pages/platform/preview-deployments/), make sure you also add environment variables to your **Preview** environment.
+If you plan to use [preview deployments](/pages/configuration/preview-deployments/), make sure you also add environment variables to your **Preview** environment.
 
 {{</Aside>}}
 
