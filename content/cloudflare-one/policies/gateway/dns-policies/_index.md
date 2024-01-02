@@ -71,7 +71,7 @@ When choosing the Block action, turn on **Display custom block page** to respond
 
 #### WARP client block notifications
 
-{{<render file="gateway/_client-notifications_.md">}}
+{{<render file="gateway/_client-notifications.md">}}
 
 ### Override
 

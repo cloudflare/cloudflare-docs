@@ -68,7 +68,7 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 #### WARP client block notifications
 
-{{<render file="gateway/_client-notifications_.md">}}
+{{<render file="gateway/_client-notifications.md">}}
 
 ### Isolate
 

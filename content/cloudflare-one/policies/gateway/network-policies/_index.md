@@ -66,7 +66,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 #### WARP client block notifications
 
-{{<render file="gateway/_client-notifications_.md">}}
+{{<render file="gateway/_client-notifications.md">}}
 
 ### Network Override
 
