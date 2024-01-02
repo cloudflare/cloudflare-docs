@@ -5,6 +5,6 @@ _build:
   list: never
 ---
 
-Turn on **Display block notification for WARP client** to display notifications for block events. Blocked users will receive an operating system notification from the WARP client with either the default message or a custom message you set. Custom messages must be 100 characters or less.
+Turn on **Display block notification for WARP client** to display notifications for Gateway block events. Blocked users will receive an operating system notification from the WARP client with a custom message you set. If you do not set a custom message, the WARP client will display a default message. Custom messages must be 100 characters or less.
 
-Upon selecting the notification, WARP will direct your users to a block page. Optionally, you can enter a custom URL to direct users to a custom URL, such as support.
+Upon selecting the notification, WARP will direct your users to a block page. Optionally, you can direct users to a custom URL, such as an internal support form.
