@@ -15,6 +15,8 @@ For Enterprise customers eligible to disable domain checks, Cloudflare recommend
 Pre-Clearance cookies only support zones that are orange-clouded.
 {{</Aside>}}
 
+Refer to the [blog post](https://blog.cloudflare.com/integrating-turnstile-with-the-cloudflare-waf-to-challenge-fetch-requests) for an example of Pre-Clearance implementation.
+
 ## Pre-Clearance level options
 
 - **Interactive**: Interactive Pre-Clearance allows a user with a clearance cookie to not be challenged by Interactive, Managed Challenge, or JavaScript Challenge Firewall Rules
