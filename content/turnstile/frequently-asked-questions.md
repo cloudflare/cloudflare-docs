@@ -15,7 +15,7 @@ structured_data: true
 
 The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page.
 
-For specifics regarding Turnstile, see the [Content Security Policy](/turnstile/reference/content-security-policy/) section.
+For specifics regarding Turnstile, refer to the [Content Security Policy](/turnstile/reference/content-security-policy/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
