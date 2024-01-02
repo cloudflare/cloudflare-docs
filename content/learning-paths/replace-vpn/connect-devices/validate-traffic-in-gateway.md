@@ -1,8 +1,10 @@
 ---
-title: Validate Cloudflare is receiving your WARP traffic
+title: Verify device connectivity
 pcx_content_type: overview
-weight: 7
+weight: 3
 layout: learning-unit
 ---
 
-{{<render file="gateway/_activity-logs.md" productFolder="cloudflare-one">}}
+To validate that Cloudflare is receiving traffic from a user device:
+
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS" productFolder="cloudflare-one">}}
