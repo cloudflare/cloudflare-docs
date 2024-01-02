@@ -30,6 +30,6 @@ You can verify which devices have enrolled by going to **My Team** > **Devices**
 
 Enterprise customers can enforce [mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) during device enrollment.
 
-{{<render file="warp/_service-token-enrollment-mtls.md">}}
+{{<render file="warp/_device-enrollment-mtls.md">}}
 
 When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) from the WARP client, their device must present a valid client certificate in order to connect.
