@@ -35,7 +35,7 @@ user to run at least **1 query every second** or do a burst of 300 queries and
 then wait 5 minutes before issuing another query.
 
 That rate limit is applied in addition to the [general rate limits enforced by
-the Cloudflare API](https://developers.cloudflare.com/fundamentals/api/reference/limits/).
+the Cloudflare API](/fundamentals/api/reference/limits/).
 
 ## Node limits and availability
 
