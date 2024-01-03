@@ -666,7 +666,6 @@
 /queues/platform/javascript-apis/ /queues/reference/javascript-apis/ 301
 /queues/platform/configuration/ /queues/reference/configuration/ 301
 /queues/changelog/ /queues/platform/changelog/ 301
-/queues/platform/wrangler-commands/ /queues/reference/wrangler-commands/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
