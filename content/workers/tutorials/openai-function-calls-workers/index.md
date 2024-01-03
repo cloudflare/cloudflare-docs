@@ -110,7 +110,7 @@ filename: index.js
 try {
   const chatCompletion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-0613",
-      messages: [{role: "user", content: "What's happening in New York City today?"}],
+      messages: [{role: "user", content: "What's happening in the NBA today?"}],
       functions: [
         {
           name: "read_website_content",
