@@ -411,6 +411,7 @@ To capture exceptions, log the `Error.message` value. For example, the code belo
 
 ```js
 try {
+    // This is an intentional mispelling
     await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
 } catch (e: any) {
     console.error({

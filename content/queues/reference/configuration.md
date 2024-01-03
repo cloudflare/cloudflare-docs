@@ -66,14 +66,17 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 - {{<code>}}max_batch_size{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of messages allowed in each batch.
+  - Defaults to `10` messages.
 
 - {{<code>}}max_batch_timeout{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of seconds to wait until a batch is full.
+  - Defaults to `5` seconds.
 
 - {{<code>}}max_retries{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+  - Defaults to `3` retries.
 
 - {{<code>}}dead_letter_queue{{</code>}} {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
