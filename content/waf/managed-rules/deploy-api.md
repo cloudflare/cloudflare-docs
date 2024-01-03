@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Deploy via API
-weight: 6
+weight: 3
 meta:
   title: Deploy a WAF managed ruleset via API
 ---

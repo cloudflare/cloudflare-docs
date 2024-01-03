@@ -1,15 +1,16 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Timescale time-series database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to Timescale
 weight: 6
-layout: example
 ---
+
+# Connect to Timescale
 
 This example shows you how to connect Hyperdrive to a [Timescale](https://www.timescale.com/) time-series database. Timescale is built on PostgreSQL, and includes powerful time-series, event and analytics features.
 
-You can learn more about Timescale by visting their [documentation](https://docs.timescale.com/getting-started/latest/services/).
+You can learn more about Timescale by referring to their [Timescale services documentation](https://docs.timescale.com/getting-started/latest/services/).
 
 ## 1. Allow Hyperdrive access
 

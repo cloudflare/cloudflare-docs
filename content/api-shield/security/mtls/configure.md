@@ -53,7 +53,7 @@ Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _
 
 ### Check for revoked certificates
 
-To check for [revoked client certificates](/ssl/client-certificates/revoke-client-certificate/), you can either add a new mTLS rule or add a new expression to the [default rule](#expression-builder).
+To check for [revoked client certificates](/ssl/client-certificates/revoke-client-certificate/), you can either add a new mTLS rule or add a new expression to the [default rule](#expression-builder). To check for revoked certificates, you must use the Expression Builder.
 
 When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revoked` field is set to `true`. If you combined this with the [default mTLS rule](#expression-builder), it would look similar to the following:
 
@@ -61,6 +61,6 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 ((not cf.tls_client_auth.cert_verified or cf.tls_client_auth.cert_revoked) and http.request.uri.path in {"/admin"})
 ```
 
-{{<Aside type="note">}}
-To check for revoked certificates, you must use the [Expression Builder](#expression-builder).
+{{<Aside type="warning">}}
+This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca-api-shield/).
 {{</Aside>}}

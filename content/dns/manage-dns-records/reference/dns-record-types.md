@@ -6,7 +6,7 @@ weight: 2
 
 # DNS record types
 
-This page provides reference information about the different types of DNS records. For guidance on adding DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
+This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ---
 
@@ -194,8 +194,6 @@ A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptog
 - [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
 - [Create a DKIM record](/dmarc-management/security-records/#create-security-records)
 
-{{<render file="_api-field-definitions.md">}}
-
 ### SPF
 
 A Sender Policy Framework (SPF) record lists authorized IP addresses and domains that can send email on behalf of your domain.
@@ -203,16 +201,12 @@ A Sender Policy Framework (SPF) record lists authorized IP addresses and domains
 - [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
 - [Create an SPF record](/dmarc-management/security-records/#create-security-records)
 
-{{<render file="_api-field-definitions.md">}}
-
 ### DMARC
 
 A Domain-based Message Authentication Reporting and Conformance (DMARC) record helps generate aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
 - [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
 - [Create a DMARC record](/dmarc-management/security-records/#create-security-records)
-
-{{<render file="_api-field-definitions.md">}}
 
 ---
 
@@ -312,6 +306,16 @@ header: Response
   "messages": []
 }
 ```
+
+### SVCB and HTTPS
+
+Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
+
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your Internet property.
+
+For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
+
+{{<render file="_api-field-definitions.md">}}
 
 ### PTR
 

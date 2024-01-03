@@ -3,6 +3,7 @@ pcx_content_type: configuration
 title: Service bindings
 meta:
   title: Service bindings - Runtime APIs
+  description: Facilitate Worker-to-Worker communication.
 ---
 
 # Service bindings
@@ -42,7 +43,7 @@ export default <ExportedHandler<Environment>> {
 {{</tab>}}
 {{</tabs>}}
 
-Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will trigger a [FetchEvent](/workers/runtime-apis/handlers/fetch/) on the target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Worker. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
+Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will invoke the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) of a target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Worker. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
 
 ### Shared resources
 

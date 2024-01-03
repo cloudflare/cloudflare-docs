@@ -2,6 +2,7 @@
 title: Reporting
 pcx_content_type: navigation
 weight: 5
+layout: single
 ---
 
 # Reporting
@@ -10,3 +11,5 @@ Area 1 offers a variety of ways for you to better examine and understand your me
 
 {{<directory-listing showDescriptions=true char_limit=300 >}}
 - The [Area 1 API](/email-security/api/) also allows you to download historical records as needed.
+
+{{<Aside type="note">}} {{<render file="_timestamp.md">}} {{</Aside>}}

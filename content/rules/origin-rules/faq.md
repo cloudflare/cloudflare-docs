@@ -16,7 +16,7 @@ Below you will find answers to the most commonly asked questions regarding Origi
 
 {{<faq-answer>}}
 
-In this situation the origin rule parameters will override the [page rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) parameters.
+In this situation the origin rule parameters will override the [page rule](/rules/page-rules/) parameters.
 
 Consider the following example scenarios:
 * A page rule defines a Host header override, but not a resolve override (or DNS record override). An origin rule defines a DNS record override, but not a Host header override. The resulting request will have the `Host` header defined by the page rule and the origin hostname defined by the origin rule.

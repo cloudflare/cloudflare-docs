@@ -15,4 +15,4 @@ By the end of this module, you will be able to:
 
 - Learn what Cloudflare is and how it works
 - Understand the basic building blocks such as Cloudflare IPs, Accounts, Zones, Profiles
-- Study various reference architechtures 
+- Study various reference architectures

@@ -67,7 +67,7 @@
           },
           {
             "external_link": true,
-            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
+            "url_path": "/fundamentals/account-and-billing/account-security/2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
@@ -122,7 +122,7 @@
       {
         "type": "module",
         "title": "Customize Web Application Firewall (WAF)",
-        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/security-events/'>detailed analysis</a> of your application traffic.",
+        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/analytics/security-events/'>detailed analysis</a> of your application traffic.",
         "estimated_time": 120,
         "pages": [
           {
@@ -160,7 +160,7 @@
       {
         "type": "module",
         "title": "Customize other security settings",
-        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/security-events/'>detailed analysis</a> of your application traffic.",
+        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/analytics/security-events/'>detailed analysis</a> of your application traffic.",
         "estimated_time": 120,
         "pages": [
           {
@@ -176,7 +176,7 @@
             "external_link": true,
             "url_path": "/waf/tools/security-level/",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/waf/reference/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
             "url_path": "/waf/tools/challenge-passage/",

@@ -658,7 +658,7 @@ To use this constant inside of your codebase, use the [`wrangler secret`](/worke
 ---
 header: Set the SLACK_WEBHOOK_URL secret
 ---
-$ wrangler secret put SLACK_WEBHOOK_URL
+$ npx wrangler secret put SLACK_WEBHOOK_URL
 Enter the secret text you’d like assigned to the variable name on the script named slack-bot-ENVIRONMENT_NAME: https://hooks.slack.com/services/abc123
 ```
 

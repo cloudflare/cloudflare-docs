@@ -23,6 +23,7 @@ This page lists the default account limits for rules, applications, fields, and 
 | IdP count                   | 50    |
 | Rules count per application | 1,000 |
 | Rules count per group       | 1,000 |
+| Domains per application     | 5     |
 
 ## Gateway
 

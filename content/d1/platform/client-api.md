@@ -210,6 +210,10 @@ console.log(info);
 
 ### await db.dump()
 
+{{<Aside type="warning">}}
+This API only works on databases created during D1's alpha period. Check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+{{</Aside>}}
+
 Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
 
 ```js
@@ -407,6 +411,7 @@ To capture exceptions, log the `Error.message` value. For example, the code belo
 
 ```js
 try {
+    // This is an intentional mispelling
     await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
 } catch (e: any) {
     console.error({

@@ -43,7 +43,7 @@ ___
 ## Enable Mirage
 
 {{<Aside type="note">}}
-If you send a CSP (content security policy) header that restricts where scripts can be loaded, you will need to ensure `ajax.cloudflare.com` is enabled. For example, to allow scripts from your own domain and `ajax.cloudflare.com` enter the following:
+If you send a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} header that restricts where scripts can be loaded, you will need to ensure `ajax.cloudflare.com` is enabled. For example, to allow scripts from your own domain and `ajax.cloudflare.com` enter the following:
 `script-src 'self' ajax.cloudflare.com;`
 {{</Aside>}}
 

@@ -2,6 +2,9 @@
 link: "/turnstile/changelog/"
 productName: Turnstile
 entries:
+- publish_date: '2023-12-18'
+  description: |-
+    - Added [Pre-Clearance mode](/turnstile/reference/pre-clearance-support/).
 - publish_date: '2023-08-24'
   description: |-
     - Added [Client-side errors](/turnstile/reference/client-side-errors).

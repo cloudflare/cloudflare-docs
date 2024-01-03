@@ -7,7 +7,7 @@ meta:
 
 # Run Wrangler in CI/CD
 
-Wrangler can be run in a [continuous integration/continuous deployment (CI/CD) environment](/workers/learning/continuous-integration/). It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment. Deploying Workers from within a CI/CD environment also makes it easier to control access to production credentials.
+Wrangler can be run in a [continuous integration/continuous deployment (CI/CD) environment](/workers/configuration/continuous-integration/). It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment. Deploying Workers from within a CI/CD environment also makes it easier to control access to production credentials.
 
 ## 1. Authentication
 

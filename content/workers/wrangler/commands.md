@@ -11,7 +11,7 @@ meta:
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -19,7 +19,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
-- [`delete`](#delete) - Delete your Worker from Cloudflare.
+- [`delete`](#delete-3) - Delete your Worker from Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -29,6 +29,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
+- [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
@@ -67,11 +68,71 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-All commands can be run with your choice of package manager. For example, to run the `wrangler deploy` command with npm, run:
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager. 
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
-$ npx wrangler deploy
+$ npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
+
+```json
+{
+  ...
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+  ...
+}
+```
+
+You can then run them using your package manager of choice:
+
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm run deploy
+```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn run deploy
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm run deploy
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -92,7 +153,7 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-Create a skeleton Wrangler project, including the `wrangler.toml` file.
+Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
 wrangler init [<NAME>] [OPTIONS]
@@ -113,7 +174,13 @@ wrangler init [<NAME>] [OPTIONS]
 
 ## `generate`
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+{{<Aside type="note">}}
+
+This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
+
+{{</Aside>}}
+
+Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```txt
 wrangler generate [<NAME>] [TEMPLATE]
@@ -1247,6 +1314,67 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `sippy enable`
+{{<Aside type="note">}}
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+{{</Aside>}}
+
+Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy enable <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to enable Sippy.
+- `--bucket` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of your AWS S3 bucket.
+- `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+- `--secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+- `--r2-key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Access Key ID. Requires read and write access.
+- `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Secret Access Key. Requires read and write access.
+- `--region` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+
+{{</definitions>}}
+
+### `sippy disable`
+
+Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy disable <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to disable Sippy.
+
+{{</definitions>}}
+
+### `sippy get`
+
+Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get the status of Sippy.
+
+{{</definitions>}}
 ---
 
 ## `r2 object`
@@ -1547,9 +1675,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
 - `--r2` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
+  - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
 - `--d1` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
+  - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
 - `--do` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -1704,6 +1832,92 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 ---
 
+## `queues`
+
+{{<Aside type="note">}}
+Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
+
+Manage your Workers [Queues](/queues/) configurations.
+
+### `create`
+
+Create a new Queue.
+
+```txt
+wrangler queues create <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to create.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an existing queue.
+
+```txt
+wrangler queues delete <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to delete.
+
+{{</definitions>}}
+
+### `list`
+
+List all queues in the current account.
+
+```txt
+wrangler queues list [OPTIONS]
+```
+
+### `consumer`
+
+Manage queue consumer configurations.
+
+### `consumer add <script-name>`
+
+Add a Worker script as a [queue consumer](/queues/learning/how-queues-works/#consumers).
+
+```txt
+wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `queue-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to add the consumer to.
+- `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Workers script to add as a consumer of the named queue.
+
+{{</definitions>}}
+
+### `consumer remove`
+
+Remove a consumer from a queue.
+
+```txt
+wrangler queues consumer remove <queue-name> <script-name>
+```
+
+{{<definitions>}}
+
+- `queue-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to remove the consumer from.
+- `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the Workers script to remove as the consumer.
+
+{{</definitions>}}
+
+---
+
 ## `login`
 
 Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
@@ -1720,7 +1934,7 @@ wrangler login [OPTIONS]
   - List all the available OAuth scopes with descriptions.
 - `--scopes $SCOPES` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
-    for example, `$ wrangler login --scopes account:read user:read`.
+    for example, `$ npx wrangler login --scopes account:read user:read`.
 
 {{</definitions>}}
 

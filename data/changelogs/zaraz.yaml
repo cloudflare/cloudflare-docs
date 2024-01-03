@@ -2,10 +2,18 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2023-12-19'
+  title:
+  description: |-
+    * **Google Analytics 4 Managed Component**: Fix Google Analytics 4 average engagement time metric.
+- publish_date: '2023-11-13'
+  title:
+  description: |-
+    * **HTTP Request Managed Component**: Re-added `__zarazTrack` property.
 - publish_date: '2023-10-31'
   title:
   description: |-
-    * **Google Analytics 4 Managed component**: Remove `debug_mode` key if falsy or `false`.
+    * **Google Analytics 4 Managed Component**: Remove `debug_mode` key if falsy or `false`.
 - publish_date: '2023-10-26'
   title:
   description: |-
@@ -14,7 +22,7 @@ entries:
   title:
   description: |-
     * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
-    * **Dashboard: Improved welcome screen for new Zaraz users".
+    * **Dashboard**: Improved welcome screen for new Zaraz users".
 - publish_date: '2023-10-03'
   title:
   description: |-

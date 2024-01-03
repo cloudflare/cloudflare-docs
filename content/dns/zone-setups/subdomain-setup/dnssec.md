@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Enable DNSSEC
-weight: 4
+weight: 3
 meta: 
     title: Enable DNSSEC - subdomain setup
 ---
@@ -26,4 +26,4 @@ Ideally, you should also wait 12 to 24 hours after enabling DNSSEC on the parent
     ![Screenshot showing how to add a DS record within Cloudflare](/images/dns/ds-record-example.png)
 
 5. Add an `A` record to the child subdomain to validate DNS resolution.
-6. Wait two to six hours. Then, [test the `A` record](/dns/dnssec/troubleshooting/#testing-dnssec-with-dig) added in the previous step using multiple DNS resolvers with DNSSEC validation (`1.1.1.1`, `8.8.8.8`, and `9.9.9.9`). For example, if the `A` record is for `test.child.example.com`: `dig test.child.example.com +dnssec @1.1.1.1`.
+6. Wait two to six hours. Then, [test the `A` record](/dns/dnssec/troubleshooting/#test-dnssec-with-dig) added in the previous step using multiple DNS resolvers with DNSSEC validation (`1.1.1.1`, `8.8.8.8`, and `9.9.9.9`). For example, if the `A` record is for `test.child.example.com`: `dig test.child.example.com +dnssec @1.1.1.1`.

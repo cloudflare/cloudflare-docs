@@ -1,9 +1,9 @@
 ---
-title: Add records
+title: Records with the same name
 pcx_content_type: troubleshooting
 weight: 11
 meta:
-  title: Troubleshooting — Cannot add DNS records with the same name
+  title: Cannot add DNS records with the same name
 ---
 
 # Cannot add DNS records with the same name

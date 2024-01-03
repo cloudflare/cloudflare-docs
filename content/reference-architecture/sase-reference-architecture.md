@@ -1,6 +1,7 @@
 ---
-title: Cloudflare One
+title: Cloudflare One (SASE)
 pcx_content_type: reference-architecture
+weight: 1
 meta:
     title: Evolving to a SASE architecture with Cloudflare
 ---
@@ -11,7 +12,7 @@ meta:
 Cloudflare One is a secure access service edge (SASE) platform that protects enterprise applications, users, devices, and networks. By progressively adopting Cloudflare One, organizations can move away from their patchwork of hardware appliances and other point solutions and instead consolidate security and networking capabilities on one unified control plane. Such network and security transformation helps address key challenges modern businesses face, including:
 
 - Securing access for any user to any resource with Zero Trust practices
-- Defending against cyber threats, including multi-channel phishing and ransomware attacks 
+- Defending against cyber threats, including multi-channel phishing and ransomware attacks
 - Protecting data in order to comply with regulations and prevent leaks
 - Simplifying connectivity across offices, data centers, and cloud environments
 
@@ -22,11 +23,11 @@ As a result, Cloudflare operates within ~50 ms of ~95% of the world’s Internet
 This document describes a reference architecture for organizations working towards a SASE architecture, and shows how Cloudflare One enables such security and networking transformation.
 
 ### Who is this document for and what will you learn?
-This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies. 
+This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
 
-To build a stronger baseline understanding of Cloudflare, we recommend the following resources: 
+To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes) 
+- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
 - Solution Brief: [Cloudflare One](https://cfl.re/SASE-SSE-platform-brief) (3 minute read)
 - Whitepaper: [Reference Architecture for Internet-Native Transformation](https://cfl.re/internet-native-transformation-wp) (10 minute read)
 - Blog: [Zero Trust, SASE, and SSE: foundational concepts for your next-generation network](https://blog.cloudflare.com/zero-trust-sase-and-sse-foundational-concepts-for-your-next-generation-network/) (14 minute read)
@@ -44,15 +45,15 @@ Traditionally, most employees worked in an office and connected locally to the c
 
 However, three important trends created problems for this “castle and moat” approach to IT security:
 
-1. **Employees became more mobile**. Organizations increasingly embrace remote / hybrid work and support the use of personal (i.e. not company-owned) devices. 
+1. **Employees became more mobile**. Organizations increasingly embrace remote / hybrid work and support the use of personal (i.e. not company-owned) devices.
 2. **Cloud migration accelerated**. Organizations are moving applications, data, and infrastructure from expensive on-premises data centers to public or private cloud environments in order to improve flexibility, scalability, and cost-effectiveness.
-3. **Cyber threats evolved**. The above trends expand an organization’s attack surface. For example, attack campaigns have become more sophisticated and persistent in exploiting multiple channels to infiltrate organizations, and cybercriminals face lower barriers to entry with the popularity of the "cybercrime-as-a-service" black market. 
+3. **Cyber threats evolved**. The above trends expand an organization’s attack surface. For example, attack campaigns have become more sophisticated and persistent in exploiting multiple channels to infiltrate organizations, and cybercriminals face lower barriers to entry with the popularity of the "cybercrime-as-a-service" black market.
 
-Traditional perimeter-based security has struggled to adapt to these changes. In particular, extending the "moat" outwards has introduced operational complexity for administrators, poor experiences for users, and inconsistency in how security controls are applied across users and applications. 
+Traditional perimeter-based security has struggled to adapt to these changes. In particular, extending the "moat" outwards has introduced operational complexity for administrators, poor experiences for users, and inconsistency in how security controls are applied across users and applications.
 
 ![With many different methods to connect networks and filter/block traffic, managing access to company applications is costly and time consuming.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-1.svg)
 
-The diagram above shows an example of this adapted perimeter-based approach, in which a mix of firewalls, WAN routers, and VPN concentrators are connected with dedicated WAN on-ramps consisting of MPLS circuits and/or leased lines. The diagram also demonstrates common problem areas. In an effort to centralize policy, organizations sometimes force all employee Internet traffic through their VPN infrastructure, which results in slow browsing and user complaints. Employees then seek workarounds — such as using non-approved devices — which increases their exposure to Internet-borne attacks when they work from home or on public Wi-Fi. In addition, IT teams are unable to respond quickly to changing business needs due to the complexity of their network infrastructure. 
+The diagram above shows an example of this adapted perimeter-based approach, in which a mix of firewalls, WAN routers, and VPN concentrators are connected with dedicated WAN on-ramps consisting of MPLS circuits and/or leased lines. The diagram also demonstrates common problem areas. In an effort to centralize policy, organizations sometimes force all employee Internet traffic through their VPN infrastructure, which results in slow browsing and user complaints. Employees then seek workarounds — such as using non-approved devices — which increases their exposure to Internet-borne attacks when they work from home or on public Wi-Fi. In addition, IT teams are unable to respond quickly to changing business needs due to the complexity of their network infrastructure.
 
 Such challenges are driving many organizations to prioritize goals like:
 
@@ -63,13 +64,13 @@ Such challenges are driving many organizations to prioritize goals like:
 - Reducing costs by replacing expensive appliances and infrastructure (e.g. VPNs, hardware firewalls, and MPLS connections)
 
 ## Understanding a SASE architecture
-In recent years, [secure access service edge](https://www.cloudflare.com/learning/access-management/security-service-edge-sse/), or SASE, has emerged as an aspirational architecture to help achieve these goals. In a SASE architecture, network connectivity and security are unified on a single cloud platform and control plane for consistent visibility, control, and experiences from any user to any application. 
+In recent years, [secure access service edge](https://www.cloudflare.com/learning/access-management/security-service-edge-sse/), or SASE, has emerged as an aspirational architecture to help achieve these goals. In a SASE architecture, network connectivity and security are unified on a single cloud platform and control plane for consistent visibility, control, and experiences from any user to any application.
 
-SASE platforms consist of networking and security services, all underpinned by supporting operational services and a policy engine: 
+SASE platforms consist of networking and security services, all underpinned by supporting operational services and a policy engine:
 
-- Network services forward traffic from a variety of networks into a single global corporate network. These services provide capabilities like firewalling, routing, and load balancing. 
-- Security services apply to traffic flowing over the network, allowing for filtering of certain types of traffic and control over who can access what. 
-- Operational services provide platform-wide capabilities like logging, API access, and comprehensive Infrastructure-as-Code support through providers like Terraform. 
+- Network services forward traffic from a variety of networks into a single global corporate network. These services provide capabilities like firewalling, routing, and load balancing.
+- Security services apply to traffic flowing over the network, allowing for filtering of certain types of traffic and control over who can access what.
+- Operational services provide platform-wide capabilities like logging, API access, and comprehensive Infrastructure-as-Code support through providers like Terraform.
 - A policy engine integrates across all services, allowing admins to define policies which are then applied across all the connected services.
 
 ![Cloudflare's SASE cloud platform offers network, security, and operational services, as well as policy engine features, to provide zero trust connectivity between a variety of user identities, devices and access locations to customer applications, infrastructure and networks.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-2.svg)
@@ -97,9 +98,9 @@ To understand how SASE fits into an organization's IT infrastructure, see the di
 
 ![Typical enterprise IT infrastructure may consist of different physical locations, devices and data centers that require connectivity to multiple cloud and on-premises applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-6.svg)
 
-In the diagram’s top half there are a variety of Internet resources (e.g. Facebook), SaaS applications (e.g. ServiceNow), and applications running in an [infrastructure-as-a-service (IaaS)](https://www.cloudflare.com/learning/cloud/what-is-iaas/) platform (e.g. AWS). This example organization has already deployed cloud based [identity providers](https://www.cloudflare.com/learning/access-management/what-is-an-identity-provider/) (IdP), [unified endpoint management](https://www.cloudflare.com/learning/security/glossary/what-is-endpoint/) (UEM) and endpoint protection platforms (EPP) as part of a Zero Trust initiative. 
+In the diagram’s top half there are a variety of Internet resources (e.g. Facebook), SaaS applications (e.g. ServiceNow), and applications running in an [infrastructure-as-a-service (IaaS)](https://www.cloudflare.com/learning/cloud/what-is-iaas/) platform (e.g. AWS). This example organization has already deployed cloud based [identity providers](https://www.cloudflare.com/learning/access-management/what-is-an-identity-provider/) (IdP), [unified endpoint management](https://www.cloudflare.com/learning/security/glossary/what-is-endpoint/) (UEM) and endpoint protection platforms (EPP) as part of a Zero Trust initiative.
 
-In the bottom half are a variety of users, devices, networks, and locations. Users work from a variety of locations: homes, headquarters and branch offices, airports, and others. The devices they use might be managed by the organization or may be personal devices. In addition to the cloud, applications run in a data center in the organization’s headquarters and in a data center operators' colo facility ([Equinix](https://www.equinix.com/), in this example). 
+In the bottom half are a variety of users, devices, networks, and locations. Users work from a variety of locations: homes, headquarters and branch offices, airports, and others. The devices they use might be managed by the organization or may be personal devices. In addition to the cloud, applications run in a data center in the organization’s headquarters and in a data center operators' colo facility ([Equinix](https://www.equinix.com/), in this example).
 
 A SASE architecture will define, secure, and streamline how each user and device will connect to the various resources in the diagram. Over the following sections, this guide will show ways to integrate Cloudflare One into the above infrastructure:
 
@@ -114,7 +115,7 @@ This journey to a SASE architecture starts with an organization needing to provi
 #### Tunnels to self-hosted applications
 [Zero Trust Network Access](https://www.cloudflare.com/learning/access-management/what-is-ztna/) (ZTNA) is a SASE service that secures access to self-hosted applications and services. ZTNA functionality can be divided broadly into two categories: 1) establishing connectivity between Cloudflare’s network and the environments where the applications are running, and 2) setting policies to define how users are able to access these applications. In this section, we first examine the former — how to connect apps to Cloudflare.
 
-Connectivity to self-hosted applications is facilitated through tunnels that are created and maintained by a software connector, 
+Connectivity to self-hosted applications is facilitated through tunnels that are created and maintained by a software connector,
 *[cloudflared](/cloudflare-one/connections/connect-networks/get-started/)*. *Cloudflared* is a lightweight daemon installed in an organizations' infrastructure that creates a tunnel via an outbound connection to Cloudflare’s global network. The connector can be installed in a variety of ways:
 
 - In the OS installed on the bare metal server
@@ -128,7 +129,7 @@ Connectivity to self-hosted applications is facilitated through tunnels that are
 
 *Cloudflared* manages multiple outbound connections back to Cloudflare and usually requires no changes to network firewalls. Those connections are spread across servers in more than one Cloudflare data center for reliability and failover. Traffic destined for a tunnel is forwarded to the connection that is geographically closest to the request, and if a *cloudflared* connection isn’t responding, the tunnel will automatically failover to the next available.
 
-For more control over the traffic routed through each tunnel connection, users can integrate with the Cloudflare [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) service. To ensure reliable local connectivity, organizations should deploy more than one instance of *cloudflared* across their application infrastructure. For example, with ten front-end web servers running in a Kubernetes cluster, you might deploy three kubernetes services [running *cloudflared* replicas](/cloudflare-one/tutorials/many-cfd-one-tunnel/). 
+For more control over the traffic routed through each tunnel connection, users can integrate with the Cloudflare [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) service. To ensure reliable local connectivity, organizations should deploy more than one instance of *cloudflared* across their application infrastructure. For example, with ten front-end web servers running in a Kubernetes cluster, you might deploy three kubernetes services [running *cloudflared* replicas](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
 
 ![Using cloudflared, multiple outbound connections are created back to Cloudflare across multiple data centers to improve overall performance and reliability.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-7.svg)
 
@@ -262,9 +263,9 @@ The simplest and easiest way to on-ramp existing network locations to the Magic 
 
 The WAN Connector can be deployed as a hardware appliance and will soon be released as a software appliance, making it versatile for a variety of user network environments — on-premises, virtual, or public cloud. Management, configuration, observability, and software updates for WAN Connectors is centrally managed from Cloudflare via either the dashboard or the Cloudflare API. As of 2023, the WAN Connector is currently best-suited for connecting small and medium-sized networks to Cloudflare (e.g. small offices and retail stores).
 
-In situations where deploying the WAN Connector is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/magic-wan/third-party/) for up-to-date examples of validated IPsec devices.
+In situations where deploying the WAN Connector is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/magic-wan/configuration/manually/third-party/) for up-to-date examples of validated IPsec devices.
 
-There may also be situations where network-layer encryption is not necessary — for example, when a site’s WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/magic-wan/get-started/configure-tunnels/).
+There may also be situations where network-layer encryption is not necessary — for example, when a site’s WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/).
 
 Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Currently, Cloudflare supports two types of [network interconnect](/network-interconnect/about/interconnect-types/):
 
@@ -305,7 +306,7 @@ Now this is what a SASE architecture looks like where corporate network traffic 
 ![Traffic from all networks, North and South, as well as East and West, is now flowing through and secured by Cloudflare.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-15.svg)
 
 ### Forwarding device traffic
-The previous sections explain using ZTNA to secure access to self-hosted applications and using an SWG to inspect and filter traffic destined for the Internet. When a user is working on a device in any of the company networks that is connected to Cloudflare's connectivity cloud, all that traffic is inspected and policies applied without disrupting the user’s workflow. Yet, users are not always (or ever) in the office; they work from home, on the road, or from other public networks. How do you ensure they have reliable access to your internal applications? How do you ensure their Internet browsing is secure no matter their work location? 
+The previous sections explain using ZTNA to secure access to self-hosted applications and using an SWG to inspect and filter traffic destined for the Internet. When a user is working on a device in any of the company networks that is connected to Cloudflare's connectivity cloud, all that traffic is inspected and policies applied without disrupting the user’s workflow. Yet, users are not always (or ever) in the office; they work from home, on the road, or from other public networks. How do you ensure they have reliable access to your internal applications? How do you ensure their Internet browsing is secure no matter their work location?
 
 There are several approaches to ensure that traffic from a user device which isn’t connected to an existing Cloudflare protected network, are also forwarding traffic through Cloudflare and be protected.
 
@@ -315,26 +316,26 @@ There are several approaches to ensure that traffic from a user device which isn
 - [Modify DNS configuration](#agentless-dns-filtering)
 
 #### Connecting with a device agent
-The preferred method of ensuring device traffic is forwarded to Cloudflare is to install the device agent (also referred to as [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp)). The agent runs on Windows, macOS, Linux, iOS, and Android/ChromeOS, and creates a secure connection to Cloudflare where all non-local traffic is sent. Because of Cloudflare’s use of Anycast networking, the device agent always connects to the nearest Cloudflare server to ensure the best performance for the user. The device agent also collects local machine and network information, which is sent in the request to enrich the policy in Cloudflare. 
+The preferred method of ensuring device traffic is forwarded to Cloudflare is to install the device agent (also referred to as [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp)). The agent runs on Windows, macOS, Linux, iOS, and Android/ChromeOS, and creates a secure connection to Cloudflare where all non-local traffic is sent. Because of Cloudflare’s use of Anycast networking, the device agent always connects to the nearest Cloudflare server to ensure the best performance for the user. The device agent also collects local machine and network information, which is sent in the request to enrich the policy in Cloudflare.
 
- To allow for flexibility in how different devices and users connect, there are multiple [deployment modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/): 
-- A full L4 traffic proxy 
+ To allow for flexibility in how different devices and users connect, there are multiple [deployment modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/):
+- A full L4 traffic proxy
 - L7 DNS proxy
 - L7 HTTP proxy
 - The ability to just collect device posture information
 
 For example, organizations might have an office that continues to use an existing [DNS filtering](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/) service, so they can configure the agent to just proxy network and HTTP traffic.
 
-The agent can also be configured with flexible routing controls that allow for scenarios in which traffic destined for office printers is not sent to the Cloudflare network but, instead, routed to the local network. These [split tunnel configurations](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) can be made specific to groups of users, types of device operating system, or networks and by default, traffic destined to all private [IPv4 and IPv6 ranges](https://datatracker.ietf.org/doc/html/rfc1918) is sent to the device’s default gateway. If the application the user is attempting to reach is not in public DNS, you can configure the hostname and domain to be resolved with [local DNS services](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/), so that the device agent does not attempt to resolve these using Cloudflare DNS. 
+The agent can also be configured with flexible routing controls that allow for scenarios in which traffic destined for office printers is not sent to the Cloudflare network but, instead, routed to the local network. These [split tunnel configurations](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) can be made specific to groups of users, types of device operating system, or networks and by default, traffic destined to all private [IPv4 and IPv6 ranges](https://datatracker.ietf.org/doc/html/rfc1918) is sent to the device’s default gateway. If the application the user is attempting to reach is not in public DNS, you can configure the hostname and domain to be resolved with [local DNS services](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/), so that the device agent does not attempt to resolve these using Cloudflare DNS.
 
 ![Using the device agent allows Internet and company application bound traffic to be secured by Cloudflare's SWG and ZTNA services.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-16.svg)
 
 The agent is more than just a network proxy; it is able to examine the device’s security posture, such as if the operating system is fully up-to-date or if the hard disk is encrypted. Cloudflare’s integrations with [CrowdStrike](https://www.cloudflare.com/partners/technology-partners/crowdstrike/endpoint-partners/), [SentinelOne](https://www.cloudflare.com/partners/technology-partners/sentinelone/), and other third-party services also provide additional data about the security posture of the device. All of this information is associated with each request and, therefore, available for use in company policies — as explained in the “Unified Management” section.
 
-The agent can be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/) to a device either manually or using existing endpoint management (UEM) technologies. Using the agent, users register and authenticate their device to Cloudflare with the integrated identity providers. Identity information — combined with information about the local device — is then used in your SWG and ZTNA policies (including inline CASB capabilities shared across these Cloudflare services). 
+The agent can be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/) to a device either manually or using existing endpoint management (UEM) technologies. Using the agent, users register and authenticate their device to Cloudflare with the integrated identity providers. Identity information — combined with information about the local device — is then used in your SWG and ZTNA policies (including inline CASB capabilities shared across these Cloudflare services).
 
 #### Browser proxy configuration
-When it is not possible to install software on the device, there are agentless approaches. 
+When it is not possible to install software on the device, there are agentless approaches.
 
 One option is to configure the browser to forward HTTP requests to Cloudflare by configuring proxy server details in the browser or OS. Although this can be done manually, it is more common for organizations to automate the configuration of browser proxy settings using Internet-hosted [Proxy Auto-Configuration](/cloudflare-one/connections/connect-devices/agentless/pac-files/) (PAC) files. The browser identifies the PAC file location in several ways:
 
@@ -342,36 +343,36 @@ One option is to configure the browser to forward HTTP requests to Cloudflare by
 - In Windows domains, Group Policy Objects (GPO) can configure the browser’s PAC file
 - Browsers can use [Web Proxy Auto-Discovery](https://datatracker.ietf.org/doc/html/draft-ietf-wrec-wpad-01) (WPAD)
 
-From there, configure a proxy endpoint where the browser will send all HTTP requests to. If using this method, please note that: 
+From there, configure a proxy endpoint where the browser will send all HTTP requests to. If using this method, please note that:
 
 - Filtering HTTPS traffic will also require [installing and trusting Cloudflare root certificates](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the devices.
 - A proxy endpoint will only proxy traffic sourced from a set of known IP addresses, such as the pool of public IP addresses used by a site’s NAT gateway, that the administrator must specify.
 
 #### Using remote browser instances
-Another option to ensure device traffic is sent to Cloudflare is to use [remote browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/) (RBI). When a remote user attempts to visit a website, the corresponding requests and responses are handled by a headless remote browser running in the Cloudflare network that functions as a “clone” of the user device’s local browser. This shields the user’s device from potential harmful content and code execution that may be downloaded from the website it visits. 
+Another option to ensure device traffic is sent to Cloudflare is to use [remote browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/) (RBI). When a remote user attempts to visit a website, the corresponding requests and responses are handled by a headless remote browser running in the Cloudflare network that functions as a “clone” of the user device’s local browser. This shields the user’s device from potential harmful content and code execution that may be downloaded from the website it visits.
 
 RBI renders the received content in an isolated and secure cloud environment. Instead of executing the web content locally, the user device receives commands for how to "draw" the final rendered web page over a highly optimized protocol supported by all HTML5-compliant browsers on all operating systems. Because the remote browser runs on Cloudflare’s servers, SWG policies are automatically applied to all browser requests.
 
 Ensuring access to sites is protected with RBI does not require any local software installation or reconfiguring the user's browser. Below are [several ways](/cloudflare-one/policies/browser-isolation/setup/) to accomplish this:
-- Typically, a remote browser session is started as the result of an SWG policy — the user just requests websites without being notified that the content is loading in a remote browser.  
-- Organizations can also provide users with a link that automatically ensures RBI always processes each request.  
+- Typically, a remote browser session is started as the result of an SWG policy — the user just requests websites without being notified that the content is loading in a remote browser.
+- Organizations can also provide users with a link that automatically ensures RBI always processes each request.
 - Organizations can also opt to use the ZTNA service to redirect all traffic from self-hosted applications via RBI instances.
 
 All requests via a remote browser pass through the Cloudflare SWG; therefore, policies can enforce certain website access limitations. For instance, browser isolation policies can be established to:
 
-- Disable copy/paste between a remote web page and the user’s local machine; this can prevent the employee from pasting proprietary code into third-party chatbots. 
+- Disable copy/paste between a remote web page and the user’s local machine; this can prevent the employee from pasting proprietary code into third-party chatbots.
 - Disable printing of remote web content to prevent contractors from printing confidential information
 - Disable file uploads/downloads to ensure sensitive company data is not sent to — or downloaded from — certain websites.
-- Disable keyboard input (in combination with other policies) to limit data being exposed, such as someone typing in passwords to a phishing site. 
+- Disable keyboard input (in combination with other policies) to limit data being exposed, such as someone typing in passwords to a phishing site.
 
-Isolating web applications and applying policies to risky websites helps organizations limit data loss from cyber threats or user error. And, like many Cloudflare One capabilities, RBI can be leveraged across other areas of the SASE architecture. Cloudflare’s [email security](https://www.cloudflare.com/learning/email-security/what-is-email-security/) service, for example, can automatically rewrite and isolate suspicious links in emails. This “email link isolation” capability helps protect the user from potential malicious activity such as credential harvesting phishing. 
+Isolating web applications and applying policies to risky websites helps organizations limit data loss from cyber threats or user error. And, like many Cloudflare One capabilities, RBI can be leveraged across other areas of the SASE architecture. Cloudflare’s [email security](https://www.cloudflare.com/learning/email-security/what-is-email-security/) service, for example, can automatically rewrite and isolate suspicious links in emails. This “email link isolation” capability helps protect the user from potential malicious activity such as credential harvesting phishing.
 
 #### Agentless DNS Filtering
-Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/policies/gateway/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use “[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or “[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)”. 
+Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/policies/gateway/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use “[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or “[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)”.
 
 When using source IP addresses, either the device will need to be told which DNS servers to use, or the local DNS server on the network the device is connected to needs to forward all DNS queries to Cloudflare. For DNS over TLS or HTTPS support, the devices need to be configured and support varies. Our recommendation is to use DNS over HTTPS which has wider operating system support.
 
-All of the above methods result in only the DNS requests — not all traffic — being sent to Cloudflare. SWG DNS policies are then implemented at this level to manage access to corporate network resources. 
+All of the above methods result in only the DNS requests — not all traffic — being sent to Cloudflare. SWG DNS policies are then implemented at this level to manage access to corporate network resources.
 
 #### Summary of SWG capabilities for each traffic forwarding method
 The following table summarizes SWG capabilities for the various methods of forwarding traffic to Cloudflare (as of Oct 2023):
@@ -379,27 +380,27 @@ The following table summarizes SWG capabilities for the various methods of forwa
 ![SWG capabilities for the various methods of forwarding traffic to Cloudflare](/images/reference-architecture/cloudflare-one-reference-architecture-images/Summary-of-SWG-capabilities.png)
 
 Notes:
-1. Running the device agent in DNS over HTTP mode provides user identity information, in addition to the same capabilities as connecting via DNS. 
+1. Running the device agent in DNS over HTTP mode provides user identity information, in addition to the same capabilities as connecting via DNS.
 2. To filter HTTPS traffic, the Cloudflare [certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) needs to be installed on each device. This can be automated when using the device agent.
 3. If configuring DNS over HTTPS, it is possible to inject a [service token](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/#filter-doh-requests-by-user) into the request, which associates the query with an authenticated user.
 
 
 #### Checkpoint: Forwarding device traffic to Cloudflare
-By connecting entire networks or individual devices, organizations can now route user traffic to Cloudflare for secure access to privately-hosted applications and secure public Internet access. 
+By connecting entire networks or individual devices, organizations can now route user traffic to Cloudflare for secure access to privately-hosted applications and secure public Internet access.
 
 Once traffic from all user devices is forwarded to the Cloudflare network, it is time for organizations to revisit their high-level SASE architecture:
 
 ![With all devices and networks connected, any traffic destined for company applications and services all flows through Cloudflare, where policies are applied to determine access.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-17.svg)
 
 ### Verifying users and devices
-At this point in implementing SASE architecture, organizations have the ability to route and secure traffic beginning from the point a request is made from a browser on a user’s device, all the way through Cloudflare’s network to either a company-hosted private application/service or to the public Internet. 
+At this point in implementing SASE architecture, organizations have the ability to route and secure traffic beginning from the point a request is made from a browser on a user’s device, all the way through Cloudflare’s network to either a company-hosted private application/service or to the public Internet.
 
 But, before organizations define policies to manage that access, they need to know who is making the request and determine the security posture of the device.
 
 #### Integrating identity providers
-The first step in any access decision is to determine who is making the request – i.e., to authenticate the user. 
+The first step in any access decision is to determine who is making the request – i.e., to authenticate the user.
 
-Cloudflare integrates with identity providers that manage secure access to resources for organizations’ employees, contractors, partners, and other users. This includes support for integrations with any [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) - or OpenID Connect ([OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/)) - compliant service; Cloudflare One also includes pre-built integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/), [Microsoft Azure AD](/cloudflare-one/identity/idp-integration/azuread/), [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), as well as consumer IdPs such as [Facebook](/cloudflare-one/identity/idp-integration/facebook-login/), [GitHub](/cloudflare-one/identity/idp-integration/github/) and [LinkedIn](/cloudflare-one/identity/idp-integration/linkedin/). 
+Cloudflare integrates with identity providers that manage secure access to resources for organizations’ employees, contractors, partners, and other users. This includes support for integrations with any [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) - or OpenID Connect ([OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/)) - compliant service; Cloudflare One also includes pre-built integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/), [Microsoft Azure AD](/cloudflare-one/identity/idp-integration/azuread/), [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), as well as consumer IdPs such as [Facebook](/cloudflare-one/identity/idp-integration/facebook-login/), [GitHub](/cloudflare-one/identity/idp-integration/github/) and [LinkedIn](/cloudflare-one/identity/idp-integration/linkedin/).
 
 Multiple IdPs can be integrated, allowing organizations to apply policies to a wide range of both internal and external users. When a user attempts to access a Cloudflare secured application or service, they are redirected to authenticate via one of the integrated IdPs. When using the device agent, users must also authenticate to one of their organization’s configured IdPs.
 
@@ -407,12 +408,12 @@ Multiple IdPs can be integrated, allowing organizations to apply policies to a w
 
 Once a user is authenticated, Cloudflare receives that user’s information, such as username, group membership, authentication method (password, whether MFA was involved and what type), and other associated attributes (i.e., the user’s  role, department, or office location). This information from the IdP is then made available to the policy engine.
 
-In addition to user identities, most corporate directories also contain groups to which those identities are members. Cloudflare supports the importing of group information, which is then used as part of the policy. Group membership is a critical part of aggregating single identities so that policies can be less complex. It is far easier — for example — to set a policy allowing all employees in the sales department to access Salesforce, than to identify each user in the sales organization. 
+In addition to user identities, most corporate directories also contain groups to which those identities are members. Cloudflare supports the importing of group information, which is then used as part of the policy. Group membership is a critical part of aggregating single identities so that policies can be less complex. It is far easier — for example — to set a policy allowing all employees in the sales department to access Salesforce, than to identify each user in the sales organization.
 
 Cloudflare also supports authentication of devices that are not typically associated with a human user – such as an IoT device monitoring weather conditions at a factory. For those secure connections, organizations can generate [service tokens](/cloudflare-one/identity/service-tokens/) or create [Mutual TLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) (mTLS) certificates that can be deployed to such devices or machine applications.
 
 #### Trusting devices
-Not only does the user identity need to be verified, but the security posture of the user’s device needs to be assessed. The device agent is able to provide a range of device information, which Cloudflare uses to build comprehensive security policies. 
+Not only does the user identity need to be verified, but the security posture of the user’s device needs to be assessed. The device agent is able to provide a range of device information, which Cloudflare uses to build comprehensive security policies.
 
 The following built-in posture checks are available:
 
@@ -422,24 +423,24 @@ The following built-in posture checks are available:
 - [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/): Checks if/how many disks are encrypted
 - [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/): Checks if the device is joined to a Microsoft Active Directory domain
 - [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/): Checks what version of the OS is running
-- [Unique Client ID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid/): When using an MDM too, organizations can assign a verifiable UUID to a mobile, desktop, or laptop device 
-- [Device serial number](/cloudflare-one/identity/devices/warp-client-checks/corp-device/): Checks to see if the device serial matches a list of company desktop/laptop computers 
+- [Unique Client ID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid/): When using an MDM too, organizations can assign a verifiable UUID to a mobile, desktop, or laptop device
+- [Device serial number](/cloudflare-one/identity/devices/warp-client-checks/corp-device/): Checks to see if the device serial matches a list of company desktop/laptop computers
 
 Cloudflare One can also integrate with any deployed endpoint security solution, such as [Microsoft Endpoint Manager](/cloudflare-one/identity/devices/service-providers/microsoft/), [Tanium](/cloudflare-one/identity/devices/access-integrations/tanium/), [Carbon Black](/cloudflare-one/identity/devices/warp-client-checks/carbon-black/), [CrowdStrike](/cloudflare-one/identity/devices/service-providers/crowdstrike/), [SentinelOne](/cloudflare-one/identity/devices/warp-client-checks/sentinel-one/), and more. Any data from those products can be passed to Cloudflare for use in access decisions.
 
-All of the above device information, combined with data on the user identity and also the network the device is on, is available in Cloudflare to be used as part of the company policy. For example, organizations could choose to only allow administrators to SSH into servers when all of the following conditions are met: their device is free from threats, running the latest operating system, and joined to the company domain. 
+All of the above device information, combined with data on the user identity and also the network the device is on, is available in Cloudflare to be used as part of the company policy. For example, organizations could choose to only allow administrators to SSH into servers when all of the following conditions are met: their device is free from threats, running the latest operating system, and joined to the company domain.
 
 Because this information is available for every network request, any time a device posture changes, its ability to connect to an organization’s resources is immediately impacted.
 
 #### Integrating email services
-Email — the #1 communication tool for many organizations and the most common channel by which phishing attacks occur — is another important corporate resource that should be secured via a SASE architecture. Phishing is the root cause of upwards of 90% of breaches that lead to financial loss and brand damage. 
+Email — the #1 communication tool for many organizations and the most common channel by which phishing attacks occur — is another important corporate resource that should be secured via a SASE architecture. Phishing is the root cause of upwards of 90% of breaches that lead to financial loss and brand damage.
 
-Cloudflare’s email security service scans for signs of malicious content or attachments before they can reach the inbox, and also proactively scans the Internet for attacker infrastructure and attack delivery mechanisms, looking for programmatically-created domains that are used to host content as part of a planned attack. Our service uses all this data to also protect against business and vendor email compromises ([BEC](https://www.cloudflare.com/learning/email-security/business-email-compromise-bec/) / [VEC](https://www.cloudflare.com/learning/email-security/what-is-vendor-email-compromise/)), which are notoriously hard to detect due to their lack of payloads and ability to look like legitimate email traffic. 
+Cloudflare’s email security service scans for signs of malicious content or attachments before they can reach the inbox, and also proactively scans the Internet for attacker infrastructure and attack delivery mechanisms, looking for programmatically-created domains that are used to host content as part of a planned attack. Our service uses all this data to also protect against business and vendor email compromises ([BEC](https://www.cloudflare.com/learning/email-security/business-email-compromise-bec/) / [VEC](https://www.cloudflare.com/learning/email-security/what-is-vendor-email-compromise/)), which are notoriously hard to detect due to their lack of payloads and ability to look like legitimate email traffic.
 
-Instead of deploying tunnels to manage and control traffic to email servers, Cloudflare provides two methods of email security [setup](/email-security/deployment/): 
+Instead of deploying tunnels to manage and control traffic to email servers, Cloudflare provides two methods of email security [setup](/email-security/deployment/):
 
 - [Inline](/email-security/deployment/inline/): Redirect all inbound email traffic through Cloudflare before they reach a user’s inbox by modifying MX records
-- [API](/email-security/deployment/api/): Integrate Cloudflare directly with an email provider such as Microsoft 365 or Gmail  
+- [API](/email-security/deployment/api/): Integrate Cloudflare directly with an email provider such as Microsoft 365 or Gmail
 
 Modifying MX records (inline deployment) forces all inbound email traffic through our cloud email security service where it is scanned, and — if found to be malicious — blocked from reaching a user’s inbox. Because the service works at the MX record level, it is possible to use the email security service with any [SMTP-compliant](https://www.cloudflare.com/learning/email-security/what-is-smtp/) email service.
 
@@ -450,7 +451,7 @@ Organizations can also opt to integrate email security directly with their email
 ![Protecting email with Cloudflare using APIs avoids the need to change DNS policy, but introduces delays into email detection and limits the types of email services that can be protected.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-20.svg)
 
 #### Checkpoint: A complete SASE architecture with Cloudflare
-The steps above provide a complete view of evolving to SASE architecture using Cloudflare One. As the diagram below shows, secure access to all private applications, services, and networks — as well as ensuring the security of users’ general Internet access — is now applied to all users in the organization, internal or external. 
+The steps above provide a complete view of evolving to SASE architecture using Cloudflare One. As the diagram below shows, secure access to all private applications, services, and networks — as well as ensuring the security of users’ general Internet access — is now applied to all users in the organization, internal or external.
 
 ![A fully deployed SASE solution with Cloudflare protects every aspect of your business. Ensuring all access to applications is secured and all threats from the Internet mitigated.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-21.svg)
 
@@ -461,7 +462,7 @@ Now that all users, devices, applications, networks, and other components are se
 
 Before we go into the details of how policies can be written to manage access to applications, services, and networks connected to Cloudflare, it’s worth taking a look at the two main enforcement points in Cloudflare’s SASE platform that control access: SWG and the ZTNA services. These services are configured through a single administrative dashboard, simplifying policy management across the entire SASE deployment.
 
-The following diagram illustrates the flow of a request through these services, including the application of  policies and the source of  data for these policies. In the diagram below, the user request can either enter through the SWG or ZTNA depending on the type of service requested. It’s also possible to combine both services, such as implementing a SWG HTTP policy that uses DLP service to inspect traffic related to a privately hosted application behind a ZTNA Cloudflare Tunnel. This configuration enables organizations to block downloads of sensitive data from internal applications that organizations have authorized for external access. 
+The following diagram illustrates the flow of a request through these services, including the application of  policies and the source of  data for these policies. In the diagram below, the user request can either enter through the SWG or ZTNA depending on the type of service requested. It’s also possible to combine both services, such as implementing a SWG HTTP policy that uses DLP service to inspect traffic related to a privately hosted application behind a ZTNA Cloudflare Tunnel. This configuration enables organizations to block downloads of sensitive data from internal applications that organizations have authorized for external access.
 
 ![User requests to the Internet or self hosted applications go through our SWG and/or ZTNA service. Administrators have a single dashboard to manage policies across both.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-23.svg)
 
@@ -470,7 +471,7 @@ In the following sections, we introduce examples of how different policies can b
 Connecting an IdP to Cloudflare provides the ability to make access decisions based on factors such as group membership, authentication method, or specific user attributes. Cloudflare's device agent also supplies additional signals for policy considerations, such as assessing the operating system or verifying the device’s serial number against company-managed devices. However, there are features that allow users to incorporate additional data into deployment for building powerful policies.
 
 ### Lists
-Cloudflare’s vast intelligent network continually monitors billions of web assets and [categorizes them](/cloudflare-one/policies/gateway/domain-categories/) based on our threat intelligence and general knowledge of Internet content. You can use our free [Cloudflare Radar](https://radar.cloudflare.com/) service to examine what categories might be applied to any specific domain. Policies can then include these categories to block known and potential security risks on the public Internet, as well as specific categories of content. 
+Cloudflare’s vast intelligent network continually monitors billions of web assets and [categorizes them](/cloudflare-one/policies/gateway/domain-categories/) based on our threat intelligence and general knowledge of Internet content. You can use our free [Cloudflare Radar](https://radar.cloudflare.com/) service to examine what categories might be applied to any specific domain. Policies can then include these categories to block known and potential security risks on the public Internet, as well as specific categories of content.
 
 Additionally, Cloudflare’s SWG offers the flexibility to create and maintain customized [lists of data](/cloudflare-one/policies/gateway/lists/). These lists can be uploaded via CSV files, manually maintained, or integrated with other processes and applications using the Cloudflare API. A list can contain the following data:
 
@@ -484,24 +485,24 @@ Additionally, Cloudflare’s SWG offers the flexibility to create and maintain c
 For example, organizations can maintain a list of IP addresses of all remote office locations, of short term contractors’ email addresses, or trusted company domains. These lists can be used in a policy to allow contractors access to a specific application if their traffic is coming from a known office IP address.
 
 ### DLP profiles and datasets
-Cloudflare looks at various aspects of a request, including the source IP, the requested domain, and the identity of the authenticated user initiating the request. Cloudflare also offers a DLP service which has the ability to detect and block requests based on the presence of sensitive content. The service has built in DLP profiles for common data types such as financial information, personally identifiable information (PII), and API keys. 
+Cloudflare looks at various aspects of a request, including the source IP, the requested domain, and the identity of the authenticated user initiating the request. Cloudflare also offers a DLP service which has the ability to detect and block requests based on the presence of sensitive content. The service has built in DLP profiles for common data types such as financial information, personally identifiable information (PII), and API keys.
 
-There is even a profile for source code, so users can detect and block the transfer of C++ or Python files. Organizations can create customized DLP profiles and use regular expressions to define the patterns of data they are looking for. For data that is hard to define a pattern for, datasets can be used which match exact data values. These datasets allow for the bulk upload of any data to be matched, such as lists of customer account IDs or sensitive project names. These profiles and data sets can be incorporated into policies to prevent users from downloading large files containing confidential customer data. 
+There is even a profile for source code, so users can detect and block the transfer of C++ or Python files. Organizations can create customized DLP profiles and use regular expressions to define the patterns of data they are looking for. For data that is hard to define a pattern for, datasets can be used which match exact data values. These datasets allow for the bulk upload of any data to be matched, such as lists of customer account IDs or sensitive project names. These profiles and data sets can be incorporated into policies to prevent users from downloading large files containing confidential customer data.
 
-To reduce the risk of false positives, internal users have the option to establish a match count on the profile. This means that a specific number of matches within the data are required before profile triggers. This approach prevents scenarios where a random string resembling PII or a credit card number would trigger the profile unnecessarily. By implementing a match count, the policy demands that multiple data elements align with the profile, significantly increasing its accuracy. 
- 
+To reduce the risk of false positives, internal users have the option to establish a match count on the profile. This means that a specific number of matches within the data are required before profile triggers. This approach prevents scenarios where a random string resembling PII or a credit card number would trigger the profile unnecessarily. By implementing a match count, the policy demands that multiple data elements align with the profile, significantly increasing its accuracy.
+
 Organizations can further increase the accuracy of the DLP profile by enabling context analysis. This feature requires certain proximity keywords to exist within approximately 1000 characters of a match. For example, the string “123-45-6789” will only count as a detection if it is in proximity to keywords such as “ssn”. This contextual requirement bolsters the accuracy of the detection process.
 
-The DLP service seamlessly integrates with both Cloudflare’s SWG and API-driven CASB services. In the case of the API CASB, DLP profiles are selected for scanning each integration with each SaaS application. This customization allows tailored detection criteria based on the type of data you wish to secure within each application. 
+The DLP service seamlessly integrates with both Cloudflare’s SWG and API-driven CASB services. In the case of the API CASB, DLP profiles are selected for scanning each integration with each SaaS application. This customization allows tailored detection criteria based on the type of data you wish to secure within each application.
 
 For the SWG service, DLP profiles can be included into any policy to detect the existence of sensitive data in any request passing through the gateway. The most common action associated with this detection is to block the request, providing a robust layer of security.
 
 ### Access Groups
-Access Groups are a powerful tool in the ZTNA service for aggregating users or devices into a unified entity that can be referenced within a policy. Within Cloudflare, multiple pieces of information can be combined into a single Access Group, efficiently reusing data across multiple policies while maintaining it in one centralized location. 
+Access Groups are a powerful tool in the ZTNA service for aggregating users or devices into a unified entity that can be referenced within a policy. Within Cloudflare, multiple pieces of information can be combined into a single Access Group, efficiently reusing data across multiple policies while maintaining it in one centralized location.
 
-Consider an Access Group designed to manage access to critical server infrastructure. The same Access Group can be used in a device agent policy that prevents administrators from disabling their connection to Cloudflare. This approach streamlines policy management and ensures consistency across various policy implementations. 
+Consider an Access Group designed to manage access to critical server infrastructure. The same Access Group can be used in a device agent policy that prevents administrators from disabling their connection to Cloudflare. This approach streamlines policy management and ensures consistency across various policy implementations.
 
-Below is a diagram featuring an Access Group named “Secure Administrators,” which uses a range of attributes to define the characteristics of secure administrators. The diagram shows the addition of two other Access Groups within “Secure Administrators”. The groups include devices running on either the latest Windows or macOS, along with the requirement that the device must have either File Vault or Bitlocker enabled. 
+Below is a diagram featuring an Access Group named “Secure Administrators,” which uses a range of attributes to define the characteristics of secure administrators. The diagram shows the addition of two other Access Groups within “Secure Administrators”. The groups include devices running on either the latest Windows or macOS, along with the requirement that the device must have either File Vault or Bitlocker enabled.
 
 ![An example of using Access Groups can be for grouping up many device, network or user attributes into a single policy that can be reused across applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-24.svg)
 
@@ -527,7 +528,7 @@ The policies that enable access rely on two Access Groups.
   - Authentication requires the use of a hardware token
   - Users should be on a device with a serial number in the “Managed Devices” list
 
-Both of these groups are then used in two different access policies. 
+Both of these groups are then used in two different access policies.
 
 - Database administration tool access
   - Database and IT admins are allowed access
@@ -538,9 +539,9 @@ Both of these groups are then used in two different access policies.
   - Their device must pass a Crowdstrike risk score of at least 80
   - Access must come from a device that is running our device agent and is connected to Cloudflare
 
-These policies show that contractors are only allowed access to the database administration tool and do not have SSH access to the server. IT and database administrators can access the SSH service only when their devices are securely connected to Cloudflare via the device agent. Every element of the access groups and policies is evaluated for every login, so an IT administrator using a compromised laptop or a contractor unable to authenticate with a hardware token will be denied access. 
+These policies show that contractors are only allowed access to the database administration tool and do not have SSH access to the server. IT and database administrators can access the SSH service only when their devices are securely connected to Cloudflare via the device agent. Every element of the access groups and policies is evaluated for every login, so an IT administrator using a compromised laptop or a contractor unable to authenticate with a hardware token will be denied access.
 
-Both user groups will connect to Cloudflare through the closest and fastest access point of Cloudflare’s globally distributed network, resulting in a high quality experience for all users no matter where they are. 
+Both user groups will connect to Cloudflare through the closest and fastest access point of Cloudflare’s globally distributed network, resulting in a high quality experience for all users no matter where they are.
 
 #### Threat defense for distributed offices and remote workers
 Another reason for using a SASE solution is to apply company security policies consistently across all users (whether they are employees or contractors) in the organization, regardless of where they work. The Cloudflare One SASE architecture shows that all user traffic, whether routed directly on the device or through the connected network, will go through Cloudflare. Cloudflare’s SWG then handles inspection of this traffic. Depending on the connection method, policies can be applied either to the HTTP or DNS request. For example:
@@ -568,7 +569,7 @@ DLP policies can also be applied in the other direction, ensuring that company s
 ![A DLP policy can also examine if a HTTP PUT, i.e. a file upload, is taking place to a non approved application where the request contains sensitive data.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-29.svg)
 
 ### Visibility across the deployment
-At this point in the SASE journey, users have re-architectured the IT network and security infrastructure to fully leverage all the capabilities of the Cloudflare One SASE platform. A critical element in long term deployment involves establishing complete visibility into the organization and the ability to diagnose and quickly resolve issues. 
+At this point in the SASE journey, users have re-architectured the IT network and security infrastructure to fully leverage all the capabilities of the Cloudflare One SASE platform. A critical element in long term deployment involves establishing complete visibility into the organization and the ability to diagnose and quickly resolve issues.
 
 For quick analysis, Cloudflare provides built-in dashboards and analytics that offers a daily overview of the deployment’s operational status. As traffic flows through Cloudflare, the dashboard will alert internal users to the most frequently used SaaS applications, enabling quick actions if any unauthorized applications are accessed by external users. Moreover, all logging information from all Cloudflare One services is accessible and searchable from the administrator’s dashboard. This makes it efficient to filter for specific blocked requests, with each log containing useful information such as the user’s identity, device information, and the specific rule that triggered the block. This can be very handy in the early stages of deployment where rules can often need tweaking.
 
@@ -577,9 +578,9 @@ However, many organizations rely on existing dedicated tools to manage long term
 On top of logs which are related to traffic and policies, Cloudflare also audits management activity. All administrative actions and changes to Cloudflare Tunnels are logged. This allows for change management auditing and, like all other logs, can be exported into other tools as part of a wider change management monitoring solution.
 
 #### Digital Experience Monitoring
-Cloudflare has [deep insight](https://radar.cloudflare.com/) into the performance of the Internet and connected networks and devices. This knowledge empowers IT administrators with visibility into minute-by-minute experiences of their end-users, enabling swift resolution of issues that impact productivity. 
+Cloudflare has [deep insight](https://radar.cloudflare.com/) into the performance of the Internet and connected networks and devices. This knowledge empowers IT administrators with visibility into minute-by-minute experiences of their end-users, enabling swift resolution of issues that impact productivity.
 
-The Digital Experience Monitoring (DEM) service enables IT to run constant tests against user devices to determine the quality of the connection to company resources. The results of these tests are available on the Cloudflare One dashboard, enabling IT administrators to review and identify root causes when a specific user encounters difficulties accessing an application. These issues could stem from the user’s local ISP or a specific underperforming SaaS service provider. This data is invaluable in helping administrators in diagnosing and addressing poor user experiences, leading to faster issue resolution. 
+The Digital Experience Monitoring (DEM) service enables IT to run constant tests against user devices to determine the quality of the connection to company resources. The results of these tests are available on the Cloudflare One dashboard, enabling IT administrators to review and identify root causes when a specific user encounters difficulties accessing an application. These issues could stem from the user’s local ISP or a specific underperforming SaaS service provider. This data is invaluable in helping administrators in diagnosing and addressing poor user experiences, leading to faster issue resolution.
 
 The dashboard shows a comprehensive summary of the entire device fleet, displaying real-time and historical connectivity metrics for all organization devices. IT admins can then drill down into specific devices for further analysis.
 

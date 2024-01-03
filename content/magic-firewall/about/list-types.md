@@ -1,7 +1,6 @@
 ---
 title: List types
 pcx_content_type: concept
-weight: 3
 ---
 
 # List types
@@ -14,8 +13,8 @@ The threat intelligence feed categories are described in [Managed IP Lists](/waf
 
 ## IP lists
 
-Use IP lists ([custom lists](/waf/tools/lists/custom-lists/) containing IP addresses) to easily group services in networks, like web servers, or for lists of known bad IP addresses to make managing good network endpoints easier. IP lists are helpful for users with very expansive firewall rules with many IP lists. You can add up to 100,000 IPs per list that can used in rules.
+Use [IP lists](/waf/tools/lists/custom-lists/#ip-lists) to group services in networks, like web servers, or for lists of known bad IP addresses to make managing good network endpoints easier. IP lists are helpful for users with very expansive firewall rules with many IP lists. You can add up to 100,000 IPs per list that can used in rules. Refer to [Use an IP list](/magic-firewall/how-to/add-rules/#use-an-ip-list) to check an example of how to use an IP list.
 
 ## Geo-blocking
 
-Geo-blocking enables you to selectively allow or block traffic to any country.
+Geo-blocking enables you to selectively allow or block traffic to any country. Refer to [Block a country](/magic-firewall/how-to/add-rules/#block-a-country) to check an example of how to block a country.

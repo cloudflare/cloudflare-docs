@@ -16,7 +16,7 @@ Cloudflare's [Browser Integrity Check](/waf/tools/browser-integrity-check/) look
 
 ## Blocked hotlink
 
-[Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your origin server. This feature can be turned on and off by Cloudflare’s customers.
+[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your origin server. This feature can be turned on and off by Cloudflare’s customers.
 
 ## Human challenged
 
@@ -38,23 +38,23 @@ Cloudflare uses Threat Scores gathered from sources such as Project Honeypot, as
 
 ## Country block
 
-Requests from countries that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+Requests from countries that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## IP block (user)
 
-Requests from specific IP addresses that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+Requests from specific IP addresses that were blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## IP range block (/16)
 
-A /16 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+A /16 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## IP range block (/24)
 
-A /24 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
+A /24 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set in the WAF.
 
 ## New Challenge (user)
 
-[Challenge](/firewall/cf-firewall-rules/cloudflare-challenges/) based on user configurations set for visitor’s IP in either WAF managed rules or custom rules, configured in **Security** > **WAF**.
+[Challenge](/waf/reference/cloudflare-challenges/) based on user configurations set for visitor’s IP in either WAF managed rules or custom rules, configured in **Security** > **WAF**.
 
 ## Challenge error
 
@@ -68,6 +68,6 @@ Request that came from a bot.
 
 ## Unclassified
 
-Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on the edge based on the composition of the request (and not its content).
+Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on Cloudflare's global network based on the composition of the request (and not its content).
 
-Unclassified means a number of conditions under which we group common threats related to Hotlink protection as well as certain cases of IP reputation and specific requests that are blocked at the Cloudflare edge before reaching your servers.
+Unclassified means a number of conditions under which we group common threats related to Hotlink Protection as well as certain cases of IP reputation and specific requests that are blocked at Cloudflare's global network before reaching your servers.

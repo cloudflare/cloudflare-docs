@@ -208,7 +208,7 @@ The JSON object properties for a list item are defined as follows:
         </tr>
         <tr>
             <td><code>hostname</code><br />{{<type>}}Object{{</type>}}</td>
-            <td>An object containing a <code>url_hostname</code> property with a hostname value. Refer to <a href="/waf/tools/lists/custom-lists/#lists-with-hostnames">Custom lists</a> for details on the supported hostname values.</td>
+            <td>An object containing a <code>url_hostname</code> property with a hostname value. Refer to <a href="/waf/tools/lists/custom-lists/#lists-with-hostnames">Lists with hostnames</a> for details on the supported hostname values.</td>
             <td><p>Applies only to custom lists with hostnames.</p></td>
         </tr>
         <tr>

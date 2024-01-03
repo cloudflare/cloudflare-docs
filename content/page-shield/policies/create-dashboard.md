@@ -14,7 +14,7 @@ meta:
 3. Select **Create policy**.
 4. Enter a descriptive name for the rule in **Description**.
 5. Under **If incoming requests match**, define the policy scope. You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
-7. Under **Allow these directives**, select the desired CSP directives for the policy by enabling one or more checkboxes.
+7. Under **Allow these directives**, select the desired {{<glossary-tooltip term_id="content security policy (CSP)">}}CSP{{</glossary-tooltip>}} directives for the policy by enabling one or more checkboxes.
     * To manually enter an allowed source, select **Add source**.
     * To refresh the displayed sources based on Page Shield's detected resources, select **Refresh suggestions**. Suggestions are only available for **Scripts** and **Connections** directives.
 

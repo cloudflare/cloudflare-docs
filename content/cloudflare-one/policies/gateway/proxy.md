@@ -6,9 +6,7 @@ weight: 14
 
 # Gateway proxy
 
-You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel.
-
-The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) on your devices.
+{{<render file="gateway/_proxy.md" productFolder="cloudflare-one">}}
 
 ## Proxy protocols
 
@@ -34,6 +32,4 @@ The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `tracero
 
 ## Enable the Gateway proxy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. Enable **Proxy** for TCP.
-3. (Optional) Depending on your use case, you can enable **UDP** and/or **ICMP**.
+{{<render file="gateway/_enable-gateway-proxy.md" productFolder="cloudflare-one">}}

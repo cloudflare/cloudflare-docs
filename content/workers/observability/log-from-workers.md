@@ -75,7 +75,7 @@ async function handleRequest(request) {
 After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. Your terminal will display:
 
 ```sh
-$ wrangler tail --format=pretty
+$ npx wrangler tail --format=pretty
 [2021-08-18 17:06:55] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/
  | [Info] Request came from city: Pacifica in country: US
 [2021-08-18 17:06:56] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/favicon.ico
@@ -111,7 +111,7 @@ The output of each `wrangler tail` log is a structured JSON object:
 By piping the output to tools like [`jq`](https://stedolan.github.io/jq/), you can query and manipulate the requests to look for specific information:
 
 ```sh
-$ wrangler tail | jq .event.request.url
+$ npx wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/"
 "https://www.bytesized.xyz/component---src-pages-index-js-a77e385e3bde5b78dbf6.js"
 "https://www.bytesized.xyz/page-data/app-data.json"

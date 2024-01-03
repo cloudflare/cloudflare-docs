@@ -10,7 +10,7 @@ Alert Webhooks allow you to connect external services to Area 1, including:
 
 - Slack
 - Email addresses
-- [SIEM](/email-security/reporting/siem-integration/)
+- {{<glossary-tooltip term_id="SIEM" link="/email-security/reporting/siem-integration/">}}SIEM{{</glossary-tooltip>}}
 - Microsoft Teams
 
 ## Create an alert webhook

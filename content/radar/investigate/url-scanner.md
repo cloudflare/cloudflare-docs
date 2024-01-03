@@ -105,7 +105,7 @@ Some examples of more specific properties include:
 - `page.cookies` - Cookies set by the page.
 - `page.console` - JavaScript console messages
 - `page.js.variables` - Non-standard JavaScript global variables.
-- `page.securityViolations` - [CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
+- `page.securityViolations` - {{<glossary-tooltip term_id="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">}}CSP{{</glossary-tooltip>}} or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
 - `verdicts.overall.malicious` - Whether the website was considered malicious _at the time of the scan_. Please check the remaining properties for each subsystem(s) for specific threats detected.
 
 The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentation contains the full response schema.

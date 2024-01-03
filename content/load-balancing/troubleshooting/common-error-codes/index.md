@@ -168,7 +168,7 @@ Data transmission was not acknowledged and retransmit of data did not succeed.
 
 ### Solution
 
-Confirm whether the SYN-ACK for the handshake takes place at your origin and [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Confirm whether the SYN-ACK for the handshake takes place at your origin and [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ---
 
@@ -300,4 +300,4 @@ If the failure cannot be classified as any other type of failure mentioned above
 
 ### Solution
 
-[Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+[Contact Cloudflare Support](/support/contacting-cloudflare-support/).

@@ -67,8 +67,8 @@ Review the list of Cloudflare features that function in this manner:
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
 - [Mirage](/speed/optimization/images/mirage/)
-- [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)
-- [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
+- [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)
+- [Email address obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
 - [Bot Management JavaScript Detections](/bots/reference/javascript-detections/)
 
 ## Troubleshoot

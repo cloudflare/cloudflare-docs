@@ -31,7 +31,7 @@ try {
 
 ## View logs
 
-View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/log-from-workers/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/log-from-workers/#view-logs-from-the-dashboard).
+View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/log-from-workers/#use-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/log-from-workers/#view-logs-from-the-dashboard).
 
 ## Report issues
 

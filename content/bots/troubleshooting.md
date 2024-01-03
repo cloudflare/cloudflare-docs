@@ -12,7 +12,7 @@ structured_data: true
 
 {{<faq-item>}}
 {{<faq-question level=2 text="How does Cloudflare detect bots?" >}}
- 
+
 {{<faq-answer>}}
 
 Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Plans](/bots/plans).
@@ -23,7 +23,7 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="How do I know what's included in my plan?" >}}
- 
+
 {{<faq-answer>}}
 
 To know what's included in your plan, refer to our [Plans](/bots/plans).
@@ -34,7 +34,7 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="How do I set up my bot product?" >}}
- 
+
 {{<faq-answer>}}
 
 To learn how to set up your bot product, refer to [Get started](/bots/get-started).
@@ -45,7 +45,7 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Yandex bot unexpectedly blocked by the WAF managed rule with ID `...f6cbb163`" >}}
- 
+
 {{<faq-answer>}}
 
 Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will occasionally be blocked by a Cloudflare WAF managed rule, as the IP list of Yandex bots has not yet synced with Yandex's most recent changes.
@@ -59,7 +59,7 @@ If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/m
 
 **Solution:**
 
-Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -68,7 +68,7 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="How does machine learning work?" >}}
- 
+
 {{<faq-answer>}}
 
 Supervised machine learning takes certain variables (X) like gender and age and predicts another variable (Y) like income.
@@ -83,12 +83,12 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Why am I seeing a Managed Challenge action for WAF rules?" >}}
- 
+
 {{<faq-answer>}}
 
 When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an **Action Taken** of **Managed Challenge**.
 
-You may also see Managed Challenge due to a triggered [WAF custom rule](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended).
+You may also see Managed Challenge due to a triggered [WAF custom rule](/waf/reference/cloudflare-challenges/#managed-challenge-recommended).
 
 This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
 
@@ -100,7 +100,7 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="What is the difference between the threat score and bot management score?" >}}
- 
+
 {{<faq-answer>}}
 
 The difference is significant:
@@ -115,8 +115,8 @@ These fields are available via [WAF custom rules](/waf/custom-rules/) and other 
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="What is `cf.bot\_management.verified\_bot`?" >}}
- 
+{{<faq-question level=2 text="What is cf.bot_management.verified_bot?" >}}
+
 {{<faq-answer>}}
 
 A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
@@ -133,7 +133,7 @@ ___
 
 {{<faq-item>}}
 {{<faq-question level=2 text="Why might the ja3hash be empty in HTTP logs?" >}}
- 
+
 {{<faq-answer>}}
 
 The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
@@ -147,7 +147,7 @@ The JA3 Fingerprint can be null or empty in some cases. The most common case is 
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="I run a good bot and want for it to be added to the allowlist (`cf.bot\_management.verified\_bot`). What should I do?" >}}
+{{<faq-question level=2 text="I run a good bot and want for it to be added to the allowlist (cf.bot_management.verified_bot). What should I do?" >}}
 
 {{<faq-answer>}}
 
@@ -247,72 +247,6 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rule
 ```
 
 Note that you need to replace <key> with your own [API key](/fundamentals/api/get-started/keys/).
-
-{{</faq-answer>}}
-{{</faq-item>}}
-___
-
-## Challenges
-
-{{<faq-item>}}
-{{<faq-question level=2 text="Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?" >}}
-
-{{<faq-answer>}}
-
-No. The Managed Challenge, Interactive Challenge, and JS Challenge actions only support requests that trigger a page refresh.
-
-Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), since visitors do not trigger a new page load.
-
-When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a `403` status code.
-
-Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
-
-For an additional layer of security against Credential Stuffing, you could use [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site (such as login or checkout forms).
-
-{{</faq-answer>}}
-{{</faq-item>}}
-___
-
-{{<faq-item>}}
-{{<faq-question level=2 text="Does the `challengeFailed` action accurately represent challenges that users did not pass?" >}}
-
-{{<faq-answer>}}
-
-No. The `challengeFailed` and `jschallengeFailed` firewall rule actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a firewall rule. Additionally, Cloudflare Firewall Rules may not have a record of every request with a failed challenge.
-
-Therefore, consider these actions with caution. A reliable indicator is the [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/) displayed in **Security** > **WAF** > **Firewall rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-___
-
-{{<faq-item>}}
-{{<faq-question level=2 text="Why would I not find any failed challenges? Why is `ChallengeIssued` not equal to `ChallengeSolved` plus `ChallengeFailed`?" >}}
-
-{{<faq-answer>}}
-
-Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
-
-There are multiple reasons for this:
-
-- Users give up on a challenge.
-- Users try to solve a challenge but cannot provide an answer.
-- Users keep refreshing the challenge, but never submit an answer.
-- Cloudflare receives a malformed challenge answer.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-___
-
-{{<faq-item>}}
-{{<faq-question level=2 text="Why do I have matches for a firewall rule that was not supposed to match the request?" >}}
-
-{{<faq-answer>}}
-Make sure you are looking at the correct request.
-
-Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a challenge.
-
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Interactive Challenge_ or _JS Challenge_ and now that challenge was answered."
 
 {{</faq-answer>}}
 {{</faq-item>}}
