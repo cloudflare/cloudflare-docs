@@ -53,6 +53,12 @@ A `key` and a `value` are required for each KV pair. The entire request size mus
 
 KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time, or after a certain amount of time has passed since the key was last modified.
 
+{{<Aside type="note">}}
+
+An `expiration` setting on a key will result in that key being deleted, even in cases where the `cacheTtl` is set to a higher (longer duration) value. Expiration always takes precedence.  
+
+{{</Aside>}}
+
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
 
 There are two ways to specify when a key should expire:
