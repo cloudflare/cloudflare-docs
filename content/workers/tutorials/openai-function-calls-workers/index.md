@@ -220,7 +220,7 @@ filename: index.js
 const secondChatCompletion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo-0613",
     messages: [
-      {role: "user", content: "What's happening in New York City today?"},
+      {role: "user", content: "What's happening in the NBA today?"},
       msg,
       {
         role: "function",
