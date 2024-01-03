@@ -97,6 +97,6 @@ ___
 
 Cloudflare Inc. is registered for Goods and Services Tax (GST) purposes in India as of 2023-10-01.
 
-An email communication, in both English and Hindi, at the end of October and the beginning November was shared with all Indian customers to inform and request them to update addresses and GST IDs accordingly. 
+An email communication, in both English and Hindi, was shared at the end of October and the beginning of November with all Indian customers to inform and request them to update addresses and GST IDs accordingly. 
 
 Make sure that your complete address and GST ID is properly updated on your account to avoid additional charges.
