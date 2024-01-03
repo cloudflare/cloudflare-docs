@@ -21,7 +21,7 @@ A queue is a buffer or list that automatically scales as messages are written to
 
 Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumers) has successfully consumed the message.
 
-Queues do not offer guarantees to deliver messages in order.
+Queues does not guarantee that messages will be delivered to a consumer in the same order in which they are published.
 
 Developers can create multiple queues. Creating multiple queues can be useful to:
 
