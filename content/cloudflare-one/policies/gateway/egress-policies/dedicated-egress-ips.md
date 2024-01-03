@@ -52,11 +52,17 @@ Dedicated egress IPs do not apply to:
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
 
+### Traffic resilience
+
+To improve traffic resilience, assign your dedicated egress IPs to different Cloudflare data center locations. If you have multiple IPs in the same city, choose different data centers within that city. For more information, contact your account team.
+
 ### IP geolocation
 
 Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
 
-When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process can take anywhere from one week to up to four weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
+When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process can take up to four weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
+
+We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
 
 #### Verify IP geolocation
 
