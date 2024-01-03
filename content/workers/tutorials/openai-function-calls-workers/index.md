@@ -3,11 +3,11 @@ updated: 2023-06-14
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: OpenAI GPT function calling with JavaScript and Cloudflare Workers 
+title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
 layout: single
 ---
 
-# Use OpenAI GPT function calling with JavaScript and Cloudflare Workers 
+# Use OpenAI GPT function calling with JavaScript and Cloudflare Workers
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -52,10 +52,9 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 ## 2. Make a request to OpenAI
 
-With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. You will also be using the `axios-fetch` adapter to interact with OpenAI's node library on the edge. Install the OpenAI node library and `axios-fetch` adapter with `npm`:
+With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API:
 ```sh
 $ npm install openai
-$ npm install @vespaiach/axios-fetch-adapter
 ```
 
 Initially, your generated `index.js` file should look like this:
@@ -70,29 +69,24 @@ export default {
 };
 ```
 
-Above `export default`, add the imports for `openai` and `axios-fetch`:
+Above `export default`, add the import for `openai`:
 ```js
 ---
 filename: index.js
 ---
-import { Configuration, OpenAIApi } from "openai";
-import fetchAdapter from "@vespaiach/axios-fetch-adapter";
+import OpenAI from "openai";
 ```
 
-Within your `fetch` function, set up the configuration and instantiate your `OpenAIApi` client:
+Within your `fetch` function, set up the configuration and instantiate your `OpenAI` client:
 
 ```js
 ---
 filename: index.js
 ---
 async fetch(request, env, ctx) {
-  const configuration = new Configuration({
-    apiKey: env.OPENAI_API_KEY,
-    baseOptions: {
-      adapter: fetchAdapter
-    }
+  const openai = new OpenAI({
+    apiKey: env.OPENAI_API_KEY
   });
-  const openai = new OpenAIApi(configuration);
 
   return new Response('Hello World!');
 },
@@ -114,25 +108,25 @@ Now, make a request to the OpenAI [Chat Completions API](https://platform.openai
 filename: index.js
 ---
 try {
-  const chatCompletion = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo-0613",
-    messages: [{role: "user", content: "What's happening in the NBA today?"}],
-    functions: [
-      {
-        name: "read_website_content",
-        description: "Read the content on a given website",
-        parameters: {
-        type: "object",
-        properties: {
-          url: {
-          type: "string",
-          description: "The URL to the website to read ",
-          }
-        },
-        required: ["url"],
-        },
-      }
-    ]
+  const chatCompletion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo-0613",
+      messages: [{role: "user", content: "What's happening in New York City today?"}],
+      functions: [
+        {
+          name: "read_website_content",
+          description: "Read the content on a given website",
+          parameters: {
+            type: "object",
+            properties: {
+              url: {
+                type: "string",
+                description: "The URL to the website to read ",
+              }
+            },
+            required: ["url"],
+          },
+        }
+      ]
   });
 
   const msg = chatCompletion.data.choices[0].message;
@@ -191,7 +185,7 @@ With cheerio installed, import it at the top of your `index.js` file and immedia
 ---
 filename: index.js
 ---
-import cheerio from "cheerio"; 
+import cheerio from "cheerio";
 
 async function read_website_content(url) {
   console.log("reading website content");
@@ -223,20 +217,20 @@ The last part of your application is returning the data you got back from your `
 ---
 filename: index.js
 ---
-const secondChatCompletion = await openai.createChatCompletion({
-  model: "gpt-3.5-turbo-0613",
-  messages: [
-    {role: "user", content: "What's happening in New York City today?"},
-    msg,
-    {
-      role: "function",
-      name: msg.function_call.name,
-      content: websiteContent
-    }
-  ],
+const secondChatCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo-0613",
+    messages: [
+      {role: "user", content: "What's happening in New York City today?"},
+      msg,
+      {
+        role: "function",
+        name: msg.function_call.name,
+        content: websiteContent
+      }
+    ],
 });
 
-return new Response(secondChatCompletion.data.choices[0].message.content);
+return new Response(secondChatCompletion.choices[0].message.content);
 ```
 
 This request to OpenAI will look similar to first request. But this time, instead of passing the schema data about your function, you are passing a message that contains the response you got back from your function. OpenAI will use this information to build its response, which you will output to the browser.
