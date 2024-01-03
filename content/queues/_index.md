@@ -70,7 +70,7 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 {{<resource header="Configuration" href="/queues/reference/configuration/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
 
-{{<resource header="JavaScript APIs" href="/queues/platform/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
+{{<resource header="JavaScript APIs" href="/queues/reference/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
 
 
 {{</resource-group>}}
