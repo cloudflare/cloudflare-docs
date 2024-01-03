@@ -49,7 +49,7 @@ Policies with Allow actions allow DNS queries to reach destinations you specify 
 
 | Selector           | Operator | Value     | Action |
 | ------------------ | -------- | --------- | ------ |
-| Content Categories | In       | Education | Allow  |
+| Content Categories | in       | Education | Allow  |
 
 #### Disable DNSSEC validation
 
@@ -63,7 +63,7 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 | Selector           | Operator | Value        | Action |
 | ------------------ | -------- | ------------ | ------ |
-| Content Categories | In       | Adult Themes | Block  |
+| Content Categories | in       | Adult Themes | Block  |
 
 #### Custom block page
 
@@ -81,7 +81,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
-| Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
+| Hostname | is       | `www.example.com` | Override | `1.2.3.4`         |
 
 {{<Aside>}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
 
@@ -95,7 +95,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 | Selector | Operator | Value        | Action      |
 | -------- | -------- | ------------ | ----------- |
-| Domain   | Is       | `google.com` | Safe Search |
+| Domain   | is       | `google.com` | Safe Search |
 
 ### YouTube Restricted Mode
 
