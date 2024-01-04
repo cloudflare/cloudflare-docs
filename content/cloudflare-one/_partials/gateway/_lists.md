@@ -5,11 +5,6 @@ _build:
   list: never
 ---
 
-You can create a list by:
-
-- [Uploading a list of entries](#create-a-list-from-a-csv-file)
-- [Manually creating a list of entries](#create-a-manual-list)
-
 ## Create a list from a CSV file
 
 Here is a [sample CSV file](/cloudflare-one/static/list-test.csv) of URLs that you can use for testing. When formatting the CSV:
@@ -28,7 +23,7 @@ To upload the list to Zero Trust:
 
 You can now use this list in the policy builder by choosing the _in list_ operator.
 
-## Create a manual list
+## Create a list manually
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 2. Select **Create manual list**.
