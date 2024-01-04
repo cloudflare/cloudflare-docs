@@ -672,6 +672,7 @@
 /queues/learning/consumer-concurrency/ /queues/reference/consumer-concurrency/ 301
 /queues/learning/metrics/ /queues/reference/metrics/ 301
 /queues/learning/local-development/ /queues/reference/local-development/ 301
+/queues/learning/ /queues/reference/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
