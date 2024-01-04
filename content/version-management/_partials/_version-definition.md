@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-A version is a collection of configuration settings related to your zone, such as WAF custom rules, Page Rules, and [other optimization settings](/version-management/reference/available-settings/).
+A version is a collection of configuration settings related to your zone, such as WAF custom rules and [other optimization settings](/version-management/reference/available-settings/).
