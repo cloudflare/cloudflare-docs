@@ -25,7 +25,7 @@ We recommend approaching Zero Trust Network Access in three distinct steps to gu
 
 #### Identity
 
-Determine which identity provider you will use as the source of truth for [identity-based attributes](cloudflare-one/policies/gateway/identity-selectors/) such as user email and user groups.
+Determine which identity provider you will use as the source of truth for [identity-based attributes](/cloudflare-one/policies/gateway/identity-selectors/) such as user email and user groups.
 
 {{<Aside type="note">}}
 Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/).
@@ -52,13 +52,16 @@ Be sure to [enable the device posture checks](/cloudflare-one/identity/devices/)
 Almost all businesses have a series of interconnected networks, either physical or virtual. Prepare a list of all relevant networks, subnets, or segments within your network that users currently access, either locally or when using the VPN. For example,
 
 | Network name | Location | IP range | Accessible by VPN? |
+|- | - | - |-|
 
 ### 3. Define your applications
 
-Each application or network subnet should be defined by an IP list, a hostname/domain list, or sometimes both. If you are building a series of policies for private applications, each with a distinct requirement (user identity, device posture, etc.) we recommend that you first decide on a definition for that application. Does it exist at `example.internal.com` and only there? Can users reach it by IP directly? Does it have a static local IP address? For example, you may have an application at `a.internal.com`, which points to a load balancer with a static IP address, balancing a series of dynamic hosts serving the application on `a.internal.com`. Because the IPs of the application hosts are dynamic, the best practice would be to build both an IP list for the IP address of the load balancer, and a domain list for the internal DNS record that points to the application server. If the IPs behind the load balancer are static or only semi-dynamic, it may make sense to build a workflow to update the application IP list via a Cloudflare API call whenever host changes are made in your infrastructure provider.
+Next, prepare a list of all relevant internal applications on your networks that will have distinct policy requirements (for example, different user identity or device posture requirements). Each application should be defined by an IP list, a hostname/domain list, or sometimes both.
 
-include all relevant internal applications, services, and DNS conventions to inform future security policy building.
-
-| Application name | Local IPs   | Hostnames | Accessible by IP? | Static or dynamic IP? |
+| Application name | Local IPs   | Hostnames | Accessible via IP? | Static or dynamic IP? |
 | ---------------- | ---------- | ----------| -------- | ------------------|
 | Company Wiki     |            | `wiki.internal.com`   |   Yes      | Static |
+
+For example, you may have an application at `a.internal.com` which points to a load balancer with a static IP address, balancing a series of dynamic hosts serving the application on `a.internal.com`. Because the IPs of the application hosts are dynamic, the best practice would be to build two policies: a network policy for the load balancer IP, and a DNS policy for the application hostnames.
+
+On the other hand, if the IPs behind the load balancer are static or only semi-dynamic, it may make sense to directly use the application IPs in your network policy. You can build a workflow to update the application IP list via a Cloudflare API call whenever host changes are made in your infrastructure provider.
