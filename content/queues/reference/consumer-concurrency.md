@@ -6,7 +6,7 @@ weight: 4
 
 # Consumer concurrency 
 
-Consumer concurrency allows a [consumer Worker](/queues/learning/how-queues-works/#consumers) processing messages from a queue to automatically scale out horizontally to keep up with the rate that messages are being written to a queue.
+Consumer concurrency allows a [consumer Worker](/queues/reference/how-queues-works/#consumers) processing messages from a queue to automatically scale out horizontally to keep up with the rate that messages are being written to a queue.
 
 In many systems, the rate at which you write messages to a queue can easily exceed the rate at which a single consumer can read and process those same messages. This is often because your consumer might be parsing message contents, writing to storage or a database, or making third-party (upstream) API calls.
 
@@ -107,4 +107,4 @@ Billing for consumers follows the [Workers unbound usage model](/workers/platfor
 
 ### Example
 
-A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/queues/learning/consumer-concurrency/#example-1)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).
+A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/queues/reference/consumer-concurrency/#example-1)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

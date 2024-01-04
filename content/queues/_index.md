@@ -24,7 +24,7 @@ Send and receive messages with guaranteed delivery and no charges for egress ban
 
 {{</Aside>}}
 
-Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/learning/delivery-guarantees/), [offload work from a request](/queues/learning/how-queues-works/), [send data from Worker to Worker](/queues/reference/configuration/), and [buffer or batch data](/queues/learning/batching-retries/).
+Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/reference/delivery-guarantees/), [offload work from a request](/queues/reference/how-queues-works/), [send data from Worker to Worker](/queues/reference/configuration/), and [buffer or batch data](/queues/reference/batching-retries/).
 
 ---
 
