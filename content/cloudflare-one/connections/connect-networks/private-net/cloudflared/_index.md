@@ -55,6 +55,8 @@ Cloudflare will now proxy traffic from enrolled devices, except for the traffic 
 
 ### Create Zero Trust policies
 
+You can create Zero Trust policies to manage access to specific applications on your network.
+
 {{<render file="access/_create-zt-policy.md" productFolder="cloudflare-one">}}
 
 ## 5. Connect as a user

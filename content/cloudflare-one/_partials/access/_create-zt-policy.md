@@ -5,8 +5,6 @@ _build:
   list: never
 ---
 
-You can create Zero Trust policies to manage access to specific applications on your network.
-
 1. Go to **Access** > **Applications** > **Add an application**.
 2. Select **Private Network**.
 3. Name your application.
