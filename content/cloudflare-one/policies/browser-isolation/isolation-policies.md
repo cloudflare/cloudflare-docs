@@ -122,6 +122,6 @@ Isolate content that has not been categorized by [Cloudflare Radar](/radar/).
 
 ### Isolate ChatGPT
 
-Isolate or block the use of ChatGPT.
+Isolate the use of ChatGPT.
 
 {{<render file="gateway/policies/_isolate-chatgpt.md">}}
