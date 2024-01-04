@@ -578,7 +578,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
 
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

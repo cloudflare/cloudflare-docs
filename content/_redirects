@@ -658,11 +658,14 @@
 /support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
 
 # queues
-/queues/configuration/ /queues/platform/configuration/ 301
-/queues/javascript-apis/ /queues/platform/javascript-apis/ 301
+/queues/configuration/ /queues/reference/configuration/ 301
+/queues/javascript-apis/ /queues/reference/javascript-apis/ 301
 /queues/limits/ /queues/platform/limits/ 301
 /queues/pricing/ /queues/platform/pricing/ 301
 /queues/examples/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-rendering/ 301
+/queues/platform/javascript-apis/ /queues/reference/javascript-apis/ 301
+/queues/platform/configuration/ /queues/reference/configuration/ 301
+/queues/changelog/ /queues/platform/changelog/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
