@@ -195,7 +195,7 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 
 Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.
 
-### Allow users to enable local network exclusion
+{{<heading-pill style="beta" heading="h3">}} Allow users to enable local network exclusion {{</heading-pill>}}
 
 {{<render file="warp/_all-systems-modes-plans.md">}}
 

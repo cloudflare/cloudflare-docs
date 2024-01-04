@@ -5,7 +5,7 @@ layout: single
 weight: 3
 ---
 
-# Switch between Zero Trust organizations
+{{<heading-pill>}} Switch between Zero Trust organizations {{</heading-pill>}}
 
 In Cloudflare WARP, users can switch between multiple Zero Trust organizations (or other [MDM parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/)) that administrators specify in an MDM file. Common use cases include:
 
