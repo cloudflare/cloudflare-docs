@@ -8,7 +8,7 @@ meta:
 
 # Find an appropriate rate limit
 
-The **Rate limit analysis** tab in [Security Analytics](/waf/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
+The **Rate limit analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
 
 {{<Aside type="note">}}
 The **Rate limit analysis** tab is only available to Enterprise customers.
@@ -68,7 +68,7 @@ Answering the following questions during your adjustments can help you with your
 
 1. Repeat the rate selection process described in the previous section, but selecting a portion of traffic where you know there was an attack or traffic peak. The rate you have chosen should block the outlier traffic during the attack and allow traffic during regular periods.
 
-2. (Optional) Check the [sampled logs](/waf/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
+2. (Optional) Check the [sampled logs](/waf/analytics/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
 
 ### 4. Create a rate limiting rule
 

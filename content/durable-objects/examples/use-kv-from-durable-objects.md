@@ -36,7 +36,7 @@ bindings = [
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
@@ -45,7 +45,7 @@ interface Env {
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
-    // We assume each Durable Object is mapped to a roomId in a query parameter
+    // Assume each Durable Object is mapped to a roomId in a query parameter
     // In a production application, this will likely be a roomId defined by your application
     // that you validate (and/or authenticate) first.
     let url = new URL(req.url)
@@ -54,18 +54,18 @@ export default {
     if (roomIdParam) {
       // Create (or get) a Durable Object based on that roomId.
       let durableObjectId = env.YOUR_DO_CLASS.idFromName(roomIdParam);
-      // Get a "stub" that allows us to call that Durable Object
+      // Get a "stub" that allows you to call that Durable Object
       let durableObjectStub = env.YOUR_DO_CLASS.get(durableObjectId);
 
       // Pass the request to that Durable Object and await the response
       // This invokes the constructor once on your Durable Object class (defined further down)
       // on the first initialization, and the fetch method on each request.
       //
-      // We could pass the original Request to the Durable Object's fetch method
+      // You could pass the original Request to the Durable Object's fetch method
       // or a simpler URL with just the roomId.
       let response = await durableObjectStub.fetch(`http://do/${roomId}`);
 
-      // This would return the value we read from KV *within* the Durable Object.
+      // This would return the value you read from KV *within* the Durable Object.
       return response;
     }
   }
@@ -74,7 +74,7 @@ export default {
 export class YourDurableObject implements Durable Object {
   constructor(public state: DurableObjectState, env: Env) {
       this.state = state;
-      // Ensure we pass our bindings and environmental variables into
+      // Ensure you pass your bindings and environmental variables into
       // each Durable Object when it is initialized
       this.env = env;
     }
@@ -90,7 +90,6 @@ export class YourDurableObject implements Durable Object {
 
     return Response.json(val)
   }
-}
 ```
 
 

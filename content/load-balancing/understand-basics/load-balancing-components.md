@@ -6,29 +6,33 @@ weight: 3
 
 # Load Balancing components
 
-The Cloudflare Load Balancing solution is built upon three main components:
-
-* [Load balancers](/load-balancing/load-balancers/)
-* [Pools](/load-balancing/pools/)
-* [Monitors](/load-balancing/monitors/)
+This page provides a simplified overview of the three main components of the Cloudflare Load Balancing solution and how they relate to one another.
 
 ## Load balancers
 
-For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) must return an IP address, where the website or application is hosted.
+For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) must return an IP address, where the website or application is hosted (origin).
 
-When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/reference/dns-records/) for the specified hostname. This means that, when a request is made, whichever logic you introduced using Load Balancing, as well as information on the health of your origin servers, will be processed in order to determine which origin the request will be routed to and, ultimately, which IP address to return.
+When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/load-balancers/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/load-balancers/dns-records/#priority-order), instead of simply returning an origin IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
 
 {{<render file="_load-balancing-diagram.md">}}
 
 ## Pools
 
-Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool, if this is what best represents your infrastructure.
+Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool, if this is what best suits your use case.
+
+For example, if you are only using Cloudflare to globally distribute traffic across regions ([traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/)), each pool could represent one region and, within each region, you could have one origin that represents the entry point to your data center.
+
+{{<Aside type="note">}}
+
+Cloudflare [local traffic management (LTM)](/load-balancing/local-traffic-management/) solution and [origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) capabilities enable you to also load balance traffic between your origin servers within a data center. In this use case, each pool would represent a data center and contain several origin servers.
+
+{{</Aside>}}
 
 ## Monitors
 
-Finally, monitors are the component you can use to guarantee only healthy pools are considered for traffic distribution. 
+Finally, monitors are the component you can use to guarantee only [healthy pools](/load-balancing/understand-basics/health-details/) are considered for traffic distribution.
 
-When you configure a monitor and attach it to origins, the monitor will issue health monitor requests to your origins at regular intervals, making it possible for your load balancer to [intelligently distribute traffic](/load-balancing/understand-basics/traffic-steering/), considering which origins are actually available.
+When you configure a monitor and attach it to origins, the monitor will issue health monitor requests to your origins at regular intervals. This process makes it possible for your load balancer to intelligently handle traffic, considering which origins are actually available.
 
 {{<render file="_health-check-diagram.md">}}
 

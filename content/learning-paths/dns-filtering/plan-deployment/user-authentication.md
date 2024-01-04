@@ -16,7 +16,7 @@ Finally, decide how users will authenticate to your Zero Trust organization. The
 
 To allow users to authenticate with an identity provider:
 
-{{<render file="_idp-integration.md" productFolder="cloudflare-one">}}
+{{<render file="access/_idp-integration.md" productFolder="cloudflare-one">}}
 
 6. In your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/), verify that the IdP is selected as an authentication option.
 
@@ -26,4 +26,4 @@ Users will now be able to select this IdP when they are prompted to authenticate
 
 To enroll devices with a service token:
 
-{{<render file="_service-token-enrollment.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_service-token-enrollment.md" productFolder="cloudflare-one">}}

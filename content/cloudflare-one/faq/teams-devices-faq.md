@@ -32,14 +32,9 @@ Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a
 
 ## Why is my device not connecting to a public Wi-Fi?
 
-The Wi-Fi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily disable WARP. After you login to the captive portal through your browser, you can re-enable WARP to access corporate resources.
+The Wi-Fi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily turn off WARP. After you login to the captive portal through your browser, you can turn WARP back on to access corporate resources.
 
-To allow end users to connect through a captive portal, administrators can do the following:
-
-1. Enable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch).
-2. Enable [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection).
-3. Set an [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) time period.
-4. If WARP fails to automatically detect a portal, provide an [admin override code](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) to your end users. This will allow users to manually turn off WARP and connect to the portal. WARP will automatically turn back on after the auto connect period.
+For more information, refer to [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/).
 
 ## Why is my device not connecting to the Internet?
 
@@ -51,10 +46,10 @@ An [OS firewall rule](/cloudflare-one/connections/connect-devices/warp/configure
 
 ## Why is my device not connecting to my private network?
 
-If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/):
+If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/cloudflared/):
 
-- Verify that the WARP client is [properly configured](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#device-configuration) on the device.
+- Verify that the WARP client is [properly configured](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#device-configuration) on the device.
 - Verify that the user is allowed through by your Access and Gateway policies.
-- Verify that the [local LAN settings](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#router-configuration) for the device do not overlap with the CIDR range of your private network.
+- Verify that the [local LAN settings](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#router-configuration) for the device do not overlap with the CIDR range of your private network.
 
 When contacting Cloudflare support, ensure that you include [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.

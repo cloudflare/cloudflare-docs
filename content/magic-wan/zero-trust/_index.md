@@ -1,7 +1,7 @@
 ---
 title: Zero Trust integration
 pcx_content_type: navigation
-weight: 7
+weight: 6
 layout: single
 meta:
     title: Cloudflare Zero Trust integration tutorials

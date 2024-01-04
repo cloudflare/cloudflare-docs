@@ -89,7 +89,7 @@ $ sudo systemctl restart cloudflared.service
 {{</tab>}}
 {{<tab label="docker" no-code="true">}}
 
-1. In Zero Trust, go to **Access** > **Tunnels**.
+1. In Zero Trust, go to **Networks** > **Tunnels**.
 2. Select your tunnel and select **Configure**.
 3. Select **Docker** and copy the installation command shown in the dashboard.
 4. Paste this command into a terminal window.
@@ -128,6 +128,12 @@ If you are not using Cloudflare's Load Balancer, you can use multiple instances 
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. In the Cloudflare DNS dashboard, [replace](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4. Remove the now-inactive instance of `cloudflared`.
+
+{{<Aside type="note" header="Traffic handling">}}
+
+When the old replica is stopped, it will drop long-lived HTTP requests (for example, WebSocket) and TCP connections (for example, SSH). UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
+
+{{</Aside>}}
 
 ### Run multiple instances in Windows
 

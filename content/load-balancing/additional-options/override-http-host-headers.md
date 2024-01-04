@@ -36,7 +36,7 @@ If you set a header override on an individual origin, it will take precedence ov
 
 For example, you might have a load balancer for `www.example.com` with the following setup:
 
-- Origin Pools:
+- Origin pools:
 
   - Pool 1:
 
@@ -50,7 +50,7 @@ For example, you might have a load balancer for `www.example.com` with the follo
 
 - Monitor (`Host` header set to `www.example.com`)
 
-In this scenario, health monitor requests for **Origin 1** would use `lb-app-a.example.com`, health monitor requests for **Origin 4** would use `lb-app-b.example.com`, and all other health monitor requests would default to `www.example.com`. For more information on updating your custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](https://support.cloudflare.com/hc/articles/205893698).
+In this scenario, health monitor requests for **Origin 1** would use `lb-app-a.example.com`, health monitor requests for **Origin 4** would use `lb-app-b.example.com`, and all other health monitor requests would default to `www.example.com`. For more information on updating your custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](/support/third-party-software/others/configure-cloudflare-and-heroku-over-https/).
 
 For a list of origins that override a monitor's `Host` header:
 

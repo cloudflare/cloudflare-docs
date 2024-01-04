@@ -14,6 +14,7 @@ Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytic
 
 | <div style="width:150px">Date of change</div> | Description |
 | -------------- | ----------- |
+| 2023-10-18     | Manages A/B testing tags |
 | 2023-07-25     | Fixed ETag format in the response header.
 | 2023-07-13     | Fixed the issue that was causing an illegal invocation error.
 | 2023-04-19     | Reports additional LCP diagnostic information using web-vitals library's attribution build.

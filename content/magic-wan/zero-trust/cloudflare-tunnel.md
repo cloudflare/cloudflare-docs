@@ -11,7 +11,7 @@ By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and dest
 
 If you have overlapping routes in your Magic WAN and Cloudflare Tunnel routing configurations, Cloudflare Tunnel routes will take precedence. This is true regardless of the [health status of your tunnels](/magic-wan/reference/tunnel-health-checks/#health-state-and-prioritization).
 
-However, if you have overlapping routes in your Magic WAN and Cloudflare Tunnel routing configurations in the default [Tunnel virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/), outbound connections from within that network will not work. This happens because Cloudflare Tunnel does not support outbound connections.
+However, if you have overlapping routes in your Magic WAN and Cloudflare Tunnel routing configurations in the default [Tunnel virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/), outbound connections from within that network will not work. This happens because Cloudflare Tunnel does not support outbound connections.
 
 ## Test `cloudflared` tunnel integration
 
@@ -21,4 +21,4 @@ For example, imagine you have a Cloudflare Tunnel set up with a private network 
 
 As mentioned above, if you have overlapping routes in your Magic WAN and Cloudflare Tunnel routing configurations, Cloudflare Tunnel will take precedence. This happens whenever a `cloudflared` tunnel CIDR matches a packet, regardless of prefix length. For example, a `cloudflared` tunnel with prefix `10.1.2.0/24` will take precedence over a static route configured to `10.1.2.4/32`, sending packets over a GRE tunnel.
 
-For more information, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/).
+For more information, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).

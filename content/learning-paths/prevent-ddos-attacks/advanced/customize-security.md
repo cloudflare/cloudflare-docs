@@ -9,7 +9,7 @@ Another way of reducing origin traffic is customizing the Cloudflare WAF and oth
 
 To reduce incoming malicious requests, you could:
 
-- Create [WAF custom rules](/waf/custom-rules/) or [rulesets](/waf/custom-rulesets/) for protection based on specific aspects of incoming requests.
+- Create [WAF custom rules](/waf/custom-rules/) for protection based on specific aspects of incoming requests.
 - Adjust DDoS rules to handle [false negatives and false positives](/ddos-protection/managed-rulesets/adjust-rules/).
 - Build [rate limiting rules](/waf/rate-limiting-rules/) to protect against specific patterns of requests.
 - Enable [bot protection](/bots/get-started/) or set up [Bot Management for Enterprise](/bots/get-started/bm-subscription/) to protect against automated abuse.

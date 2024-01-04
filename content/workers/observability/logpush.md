@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Logpush
+meta:
+  description: Send Workers Trace Event Logs to a supported third party, such as a storage or logging provider.
 ---
 
 # Workers Trace Events Logpush
@@ -9,7 +11,7 @@ title: Logpush
 
 ## Verify your Logpush access
 
-Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your version by running `wrangler version`. Update Wrangler by running `npm update -g wrangler`.
+Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
 

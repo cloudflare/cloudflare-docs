@@ -33,22 +33,22 @@ To enable load shedding for a specific pool via the dashboard:
 4. Click the **Configure Load Shedding** dropdown.
 5. For **Default traffic**, select a **Policy** and a **Shed %**:
 
-     {{<details header="Policy options">}}
+{{<details header="Policy options">}}
 
-     When shedding <strong>Default traffic</strong>, you have two <strong>Policy</strong> options:
+When shedding **Default traffic**, you have two **Policy** options:
 
-    * **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
-    * **IP hash**: Sheds the percentage of IP address hash space specified in the *Shed %*. Ensures requests from the same IP will hit the same origin, but may shed a significantly higher or lower percentage of requests.
+* **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
+* **IP hash**: Sheds the percentage of IP address hash space specified in the *Shed %*. Ensures requests from the same IP will hit the same origin, but may shed a significantly higher or lower percentage of requests.
 
-    For more guidance on choosing a policy, refer to [Shedding policies](#shedding-policies).
+For more guidance on choosing a policy, refer to [Shedding policies](#shedding-policies).
 
-     {{</details>}}
+{{</details>}}
 
-     {{<details header="Shed %">}}
+{{<details header="Shed %">}}
 
-     When choosing a **Shed %**, start with a small percentage and increase gradually. Particularly if you choose the [IP hash shedding policy](#shedding-policies), you might shed more traffic than expected.
+When choosing a **Shed %**, start with a small percentage and increase gradually. Particularly if you choose the [IP hash shedding policy](#shedding-policies), you might shed more traffic than expected.
 
-     {{</details>}}
+{{</details>}}
 
 ### Configure via API
 

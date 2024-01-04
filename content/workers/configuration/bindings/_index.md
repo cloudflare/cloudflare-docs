@@ -2,13 +2,17 @@
 pcx_content_type: concept
 title: Bindings
 layout: single
+meta:
+  description: Interact with storage and other resources on the Cloudflare Developer Platform.
 ---
 
 # Bindings
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform.
+Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
 There are multiple types of bindings available today.
+
+To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
 ## Configuration
 
@@ -54,7 +58,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 [D1](/d1) bindings allow you to query a D1 database from your Worker.
 
-* [Configure a D1 binding](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
+* [Configure a D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
 * Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
 
 ### Vectorize database bindings

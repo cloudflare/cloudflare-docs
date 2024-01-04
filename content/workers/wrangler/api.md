@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: API
 weight: 2
+meta:
+  description: An experimental API to programmatically manage your Cloudflare Workers.
 ---
 
 # Wrangler API
@@ -101,10 +103,8 @@ describe("Worker", () => {
 
   it("should return Hello World", async () => {
     const resp = await worker.fetch();
-    if (resp) {
-      const text = await resp.text();
-      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-    }
+    const text = await resp.text();
+    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
   });
 });
 ```
@@ -132,10 +132,8 @@ describe("Worker", () => {
 
   it("should return Hello World", async () => {
     const resp = await worker.fetch();
-    if (resp) {
-      const text = await resp.text();
-      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-    }
+    const text = await resp.text();
+    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
   });
 });
 ```
@@ -179,18 +177,14 @@ describe("multi-worker testing", () => {
 
   it("childWorker should return Hello World itself", async () => {
     const resp = await childWorker.fetch();
-    if (resp) {
-      const text = await resp.text();
-      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-    }
+    const text = await resp.text();
+    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
   });
 
   it("parentWorker should return Hello World by invoking the child worker", async () => {
     const resp = await parentWorker.fetch();
-    if (resp) {
-      const parsedResp = await resp.text();
-      expect(parsedResp).toEqual("Parent worker sees: Hello World!");
-    }
+    const parsedResp = await resp.text();
+    expect(parsedResp).toEqual("Parent worker sees: Hello World!");
   });
 });
 ```
@@ -225,18 +219,14 @@ describe("multi-worker testing", () => {
 
   it("childWorker should return Hello World itself", async () => {
     const resp = await childWorker.fetch();
-    if (resp) {
-      const text = await resp.text();
-      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-    }
+    const text = await resp.text();
+    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
   });
 
   it("parentWorker should return Hello World by invoking the child worker", async () => {
     const resp = await parentWorker.fetch();
-    if (resp) {
-      const parsedResp = await resp.text();
-      expect(parsedResp).toEqual("Parent worker sees: Hello World!");
-    }
+    const parsedResp = await resp.text();
+    expect(parsedResp).toEqual("Parent worker sees: Hello World!");
   });
 });
 ```

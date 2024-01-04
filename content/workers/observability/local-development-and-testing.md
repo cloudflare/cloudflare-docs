@@ -2,6 +2,8 @@
 title: Local development and testing
 weight: 6
 pcx_content_type: concept
+meta:
+  description: Test your Worker in local development.
 ---
 
 # Local development and testing
@@ -27,7 +29,7 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
 
 ### Develop locally using remote resources and bindings
 
@@ -37,11 +39,13 @@ Developing against remote resources will count towards billable usage. `wrangler
 
 {{</Aside>}}
 
-`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote flag`:
+`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote` flag:
 
 ```sh
 $ npx wrangler dev --remote
 ```
+
+Remote resources to use during `wrangler dev --remote` are specified with preview ID/names such as `preview_id` or `preview_bucket name`. Preview resources can be resources separate from production resources to prevent changing production data in development. `wrangler dev --remote` only supports preview ID/names for storage resources such as KV, R2, and D1. To change production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of the production resource.
 
 ### Customize `wrangler dev`
 
@@ -59,13 +63,13 @@ Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/
 
 ## Debug via breakpoints
 
-As of Wrangler 3.9.0, you can debug via breakpoints in your Worker. Breakpoints provide the ability to see exactly what is happening at a given point in the execution of your Worker. This functionality exists in both DevTools and VSCode.
+As of Wrangler 3.9.0, you can debug via breakpoints in your Worker. Breakpoints provide the ability to see exactly what is happening at a given point in the execution of your Worker. This functionality exists in both DevTools and VS Code.
 
 For more information on breakpoint debugging via Chrome's DevTools, refer to [Chrome's article on breakpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints/).
 
-### Setup VSCode to use breakpoints
+### Setup VS Code to use breakpoints
 
-To setup VSCode for breakpoint debugging Workers:
+To setup VS Code for breakpoint debugging Workers:
 
 1. Create a `.vscode` folder in your project's root folder if one does not exist.
 2. Within that folder, create a `launch.json` file with the following content:
@@ -88,13 +92,19 @@ To setup VSCode for breakpoint debugging Workers:
 }
 ```
 
-3. Open your project in VSCode, open a new terminal window from VSCode, and run `npx wrangler dev` to start the local dev server.
+3. Open your project in VS Code, open a new terminal window from VS Code, and run `npx wrangler dev` to start the local dev server.
 
 4. At the top of the **Run & Debug** panel, you should see an option to select a configuration. Choose **Wrangler**, and select the play icon. You should see **Wrangler: Remote Process [0]** show up in the Call Stack panel on the left.
 
 5. Go back to a `.js` or `.ts` file in your project and add at least one breakpoint.
 
 5. Open your browser and go to the Worker's local URL (default `http://127.0.0.1:8787`). The breakpoint should be hit, and you should see details about your code at the specified line.
+
+{{<Aside type="warning">}}
+
+Note that breakpoint debugging in `wrangler dev` using `--remote` could extend Worker CPU time and incur additional costs. It is recommended to use `wrangler dev` in local mode by specifying no `--remote` option or with `--local`.
+
+{{</Aside>}}
 
 ## Test Workers
 

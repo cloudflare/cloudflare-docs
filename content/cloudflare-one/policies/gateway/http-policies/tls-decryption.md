@@ -23,6 +23,7 @@ Gateway does not support TLS decryption for applications which use:
 - [Self-signed certificates](#incompatible-certificates)
 - [Mutual TLS (mTLS) authentication](#incompatible-certificates)
 - [ESNI and ECH handshake encryption](#esni-and-ech)
+- [Automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
 
 ### Incompatible certificates
 
@@ -35,6 +36,12 @@ To allow HTTP filtering while accessing a site with an insecure certificate, set
 To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a [list of trusted applications](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you will see a **Your connection is not private** warning, which you can proceed through to connect.
 
 HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gateway or subject to your HTTP policies. You can, however, still apply [network policies](/cloudflare-one/policies/gateway/network-policies/) to these applications.
+
+### Google Chrome automatic HTTPS upgrades
+
+Google Chrome can automatically upgrade HTTP requests to HTTPS requests, even when you select a link that explicitly declares `http://`. When you use Gateway to proxy and filter your traffic, this upgrade can interrupt the connection between your Zero Trust users and Gateway.
+
+To disable automatic HTTPS upgrades in Chrome, go to [Chrome flags](chrome://flags/#https-upgrades) and turn **HTTPS Upgrades** off. Chrome Enterprise users can turn off automatic HTTPS upgrades with a [management policy](https://chromeenterprise.google/policies/#HttpsUpgradesEnabled).
 
 ### ESNI and ECH
 

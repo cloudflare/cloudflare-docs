@@ -18,9 +18,43 @@ Enterprise customers who do not wish to install the [Cloudflare certificate](/cl
 Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use the Cloudflare certificate.
 {{</Aside>}}
 
-When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name.
+## Generate a custom root CA
 
-To deploy a custom root certificate:
+Before you generate a custom root CA, make sure you have [OpenSSL](https://www.openssl.org/) installed.
+
+1. Open a terminal.
+2. Create a directory for the root CA and change into it.
+
+   ```sh
+   $ mkdir -p /root/customca
+   $ cd /root/customca
+   ```
+
+3. Generate a private key for the root CA.
+
+   ```sh
+   $ openssl genrsa -out <CUSTOM-ROOT-PRIVATE-KEY>.pem 2048
+   ```
+
+4. Generate a self-signed root certificate.
+
+   ```sh
+   $ openssl req -x509 -sha256 -new -nodes -key <CUSTOM-ROOT-PRIVATE-KEY>.pem -days 365 -out <CUSTOM-ROOT-CERT>.pem
+   ```
+
+When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name. To review the private key, run the following command:
+
+```sh
+$ openssl rsa -in <CUSTOM-ROOT-PRIVATE-KEY>.key -text
+```
+
+To review the certificate, run the following command:
+
+```sh
+$ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
+```
+
+## Deploy a custom root certificate
 
 1. Verify that the certificate is installed on your devices.
 

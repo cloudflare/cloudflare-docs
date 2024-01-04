@@ -9,15 +9,13 @@ weight: 10000
 layout: example
 ---
 
-# Use WebSockets
-
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSocket connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSocket connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
 {{<Aside type="note">}}
 
-WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.
+WebSockets utilize an event-based system for receiving and sending messages, much like the Workers runtime model of responding to events.
 
 {{</Aside>}}
 
@@ -186,6 +184,4 @@ async function websocket(url) {
 
 ## WebSocket compression
 
-Cloudflare Workers provides experimental support for WebSocket compression via the `web_socket_compression` compatibility flag. Refer to [Experimental Changes](/workers/configuration/compatibility-dates/#experimental-changes) for more information.
-
-Without this compatibility flag, the Workers runtime will strip or ignore the `Sec-WebSocket-Extensions: permessage-deflate` header on all inbound and outbound WebSocket requests.
+Cloudflare Workers supports WebSocket compression. Refer to [WebSocket Compression](/workers/configuration/compatibility-dates/#websocket-compression) for more information.

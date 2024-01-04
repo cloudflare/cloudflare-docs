@@ -22,6 +22,17 @@
       container: '#algolia',
       maxResultsPerGroup: 10,
       insights: true,
+      translations: {
+        modal: {
+        noResultsScreen: {
+          reportMissingResultsText: "",
+          reportMissingResultsLinkText: 'View all results'
+        }
+      }
+      },
+      getMissingResultsUrl({ query }) {
+        return `/search/#q=${query}&t=Docs`;
+      },
       searchParameters: {
         optionalFilters: facetFilters
       },
@@ -44,6 +55,9 @@
             href: `/search/#q=${state.query}&t=Docs`,
             // Raw text rendered in the HTML element
             children: `View all results`,
+            onClick: () => {
+              zaraz.track("view all results", {query: state.query})
+            },
           },
           __v: null,
         };

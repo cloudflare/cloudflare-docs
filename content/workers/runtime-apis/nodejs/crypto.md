@@ -7,7 +7,7 @@ title: Crypto
 
 {{<render file="_nodejs-compat-howto.md">}}
 
-The `node:crypto`` module provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign, and verify functions.
+The `node:crypto` module provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign, and verify functions.
 
 A subset of the the `node:crypto` module is available in Workers. All APIs in the tables below with a ✅ are supported, and unless otherwise noted, work the same way as the implementations in Node.js.
 

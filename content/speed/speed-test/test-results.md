@@ -16,7 +16,7 @@ Metric | Definition
 ------ | --------
 Time to First Byte ([TTFB](https://web.dev/ttfb/)) | Measures the time between the request for a resource and when the first byte of a response begins to arrive.
 First Contentful Paint ([FCP](https://web.dev/first-contentful-paint/)) |  Measures the time from when the page starts loading to when any part of the page's content is rendered on the screen.
-Largest Contentful Paint ([LCP](https://web.dev/lcp/)) | [CP reports the render time of the largest image or text block visible within the viewport.
+Largest Contentful Paint ([LCP](https://web.dev/lcp/)) | CP reports the render time of the largest image or text block visible within the viewport.
 Cumulative Layout Shift ([CLS](https://web.dev/cls/)) | Measures the largest burst of layout shift scores for every unexpected layout shift that occurs during the entire lifespan of a page.
 
 ## Synthetic tests metrics

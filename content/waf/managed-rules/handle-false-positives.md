@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Handle false positives
-weight: 9
+weight: 4
 ---
 
 # Handle false positives

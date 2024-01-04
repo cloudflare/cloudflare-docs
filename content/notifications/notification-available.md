@@ -146,6 +146,8 @@ Customers can filter incident alerts to specific impact levels (minor, major, cr
 
 Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.
 
+The impact level and affected components of an incident may change as the incident progresses. A notification will only be sent if the configured filters match at the time of the incident update. Updates will not be sent retroactively.
+
 **Included with**
 
 All Cloudflare plans.
@@ -438,7 +440,7 @@ In the email for the notification, you can find the destination name for the fai
 
 **Who is it for?**
 
-Magic Transit on-demand customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
+[Magic Transit on-demand](/magic-transit/on-demand/) customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
 
 **Other options / filters**
 
@@ -494,6 +496,36 @@ If you do not have auto advertisement enabled, you need to advertise your IP pre
 
 {{</details>}}
 
+{{<details header="Magic Tunnel Health Check Alert">}}
+
+**Who is it for?**
+
+Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
+
+**Other options / filters**
+
+- Notification Name
+  - Custom name for this notification
+- Description (optional)
+  - Custom description for this notification
+- Notification Email (can be multiple emails)
+  - Email address of recipient for this notification
+- Webhooks
+- Tunnels
+  - Choose one or more tunnels to monitor
+- SLO
+  - Define SLO threshold for Magic Tunnel health alerts. Available options are _High_, _Medium_, and _Low_.
+
+**Included with**
+
+Purchase of Magic Transit and Magic WAN.
+
+**What should you do if you receive one?**
+
+Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) for more information on what the issue might be.
+
+{{</details>}}
+
 ## Pages
 
 {{<details header="Project updates">}}
@@ -519,7 +551,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-For failed deployments, review our [debugging guide](/pages/platform/debugging-pages/#check-your-build-log).
+For failed deployments, review our [debugging guide](/pages/configuration/debugging-pages/#check-your-build-log).
 
 {{</details>}}
 
@@ -741,6 +773,8 @@ Action only needed if notification is about a certificate that failed to be issu
 
 Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
+
 **Other options / filters**
 
 None.
@@ -802,6 +836,8 @@ All Cloudflare plans.
 **Who is it for?**
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
+
 **Other options / filters**
 
 None.
@@ -849,6 +885,8 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive a notification when Cloudflare detects edge and/or origin errors.
 
+{{<render file="_traffic-alerts.md">}}
+
 **Other options / filters**
 
 Multiple filters available:
@@ -872,7 +910,6 @@ Enterprise plans.
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing.
 2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
-3. {{<render file="_errors.md">}}
 
 {{</details>}}
 
@@ -881,6 +918,8 @@ Enterprise plans.
 **Who is it for?**
 
 Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server.
+
+{{<render file="_traffic-alerts.md">}}
 
 **Other options / filters**
 
@@ -930,6 +969,8 @@ All Cloudflare plans.
 
 Enterprise customers who want to receive a notification when one zone is experiencing an unexpected spike or drop in traffic.
 
+{{<render file="_traffic-alerts.md">}}
+
 **Other options / filters**
 
 Multiple filters available:
@@ -945,7 +986,6 @@ Enterprise plans.
 **What should you do if you receive one?**
 
 1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
-2. {{<render file="_errors.md">}}
 
 {{</details>}}
 
@@ -1059,7 +1099,7 @@ Monitor tunnel health over time and consider deploying [`cloudflared` replicas o
 
 **Who is it for?**
 
-Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/security-events/paid-plans/).
+Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/).
 
 For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
@@ -1075,7 +1115,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 {{</details>}}
 
@@ -1083,7 +1123,7 @@ Review the information in [Security Events](/waf/security-events/paid-plans/) to
 
 **Who is it for?**
 
-Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/security-events/paid-plans/).
+Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/).
 
 For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
@@ -1098,7 +1138,7 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 {{</details>}}
 

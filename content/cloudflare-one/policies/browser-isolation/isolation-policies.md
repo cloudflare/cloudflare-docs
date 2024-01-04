@@ -94,7 +94,7 @@ Isolate security threats such as malware and phishing.
 
 | Selector       | Operator | Value              | Action  |
 | -------------- | -------- | ------------------ | ------- |
-| Security Risks | In       | All security risks | Isolate |
+| Security Risks | in       | All security risks | Isolate |
 
 ### Isolate high risk content
 

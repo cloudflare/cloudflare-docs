@@ -185,8 +185,6 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 {{<Aside type="warning" header="Important">}}
 Ruleset overrides and tag overrides apply to both existing and **future** rules in the managed ruleset. If you wish to override existing rules only, you must use rule overrides.
-
-In the rules-level or category-level override, use the `status` field to indicate whether the override enables or disables the ruleset rules or category.
 {{</Aside>}}
 
 The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
@@ -207,16 +205,16 @@ highlight: 9-24
         rules {
           id = "5de7edfa648c4d6891dc3e7f84534ffa"
           action = "log"
-          status = "enabled"
+          enabled = true
         }
         rules {
           id = "75a0060762034a6cb663fd51a02344cb"
-          status = "disabled"
+          enabled = false
         }
         categories {
           category = "wordpress"
           action = "js_challenge"
-          status = "enabled"
+          enabled = true
         }
       }
     }
@@ -294,11 +292,11 @@ highlight: 8-25
         # tags "paranoia-level-3" and "paranoia-level-4".
         categories {
           category = "paranoia-level-3"
-          status = "disabled"
+          enabled = false
         }
         categories {
           category = "paranoia-level-4"
-          status = "disabled"
+          enabled = false
         }
         rules {
           id = "6179ae15870a4bb7b2d480d4843b323c"

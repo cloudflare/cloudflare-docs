@@ -44,7 +44,7 @@ The `constructor()` in the Durable Object makes your `Environment` available (in
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 interface Env {
   YOUR_QUEUE: Queue;
@@ -77,7 +77,7 @@ export default {
   }
 }
 
-export class YourDurableObject implements Durable Object {
+export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
       this.state = state;
       // Ensure you pass your bindings and environment variables into

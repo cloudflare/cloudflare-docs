@@ -6,7 +6,7 @@ weight: 5
 
 # Schema Validation
 
-An API schema defines which API requests are valid based on several request properties like target endpoint, path or query variable format, and HTTP method.
+{{<glossary-definition term_id="API schema">}}
 
 Schema Validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema or select from a list of learned schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
@@ -16,7 +16,9 @@ You can migrate to Schema Validation 2.0 manually by uploading your schemas to t
 
 ## Process
 
-Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. Uploading a schema will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
+{{<glossary-tooltip term_id="API endpoint">}}Endpoints{{</glossary-tooltip>}} must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. Uploading a schema will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
+
+{{<glossary-definition term_id="API endpoint">}}
 
 ### Add validation by uploading a schema
 
@@ -143,8 +145,6 @@ We currently only accept [OpenAPI v3 schemas](https://swagger.io/specification/)
 Currently, API Shield cannot validate some features of API schemas, including the following: all responses, external references, non-basic path templating, or unique items.
 
 There is a limit of 1000 total operations for enabled schemas. We will raise this limit in the near future.
-
-Schema Validation 2.0 is available via the API for all customers. A private beta for the dashboard interface is now available. Contact your account team know if you would like to be added to the new beta.
 
 ## Body inspection
 

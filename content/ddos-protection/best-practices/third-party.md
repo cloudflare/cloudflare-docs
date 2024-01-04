@@ -10,7 +10,7 @@ meta:
 
 ## Using a third-party CDN in front of Cloudflare
 
-Some Cloudflare customers choose to use a Content Delivery Network (CDN) in front of Cloudflare to cache and serve their resources.
+Some Cloudflare customers choose to use a {{<glossary-tooltip term_id="content delivery network (CDN)">}}Content Delivery Network (CDN){{</glossary-tooltip>}} in front of Cloudflare to cache and serve their resources.
 
 Cloudflare recommends that you **do not use a third-party CDN in front of Cloudflare**. Some CDN providers may introduce subtleties into HTTP requests that deviate from protocol standards and/or protocol best practices. Additionally, because traffic to Cloudflare will originate from a limited set of IP addresses of the third-party CDN, in rare occasions — such as when using the Akamai CDN in front of Cloudflare — it may appear as if the CDN is launching a DDoS attack against Cloudflare due to the amount of traffic from these limited IP addresses.
 
@@ -32,7 +32,7 @@ For more information, refer to [HTTP DDoS Attack Protection managed ruleset: Rul
 
 ## Using VPNs, NATs, and other third-party services
 
-Some Cloudflare Magic Transit customers operate Virtual Private Networks (VPN) so that their remote employees can connect securely to the organization’s services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
+Some Cloudflare Magic Transit customers operate {{<glossary-tooltip term_id="Virtual Private Network (VPN)">}}Virtual Private Networks (VPN){{</glossary-tooltip>}} so that their remote employees can connect securely to the organization’s services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
 
 Cloudflare Magic Transit customers may also use third-party services such as Zoom, Webex, Microsoft Teams, and others for their internal organization communication. Because traffic to Cloudflare will be originating from a limited set of IP addresses belonging to these third-party services, it may appear as if the services are launching a DDoS attack against Cloudflare due to the amount of traffic from limited IP addresses.
 

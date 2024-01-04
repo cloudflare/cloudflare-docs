@@ -6,7 +6,7 @@ _build:
 ---
 
 
-By default, the WARP client excludes traffic bound for RFC 1918 space as part of its [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) feature. For example, WARP automatically excludes `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. In order for WARP to send traffic to your private network, the IP/CIDR that you specified for your Cloudflare Tunnel must be included in your Split Tunnel configuration.
+By default, WARP excludes traffic bound for RFC 1918 space as part of its [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) feature. For example, WARP automatically excludes `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. In order for WARP to send traffic to your private network, the IP/CIDR that you specified for your tunnel must be included in your Split Tunnel configuration.
 
 To configure Split Tunnels for private network access:
 

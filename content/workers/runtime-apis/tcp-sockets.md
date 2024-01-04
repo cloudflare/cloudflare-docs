@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: TCP sockets
+meta:
+  description: Use the `connect()` API to create outbound TCP connections from Workers.
 ---
 
 # TCP sockets

@@ -39,9 +39,9 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
     * **Cookies**
     * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/#field-ip-src-country), [region](/ruleset-engine/rules-language/fields/#field-ip-src-region_code), and [city](/ruleset-engine/rules-language/fields/#field-ip-src-city))
     * [**Bot score**](/bots/concepts/bot-score/)
-    * [**Threat score**](/ruleset-engine/rules-language/fields/#field-cf-threat_score)
+    * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score**{{</glossary-tooltip>}}
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
-    * **Skip challenge** (skips a Cloudflare-issued [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/), if any, allowing the trace to continue)
+    * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
 5. Select **Send trace**.
 
@@ -73,7 +73,7 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 For matched configurations in trace results, each step corresponds to one of the following:
 
 * Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
-* [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) (execution of one or more rules)
+* [Page Rules](/rules/page-rules/) (execution of one or more rules)
 
 The following steps are planned for future additions:
 
@@ -83,11 +83,7 @@ The following steps are planned for future additions:
 
 ## Limitations
 
-Currently, you cannot perform traces for:
-
-* Domains or subdomains associated with [BYOIP](/byoip/) addresses
-* [Custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
-* [Spectrum](/spectrum/) applications
+Currently, you cannot perform traces for [Spectrum](/spectrum/) applications.
 
 Also, the following products will not appear in trace results:
 

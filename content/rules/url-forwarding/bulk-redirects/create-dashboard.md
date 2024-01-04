@@ -19,30 +19,30 @@ To create Bulk Redirects in the Cloudflare dashboard you must:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to Account Home > **Bulk Redirects**.
-3. In the **Bulk Redirect Lists** card, select **Create Bulk Redirect List**.
+3. Under **Bulk Redirect Lists**, select **Create Bulk Redirect List**.
 4. Enter a list name and description, and select **Next**.
 
 5. You can import a CSV file containing several URL redirects or enter URL redirects one at a time in the dashboard.
 
     {{<details header="Import a CSV file">}}
 
-    1\. Drag and drop a CSV file containing URL redirects or select **browse** and select a CSV file. For more information on the file format, refer to [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
+1. Drag and drop a CSV file containing URL redirects or select **browse** and select a CSV file. For more information on the file format, refer to [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
 
-    2\. The dashboard will display the URL redirects that were successfully imported from the file. You can manually adjust the displayed records or add/remove URL redirects before proceeding.
+2. The dashboard will display the URL redirects that were successfully imported from the file. You can manually adjust the displayed records or add/remove URL redirects before proceeding.
 
-    3\. Select **Next**.
+3. Select **Next**.
 
     {{</details>}}
 
     {{<details header="Add URL redirects manually">}}
 
-    1\. Select **Or, manually add URL redirects**.
+1. Select **Or, manually add URL redirects**.
 
-    2\. Enter the URL redirects you wish to add to the list. You must enter at least the following three fields: **Source URL**, **Target URL**, and **Status**. To set additional options, expand **Edit Parameters**.
+2. Enter the URL redirects you wish to add to the list. You must enter at least the following three fields: **Source URL**, **Target URL**, and **Status**. To set additional options, expand **Edit parameters**.
 
-    3\. Add more URL redirects, if required.
+3. Add more URL redirects, if required.
 
-    4\. Select **Next**.
+4. Select **Next**.
 
     {{</details>}}
 
@@ -58,7 +58,7 @@ To create Bulk Redirects in the Cloudflare dashboard you must:
 1. (Optional) If you are not using the Bulk Redirect List creation wizard according to the instructions in the previous section:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. Go to Account Home > **Bulk Redirects**.
-    3. In the **Bulk Redirects** card, select **Create Bulk Redirect Rule**.
+    3. Select **Create Bulk Redirect Rule**.
 
 2. In **Rule name**, enter a descriptive name for the rule.
 3. Select the Bulk Redirect List you previously created.

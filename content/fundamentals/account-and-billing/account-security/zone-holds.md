@@ -1,7 +1,7 @@
 ---
 title: Zone holds
 pcx_content_type: how-to
-weight: 6
+weight: 8
 ---
 
 # Zone holds

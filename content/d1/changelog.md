@@ -5,8 +5,8 @@ weight: 11
 layout: changelog
 changelog_file_name: [d1]
 outputs:
-    - html
-    - rss
+  - html
+  - rss
 ---
 
 # Changelog
