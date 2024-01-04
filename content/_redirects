@@ -666,6 +666,12 @@
 /queues/platform/javascript-apis/ /queues/reference/javascript-apis/ 301
 /queues/platform/configuration/ /queues/reference/configuration/ 301
 /queues/changelog/ /queues/platform/changelog/ 301
+/queues/learning/how-queues-works/ /queues/reference/how-queues-works/ 301
+/queues/learning/delivery-guarantees/ /queues/reference/delivery-guarantees/ 301
+/queues/learning/batching-retries/ /queues/reference/batching-retries/ 301
+/queues/learning/consumer-concurrency/ /queues/reference/consumer-concurrency/ 301
+/queues/learning/metrics/ /queues/reference/metrics/ 301
+/queues/learning/local-development/ /queues/reference/local-development/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
