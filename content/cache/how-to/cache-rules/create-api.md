@@ -26,6 +26,7 @@ When creating a cache rule via API, make sure you:
     * kind: `zone`
     * phase: `http_request_cache_settings`
 3. Use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation to add a cache rule to the list of ruleset rules. Alternatively, include the rule in the [Create a zone ruleset](/api/operations/createZoneRuleset) request mentioned in the previous step.
+4. Use [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation to update an existing rule. For an example, refer to the section below.
 
 ## Example requests
 
@@ -137,6 +138,41 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
       }
     }
   ]
+}'
+```
+
+{{</details>}}
+
+{{<details header="Example: Update an existing rule">}}
+
+```bash
+---
+header: Request
+---
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "action": "block",
+  "action_parameters": {
+    "response": {
+      "content": "{\n  \"success\": false,\n  \"error\": \"you have been blocked\"\n}",
+      "content_type": "application/json",
+      "status_code": 400
+    }
+  },
+  "description": "Block when the IP address is not 1.1.1.1",
+  "enabled": true,
+  "expression": "ip.src ne 1.1.1.1",
+  "id": "3a03d665bac047339bb530ecb439a90d",
+  "logging": {
+    "enabled": true
+  },
+  "ref": "my_ref",
+  "position": {
+    "before": "da5e8e506c8e7877fe06cdf4c41add54"
+  }
 }'
 ```
 
