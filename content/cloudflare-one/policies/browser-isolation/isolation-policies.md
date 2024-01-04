@@ -114,7 +114,7 @@ Isolate news and media sites, which are targets for malvertising attacks.
 
 ### Isolate uncategorized content
 
-Isolate content that has not been categorized by Cloudflare Radar.
+Isolate content that has not been categorized by [Cloudflare Radar](/radar/).
 
 | Selector           | Operator | Value                  | Action  |
 | ------------------ | -------- | ---------------------- | ------- |
