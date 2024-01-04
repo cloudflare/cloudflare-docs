@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 pcx_content_type: concept
-weight: 16
+weight: 
 ---
 
 # Troubleshooting
