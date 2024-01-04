@@ -39,7 +39,7 @@ Network Analytics will not show other traffic, such as:
 
 ## High-level metrics
 
-The side panels in the Network Analytics page provide a summary of activity over the period selected in the timeframe drop-down list.
+The side panels in the Network Analytics page provide a summary of activity over the period selected in the time frame drop-down list.
 
 ![Available high-level metrics in the Network Analytics dashboard](/images/analytics/network-analytics/high-level-metrics.png)
 
