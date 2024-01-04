@@ -123,7 +123,7 @@ This is sometimes referred to as Phase 1 as per IKEv1 language.
 
 The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
-- **Encryption**: 
+- **Encryption**:
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 128-bit or 256-bit key length
 
@@ -162,6 +162,10 @@ RFC name | Format | Example
 
 {{</table-wrap>}}
 
-Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following two conditions are met: 
-1. The IPsec tunnel’s `customer_endpoint` value is set. 
+Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following two conditions are met:
+1. The IPsec tunnel’s `customer_endpoint` value is set.
 2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer’s IPsec tunnels.
+
+{{<Aside type="warning">}}
+Make sure each IPsec tunnel has a unique combination of a [Cloudflare endpoint and customer endpoint]($4). If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.
+{{</Aside>}}

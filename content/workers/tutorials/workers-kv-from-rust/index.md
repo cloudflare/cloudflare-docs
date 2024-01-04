@@ -35,7 +35,7 @@ $ git commit -m 'Initial commit'
 To be able to access Workers KV, define a binding for a particular KV namespace in the `wrangler.toml` file generated in your new project's directory. If you do not have an existing namespace, create one using `wrangler`. For example, a namespace called `KV_FROM_RUST` would be created by running:
 
 ```sh
-$ wrangler kv:namespace create "KV_FROM_RUST"
+$ npx wrangler kv:namespace create "KV_FROM_RUST"
 🌀  Creating namespace with title "workers-kv-from-rust-KV_FROM_RUST"
 ✨  Success!
 Add the following to your configuration file:

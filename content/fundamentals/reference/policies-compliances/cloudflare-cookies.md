@@ -79,6 +79,6 @@ The table below shows additional cookies used by the Challenge Platform.
 
 {{<Aside type="warning">}}
 
-If your website is not [using HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/), you may experience issues with the [`cf_clearance` cookie](/support/account-management-billing/account-privacy-and-security/understanding-samesite-cookie-interaction-with-cloudflare/).
+If your website is not [using HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/), you may experience issues with the [`cf_clearance` cookie](/waf/troubleshooting/samesite-cookie-interaction/#known-issues-with-samesite-and-cf_clearance-cookies).
 
 {{</Aside>}}

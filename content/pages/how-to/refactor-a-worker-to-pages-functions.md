@@ -5,14 +5,14 @@ title: Refactor a Worker to a Pages Function
 
 # Refactor a Worker to a Pages Function
 
-In this guide, you will learn how to refactor a Worker made to intake form submissions to a Pages Function that can be hosted on your Cloudflare Pages application. [Pages Functions](/pages/platform/functions/) is a serverless function that lives within the same project directory as your application and is deployed with Cloudflare Pages. It enables you to run server-side code that adds dynamic functionality without running a dedicated server. You may want to refactor a Worker to a Pages Function for one of these reasons:
+In this guide, you will learn how to refactor a Worker made to intake form submissions to a Pages Function that can be hosted on your Cloudflare Pages application. [Pages Functions](/pages/functions/) is a serverless function that lives within the same project directory as your application and is deployed with Cloudflare Pages. It enables you to run server-side code that adds dynamic functionality without running a dedicated server. You may want to refactor a Worker to a Pages Function for one of these reasons:
 
 1. If you manage a serverless function that your Pages application depends on and wish to ship the logic without managing a Worker as a separate service.
 2. If you are migrating your Worker to Pages Functions and want to use the routing and middleware capabilities of Pages Functions.
 
 {{<Aside type= "note">}}
 
-You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/advanced-mode/) requires writing your Worker with [Module syntax](/workers/learning/migrate-to-module-workers/).
+You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/functions/advanced-mode/) requires writing your Worker with [Module syntax](/workers/reference/migrate-to-module-workers/).
 
 However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
 
@@ -20,9 +20,9 @@ However, when using the `_worker.js` file in Pages, the entire `/functions` dire
 
 ## General refactoring steps
 
-1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/platform/functions/get-started/) to select the appropriate method for your Function.
+1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/functions/get-started/) to select the appropriate method for your Function.
 2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
-3. Use middleware to handle logic that must be executed before or after route handlers. Learn more about [using Middleware](/pages/platform/functions/middleware/) in the Functions documentation.
+3. Use middleware to handle logic that must be executed before or after route handlers. Learn more about [using Middleware](/pages/functions/middleware/) in the Functions documentation.
 
 ## Background
 
@@ -32,7 +32,7 @@ Form submissions can be handled by Workers but can also be a good use case for P
 
 Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then added the URL to your form action attribute in your HTML form. This means that when you change how the Worker handles your submissions, you must make changes to the Worker script. If the logic in your Worker is used by more than one application, Pages Functions would not be a good use case.
 
-However, it can be beneficial to use a [Pages Function](/pages/platform/functions/) when you would like to organize your function logic in the same project directory as your application.
+However, it can be beneficial to use a [Pages Function](/pages/functions/) when you would like to organize your function logic in the same project directory as your application.
 
 Building your application using Pages Functions can help you manage your client and serverless logic from the same place and make it easier to write and debug your code.
 
@@ -126,7 +126,7 @@ export async function onRequestPost(context) {
 
 ```
 
-Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `onRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/platform/functions/get-started/) to select the appropriate method for your function.
+Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `onRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/functions/get-started/) to select the appropriate method for your function.
 
 The above code takes a `request` and `env` as arguments which pass these properties down to the `submitHandler` function, which remains unchanged from the [original Worker](#handle-form-entries-with-airtable-and-workers). However, because Functions allow you to specify the HTTPS request type, you can remove the `request.method` check in your Worker. This is now handled by Pages Functions by naming the `onRequest` handler.
 
@@ -187,11 +187,11 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 };
 ```
 
-You can test your Function [locally using Wrangler](/pages/platform/functions/local-development/). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
+You can test your Function [locally using Wrangler](/pages/functions/local-development/). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
 
 ## Related resources
 
 - [HTML forms](/pages/tutorials/forms/)
-- [Plugins documentation](/pages/platform/functions/plugins/)
-- [Functions documentation](/pages/platform/functions/)
+- [Plugins documentation](/pages/functions/plugins/)
+- [Functions documentation](/pages/functions/)
 

@@ -347,7 +347,11 @@ for (const message of batch.messages) {
 
 ## 7. Deploy your Worker 
 
-To deploy your Worker, run `npx wrangler deploy`. 
+To deploy your Worker, run the following command:
+
+```sh
+$ npx wrangler deploy
+```
 
 You have successfully created a Worker which can submit URLs to a queue for crawling and save results to KV.
 
@@ -355,8 +359,8 @@ Refer to the [GitHub repository for the complete tutorial](https://github.com/cl
 
 ## Related resources
 
-- [How Queues works](/queues/learning/how-queues-works/)
-- [Queues Batching and Retries](/queues/learning/batching-retries/)
+- [How Queues works](/queues/reference/how-queues-works/)
+- [Queues Batching and Retries](/queues/reference/batching-retries/)
 - [Browser Rendering](/browser-rendering/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
 

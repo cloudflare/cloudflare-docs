@@ -94,7 +94,7 @@ Use one of the following API endpoints:
 
 {{<Aside type="warning" header="Important">}}
 
-Note: You can only use the _Get a zone ruleset_ operation for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
+You can only use the _Get a zone ruleset_ operation for zone-level phase entry points (entry points where `kind` is set to `zone`).
 
 {{</Aside>}}
 

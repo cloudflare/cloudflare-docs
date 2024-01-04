@@ -12,7 +12,7 @@ It is common for a misconfigured Gateway policy to accidentally block traffic to
 1. Go to **Gateway** > **Firewall policies**.
 2. Disable all existing DNS policies.
 3. Re-enable or create a policy to block all security categories:
-    {{<render file="gateway/_block-security-categories.md" productFolder="cloudflare-one">}}
+    {{<render file="gateway/policies/_block-security-categories.md" productFolder="cloudflare-one">}}
 4. Ensure that your browser is not configured to use an alternate DNS resolver. For example, Chrome has a **Use secure DNS** setting that will cause the browser to send requests to 1.1.1.1 and bypass your DNS policies.
 5. In the browser, go to `malware.testcategory.com`. You should see a generic Gateway block page.
 
