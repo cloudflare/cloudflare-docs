@@ -24,11 +24,13 @@ ORDER BY CURRENT_DATE() DESC
 LIMIT 50
 ```
 
-Mutating queries, including `INSERT`, `UPSERT`, or `CREATE TABLE` are not cached:
+Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries that use [functions designated as `volatile` by PostgreSQL](https://www.postgresql.org/docs/current/xfunc-volatility.html) are not cached:
 
 ```sql
 -- Not cached
 INSERT INTO users(id, name, email) VALUES(555, 'Matt', 'hello@example.com');
+
+SELECT LASTVAL(), * FROM articles LIMIT 50;
 ```
 
 ## Default cache settings
