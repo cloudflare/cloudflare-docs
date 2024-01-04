@@ -1884,7 +1884,7 @@ Manage queue consumer configurations.
 
 ### `consumer add <script-name>`
 
-Add a Worker script as a [queue consumer](/queues/learning/how-queues-works/#consumers).
+Add a Worker script as a [queue consumer](/queues/reference/how-queues-works/#consumers).
 
 ```txt
 wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
