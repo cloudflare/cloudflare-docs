@@ -10,4 +10,4 @@ _build:
 | Application | in       | `ChatGPT`                                                            | Or    | Isolate |
 | Host        | in       | `chat.openai.com`, `auth0.openai.com`, `openai.com`, `cdn.auth0.com` |       |         |
 
-In **Configure policy settings**, you can restrict how your users interact with ChatGPT. For example, to prevent against information leaks, you can select **Disable copy / paste** and **Disable file uploads**.
+In **Configure policy settings**, you can customize restrictions for ChatGPT. For example, to prevent your users from inputting sensitive information, you can select **Disable copy / paste** and **Disable file uploads**.

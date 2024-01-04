@@ -126,6 +126,6 @@ Block file downloads from Gmail.
 
 ## Isolate ChatGPT
 
-Cloudflare [Browser Isolation](/cloudflare-one/policies/browser-isolation/) users can isolate interaction with ChatGPT.
+Cloudflare [Browser Isolation](/cloudflare-one/policies/browser-isolation/) users can isolate interactions with ChatGPT.
 
 {{<render file="gateway/policies/_isolate-chatgpt.md">}}
