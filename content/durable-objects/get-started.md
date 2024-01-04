@@ -167,7 +167,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/platform/environments/) Worker code.
+  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
 
 ## 6. Configure Durable Object classes with migrations
 
