@@ -8,6 +8,22 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+
+## Privacy Pass API Removal
+**End of life date: March 31st, 2024**
+
+In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to
+provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time
+since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no 
+longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting
+is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
+In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed and by the end of March 2023 the current public-facing API will be removed as well.
+
+Deprecated API:
+ - GET zones/:zone_identifier/settings/privacy_pass
+ - POST zones/:zone_identifier/settings/privacy_pass
+
+
 ## ChaCha20 TLS Cipher Removal
 **End of life Date: July 1st, 2023**
 
