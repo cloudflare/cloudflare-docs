@@ -51,7 +51,7 @@ You need to configure the Incoming Relays section to tell IronPort to ignore ups
 
 ## 3. Disable SPF checks
 
-Make sure you disable SPF checks in IronPort. Because Area 1 is acting as the MX record, if you do not disable SPF checks, IronPort will block emails due to an SPF failure.
+Make sure you disable Sender Policy Framework (SPF) checks in IronPort. Because Area 1 is acting as the MX record, if you do not disable SPF checks, IronPort will block emails due to an SPF failure.
 
 Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/security/email-security-appliance/117973-faq-esa-00.html) for more information on how to disable SPF checks.
 
