@@ -74,9 +74,9 @@ flowchart TB
 Gateway applies your policies in the following order:
 
 1. DNS policies with selectors evaluated before resolution
-2. HTTP policies
-3. Network policies
-4. DNS policies with selectors evaluated after resolution
+2. DNS policies with selectors evaluated after resolution
+3. HTTP policies
+4. Network policies
 5. Egress policies (if applicable)
 
 DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
