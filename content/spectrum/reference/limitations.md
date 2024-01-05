@@ -22,7 +22,7 @@ Minecraft Java Edition is supported but Minecraft Bedrock Edition is not support
 
 ## Universal SSL
 
-[Universal SSL](/ssl/edge-certificates/universal-ssl/) is not compatible with Cloudflare Spectrum, use either an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or a [custom certificate](/ssl/edge-certificates/custom-certificates/).
+[Universal SSL](/ssl/edge-certificates/universal-ssl/) is not compatible with Cloudflare Spectrum. Use either an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or a [custom certificate](/ssl/edge-certificates/custom-certificates/) instead.
 
 ## Listen on ports configuration
 
