@@ -27,7 +27,7 @@ Use Durable Objects to build collaborative editing tools, interactive chat, mult
 
 ## Features
 
-{{<feature header="In-memory state" href="/durable-objects/learning/in-memory-state/">}}
+{{<feature header="In-memory state" href="/durable-objects/reference/in-memory-state/">}}
 
 Learn how Durable Objects coordinate connections among multiple clients or events.
 

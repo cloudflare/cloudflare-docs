@@ -1,7 +1,7 @@
 ---
 title: In-memory state in a Durable Object
 pcx_content_type: concept
-weight: 16
+weight: 1
 ---
 
 # In-memory state in a Durable Object

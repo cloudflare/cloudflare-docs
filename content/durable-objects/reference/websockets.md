@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Durable Objects with WebSockets
+weight: 3
 ---
 
 # Use Durable Objects with WebSockets

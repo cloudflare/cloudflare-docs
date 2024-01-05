@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Durable Objects migrations
+weight: 2
 ---
 
 # Durable Objects migrations
