@@ -42,7 +42,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes.                                                                                 |
 | Business & Economy     | Sites that are related to business, economy, finance, education, science and technology.                                                                                          |
 | Child Abuse            | Sites hosting child abuse content.                                                                                                                                                |
-| CIPA                   | Sites related to aiding schools and organizations in abiding by CIPA requirements. |
+| CIPA                   | Sites related to aiding schools and organizations in abiding by CIPA requirements.                                                                                                |
 | Education              | Sites hosting educational content that are not included in other categories like Science, Technology or Educational institutions.                                                 |
 | Entertainment          | Sites that are hosting entertaining content that are not included in other categories like Comic books, Audio streaming, Video streaming etc.                                     |
 | Gambling               | Sites that are providing online gambling or are related to gambling.                                                                                                              |
@@ -72,13 +72,13 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 {{<table-wrap>}}
 
-| Category      | Definition                                                                      |
-| ------------- | ------------------------------------------------------------------------------- |
-| Login Screens | Sites hosting login screens that might be included in other categories as well. |
-| Miscellaneous | Sites that do not belong to other content categories.                           |
-| No Content    | Sites that have no content.                                                     |
-| Redirect      | Domains that redirect to other sites.                                           |
-| Unreachable   | Domains that resolve to unreachable IP addresses.                               |
+| Category      | Definition                                                                   |
+| ------------- | ---------------------------------------------------------------------------- |
+| Login Screens | Sites hosting login screens that might also be included in other categories. |
+| Miscellaneous | Sites that do not belong to other content categories.                        |
+| No Content    | Sites that have no content.                                                  |
+| Redirect      | Domains that redirect to other sites.                                        |
+| Unreachable   | Domains that resolve to unreachable IP addresses.                            |
 
 {{</table-wrap>}}
 
