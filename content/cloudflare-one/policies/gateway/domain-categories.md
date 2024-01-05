@@ -194,14 +194,15 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 24          | Society & Lifestyle    | 173            | Body Art                                   |
 | 24          | Society & Lifestyle    | 174            | Lingerie & Bikini                          |
 | 25          | Sports                 | 152            | Sports                                     |
-| 26          | Technology             | 155            | Technology                                 |
-| 26          | Technology             | 95             | File Sharing                               |
 | 26          | Technology             | 69             | APIs                                       |
 | 26          | Technology             | 81             | Content Servers                            |
+| 26          | Technology             | 95             | File Sharing                               |
 | 26          | Technology             | 109            | Information Technology                     |
 | 26          | Technology             | 123            | News, Portal & Search                      |
 | 26          | Technology             | 145            | Search Engines                             |
+| 26          | Technology             | 155            | Technology                                 |
 | 26          | Technology             | 159            | Translator                                 |
+| 26          | Technology             | 184            | Artificial Intelligence                    |
 | 27          | Travel                 | 160            | Travel                                     |
 | 28          | Vehicles               | 163            | Vehicles                                   |
 | 29          | Violence               | 165            | Violence                                   |
@@ -211,7 +212,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 32          | Security Risks         | 128            | Parked & For Sale Domains                  |
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
-| 34          | CIPA         | 182            | CIPA Filter                         |
+| 34          | CIPA                   | 182            | CIPA Filter                                |
 
 {{</table-wrap>}}
 
