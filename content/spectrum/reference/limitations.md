@@ -20,6 +20,10 @@ At the moment, Cloudflare does not support packet fragmentation for UDP packets.
 
 Minecraft Java Edition is supported but Minecraft Bedrock Edition is not supported.
 
+## Universal SSL
+
+[Universal SSL](/ssl/edge-certificates/universal-ssl/) is not compatible with Cloudflare Spectrum. Use either an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or a [custom certificate](/ssl/edge-certificates/custom-certificates/) instead.
+
 ## Listen on ports configuration
 
 By default, Spectrum is configured to listen on all ports, which can raise concerns for security auditors. However, it is important to note that Spectrum will only proxy connections from edge ports that are specifically configured within Cloudflare.

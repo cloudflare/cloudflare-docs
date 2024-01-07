@@ -59,7 +59,7 @@
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing

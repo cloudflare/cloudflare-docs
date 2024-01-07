@@ -8,7 +8,7 @@ weight: 3
 
 ## Batching
 
-When configuring a [consumer Worker](/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
+When configuring a [consumer Worker](/queues/reference/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
 
 Batching can:
 
@@ -105,7 +105,7 @@ When a single message within a batch fails to be delivered, the entire batch is 
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) to learn more. 
+Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) to learn more. 
 
 {{</Aside>}}
 

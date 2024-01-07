@@ -156,7 +156,7 @@ Queues is ideal for:
 To get started with Queues:
 
 * [Set up your first queue](/queues/get-started/).
-* Learn more [about how Queues works](/queues/learning/how-queues-works/).
+* Learn more [about how Queues works](/queues/reference/how-queues-works/).
 
 
 ## Hyperdrive

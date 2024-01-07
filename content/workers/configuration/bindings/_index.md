@@ -52,7 +52,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
-* Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
+* Configure Queue bindings via your [`wrangler.toml` file](/queues/reference/configuration/).
 
 ### D1 database bindings
 

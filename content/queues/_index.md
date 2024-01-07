@@ -24,7 +24,7 @@ Send and receive messages with guaranteed delivery and no charges for egress ban
 
 {{</Aside>}}
 
-Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/learning/delivery-guarantees/), [offload work from a request](/queues/learning/how-queues-works/), [send data from Worker to Worker](/queues/platform/configuration/), and [buffer or batch data](/queues/learning/batching-retries/).
+Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/reference/delivery-guarantees/), [offload work from a request](/queues/reference/how-queues-works/), [send data from Worker to Worker](/queues/reference/configuration/), and [buffer or batch data](/queues/reference/batching-retries/).
 
 ---
 
@@ -68,9 +68,9 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
 
-{{<resource header="Configuration" href="/queues/platform/configuration/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
+{{<resource header="Configuration" href="/queues/reference/configuration/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
 
-{{<resource header="JavaScript APIs" href="/queues/platform/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
+{{<resource header="JavaScript APIs" href="/queues/reference/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
 
 
 {{</resource-group>}}

@@ -1,9 +1,9 @@
 ---
-title: Learning
+title: Reference
 pcx_content_type: navigation
-weight: 2
+weight: 5
 ---
 
-# Learning
+# Reference
 
 {{<directory-listing>}}

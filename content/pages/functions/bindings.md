@@ -308,7 +308,7 @@ To interact with a [service binding](/workers/configuration/bindings/about-servi
 
 ## Queue Producers
 
-[Queue Producers](/queues/platform/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
+[Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.

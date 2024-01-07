@@ -65,12 +65,12 @@ jobs:
     timeout-minutes: 60
     needs: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Build & Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
 
 ### GitLab Pipelines

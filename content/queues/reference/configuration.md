@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Configuration
-weight: 6
+weight: 7
 meta:
   title: Cloudflare Queues - Configuration
 ---
@@ -66,14 +66,17 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 - {{<code>}}max_batch_size{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of messages allowed in each batch.
+  - Defaults to `10` messages.
 
 - {{<code>}}max_batch_timeout{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of seconds to wait until a batch is full.
+  - Defaults to `5` seconds.
 
 - {{<code>}}max_retries{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
+  - Defaults to `3` retries.
 
 - {{<code>}}dead_letter_queue{{</code>}} {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -84,6 +87,6 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 - {{<code>}}max_concurrency{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
-  - Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+  - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
 
 {{</definitions>}}

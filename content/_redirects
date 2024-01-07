@@ -261,6 +261,14 @@
 /durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-location-example/ 301
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
+/durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
+/durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
+/durable-objects/platform/graphql-analytics/ /durable-objects/reference/graphql-analytics/ 301
+/durable-objects/platform/troubleshooting/ /durable-objects/reference/troubleshooting/ 301
+/durable-objects/learning/ /durable-objects/reference/ 301
+/durable-objects/learning/in-memory-state/ /durable-objects/reference/in-memory-state/ 301
+/durable-objects/learning/durable-objects-migrations/ /durable-objects/reference/durable-objects-migrations/ 301
+/durable-objects/learning/websockets/ /durable-objects/reference/websockets/ 301
 
 
 # email-routing
@@ -658,11 +666,21 @@
 /support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
 
 # queues
-/queues/configuration/ /queues/platform/configuration/ 301
-/queues/javascript-apis/ /queues/platform/javascript-apis/ 301
+/queues/configuration/ /queues/reference/configuration/ 301
+/queues/javascript-apis/ /queues/reference/javascript-apis/ 301
 /queues/limits/ /queues/platform/limits/ 301
 /queues/pricing/ /queues/platform/pricing/ 301
 /queues/examples/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-rendering/ 301
+/queues/platform/javascript-apis/ /queues/reference/javascript-apis/ 301
+/queues/platform/configuration/ /queues/reference/configuration/ 301
+/queues/changelog/ /queues/platform/changelog/ 301
+/queues/learning/how-queues-works/ /queues/reference/how-queues-works/ 301
+/queues/learning/delivery-guarantees/ /queues/reference/delivery-guarantees/ 301
+/queues/learning/batching-retries/ /queues/reference/batching-retries/ 301
+/queues/learning/consumer-concurrency/ /queues/reference/consumer-concurrency/ 301
+/queues/learning/metrics/ /queues/reference/metrics/ 301
+/queues/learning/local-development/ /queues/reference/local-development/ 301
+/queues/learning/ /queues/reference/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
