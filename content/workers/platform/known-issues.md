@@ -77,3 +77,21 @@ Do not use:
 ```js
 await fetch('http://192.0.2.1')
 ```
+
+## FormData() returns empty string
+
+The use of [`FormData()`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) to turn form data into a set of key/value pairs will instead return an empty string.  This can be worked around by manually iterating over the FormData.
+
+An example of how you can do this:
+
+```
+var formBodyEntries = []
+for (var pair of formData.entries()) {
+  formBodyEntries.push(encodeURIComponent(pair[0]) + "=" + encodeURIComponent(pair[1]))
+}
+const formBody = formBodyEntries.join("&")
+
+request = new Request(request, {
+  body: formBody
+})
+```
