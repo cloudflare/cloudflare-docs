@@ -71,7 +71,7 @@ To add a site:
 
 #### DHCP static address reservation
 
-If you configure your LAN with a DHCP server, you can also assign IP addresses to specific devices on your network.
+If you configure your LAN with a DHCP server, you can also assign IP addresses to specific devices on your network if needed.
 
 12. Select **Add DHCP Reservation**.
 13. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
