@@ -65,7 +65,7 @@ $ pulumi login
 
 {{<Aside type="note">}}
 
-A Pulumi program is code written in a [supported programming language](https://www.pulumi.com/docs/languages-sdks/) that defines infrastructure resources. We'll use TypeScript.
+A Pulumi program is code written in a [supported programming language](https://www.pulumi.com/docs/languages-sdks/) that defines infrastructure resources. We use TypeScript.
 
 {{</Aside>}}
 
