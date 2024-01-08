@@ -32,6 +32,9 @@ To add a site:
 6. Choose from the list the Connector corresponding to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Device activation](#device-activation) for more details.
 8. Select **Next** to proceed.
+
+### Create a WAN
+
 9. Create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/) under **WAN configuration**. Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}. Select **Create**, and define the following settings:
     1. **Network name**: Enter a descriptive name for your WAN.
     2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
@@ -45,6 +48,8 @@ To add a site:
     </div>
 
 10. Select **Save** when you are finished.
+
+### Create a LAN
 
 11. In **LAN configuration**, select **Create**, and repeat the process to define your LAN:
     1. **Network name**: Enter a descriptive name for your LAN.
@@ -64,9 +69,16 @@ To add a site:
 
     </div>
 
-12. Select **Save** when you are finished.
+#### DHCP static address reservation
 
-13. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+If you configure your LAN with a DCHP server, you can also assign IP addressess to specic devices on your network.
+
+12. Select **Add DHCP Reservation**.
+13. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
+14. In **IP Address**, enter the IP address for that device.
+15. (Optional) If you need to reserve more IP addresses for specific devices, select **Add DHCP Reservation**, and enter the new values.
+16. Select **Save**.
+17. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
 ## 3. Set up your Magic WAN Connector
 
