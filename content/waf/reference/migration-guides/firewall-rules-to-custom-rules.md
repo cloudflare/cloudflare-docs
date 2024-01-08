@@ -1,10 +1,10 @@
 ---
-title: Migrating from Firewall Rules to WAF custom rules
+title: Firewall Rules to WAF custom rules migration
 pcx_content_type: reference
 weight: 2
 ---
 
-# Migrating from Firewall Rules to WAF custom rules
+# Firewall Rules to WAF custom rules migration
 
 Cloudflare converted existing [firewall rules](/firewall/) into [WAF custom rules](/waf/custom-rules/). With custom rules, you get the same level of protection and a few additional features. Custom rules are available in the Cloudflare dashboard at **Security** > **WAF** > **Custom rules**.
 

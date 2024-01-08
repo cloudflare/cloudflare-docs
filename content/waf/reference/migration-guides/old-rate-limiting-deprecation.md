@@ -1,5 +1,5 @@
 ---
-title: Deprecation of old rate limiting
+title: Rate limiting (previous version) deprecation
 pcx_content_type: reference
 weight: 3
 meta:
