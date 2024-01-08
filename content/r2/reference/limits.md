@@ -18,10 +18,11 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 | Bucket                          | 1000 buckets per account              |
 | Data storage per bucket         | Unlimited                             |
 | Object metadata size            | 8,192 bytes                           |
-| Object size                     | 5 TiB per object<sup>1</sup>           |
-| Maximum upload size<sup>3</sup> | 5 GiB<sup>2</sup>                      |
+| Object size                     | 5 TiB per object<sup>1</sup>          |
+| Maximum object name length      | 1024 bytes                            |
+| Maximum upload size<sup>3</sup> | 5 GiB<sup>2</sup>                     |
 | Maximum upload parts            | 10,000                                |
-| Maximum custom domains per bucket | 50                                |
+| Maximum custom domains per bucket | 50                                  |
 
 {{</table-wrap>}}
 
@@ -30,6 +31,8 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 <sup>3</sup> Max upload size applies to uploading a file via one request, uploading a part of a multipart upload, or copying into a part of a multipart upload. If you have a Worker, its inbound request size is
 constrained by [Workers request limits](/workers/platform/limits#request-limits). The max upload size limit does not apply to subrequests.<br>
 Review the [Examples](/r2/examples/) on how to use the SDKs.<br>
+
+Note that limits specified in MiB (mebibyte), GiB (gibibyte) or TiB (tebibyte) are storage uses of measure that are based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup>) bytes. This is distinct from 1 GB (gigabyte), which is 1<sup>9</sup> bytes.
 
 {{<render file="_limits_increase.md" productFolder="workers">}}
 
