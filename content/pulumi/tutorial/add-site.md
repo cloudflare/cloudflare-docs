@@ -322,7 +322,7 @@ $ pulumi stack rm dev
 
 You have incrementally defined Cloudflare resources needed to add a site to Cloudflare. After each new resource, you apply the changes to your stack via the `pulumi up` command. You declare the resources in TypeScript and let Pulumi handle the rest. 
 
-Follow the [Hello World tutorial](../hello-world/) next to deploy your first app with Pulumi!
+Follow the [Hello World tutorial](/pulumi/tutorials/hello-world/) next to deploy your first app with Pulumi.
 {{</tutorial-step>}}
 
 {{</tutorial>}}
