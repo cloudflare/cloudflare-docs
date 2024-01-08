@@ -174,7 +174,7 @@ Once you have added a domain to Cloudflare, that domain will receive two assigne
 
 This process makes Cloudflare your authoritative DNS provider, allowing your DNS queries and web traffic to be served from and protected by the Cloudflare network. 
 
-[Learn more about pending domains](https://developers.cloudflare.com/dns/zone-setups/reference/domain-status/)
+[Learn more about pending domains](/dns/zone-setups/reference/domain-status/)
 {{</Aside>}}
 
 ### a. Update the program 
