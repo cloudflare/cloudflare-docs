@@ -13,5 +13,6 @@ With Cloudflare Zero Trust, you can apply granular security policies to all traf
 
 By the end of this module, you will be able to:
 
-- Deploy your first Zero Trust policies to secure access to your internal network.
--
+- Create Zero Trust policies to secure access to your private network.
+- Enforce WARP client session timeouts.
+- Discover Shadow IT within your private network.
