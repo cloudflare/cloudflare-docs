@@ -61,4 +61,4 @@ The insights and trends presented in quarterly reports exclude certain countries
 
 ### Map chart coloring 
 
-In the map charts, the countries and regions are colored using a diverging scale, ranging from dark blue (minimum value) through white (median) to red (maximum value). These vary according to the selected world continent group. Therefore, countries and regions in blue have values below the median of the group, and entries in red have values above the median.
+In the map charts, the countries and regions are colored using a diverging scale, ranging from white (minimum value) to red (maximum value). These vary according to the selected world continent group.
