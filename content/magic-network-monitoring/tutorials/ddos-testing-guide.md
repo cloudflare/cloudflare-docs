@@ -75,7 +75,7 @@ To review all the attack options relevant in testing Magic Network Monitoring, v
 2. Run the following command:
 
 ```bash
-C:\>python start.py udp 1.1.1.1:53 1 10 true
+C:\> python start.py udp 1.1.1.1:53 1 10 true
 ```
 
 This command will simulate an UDP attack against `1.1.1.1` at port `53`. The attack will use one Python thread to generate the UDP packets, and will run for 10 seconds. The `true` statement at the end of the command will run the attack in debug mode.
@@ -141,7 +141,7 @@ In our example, the fictional data for `192.168.1.0/24` over 21 days shows that 
 3. Run the following command. Adapt the destination IP address to the one you found works for your particular case:
 
 ```bash
-python start.py udp 192.168.1:137 2 120 true
+C:\> python start.py udp 192.168.1:137 2 120 true
 ```
 
 This command will simulate a UDP DDoS attack on `192.168.1.1:137`. The UDP attack will use two Python threads, and run for 120 seconds. Debug mode is set to `true`, which lets us observe the attack's live progress. This command should generate anywhere from 25 to 75 mbps of attack traffic.
