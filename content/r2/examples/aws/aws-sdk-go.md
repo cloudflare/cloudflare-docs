@@ -3,7 +3,7 @@ title: aws-sdk-go
 pcx_content_type: configuration
 ---
 
-# Configure `aws-sdk-go` for R2
+# Configure `aws-sdk-go` for R2 
 
 {{<render file="_keys.md">}}<br>
 
