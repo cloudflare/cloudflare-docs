@@ -8,10 +8,10 @@ meta:
 
 # Wrangler API
 
-Wrangler offers an experimental API to programmatically manage your Cloudflare Workers.
+Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
-
+- [`getBindingsProxy`](#getBindingsProxy) - get bindings via Wrangler and use them in your code.
 
 ## `unstable_dev`
 
@@ -233,3 +233,44 @@ describe("multi-worker testing", () => {
 {{</tab>}}
 {{</tabs>}}
 
+## `getBindingsProxy`
+
+This function is used to get a proxy for workerd bindings that can be then passed to user code running in Nodejs processes for Workers and Pages projects.
+
+### Usage
+
+The function can accept inline definitions for the bindings. For example,:
+
+```js
+const { bindings } = await getBindingsProxy({
+    bindings: {
+        'MY_VARIABLE': {
+            type: 'var',
+            value: "production_value",
+        },
+        // ...
+    }
+});
+```
+
+You can then add the following to your code:
+
+```js
+console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE'].value}`);
+```
+
+You should see the returned value: `production_value`.
+
+If you prefer to take bindings directly from a `wrangler.toml` file (for Workers only), you would provide no binding definition, like this:
+
+```js
+const { bindings } = await getBindingsProxy({});
+```
+
+All of supported bindings found in your `wrangler.toml` would then be available to you via `bindings`. Supported bindings currently include: kv, r2, d1, service, queue-producer, and var.
+
+{{<Aside type="note">}}
+
+While this function works for both Workers and Pages projects, Durable Objects integration has not been implemented for Pages.
+
+{{</Aside>}}
