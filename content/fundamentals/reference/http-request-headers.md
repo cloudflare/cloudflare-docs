@@ -13,7 +13,7 @@ Cloudflare may remove HTTP request headers with names considered invalid [accord
 
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
 
 [^1]: Brotli support between Cloudflare and the origin will be available across all plans by the end of Q4 2023.
 
