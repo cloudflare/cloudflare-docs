@@ -3,7 +3,7 @@ title: Terraform (AWS)
 pcx_content_type: configuration
 ---
 
-# Configure R2 with Terraform
+# Configure R2 with Terraform 
 
 {{<render file="_keys.md">}}<br>
 
