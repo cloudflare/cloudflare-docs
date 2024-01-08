@@ -1,0 +1,14 @@
+{
+    "title": "Defense In-Depth",
+    "path": "/learning-paths/defense-in-depth/",
+    "priority": 2,
+    "description": "Provide your users and networks with a secure, performant, and flexible path to the Internet.",
+    "products": [
+      "DNS",
+      "Gateway",
+      "CASB",
+      "DLP",
+      "Browser Isolation"
+    ],
+    "product_group": "Cloudflare One"
+}
