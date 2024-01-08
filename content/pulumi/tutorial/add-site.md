@@ -46,7 +46,7 @@ $ pulumi up --yes
 
 ### a. Create a directory
 
-You'll use a new and empty directory for this tutorial.
+Use a new and empty directory for this tutorial.
 
 ```sh
 $ mkdir addsite-cloudflare
