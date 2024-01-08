@@ -248,7 +248,7 @@ Origin steering is responsible for selecting which origin will receive the reque
 
 #### Weighted steering
 
-Weighted steering takes into account the differences in origin pools and origins that will be responsible for handling requests from a load balancer. Origin weight, which is a required field for every origin, is only used when specific steering methods are chosen. Similarly, origin pool weight is only needed when specific steering methods are selected. Please see the [steering options overview](#steering-options-overview-) section for a quick reference for when weights are applied.
+Weighted steering takes into account the differences in origin pools and origins that will be responsible for handling requests from a load balancer. Origin weight, which is a required field for every origin, is only used when specific steering methods are chosen. Similarly, origin pool weight is only needed when specific steering methods are selected. Please see the [steering options overview](#steering-options-overview) section for a quick reference for when weights are applied.
 
 Weight influences the randomness of origin pool or origin selection for a single request or connection within a load balancer. Weight does not consider historical data or current connection information, which means that weight may have variations in distribution over shorter timeframes. However, over longer periods of time and with significant traffic, the distribution will more closely resemble the desired weights applied in configuration. It’s important to note that session affinity will also override weight settings after the initial connection, as session affinity is intended to direct subsequent requests to the same origin pool or origin. Figure 12 shows a weight example for two origin pools with equal capacity and probability of being selected.
 
@@ -608,7 +608,7 @@ _Figure 22: The combinations of public and private load balancers and origins an
 
 Cloudflare offers three load balancing deployment models, each of which support different use cases, functionality, and privacy requirements.
 
-* [Layer 7 HTTP(S) load balancing](#layer-7-http-s-load-balancing)
+* [Layer 7 HTTP(S) load balancing](#layer-7-https-load-balancing)
 * [DNS-only load balancing](#dns-only-load-balancing)
 * [Spectrum load balancing](#spectrum-load-balancing)
 
