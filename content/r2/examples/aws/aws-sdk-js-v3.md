@@ -3,7 +3,7 @@ title: aws-sdk-js-v3
 pcx_content_type: configuration
 ---
 
-# Configure `aws-sdk-js-v3` for R2
+# Configure `aws-sdk-js-v3` for R2 
 
 {{<render file="_keys.md">}}<br>
 
