@@ -27,7 +27,7 @@ Ensure you have:
 * A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 * A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
 * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and the [Pulumi CLI](https://developers.cloudflare.com/pulumi/installing/) installed on your machine.
-* A Cloudflare Zone. Complete the [Add a Site tutorial](../add-site/) to create one. 
+* A Cloudflare Zone. Complete the [Add a Site tutorial](/pulumi/tutorials/add-site/) to create one. 
 
 {{</tutorial-prereqs>}}
 
