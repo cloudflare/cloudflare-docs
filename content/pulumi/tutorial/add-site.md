@@ -208,7 +208,7 @@ If you use `example.com` as your site, skip to the next step: [Add a DNS record]
 
 {{</Aside>}}
 
-Update the nameservers at your registrar to activate Cloudflare services for your domain. Instructions are registrar-specific. You may be able to find guidance under [this consolidated list of common registrars](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/#update-your-registrar).
+Update the nameservers at your registrar to activate Cloudflare services for your domain. Instructions are registrar-specific. You may be able to find guidance under [this consolidated list of common registrars](/dns/zone-setups/full-setup/setup/#update-your-registrar).
 
 {{<Aside type="warning">}}
 
