@@ -27,18 +27,18 @@ There are a few tools we can recommend to simulate a DDoS attack:
 - Read the documentation: https://github.com/MatrixTM/MHDDoS/wiki
 
 ### Kali Linux & hping3
-- Recommended for Linux users. This is an established cybersecurity tool with a variety of use cases beyond DDoS attacks.
+- Recommended for Linux users. This is an established cyber-security tool with a variety of use cases beyond DDoS attacks.
 - Download the Linux distribution: https://www.kali.org/
 - Read the Kali Linux documentation: https://www.kali.org/docs/
 - Learn more about the hping3 package: https://www.kali.org/tools/hping3/
 
-For the purposes of this tutorial, we will be using the MHDDoS tool.
+This tutorial will use the MHDDoS tool.
 
 ---
 
 ## Prerequisites
 
-MGDDoS requires Python 3, Python 3 libraries, and Git. If you already have these tools installed, follow the [MHDDoS automatic installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation).
+MHDDoS requires Python 3, Python 3 libraries, and Git. If you already have these tools installed, follow the [MHDDoS automatic installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation).
 
 If you are an Enterprise customer, you also need to [open a support ticket with Cloudflare](/ddos-protection/reference/simulate-ddos-attack/) when simulating DDoS attacks against your own Internet properties.
 
@@ -49,7 +49,7 @@ If you are an Enterprise customer, you also need to [open a support ticket with 
 ### 1. Install Python 3
 
 1. Go to the [Python download page](https://www.python.org/downloads/), and download the latest version of Python.
-2. Follow the recommended installation settings, and make sure to select the option **Add Python PATH** to add Python to your file path.
+2. Follow the recommended installation settings, and make sure to select the option **Add Python to PATH** to add Python to your file path.
 3. Open your command prompt, and run the following command to confirm Python has been installed and added to your computer’s program path:
 
 ```bash
@@ -62,7 +62,7 @@ You should receive a message with the current version of Python.
 
 1. Go to the [Git download page](https://git-scm.com/download/win), and download the latest version of Git.
 2. Follow the recommended installation settings.
-3. Open a terminal window, and run the following command to confirm Git has been installed:
+3. Open a command prompt, and run the following command to confirm Git has been installed:
 
 ```bash
 C:\> git --version
@@ -72,22 +72,22 @@ You should receive a message with the current version of Git.
 
 ### 3. Install MHDDoS
 
-1. Go to the [installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation) for MHDDoS in the project’s GitHub Repository Wiki.
+1. Go to the [installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation) for MHDDoS in the project’s GitHub repository wiki.
 2. Follow the steps for either **Automatic Installation**, **DockerFile**, or **Manual Installation** depending on your preference.
 
-{{<Aside type="note">}}The steps for **Automatic Installation** are a good default to follow unless you already have docker set up and are familiar with it.{{</Aside>}}
+{{<Aside type="note">}}The steps for **Automatic Installation** are a good default to follow unless you already have Docker set up and are familiar with it.{{</Aside>}}
 
 ### 4. Check if MHDDoS is working
 
 The last step is to check if the MHDDoS tool is working. For that, we will simulate a small DDoS attack against 1.1.1.1.
 
-To review all the attack options relevant in testing Magic Network Monitoring, visit the [MHDDoS README.md](https://github.com/MatrixTM/MHDDoS#readme), and scroll down to **Features And Method > Layer 4**. To learn how to structure the commands for starting a test attack, read the [MHDDoS Usage of Script](https://github.com/MatrixTM/MHDDoS/wiki/Usage-of-script) wiki article.
+To review all the attack options relevant in testing Magic Network Monitoring, visit the [MHDDoS README](https://github.com/MatrixTM/MHDDoS#readme), and scroll down to **Features And Method > Layer 4**. To learn how to structure the commands for starting a test attack, read the [MHDDoS Usage of Script](https://github.com/MatrixTM/MHDDoS/wiki/Usage-of-script) wiki article.
 
 1. Open the command prompt, and navigate to the folder `MHDDoS-main`.
 2. Run the following command:
 
 ```bash
-C:\> python start.py udp 1.1.1.1:53 1 10 true
+C:\MHDDoS-main> python start.py udp 1.1.1.1:53 1 10 true
 ```
 
 This command will simulate an UDP attack against `1.1.1.1` on port `53`. The attack will use one Python thread to generate the UDP packets, and will run for 10 seconds. The `true` statement at the end of the command will run the attack in debug mode.
@@ -163,13 +163,13 @@ In our example, the fictional data for `example_192.168.1.1` over 21 days (the r
 
 1. Open your command line.
 2. Navigate to the folder `MHDDoS-main`.
-3. Run the following command. Adapt the destination IP address to the one you found that works for your particular case:
+2. Run the following command. Adapt the destination IP address to the one you found that works for your particular case:
 
 ```bash
-C:\> python start.py udp 192.168.1:137 2 120 true
+C:\MHDDoS-main> python start.py udp 192.168.1.1:137 2 120 true
 ```
 
-This command will simulate a UDP DDoS attack on `192.168.1.1:137`. The UDP attack will use two Python threads, and run for 120 seconds. Debug mode is set to `true`, which lets us observe the attack's live progress. This command should generate anywhere from 25 to 75 mbps of attack traffic.
+This command will simulate a UDP DDoS attack on `192.168.1.1:137`. The UDP attack will use two Python threads, and run for 120 seconds. Debug mode is set to `true`, which lets us observe the attack's live progress. This command should generate anywhere from 25 to 75 Mbps of attack traffic.
 
 ### 6. MNM volumetric attack alert
 
