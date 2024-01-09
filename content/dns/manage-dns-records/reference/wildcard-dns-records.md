@@ -41,19 +41,19 @@ Customers on all plans can create and proxy wildcard DNS records.
 
 ## Limitations
 
-# No wildcard certificates for partial zones
+### No wildcard certificates for partial zones
 If you are using a [partial zone setup](/dns/zone-setups/partial-setup/) for your DNS, Cloudflare does not automatically provision SSL/TLS certificates for your wildcard record.
 
 {{<render file="_partial-zone-acm-dcv-wildcard.md" productFolder="ssl" >}}
 
-# Wildcards are only supported on the first label
+### Wildcards are only supported on the first label
 This means that a hostname such as `subdomain.*.example.com` is not a wildcard on the level of the asterisk character. 
 If you create a DNS record with that name, the asterisk is interpreted as the literal character `*` and not as the wildcard operator.
 
-# You cannot create wildcards on multiple levels
+### You cannot create wildcards on multiple levels
 If you create a DNS record on `*.*.example.com`, only the first asterisk is interpreted as a wildcard while the second one is interpreted as the literal `*` character.
 
-# Wildcards will be applied for multiple levels
+### Wildcards will be applied for multiple levels
 But a specific record on any equal or lower level will terminate anything on or below this specific record — independent of the type of that specific record. 
 Here is an example. If you have only these two records on your domain, `A` and `TXT`: 
 
