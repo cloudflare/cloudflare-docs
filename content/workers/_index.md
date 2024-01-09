@@ -40,7 +40,7 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 {{<feature header="Playground" href="/workers/playground/" cta="Use the Playground">}}
 
-The Playground is a sandbox which gives you an instant way to preview and test a Workers script directly in the browser against any site. No setup required.
+The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser against any site. No setup required.
 
 {{</feature>}}
 

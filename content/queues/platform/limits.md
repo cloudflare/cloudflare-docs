@@ -1,14 +1,14 @@
 ---
 pcx_content_type: concept
 title: Limits
-weight: 9
+weight: 2
 ---
 
 # Limits
 
 {{<Aside type="note">}}
 
-Many of these limits will increase during Queues' public beta period. [Follow our changelog](/queues/changelog/) or join the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
+Many of these limits will increase during Queues' public beta period. [Follow our changelog](/queues/platform/changelog/) or join the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
 
 {{</Aside>}}
 

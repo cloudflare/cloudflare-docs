@@ -250,10 +250,10 @@ metrics are displayed together on a single line.
 cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
 
 -   CF-Cache-Status
--   Cache-control/Pragma
+-   Cache-Control/Pragma
 -   Expires
 -   Last-Modified
--   S-Maxage
+-   s-maxage
 
 {{<Aside type="note">}}
 Find specifics on [Cloudflare\'s caching
@@ -310,7 +310,7 @@ requests.
 
 Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and hostname in the examples below:
 
-### Run traceroot on Windows
+### Run traceroute on Windows
 
 1\. Open the **Start** menu.
 
@@ -334,7 +334,7 @@ $ tracert -6 www.example.com
 
 6\. You can copy the results to save in a file or paste in another program.
 
-### Run traceroot on Linux
+### Run traceroute on Linux
 
 1\. Open a terminal window.
 
@@ -354,7 +354,7 @@ $ traceroute -6 www.example.com
 
 3\. You can copy the results to save in a file or paste in another program.
 
-### Run traceroot on Mac OS
+### Run traceroute on Mac OS
 
 1.  Open the **Network Utility** application.
 2.  Click the **Traceroute** tab.
@@ -437,7 +437,7 @@ Cloudflare suggests [Wireshark](https://www.wireshark.org/download.html) for run
 4.  Click the blue shark fin icon in the top left-hand corner to start your packet capture. 
 5.  Reproduce the issue while running capture.
 6.  Click the red square icon in the top left-hand corner to stop your packet capture. 
-7.  Save as a pcap file and attach it to your support ticket.
+7.  Save as a `.pcap` file and attach it to your support ticket.
 
 ___
 

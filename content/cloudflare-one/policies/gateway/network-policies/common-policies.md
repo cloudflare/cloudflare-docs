@@ -12,9 +12,9 @@ The following policies are commonly used to secure network traffic.
 
 Refer to the [network policies page](/cloudflare-one/policies/gateway/network-policies/) for a comprehensive list of other selectors, operators, and actions.
 
-{{<render file="gateway/_block-applications.md">}}
+{{<render file="gateway/policies/_block-applications.md">}}
 
-{{<render file="gateway/_policies-optional.md">}}
+{{<render file="gateway/policies/_policies-optional.md">}}
 
 ## Enforce device posture
 

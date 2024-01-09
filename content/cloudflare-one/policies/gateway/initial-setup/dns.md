@@ -50,7 +50,7 @@ To create a new DNS policy, go to **Gateway** > **Firewall Policies** > **DNS** 
 
 Block [known threats](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
 
-{{<render file="gateway/_block-security-categories.md">}}
+{{<render file="gateway/policies/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 

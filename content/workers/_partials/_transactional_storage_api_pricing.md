@@ -30,4 +30,4 @@ Durable Objects do not have to use the Transactional Storage API, but if your co
 
 <sup>5</sup>  Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/learning/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.

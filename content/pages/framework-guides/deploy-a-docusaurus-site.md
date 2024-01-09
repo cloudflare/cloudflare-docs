@@ -37,7 +37,7 @@ $ npm create cloudflare@latest my-docusaurus-app -- --framework=docusaurus
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
-Every time you commit new code to your Docusaurus site and push those changes to GitHub, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests and be able to preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Docusaurus site and push those changes to GitHub, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests and be able to preview how changes look to your site before deploying them to production.
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 

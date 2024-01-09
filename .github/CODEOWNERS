@@ -34,7 +34,7 @@
 /content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
-/content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
+/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
@@ -59,11 +59,11 @@
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF

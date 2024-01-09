@@ -34,7 +34,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 
@@ -78,20 +78,25 @@ To create your first D1 database, change into the directory you just created for
 $ cd d1-tutorial
 ```
 
-Run the following `wrangler d1` command and give your database a name. A good database name is:
+Run the following `wrangler d1` command and give your database a name. In this tutorial, the database will be named `prod-d1-tutorial`
+
+{{<Aside type="note" heading="Naming databases">}}
+For reference, a good database name is:
 
 - Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
 - Only used for describing the database, and is not directly referenced in code.
+{{</Aside>}}
+
 
 ```sh
-$ npx wrangler d1 create <DATABASE_NAME>
+$ npx wrangler d1 create prod-d1-tutorial
 
-✅ Successfully created DB '<DATABASE_NAME>'
+✅ Successfully created DB 'prod-d1-tutorial'
 
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
-database_name = "<DATABASE_NAME>"
+database_name = prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
@@ -110,7 +115,7 @@ filename: wrangler.toml
 
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
-database_name = "<DATABASE_NAME>"
+database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
@@ -153,6 +158,22 @@ Then validate your data is in your database by running:
 
 ```sh
 $ npx wrangler d1 execute <DATABASE_NAME> --local --command="SELECT * FROM Customers"
+```
+
+You should see the following output: 
+```sh
+🌀 Mapping SQL input into an array of statements
+🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
+┌────────────┬─────────────────────┬───────────────────┐
+│ CustomerId │ CompanyName         │ ContactName       │
+├────────────┼─────────────────────┼───────────────────┤
+│ 1          │ Alfreds Futterkiste │ Maria Anders      │
+├────────────┼─────────────────────┼───────────────────┤
+│ 4          │ Around the Horn     │ Thomas Hardy      │
+├────────────┼─────────────────────┼───────────────────┤
+│ 11         │ Bs Beverages        │ Victoria Ashworth │
+├────────────┼─────────────────────┼───────────────────┤
+│ 13         │ Bs Beverages        │ Random Name       │
 ```
 
 ### Write queries within your Worker
@@ -223,13 +244,13 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
 ```sh
-$ npx wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
+$ npx wrangler d1 execute prod-d1-tutorial --file=./schema.sql
 ```
 
 Then validate the data is in production by running:
 
 ```sh
-$ npx wrangler d1 execute <DATABASE_NAME> --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
