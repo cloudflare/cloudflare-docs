@@ -5193,9 +5193,23 @@ pre {
 }
 
 /* Pills on levels lower than H1 */
+
 .DocsMarkdown-pill-lower {
   margin-bottom: initial;
   margin-top: 2.25em;
+}
+
+.DocsMarkdown-pill-h2 {
+  margin-bottom: initial;
+  margin-top: 2.6em;
+}
+.DocsMarkdown-pill-h3 {
+  margin-bottom: initial;
+  margin-top: 2.75em;
+}
+.DocsMarkdown-pill-h4 {
+  margin-bottom: initial;
+  margin-top: 1.75em;
 }
 
 .DocsMarkdown--pill-tab {
