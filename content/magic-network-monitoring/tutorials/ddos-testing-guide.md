@@ -97,8 +97,8 @@ The command line output should look similar to the screenshot below:
 ![The command line will display the results of simulating a DDoS attack on 1.1.1.1](/images/magic-network-monitoring/cmd-output.png)
 
 Looking at the debug output, we can learn the following UDP DDoS attack statistics:
-- The attack generated between 33 thousand and 38 thousand packets per second (PPS).
-- The attack bandwidth ranged between 34 and 39 megabits per second (Mbps).
+- The attack generated between 146 thousand and 164 thousand packets per second (PPS).
+- The attack bandwidth ranged between 149 and 168 megabits per second (Mbps).
 
 ## Simulate a DDoS attack on your network
 
