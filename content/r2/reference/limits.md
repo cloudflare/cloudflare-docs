@@ -32,7 +32,7 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 constrained by [Workers request limits](/workers/platform/limits#request-limits). The max upload size limit does not apply to subrequests.<br>
 Review the [Examples](/r2/examples/) on how to use the SDKs.<br>
 
-Note that limits specified in MiB (mebibyte), GiB (gibibyte) or TiB (tebibyte) are storage uses of measure that are based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup>) bytes. This is distinct from 1 GB (gigabyte), which is 1<sup>9</sup> bytes.
+Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storage units of measurement based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup> bytes). This is distinct from 1 GB (gigabyte), which is 10<sup>9</sup> bytes (or 1000<sup>3</sup> bytes).
 
 {{<render file="_limits_increase.md" productFolder="workers">}}
 
