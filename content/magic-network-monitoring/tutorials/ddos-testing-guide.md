@@ -146,7 +146,7 @@ The next step involves analyzing data received over a few weeks. This is needed 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to  **Analytics & Logs** > **Magic Monitoring**.
-3. Select **Add filter*.
+3. Select **Add filter**.
 4. In **New filter**, create the following two rules:
 
   ```txt
