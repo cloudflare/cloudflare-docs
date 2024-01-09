@@ -19,7 +19,7 @@ Turn your existing regional database into a globally distributed database.
 
 {{<plan type="workers_paid">}}
 
-Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location. Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud, Supabase and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon.
+Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location. Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon.
 
 Use your existing Postgres drivers and object-relational mapping (ORM) libraries of your choice without any changes. Hyperdrive gives you a connection string that looks just like any other. You do not need to write new code or replace your favorite tools: Hyperdrive works with the ones you already use.
 
