@@ -16,6 +16,12 @@ Public buckets can be set up in either one of two ways:
 To configure WAF custom rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
 Using a custom domain does not require enabling `r2.dev`.
 
+{{<Aside type="note">}}
+
+Currently, public buckets do not let you list the bucket contents at the root of your (sub) domain.
+
+{{</Aside>}}
+
 ## Custom domains
 
 ### Caching

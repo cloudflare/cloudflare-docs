@@ -92,7 +92,7 @@ entries:
 - publish_date: '2022-09-12'
   title: Increased domain limits
   description: |-
-    Previously, all plans had a maximum of 10 [custom domains](/pages/platform/custom-domains/) per project.
+    Previously, all plans had a maximum of 10 [custom domains](/pages/configuration/custom-domains/) per project.
 
     Now, the limits are:
 

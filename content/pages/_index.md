@@ -31,13 +31,13 @@ Use Pages Functions to deploy server-side code to enable dynamic functionality w
 
 {{</feature>}}
 
-{{<feature header="Rollbacks" href="/pages/platform/rollbacks/">}}
+{{<feature header="Rollbacks" href="/pages/configuration/rollbacks/">}}
 
 Rollbacks allow you to instantly revert your project to a previous production deployment.
 
 {{</feature>}}
 
-{{<feature header="Redirects" href="/pages/platform/redirects/">}}
+{{<feature header="Redirects" href="/pages/configuration/redirects/">}}
 
 Set up redirects for your Cloudflare Pages project.
 

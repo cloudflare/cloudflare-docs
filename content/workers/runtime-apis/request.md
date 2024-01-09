@@ -403,4 +403,4 @@ Using any other type of `ReadableStream` as the body of a request will result in
 * [Examples: Modify request property](/workers/examples/modify-request-property/)
 * [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
 * [Reference: `Response`](/workers/runtime-apis/response/)
-* Write your Worker code in [ES modules syntax](/workers/learning/migrate-to-module-workers/) for an optimized experience.
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

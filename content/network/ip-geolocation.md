@@ -14,7 +14,7 @@ IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-req
 
 ## Add IP geolocation information
 
-The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
+The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/#add-visitor-location-headers). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
 
 If you only want the request header for the visitor's country, you can enable **IP Geolocation**.
 

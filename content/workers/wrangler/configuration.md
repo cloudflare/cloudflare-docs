@@ -457,7 +457,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/learning/durable-objects-migrations/).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/).
 
 {{<definitions>}}
 
@@ -533,7 +533,7 @@ kv_namespaces = [
 
 ### Queues
 
-[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/learning/delivery-guarantees/) and [message batching](/queues/learning/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/reference/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
 
 To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
 
@@ -578,7 +578,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
 
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -589,7 +589,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
-  - Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+  - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
 
 {{</definitions>}}
 

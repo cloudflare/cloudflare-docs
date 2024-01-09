@@ -12,7 +12,7 @@ Bindings allow your Workers to interact with resources on the Cloudflare Develop
 
 There are multiple types of bindings available today.
 
-To learn how to access bindings in your code, refer to [Bindings](/workers/learning/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
+To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
 ## Configuration
 
@@ -52,7 +52,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
-* Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
+* Configure Queue bindings via your [`wrangler.toml` file](/queues/reference/configuration/).
 
 ### D1 database bindings
 

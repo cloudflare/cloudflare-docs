@@ -1,4 +1,3 @@
-
 ---
 title: "Design guide: secure application delivery"
 pcx_content_type: reference-architecture
@@ -6,6 +5,7 @@ weight:
 meta:
   title: "Design guide: securely deliver applications with Cloudflare"
 ---
+
 # Design guide: securely deliver applications with Cloudflare
 
 ## Overview and the Cloudflare advantage
@@ -162,10 +162,10 @@ Further, if we look at the DNS configuration, we can see a DNS record was automa
 
 We now have secure application access. Users can only access the application through the tunnel connected to the Cloudflare network. Further, since Tunnel uses outbound connections to Cloudflare and any return traffic from an outbound connection will be allowed, no inbound firewall rule is required creating less overhead and more operational simplicity. 
 
-If you were to deploy the tunnel via CLI, after the tunnel install, you would also need to authenticate [cloudflared](/cloudflare-one/glossary/#cloudflared) on the origin server. cloudflared is what connects the server to Cloudflare’s global network. This authentication can be done with the ```cloudflared tunnel login``` command as shown below.
+If you were to deploy the tunnel via CLI, after the tunnel install, you would also need to authenticate [cloudflared](/cloudflare-one/glossary/?term=cloudflared) on the origin server. cloudflared is what connects the server to Cloudflare’s global network. This authentication can be done with the ```cloudflared tunnel login``` command as shown below.
 
 ![Cloudflare provides for easily authenticating Cloudflare Tunnel with a Cloudflare account.](/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-15.png)
-*Figure 15: Authenticating [cloudflared](/cloudflare-one/glossary/#cloudflared) on the origin server.*
+*Figure 15: Authenticating [cloudflared](/cloudflare-one/glossary/?term=cloudflared) on the origin server.*
 
 You’ll be asked to select the zone you want to add the tunnel to as shown below.
 

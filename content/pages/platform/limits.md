@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Limits
+weight: 1
 ---
 
 # Limits
@@ -41,11 +42,11 @@ An individual header in a `_headers` file can have a maximum of 2,000 characters
 
 ## Preview deployments
 
-You can have an unlimited number of [preview deployments](/pages/platform/preview-deployments/) active on your project at a time.
+You can have an unlimited number of [preview deployments](/pages/configuration/preview-deployments/) active on your project at a time.
 
 ## Redirects
 
-A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/platform/redirects/#surpass-_redirects-limits) when you have a need for more than the `_redirects` file supports.
+A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/configuration/redirects/#surpass-_redirects-limits) when you have a need for more than the `_redirects` file supports.
 
 ## Users
 

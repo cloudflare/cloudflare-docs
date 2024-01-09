@@ -54,12 +54,12 @@ If you choose to deploy, you will be asked to authenticate (if not logged in alr
 Before you integrate R2 bucket access into your Worker application, an R2 bucket must be created:
 
 ```sh
-$ wrangler r2 bucket create <YOUR_BUCKET_NAME>
+$ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 Replace `<YOUR_BUCKET_NAME>` with the name you want to assign to your bucket. List your account's R2 buckets to verify that a new bucket has been added:
 
 ```sh
-$ wrangler r2 bucket list
+$ npx wrangler r2 bucket list
 ```
 
 ## Configure access to an R2 bucket
@@ -119,7 +119,7 @@ Next, you will add the ability to upload to your R2 bucket using authentication.
 Create a secret value of your choice -- for instance, a random string or password. Using the Wrangler CLI, add the secret to your project as `AUTH_SECRET`:
 
 ```sh
-$ wrangler secret put AUTH_SECRET
+$ npx wrangler secret put AUTH_SECRET
 ```
 
 Now, add a new code path that handles a `PUT` HTTP request. This new code will check that the previously uploaded secret is correctly used for authentication, and then upload to R2 using `MY_BUCKET.put(key, data)`:

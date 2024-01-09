@@ -123,3 +123,9 @@ Block file downloads from Gmail.
 | ---------------- | -------- | --------------------------------------- | ----- | ------ |
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
+
+## Isolate ChatGPT
+
+[Browser Isolation](/cloudflare-one/policies/browser-isolation/) users can isolate interactions with ChatGPT.
+
+{{<render file="gateway/policies/_isolate-chatgpt.md">}}
