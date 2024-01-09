@@ -161,8 +161,7 @@ In our example, the fictional data for `example_192.168.1.1` over 21 days (the r
 
 ### 5. Simulate a DDoS attack to test MNM
 
-1. Open your command line.
-2. Navigate to the folder `MHDDoS-main`.
+1. Open a command prompt, and go to the folder `MHDDoS-main`.
 2. Run the following command. Adapt the destination IP address to the one you found that works for your particular case:
 
 ```bash
