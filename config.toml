@@ -8,6 +8,7 @@ enableRobotsTXT = false
 summaryLength = 30
 disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
+timeout = "120s"
 
 enableEmoji = true
 enableGitInfo = true
