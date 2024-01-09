@@ -7,7 +7,7 @@ weight: 4
 
 # HTTP policies
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/">Cloudflare Root Certificate</a> before creating HTTP policies.
 
@@ -66,7 +66,7 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 | Application      | in            | `Google Drive` | And   | Block  |
 | Upload Mime Type | matches regex | `.*`           |       |        |
 
-#### WARP client block notifications
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
 
 {{<render file="gateway/_client-notifications.md">}}
 

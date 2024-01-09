@@ -64,7 +64,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 | ---------------- | -------- | ----- | ------ |
 | Destination Port | in       | `443` | Block  |
 
-#### WARP client block notifications
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
 
 {{<render file="gateway/_client-notifications.md">}}
 

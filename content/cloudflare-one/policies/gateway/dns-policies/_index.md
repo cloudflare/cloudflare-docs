@@ -21,7 +21,7 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 {{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
-{{<Aside>}}
+{{<Aside type="note">}}
 If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
 {{</Aside>}}
 
@@ -69,7 +69,7 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 When choosing the Block action, turn on **Display custom block page** to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If the block page is disabled, Gateway will respond to blocked queries with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 
-#### WARP client block notifications
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
 
 {{<render file="gateway/_client-notifications.md">}}
 
@@ -83,7 +83,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | is       | `www.example.com` | Override | `1.2.3.4`         |
 
-{{<Aside>}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
+{{<Aside type="note">}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
 
 ### Safe Search
 
@@ -141,7 +141,7 @@ Use this selector to filter DNS responses by their `CNAME` records.
 | ------------------------ | ------------------------------------------------------------- | -------------------- |
 | DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` | After DNS resolution |
 
-{{<Aside>}}
+{{<Aside type="note">}}
 If one CNAME record points to another CNAME record, each record in the chain will be evaluated. For example, if `abc.example.com` points to `xyz.example.com`, then your DNS policy will evaluate both `abc.example.com` and `xyz.example.com`.
 {{</Aside>}}
 
