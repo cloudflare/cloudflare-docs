@@ -185,4 +185,4 @@ You can also navigate to MNM analytics to observe the attack traffic:
   Monitoring Rule | equals | example_192_168_1_1
   ```
 
-For the filter above, you should select the name of the rule you have created in [step 3](#3-create-mnm-rule-for-testing)..
+For the filter above, you should select the name of the rule you have created in [step 3](#3-create-mnm-rule-for-testing).
