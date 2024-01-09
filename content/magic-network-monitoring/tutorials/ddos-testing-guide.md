@@ -38,9 +38,9 @@ For the purposes of this tutorial, we will be using the MHDDoS tool.
 
 ## Prerequisites
 
-MGDDoS requires Python 3, Python 3 libraries, and git. If you already have these tools installed, follow the [MHDDoS automatic installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation).
+MGDDoS requires Python 3, Python 3 libraries, and Git. If you already have these tools installed, follow the [MHDDoS automatic installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation).
 
-If you are an Enterprise customer, you also need to [open a support ticket with Cloudflare](/ddos-protection/reference/simulate-ddos-attack/) when simulating DDoS attacks against your own Internet properties. Free customers do not need to open a ticket.
+If you are an Enterprise customer, you also need to [open a support ticket with Cloudflare](/ddos-protection/reference/simulate-ddos-attack/) when simulating DDoS attacks against your own Internet properties.
 
 ---
 
@@ -53,19 +53,31 @@ If you are an Enterprise customer, you also need to [open a support ticket with 
 3. Open your command prompt, and run the following command to confirm Python has been installed and added to your computer’s program path:
 
 ```bash
-C:\>python --version
+C:\> python --version
 ```
 
 You should receive a message with the current version of Python.
 
-### 2. Install MHDDoS
+### 2. Install Git
+
+1. Go to the [Git download page](https://git-scm.com/download/win), and download the latest version of Git.
+2. Follow the recommended installation settings.
+3. Open a terminal window, and run the following command to confirm Git has been installed:
+
+```bash
+C:\> git --version
+```
+
+You should receive a message with the current version of Git.
+
+### 3. Install MHDDoS
 
 1. Go to the [installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation) for MHDDoS in the project’s GitHub Repository Wiki.
 2. Follow the steps for either **Automatic Installation**, **DockerFile**, or **Manual Installation** depending on your preference.
 
 {{<Aside type="note">}}The steps for **Automatic Installation** are a good default to follow unless you already have docker set up and are familiar with it.{{</Aside>}}
 
-### 3. Check if MHDDoS is working
+### 4. Check if MHDDoS is working
 
 The last step is to check if the MHDDoS tool is working. For that, we will simulate a small DDoS attack against 1.1.1.1.
 
@@ -78,7 +90,7 @@ To review all the attack options relevant in testing Magic Network Monitoring, v
 C:\> python start.py udp 1.1.1.1:53 1 10 true
 ```
 
-This command will simulate an UDP attack against `1.1.1.1` at port `53`. The attack will use one Python thread to generate the UDP packets, and will run for 10 seconds. The `true` statement at the end of the command will run the attack in debug mode.
+This command will simulate an UDP attack against `1.1.1.1` on port `53`. The attack will use one Python thread to generate the UDP packets, and will run for 10 seconds. The `true` statement at the end of the command will run the attack in debug mode.
 
 The command line output should look similar to the screenshot below:
 
@@ -109,7 +121,7 @@ For this tutorial, we will take into account the fictional `Example` Cloudflare 
   Source IP | equals | 192.168.1.1
   ```
 
-This should give you an idea of the amount of traffic the IP address you identified really has. If it is suitable, create an MNM rule with that IP.
+This should give you an idea of the amount of traffic the IP address you chose really has. If it is suitable, create an MNM rule with that IP.
 
 ### 3. Create MNM rule for testing
 
@@ -132,13 +144,26 @@ Refer to the [Rules](/magic-network-monitoring/rules/) page for more information
 
 The next step involves analyzing data received over a few weeks. This is needed so we can have a better sense of the type of traffic received and what port we need for testing.
 
-In our example, the fictional data for `192.168.1.0/24` over 21 days shows that the destination IP address `192.168.1.1` has received UDP traffic on port 137. You can use this destination port for testing.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to  **Analytics & Logs** > **Magic Monitoring**.
+3. Select **Add filter*.
+4. In **New filter**, create the following two rules:
+
+  ```txt
+  Monitoring Rule | equals | example_192.168.1.1
+  ```
+
+  ```txt
+  Protocol | equals | UDP
+  ```
+
+In our example, the fictional data for `example_192.168.1.1` over 21 days (the rule we created in [step 3](#3-create-mnm-rule-for-testing)) shows that the destination IP address `192.168.1.1` has received UDP traffic on **Destination Port** `137`. You can use this destination port for testing.
 
 ### 5. Simulate a DDoS attack to test MNM
 
 1. Open your command line.
 2. Navigate to the folder `MHDDoS-main`.
-3. Run the following command. Adapt the destination IP address to the one you found works for your particular case:
+3. Run the following command. Adapt the destination IP address to the one you found that works for your particular case:
 
 ```bash
 C:\> python start.py udp 192.168.1:137 2 120 true
@@ -146,7 +171,7 @@ C:\> python start.py udp 192.168.1:137 2 120 true
 
 This command will simulate a UDP DDoS attack on `192.168.1.1:137`. The UDP attack will use two Python threads, and run for 120 seconds. Debug mode is set to `true`, which lets us observe the attack's live progress. This command should generate anywhere from 25 to 75 mbps of attack traffic.
 
-​​### 6. MNM volumetric attack alert
+### 6. MNM volumetric attack alert
 
 After performing the attack simulation, you should receive an email alert stating that MNM detected an attack.
 
