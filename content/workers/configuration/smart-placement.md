@@ -11,7 +11,6 @@ By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are in
 
 You may benefit from Smart Placement if you are making multiple round trips to a centralized database, API or origin server in a Worker. 
 
-
 ## Background
 
 The following example demonstrates how moving your Worker close to your back-end services could decrease application latency:
@@ -24,7 +23,7 @@ The issue is the time that it takes the Worker to perform multiple round trips t
 
 ![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](/images/workers/platform/workers-smart-placement-enabled.png)
 
-## Understand how Smart Placement (beta) works
+## Understand how Smart Placement works
 
 Smart Placement is enabled on a per-Worker basis. Once enabled, fetch requests (also known as subrequests) from your Worker are analyzed regularly. The Smart Placement algorithm determines the optimal placement to minimize the round-trip time (RTT) between the Worker and the back-end service the Worker is communicating with. 
 
@@ -49,7 +48,7 @@ There are some back-end services that are not considered by the Smart Placement 
 - **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
     - Examples: New Relic, Datadog, Tinybird, Grafana, Amplitude, Honeycomb.
 
-## Enable Smart Placement (beta)
+## Enable Smart Placement
 
 Smart Placement is available to users on all Workers plans.
 
