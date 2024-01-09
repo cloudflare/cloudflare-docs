@@ -49,7 +49,7 @@ If you are an Enterprise customer, you also need to [open a support ticket with 
 ### 1. Install Python 3
 
 1. Go to the [Python download page](https://www.python.org/downloads/), and download the latest version of Python.
-2. Follow the recommended installation settings, and make sure to select the option **Add Python to PATH** to add Python to your file path.
+2. Follow the recommended installation settings, and make sure to select the option **Add python.exe to PATH** to add Python to your file path.
 3. Open your command prompt, and run the following command to confirm Python has been installed and added to your computer’s program path:
 
 ```bash
