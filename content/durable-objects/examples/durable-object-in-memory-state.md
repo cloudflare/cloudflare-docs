@@ -9,7 +9,7 @@ weight: 3
 layout: example
 ---
 
-After a brief period of inactivity, the Durable Object will be evicted, and all in-memory state will be lost. The next request will reconstruct the object, but instead of showing the city of the previous request, it will display the object that has just been initialized. If you need your applications state to survive eviction, write the application to storage by using the [storage API](/durable-objects/api/transactional-storage-api/), or by storing your data elsewhere.
+This example shows you how Durable Objects are stateful, meaning in-memory state can be rateined between requests. After a brief period of inactivity, the Durable Object will be evicted, and all in-memory state will be lost. The next request will reconstruct the object, but instead of showing the city of the previous request, it will display the object that has just been initialized. If you need your applications state to survive eviction, write the application to storage by using the [storage API](/durable-objects/api/transactional-storage-api/), or by storing your data elsewhere.
 
 ```js
 // Worker
