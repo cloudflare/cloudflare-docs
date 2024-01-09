@@ -13,5 +13,5 @@ As soon as you onboard your domain to Cloudflare, you are automatically protecte
 
 By the end of this module, you will be able to:
 
-- Understand the out-of-the-box DDoS security controls your site will have
+- Understand the most common security controls your applications will have access to
 

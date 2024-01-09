@@ -9,11 +9,6 @@ layout: learning-module
 
 Rate Limiting mitigates excessive request rates for specific URLs or for an entire domain. Request rates are calculated locally for individual Cloudflare data centers. You can configure thresholds and define responses by IP. If traffic from a specific IP exceeds the threshold, then you can take action on the offending IP for a defined period of time.
 
-The most common uses cases are:
-
-{{<render file="_rate-limiting-best-practices.md" productFolder="waf" >}}
-
-
 ## Objectives
 
 By the end of this module, you will be able to:

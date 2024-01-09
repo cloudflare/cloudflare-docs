@@ -11,13 +11,7 @@ Use lists to refer to a group of items (such as IP addresses) collectively, by n
 
 Lists have the following advantages:
 
-- When creating a rule, using a list is easier and less error-prone than adding a long list of items such as IP addresses to a rule expression.
-- When updating a set of rules that target the same group of IP addresses (or hostnames), using an IP list (or a hostname list) is easier and less error prone than editing multiple rules.
-- Lists are easier to read and more informative, particularly when you use descriptive names for your lists.
-
-When you update the content of a list, any rules that use the list are automatically updated, so you can make a single change to your list rather than modify rules individually.
-
-Cloudflare stores your lists at the account level. You can use the same list in rules of different zones in your Cloudflare account.
+{{<render file="_list-advantages.md" productFolder="waf">}}
 
 ## Supported lists
 
@@ -73,15 +67,7 @@ List availability varies according to the list type and your Cloudflare plan and
 
 Notes:
 
-* The number of available custom lists depends on the highest plan in your account. Any account with at least one paid plan will get the highest quota.
-
-* You can have a maximum number of 10,000 list items across all custom lists.
-
-* The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
-
-* Customers on Enterprise plans may contact their account team if they need more custom lists or a larger maximum number of items across lists. For these customers, the maximum number of custom lists per data type is 40 lists.
-
-* For details on the availability of Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/#availability) documentation.
+{{<render file="_lists-notes.md" productFolder="waf">}}
 
 ---
 

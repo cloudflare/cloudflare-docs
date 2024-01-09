@@ -5,10 +5,6 @@ weight: 3
 layout: learning-unit
 ---
 
-Rate limiting can be a very powerful tool against sophisticated attacks. Creating rules is as much of an art as it is a science. 
-
-## Basic configuration
-
 Let's step through an example. If your `/create-account` page is being attacked, you will create a rule to limit the amount of requests, per `counting characteristic`, that you feel comfortable permitting through to your origin. 
 
 The rule below is being created on the `free` plan, which limits configuration options. The rule will trigger if the URI path matches `/create-account`, from the same IP address, _after_ 5 requests and within a 10 second window, [within each Cloudflare datacenter](/waf/rate-limiting-rules/request-rate/), globally. 
