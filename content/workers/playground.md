@@ -7,7 +7,7 @@ weight: 5
 # Playground
 
 
-{{<Aside type="note" header="Browser Support">}}
+{{<Aside type="note" header="Browser support">}}
 
 The Cloudflare Workers Playground is currently only supported in Firefox and Chrome desktop browsers. In Safari, it will show a `PreviewRequestFailed` error message.
 
