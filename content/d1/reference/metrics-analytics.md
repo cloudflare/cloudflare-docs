@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
+weight: 10
 ---
 
 # Metrics and analytics

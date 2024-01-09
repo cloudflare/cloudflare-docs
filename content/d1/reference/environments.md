@@ -1,6 +1,7 @@
 ---
 title: Environments
 pcx_content_type: configuration
+weight: 9
 ---
 
 # Environments

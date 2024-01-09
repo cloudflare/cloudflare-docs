@@ -1,6 +1,7 @@
 ---
 title: D1 client API
 pcx_content_type: concept
+weight: 6
 ---
 
 # D1 client API
