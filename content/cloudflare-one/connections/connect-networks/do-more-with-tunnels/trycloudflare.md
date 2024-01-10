@@ -40,8 +40,9 @@ TryCloudflare quick tunnels are currently not supported if a `config.yaml` confi
 
 ### Limits
 
-- Quick Tunnels are subject to a limit on the number of concurrent requests that can be proxied at any point in time. Currently, this limit is 200 in-flight requests. If a Quick Tunnel hits this limit the HTTP response returned will have a 429 status code.
-This limit only applies to QuickTunnels and users see this limit being hit should instead create a Cloudflare account and configure a Cloudflare Tunnel.
+Quick Tunnels are subject to a hard limit on the number of concurrent requests that can be proxied at any point in time. Currently, this limit is 200 in-flight requests. If a Quick Tunnel hits this limit, the HTTP response will return a `429` status code.
+
+This limit only applies to Quick Tunnels. To avoid this limit, [sign up](https://dash.cloudflare.com/sign-up) for a Cloudflare account and [create a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/get-started/).
 
 ### Legal
 
