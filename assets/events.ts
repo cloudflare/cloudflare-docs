@@ -289,7 +289,11 @@ export function zarazTrackDocEvents() {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
         if (link.hostname !== "developers.cloudflare.com") {
-          if (link.hostname.includes("cloudflare.com")) {
+          if (link.href.includes("workers.cloudflare.com/playground")) {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('playground link click', link);
+            });
+          } else if (link.hostname.includes("cloudflare.com")) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('Cross Domain Click', link);
             });
