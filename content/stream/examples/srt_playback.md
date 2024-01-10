@@ -1,4 +1,3 @@
-
 ---
 type: example
 summary: Example of sub 1s latency video playback using SRT and ffplay

@@ -33,15 +33,5 @@ jobs:
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts
 
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - name: (env) pnpm
-  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-  #     - run: pnpm install
-  #     - run: pnpm run lint
+      - name: Lint
+        run: npm run lint

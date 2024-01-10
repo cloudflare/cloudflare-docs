@@ -5,15 +5,6 @@
   {{- $title := "" -}}
   {{- $rellink := .Context.RelPermalink -}}
 
-  <!-- Evaluate content type against standards -->
-
-  {{- $availableContentTypes := slice
-    "changelog" "concept" "configuration" "faq" "get-started" "glossary"
-    "how-to" "integration-guide" "learning-path" "learning-unit" "migration" 
-    "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
-    "tutorial"
-    -}}
-
   <!-- Pull the product group -->
 
   {{- $productGroup := "" -}}
@@ -123,15 +114,7 @@
     <meta name="pcx_last_reviewed" content="500" />
   {{- end -}}
 
-  {{- with .Context.Params.pcx_content_type -}}
-    {{- if in $availableContentTypes . -}}
-      <meta name="pcx_content_type" content="{{ . }}" />
-    {{- else -}}
-      <meta name="pcx_content_type" content="Invalid content type" />
-    {{- end -}}
-  {{- else -}}
-    <meta name="pcx_content_type" content="Not set" />
-  {{- end -}}
+  <meta name="pcx_content_type" content="{{ . }}" />
 
   {{- if ne $productGroup "" -}}
     <meta name="pcx_content_group" content="{{$productGroup}}" />
