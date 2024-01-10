@@ -75,7 +75,7 @@ The work needed to create this application is split into three tasks:
 
 For the remainder of this tutorial you will complete each task, iterating on your application, and then publish it to your own domain.
 
-## 3. Writing data to KV
+## 3. Write data to KV
 
 To begin, you need to understand how to populate your todo list with actual data. To do this, use [Cloudflare Workers KV](/kv/) — a key-value store that you can access inside of your Worker script to read and write data.
 
