@@ -5193,9 +5193,24 @@ pre {
 }
 
 /* Pills on levels lower than H1 */
+
+/* '-lower' unused? */
 .DocsMarkdown-pill-lower {
   margin-bottom: initial;
   margin-top: 2.25em;
+}
+
+.DocsMarkdown--pill-h2 {
+  margin-bottom: initial;
+  margin-top: 2.6em;
+}
+.DocsMarkdown--pill-h3 {
+  margin-bottom: initial;
+  margin-top: 2.75em;
+}
+.DocsMarkdown--pill-h4 {
+  margin-bottom: initial;
+  margin-top: 1.75em;
 }
 
 .DocsMarkdown--pill-tab {
@@ -5210,19 +5225,16 @@ pre {
 }
 
 .DocsMarkdown--pill-beta {
-  width: 42px;
   background: var(--orange-8);
   color: var(--orange-1);
 }
 
 .DocsMarkdown--pill-deprecated {
-  width: 79px;
   background: var(--red-8);
   color: var(--red-0);
 }
 
 [theme="dark"] .DocsMarkdown--pill-deprecated {
-  width: 79px;
   background: var(--red-6);
   color: var(--red-0);
 }
