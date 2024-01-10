@@ -44,7 +44,7 @@ To configure your Worker:
 
 Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
-All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
+All incoming HTTP requests to a Worker are passed to the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) as a [request](/workers/runtime-apis/request/) object. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
 
 ```js
 ---
