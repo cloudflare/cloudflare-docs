@@ -77,7 +77,7 @@ For the remainder of this tutorial you will complete each task, iterating on you
 
 ## 3. Write data to KV
 
-To begin, you need to understand how to populate your todo list with actual data. To do this, use [Cloudflare Workers KV](/kv/) — a key-value store that you can access inside of your Worker script to read and write data.
+To begin, you need to understand how to populate your todo list with actual data. To do this, use [Cloudflare Workers KV](/kv/) — a key-value store that you can access inside of your Worker to read and write data.
 
 To get started with KV, set up a namespace. All of your cached data will be stored inside that namespace and, with configuration, you can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID by running the following command in your terminal:
 
