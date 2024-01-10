@@ -59,7 +59,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 [D1](/d1) bindings allow you to query a D1 database from your Worker.
 
 * [Configure a D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
-* Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
+* Learn more about how to query a D1 database using the [client API](/d1/reference/client-api/).
 
 ### Vectorize database bindings
 
