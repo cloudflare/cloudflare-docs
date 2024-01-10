@@ -19,7 +19,7 @@ In this tutorial, you will build a todo list application using HTML, CSS, and Ja
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 
-1.  How building with Workers makes it seamless to focus on writing code and ship finished products.
+1.  How building with Workers makes allows you to focus on writing code and ship finished products.
 2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
 If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/lauragift21/cloudflare-workers-todos) and refer to the [live demo](https://todos.examples.workers.dev/) to review what you will be building.
