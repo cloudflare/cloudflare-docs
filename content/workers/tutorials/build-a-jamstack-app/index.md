@@ -162,7 +162,7 @@ export default {
 };
 ```
 
-## Rendering data from KV
+## Render data from KV
 
 Given the presence of data in your code, which is the cached data object for your application, you should take this data and render it in a user interface.
 
