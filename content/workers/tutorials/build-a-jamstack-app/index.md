@@ -63,7 +63,7 @@ When a Worker receives a `request`, the Worker returns the newly constructed res
 
 ## 2. Review project details
 
-Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, `npm` packages, and [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing Workers, you can use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) using the same tooling and process as in this tutorial.
+Any project you deploy to Cloudflare Workers can make use of modern JavaScript tooling like [ES modules](/workers/reference/migrate-to-module-workers/), `npm` packages, and [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing Workers, you can use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) using the same tooling and process as in this tutorial.
 
 In this tutorial, you will build a todo list application running on Workers that allows reading data from a [KV](/kv/) store and using the data to populate an HTML response to send to the client.
 
