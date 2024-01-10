@@ -15,11 +15,11 @@ On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 {{<Aside type="warning">}}
 
-The offboarding for new advanced certificate orders has been postponed from October 4, 2023 to October 5, 2023.
+The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023.
 
 {{</Aside>}}
 
-On **October 11, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
+On **October 26, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
 {{<Aside type="warning">}}
 
@@ -50,17 +50,17 @@ If your system integrates with the Cloudflare API to [order advanced certificate
 - The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 - The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
 
-### Changes after October 11, 2023
+### Changes after October 26, 2023
 
-The following changes will automatically affect certificates that are renewed after October 11, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate. 
+The following changes will automatically affect certificates that are renewed after October 26, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate.
 
 #### Certificate authorities
 
-DigiCert certificates renewed after October 11, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
+DigiCert certificates renewed after October 26, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
-Certificates with 14 and 30 day validity periods will be renewed with Google Trust Services. 90 day certificates will either use Let’s Encrypt or Google Trust Services. 
+Certificates with 14 and 30 day validity periods will be renewed with Google Trust Services. 90 day certificates will either use Let’s Encrypt or Google Trust Services.
 
 {{</Aside>}}
 
@@ -74,7 +74,7 @@ If the DigiCert certificate had the `“validation_method”` set to `“email�
 
 Full zone certificate renewals will default to [TXT DCV](/ssl/edge-certificates/changing-dcv-method/methods/txt/) and are automatically renewed by Cloudflare. This is because Cloudflare can place the TXT DCV tokens as the Authoritative DNS provider.
 
-Partial zone certificate renewals will default to [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/), unless there is a wildcard hostname on the certificate. 
+Partial zone certificate renewals will default to [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/), unless there is a wildcard hostname on the certificate.
 
 Certificates with wildcard hostnames will be required to complete [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) or [TXT DCV](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
@@ -82,9 +82,9 @@ Certificates with wildcard hostnames will be required to complete [Delegated DCV
 
 For multi-hostname or wildcard certificates using DigiCert, multiple DCV records will now be returned in the `“validation_records”` field.
 
-This is because DigiCert only requires one DCV record to be placed to validate the apex, wildcard, and subdomains on a certificate. Let’s Encrypt and Google Trust Services follow the [ACME protocol](https://datatracker.ietf.org/doc/html/rfc8555) which requires that one DCV token is placed for every hostname on a certificate. 
+This is because DigiCert only requires one DCV record to be placed to validate the apex, wildcard, and subdomains on a certificate. Let’s Encrypt and Google Trust Services follow the [ACME protocol](https://datatracker.ietf.org/doc/html/rfc8555) which requires that one DCV token is placed for every hostname on a certificate.
 
-If your certificate covers multiple hostnames, then on renewal you will see one DCV token associated with every hostname on the certificate. These tokens will be returned in the `“validation_records”` field. 
+If your certificate covers multiple hostnames, then on renewal you will see one DCV token associated with every hostname on the certificate. These tokens will be returned in the `“validation_records”` field.
 
 If your certificate includes a wildcard hostname, you will see a TXT DCV token returned for the wildcard hostname. Previously with DigiCert, only one TXT DCV token would have been required at the apex to complete validation for any subdomains or wildcard under the zone.
 
@@ -94,13 +94,13 @@ If your certificate includes a wildcard hostname, you will see a TXT DCV token r
 
 If you want to take control of migrating your certificates and choose a particular CA - instead of having Cloudflare handle migrations as certificates come up for renewal and choose a CA on your behalf - you will need to:
 
-1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-11-2023) noted before).
+1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-26-2023) noted before).
 2. Make sure your certificates are validated ([partial zones](#dcv---partial-zones) will require additional steps than previously).
 3. [Delete](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) all existing DigiCert certificates (once each has been replaced and the new certificate is active).
 
 #### DCV - Full zones
 
-For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
+For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](/dns/zone-setups/full-setup/setup/#verify-changes).
 
 {{<render file="_full-zone-acm-dcv.md">}}
 <br/>
@@ -141,7 +141,7 @@ Once you update your DNS records, you can either [wait for the next retry](/ssl/
 
 {{<render file="_dcv-validate-patch.md">}}
 
-Once the certificate has been validated, the certificate status will change to **Active**. 
+Once the certificate has been validated, the certificate status will change to **Active**.
 
 [^1]: Meaning that Cloudflare is your Authoritative DNS provider.
 [^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.

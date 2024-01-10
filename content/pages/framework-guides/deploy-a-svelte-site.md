@@ -89,11 +89,11 @@ declare namespace App {
 
 ```
 
-4. Access the added KV or Durable objects (or generally any [binding](/pages/platform/functions/bindings/)) in your endpoint with `env`:
+4. Access the added KV or Durable objects (or generally any [binding](/pages/functions/bindings/)) in your endpoint with `env`:
 
 ```js
-export async function post({ request, platform }) {
-  const counter = platform.env.COUNTER.idFromName("A");
+export async function post(context) {
+  const counter = context.platform.env.COUNTER.idFromName("A");
 }
 ```
 
@@ -146,7 +146,7 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 {{<Aside type="note">}}
 
@@ -158,7 +158,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file.
 
-To have the functionality equivalent to Pages Functions [`onRequests`](/pages/platform/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
+To have the functionality equivalent to Pages Functions [`onRequests`](/pages/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
 
 ```ts
 ---

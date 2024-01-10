@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Staging environment (Beta)
-weight: 6
+weight: 8
 ---
 
 # Staging environment (Beta)

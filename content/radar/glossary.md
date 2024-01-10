@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Glossary
-weight: 6
+weight: 7
 ---
 
 # Glossary
@@ -121,6 +121,9 @@ The Internet Quality Index estimates connection performance under average utiliz
 
 The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
 
+## Mobile Operating Systems
+
+The Mobile Operating Systems graph shows the distribution of mobile device requests by operating system, representing trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network. "Mobile device" includes phones and tablets only, and does not include other types of devices, such as those classified as desktops/laptops, smart TVs, or gaming consoles.
 
 ## Network-level DDoS Attacks
 

@@ -25,9 +25,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
 3. Enter a name and optional description for the profile.
 4. Add custom or existing detection entries.
 
-   <details>
-   <summary>Add a custom entry</summary>
-   <div class="special-class" markdown="1">
+   {{<details header="Add a custom entry">}}
 
    1. Select **Add custom entry** and give it a name.
    2. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by two digits.
@@ -38,12 +36,9 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
 
    3. To save the detection entry, select **Done**.
 
-   </div>
-   </details>
+   {{</details>}}
 
-   <details>
-   <summary>Add existing entries</summary>
-   <div class="special-class" markdown="1">
+   {{<details header="Add existing entries">}}
 
    Existing entries include [predefined detection entries](predefined-profiles/) and [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/).
 
@@ -51,8 +46,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
    2. Choose which entries you want to add, then select **Confirm**.
    3. To save the detection entry, select **Done**.
 
-   </div>
-   </details>
+   {{</details>}}
 
 5. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
 6. Select **Save profile**.

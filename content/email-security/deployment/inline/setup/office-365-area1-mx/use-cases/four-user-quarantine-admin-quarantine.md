@@ -1,6 +1,6 @@
 ---
 title: 4 - User managed quarantine and administrative quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 4
 meta:
     title: User managed quarantine and administrative quarantine - Office 365

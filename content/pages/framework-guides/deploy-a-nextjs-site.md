@@ -141,7 +141,7 @@ To deploy your site to Pages:
 
 {{<Aside type="note">}}
 
-The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/advanced-mode/). The library attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](/workers/platform/limits/#worker-size). If you notice any bugs, file a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
+The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/functions/advanced-mode/). The library attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](/workers/platform/limits/#worker-size). If you notice any bugs, file a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
 
 {{</Aside>}}
 
@@ -186,32 +186,58 @@ After configuring your site, you can begin your first deploy. You should see Clo
 ## Preview your site
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers), and [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props). Then, access bindings set for your application by accessing them in your code via `process.env`.
 
-The following code block shows an example of accessing a KV namespace in Next.js.
+The following code shows an example of accessing a KV namespace in a TypeScript Next.js project.
+
+First, create a new `env.d.ts` file and declare a [binding](/pages/functions/bindings/):
 
 ```typescript
 ---
-filename: app/api/hello/route.js
-highlight: [4, 5]
+filename: env.d.ts
+highlight: [5-11]
+---
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      [key: string]: string | undefined;
+      // The KV Namespace binding type used here comes
+      // from `@cloudflare/workers-types`, in order to
+      // use it like so, make sure that you have installed
+      // the package as a dev dependency and you have added
+      // it to your `tsconfig.json` file under
+      // `compilerOptions.types`.
+      MY_KV: KVNamespace;
+    }
+  }
+}
+
+export {};
+```
+
+Then, the binding can be accessed directly from `process.env`:
+
+```typescript
+---
+filename: app/api/hello/route.ts
+highlight: [4]
 ---
 // ...
 
 export async function GET(request: Request) {
-  // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (process.env as { MY_KV: KVNamespace });
+  const myKv = process.env.MY_KV;
 
   return new Response(
     // ...
-	);
+  );
 };
 ```
 

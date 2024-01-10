@@ -44,7 +44,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 4. Save your public key
 
-1. Copy the public key generated from the dashboard in Step 2.
+1. Copy the public key generated from the dashboard in Step 3.
 
 {{<render file="ssh/_public-key.md">}}
 

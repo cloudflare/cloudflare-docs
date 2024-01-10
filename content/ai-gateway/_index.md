@@ -19,11 +19,11 @@ Cloudflare's AI Gateway allows you to gain visibility and control over your AI a
 
 **Key features include:**
 * **Analytics:** View metrics such as the number of requests, tokens, and the cost it takes to run your application
-* **Logging:** Gain insight on requests and errors
+* **Real-time logs:** Gain insight on requests and errors
 * **Caching:** Serve requests directly from Cloudflare's cache instead of the original model provider for faster requests and cost savings
 * **Rate limiting:** Control how your application scales by limiting the number of requests your application receives
 * **Request retry and fallback:** Improve resilience by defining request retry and model fallbacks in case of an error
-* **Support for your favorite providers:** Workers AI, OpenAI, HuggingFace, Replicate all work with AI Gateway (more to come)
+* **Support for your favorite providers:** Workers AI, OpenAI, Azure OpenAI, HuggingFace, Replicate all work with AI Gateway (more to come)
 * **Response streaming :** AI Gateway supports response streaming
 
 Check out the [Get started guide](/ai-gateway/get-started/) to learn how to configure your applications with AI Gateway.

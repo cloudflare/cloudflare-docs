@@ -5,7 +5,9 @@ _build:
   list: never
 ---
 
-DNS locations are usually physical entities like schools offices, homes, retail stores, movie theatres, or data centers. The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router.
+{{<glossary-definition term_id="DNS location">}}
+
+The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router.
 
 To add a DNS location to Gateway:
 
@@ -31,7 +33,7 @@ When trying to configure a DNS location over IPv4, you may run into a **Your sou
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
-If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/#getting-help-with-an-issue).
+If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/contacting-cloudflare-support/#getting-help-with-an-issue).
 
 {{</Aside>}}
 

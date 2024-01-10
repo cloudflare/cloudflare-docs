@@ -16,6 +16,7 @@ To use a custom origin server, you need to meet the following requirements:
 
 - Your fallback proxy zone has an entitlement for Custom Origin Servers.
 - Each custom origin needs to be a valid hostname with a proxied (orange-clouded) A, AAAA, or CNAME record in your account's DNS. You cannot use an IP address.
+- The DNS record for the custom origin server does not currently support wildcard values. 
 
 ## Use a custom origin
 

@@ -8,7 +8,7 @@ updated: 2023-01-26
 
 # Sumo Logic integration guide
 
-When Area 1 detects a phishing email, the metadata of the detection can be sent directly into your instance of Sumo Logic. This document outlines the steps required to integrate Area 1 with Sumo Logic.
+When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly into your instance of Sumo Logic. This document outlines the steps required to integrate Area 1 with Sumo Logic.
 
 ![A diagram outlining what happens when Area 1 detects a phishing email and sends it to Sumo Logic.](/images/email-security/siem-integration/sumo-logic/opening-sumo-logic.png)
 
@@ -56,7 +56,7 @@ The next step is to configure Area 1 to push the Email Detection Events to the S
 3. In the Add Webhooks page, enter the following settings: 
     - **App type**: Select **SIEM** > **Splunk**. In **Auth code**, enter `Sumologic`.
     - **Target**: Enter the HTTP endpoint you saved in the previous section.
-    - For the dispositions (`MALICIOUS`, `SUSPICIOUS`, `SPOOF`, `SPAM`, `BULK`) choose which (if any) you want to send to the webhook. Sending `SPAM` and `BULK` dispositions will generate a high number of events.
+    - For the {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} (`MALICIOUS`, `SUSPICIOUS`, `SPOOF`, `SPAM`, `BULK`) choose which (if any) you want to send to the webhook. Sending `SPAM` and `BULK` dispositions will generate a high number of events.
 4. Select **Publish Webhook**.
 
 Your Sumo Logic integration will now show up in the All Webhooks panel.

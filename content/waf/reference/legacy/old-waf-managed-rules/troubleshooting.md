@@ -18,26 +18,26 @@ By default, WAF managed rules are fully managed via the Cloudflare dashboard and
 
 The definition of suspicious content is subjective for each website. For example, PHP code posted to your website is normally suspicious. However, your website may be teaching how to code and it may require PHP code submissions from visitors. In this situation, you should disable related managed rules for this website, since they would interfere with normal website operation.
 
-To test for false positives, set WAF managed rules to _Simulate_ mode. This mode allows you to record the response to possible attacks without challenging or blocking incoming requests. Also, use the Firewall Analytics [**Activity log**](/waf/security-events/paid-plans/#activity-log) to determine which managed rules caused false positives.
+To test for false positives, set WAF managed rules to _Simulate_ mode. This mode allows you to record the response to possible attacks without challenging or blocking incoming requests. Also, use the Firewall Analytics [**Activity log**](/waf/analytics/security-events/paid-plans/#activity-log) to determine which managed rules caused false positives.
 
 If you find a false positive, there are several potential resolutions:
 
 - **Add the client’s IP addresses to the [IP Access Rules](/waf/tools/ip-access-rules/) allowlist:** If the browser or client visits from the same IP addresses, allowing is recommended. 
 - **Disable the corresponding managed rule(s)**: Stops blocking or challenging false positives, but reduces overall site security. A request blocked by Rule ID `981176` refers to OWASP rules. Decrease OWASP sensitivity to resolve the issue.
 - **Bypass WAF managed rules with a firewall rule (deprecated):** [Create a firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) with the _Bypass_ action to deactivate WAF managed rules for a specific combination of parameters. For example, [bypass managed rules](/firewall/cf-firewall-rules/actions/) for a specific URL and a specific IP address or user agent.
-- **(Not recommended) Disable WAF managed rules for traffic to a URL:** Lowers security on the particular URL endpoint. Configured via [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
+- **(Not recommended) Disable WAF managed rules for traffic to a URL:** Lowers security on the particular URL endpoint. Configured via [Page Rules](/rules/page-rules/).
 
 Additional guidelines are as follows:
 
 - If one specific rule causes false positives, set rule’s **Mode** to _Disable_ rather than turning _Off_ the entire rule **Group**.
-- For false positives with the administrator section of your website, create a [**Page Rule**](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to **Disable Security** for the admin section of your site resources — for example, `example.com/admin`.
+- For false positives with the administrator section of your website, create a [page rule](/rules/page-rules/) to **Disable Security** for the admin section of your site resources — for example, `example.com/admin`.
 
 ## Troubleshoot false negatives
 
 To identify false negatives, review the HTTP logs on your origin web server. To reduce false negatives, use the following checklist:
 
 - Are WAF managed rules enabled in **Security** > **WAF** > **Managed rules**?
-- Are WAF managed rules being disabled via [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)?
+- Are WAF managed rules being disabled via [Page Rules](/rules/page-rules/)?
 - Not all managed rules are enabled by default, so review individual managed rule default actions.
 
     - For example, Cloudflare allows requests with empty user agents by default. To block requests with an empty user agent, change the rule **Mode** to _Block_.

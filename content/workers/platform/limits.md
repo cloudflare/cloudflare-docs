@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Limits
+weight: 2
+meta:
+  description: Cloudflare Workers plan and platform limits.
 ---
 
 # Limits
@@ -9,25 +12,20 @@ title: Limits
 
 {{<table-wrap>}}
 
-| Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
+| Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) and [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model))      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#unbound-usage-model), [Standard](/workers/platform/pricing/#standard-usage-model))|
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 400 ms    | 400 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per Worker | 3         | 3         |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
-
-{{</Aside>}}
+{{<render file="_limits_increase.md">}}
 
 ---
 
@@ -39,7 +37,7 @@ Request headers observe a total limit of 32 KB, but each header is limited to 16
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare account's plan, which is separate from your Workers plan. When the request body size of your `POST`/`PUT`/`PATCH` requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
@@ -64,11 +62,11 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#unbound-usage-model)|
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#example-pricing-unbound-usage-model)|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/platform/javascript-apis/#consumer) |     |
+| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/reference/javascript-apis/#consumer) |     |
 | [Duration](#duration)       |   None                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
@@ -94,11 +92,11 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 {{<table-wrap>}}
 
-| Feature                       | Free   | Bundled |
-| ----------------------------- | ------ | ------- |
-| [Max object size](#cache-api-limits) | 512 MB | 512 MB  |
-| [Calls/request](#cache-api-limits)   | 50     | 50      |
-| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    |
+| Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) | [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)  |
+| ----------------------------- | ------------- | ------- | ------- | ------- |
+| [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  | 512 MB  |
+| [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   | 1,000   |
+| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    | 5 GB    | 5 GB    |
 
 {{</table-wrap>}}
 
@@ -120,11 +118,11 @@ Workers automatically scale onto thousands of Cloudflare global network servers 
 
 Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
 
-The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
+The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
 {{<Aside type="warning">}}
 
-If you are currently being rate limited, upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+If you are currently being rate limited, upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
 
 {{</Aside>}}
 
@@ -209,7 +207,7 @@ Simultaneous Open Connections are measured from the top-level request, meaning a
 
 ## Environment variables
 
-The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Paid plan, and 64 variables on the Free plan.
+The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Workers Paid plan, and 64 variables on the Workers Free plan.
 There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
@@ -218,13 +216,17 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 1 MB on the Workers Free plan.
+
+{{<render file="_limits_increase.md">}}
 
 ---
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
+
+{{<render file="_limits_increase.md">}}
 
 ---
 
@@ -242,15 +244,19 @@ App Workers do not count towards this limit.
 
 ## Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+
+{{<render file="_limits_increase.md">}}
 
 ## Number of routed zones per Worker
 
-When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+
+{{<render file="_limits_increase.md">}}
 
 ---
 
-## Image Resizing with Workers 
+## Image Resizing with Workers
 
 When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
 

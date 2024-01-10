@@ -11,7 +11,7 @@ To create a new key-value pair, or to update the value for a particular key, cal
 The basic form of the method  `put()` looks like this:
 
 ```js
-await NAMESPACE.put(key, value);
+await env.NAMESPACE.put(key, value);
 ```
 
 ## Parameters
@@ -53,6 +53,12 @@ A `key` and a `value` are required for each KV pair. The entire request size mus
 
 KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time, or after a certain amount of time has passed since the key was last modified.
 
+{{<Aside type="note">}}
+
+An `expiration` setting on a key will result in that key being deleted, even in cases where the `cacheTtl` is set to a higher (longer duration) value. Expiration always takes precedence.  
+
+{{</Aside>}}
+
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
 
 There are two ways to specify when a key should expire:
@@ -69,9 +75,9 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTTL`, depending on how you want to specify the key’s expiration time. 
+The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtl`, depending on how you want to specify the key’s expiration time. 
 
-To use `expiration` or `expirationTTL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
+To use `expiration` or `expirationTtl`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 
 {{<definitions>}}
 
@@ -92,7 +98,7 @@ To associate some {{<glossary-tooltip term_id="metadata">}}metadata{{</glossary-
 To do this in your Worker script:
 
 ```js
-await NAMESPACE.put(key, value, {
+await env.NAMESPACE.put(key, value, {
   metadata: { someMetadataKey: "someMetadataValue" },
 });
 ```

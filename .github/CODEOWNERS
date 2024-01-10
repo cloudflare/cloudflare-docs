@@ -11,11 +11,15 @@
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
+/data/calculations/ @kristianfreeman @kodster28 @pedrosousa
+/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa
 
 # AI
-/content/ai-gateway/ @bjesus @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
 /content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
+/data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
@@ -27,22 +31,25 @@
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
-/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
-/content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
+/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
 
 # Developer platform
-/content/d1/ @elithrar @rozenmd @cloudflare/pcx-technical-writing
+/content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
+/content/durable-objects/ @elithrar @vy-ton @joshthoward @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
-/content/hyperdrive/ @elithrar @cloudflare/pcx-technical-writing
+/content/hyperdrive/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/data/changelogs/hyperdrive.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/content/pub-sub/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
-/content/queues/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
-/data/changelogs/queues.yaml @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
+/content/kv/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/content/pub-sub/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/content/queues/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/data/changelogs/queues.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
 /content/r2/ @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /data/changelogs/r2.yaml @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @cloudflare/pcx-technical-writing
@@ -52,11 +59,11 @@
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
@@ -80,7 +87,7 @@
 /data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
 
 # Support
-/content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
+/content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
 /content/turnstile/ @migueldemoura @punkeel @worenga @cloudflare/pcx-technical-writing

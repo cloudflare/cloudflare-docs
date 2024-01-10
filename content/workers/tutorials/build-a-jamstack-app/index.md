@@ -85,7 +85,7 @@ To get started with KV, set up a namespace. All of your cached data will be stor
 ---
 header: Create a new KV namespace
 ---
-$ wrangler kv:namespace create "TODOS" --preview
+$ npx wrangler kv:namespace create "TODOS" --preview
 ```
 
 The associated namespace can be combined with a `--preview` flag to interact with a preview namespace instead of a production namespace. Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:

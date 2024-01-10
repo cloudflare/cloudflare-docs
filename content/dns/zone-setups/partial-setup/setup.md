@@ -21,21 +21,21 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 {{<tutorial>}}
 {{<tutorial-step title="Add your domain to Cloudflare">}}
 
-1.  Create a Cloudflare account and [add your domain](/fundamentals/setup/account-setup/add-site/).
+1. Create a Cloudflare account and [add your domain](/fundamentals/setup/account-setup/add-site/).
 
-2.  For your **Plan**, choose **Business** or **Enterprise**.
+2. For your **Plan**, choose **Business** or **Enterprise**.
 
-3.  Add your domain to Cloudflare. You should land on the **Overview** page.
+3. Add your domain to Cloudflare. You should land on the **Overview** page.
 
-4.  Ignore the instructions to change your nameservers.
+4. Ignore the instructions to change your nameservers.
 
-5.  For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
+5. For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
 
     ![On your domain's overview page, click Convert to CNAME DNS Setup](/images/dns/dns_cname_setup.png)
 
-6.  Click **Convert**.
+6. Click **Convert**.
 
-7.  Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
+7. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
 
 {{</tutorial-step>}}
 
@@ -43,18 +43,15 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 Once you [add your domain to Cloudflare](#add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
-<details>
-<summary>Example verification record</summary>
-<div>
+{{<details header="Example verification record">}}
 
 A verification record for `example.com` might be:
 
-| Type | Name | Content |
-| --- | --- | --- |
-| TXT | `cloudflare-verify.example.com` | 966215192-518620144
+| Type | Name                            | Content             |
+| ---- | ------------------------------- | ------------------- |
+| TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note">}}
 
@@ -78,16 +75,17 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
 
 {{<tutorial-step title="Add DNS records">}}
 
-1.  In Cloudflare, [add an `A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/).
-2.  At your authoritative DNS provider:
+1. In Cloudflare, [add an `A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/).
+2. At your authoritative DNS provider:
 
-    1.  Remove any existing `A`, `AAAA`, or `CNAME` records on the hostname you want to proxy to Cloudflare.
+    1. Remove any existing `A`, `AAAA`, or `CNAME` records on the hostname you want to proxy to Cloudflare.
 
-    2.  Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
+    2. Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
 
         <details>
-        <summary>Example CNAME record at authoritative DNS provider</summary>
-        <div>
+        <summary>
+        Example CNAME record at authoritative DNS provider
+        </summary>
 
         The `CNAME` record for `www.example.com` would be:
 
@@ -95,10 +93,9 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
         www.example.com CNAME www.example.com.cdn.cloudflare.net
         ```
 
-        </div>
         </details>
 
-    3.  Repeat this process for each subdomain proxied to Cloudflare.
+    3. Repeat this process for each subdomain proxied to Cloudflare.
 
 {{</tutorial-step>}}
 {{</tutorial>}}

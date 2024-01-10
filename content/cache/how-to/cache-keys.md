@@ -124,7 +124,7 @@ Currently, you can only exclude the `Origin` header. The `Origin` header is alwa
 Host determines which host header to include in the Cache Key.
 
 - If `resolved: false`, Cloudflare includes the `Host` header in the HTTP request sent to the origin.
-- If `resolved: true`, Cloudflare includes the `Host` header that was resolved to get the `origin IP` for the request. In this scenario, the `Host` header may be different from the header actually sent if the [Cloudflare Resolve Override](/support/page-rules/using-resolve-override-in-page-rules/) feature is used.
+- If `resolved: true`, Cloudflare includes the `Host` header that was resolved to get the `origin IP` for the request. In this scenario, the `Host` header may be different from the header actually sent if the [Cloudflare Resolve Override](/rules/page-rules/how-to/override-url-or-ip-address/) feature is used.
 
 ### Cookie
 

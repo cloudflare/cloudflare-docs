@@ -126,7 +126,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `zone_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
+  - This is the ID of the zone or domain you want to run your Worker on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
 
 - `workers_dev` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -186,7 +186,7 @@ FOO = "some value"
 BAR = "some other string"
 ```
 
-The table keys are available to your script as global variables, which will contain their associated values.
+The table keys are available to your Worker as global variables, which will contain their associated values.
 
 ```js
 // Worker code:
@@ -410,7 +410,7 @@ local_protocol = "https"
 
 ### build
 
-A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules` (beta).
+A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules`.
 
 #### Service Workers
 
@@ -462,13 +462,13 @@ format = "service-worker"
 
 {{<Aside type="note">}}
 
-Ensure the `main` field in your `package.json` references the Worker script you want to publish.
+Ensure the `main` field in your `package.json` references the Worker you want to publish.
 
 {{</Aside>}}
 
 #### Modules
 
-Workers now supports the ES Modules syntax. Modules support in Cloudflare Workers is currently in beta. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
+Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
 
 Module Workers `export` their event handlers instead of using `addEventListener` calls.
 
@@ -476,7 +476,7 @@ Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets)
 
 {{<Aside type="note">}}
 
-Refer to the [`FetchEvent` documentation](/workers/runtime-apis/handlers/fetch) to learn more about the differences between the Service Worker and Module worker formats.
+Refer to the [`fetch()` handler documentation](/workers/runtime-apis/handlers/fetch) to learn more about the differences between the Service Worker and Module worker formats.
 
 {{</Aside>}}
 

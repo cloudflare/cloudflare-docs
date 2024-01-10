@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Connect to databases
 weight: 1
+meta:
+  description: Learn about the different kinds of database integrations Cloudflare supports.
 ---
 
 # Connect to databases
@@ -27,6 +29,7 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 | [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/databases/native-integrations/neon/) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
 | [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No | API | GraphQL API via fetch() |
 | [Upstash Redis](https://blog.cloudflare.com/cloudflare-workers-database-integration-with-upstash/) | [Yes](/workers/databases/native-integrations/upstash/) | [@upstash/redis](https://github.com/upstash/upstash-redis) | API via client library |
+| [TiDB Cloud](https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare)                      | No                                                       | [@tidbcloud/serverless](https://github.com/tidbcloud/serverless-js)               | API via client library                       |
 
 {{</table-wrap>}}
 
@@ -66,5 +69,5 @@ For services that require mTLS authentication, use [mTLS certificates](/workers/
 ## Next steps
 
 * Learn how to connect to [an existing PostgreSQL database](/hyperdrive/) with Hyperdrive.
-* Discover [other storage options available](/workers/learning/storage-options/) for use with Workers.
+* Discover [other storage options available](/workers/platform/storage-options/) for use with Workers.
 * [Create your first database](/d1/get-started/) with Cloudflare D1.

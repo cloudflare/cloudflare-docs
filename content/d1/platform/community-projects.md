@@ -15,6 +15,13 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 
 ## Projects
 
+### Backup/export tools
+
+Two community tools are available for creating backups/exports of D1 databases as `.sql` files. D1 exports can be restored using Wrangler.
+
+* [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](https://developers.cloudflare.com/api/operations/cloudflare-d1-query-database) (slower but simpler.)
+* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](https://developers.cloudflare.com/workers/configuration/bindings/) (faster but more complex.)
+
 ### D1 adapter for Kysely ORM
 
 Kysely is a type-safe and autocompletion-friendly typescript SQL query builder. With this adapter you can interact with D1 with the familiar Kysely interface.
@@ -37,16 +44,6 @@ Drizzle ORM is a TypeScript ORM for SQL databases designed with maximum type saf
 * [D1 example](https://github.com/drizzle-team/drizzle-orm/tree/main/examples/cloudflare-d1)
 * [SQLite API surface](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/sqlite-core/README.md)
 
-### t4-app
-
-The T4 Stack is a universal web and native stack focused on developer experience, rapid development, and performance. The T4 Stack uses Cloudflare D1, Workers, Next.js and Hono as core parts of its stack.
-
-Easy integration with Cloudflare services, such as R2 & D1 enable developers to easily and rapidly build apps with AI-powered features.
-
-* [T4 stack documentation](https://t4stack.com/)
-* [Getting started guide](https://t4stack.com/getting-started)
-* [GitHub repo](https://github.com/timothymiller/t4-app)
-
 ### d1-orm
 
 Object Relational Mapping (ORM) is a technique to query and manipulate data by using JavaScript. Created by a Cloudflare Discord Community Champion, the `d1-orm` seeks to provide a strictly typed experience while using D1.
@@ -66,6 +63,13 @@ Object Relational Mapping (ORM) is a technique to query and manipulate data by u
 Instead of running the `wrangler d1 execute` command in your terminal every time you want to interact with your database, you can interact with D1 from within the `d1-console`. Created by a Discord Community Champion, this gives the benefit of executing multi-line queries, obtaining command history, and viewing a cleanly formatted table output.
 
 * [GitHub](https://github.com/isaac-mcfadyen/d1-console)
+
+### L1
+
+`L1` is a package that brings some Cloudflare Worker ecosystem bindings into PHP and Laravel via the Cloudflare API. It provides interaction with D1 via PDO, KV and Queues, with more services to add in the future, making PHP integration with Cloudflare a real breeze.
+
+* [GitHub](https://github.com/renoki-co/l1)
+* [Packagist](https://packagist.org/packages/renoki-co/l1)
 
 ## Feedback
 

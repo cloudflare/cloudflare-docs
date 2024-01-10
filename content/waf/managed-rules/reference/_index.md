@@ -1,7 +1,7 @@
 ---
 title: Rulesets reference
 pcx_content_type: navigation
-weight: 6
+weight: 14
 layout: single
 ---
 

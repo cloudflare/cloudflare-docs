@@ -11,7 +11,7 @@ In this guide, you will create a new Angular application and deploy it using Clo
 
 ## Setting up a new project
 
-se the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Angular's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Angular's official setup tool, and provide the option to deploy instantly.
 To use `create-cloudflare` to create a new Angular project, run the following command:
 
 To use `create-cloudflare` to create a new Angular project, run the following command:
@@ -92,6 +92,6 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 {{<render file="_learn-more.md" withParameters="Angular">}}

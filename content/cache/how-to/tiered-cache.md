@@ -33,8 +33,7 @@ Regional Cache instructs Cloudflare to check a regional hub data center near the
 
 ### Custom Tiered Cache
 
-Custom Tiered cache allows you to work with Cloudflare’s support team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have an unique traffic pattern. If you want a custom topology, please contact your CSM. 
-
+Custom Tiered cache allows you to work with Cloudflare’s support team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have an unique traffic pattern. If you want a custom topology, please contact your CSM.
 
 ## Availability
 
@@ -42,7 +41,7 @@ Custom Tiered cache allows you to work with Cloudflare’s support team to set a
 
 {{<Aside type="note">}}
 
-Tiered Cache currently is not compatible with responses from [R2](/r2). These responses will act as if Tiered Cache is not configured. 
+Tiered Cache currently is not compatible with responses from [R2](/r2). These responses will act as if Tiered Cache is not configured.
 
 {{</Aside>}}
 
@@ -61,7 +60,7 @@ You can enable Tiered Cache in the dashboard or via API.
 3. From **Tiered Cache**, toggle the button to **enabled**.
 4. In **Tiered Cache Topology**, you can control how your origin connects to Cloudflare’s data centers. You can select:
     - **Upper Tier Cache** - You have the option to choose between Smart or Generic Global Tiered Cache Topology.
-    - **Middle Tier Cache** -  If you have selected Smart or Custom Tiered Cache Topology, you can now enable Regional Tiered Cache. 
+    - **Middle Tier Cache** -  If you have selected Smart or Custom Tiered Cache Topology, you can now enable Regional Tiered Cache.
     - **Custom Tiered Cache** - Allows you to work with Cloudflare’s support team to set a custom topology that fits your specific needs.
     - **Disable Tiered Cache**.
 
@@ -80,9 +79,7 @@ curl --request GET \
 
 You can also configure Tiered Cache Topology via API, for instance:
 
-<details>
-<summary>Enable Smart Tiered Cache</summary>
-<div>
+{{<details header="Enable Smart Tiered Cache">}}
 
 ```json
 curl --request GET \
@@ -91,12 +88,9 @@ curl --request GET \
  --header 'X-Auth-Email: '
  ```
 
- </div>
-</details>
+ {{</details>}}
 
-<details>
-<summary>Enable Regional Tiered Cache</summary>
-<div>
+{{<details header="Enable Regional Tiered Cache">}}
 
 ```json
 curl --request GET \
@@ -105,8 +99,7 @@ curl --request GET \
  --header 'X-Auth-Email: '
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For more API examples and configuration options for Tiered Cache, refer to the [API documentation](/api/operations/tiered-caching-get-tiered-caching-setting).
 

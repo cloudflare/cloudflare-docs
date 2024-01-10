@@ -17,7 +17,6 @@ export default {
   async scheduled(event, env, ctx) {
     // Write code for updating your API
     switch (event.cron) {
-      // You can set up to three schedules maximum.
       case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
@@ -44,7 +43,6 @@ const handler: ExportedHandler = {
   async scheduled(event, env, ctx) {
     // Write code for updating your API
     switch (event.cron) {
-      // You can set up to three schedules maximum.
       case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
@@ -75,7 +73,7 @@ The recommended way of testing Cron Triggers is using Wrangler.
 Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
-$ wrangler dev --test-scheduled
+$ npx wrangler dev --test-scheduled
 
 $ curl "http://localhost:8787/__scheduled?cron=*%2F3+*+*+*+*"
 ```

@@ -1,7 +1,7 @@
 ---
 title: Client-side error codes
 pcx_content_type: reference
-weight: 14
+weight: 15
 layout: single
 ---
 
@@ -48,7 +48,7 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `102***` `103***` `104***` `106***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device. |
 | `105***` | Error Code Family: Turnstile API Compatibility: Turnstile was invoked in a deprecated or invalid way. | No | It is advised to refer to the [Turnstile documentation](/turnstile/) again and refresh the page to obtain the most recent Turnstile version. |
 | `106***` | Error Code Family: Invalid Parameters: The visitor sent unexpected invalid parameters to Turnstile. | No | Verify the visitor's authenticity by other means. |
-| `110100` `110110` | Invalid sitekey | No | Turnstile was invoked with an invalid sitekey or a sitekey that is no longer active. Verify if the sitekey provided is still active. |
+| `110100` `110110` | Invalid {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}} | No | Turnstile was invoked with an invalid sitekey or a sitekey that is no longer active. Verify if the sitekey provided is still active. |
 | `110200` | Domain not allowed. | No | Turnstile was used on a domain that was not allowed for this widget to be used on. Ensure that the domain Turnstile is intended to run on is allowed in the widget configuration. |
 | `110420` | This error occurs when an unsupported or incorrectly formatted action is submitted. | No | Ensure that the action conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. |
 | `110430` | This error occurs when an unsupported or incorrectly formatted action is submitted. The "Invalid CDATA" error in Turnstile refers to an issue encountered when processing Custom Data (CDATA). This error occurs when the CDATA provided does not adhere to the expected format or contains invalid characters. | No | Ensure that the CDATA conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. | 
@@ -58,5 +58,5 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `120***` | Error Code Family: Internal Errors for Cloudflare Employees. | No | Only encountered by Cloudflare Support Engineers while debugging. | 
 | `200010` | Invalid Caching: Some portion of Turnstile was accidentally cached. | No | Encourage the visitor to clear their cache. | 
 | `200100` | Time Problem: The visitor's clock is incorrect. | No | Encourage the visitor to set their clock to the correct time. | 
-| `300100` | Generic Client Execution Error. An unspecified error occurred in the visitor while they were solving a challenge. | Yes | Potentially Automated Visitor. Retry the challenge. Upon multiple subsequent failures, verify the visitor otherwise. |
+| `300***` | Generic Client Execution Error. An unspecified error occurred in the visitor while they were solving a challenge. | Yes | Potentially Automated Visitor. Retry the challenge. Upon multiple subsequent failures, verify the visitor otherwise. |
 | `600***` | Error Family Challenge Execution Failure: A visitor failed to solve a Turnstile Challenge. Also used by [failing testing sitekey](/turnstile/reference/testing/). | Yes | Potentially Automated Visitor. Retry the challenge. Upon multiple subsequent failures, verify the visitor otherwise. |

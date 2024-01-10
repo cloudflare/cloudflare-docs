@@ -59,6 +59,6 @@ For upgrades and installation alternatives, refer to [Install Pulumi](https://ww
 
 {{</Aside>}}
 
-<!-- # Next steps
+## Next steps
 
-Visit the [Get started tutorial](TODO) to write a simple Pulumi program. It takes about 10 minutes to complete. -->
+Follow the [Hello World tutorial](/pulumi/tutorial/hello-world/) to write a simple Pulumi program. It takes about 10 minutes to complete.

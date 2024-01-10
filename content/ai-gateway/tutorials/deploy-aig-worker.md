@@ -158,7 +158,7 @@ export default {
 
 		  const response = chatCompletion.choices[0].message;
 
-		  return new Response(JSON.stringify(response);
+		  return new Response(JSON.stringify(response));
 		} catch (e) {
 		  return new Response(e);
 		}

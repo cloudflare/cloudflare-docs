@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Order of enforcement
-weight: 11
+weight: 12
 ---
 
 # Order of enforcement
@@ -24,8 +24,20 @@ flowchart TB
     subgraph DNS
     dns1["DNS policies"]
     style DNS text-align:left
+    dns1--Resolved by-->dns2["1.1.1.1"]
+    dns1-.->dns3
+
+        %% DNS resolution
+        subgraph Resolution
+        dns2["1.1.1.1"]
+        dns3["Resolver policies <br />(Enterprise users only)"]--Resolved by-->dns4["Custom resolver"]
+        end
+
     end
-    dns1--Resolved by-->dns2["1.1.1.1"]------>internet
+    dns2["1.1.1.1"]----->internet
+    dns4----->internet
+    dns4-.->cloudflare["Private network services <br />(Cloudflare Tunnel, Magic WAN, etc.)"]
+
 
     %% Proxied by Gateway
     subgraph Proxy
@@ -33,7 +45,7 @@ flowchart TB
     %% HTTP policies
     subgraph HTTP
     http1{{"Do Not Inspect policies"}}
-    http1--Inspect-->http2["Isolate policies"]
+    http1-."Inspect".->http2["Isolate policies  <br />(with add-on)"]
     http2-->http3["Allow, Block, Do Not Scan policies"]
     end
 
@@ -49,7 +61,7 @@ flowchart TB
 
     %% Egress
     subgraph Egress
-    network1-.Enterprise users only.->egress1[Egress policies]
+    network1-.->egress1["Egress policies <br />(Enterprise users only)"]
     end
 
     %% Finish
@@ -61,9 +73,11 @@ flowchart TB
 
 Gateway applies your policies in the following order:
 
-1. DNS
-2. HTTP
-3. Network
+1. DNS policies with selectors evaluated before resolution
+2. DNS policies with selectors evaluated after resolution
+3. HTTP policies
+4. Network policies
+5. Egress policies (if applicable)
 
 DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
 
@@ -75,9 +89,9 @@ Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against
 
 For proxied [HTTP/3 traffic](/cloudflare-one/policies/gateway/http-policies/http3/), Gateway applies your policies in the following order:
 
-1. DNS
-2. Network
-3. HTTP
+1. DNS policies
+2. Network policies
+3. HTTP policies
 
 ## Priority within a policy builder
 

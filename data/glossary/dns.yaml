@@ -13,14 +13,14 @@ entries:
 
 - term: DNS over HTTPS
   general_definition: |-
-    DNS over HTTPS (DoH) is a standard for encrypting DNS traffic, preventing tracking and spoofing of DNS queries.
+    DNS over HTTPS (DoH) is a standard for encrypting DNS traffic via the HTTPS protocol, preventing tracking and spoofing of DNS queries.
   associated_products: 
     - 1.1.1.1
     - Cloudflare One
 
 - term: DNS over TLS
   general_definition: |-
-    DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (853) and TLS encryption.
+    DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (`853`) and TLS encryption.
   associated_products: 
     - 1.1.1.1
     - Cloudflare One
@@ -47,9 +47,12 @@ entries:
 - term: hostname
   general_definition: |-
     the name given to a server or node on a network, often the public DNS name of a server.
-  associated_products: 
+  associated_products:
     - Cloudflare One
+    - DDoS Protection
 
 - term: nameserver
   general_definition: |-
     a nameserver is a dedicated server that translates human readable hostnames into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
+  associated_products:
+    - DDoS Protection

@@ -45,6 +45,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Gridsome project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Gridsome project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
 
 {{<render file="_learn-more.md" withParameters="Gridsome">}}

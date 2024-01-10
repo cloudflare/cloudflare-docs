@@ -8,37 +8,28 @@ meta:
 
 # Per-hostname authenticated origin pulls
 
-When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. Customers can use client certificates from their Private PKI to authenticate connections from Cloudflare.
+When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
 
 ## 1. Upload custom certificate
 
 First, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
-In the API response, save the certificate `id` since it is required for the next step.
+In the API response, save the certificate `id` since it will be required in step 4.
 
-## 2. Enable Authenticated Origin Pulls (globally)
+## 2. Configure origin to accept client certificates
 
-Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone.
+{{<render file="_aop-configure-origin.md">}}
 
-This step sets the TLS Client Auth to require Cloudflare to use a client certificate when connecting to your origin server.
+## 3. Enable Authenticated Origin Pulls (globally)
 
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
+{{<render file="_aop-enable-feature.md">}}
 
-To enable **Authenticated Origin Pulls** in the dashboard:
+## 4. Enable Authenticated Origin Pulls for the hostname
 
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Go to **SSL/TLS** > **Origin Server**.
-3.  For **Authenticated Origin Pulls**, switch the toggle to **On**.
+Use the Cloudflare API to send a [`PUT`](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) request to enable Authenticated Origin Pulls for specific hostnames.
 
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
+If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
 
-To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH`](/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+## 5. Enforce validation check on your origin
 
-{{</tab>}}
-{{</tabs>}}
-
-## 3. Enable Authenticated Origin Pulls for the hostname
-
-Finally, use the Cloudflare API to send a [`PUT`](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) request to enable Authenticated Origin Pulls for specific hostnames.
+{{<render file="_aop-enforce-validation.md">}}

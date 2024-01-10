@@ -22,9 +22,7 @@ A static URL redirect has the following configuration parameters:
 
 * **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 The full syntax of the `"action_parameters"` field for a redirect rule performing a static URL redirect is the following:
 
@@ -44,8 +42,7 @@ The only required parameter is `<STATIC_URL_VALUE>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Dynamic URL redirect
 
@@ -59,9 +56,7 @@ A dynamic URL redirect has the following configuration parameters:
 
 * **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 The full syntax of the `"action_parameters"` field for a redirect rule performing a dynamic URL redirect is the following:
 
@@ -81,5 +76,4 @@ The only required parameter is `<DYNAMIC_URL_EXPRESSION>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
-</div>
-</details>
+{{</details>}}

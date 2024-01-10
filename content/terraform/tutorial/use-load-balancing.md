@@ -144,7 +144,7 @@ As noted above, there is no discernible pattern for which origin receives the re
 ## 4. Switch to using Cloudflare's Load Balancing product
 
 {{<Aside type="note">}}
-Before proceeding, ensure [Load Balancing is enabled for your account](/load-balancing/how-to/enable-load-balancing/).
+Before proceeding, ensure [Load Balancing is enabled for your account](/load-balancing/get-started/enable-load-balancing/).
 {{</Aside>}}
 
 As described in the [Load Balancing tutorial](/learning-paths/load-balancing/), you will need to complete three tasks:
@@ -214,7 +214,7 @@ EOF
 
 ### iii. Define and create the load balancer
 
-When you create a load balancer (LB), it will [replace any existing DNS records with the same name](/load-balancing/reference/dns-records/). For example, if you create the `www.example.com` load balancer below, it will supersede the two `www` DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in [step 2](#2-preview-and-merge-the-changes) above.
+When you create a load balancer (LB), it will [replace any existing DNS records with the same name](/load-balancing/load-balancers/dns-records/). For example, if you create the `www.example.com` load balancer below, it will supersede the two `www` DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in [step 2](#2-preview-and-merge-the-changes) above.
 
 ```bash
 $ cat >> cloudflare.tf <<'EOF'

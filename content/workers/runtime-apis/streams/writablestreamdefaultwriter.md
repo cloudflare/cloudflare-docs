@@ -72,6 +72,7 @@ await someResponse.body.pipeTo(writable);
 - {{<code>}}write(chunk{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}Promise\<void>{{</type>}}
 
   - Writes a chunk of data to the writer and returns a promise that resolves if the operation succeeds.
+  - The underlying stream may accept fewer kinds of type than `any`, it will throw an exception when encountering an unexpected type.
 
 {{</definitions>}}
 
