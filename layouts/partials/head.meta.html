@@ -18,23 +18,23 @@
 
   {{- $productGroup := "" -}}
   {{- with $DATA.product.group -}}
-  {{- $productGroup = . -}}
+    {{- $productGroup = . -}}
   {{- else -}}
-  <!-- Special behavior for learning paths -->
-  {{- if or (eq .Context.Params.pcx_content_type "learning-path") (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
-  {{- $learningPathArray := index .Context.Site.Data "learning-paths" -}}
-  {{- range $index, $item := $learningPathArray -}}
-  {{- if eq (printf "%T" $item) "map[string]interface {}" -}}
-  {{- with $item.path -}}
-  {{- if (in $rellink .) -}}
-  {{- with $item.product_group -}}
-  {{- $productGroup = . -}}
-  {{- end -}}
-  {{- end -}}
-  {{- end -}}
-  {{- end -}}
-  {{- end -}}
-  {{- end -}}
+    <!-- Special behavior for learning paths -->
+    {{- if or (eq .Context.Params.pcx_content_type "learning-path") (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
+      {{- $learningPathArray := index .Context.Site.Data "learning-paths" -}}
+      {{- range $index, $item := $learningPathArray -}}
+        {{- if eq (printf "%T" $item) "map[string]interface {}" -}}
+          {{- with $item.path -}}
+            {{- if (in $rellink .) -}}
+              {{- with $item.product_group -}}
+                {{- $productGroup = . -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
   {{- end -}}
 
   <!-- Choose the preview image based on the product group -->
@@ -49,24 +49,24 @@
   -}}
 
   {{- range $key, $value := $imageDict -}}
-  {{- if eq $key $productGroup -}}
-  {{- $imagePlaceholder = $value | absURL -}}
-  {{- end -}}
+    {{- if eq $key $productGroup -}}
+      {{- $imagePlaceholder = $value | absURL -}}
+    {{- end -}}
   {{- end -}}
 
   {{- $pt := default .Context.Title .Context.Params.meta.title -}}
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
-  {{- $titleAddition := "" -}}
-  {{- if eq (len .Context.Ancestors) 4 -}}
-    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 1).Title -}}
-  {{- else -}}
-    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
-  {{- end -}}
+    {{- $titleAddition := "" -}}
+    {{- if eq (len .Context.Ancestors) 4 -}}
+      {{- $titleAddition = printf " · %s" (index .Context.Ancestors 1).Title -}}
+    {{- else -}}
+      {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
+    {{- end -}}
   
-  {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
+    {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
-  {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
+    {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
   {{- end -}}
   {{- $description := (partial "seo-meta-description.html" (dict "meta" $META "content" .Context.Content "params"
   .Context.Params "truncate" $metaTruncateLength "plainify" true )) -}}
@@ -105,8 +105,8 @@
   <!-- Add metadata for reporting -->
   {{- $product := "" -}}
   {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
-  {{- $product = replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
-  <meta name="pcx_product" content="{{- $product -}}">
+    {{- $product = replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
+    <meta name="pcx_product" content="{{- $product -}}">
   {{- end -}}
 
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
@@ -116,65 +116,65 @@
   <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
   
   {{- with .Context.Params.updated -}}
-  {{- $lastReview := . | time -}}
-  {{- $diffReview := now.Sub $lastReview -}}
-  <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
+    {{- $lastReview := . | time -}}
+    {{- $diffReview := now.Sub $lastReview -}}
+    <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
   {{- else -}}
-  <meta name="pcx_last_reviewed" content="500" />
+    <meta name="pcx_last_reviewed" content="500" />
   {{- end -}}
 
   {{- with .Context.Params.pcx_content_type -}}
-  {{- if in $availableContentTypes . -}}
-  <meta name="pcx_content_type" content="{{ . }}" />
+    {{- if in $availableContentTypes . -}}
+      <meta name="pcx_content_type" content="{{ . }}" />
+    {{- else -}}
+      <meta name="pcx_content_type" content="Invalid content type" />
+    {{- end -}}
   {{- else -}}
-  <meta name="pcx_content_type" content="Invalid content type" />
-  {{- end -}}
-  {{- else -}}
-  <meta name="pcx_content_type" content="Not set" />
+    <meta name="pcx_content_type" content="Not set" />
   {{- end -}}
 
   {{- if ne $productGroup "" -}}
-  <meta name="pcx_content_group" content="{{$productGroup}}" />
+    <meta name="pcx_content_group" content="{{$productGroup}}" />
   {{- end -}}
 
   <!--Add rss feed if specified via output -->
   {{ with $.Context.OutputFormats.Get "rss" }}
   
-  {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
+    {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
 
-  {{- if ne $product "" -}}
-  {{ printf `
-    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - %s - RSS Feed" />` $rssFeedURL $pt ($product | title) | safeHTML }}
+    {{- if ne $product "" -}}
+      {{ printf `
+        <link rel="alternate" type="application/rss+xml" href="%s" title="%s - %s - RSS Feed" />` $rssFeedURL $pt ($product | title) | safeHTML }}
 
-  {{- else -}}
-  {{ printf `
-    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeedURL $pt | safeHTML }}
-  {{- end -}}
+    {{- else -}}
+      {{ printf `
+        <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeedURL $pt | safeHTML }}
+    {{- end -}}
   {{- end -}}
 
   <!--Add rss feed links if specified via Param -->
   {{ with $.Context.Params.rss -}}
-  {{ if eq . "folder" }}
+    {{ if eq . "folder" }}
 
-  {{ $folderPlaceholder = ".atom" }}
+      {{ $folderPlaceholder = ".atom" }}
 
-  {{ else if eq . "file" }}
+    {{ else if eq . "file" }}
 
-  {{ $folderPlaceholder = ".md.atom" }}
+      {{ $folderPlaceholder = ".md.atom" }}
 
-  {{ end }}
+    {{ end }}
 
-  {{ if or (eq . "folder") (eq . "file") }}
+    {{ if or (eq . "folder") (eq . "file") }}
 
-  {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
-  {{ printf `
-  <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
+      {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
+      {{ printf `
+      <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
 
-  {{ else }}
+    {{ else }}
 
-  {{ printf `
-  <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
-  {{ end }}
+      {{ printf `
+      <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
+    {{ end }}
 
 
   {{ end }}
@@ -197,62 +197,62 @@
   <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
 
   {{- if $DATA.algolia -}}
-  <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
-  <meta name="docsearch:product" content="{{ $DATA.algolia.product }}" />
+    <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
+    <meta name="docsearch:product" content="{{ $DATA.algolia.product }}" />
   {{- end -}}
 
   {{- $coveo := index $.Context.Site.Params "coveo" -}}
   {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
-  <link rel="stylesheet preconnect" href="/search-coveo.css" />
-  <link rel="stylesheet preconnect"
-    href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
-    integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA=="
-    crossorigin="anonymous" />
-  <script defer async class="coveo-script"
-    src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js"
-    integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw=="
-    crossorigin="anonymous"></script>
+    <link rel="stylesheet preconnect" href="/search-coveo.css" />
+    <link rel="stylesheet preconnect"
+      href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
+      integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA=="
+      crossorigin="anonymous" />
+    <script defer async class="coveo-script"
+      src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js"
+      integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw=="
+      crossorigin="anonymous"></script>
 
-  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $script := (resources.Get "search-coveo.ts") | js.Build $opts -}}
+    {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
+    {{- $script := (resources.Get "search-coveo.ts") | js.Build $opts -}}
 
-  {{- if hugo.IsProduction -}}
-  {{- $script = $script | minify | fingerprint "md5" -}}
-  {{- end -}}
+    {{- if hugo.IsProduction -}}
+      {{- $script = $script | minify | fingerprint "md5" -}}
+    {{- end -}}
 
-  <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.token }}" data-org="{{ $coveo.org }}"></script>
+    <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.token }}" data-org="{{ $coveo.org }}"></script>
   {{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
-  <link rel="stylesheet preconnect" href="/tutorial-coveo.css" />
-  <link rel="stylesheet preconnect"
-    href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
-    integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA=="
-    crossorigin="anonymous" />
-  <script defer async class="coveo-script"
-    src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js"
-    integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw=="
-    crossorigin="anonymous"></script>
+    <link rel="stylesheet preconnect" href="/tutorial-coveo.css" />
+    <link rel="stylesheet preconnect"
+      href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
+      integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA=="
+      crossorigin="anonymous" />
+    <script defer async class="coveo-script"
+      src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js"
+      integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw=="
+      crossorigin="anonymous"></script>
 
-  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $search_script := (resources.Get "search.ts") | js.Build $opts -}}
-  {{- $script := (resources.Get "tutorial-coveo.ts") | js.Build $opts -}}
+    {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
+    {{- $search_script := (resources.Get "search.ts") | js.Build $opts -}}
+    {{- $script := (resources.Get "tutorial-coveo.ts") | js.Build $opts -}}
 
-  {{- if hugo.IsProduction -}}
-  {{- $script = $script | minify | fingerprint "md5" -}}
-  {{- end -}}
+    {{- if hugo.IsProduction -}}
+      {{- $script = $script | minify | fingerprint "md5" -}}
+    {{- end -}}
 
-  <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.tutorial_token }}"
-    data-org="{{ $coveo.org }}"></script>
+    <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.tutorial_token }}"
+      data-org="{{ $coveo.org }}"></script>
   {{- end -}}
 
   {{- if (in $.Context.RelPermalink "/learning-paths/") -}}
-  <link rel="stylesheet preconnect" href="/learning-paths.css" />
+    <link rel="stylesheet preconnect" href="/learning-paths.css" />
   {{- end -}}
 
   {{- if or (eq $.Context.RelPermalink "/learning-paths/") (eq $.Context.RelPermalink "/learning-paths") -}}
-  {{- partial "script" (dict "src" "learning-paths.ts" "defer" true) -}}
+    {{- partial "script" (dict "src" "learning-paths.ts" "defer" true) -}}
   {{- end -}}
 
 
   {{ if eq $.Context.RelPermalink "/plans/" }}
-  <link rel="stylesheet preconnect" href="/plans.css" />
+    <link rel="stylesheet preconnect" href="/plans.css" />
   {{- end -}}
