@@ -20,23 +20,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.1
-      - uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: '0.110.0'
-          extended: true
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-
-      - run: pnpm install
+      - run: npm ci
 
       - run: make build
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Check - Broken Links
-        run: pnpm run crawl
-        if: success()
+        run: npm run crawl
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts

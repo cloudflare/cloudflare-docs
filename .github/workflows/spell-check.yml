@@ -11,7 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   spell-check:
     runs-on: ubuntu-latest
     steps:

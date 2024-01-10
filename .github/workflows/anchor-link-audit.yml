@@ -6,7 +6,7 @@ name: Anchor link audit
 
 on:
   schedule:
-    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+    - cron: "0 0 * * 0" # Run at 00:00 UTC every Sunday
   workflow_dispatch:
 
 jobs:
@@ -20,15 +20,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.1
-      - uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: '0.110.0'
-          extended: true
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-
-      - run: pnpm install
+      - run: npm ci
 
       - run: make build
         env:
