@@ -969,6 +969,7 @@
 /web3/ipfs-gateway/browsing-ipfs/ /web3/how-to/use-ipfs-gateway/ 301
 /web3/ipfs-gateway/connecting-website/ /web3/how-to/manage-gateways/ 301
 /web3/ipfs-gateway/setting-up-a-server/ /web3/ipfs-gateway/ 301
+/web3/how-to/use-polygon-gateway/ /web3/how-to/ 301
 
 # workers
 /workers/about/ /workers/reference/ 301
@@ -1381,6 +1382,7 @@
 /waf/custom-rulesets/* /waf/custom-rules/custom-rulesets/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
+/web3/polygon-gateway/* /web3/ 301
 
 # Old WAF changelog entries
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301
