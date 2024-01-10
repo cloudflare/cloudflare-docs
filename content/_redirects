@@ -258,7 +258,7 @@
 /support/dns/troubleshooting/my-dns-doesnt-work/ /dns/troubleshooting/dns-issues/ 301
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
-/durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-location-example/ 301
+/durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-in-memory-state/ 301
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
