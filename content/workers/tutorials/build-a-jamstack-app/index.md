@@ -26,7 +26,7 @@ If you would like to see the finished code for this project, find the [project o
 
 ## 1. Create a new Workers project
 
-First, use create-cloudflare CLI tool to create a new Cloudflare Workers project. In this tutorial, you will use the default `Hello World` template to create a Workers project.
+First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
 ```sh
 ---
