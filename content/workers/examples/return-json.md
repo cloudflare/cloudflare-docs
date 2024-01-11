@@ -11,6 +11,7 @@ title: Return JSON
 weight: 2
 layout: example
 playground: true
+updated: 2024-01-11
 ---
 
 {{<tabs labels="js | ts">}}

@@ -9,6 +9,7 @@ title: Fetch HTML
 weight: 3
 layout: example
 playground: true
+updated: 2024-01-11
 ---
 
 {{<tabs labels="js | ts">}}
