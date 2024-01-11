@@ -1177,8 +1177,8 @@
 /workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
 
 # workers KV
-
-/
+/kv/platform/environments/ /kv/reference/environments/ 301
+/kv/platform/kv-commands/ /kv/reference/kv-commands/ 301
 
 # zaraz
 
