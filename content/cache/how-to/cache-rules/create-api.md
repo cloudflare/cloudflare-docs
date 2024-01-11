@@ -143,7 +143,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 {{</details>}}
 
-{{<details header="Example: Update an existing rule">}}
+{{<details header="Example: Update the position of an existing rule">}}
 
 ```bash
 ---
@@ -161,7 +161,6 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules
         "cache": true
       }
       "enabled": true,
-      "ref": "my_ref",
       "position": {
         "before": "da5e8e506c8e7877fe06cdf4c41add54"
       }
