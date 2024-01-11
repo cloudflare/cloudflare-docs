@@ -730,11 +730,11 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Paid add-on for Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Paid add-on"
+          "ent": "Yes"
         }
       }
     },
