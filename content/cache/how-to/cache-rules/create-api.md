@@ -26,7 +26,7 @@ When creating a cache rule via API, make sure you:
     * kind: `zone`
     * phase: `http_request_cache_settings`
 3. Use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation to add a cache rule to the list of ruleset rules. Alternatively, include the rule in the [Create a zone ruleset](/api/operations/createZoneRuleset) request mentioned in the previous step.
-4. Use [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation to update an existing rule within the ruleset. For an example, refer to the section below.
+4. (Optional) To update an existing cache rule, use the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation. For an example, refer to the section below.
 
 ## Example requests
 
@@ -150,7 +150,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 header: Request
 ---
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id} \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -161,7 +161,6 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
         "cache": true
       }
       "enabled": true,
-      "id": "3a03d665bac047339bb530ecb439a90d",
       "ref": "my_ref",
       "position": {
         "before": "da5e8e506c8e7877fe06cdf4c41add54"
