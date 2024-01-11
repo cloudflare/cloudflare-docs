@@ -1183,6 +1183,10 @@
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
 /kv/platform/kv-commands/ /kv/reference/kv-commands/ 301
+/kv/learning/ /kv/reference/ 301
+/kv/learning/how-kv-works/ /kv/reference/how-kv-works/ 301
+/kv/learning/kv-bindings/ /kv/reference/kv-bindings/ 301
+/kv/learning/kv-namespaces/ /kv/reference/kv-namespaces/ 301
 
 # zaraz
 

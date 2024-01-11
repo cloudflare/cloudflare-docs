@@ -81,8 +81,8 @@ It is ideal for projects that require:
 
 To get started with KV:
 
-* Read how [KV works](/kv/learning/how-kv-works/).
-* Create a [KV namespace](/kv/learning/kv-namespaces/).
+* Read how [KV works](/kv/reference/how-kv-works/).
+* Create a [KV namespace](/kv/reference/kv-namespaces/).
 * Review the [KV Runtime API](/kv/api/).
 * Learn about KV [Limits](/kv/platform/limits/).
 
