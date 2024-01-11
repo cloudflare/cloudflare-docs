@@ -19,6 +19,10 @@ Refer to the following Cloudflare Workers resources for two different implementa
 
 To get started with Workers, refer to [Configure a Worker](/workers/get-started/quickstarts/).
 
+{{<Aside type="note">}}
+The code provided in the [Sign requests](/workers/examples/signing-requests/) example is compatible with the `is_timed_hmac_valid_v0()` function used in [Option 2](#option-2-configure-using-waf-custom-rules). This means that you can verify requests signed by the example Worker script using a WAF custom rule.
+{{</Aside>}}
+
 ## Option 2: Configure using WAF custom rules
 
 Use the Rules language [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) HMAC validation function to validate hash-based message authentication code (HMAC) tokens in a custom rule expression.
@@ -60,7 +64,7 @@ Where:
 - `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a Base64-encoded MAC.
 
 {{<Aside type="warning">}}
-When you do not use the optional `flags` argument for `is_timed_hmac_valid_v0()`, you must URL encode the Base64-encoded MAC value. For more information, refer to [HMAC Validation](/ruleset-engine/rules-language/functions/#hmac-validation).
+When you do not use the optional `flags` argument for `is_timed_hmac_valid_v0()`, you must URL encode the Base64-encoded MAC value. For more information, refer to [HMAC validation](/ruleset-engine/rules-language/functions/#hmac-validation).
 {{</Aside>}}
 
 The expression for the custom rule would be similar to the following:
