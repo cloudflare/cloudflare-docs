@@ -19,12 +19,7 @@
       <article class="DocsMarkdown">
         <h1>{{ .Title }}</h1>
         {{ if .Params.Playground }}
-        <div class="DocsMarkdown--content-column">
-          <a href="{{- .Params.Playground -}}" class="DocsMarkdown--link" target="_blank" rel="noopener">
-            <span class="DocsMarkdown--link-content">Try in Workers Playground</span>
-            {{- partialCached "external.icon" . -}}
-          </a>
-        </div>
+        <workers-playground-link></workers-playground-link>
         {{ end }}
         <div class="DocsMarkdown--content-column">
           {{- .Params.Summary -}}
