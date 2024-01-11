@@ -1180,6 +1180,10 @@
 /workers-ai/models/sentiment-analysis/ /workers-ai/models/text-classification/ 301
 /workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
 
+# workers KV
+/kv/platform/environments/ /kv/reference/environments/ 301
+/kv/platform/kv-commands/ /kv/reference/kv-commands/ 301
+
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
