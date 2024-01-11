@@ -12,9 +12,9 @@ weight: 1001
 layout: example
 ---
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 
-This example Worker makes use of the [Node.JS Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](http://localhost:5173/workers/runtime-apis/nodejs/#enable-nodejs-with-workers)
+This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
 {{</Aside>}}
 
 You can both verify and generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
@@ -63,7 +63,7 @@ export default {
     const url = new URL(request.url);
 
     // This is a demonstration Worker that allows unauthenticated access to /generate
-    // In a real application you'd want to make sure that
+    // In a real application you would want to make sure that
     // users could only generate signed URLs when authenticated
     if (url.pathname.startsWith("/generate/")) {
       url.pathname = url.pathname.replace("/generate/", "/");
@@ -71,7 +71,7 @@ export default {
       const timestamp = Math.floor(Date.now() / 1000);
 
       // This contains all the data about the request that you want to be able to verify
-      // Here we only sign the timestamp and the pathname, but often you'll want to
+      // Here we only sign the timestamp and the pathname, but often you will want to
       // include more data (for instance, the URL hostname or query parameters)
       const dataToAuthenticate = `${url.pathname}${timestamp}`;
 
@@ -82,7 +82,7 @@ export default {
       );
 
       // Refer to https://developers.cloudflare.com/workers/runtime-apis/nodejs/
-      // for more details on using NodeJS APIs in Workers
+      // for more details on using Node.js APIs in Workers
       const base64Mac = Buffer.from(mac).toString("base64");
 
       url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
@@ -165,7 +165,7 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
     const url = new URL(request.url);
 
     // This is a demonstration Worker that allows unauthenticated access to /generate
-    // In a real application you'd want to make sure that
+    // In a real application you would want to make sure that
     // users could only generate signed URLs when authenticated
     if (url.pathname.startsWith("/generate/")) {
       url.pathname = url.pathname.replace("/generate/", "/");
@@ -173,7 +173,7 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
       const timestamp = Math.floor(Date.now() / 1000);
 
       // This contains all the data about the request that you want to be able to verify
-      // Here we only sign the timestamp and the pathname, but often you'll want to
+      // Here we only sign the timestamp and the pathname, but often you will want to
       // include more data (for instance, the URL hostname or query parameters)
       const dataToAuthenticate = `${url.pathname}${timestamp}`;
 
