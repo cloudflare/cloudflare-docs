@@ -1171,7 +1171,6 @@
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 /workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
-/workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 /workers/learning/security-model/ /workers/reference/security-model/ 301
 
 # workers ai
