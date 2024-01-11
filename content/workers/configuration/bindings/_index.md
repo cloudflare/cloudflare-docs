@@ -31,7 +31,7 @@ Service bindings allow for communication with another Worker.
 
 KV namespace bindings allow for communication between a Worker and a KV namespace.
 
-* Learn more about [KV namespace bindings](/kv/learning/kv-bindings/).
+* Learn more about [KV namespace bindings](/kv/reference/kv-bindings/).
 * Configure KV namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#kv-namespaces).
 
 ### Durable Object bindings
