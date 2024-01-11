@@ -9,6 +9,7 @@ pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001
 layout: example
+playground: true
 ---
 
 {{<Aside type="note">}}

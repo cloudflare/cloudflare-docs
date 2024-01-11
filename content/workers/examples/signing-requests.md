@@ -6,10 +6,10 @@ tags:
   - Security
   - WebCrypto
 pcx_content_type: configuration
-playground: true
 title: Sign requests
 weight: 1001
 layout: example
+playground: true
 ---
 
 {{<Aside type="note">}}
