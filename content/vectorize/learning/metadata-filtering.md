@@ -14,10 +14,21 @@ By using metadata filtering to limit the scope of a query, you can filter by spe
 
 Optional `filter` property on `query()` method specifies metadata filter:
 
-- Operators: `$eq` (equals), `$ne` (not equals).
+| Operator | Description |
+| -------- | ----------- |
+| `$eq`    | Equals      |
+| `$ne`    | Not equals |
+
 - `filter` must be non-empty object whose compact JSON representation must be less than 2048 bytes.
 - `filter` object keys cannot be empty, contain `" | .` (dot is reserved for nesting), start with `$`, or be longer than 512 characters.
 - `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values.
+
+### Namespace versus metadata filtering
+
+Both [namespaces](/vectorize/learning/insert-vectors/#namespaces) and metadata filtering narrow the vector search space for a query.  Consider the following when evaluating both filter types:
+
+- A namespace filter is applied before metadata filter(s). 
+- A vector can only be part of a single namespace with the documented [limits](/vectorize/platform/limits/). Vector metadata can contain multiple key-value pairs up to [metadata per vector limits](/vectorize/platform/limits/). Metadata values support different types (`string`, `boolean`, and others), therefore offering more flexibility.
 
 ### Valid `filter` examples
 

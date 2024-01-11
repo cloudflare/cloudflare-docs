@@ -30,14 +30,14 @@ To create a page rule in the dashboard:
     -   **Save as Draft** to save the rule and leave it disabled.
     -   **Save and Deploy Page Rule** to save the rule and enable it immediately.
 
-For ideas about what rules you can create, refer to [example rules](/rules/page-rules/reference/recommended-rules/).
+For ideas about what rules you can create, refer to [recommended rules](/rules/page-rules/reference/recommended-rules/).
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 To create a page rule using the API, send a [`POST` request](/api/operations/page-rules-create-a-page-rule).
 
-You may also want to review the documentation on [wildcard matching](/rules/page-rules/reference/wildcard-matching/), [available settings](/rules/page-rules/reference/settings/), and [example rules](/rules/page-rules/reference/recommended-rules/).
+You may also want to review the documentation on [wildcard matching](/rules/page-rules/reference/wildcard-matching/), [available settings](/rules/page-rules/reference/settings/), and [recommended rules](/rules/page-rules/reference/recommended-rules/).
 
 {{</tab>}}
 {{</tabs>}}

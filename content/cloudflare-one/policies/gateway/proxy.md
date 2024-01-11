@@ -6,7 +6,7 @@ weight: 14
 
 # Gateway proxy
 
-{{<render file="gateway/_gateway-proxy-description.md" productFolder="cloudflare-one">}}
+{{<render file="gateway/_proxy.md" productFolder="cloudflare-one">}}
 
 ## Proxy protocols
 

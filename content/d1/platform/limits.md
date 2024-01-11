@@ -1,13 +1,14 @@
 ---
 pcx_content_type: concept
 title: Limits
+weight: 2
 ---
 
 # Limits
 
 {{<Aside type="note" heading="D1 is currently in public beta">}}
 
-Many of these limits will increase during D1's [public beta](/workers/platform/betas/). Join the [`#d1-beta`](https://discord.cloudflare.com) channel in the Cloudflare Developer Discord or subscribe to D1's [public changelog](/d1/changelog/) to keep up to date with changes.
+Many of these limits will increase during D1's [public beta](/workers/platform/betas/). Join the [`#d1-beta`](https://discord.cloudflare.com) channel in the Cloudflare Developer Discord or subscribe to D1's [public changelog](/d1/platform/changelog/) to keep up to date with changes.
 
 {{</Aside>}}
 
@@ -27,6 +28,7 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 | Maximum arguments per SQL function                 | 32                                           |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes                               |
 | Maximum bindings per Workers script                 | Approximately 5,000 <sup>1</sup>     |
+| Maximum SQL query duration                    | 30 seconds                        |
 
 {{<Aside type="note">}}
 

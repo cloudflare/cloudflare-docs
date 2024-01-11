@@ -1,13 +1,14 @@
 ---
 pcx_content_type: concept
 title: Pricing
+weight: 1
 ---
 
 # Pricing
 
 {{<Aside type="note" header="D1 public beta">}}
 
-D1 is currently free to use during the public beta. Billing is expected to be enabled on December 1st, 2023 for developers using D1 on the Workers paid plan.
+D1 is currently free to use during the public beta. Billing is expected to be enabled in February 2024 for developers using D1 on the Workers paid plan.
 
 Developers using the Workers Free plan and D1's Free plan will not be charged.
 
@@ -66,7 +67,7 @@ Every query returns a `meta` object that contains a total count of the rows read
 }
 ```
 
-These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/platform/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
+These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/reference/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
 
 - Does D1 charge for data transfer / egress?
 

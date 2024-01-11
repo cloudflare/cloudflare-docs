@@ -47,7 +47,7 @@ To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) 
 Cloudflare’s CDN provides several cache customization options:
 
 - Caching behavior for individual URLs via [Cache Rules](/cache/how-to/cache-rules/)
-- Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
+- Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
 ### Upload limits

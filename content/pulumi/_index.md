@@ -34,7 +34,7 @@ Use TypeScript, JavaScript, Python, Go, .Net, Java, or YAML to write Pulumi prog
 ## Related products
 
 {{<related header="Pulumi Cloud" href="https://www.pulumi.com/product/pulumi-cloud/">}}
-Pulumi Cloud fully manages infrastructure state and secrets, provides rich search capabilities and more.
+Pulumi Cloud fully manages infrastructure state and secrets, provides rich search capabilities, and more.
 {{</related>}}
 
 {{<related header="Pulumi AI" href="https://www.pulumi.com/ai">}}

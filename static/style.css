@@ -111,11 +111,11 @@ html {
 }
 
 html {
-  --sans-serif-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+  --sans-serif-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
-  --monospace-font-family: Menlo, "SF Mono", "Andale Mono", "Roboto Mono",
-    Monaco, monospace;
+  --monospace-font-family: ui-monospace, Menlo, "SF Mono", "Andale Mono", "Cascadia Code", "Source Code Pro", "Roboto Mono",
+    Monaco, Consolas, "DejaVu Sans Mono", monospace;
   --font-family: var(--sans-serif-font-family);
   --cloudflare-logo-gray-rgb: 64, 64, 65;
   --cloudflare-logo-orange-rgb: 243, 128, 32;
@@ -3518,7 +3518,7 @@ code .DocsMarkdown--prop-meta {
   top: 0.05em;
   left: -0.8em;
   display: inline-block;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 2em;
   line-height: 1;
@@ -5193,9 +5193,24 @@ pre {
 }
 
 /* Pills on levels lower than H1 */
+
+/* '-lower' unused? */
 .DocsMarkdown-pill-lower {
   margin-bottom: initial;
   margin-top: 2.25em;
+}
+
+.DocsMarkdown--pill-h2 {
+  margin-bottom: initial;
+  margin-top: 2.6em;
+}
+.DocsMarkdown--pill-h3 {
+  margin-bottom: initial;
+  margin-top: 2.75em;
+}
+.DocsMarkdown--pill-h4 {
+  margin-bottom: initial;
+  margin-top: 1.75em;
 }
 
 .DocsMarkdown--pill-tab {
@@ -5210,19 +5225,16 @@ pre {
 }
 
 .DocsMarkdown--pill-beta {
-  width: 42px;
   background: var(--orange-8);
   color: var(--orange-1);
 }
 
 .DocsMarkdown--pill-deprecated {
-  width: 79px;
   background: var(--red-8);
   color: var(--red-0);
 }
 
 [theme="dark"] .DocsMarkdown--pill-deprecated {
-  width: 79px;
   background: var(--red-6);
   color: var(--red-0);
 }
