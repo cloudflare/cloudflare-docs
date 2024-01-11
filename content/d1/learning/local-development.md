@@ -120,7 +120,9 @@ database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 ```js
 const mf = new Miniflare({
-  d1Databases: ["DB"],
+  d1Databases: {
+    DB: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  },
 });
 ```
 
