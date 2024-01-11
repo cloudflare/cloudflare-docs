@@ -31,10 +31,10 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 | Field             | Description                                                                                                                                                                                                                                                                                                                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| DNS               | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
-| Email             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
-| Action            | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                   |
-| Time              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
+| **DNS**           | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
+| **Email**         | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
+| **Action**        | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                   |
+| **Time**          | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
 | Resolver Decision | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
 
 {{</table-wrap>}}
@@ -43,11 +43,11 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field              | Description                                          |
-| ------------------ | ---------------------------------------------------- |
-| Policy Name        | Name of the matched policy (if there is one).        |
-| Policy ID          | ID of the matched policy (if there is one).          |
-| Policy Description | Description of the matched policy (if there is one). |
+| Field                  | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| **Policy Name**        | Name of the matched policy (if there is one).        |
+| **Policy ID**          | ID of the matched policy (if there is one).          |
+| **Policy Description** | Description of the matched policy (if there is one). |
 
 {{</table-wrap>}}
 
@@ -55,12 +55,12 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field                  | Description                          |
-| ---------------------- | ------------------------------------ |
-| Address                | Address of your custom resolver.     |
-| Policy                 | Name of the matched resolver policy. |
-| Response               |                                      |
-| Time (in milliseconds) |                                      |
+| Field                      | Description                          |
+| -------------------------- | ------------------------------------ |
+| **Address**                | Address of your custom resolver.     |
+| **Policy**                 | Name of the matched resolver policy. |
+| **Response**               |                                      |
+| **Time (in milliseconds)** |                                      |
 
 {{</table-wrap>}}
 
@@ -68,13 +68,13 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field              | Description                                                                                                                                                                                                                                                    |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Email              | Email address of the user who registered the WARP client where traffic originated from.                                                                                                                                                                        |
-| User ID            | UUID of the user. Each unique email address in your organization will have a UUID associated with it.                                                                                                                                                          |
-| Device Name        | Display name of the device returned by the operating system to the WARP client. Typically this is the hostname of a device. Not all devices will have a device name. Device names are not guaranteed to be unique.                                             |
-| Device ID          | UUID of the device connected with the WARP client. Each unique device in your organization will have a UUID associated with it each time the device is registered for a particular email. The same physical device may have multiple UUIDs associated with it. |
-| Last authenticated | Date and time the user last authenticated their Zero Trust session.                                                                                                                                                                                            |
+| Field                  | Description                                                                                                                                                                                                                                                    |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Email**              | Email address of the user who registered the WARP client where traffic originated from.                                                                                                                                                                        |
+| **User ID**            | UUID of the user. Each unique email address in your organization will have a UUID associated with it.                                                                                                                                                          |
+| **Device Name**        | Display name of the device returned by the operating system to the WARP client. Typically this is the hostname of a device. Not all devices will have a device name. Device names are not guaranteed to be unique.                                             |
+| **Device ID**          | UUID of the device connected with the WARP client. Each unique device in your organization will have a UUID associated with it each time the device is registered for a particular email. The same physical device may have multiple UUIDs associated with it. |
+| **Last authenticated** | Date and time the user last authenticated their Zero Trust session.                                                                                                                                                                                            |
 
 {{</table-wrap>}}
 
@@ -82,22 +82,22 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field                       | Description                                                                                                                         |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Query Type                  | Type of DNS query. [This page](https://en.wikipedia.org/wiki/List_of_DNS_record_types) contains a list of all the DNS query types.  |
-| Query Category              | Content categories that the domain belongs to.                                                                                      |
-| Matched Categories          |                                                                                                                                     |
-| Matched Indicator Feed Name | Name of the indicator feeds that matched a Gateway policy (if any).                                                                 |
-| Query Indicator Feed Name   | Name of the indicator feeds that a matched domain or IP belongs to (if any).                                                        |
-| Source IP                   | Public source IP address of the DNS query.                                                                                          |
-| Source IP Country           | Country code of the DNS query.                                                                                                      |
-| Source Internal IP          | Private IP address assigned by the user's local network (if any).                                                                   |
-| Resolver IP                 | Public IP address of the DNS resolver.                                                                                              |
-| Resolved IPs                | Resolved IP addresses in the response (if any).                                                                                     |
-| Port                        | Port that was used to make the DNS query.                                                                                           |
-| Protocol                    | Protocol that was used to make the DNS query (for example, `https`).                                                                |
-| DNS Location                | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
-| Location ID                 | ID of the DNS location where the query originated.                                                                                  |
+| Field                           | Description                                                                                                                         |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Query Type**                  | Type of DNS query. [This page](https://en.wikipedia.org/wiki/List_of_DNS_record_types) contains a list of all the DNS query types.  |
+| **Query Category**              | Content categories that the domain belongs to.                                                                                      |
+| **Matched Categories**          |                                                                                                                                     |
+| **Matched Indicator Feed Name** | Name of the indicator feeds that matched a Gateway policy (if any).                                                                 |
+| **Query Indicator Feed Name**   | Name of the indicator feeds that a matched domain or IP belongs to (if any).                                                        |
+| **Source IP**                   | Public source IP address of the DNS query.                                                                                          |
+| **Source IP Country**           | Country code of the DNS query.                                                                                                      |
+| **Source Internal IP**          | Private IP address assigned by the user's local network (if any).                                                                   |
+| **Resolver IP**                 | Public IP address of the DNS resolver.                                                                                              |
+| **Resolved IPs**                | Resolved IP addresses in the response (if any).                                                                                     |
+| **Port**                        | Port that was used to make the DNS query.                                                                                           |
+| **Protocol**                    | Protocol that was used to make the DNS query (for example, `https`).                                                                |
+| **DNS Location**                | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
+| **Location ID**                 | ID of the DNS location where the query originated.                                                                                  |
 
 {{</table-wrap>}}
 
@@ -124,31 +124,65 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 ### Explanation of the fields
 
+#### Basic information
+
 {{<table-wrap>}}
 
-| Field                      | Description                                                                                                                                                |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Source IP**              | IP address of the user sending the packet.                                                                                                                 |
-| **Destination IP**         | IP address of the packet’s target.                                                                                                                         |
-| **Action**                 | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
-| **Session ID**             | ID of the unique session.                                                                                                                                  |
-| **Time**                   | Date and time of the session.                                                                                                                              |
-| **Source Port**            | Source port number for the packet.                                                                                                                         |
-| **Source IP Country**      | Country code for the packet source.                                                                                                                        |
-| **Source Internal IP**     | Private IP address assigned by the user's local network.                                                                                                   |
-| **Destination Port**       | Destination port number for the packet.                                                                                                                    |
-| **Destination IP Country** | Country code for the packet destination.                                                                                                                   |
-| **Protocol**               | Protocol over which the packet was sent.                                                                                                                   |
-| **Detected Protocol**      | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                                    |
-| **SNI**                    | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                                        |
-| **Virtual Network**        | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to.          |
-| **Categories**             | Category or categories associated with the packet.                                                                                                         |
-| **Policy Name**            | Name of the matched policy (if there is one).                                                                                                              |
-| **Policy ID**              | ID of the policy enforcing the decision Gateway made.                                                                                                      |
-| **Email**                  | Email address of the user sending the packet. This is generated by the WARP client.                                                                        |
-| **User ID**                | ID of the user sending the packet. This is generated by the WARP client.                                                                                   |
-| **Device ID**              | ID of the device that sent the packet. This is generated by the WARP client.                                                                               |
-| **Device Name**            | Name of the device that sent the packet.                                                                                                                   |
+| Field                  | Description                                                                                                                                                |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Source IP**          | IP address of the user sending the packet.                                                                                                                 |
+| **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                                   |
+| **Destination IP**     | IP address of the packet’s target.                                                                                                                         |
+| **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
+| **Session ID**         | ID of the unique session.                                                                                                                                  |
+| **Time**               | Date and time of the session.                                                                                                                              |
+
+{{</table-wrap>}}
+
+#### Matched policies
+
+{{<table-wrap>}}
+
+| Field                  | Description                                           |
+| ---------------------- | ----------------------------------------------------- |
+| **Policy Name**        | Name of the matched policy (if there is one).         |
+| **Policy ID**          | ID of the policy enforcing the decision Gateway made. |
+| **Policy Description** | Description of the matched policy (if there is one).  |
+
+{{</table-wrap>}}
+
+#### Identities
+
+{{<table-wrap>}}
+
+| Field                  | Description                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| **Email**              | Email address of the user sending the packet. This is generated by the WARP client. |
+| **User ID**            | ID of the user sending the packet. This is generated by the WARP client.            |
+| **Device Name**        | Name of the device that sent the packet.                                            |
+| **Device ID**          | ID of the device that sent the packet. This is generated by the WARP client.        |
+| **Last Authenticated** |                                                                                     |
+
+{{</table-wrap>}}
+
+#### Network query details
+
+{{<table-wrap>}}
+
+| Field                   | Description                                                                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Source IP**           | IP address of the user sending the packet.                                                                                                        |
+| **Source Port**         | Source port number for the packet.                                                                                                                |
+| **Source Country**      | Country code for the packet source.                                                                                                               |
+| **Destination IP**      | IP address of the packet’s target.                                                                                                                |
+| **Destination Port**    | Destination port number for the packet.                                                                                                           |
+| **Destination Country** | Destination port number for the packet.                                                                                                           |
+| **Protocol**            | Protocol over which the packet was sent.                                                                                                          |
+| **Detected Protocol**   | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                           |
+| **SNI**                 | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                               |
+| **Virtual Network**     | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
+| **Category details**    | Category or categories associated with the packet.                                                                                                |
+| **Proxy PAC Endpoint**  |                                                                                                                                                   |
 
 {{</table-wrap>}}
 
