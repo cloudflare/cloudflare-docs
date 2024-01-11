@@ -6,7 +6,7 @@ tags:
   - Security
   - WebCrypto
 pcx_content_type: configuration
-playground: https://workers.cloudflare.com/playground#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-e+lGdf2A2-Ru2e+7V6b0cIAve7HGHF1STtLl9MwOM5keQ2kfG9y9J6CAuCLBjkvMNRG2zbsG9UauBxHiVwhIeesGJOYMkFJrDUjsHSBkTgFRVcCCEMIHJgHckwLyRIpABSZGcWALzjltLADAGKEoZRVcZHV5rydEAdcZEl40FobQOgYSTMgKeQojQAB5G0BHae4ZoIE3i3C0mbsAX3XDO+19Bey25Mh+AyIH84wfhW4GjzHki-VXyIElZkemzQABi2AtAZBNgn53Se-e6WwGzXDmQAAa2B6bw08N56AZBITR0VBATIHxbgMFgmbPPyAC9F8N2MVrsYzR56UY0NXUBcCTQYIZfoPhsCQSn3l3TBbqtgGwFMF26ROA5EED3gv0AVlffcB8uyDkJb-MvG8eydB-gumoLgZ3yBD9lAL+Z8ipDERgEyBuOgZR34+BPgZCkIviIioCZBU6PJTy37340A5CGQwAui4DvKUCfIOTwE+BjAuTGSa4b4QB-4M5lrAE8zR5P45xwDx4PrO4UC4B0AF64C4anT2RlqZBn6IiFAJ4x4mjILBB+oQE6TU5ATQF36UBwEIFIEoE2RsGOSGRoBfJIiVzbj77sRP4MFjB95CacHO5qFMGTDBBq6X7YAmT-DoBR6qG4ZaEwCcHnBCQ4GISNoMy4RGZX434iEP6aS+BhS4AzC5r9T4r2jfgoSawETCxYSYSkLnDvzn5xxCjpJeLZy5zOy0H5g9DoBlQMHYa3RlQGy4Jd7PAmbhQ6ToogAwB4QREn6oHSF4Q6yiEcykJP5WH1EvicBfZCQvy6Z9QX5Sz2gFRkEtH1GNE7b5QVFSHyFdHSz0QtLaiTi6hyTRx7AkDZqxgzCWyGKQw0D-6LGCQQQ+BkAREcg+A4yybNDNBvAYRNi2hkQZERRZEr4DSn7yFHF5EkAmQajAJ9SwFwRqwRGuQCq4DhYKzoCQQ7rZoGyvHBFphMG-yaSdQOh+BwSRzmR3GYCRh8QRHsFrpfFhE5xujwrPCdj9DkTxz1EO5aHNFfbND7onSwmohgCoB9GWHWHtJSSwkvH7DHCCzwQQjPD+EOhrH0RApUAFo7qpb8zwSRB3xgTGIDBUARGwQnQnS9C+GLSojPzPDsFHCXg5zfIkC3AMFmKZL4JwAUC5oGzICwhok7aqk5Lxi5GYJPDjG3KywbFIi7BEz+iNB6KUCeE0RSmnSSTywIQ-j6kRG4KQkGzWnZwEBHGy4RCN7PAObkBRasm0wbAcl7D9RglEyOQkmDEx7IABxCikHIA0F0FB7IAh6B74i868786kiWCUg2A0j2D0iOAuAeDMhW5siy6RDy6xCK4JCEAq4VCZBJ58h64SiG6N7oBkAW4dkt7W4qh4RqgezAIjBxZGgnAZCFlUALiLDLCQh6AZAygigFAZBYjVk1mEh1kWDkhWBUi2C0gOC6DMBuBAA
+playground: https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbMutvvsCMAbAKwBMADgAsg-twAM-AJyDB3fgGYp0zoM79eoid24AuDoaNseAkWMky5C5TLUatgndwCwAKADC6KhACmP7AARKABnGHQQqGhvPRIMLDwCYhIqOGBfBgAifEIAOgArEMzSVCgwfzSM7KSCovcvH38IbAAVOhhfWLgYGDAoAGMCKG9kfLgANzgQ-oRYCABqYHRccF93d18AD3CkElxfVDhwCBIAbzcASFT02MyAUU203t8SAEEABQBJTIAaS8IAOYhWIAbUyWye5V+JEy3Sg0MyCF8YW8IV8mQAun8AL5ENzuYyEwymISicQqaxKFT2TTaXT1bx+ALBFGRaJUWLxHA5ZLXKpQGhbWrFOJlCrpLIC-abYUMxoBNodLo9PqDdmjCZTGZzRbLVbrNxQYA7E6nEgAIRAqFQvgQJGxcQQ6GAJAA5FRlp0yFabQhXXi3P1USd-EH9naGClfAB3EgtLYQO5UMO2gAUAEoA8hkCQABLoWNgbwAkhwKh5gCyrw8JAg6AA1v4SCEABaUMC4cgvSZ9TvxH4kAXN3xBmghQPBkh3AAaXwASgBNEiRyRuNxbE17A5HSBnS7IABUB8uJAPJBPZ4AAvAEGkznPfABHEDIiAOpHP1-ni6nkjXxB3qcpwAMp3B4c53C0AD6gSvC0ryxCEECzFQALYg6-jjN+v6XkiEAgAgVAhNhB7IJcUx0MmcS+BA-QtqmH4vkhA6Yeme4XBc2YkAulAkNGZRgFGvidiEzovGiMw0XsSS1ugJAgGipbEXAzZ0MA6TIQMJCNnQuRxi2oTNm24CdmQviXJxOYEIQdHCbJJB0JQdoAOqYI2dpTKW5ahvQMB+CJI54bkFlcQ+vr2S2EAQDAwLZvs4y+EWHQICEuT9EWIC4KgYCIL4aXOsg0ZubaITIKOpQAgRQwjBJeGlRZo5IcOkkQAA0r4dCBDJkahp6CC5L1+ypphuSgeBkEwXBrwkAA-DNbrAHQzV4ap6k0bM-TaR1rqZmuHFcZ8xqYCcjkEctUmeSpHi+XW7VLfE5DoBALZupEAJUK6Xmdq6CWzKgdCfegyXVURDWTjpy6ltGcBRCQMztHWuQhCAZAQOUuRGiad2pq6t7Rq6A61TRd1dYQA5mnysSurmVYeATJAtlMLZU8BuavNgmjcJ92IDocYBogOIKum9H0Dj9tpQP9roYrtYNEScBGCZGVAxiQACqc4ADIMU+TEQLkiuy-tOYtAZxGGSp+xLPLt7siQrkIO5taMyccBgEW0bEdQRzPU0AwEHZcD9P0yLEXWJDIAC-i2gHIU5p85YqUibuliq-t26drqdtDPj2cAcCNs2BEvM9BBx-JaIpXD7adt4YBLVHKu2+JUDvXZGua8R0Ytk2Ps9z46fCRZkskKmiu5PAz18kjhBICEzlRPRrqR9HzfIDtbHnBxFzj5PLZ8pDu8EPvlS5EivRB74OMr03Afr2L69GxxjUnNA6RIU8kMVsfuTZegmCplJnlD00YMwRxIJwCQUD0x7WNvpQyo5CACmUu7Z2LweSlgoCAV+PcSCMS-KXE6vEc6vzkmZTB5R7K-UlnQCylk8y2heNGF4dcloizQbWI0r5P5lk7L7Ege8+QDm9CcdAqAmQOUoK6VBJDZJ0K4gKdKmUXhLCRNJQgo8HrIMIMmXwA5+EdwZhECAB9MAkE-PQARAENIlRgdvF+6i4AtHQK8bB-doBqheJGAABgAElOEfKelRsT+Lftw402JvGwIuA4-Om1IxwGhrDeGfl0BIxRmjPKIscY02rPTHSLFkx9QGkUoaPJnGuN9gPTx6Yn70LCraCKUUYp6Dir4BKSUSppQyllHKSJ8rAEKsVFKyAEDUDCdgOEpUPT7EKGRbeXEHqqPQTRGG-MSDeArgKEsAA5T0AApYCbwvjm3LA7dy457GTjIFMXw3BhDf3iRaH0tpf5OmAKmOJ6Zch1mAppVCOMblonuTtAM29x5okQHRd41jUpoggDjahUsBx+NOGEj+ETsD+KBXch5QdIl1LwgRcsKtYwPhRERK+qLAkn3SCEgJCAwBI18FClsBK8RwIAGoS3+qWVBHpyw3xjn4PButXyXIuBhfmLwt5wO-oXZGajToMwmCXXBwABRGhAC6FWIcQghEQEtCxS0byVD8ClYK28R6pgAIQQpZQgaFsLciMxCIinlANansW3kSwiUYyXInCJSnGFZQiRFQuYl8ljTU2L9OTZshB8LAhIMICQih7S7W3tiaJDiQTosIMaAcLY4kYkPoy5lrKYW3mAKlKOCLxZ-U9UjXoURUyZGwJkGBdCHFTErv5FoXCMUwEhjs7VZkECpnzU8LtVz5aOIqW4v2njIbUvLYI4J-je22n7YOgtMBIk5snEiEOUAEq4EeZDS01pXmoHeamYtQcxY4pBXUriatFIpMRsjVG6MkV0DAeHSqiBOxwABDDOdb9tmliikHesqUSDAUUS8XJHgvZonkTmEIakNIbS2nQEIA5lVBhMoOY05R0i52eoZMgS1Bjuyg5+tJ37MlI1blQMBvCMNoPLLgdAUGVJIRQiWIMxpEChE2cwZ2hlpOUv6MXAcnlBMMedDecToMFk5huWUDZ2CNnln4aUFKJwNUhHzrRFsA5u4DBeuUAupyuQg3suEJk0A3ZcesrBrp3bJxIqgHZBJSSTiMfST+vKf6cm03yR1Acx7fCnuEo8wpKZ+qDSvuUlxi7qkB1qWCji1qbW+eEpvOhFxfUktVuSoNaIcYJx7FATskX40fyTbEVN6bsSZo4tmrjiG26dnwUhYiG4oBqLgOIxp3gVECmwXlEgeyRWEKk8RHsL4jI1y3B0GgenJFnTCCOSWWkFIvEGOhq1qBR6AIDrkEBGZkCQOgSQAAfKPLdSBhIDvfnukg8wpyzk+IuL1sqOJlf9SQSrqIqWGOG0iEDJx-GkpIEA1MqZXs7s+5-H7M55wLjYmee7Eh0yRKa4mhSrW00Zo5V1iy3Xgc0WJdRczqYEcdzHmu4+Qi3SRWirFZAEIyN5REztGLYqkKZp5m4XE+I3BEhl6wEk5hyRWHkFSOw6haROHpJ4RkTQgihHCGyYYHI4iYG5EkUgfIsjMLACJvKkVgBgBFKUcoFvMhW5ty6iA9vMhyhc60donRawJmQBfAUBoAA8NrAgAHkPAtAXO8O4DNPdgEe24MPdvBI5VQlkfwmRU8XHTyy3A+eC8aRUnRRA8KshqxaAAMWwIITIEcS9h7L0n6K2BdanqyNObAat2ZeFE9AMgUJq7yggFkT4dwGDCSjk35ALe28u-GH56MJom+IKaJb+rz0GDxQGL4bA-FcDPQHJq1zYBsDTDdhkTguQJDz5b9ATJj2PA9Oyrle2wziLvBynQAETo1AuAYeyAz+5QLefQVA9YdCSIYAWQSEdA5QrYvgNEmQdCLYSIqAWQXOLS2YF8-+gBNAuQ8UMATouA3SlAvSuUxB7ShUiUNuV+EAiBAu+qaB+0+eIBPccAxee0YeFAuAdALeuAp6cMOU+qWQH+SIRQJeBeRoJYIQjq2BzSPO+BABlARBJBZBFBmUkheU8UaAfSyIE8qEj+FkIBwh4wi+4GMhYeFhohvalu3+2ARYAI6Aee5hp6NhMAMhFwzk9BYkNq6sikVGP+f+ahQB9kfgTUuAswCUpYX+jstoA4kkAc8RVsckdYJWrYn+dcAoeiX0fE-coq3BS0+wvQ6ApRI2I4aMS04c-Cs+LwNGw4UUUGIAw6cAJWb+lBuhpYwc6h+sdCIB3hgxLYnAj2zkLsg4ykCR7kM0nBYxgxwx28Fw00XROhhhMxjShk+ymowE2ofk1c+wO2fEswC2kxjMNASBO2dozCZAWRUQvgwseYLQLQ7wtYt41oWkwhx6NRg45YaxVBSITxDRJARYaohuykhBfCPcJWRUjKuACm7sBYUGyq4cYJqRKYohEQJcckp0do-gnYR2VcQ4mA4YciyxUhQafCGRPcLoyykaAw9Y9cgxweNhoxj2LQlisMeJaIYAqA8xXhPhUe5YeJoJBwJwFszYkILw5yjSi2hkYyVAVAUGmyIRzYDxekPEIAcMZYJWwksMsMfQcRvCw4aqLwUhxwxEPc-SU4whOCLwe8mC6AcR4cyAcI5J28aILwbYsY9Rjw-OmxdoFxuAVxwh16SIucgBURmpvEgwic-Mck+pEAJW-CmJ4cXphRBATx+ukQI+LwJpZAQm1xUYmwEp+wKkaJkseULJSxBeyA+cAoHByA-BghaeyAGeqeBIsusu8uZIlgsgyutgqgaujgzgPuOuLI+uUQhunIJuiQhA5ulQWQZePIjuYoLuI+6AZA3uWu4+fuSoqcLa4JIwhQ3gBopwmQDZVAUESwKwUIegmQUoQohQmQ2IXZ3ZRIvZFgFIg51II5dI3AzA7gQAA
 title: Sign requests
 weight: 1001
 layout: example
@@ -14,16 +14,16 @@ layout: example
 
 {{<Aside type="note">}}
 
-This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](http://localhost:5173/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
+This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
 {{</Aside>}}
 
 You can both verify and generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
 
 The following Worker will:
 
-- For request URLs beginning with `/generate/`, replace `/generate/` with `/verify/`, sign the resulting path with its timestamp, and return the full, signed URL in the response body.
+- For request URLs beginning with `/generate/`, replace `/generate/` with `/`, sign the resulting path with its timestamp, and return the full, signed URL in the response body.
 
-- For request URLs beginning with `/verify/`, verify the signed URL and allow the request through.
+- For all other request URLs, verify the signed URL and allow the request through.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -32,6 +32,9 @@ The following Worker will:
 import { Buffer } from "node:buffer";
 
 const encoder = new TextEncoder();
+
+// How long an HMAC token should be valid for, in seconds
+const EXPIRY = 60;
 
 export default {
   /**
@@ -59,21 +62,18 @@ export default {
 
     const url = new URL(request.url);
 
-    // This is a demonstration Worker that allows unauthenticated access to both
-    // /generate and /verify. In a real application you would want to make sure that
+    // This is a demonstration Worker that allows unauthenticated access to /generate
+    // In a real application you would want to make sure that
     // users could only generate signed URLs when authenticated
     if (url.pathname.startsWith("/generate/")) {
-      url.pathname = url.pathname.replace("/generate/", "/verify/");
-      // Signed requests expire after one minute. Note that you should choose
-      // expiration durations dynamically, depending on, for example, the path or a query
-      // parameter.
-      const expirationMs = 60000;
-      const expiry = Date.now() + expirationMs;
+      url.pathname = url.pathname.replace("/generate/", "/");
 
-      // This array contains all the data about the request that you want to be able to verify
-      // Here we only sign the expiry and the pathname, but often you will want to
+      const timestamp = Math.floor(Date.now() / 1000);
+
+      // This contains all the data about the request that you want to be able to verify
+      // Here we only sign the timestamp and the pathname, but often you will want to
       // include more data (for instance, the URL hostname or query parameters)
-      const dataToAuthenticate = JSON.stringify([url.pathname, expiry]);
+      const dataToAuthenticate = `${url.pathname}${timestamp}`;
 
       const mac = await crypto.subtle.sign(
         "HMAC",
@@ -82,24 +82,26 @@ export default {
       );
 
       // Refer to https://developers.cloudflare.com/workers/runtime-apis/nodejs/
-      // for more details on using NodeJS APIs in Workers
+      // for more details on using Node.js APIs in Workers
       const base64Mac = Buffer.from(mac).toString("base64");
 
-      url.searchParams.set("mac", base64Mac);
-      url.searchParams.set("expiry", expiry.toString());
+      url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
 
       return new Response(`${url.pathname}${url.search}`);
-    } else if (url.pathname.startsWith("/verify/")) {
+      // Verify all non /generate requests
+    } else {
       // Make sure you have the minimum necessary query parameters.
-      if (!url.searchParams.has("mac") || !url.searchParams.has("expiry")) {
+      if (!url.searchParams.has("verify")) {
         return new Response("Missing query parameter", { status: 403 });
       }
 
-      const expiry = Number(url.searchParams.get("expiry"));
+      const [timestamp, hmac] = url.searchParams.get("verify").split("-");
 
-      const dataToAuthenticate = JSON.stringify([url.pathname, expiry]);
+      const assertedTimestamp = Number(timestamp);
 
-      const receivedMac = Buffer.from(url.searchParams.get("mac"), "base64");
+      const dataToAuthenticate = `${url.pathname}${assertedTimestamp}`;
+
+      const receivedMac = Buffer.from(hmac, "base64");
 
       // Use crypto.subtle.verify() to guard against timing attacks. Since HMACs use
       // symmetric keys, you could implement this by calling crypto.subtle.sign() and
@@ -117,10 +119,12 @@ export default {
         return new Response("Invalid MAC", { status: 403 });
       }
 
-      if (Date.now() > expiry) {
-        return new Response(`URL expired at ${new Date(expiry)}`, {
-          status: 403,
-        });
+      // Signed requests expire after one minute. Note that this value should depend on your specific use case
+      if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
+        return new Response(
+          `URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
+          { status: 403 }
+        );
       }
     }
 
@@ -136,6 +140,9 @@ export default {
 import { Buffer } from "node:buffer";
 
 const encoder = new TextEncoder();
+
+// How long an HMAC token should be valid for, in seconds
+const EXPIRY = 60;
 
 export default <ExportedHandler<{ SECRET_DATA: string }>>{
   async fetch(request, env) {
@@ -157,21 +164,18 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
 
     const url = new URL(request.url);
 
-    // This is a demonstration Worker that allows unauthenticated access to both
-    // /generate and /verify. In a real application you'd want to make sure that
+    // This is a demonstration Worker that allows unauthenticated access to /generate
+    // In a real application you would want to make sure that
     // users could only generate signed URLs when authenticated
     if (url.pathname.startsWith("/generate/")) {
-      url.pathname = url.pathname.replace("/generate/", "/verify/");
-      // Signed requests expire after one minute. Note that you should choose
-      // expiration durations dynamically, depending on, for example, the path or a query
-      // parameter.
-      const expirationMs = 60000;
-      const expiry = Date.now() + expirationMs;
+      url.pathname = url.pathname.replace("/generate/", "/");
 
-      // This array contains all the data about the request that you want to be able to verify
-      // Here we only sign the expiry and the pathname, but often you'll want to
+      const timestamp = Math.floor(Date.now() / 1000);
+
+      // This contains all the data about the request that you want to be able to verify
+      // Here we only sign the timestamp and the pathname, but often you will want to
       // include more data (for instance, the URL hostname or query parameters)
-      const dataToAuthenticate = JSON.stringify([url.pathname, expiry]);
+      const dataToAuthenticate = `${url.pathname}${timestamp}`;
 
       const mac = await crypto.subtle.sign(
         "HMAC",
@@ -183,21 +187,23 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
       // for more details on using NodeJS APIs in Workers
       const base64Mac = Buffer.from(mac).toString("base64");
 
-      url.searchParams.set("mac", base64Mac);
-      url.searchParams.set("expiry", expiry.toString());
+      url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
 
       return new Response(`${url.pathname}${url.search}`);
-    } else if (url.pathname.startsWith("/verify/")) {
+      // Verify all non /generate requests
+    } else {
       // Make sure you have the minimum necessary query parameters.
-      if (!url.searchParams.has("mac") || !url.searchParams.has("expiry")) {
+      if (!url.searchParams.has("verify")) {
         return new Response("Missing query parameter", { status: 403 });
       }
 
-      const expiry = Number(url.searchParams.get("expiry"));
+      const [timestamp, hmac] = url.searchParams.get("verify").split("-");
 
-      const dataToAuthenticate = JSON.stringify([url.pathname, expiry]);
+      const assertedTimestamp = Number(timestamp);
 
-      const receivedMac = Buffer.from(url.searchParams.get("mac"), "base64");
+      const dataToAuthenticate = `${url.pathname}${assertedTimestamp}`;
+
+      const receivedMac = Buffer.from(hmac, "base64");
 
       // Use crypto.subtle.verify() to guard against timing attacks. Since HMACs use
       // symmetric keys, you could implement this by calling crypto.subtle.sign() and
@@ -215,10 +221,12 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
         return new Response("Invalid MAC", { status: 403 });
       }
 
-      if (Date.now() > expiry) {
-        return new Response(`URL expired at ${new Date(expiry)}`, {
-          status: 403,
-        });
+      // Signed requests expire after one minute. Note that this value should depend on your specific use case
+      if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
+        return new Response(
+          `URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
+          { status: 403 }
+        );
       }
     }
 
@@ -229,3 +237,7 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
 
 {{</tab>}}
 {{</tabs>}}
+
+## Validate signed requests using the WAF
+
+The provided example code for signing requests is compatible with the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) Rules language function. This means that you can verify requests signed by the Worker script using a [WAF custom rule](/waf/custom-rules/use-cases/configure-token-authentication/#option-2-configure-using-waf-custom-rules).

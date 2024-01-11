@@ -42,7 +42,7 @@ Alternatively, download the latest release directly:
 Download and install `cloudflared` via Homebrew:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Alternatively, download the [latest Darwin amd64 release](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz) directly.

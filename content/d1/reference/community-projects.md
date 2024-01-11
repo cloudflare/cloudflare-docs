@@ -1,6 +1,7 @@
 ---
 title: Community projects 
 pcx_content_type: concept
+weight: 7
 ---
 
 # Community projects

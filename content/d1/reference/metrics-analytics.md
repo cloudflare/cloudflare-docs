@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
+weight: 10
 ---
 
 # Metrics and analytics
@@ -26,7 +27,7 @@ Metrics can be queried (and are retained) for the past 31 days.
 
 ## Row counts
 
-D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/platform/client-api/#return-object).
+D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/reference/client-api/#return-object).
 
 Row counts are a precise count of how many rows were read (scanned) or written by that query.
 Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/learning/using-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   

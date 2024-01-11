@@ -21,7 +21,7 @@ If the requested content is not cached, it will first be requested via API call 
 
 ## Write operations
 
-*Only available for gateways to EVM-based chains, such as [Ethereum](/web3/how-to/use-ethereum-gateway) and [Polygon](/web3/how-to/use-polygon-gateway).*
+*Only available for gateways to EVM-based chains, such as [Ethereum](/web3/how-to/use-ethereum-gateway).*
 
 If the API call to the gateway is a write operation, the gateway will make an API call to one of the Cloudflare nodes, and the transaction is placed in the local mempool and propagated to peers. 
 

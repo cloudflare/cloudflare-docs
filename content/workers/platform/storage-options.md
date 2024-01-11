@@ -81,8 +81,8 @@ It is ideal for projects that require:
 
 To get started with KV:
 
-* Read how [KV works](/kv/learning/how-kv-works/).
-* Create a [KV namespace](/kv/learning/kv-namespaces/).
+* Read how [KV works](/kv/reference/how-kv-works/).
+* Create a [KV namespace](/kv/reference/kv-namespaces/).
 * Review the [KV Runtime API](/kv/api/).
 * Learn about KV [Limits](/kv/platform/limits/).
 
@@ -140,7 +140,7 @@ To get started with D1:
 
 * Read [the documentation](/d1)
 * Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-* Review the [D1 client API](/d1/platform/client-api/).
+* Review the [D1 client API](/d1/reference/client-api/).
 
 
 ## Queues

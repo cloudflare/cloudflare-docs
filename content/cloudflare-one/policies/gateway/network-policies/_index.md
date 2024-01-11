@@ -37,8 +37,8 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 
 | Selector       | Operator | Value           | Logic | Action |
 | -------------- | -------- | --------------- | ----- | ------ |
-| Destination IP | In       | `92.100.02.102` | And   | Allow  |
-| Email          | In       | `*@example.com` |       |        |
+| Destination IP | in       | `92.100.02.102` | And   | Allow  |
+| Email          | in       | `*@example.com` |       |        |
 
 ### Audit SSH
 
@@ -48,7 +48,7 @@ Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
-| Destination IP | In       | `203.0.113.83` | Audit SSH |
+| Destination IP | in       | `203.0.113.83` | Audit SSH |
 
 For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
 
@@ -62,7 +62,11 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 | Selector         | Operator | Value | Action |
 | ---------------- | -------- | ----- | ------ |
-| Destination Port | In       | `443` | Block  |
+| Destination Port | in       | `443` | Block  |
+
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
+
+{{<render file="gateway/_client-notifications.md">}}
 
 ### Network Override
 
@@ -72,8 +76,8 @@ Policies with Network Override actions override traffic directed to, or coming f
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |
-| Destination IP | In       | `95.92.143.151` | And   | Network Override |
-| User Email     | In       | `*@example.com` | And   |                  |
+| Destination IP | in       | `95.92.143.151` | And   | Network Override |
+| User Email     | in       | `*@example.com` | And   |                  |
 | Override IP    |          | 10.0.0.1        |       |                  |
 
 ## Selectors
@@ -166,7 +170,7 @@ The country of the user making the request.
 
 {{<Aside type="note">}}
 
-The _In_ operator allows you to specify IP addresses or networks using CIDR notation.
+The _in_ operator allows you to specify IP addresses or networks using CIDR notation.
 
 {{</Aside>}}
 
