@@ -122,7 +122,7 @@ Binding names do not need to correspond to the namespace you created. Binding na
 
 A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/learning/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
 
-Refer to [Environment](/kv/platform/environments/) for more information.
+Refer to [Environment](/kv/reference/environments/) for more information.
 
 {{</Aside>}}
 
@@ -180,7 +180,7 @@ wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --name
 Exactly one of `--binding` or `--namespace-id` is required.
 {{</Aside>}}
 
-Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
+Refer to the [`kv:bulk` documentation](/kv/reference/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
 
 ### Interact with your KV namespace via a Worker
 
@@ -280,5 +280,5 @@ By finishing this tutorial, you have created a KV namespace, a Worker that write
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
 * Learn more about the [KV API](/kv/api/).
-* Understand how to use [Environments](/kv/platform/environments/) with Workers KV.
-* Read the wrangler [`kv` command documentation](/kv/platform/kv-commands/).
+* Understand how to use [Environments](/kv/reference/environments/) with Workers KV.
+* Read the wrangler [`kv` command documentation](/kv/reference/kv-commands/).
