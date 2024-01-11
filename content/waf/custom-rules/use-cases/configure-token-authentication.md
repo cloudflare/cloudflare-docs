@@ -60,7 +60,7 @@ Where:
 
 - `/images/cat.jpg` represents the path to the asset — the HMAC message to authenticate.
 - `?verify=` is the separator between the path to the asset and the timestamp when the HMAC token was issued.
-- `1484063787` represents the timestamp when the token was issued, expressed as Unix time in seconds.
+- `1484063787` represents the timestamp when the token was issued, expressed as UNIX time in seconds.
 - `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a Base64-encoded MAC.
 
 {{<Aside type="warning">}}
