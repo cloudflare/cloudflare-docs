@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
+weight: 1
 ---
 
 # Pricing
@@ -66,7 +67,7 @@ Every query returns a `meta` object that contains a total count of the rows read
 }
 ```
 
-These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/platform/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
+These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/reference/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
 
 - Does D1 charge for data transfer / egress?
 

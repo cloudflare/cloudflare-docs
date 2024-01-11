@@ -135,7 +135,7 @@ console.log(await res.json(results));
 
 ### `unstable_dev`
 
-Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/platform/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
+Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
 
 Given the below `wrangler.toml` configuration:
 

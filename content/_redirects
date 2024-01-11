@@ -205,10 +205,17 @@
 /constellation/ /workers-ai/ 301
 
 # d1
-/d1/client-api/ /d1/platform/client-api/ 301
+/d1/client-api/ /d1/reference/client-api/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
-/d1/migrations/ /d1/platform/migrations/ 301
+/d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
+/d1/platform/community-projects/ /d1/reference/community-projects/ 301
+/d1/platform/client-api/ /d1/reference/client-api/ 301
+/d1/platform/data-security/ /d1/reference/data-security/ 301
+/d1/platform/environments/ /d1/reference/environments/ 301
+/d1/platform/metrics-analytics/ /d1/reference/metrics-analytics/ 301
+/d1/platform/migrations/ /d1/reference/migrations/ 301
+
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301

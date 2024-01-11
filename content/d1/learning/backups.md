@@ -44,7 +44,7 @@ The `id` of each backup allows you to download or restore a specific backup.
 
 ## Manually back up a database
 
-Creating a manual backup of your database before making large schema changes, manually inserting or deleting data, or otherwise modifying a database you are actively using is a good practice to get into. D1 allows you to make a backup of a database at any time, and stores the backup on your behalf. You should also consider [using migrations](/d1/platform/migrations/) to simplify changes to an existing database.
+Creating a manual backup of your database before making large schema changes, manually inserting or deleting data, or otherwise modifying a database you are actively using is a good practice to get into. D1 allows you to make a backup of a database at any time, and stores the backup on your behalf. You should also consider [using migrations](/d1/reference/migrations/) to simplify changes to an existing database.
 
 To back up a D1 database, you must have:
 
