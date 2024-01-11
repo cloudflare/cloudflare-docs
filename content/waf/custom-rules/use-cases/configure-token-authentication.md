@@ -17,10 +17,6 @@ Refer to the following Cloudflare Workers resources for two different implementa
 - The [Sign requests](/workers/examples/signing-requests/) example.
 - The [Auth with headers](/workers/examples/auth-with-headers/) template.
 
-{{<Aside type="warning">}}
-The Auth with headers template code contains a generic header key and value of `X-Custom-PSK` and `mypresharedkey`. To best protect your resources, change the header key and value in the Workers editor before saving your code.
-{{</Aside>}}
-
 To get started with Workers, refer to [Configure a Worker](/workers/get-started/quickstarts/).
 
 ## Option 2: Configure using WAF custom rules
