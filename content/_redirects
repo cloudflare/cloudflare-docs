@@ -855,6 +855,9 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
+/support/firewall/learn-more/configuring-token-authentication/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
+/support/firewall/learn-more/ /waf/troubleshooting/ 301
+/support/firewall/ /waf/troubleshooting/ 301
 /support/about-cloudflare/better-internet-initiatives/faqs-for-cryptographic-attestation-of-personhood/ /fundamentals/reference/cryptographic-personhood/ 301
 /support/troubleshooting/general-troubleshooting/registrar-troubleshoot-stalled-domain-transfers/ /registrar/troubleshooting/ 301
 /support/troubleshooting/general-troubleshooting/troubleshooting-issues-sharing-to-facebook/ /waf/troubleshooting/facebook-sharing/ 301
@@ -954,6 +957,7 @@
 /waf/change-log/historical/ /waf/change-log/historical-2019/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
+/waf/custom-rules/use-cases/require-valid-hmac-token/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301

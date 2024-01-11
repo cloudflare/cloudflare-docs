@@ -237,3 +237,7 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
 
 {{</tab>}}
 {{</tabs>}}
+
+## Validate signed requests using the WAF
+
+The provided example code for signing requests is compatible with the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) Rules language function. This means that you can verify requests signed by the Worker script using a [WAF custom rule](/waf/custom-rules/use-cases/configure-token-authentication/#option-2-configure-using-waf-custom-rules).
