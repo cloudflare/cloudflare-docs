@@ -224,9 +224,9 @@ You could also use these to create email authentication records, but we recommen
 
 {{<Aside type="note">}}
 
-The **Content** for each TXT record must be 2048 characters or less.
+The **Content** for each TXT record must be 2,048 characters or less.
 
-If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8192 or less.
+If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8,192 or less.
 
 {{</Aside>}}
 
