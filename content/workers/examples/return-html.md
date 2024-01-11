@@ -9,6 +9,7 @@ title: Return small HTML page
 weight: 1
 layout: example
 playground: true
+updated: 2024-01-11
 ---
 
 {{<tabs labels="js | ts">}}
