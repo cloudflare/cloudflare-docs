@@ -140,7 +140,7 @@ To get started with D1:
 
 * Read [the documentation](/d1)
 * Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-* Review the [D1 client API](/d1/platform/client-api/).
+* Review the [D1 client API](/d1/reference/client-api/).
 
 
 ## Queues
@@ -156,7 +156,7 @@ Queues is ideal for:
 To get started with Queues:
 
 * [Set up your first queue](/queues/get-started/).
-* Learn more [about how Queues works](/queues/learning/how-queues-works/).
+* Learn more [about how Queues works](/queues/reference/how-queues-works/).
 
 
 ## Hyperdrive

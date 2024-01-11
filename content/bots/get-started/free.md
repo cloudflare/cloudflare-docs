@@ -27,3 +27,7 @@ To disable Bot Fight Mode:
 ## Visibility
 
 You can see bot-related actions by going to **Security** > **Events**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+
+## Limitations
+
+You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/pro/).

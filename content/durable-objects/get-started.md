@@ -167,7 +167,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/platform/environments/) Worker code.
+  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
 
 ## 6. Configure Durable Object classes with migrations
 
@@ -185,7 +185,7 @@ filename: wrangler.toml
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes
 ```
-Refer to [Durable Objects migrations](/durable-objects/learning/durable-objects-migrations/) to learn more about the migration process.
+Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
 
 ## 7. Develop a Durable Object Worker locally
 

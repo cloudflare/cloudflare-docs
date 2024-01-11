@@ -19,7 +19,7 @@ This allows you to more precisely query over data and reduce the result set your
 
 ## Types
 
-JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/platform/client-api/#type-conversion) as D1 in general, including:
+JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/reference/client-api/#type-conversion) as D1 in general, including:
 
 * A JSON null is treated as a D1 `NULL`.
 * A JSON number is treated as an `INTEGER` or `REAL`.
@@ -204,7 +204,7 @@ key|value|type|id|fullkey|path
 2|94944|integer|3|$[2]|$
 ```
 
-You can use `json_each` with D1's [client API](/d1/platform/client-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/platform/client-api/#parameter-binding):
+You can use `json_each` with D1's [client API](/d1/reference/client-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/reference/client-api/#parameter-binding):
 
 ```ts
 const stmt = context.env.DB

@@ -17,7 +17,7 @@ provide untraceable tokens to sites to vouch for users who might otherwise have 
 since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no 
 longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting
 is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
-In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed and by the end of March 2023 the current public-facing API will be removed as well.
+In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
 
 Deprecated API:
  - GET zones/:zone_identifier/settings/privacy_pass

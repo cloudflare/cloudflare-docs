@@ -138,7 +138,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="3">}}Network Analytics (including DoS analytics) will not be sent outside the region. However, these are only viewable today in US region.{{</fnentry>}}
 {{<fnentry num="4">}}API shield will not yet work with Customer Metadata Boundary enabled outside of US region.{{</fnentry>}}
 {{<fnentry num="5">}}Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.{{</fnentry>}}
-{{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/platform/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
+{{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
 {{<fnentry num="8">}}Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).{{</fnentry>}}
 {{<fnentry num="9">}}Argo cannot be used with Regional Services.{{</fnentry>}}
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}

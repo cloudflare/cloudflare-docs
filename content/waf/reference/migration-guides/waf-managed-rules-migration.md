@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: Migrating to the new WAF Managed Rules
+title: WAF Managed Rules migration
 weight: 1
 ---
 
-# Migrating to the new WAF Managed Rules
+# WAF Managed Rules migration
 
 On 2022-05-04, Cloudflare started the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Currently, all zones can migrate to WAF Managed Rules, including partner accounts.
 
