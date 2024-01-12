@@ -6,7 +6,7 @@ weight: 89
 
 # Manage Logpush with Python
 
-You can manage your Cloudflare Logpush service using Python. In the script bellow you can find example requests to create a job, retrieve job details, update job settings, and delete a Logpush job.
+You can manage your Cloudflare Logpush service using Python. In the script below you can find example requests to create a job, retrieve job details, update job settings, and delete a Logpush job.
 
 {{<Aside type="note">}}
 
