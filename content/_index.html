@@ -103,6 +103,49 @@ meta:
 </div>
 </div>
 
+<div class="TryOutSection">
+  <h2>Try it out</h2>
+  <div class="documentation-container">
+    <input type="radio" id="section1" name="sections" checked>
+    <input type="radio" id="section2" name="sections">
+    <input type="radio" id="section3" name="sections">
+    <input type="radio" id="section4" name="sections">
+    <input type="radio" id="section5" name="sections">
+  
+    <div class="documentation-sidebar">
+      <label for="section1" id="section1Label">Return HTML</label>
+      <label for="section2" id="section2Label">Return JSON</label>
+      <label for="section3" id="section3Label">Section 3</label>
+      <label for="section4" id="section4Label">Section 4</label>
+      <label for="section5" id="section5Label">Section 5</label>
+    </div>
+  
+    <div class="documentation-content">
+  <div class="content" id="section1Content">
+  {{<markdown>}}
+  {{<render file="_return-html-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section2Content">
+  {{<markdown>}}
+  {{<render file="_return-json-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+      <div class="content" id="section3Content">
+        <h3 class="content-title">Section 3</h2>
+        <p class="content-text">This is the content for Section 3.</p>
+      </div>
+      <div class="content" id="section4Content">
+        <h3 class="content-title">Section 4</h2>
+        <p class="content-text">This is the content for Section 4.</p>
+      </div>
+      <div class="content" id="section5Content">
+        <h3 class="content-title">Section 5</h2>
+        <p class="content-text">This is the content for Section 5.</p>
+      </div>
+    </div>
+  </div>
+
 <div class="FeaturedContentSection">
 <div>
 {{<featured-content-block>}}
