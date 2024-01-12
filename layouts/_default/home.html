@@ -7,9 +7,7 @@
   {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-  {{- if or (eq .Page.RelPermalink "/changelog/") (eq .Page.RelPermalink "/glossary/") -}}
-  <link rel="stylesheet preconnect" href="/changelog.css" />
-  {{- end -}}
+  <link rel="stylesheet preconnect" href="/codeblockHomePage.css" />
 
   <link rel="stylesheet preconnect" href="/home.css" />
   {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}

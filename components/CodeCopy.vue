@@ -6,6 +6,8 @@ function copyCode(e: MouseEvent) {
   const highlightedCode = (
     e.target as HTMLElement
   )?.parentElement?.parentElement?.querySelector("pre code");
+
+  console.log(highlightedCode)
   
   if (highlightedCode) {
     // the markdown's code blocks adds a class "CodeBlock--token-unselectable", if it is not supposed to be copied.
