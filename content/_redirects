@@ -460,18 +460,18 @@
 /http-applications/how-to/manage-applications-and-versions/ /version-management/how-to/ 301
 
 # images
-/images/cloudflare-images/upload-images/supported-formats/ /images/cloudflare-images/upload-images/formats-limitations/ 301
-/image-resizing/ /images/image-resizing/ 301
-/image-resizing/url-format/ /images/image-resizing/url-format/ 301
+/images/cloudflare-images/upload-images/supported-formats/ /images/upload-images/ 301
+/image-resizing/ /images/transform-images/resize-images/ 301
+/image-resizing/url-format/ /images/transform-images/ 301
 /images/about/ /images/ 301
-/images/images/ /images/cloudflare-images/ 301
-/images/keys/ /images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/ 301
-/images/resizing-with-workers/ /images/image-resizing/resize-with-workers/ 301
-/images/url-format/ /images/image-resizing/url-format/ 301
-/images/variants/ /images/cloudflare-images/transform/ 301
-/images/worker/ /images/image-resizing/resize-with-workers/ 301
+/images/images/ /images/ 301
+/images/keys/ /images/serve-images/serve-private-images/ 301
+/images/resizing-with-workers/ /images/serve-images/resize-with-workers/ 301
+/images/url-format/ /images/transform-images/ 301
+/images/variants/ /images/transform-images/enable-flexible-variants/ 301
+/images/worker/ /images/serve-images/resize-with-workers/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
-/support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/image-resizing/troubleshooting/ 301
+/support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/reference/troubleshooting/ 301
 /images/cloudflare-images/ /images/ 301
 /images/cloudflare-images/api-request/ /images/get-started/ 301
 /images/cloudflare-images/images-analytics/ /images/ 301
