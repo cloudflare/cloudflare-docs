@@ -74,7 +74,6 @@ const renderPlaygroundLink = (): PluginOption => {
             element: (element) => {
               if (element.getAttribute("class") === "playground-link") {
                 playgroundUrl = element.getAttribute("href")!;
-                console.log(playgroundUrl);
               }
             },
           },
