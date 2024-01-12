@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Extended DNS error codes
-
+layout: wide
 ---
 
 # Extended DNS error codes
