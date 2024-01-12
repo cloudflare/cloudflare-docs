@@ -9,7 +9,6 @@ pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001
 layout: example
-playground: true
 updated: 2024-01-11
 ---
 
@@ -28,6 +27,9 @@ This code is provided as a sample, and is not suitable for production use. Basic
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 /**
  * Shows how to restrict access using the HTTP Basic schema.
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication

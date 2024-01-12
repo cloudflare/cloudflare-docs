@@ -18,9 +18,8 @@
     <div class="DocsContent" id="main" page-type="{{ $type }}">
       <article class="DocsMarkdown">
         <h1>{{ .Title }}</h1>
-        {{ if .Params.Playground }}
+
         <workers-playground-link></workers-playground-link>
-        {{ end }}
         <div class="DocsMarkdown--content-column">
           {{- .Params.Summary -}}
         </div>

@@ -9,7 +9,6 @@ pcx_content_type: configuration
 title: Sign requests
 weight: 1001
 layout: example
-playground: true
 updated: 2024-01-11
 ---
 
@@ -30,6 +29,9 @@ The following Worker will:
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 import { Buffer } from "node:buffer";
 
 const encoder = new TextEncoder();
