@@ -1,5 +1,5 @@
 ---
-title: Guide
+title: Manual setup
 pcx_content_type: get-started
 weight: 1
 layout: single
