@@ -155,7 +155,7 @@ async function updateCredentials(bearer) {
 // Export a default object containing event handlers
 export default {
     /**
-     * fetch handles requests made direclty to the Worker.
+     * fetch handles requests made directly to the Worker.
      *
      */
     async fetch(request, env, ctx) {
