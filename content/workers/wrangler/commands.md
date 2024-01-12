@@ -60,7 +60,7 @@ The following global flags work on every command.
 
 ---
 
-## Background
+## How to run Wrangler commands
 
 This page provides a reference for Wrangler commands.
 
@@ -108,7 +108,6 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 ```
 
 You can then run them using your package manager of choice:
-
 
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
@@ -561,6 +560,7 @@ wrangler vectorize get <INDEX_NAME>
   - The name of the index to fetch details for.
 
 {{</definitions>}}
+
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
@@ -1315,6 +1315,7 @@ wrangler r2 bucket list
 ```
 
 ### `sippy enable`
+
 {{<Aside type="note">}}
 Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
 {{</Aside>}}
@@ -1374,8 +1375,7 @@ wrangler r2 bucket sippy get <NAME>
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to get the status of Sippy.
 
-{{</definitions>}}
----
+## {{</definitions>}}
 
 ## `r2 object`
 
@@ -1436,7 +1436,7 @@ wrangler r2 object put <OBJECT_PATH> [OPTIONS]
   - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory for locally persisted data.
- {{</definitions>}}
+    {{</definitions>}}
 
 ### `delete`
 
@@ -1512,9 +1512,11 @@ wrangler secret delete <KEY> [OPTIONS]
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1567,15 +1569,17 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-  
+
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1730,7 +1734,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-  
+
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
