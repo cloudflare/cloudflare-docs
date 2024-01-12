@@ -235,7 +235,7 @@ describe("multi-worker testing", () => {
 
 ## `getBindingsProxy`
 
-This function is used to get a proxy for `workerd` bindings that can be then used in code running via Nodejs processes for Workers and Pages projects.
+This function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Nodejs processes for Workers and Pages projects.
 
 ### Usage
 
@@ -261,7 +261,7 @@ console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 
 You should see the returned value: `production_value`.
 
-If you prefer to use bindings directly from a `wrangler.toml` file (for Workers only), you would provide no binding definition, like this:
+If you prefer to take bindings directly from a `wrangler.toml` file (for Workers only), you would provide no binding definition, like this:
 
 ```js
 const { bindings } = await getBindingsProxy({});
