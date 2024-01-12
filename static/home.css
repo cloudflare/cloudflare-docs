@@ -931,7 +931,6 @@ a {
       padding: 20px;
       box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
-      height: 17em;
     }
   
     [theme="dark"] .documentation-sidebar {
@@ -956,9 +955,15 @@ a {
     }
   
     .documentation-content {
-      padding-left: 5em;
+      margin-left: 2em;
       width: 90%;
-      padding-right: 2em;
+      margin-right: 2em;
+      background: #f2f2f2;
+      border-radius: 20px;
+    }
+
+    [theme="dark"] .documentation-content {
+      background: #222629;
     }
   
     #section1:checked ~ .documentation-content #section1Content,
