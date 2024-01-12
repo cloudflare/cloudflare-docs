@@ -19,6 +19,40 @@ If you add or remove a user from a group in your IdP, Gateway will not detect th
 - Log out from an Access-protected application and log back in.
 - In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
+### Extended email match
+
+Extended emails included addresses with `+` or `.` characters in them. For example, for `contact@example.com`, this would be `contact+user@example.com` or `con.tact@example.com`. Depending on which firewall policy type and action you use, Gateway will either filter only exact matches or all extended variants.
+
+#### DNS
+
+| Action             | Behavior                             |
+| ------------------ | ------------------------------------ |
+| Allow              | Match exact address only             |
+| Block              | Match exact address and all variants |
+| Override           | Match exact address and all variants |
+| Safe Search        | Match exact address and all variants |
+| YouTube Restricted | Match exact address and all variants |
+
+#### Network
+
+| Action           | Behavior                             |
+| ---------------- | ------------------------------------ |
+| Allow            | Match exact address only             |
+| Audit SSH        | Match exact address and all variants |
+| Block            | Match exact address and all variants |
+| Network Override | Match exact address only             |
+
+#### HTTP
+
+| Action         | Behavior                             |
+| -------------- | ------------------------------------ |
+| Allow          | Match exact address only             |
+| Block          | Match exact address and all variants |
+| Do Not Inspect | Match exact address only             |
+| Do Not Isolate | Match exact address only             |
+| Do Not Scan    | Match exact address only             |
+| Isolate        | Match exact address and all variants |
+
 ## Identity-based selectors
 
 ### SAML Attributes
