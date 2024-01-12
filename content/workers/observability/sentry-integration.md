@@ -12,7 +12,7 @@ meta:
 This integration allows you to connect to a Sentry project from your Worker to automcatically send errors and uncaught exceptions to Sentry with no code changes needed in the Workers application.
 
 {{<Aside type="note">}}
-This integration is available to all customers on the Workers Paid and Enterprise plans. 
+Sentry integration is available to all Enterprise customers and Free, Pro, and Business customers on the Workers Paid plan. 
 {{</Aside>}}
 ## How it works
 
