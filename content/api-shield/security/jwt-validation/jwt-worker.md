@@ -2,7 +2,7 @@
 title: Configure the Worker
 pcx_content_type: how-to
 type: overview
-
+layout: wide
 meta:
   title: Configure the Worker for JWT Validation
 ---

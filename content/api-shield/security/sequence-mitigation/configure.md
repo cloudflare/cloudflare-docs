@@ -2,7 +2,7 @@
 title: Configure
 pcx_content_type: how-to
 type: overview
-
+layout: wide
 meta:
   title: Configure Sequence Mitigation
 ---
