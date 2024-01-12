@@ -4,7 +4,7 @@ title: Historical (2020)
 weight: 10048
 meta:
     description: Changes to WAF managed rulesets done in 2020.
-layout: list
+layout: wide
 ---
 
 # Historical - 2020

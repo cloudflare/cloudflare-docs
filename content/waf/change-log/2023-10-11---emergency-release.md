@@ -3,7 +3,7 @@ title: 2023-10-11 - Emergency
 type: table
 pcx_content_type: changelog
 weight: 850
-layout: list
+layout: wide
 ---
 
 # 2023-10-11 - Emergency Release

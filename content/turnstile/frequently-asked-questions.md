@@ -2,7 +2,7 @@
 title: FAQ
 pcx_content_type: faq
 weight: 12
-layout: list
+layout: wide
 structured_data: true
 ---
 

@@ -4,7 +4,7 @@ title: Historical (2018)
 weight: 10050
 meta:
     description: Changes to WAF managed rulesets done in 2018, before the public changelog was available.
-layout: list
+layout: wide
 ---
 
 # Historical - 2018

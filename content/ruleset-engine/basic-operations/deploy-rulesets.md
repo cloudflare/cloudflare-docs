@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: Deploy rulesets
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Deploy rulesets
