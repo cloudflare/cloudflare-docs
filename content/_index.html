@@ -115,9 +115,9 @@ meta:
     <div class="documentation-sidebar">
       <label for="section1" id="section1Label">Return HTML</label>
       <label for="section2" id="section2Label">Return JSON</label>
-      <label for="section3" id="section3Label">Section 3</label>
-      <label for="section4" id="section4Label">Section 4</label>
-      <label for="section5" id="section5Label">Section 5</label>
+      <label for="section3" id="section3Label">Fetch HTML</label>
+      <label for="section4" id="section4Label">Redirect</label>
+      <label for="section5" id="section5Label">Respond with a new site</label>
     </div>
   
     <div class="documentation-content">
@@ -131,18 +131,21 @@ meta:
   {{<render file="_return-json-example-js.md" productFolder="workers">}}
   {{</markdown>}}
   </div>
-      <div class="content" id="section3Content">
-        <h3 class="content-title">Section 3</h2>
-        <p class="content-text">This is the content for Section 3.</p>
-      </div>
-      <div class="content" id="section4Content">
-        <h3 class="content-title">Section 4</h2>
-        <p class="content-text">This is the content for Section 4.</p>
-      </div>
-      <div class="content" id="section5Content">
-        <h3 class="content-title">Section 5</h2>
-        <p class="content-text">This is the content for Section 5.</p>
-      </div>
+  <div class="content" id="section3Content">
+  {{<markdown>}}
+  {{<render file="_fetch-html-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section4Content">
+  {{<markdown>}}
+  {{<render file="_redirect-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section5Content">
+  {{<markdown>}}
+  {{<render file="_respond-another-site-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
     </div>
   </div>
 
