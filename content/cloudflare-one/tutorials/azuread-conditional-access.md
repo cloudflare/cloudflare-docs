@@ -1,5 +1,5 @@
 ---
-updated: 2023-01-10
+updated: 2024-01-12
 category: 🔐 Access
 pcx_content_type: tutorial
 title: Use Azure AD Conditional Access policies in Cloudflare Access
