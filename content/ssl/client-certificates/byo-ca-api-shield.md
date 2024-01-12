@@ -18,6 +18,10 @@ This is especially useful if you already have mTLS implemented and client certif
 * This process is only available on Enterprise accounts.
 * Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
+## CA certificate requirements
+
+The CA certificate must be self-signed and, in the `X509v3 Basic Constraints` certificate setting, the attribute `CA` must be set to `TRUE`.
+
 ## Set up mTLS with your CA
 
 1. Use the [Upload mTLS certificate endpoint](/api/operations/m-tls-certificate-management-upload-m-tls-certificate) to upload the CA root certificate.
@@ -36,10 +40,6 @@ This is especially useful if you already have mTLS implemented and client certif
     - Indicate a unique name for your CA certificate.
 
   {{</definitions>}}
-
-  {{<Aside type="warning">}}
-  In the `X509v3 Basic Constraints` certificate setting, the value for `CA` must be set to **TRUE**.
-  {{</Aside>}}
 
 2. Take note of the certificate ID (`id`) that is returned in the API response.
 3. Use the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations) to enable mTLS in each hostname that should use the CA for mTLS validation. Use the following parameters:
