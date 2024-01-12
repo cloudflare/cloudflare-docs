@@ -198,35 +198,6 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 
 There are two ways to interact with Cloudflare bindings: locally and remotely.
 
-### Using bindings in Typescript
-
-In order to get proper type support, you'll need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/). 
-
-The following is an example of adding a `KVNamespace` binding:
-
-```typescript
----
-filename: env.d.ts
-highlight: [5-11]
----
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      [key: string]: string | undefined;
-      // The KV Namespace binding type used here comes
-      // from `@cloudflare/workers-types`, in order to
-      // use it like so, make sure that you have installed
-      // the package as a dev dependency and you have added
-      // it to your `tsconfig.json` file under
-      // `compilerOptions.types`.
-      MY_KV: KVNamespace;
-    }
-  }
-}
-
-export {};
-```
-
 ### Access bindings locally
 
 To access bindings locally, you'll use the `setupDevBindings` function provided by `@cloudflare/next-on-pages/next-dev`. This function allows you to specify bindings that will work locally, and can be accessed the same way remote bindings are.
@@ -293,6 +264,35 @@ export async function GET(request: Request) {
     // ...
   );
 };
+```
+
+### Use bindings in Typescript
+
+In order to get proper type support, you'll need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
+
+The following is an example of adding a `KVNamespace` binding:
+
+```typescript
+---
+filename: env.d.ts
+highlight: [5-11]
+---
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      [key: string]: string | undefined;
+      // The KV Namespace binding type used here comes
+      // from `@cloudflare/workers-types`, in order to
+      // use it like so, make sure that you have installed
+      // the package as a dev dependency and you have added
+      // it to your `tsconfig.json` file under
+      // `compilerOptions.types`.
+      MY_KV: KVNamespace;
+    }
+  }
+}
+
+export {};
 ```
 
 ## `Image` component
