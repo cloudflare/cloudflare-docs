@@ -223,7 +223,7 @@ if (process.env.NODE_ENV === "development") {
 }
 ```
 
-You should then be able to access the binding in your code like this:
+You should then be able run `next dev` and access the binding in your code like this:
 
 ```js
 import type { NextRequest } from 'next/server'
