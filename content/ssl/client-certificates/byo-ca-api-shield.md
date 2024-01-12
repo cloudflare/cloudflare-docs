@@ -20,7 +20,7 @@ This is especially useful if you already have mTLS implemented and client certif
 
 ## CA certificate requirements
 
-The CA certificate must be self-signed and, in the `X509v3 Basic Constraints` certificate setting, the attribute `CA` must be set to `TRUE`.
+{{<render file="_byo-ca-mtls-cert-requirements.md">}}<br />
 
 ## Set up mTLS with your CA
 
