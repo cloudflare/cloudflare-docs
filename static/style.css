@@ -752,23 +752,22 @@ html {
 
 .CodeBlock--filename,
 .CodeBlock--header {
-  display: block;
+  display: inline-block;
+  margin: 0.5rem;
+  border-radius: var(--border-radius);
   background: rgba(var(--color-rgb), 0.05);
-  box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
   padding: 0.4em var(--padding-horizontal);
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
   opacity: 0.9;
   font-weight: 700;
 }
-
-.tabs-wrapper .CodeBlock--filename,
-.tabs-wrapper .CodeBlock--header {
-  border-radius: 0;
+.CodeBlock--filename + code,
+.CodeBlock--header + code {
+  padding-top: 0rem;
 }
 
 [theme="light"] .CodeBlock-is-light-in-light-theme .CodeBlock--filename,
 [theme="light"] .CodeBlock-is-light-in-light-theme .CodeBlock--header {
-  background: transparent;
+  background: #d9d9d9;
 }
 
 .CodeBlock--header {
@@ -5118,7 +5117,7 @@ pre {
   font-family: var(--sans-serif-font-family);
 }
 
-.tabs-wrapper .CodeBlock {
+.tabs-wrapper .tab .code-container:first-child .CodeBlock {
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
@@ -5141,11 +5140,11 @@ pre {
   margin: 0;
   display: flex;
   width: 100%;
-  background-color: rgb(216 216 218);
+  background-color: #d9d9d9;
 }
 
 [theme="dark"] .tabs > ul {
-  background-color: rgba(var(--color-rgb), 0.1);
+  background-color: #313131;
 }
 
 .tabs > ul > li {
@@ -5162,21 +5161,20 @@ pre {
   flex-direction: row;
   margin-bottom: 0;
   list-style-type: none;
-  box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
-.active,
 .tab-label-wrapper:hover,
 .tab-label-wrapper a:hover {
-  background-color: rgb(243 243 244) !important;
-  color: rgb(29, 31, 32) !important;
+  background-color: #f2f2f2;
 }
 
-[theme="dark"] .active,
-.tab-label-wrapper:hover,
+[theme="dark"] .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
-  background-color: rgb(43 44 46) !important;
-  color: var(--code-orange) !important;
+  background-color: #1d1d1d;
+}
+
+.tab-label.active {
+  border-bottom-color: var(--code-orange);
 }
 
 .tab-label {
@@ -5195,6 +5193,9 @@ pre {
   font-weight: 700;
   font-size: var(--code-font-size);
   font-family: var(--monospace-font-family);
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
 }
 
 .tab-label > svg {
