@@ -997,8 +997,20 @@ a {
     .TryOutSection {
       display: none;
     }
+    .ViewProducts {
+      display: none
+    }
   }
-  
+
+.ViewProducts {
+    margin-top: 2em;
+    margin-left: .3em;
+}
+
+.ViewProducts a {
+    color: inherit;
+    text-decoration:underline;
+}
 
 .FeaturedContentSection {
     margin-top: 2em;
