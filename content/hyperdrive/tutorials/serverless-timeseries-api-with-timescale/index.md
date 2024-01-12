@@ -291,7 +291,7 @@ EOF
 ---
 header: Query some data
 ---
-$ curl 'https://timescale-api.<YOUR_SUBDOMAIN>jsewell.workers.dev/readings?limit=10'
+$ curl "https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings?limit=10"
 ```
 
 In this tutorial, you have learned how to create a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive, and TypeScript.
