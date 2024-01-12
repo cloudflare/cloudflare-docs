@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 5
 layout: wide
 meta:
-    title: Rule categories — HTTP DDoS
+  title: Rule categories — HTTP DDoS
 ---
 
 # Rule categories

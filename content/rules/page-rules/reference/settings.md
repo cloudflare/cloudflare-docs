@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-c
 title: Settings
 layout: wide
 meta:
-    title: Settings | Page Rules
+  title: Settings | Page Rules
 weight: 3
 ---
 
