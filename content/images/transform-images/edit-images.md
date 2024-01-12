@@ -14,6 +14,6 @@ The Edit option provides you available options to modify a specific image. After
 
 To edit an image:
 
-1. Log in to the Cloudflare dashboard and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. In **Account Home**, select **Images**.
 3. Locate the image you want to modify and select **Edit.**

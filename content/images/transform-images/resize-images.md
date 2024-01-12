@@ -13,7 +13,7 @@ Cloudflare Images can deliver SVG files but will not resize them because it is a
 Resize via the Cloudflare dashboard.
 {{</Aside>}}
 
-1. Log in to the Cloudflare dashboard and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images** > **Variants**.
 3. Name your variant and select **Add New Variant**.
 4. Define variables for your new variant, such as resizing options, type of fit, and specific metadata options.

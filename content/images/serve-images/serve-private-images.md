@@ -8,9 +8,9 @@ weight: 11
 
 You can serve private images by using signed URL tokens. When an image requires a signed URL, the image cannot be accessed without a token unless it is being requested for a variant set to always allow public access.
 
-Log in to the Cloudflare dashboard and select your account.
-Select Images > Keys.
-Copy your key and use it to generate an expiring tokenized URL.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Select **Images** > **Keys**.
+3. Copy your key and use it to generate an expiring tokenized URL.
 
 {{<Aside type="note">}}
 
@@ -67,5 +67,4 @@ addEventListener('fetch', event => {
   );
   event.respondWith(generateSignedUrl(imageDeliveryURL));
 });
-
 ```

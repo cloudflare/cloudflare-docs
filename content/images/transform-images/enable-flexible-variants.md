@@ -10,8 +10,8 @@ Flexible variants allow you to create variants with dynamic resizing which can p
 
 ## Enable flexible variants via the Cloudflare dashboard
 
-1. Log in to the Cloudflare dashboard and select your account.
-2. Select **Images** > **Variants.**
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Select **Images** > **Variants**.
 3. Enable **Flexible variants**.
 
 ## Enable flexible variants via the API
