@@ -21,7 +21,9 @@ If you add or remove a user from a group in your IdP, Gateway will not detect th
 
 ### Extended email match
 
-Extended emails included addresses with `+` or `.` characters in them. For example, for `contact@example.com`, this would be `contact+user@example.com` or `con.tact@example.com`. Depending on which firewall policy type and action you use, Gateway will either filter only exact matches or all extended variants.
+Email providers allow emails sent to extended email addresses to be delivered to the same inbox. Extended emails included addresses with `+` or `.` characters in them. For example, for `contact@example.com`, this would be `contact+user@example.com` or `con.tact@example.com`.
+
+Depending on which firewall policy type and action you use, Gateway will either filter only exact matches or all extended variants.
 
 #### DNS
 
