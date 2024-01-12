@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Pricing
-weight: 6
+weight: 8
 ---
 
 # Pricing

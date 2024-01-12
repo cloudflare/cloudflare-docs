@@ -33,14 +33,14 @@ Use Cloudflare’s edge network to store your images
 
 {{</feature>}}
 
-{{<feature header="User uploaded images" href="/images/direct-creator-upload/">}}
+{{<feature header="User uploaded images" href="/images/upload-images/direct-creator-upload/">}}
 Accept uploads directly and securely from your users by generating a one-time token.
 {{</feature>}}
 
 {{<feature header="Create variants by transforming images" href="/images/transform-images" cta="Create variants by transoforming images">}}
 {{</feature>}}
 
-{{<feature header="Control access to your images" href="/images/serve-private-images" cta="Control access to your images">}}
+{{<feature header="Control access to your images" href="/images/serve-images/serve-private-images" cta="Control access to your images">}}
 Restrict access to your images by using signed URL tokens.
 {{</feature>}}
 
