@@ -119,15 +119,15 @@ This code block consists of four parts:
 
 2. The event handler: `async fetch(request)`
 
-This [`fetch()` handler](<(/workers/runtime-apis/handlers/fetch/)>) will be called when your Worker receives an HTTP request. You can define additional event handlers in the exported object to respond to different types of events. For example, add a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) to respond to a Worker invocations via a [Cron Trigger](/workers/configuration/cron-triggers/).
+This [`fetch()` handler](<(/workers/runtime-apis/handlers/fetch/)>) will be called when your Worker receives an HTTP request. You can define additional event handlers in the exported object to respond to different types of events. For example, add a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) to respond to Worker invocations via a [Cron Trigger](/workers/configuration/cron-triggers/).
 
 3. Parameters: `request`, `env`, `context`
 
-The `fetch` handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/handlers/fetch/).
+The `fetch` handler will always be passed three parameters: [`request`, `env` and `context`](/workers/runtime-apis/handlers/fetch/).
 
 1. The `Response` object: `return new Response("Hello World!");`
 
-The Workers runtime expects `fetch` handlers to return a `Response` object. In this example, you will return a new Response with the string `"Hello World!"`.
+The Workers runtime expects `fetch` handlers to return a `Response` object or a Promise which resolves with a `Response` object. In this example, you will return a new `Response` with the string `"Hello World!"`.
 
 To review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
 
