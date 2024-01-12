@@ -467,12 +467,41 @@
 /images/images/ /images/cloudflare-images/ 301
 /images/keys/ /images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/ 301
 /images/resizing-with-workers/ /images/image-resizing/resize-with-workers/ 301
-/images/upload-images/ /images/cloudflare-images/upload-images/ 301
 /images/url-format/ /images/image-resizing/url-format/ 301
 /images/variants/ /images/cloudflare-images/transform/ 301
 /images/worker/ /images/image-resizing/resize-with-workers/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/image-resizing/troubleshooting/ 301
+/images/cloudflare-images/ /images/ 301
+/images/cloudflare-images/api-request/ /images/get-started/ 301
+/images/cloudflare-images/images-analytics/ /images/ 301
+/images/cloudflare-images/make-an-image-private/ /images/serve-images/serve-private-images/ 301
+/images/cloudflare-images/serve-images/ /images/serve-images/ 301
+/images/cloudflare-images/serve-images/adaptive-images-format/ /images/serve-images/adaptive-optimized-format-delivery/ 301
+/images/cloudflare-images/serve-images/browser-ttl/ /images/serve-images/browser-ttl/ 301
+/images/cloudflare-images/serve-images/serve-images-custom-domains/ /images/serve-images/serve-from-custom-domains/ 301
+/images/cloudflare-images/sourcing-kit/ /images/platform/sourcing-kit/ 301
+/images/cloudflare-images/sourcing-kit/credentials/ /images/platform/sourcing-kit/credentials/ 301
+/images/cloudflare-images/sourcing-kit/edit/ /images/platform/sourcing-kit/edit/ 301
+/images/cloudflare-images/sourcing-kit/enable/ /images/platform/sourcing-kit/enable/ 301
+/images/cloudflare-images/transform/ /images/transform-images/ 301
+/images/cloudflare-images/transform/blur-images/ /images/transform-images/blur-images/ 301
+/images/cloudflare-images/transform/delete-images/ /images/transform-images/delete-images/ 301
+/images/cloudflare-images/transform/delete-variants/ /images/transform-images/delete-images/ 301
+/images/cloudflare-images/transform/edit-images/ /images/transform-images/edit-images/ 301
+/images/cloudflare-images/transform/export-image/ /images/transform-images/export-images/ 301
+/images/cloudflare-images/transform/flexible-variants/ /images/transform-images/enable-flexible-variants/ 301
+/images/cloudflare-images/transform/resize-images/ /images/transform-images/resize-images/ 301
+/images/cloudflare-images/tutorials/ /images/ 301
+/images/cloudflare-images/tutorials/integrate-cloudflare-images/ /images/ 301
+/images/cloudflare-images/upload-images/ /images/upload-images/ 301
+/images/cloudflare-images/upload-images/custom-id/ /images/upload-images/upload-custom-path/ 301
+/images/cloudflare-images/upload-images/dashboard-upload/ /images/upload-images/upload-dashboard/ 301
+/images/cloudflare-images/upload-images/direct-creator-upload/ /images/upload-images/direct-creator-upload/ 301
+/images/cloudflare-images/upload-images/images-batch/ /api/operations/cloudflare-images-list-images 301
+/images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
+/images/faq /images/ 301
+
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/reference/partners/ 301
