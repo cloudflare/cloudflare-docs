@@ -1375,7 +1375,7 @@ wrangler r2 bucket sippy get <NAME>
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to get the status of Sippy.
 
-## {{</definitions>}}
+{{</definitions>}}
 
 ## `r2 object`
 
@@ -1436,7 +1436,8 @@ wrangler r2 object put <OBJECT_PATH> [OPTIONS]
   - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory for locally persisted data.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `delete`
 
