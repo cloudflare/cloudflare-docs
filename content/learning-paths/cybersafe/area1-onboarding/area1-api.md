@@ -5,4 +5,4 @@ weight: 3
 layout: learning-unit
 ---
 
-{{<render file="_setup-api-overview.md" productFolder="email-security">}}
+{{<render file="deployment/_setup-api-overview.md" productFolder="email-security">}}
