@@ -49,6 +49,14 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Waiting Room](/waiting-room/) | Yes | Yes |
 | [Websockets](/network/websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Zaraz](/zaraz/) | Yes | No | 
+| [Zaraz](/zaraz/) | Yes | No |
 
 {{</table-wrap>}}
+
+---
+
+## Managed Challenges in an O2O setup
+
+In an O2O setup, issuing a [Managed Challenge](/waf/reference/cloudflare-challenges/#managed-challenge-recommended) in the SaaS provider zone configuration is not supported.
+
+To issue a Managed Challenge to the visitor when using O2O you must do it in the customer zone configuration.
