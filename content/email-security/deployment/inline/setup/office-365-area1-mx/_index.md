@@ -216,7 +216,7 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts. For example:
 
-{{<render file="_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
 {{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).

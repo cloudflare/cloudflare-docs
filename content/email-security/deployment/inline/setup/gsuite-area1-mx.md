@@ -152,7 +152,7 @@ Google handles Groups (that is, distributions lists) differently from user mail 
 
 Instructions to update your MX records will depend on the DNS provider you are using. You need to replace the existing Google MX records with the Area 1 hosts. For example:
 
-{{<render file="_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
 {{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
