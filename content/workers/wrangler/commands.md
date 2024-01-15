@@ -35,7 +35,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
-- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 
@@ -220,7 +220,7 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
 - `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the new experimental storage backend for this database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Provide an optional [location hint](/d1/learning/data-location/) for your database leader.
+  - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
 
@@ -268,7 +268,7 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 
 ### `time-travel restore`
 
-Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
+Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
 
 ```txt
 wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
@@ -286,7 +286,7 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 
 ### `time-travel info`
 
-Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
+Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
 
 ```txt
 wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
@@ -349,7 +349,7 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 {{<Aside type="warning">}}
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/learning/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
+This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
 {{</Aside>}}
 
 Download existing data to your local machine.

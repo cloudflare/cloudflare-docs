@@ -24,13 +24,13 @@ meta:
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2024-01-15</td>
+      <td>2024-01-23</td>
+      <td>...2de94fb2</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #3).</td>
+      <td>block</td>
+      <td>ddos_dynamic</td>
+      <td>Expand the rule to look at more requests</td>
     </tr>
   </tbody>
 </table>
