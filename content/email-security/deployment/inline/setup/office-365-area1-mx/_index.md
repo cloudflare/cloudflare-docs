@@ -20,6 +20,8 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 {{<render file="_mx-deployment-prerequisites.md">}}
 
+{{<render file="_o365-gcc.md">}}
+
 ## 1. Add Area 1 IP addresses to Allow List
 
 1. Go to the [Microsoft Security admin center](https://security.microsoft.com/homepage).
@@ -27,9 +29,9 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 2. Go to **Email & collaboration** > **Policies & Rules** > **Threat policies**.
 
 3. Select the [Anti-spam option](https://security.microsoft.com/antispam).
-    
+
     <div class="large-img">
-    
+
     ![Select the anti-spam option](/images/email-security/deployment/inline-setup/o365-area1-mx/step3-anti-spam.png)
 
     </div>
@@ -75,7 +77,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 ## 2. Enhanced Filtering configuration
 
-This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: 
+This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps:
 
 * Creating an inbound connector.
 * Enabling the enhanced filtering configuration of the connector.
@@ -142,7 +144,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
     </div>
 
-2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters. 
+2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters.
 
 3. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
 
@@ -154,7 +156,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 ### Select the disposition you want to quarantine
 
-Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration: 
+Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
@@ -229,7 +231,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 
 #### Configure domains
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/). 
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
