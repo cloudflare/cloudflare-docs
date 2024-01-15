@@ -1,5 +1,5 @@
 ---
-title: Microsoft Office 365 GCC
+title: MS Office 365 GCC
 pcx_content_type: reference
 meta:
   title: Microsoft 365 Government Community Cloud
