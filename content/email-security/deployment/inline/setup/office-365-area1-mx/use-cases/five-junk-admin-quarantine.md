@@ -17,7 +17,7 @@ In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to 
 
 ## Configure anti-spam policies
 
-{{<render file="_o365-use-cases-antispam.md" withParameters="_AdminOnlyAccessPolicy_;;_AdminOnlyAccessPolicy_;;_AdminOnlyAccessPolicy_;;step7-adminonly-case5.png">}}
+{{<render file="deployment/_o365-use-cases-antispam.md" withParameters="_AdminOnlyAccessPolicy_;;_AdminOnlyAccessPolicy_;;_AdminOnlyAccessPolicy_;;step7-adminonly-case5.png">}}
 
 ## Create transport rules
 
