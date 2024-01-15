@@ -71,4 +71,4 @@ Refer to Microsoft's documentation to learn more about how to use these tools to
 
 ## Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md">}}
+{{<render file="deployment/_bcc-table-geographic-locations.md">}}

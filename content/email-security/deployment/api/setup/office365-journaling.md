@@ -21,4 +21,4 @@ For customers using Microsoft Office 365, setting up Area 1 via journaling is qu
 
 ## Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md">}}
+{{<render file="deployment/_bcc-table-geographic-locations.md">}}
