@@ -212,8 +212,8 @@
 /d1/platform/community-projects/ /d1/reference/community-projects/ 301
 /d1/platform/client-api/ /d1/reference/client-api/ 301
 /d1/platform/data-security/ /d1/reference/data-security/ 301
-/d1/platform/environments/ /d1/reference/environments/ 301
-/d1/platform/metrics-analytics/ /d1/reference/metrics-analytics/ 301
+/d1/platform/environments/ /d1/configuration/environments/ 301
+/d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/platform/migrations/ /d1/reference/migrations/ 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
