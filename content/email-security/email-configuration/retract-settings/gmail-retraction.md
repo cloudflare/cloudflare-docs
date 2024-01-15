@@ -182,7 +182,7 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 
 You must send copies of inbound email messages to Area 1 for inspection, so that Area 1 can automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Area 1 is deployed as MX.
 
-{{<render file="_gmail-bcc-setup.md">}}
+{{<render file="deployment/_gmail-bcc-setup.md">}}
 
 ### Geographic locations
 
