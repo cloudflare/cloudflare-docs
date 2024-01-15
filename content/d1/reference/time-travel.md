@@ -16,7 +16,7 @@ By not having to rely on scheduled backups and/or manually initiated backups, yo
 
 {{<Aside type="note" header="Support for Time Travel">}}
 
-Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
+Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/reference/backups/) used for legacy alpha databases.
 
 To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: beta` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
 
