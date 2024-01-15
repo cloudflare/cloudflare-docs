@@ -54,7 +54,7 @@ The authorization process grants Area 1 access to the Azure environment with the
 
 ## 3. Configure journaling
 
-{{<render file="_journaling-connector.md">}}
+{{<render file="deployment/_journaling-connector.md">}}
 
 ## 4. Manual message retraction
 

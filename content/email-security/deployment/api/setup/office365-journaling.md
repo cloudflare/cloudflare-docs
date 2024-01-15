@@ -17,7 +17,7 @@ For customers using Microsoft Office 365, setting up Area 1 via journaling is qu
 
 ## Journaling
 
-{{<render file="_journaling-connector.md">}}
+{{<render file="deployment/_journaling-connector.md">}}
 
 ## Geographic locations
 
