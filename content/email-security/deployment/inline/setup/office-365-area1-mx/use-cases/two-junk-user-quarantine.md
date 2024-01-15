@@ -21,7 +21,7 @@ In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages
 
 ## Configure quarantine notifications
 
-{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
+{{<render file="deployment/_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 

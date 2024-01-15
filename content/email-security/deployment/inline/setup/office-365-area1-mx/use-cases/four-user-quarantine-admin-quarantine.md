@@ -21,7 +21,7 @@ In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the u
 
 ## Configure quarantine notifications
 
-{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
+{{<render file="deployment/_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 
