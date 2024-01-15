@@ -20,7 +20,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 {{<render file="_outbound-email.md">}}
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to Allow List
 

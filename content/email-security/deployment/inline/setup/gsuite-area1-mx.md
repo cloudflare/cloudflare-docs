@@ -22,7 +22,7 @@ In this tutorial, you will learn how to configure Google Workspace with Area 1 a
 * Access to the Google administrator console ([**Google administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
 * Access to the domain nameserver hosting the MX records for the domains that will be processed by Area 1.
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to the Inbound gateway configuration
 
@@ -55,7 +55,7 @@ When Area 1 is deployed as the MX record for Google Workspace, the Inbound gatew
 {{<Aside type="note">}}Do not select **Reject all mail not from gateway IPs** until the MX records have fully propagated. [Refer to step 4](#4-secure-your-email-flow) for more details.{{</Aside>}}
 
 5. Select the **Save** button at the bottom of the dialog box to save the configuration once the details have been entered. Once saved, the administrator console will show the Inbound Gateway as **enabled**.
-    
+
     ![Inbound gateway on](/images/email-security/deployment/inline-setup/gsuite-area1-mx/step5-inbound-on.png)
 
 ## 2. Quarantine malicious detections
@@ -173,7 +173,7 @@ After 36 hours, the MX record DNS update will have sufficiently propagated acros
 
 ## 5. Send Area 1 spam to user spam folder (optional)
 
-Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where the message can be sent to an administrative quarantine, this optional step can be configured to send messages that are identified as spam by Area 1 to the user’s spam folder. 
+Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where the message can be sent to an administrative quarantine, this optional step can be configured to send messages that are identified as spam by Area 1 to the user’s spam folder.
 
 1. Access [Google's Administrative Console](https://admin.google.com/), then select **Apps** > **Google Workspace** > **Gmail**.
 

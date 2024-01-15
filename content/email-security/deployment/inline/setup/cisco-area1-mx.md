@@ -14,7 +14,7 @@ updated: 2022-09-30
 
 In this tutorial, you will learn how to configure Cisco IronPort with Area 1 as MX record. This tutorial is broken down into several steps.
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add a Sender Group for Area 1 Email Protection IPs
 
