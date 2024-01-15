@@ -179,6 +179,17 @@ If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/mo
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
+## Warp on Linux shows `DNS connectivity check failed to resolve host="warp-svc."`
+
+This error probably means that you have changed `systemd-resolved` configuration `/etc/systemd/resolved.conf` and set a DNS manually
+
+1. Check your `/etc/systemd/resolved.conf`
+2. If there is an uncommented line with the `DNS=X.Y.Z.Q` line, this might be the source of the error
+3. Comment the line and do:
+
+```sh
+sudo systemctl restart systemd-resolved.service
+```
 
 ## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
 
