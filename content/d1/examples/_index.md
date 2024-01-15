@@ -3,7 +3,7 @@ type: overview
 hideChildren: false
 pcx_content_type: navigation
 title: Examples
-weight: 10
+weight: 3
 layout: list
 ---
 
