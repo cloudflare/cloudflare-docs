@@ -41,7 +41,7 @@ Create your first D1 database, establish a schema, import data and query D1 dire
 
 {{</feature>}}
 
-{{<feature header="Time Travel" href="/d1/learning/time-travel/" cta="Learn about Time Travel">}}
+{{<feature header="Time Travel" href="/d1/reference/time-travel/" cta="Learn about Time Travel">}}
 
 Time Travel is D1’s approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.
 

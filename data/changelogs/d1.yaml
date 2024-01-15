@@ -5,9 +5,9 @@ entries:
   - publish_date: "2023-12-18"
     title: Legacy alpha automated backups disabled
     description: |-
-      Databases using D1's legacy alpha backend will no longer run automated [hourly backups](/d1/learning/backups/). You may still choose to take manual backups of these databases.
+      Databases using D1's legacy alpha backend will no longer run automated [hourly backups](/d1/reference/backups/). You may still choose to take manual backups of these databases.
 
-      The D1 team recommends moving to D1's new [production backend](/d1/platform/changelog/#the-d1-public-beta-is-here), which will require you to export and import your existing data. D1's production backend is faster than the original alpha backend. The new backend also supports [Time Travel](/d1/learning/time-travel/), which allows you to restore your database to any minute in the past 30 days without relying on hourly or manual snapshots.
+      The D1 team recommends moving to D1's new [production backend](/d1/platform/changelog/#the-d1-public-beta-is-here), which will require you to export and import your existing data. D1's production backend is faster than the original alpha backend. The new backend also supports [Time Travel](/d1/reference/time-travel/), which allows you to restore your database to any minute in the past 30 days without relying on hourly or manual snapshots.
 
   - publish_date: "2023-10-03"
     title: Create up to 50,000 D1 databases
@@ -71,15 +71,15 @@ entries:
 
       To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the version field in the output.
 
-      Databases with `version: beta` use the new storage backend and support the [Time Travel](/d1/learning/time-travel/) API. Databases with `version: alpha` only use D1's older, legacy backend.
+      Databases with `version: beta` use the new storage backend and support the [Time Travel](/d1/reference/time-travel/) API. Databases with `version: alpha` only use D1's older, legacy backend.
   - publish_date: "2023-07-27"
     title: Time Travel
     description: |-
-      [Time Travel](/d1/learning/time-travel/) is now available. Time Travel allows you to restore a D1 database back to any minute within the last 30 days (Workers Paid plan) or 7 days (Workers Free plan), at no additional cost for storage or restore operations.
+      [Time Travel](/d1/reference/time-travel/) is now available. Time Travel allows you to restore a D1 database back to any minute within the last 30 days (Workers Paid plan) or 7 days (Workers Free plan), at no additional cost for storage or restore operations.
 
-      Refer to the [Time Travel](/d1/learning/time-travel/) documentation to learn how to travel backwards in time.
+      Refer to the [Time Travel](/d1/reference/time-travel/) documentation to learn how to travel backwards in time.
 
-      Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
+      Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/reference/backups/) used for legacy alpha databases.
   - publish_date: "2023-06-28"
     title: Metrics and analytics
     description: |-
