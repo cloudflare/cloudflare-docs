@@ -14,7 +14,7 @@ updated: 2023-01-12
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
 
-{{<render file="_o365-gcc.md">}}
+{{<render file="deployment/_o365-gcc.md">}}
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
