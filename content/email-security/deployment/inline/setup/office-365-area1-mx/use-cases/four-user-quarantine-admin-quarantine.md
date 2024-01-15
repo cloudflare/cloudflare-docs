@@ -13,7 +13,7 @@ In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the u
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
+{{<render file="deployment/_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
 
 ## Create quarantine policies
 

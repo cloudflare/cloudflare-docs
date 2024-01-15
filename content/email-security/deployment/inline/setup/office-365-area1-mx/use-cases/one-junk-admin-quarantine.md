@@ -13,7 +13,7 @@ In this tutorial, you will learn how to deliver emails to the Office 365 junk em
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
+{{<render file="deployment/_o365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
 
 ## Create quarantine policies
 

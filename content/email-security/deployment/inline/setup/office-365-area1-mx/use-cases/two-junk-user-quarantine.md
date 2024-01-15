@@ -13,7 +13,7 @@ In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Only `MALICIOUS` should be checked.">}}
+{{<render file="deployment/_o365-use-case-configure-domain.md" withParameters="Only `MALICIOUS` should be checked.">}}
 
 ## Create quarantine policies
 
