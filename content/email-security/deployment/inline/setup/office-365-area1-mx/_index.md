@@ -22,7 +22,6 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 {{<render file="_mx-deployment-prerequisites.md">}}
 
-
 ## 1. Add Area 1 IP addresses to Allow List
 
 1. Go to the [Microsoft Security admin center](https://security.microsoft.com/homepage).
