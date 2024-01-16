@@ -18,12 +18,12 @@ jobs:
       
       - name: List reviews
         id: reviews
-        run: echo "::set-output name=reviews::$(gh pr review list --json state --json user --ref HEAD --number ${{ github.event.pull_request.number }})"
+        run: echo "reviews = $(gh pr review list --json state --json user --ref HEAD --number ${{ github.event.pull_request.number }})" >> "$GITHUB_ENV"
 
       - name: Delete reviews based on criteria
-        if: ${{ steps.reviews.outputs.reviews != '' }}
+        if: ${{ env.reviews != '' }}
         run: |
-          REVIEWS=$(echo "${{ steps.reviews.outputs.reviews }}" | jq -c 'select(.state == "COMMENTED" and .user.id == "41898282") | .id')
+          REVIEWS=$(echo "${{ env.reviews }}" | jq -c 'select(.state == "COMMENTED" and .user.id == "41898282") | .id')
           
           if [ -n "$REVIEWS" ]; then
             for REVIEW_ID in $REVIEWS; do
