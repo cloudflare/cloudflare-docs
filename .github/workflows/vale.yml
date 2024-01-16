@@ -23,16 +23,7 @@ jobs:
         run: |
           # Get reviews and filter based on state and reviewer id
           filtered_reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions")')
-          echo "FILTERED_REVIEWS=$filtered_reviews" >> "$GITHUB_ENV"
-
-      - name: Delete reviews
-        if: ${{ env.FILTERED_REVIEWS != '' }}
-        run: |
-          # Loop through the filtered reviews and delete each one
-          for review in ${{ env.FILTERED_REVIEWS }}; do
-            review_id=$(echo "$review" | jq -r '.id')
-            gh pr review ${{ github.event.pull_request.number }} -D "${review_id}"
-          done
+          echo $filtered_reviews
 
       - name: Get Changed Files from Pull Request
         run: |
