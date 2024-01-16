@@ -7,3 +7,5 @@ title: Infrastructure
 # Infrastructure
 
 {{<directory-listing>}}
+
+Another link goes to [this page](/).
