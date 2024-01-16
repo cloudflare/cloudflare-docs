@@ -1,4 +1,4 @@
-name: Vale checks
+name: Style guide
 on:
   pull_request:
     types:
@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  vale:
+  review-styles:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -34,4 +34,4 @@ jobs:
         with:
           files: ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
-          reporter: github-pr-review
+          reporter: github-pr-annotations
