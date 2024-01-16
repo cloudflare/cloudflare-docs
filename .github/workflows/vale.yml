@@ -18,6 +18,8 @@ jobs:
       
       - name: Get and filter reviews
         id: get-and-filter-reviews
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get reviews and filter based on state and reviewer id
           filtered_reviews=$(gh pr view --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .user.id == "41898282")')
@@ -44,8 +46,6 @@ jobs:
           fi
 
       - name: Get Changed Files from Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and structure as JSON
           files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} echo "\"{}\"" | tr '\n' ',' | sed 's/,$/\n/' | awk '{print "["$0"]"}')
