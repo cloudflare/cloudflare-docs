@@ -17,6 +17,10 @@ After an event is received, if the event takes some time to execute and does not
 
 A Durable Object may be replaced in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling `wrangler tail` or [Cloudflare dashboard](https://dash.cloudflare.com/) logs requires a software update.
 
+## Code updates
+
+Code changes for Workers and Durable Objects are released globally in an eventually consistent manner. Because Durable Objects are globally unique, the situation can arise that a Worker is running in a part of the world that has been updated and a Durable Object can be running in a part of the world that has not yet been updated, or vice versa. For this reason, it is best practice to ensure that API changes between Workers and Durable Objects are forward and backward compatible across code updates.
+
 ## Development tools
 
 [`wrangler tail`](/workers/wrangler/commands/#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed. `wrangler tail` should not be connected to a Worker that you expect will receive heavy volumes of traffic.
