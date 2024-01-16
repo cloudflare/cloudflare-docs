@@ -21,6 +21,7 @@ jobs:
         run: echo "::set-output name=reviews::$(gh pr review list --json state --json user --ref HEAD --number ${{ github.event.pull_request.number }})"
 
       - name: Delete reviews based on criteria
+        if: ${{ steps.reviews.outputs.reviews != '' }}
         run: |
           REVIEWS=$(echo "${{ steps.reviews.outputs.reviews }}" | jq -c 'select(.state == "COMMENTED" and .user.id == "41898282") | .id')
           
