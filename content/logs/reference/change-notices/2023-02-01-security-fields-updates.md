@@ -8,8 +8,8 @@ weight: 300
 
 Cloudflare will deploy some updates to security-related fields in Cloudflare Logs. These updates will affect the following datasets:
 
-* [HTTP Requests](/logs/reference/log-fields/zone/http_requests/)
-* [Firewall Events](/logs/reference/log-fields/zone/firewall_events/)
+- [HTTP Requests](/logs/reference/log-fields/zone/http_requests/)
+- [Firewall Events](/logs/reference/log-fields/zone/firewall_events/)
 
 ## Timeline
 
@@ -27,11 +27,12 @@ For the log fields being renamed, Cloudflare will:
 For the log fields being removed, Cloudflare is announcing them as deprecated. Their removal from logs datasets will occur on August 1, 2023.
 
 In addition to these Cloudflare Logs changes, Cloudflare will also add new security-related fields to the following [GraphQL datasets](/analytics/graphql-api/features/data-sets/):
-  - `httpRequestsAdaptive `
-  - `httpRequestsAdaptiveGroups`
-  - `firewallEventsAdaptive`
-  - `firewallEventsAdaptiveGroups`
-  - `firewallEventsAdaptiveByTimeGroups`
+
+- `httpRequestsAdaptive `
+- `httpRequestsAdaptiveGroups`
+- `firewallEventsAdaptive`
+- `firewallEventsAdaptiveGroups`
+- `firewallEventsAdaptiveByTimeGroups`
 
 ### Phase 2 (August 1, 2023)
 
@@ -43,20 +44,20 @@ For the log fields being removed, Cloudflare will also remove them from the Clou
 
 The following concepts are used below in the reviewed field descriptions:
 
-* **Terminating action:** One of the following actions:
+- **Terminating action:** One of the following actions:
 
-  * `block`
-  * `js_challenge`
-  * `managed_challenge`
-  * `challenge` (_Interactive Challenge_)
+  - `block`
+  - `js_challenge`
+  - `managed_challenge`
+  - `challenge` (_Interactive Challenge_)
 
 For more information on these actions, refer to the [Actions](/ruleset-engine/rules-language/actions/) reference in the Rules language documentation.
 
-* **Security rule:** One of the following rule types:
+- **Security rule:** One of the following rule types:
 
-  * [WAF managed rule](/waf/managed-rules/)
-  * [WAF custom rule](/waf/custom-rules/)
-  * [WAF rate limiting rule](/waf/rate-limiting-rules/)
+  - [WAF managed rule](/waf/managed-rules/)
+  - [WAF custom rule](/waf/custom-rules/)
+  - [WAF rate limiting rule](/waf/rate-limiting-rules/)
 
 ## HTTP Requests dataset changes
 
@@ -64,14 +65,14 @@ The following fields will be renamed in the [HTTP Requests](/logs/reference/log-
 
 {{<table-wrap>}}
 
-New field name | Type | Description | Old field name<br>(deprecated on Aug 1, 2023)
----|---|---|---
-`SecurityRuleID` | String | Rule ID of the security rule that triggered a terminating action, if any. | `WAFRuleID`
-`SecurityRuleDescription`	| String | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`
-`SecurityAction` | String | Rule action of the security rule that triggered a terminating action, if any. | `WAFAction`
-`SecurityRuleIDs` | String Array | Array of security rule IDs that matched the request. | `FirewallMatchesRuleIDs`
-`SecurityActions` | String Array | Array of actions that Cloudflare security products performed on the request. | `FirewallMatchesActions`
-`SecuritySources` | String Array | Array of Cloudflare security products that matched the request. | `FirewallMatchesSources`
+| New field name            | Type         | Description                                                                        | Old field name<br>(deprecated on Aug 1, 2023) |
+| ------------------------- | ------------ | ---------------------------------------------------------------------------------- | --------------------------------------------- |
+| `SecurityRuleID`          | String       | Rule ID of the security rule that triggered a terminating action, if any.          | `WAFRuleID`                                   |
+| `SecurityRuleDescription` | String       | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`                              |
+| `SecurityAction`          | String       | Rule action of the security rule that triggered a terminating action, if any.      | `WAFAction`                                   |
+| `SecurityRuleIDs`         | String Array | Array of security rule IDs that matched the request.                               | `FirewallMatchesRuleIDs`                      |
+| `SecurityActions`         | String Array | Array of actions that Cloudflare security products performed on the request.       | `FirewallMatchesActions`                      |
+| `SecuritySources`         | String Array | Array of Cloudflare security products that matched the request.                    | `FirewallMatchesSources`                      |
 
 {{</table-wrap>}}
 
@@ -79,12 +80,12 @@ The following fields are now deprecated and they will be removed from the HTTP R
 
 {{<table-wrap>}}
 
-Deprecated field name | Notes
-----------------------|----------------------------------------------------------------------
-`WAFProfile`          | Used in the previous version of WAF managed rules (now deprecated).
-`EdgeRateLimitAction` | Used in the previous version of rate limiting rules (now deprecated).
-`EdgeRateLimitID`     | Used in the previous version of rate limiting rules (now deprecated).
-`SecurityLevel`       | N/A
+| Deprecated field name | Notes                                                                 |
+| --------------------- | --------------------------------------------------------------------- |
+| `WAFProfile`          | Used in the previous version of WAF managed rules (now deprecated).   |
+| `EdgeRateLimitAction` | Used in the previous version of rate limiting rules (now deprecated). |
+| `EdgeRateLimitID`     | Used in the previous version of rate limiting rules (now deprecated). |
+| `SecurityLevel`       | N/A                                                                   |
 
 {{</table-wrap>}}
 
@@ -94,10 +95,10 @@ The following fields will be added to the [Firewall Events](/logs/reference/log-
 
 {{<table-wrap>}}
 
-Field name    | Type   | Description
---------------|--------|--------------------------------------------
-`Description` | String | The description of the rule triggered by the request.
-`Ref`         | String | The user-defined identifier for the rule triggered by the request.
+| Field name    | Type   | Description                                                        |
+| ------------- | ------ | ------------------------------------------------------------------ |
+| `Description` | String | The description of the rule triggered by the request.              |
+| `Ref`         | String | The user-defined identifier for the rule triggered by the request. |
 
 {{</table-wrap>}}
 
@@ -107,10 +108,10 @@ Cloudflare will add the following fields to the `httpRequestsAdaptive `and `http
 
 {{<table-wrap>}}
 
-Field name       | Type   | Description
------------------|--------|-------------------------------------------------------------------------
-`securityAction` | String | Action of the security rule that triggered a terminating action, if any.
-`securitySource` | String | Source of the security rule that triggered a terminating action, if any.
+| Field name       | Type   | Description                                                              |
+| ---------------- | ------ | ------------------------------------------------------------------------ |
+| `securityAction` | String | Action of the security rule that triggered a terminating action, if any. |
+| `securitySource` | String | Source of the security rule that triggered a terminating action, if any. |
 
 {{</table-wrap>}}
 
@@ -118,9 +119,9 @@ Cloudflare will also add the following field to the `firewallEventsAdaptive`, `f
 
 {{<table-wrap>}}
 
-Field name    | Type   | Description
---------------|--------|-----------------------------
-`description` | String | The description of the rule triggered by the request.
+| Field name    | Type   | Description                                           |
+| ------------- | ------ | ----------------------------------------------------- |
+| `description` | String | The description of the rule triggered by the request. |
 
 {{</table-wrap>}}
 
@@ -144,7 +145,7 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job via API
 
-Follow the instructions in [Update log_pull options](/logs/tutorials/examples/example-logpush-curl/#step-6---update-logpull_options) to update the fields in the Logpush job.
+Follow the instructions in [Update log_pull options](/logs/tutorials/examples/example-logpush-curl/#optional---update-logpull_options) to update the fields in the Logpush job.
 
 ### Update Logpush job via Terraform
 
