@@ -45,4 +45,4 @@ By default, Gateway will either filter only exact matches or all extended varian
 
 {{</details>}}
 
-To force Gateway to exact match all email address variants, go to **Settings** > **Network** > **Firewall** and turn on **Match email variants**. This settings applies to all Gateway policies.
+To force Gateway to match all email address variants, go to **Settings** > **Network** > **Firewall** and turn on **Match email variants**. This settings applies to all Gateway policies.
