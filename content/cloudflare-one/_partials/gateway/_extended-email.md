@@ -5,9 +5,9 @@ _build:
   list: never
 ---
 
-Extended email addresses (also known as plus addresses) are the addition of `+` or `.` modifiers to an email address. Many email providers support emails sent to extended email addresses to be delivered to the same inbox. For example, possible extended email addresses for `contact@example.com` include `contact+123@example.com` or `con.tact@example.com`.
+Extended email addresses (also known as plus addresses) are variants of an existing email address with `+` or `.` modifiers. Many email providers, such as Gmail and Outlook, deliver emails intended for an extended address to its original address. For example, providers will deliver emails sent to `contact+123@example.com` or `con.tact@example.com` to `contact@example.com`.
 
-Depending on which firewall policy type and action you use, Gateway will either filter only exact matches or all extended variants.
+By default, Gateway will either filter only exact matches or all extended variants depending on the type of firewall policy and action used:
 
 {{<details header="DNS policies">}}
 
@@ -44,3 +44,5 @@ Depending on which firewall policy type and action you use, Gateway will either 
 | Isolate        | Match exact address and all variants |
 
 {{</details>}}
+
+To force Gateway to exact match all email address variants, go to **Settings** > **Network** > **Firewall** and turn on **Match email variants**. This settings applies to all Gateway policies.
