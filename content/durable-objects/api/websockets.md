@@ -149,6 +149,16 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
 {{</definitions>}}
 
+### getTags
+
+{{<definitions>}}
+
+- {{<code>}}getTags(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Array\<string>{{</type>}}
+
+  - Returns an Array of tags associated with the given WebSocket. Throws an error if you have not called `state.acceptWebSocket()` on the given WebSocket.
+
+{{</definitions>}}
+
 ### setWebSocketAutoResponse
 
 {{<definitions>}}
@@ -186,6 +196,28 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 - {{<code>}}getWebSocketAutoResponseTimestamp(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Date | null{{</type>}}
 
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
+
+{{</definitions>}}
+
+### setHibernatableWebSocketEventTimeout
+
+{{<definitions>}}
+
+- {{<code>}}setHibernatableWebSocketEventTimeout(timeout{{<param-type>}}number{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Sets the maximum amount of milliseconds a WebSocket event (refer to the handler methods below) can run for.
+  - If `0`, or no value is given for the `timeout`, the previously set timeout (if any) will be unset.
+  - The maximum value of `timeout` is 604,800,000 ms (7 days).
+
+{{</definitions>}}
+
+### getHibernatableWebSocketEventTimeout
+
+{{<definitions>}}
+
+- {{<code>}}getHibernatableWebSocketEventTimeout(){{</code>}} : {{<type>}}number | null{{</type>}}
+
+  - Gets the currently set hibernatable WebSocket event timeout if any had been set with `state.setHibernatableWebSocketEventTimeout()`.
 
 {{</definitions>}}
 
