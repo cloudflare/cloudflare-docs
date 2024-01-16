@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Bindings
-layout: single
 meta:
   description: Interact with storage and other resources on the Cloudflare Developer Platform.
 ---

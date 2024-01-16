@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Global policies
-layout: single
 weight: 7
 ---
 

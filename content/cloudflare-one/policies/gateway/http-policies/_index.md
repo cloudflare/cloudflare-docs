@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: HTTP policies
-layout: single
 weight: 4
 ---
 

@@ -4,7 +4,6 @@ pcx_content_type: concept
 weight: 4
 meta:
   title: Network-layer DDoS Attack Protection managed ruleset
-layout: single
 ---
 
 # Network-layer DDoS Attack Protection managed ruleset
