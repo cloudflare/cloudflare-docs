@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Get and delete existing reviews
+      - name: Get existing review comments
         id: get-and-filter-reviews
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,8 +26,15 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments" | \
             jq '.[] | select(.user.id == 41898282) | select(.body | contains("vale")) | .url')
-          
-          for review_url in "${reviews[@]}"; do
+
+          echo "FILTERED_REVIEWS=$reviews" >> "$GITHUB_ENV"
+
+      - name: Delete existing review comments
+        if: ${{ !cancelled() && env.FILTERED_REVIEWS != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |   
+          for review_url in "${env.FILTERED_REVIEWS[@]}"; do
             # Remove double quotes from the URL
             review_url=$(echo $review_url | tr -d '"')
             
@@ -36,7 +43,7 @@ jobs:
               -X DELETE \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GITHUB_TOKEN" \
-             $review_url
+              $review_url
           done
 
       - name: Get Changed Files from Pull Request
@@ -54,5 +61,4 @@ jobs:
         if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
         with:
           files: ${{ env.CHANGED_FILES }}
-          filter_mode: diff_context
           reporter: github-pr-review
