@@ -20,7 +20,6 @@ A Token Configuration defines a JSON Web Key Set (JWKs), which is used to valida
 |  `token type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. |
 | `title` | A human-readable name for the configuration that allows to quickly identify the purpose of the configuration. | Production JWT configuration |
 | `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} in endpoint management and checks the JWT in the authorization header.|
-| `action` | How we should configure the firewall to act on the validation result. | `block` | possible: `log` or `block` |
 | `enabled` | This enables or disables acting on the validation result. | `true` | possible: `true` or `false` |
 | `allow_absent_token` | How API Shield should handle requests that do not have a JWT present. Setting this to `true` allows hybrid endpoints where JWTs, if present, must be valid, but JWTs are still allowed to be absent. | `true` | possible: `true` or `false` |
 | `token_schema` | This describes where the JWT can be found on a request. Currently, we only support extracting them from headers. | See example below. |The type must be `header`. The name field denotes the header name from which to extract the JWT. |
