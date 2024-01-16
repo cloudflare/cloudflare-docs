@@ -916,6 +916,10 @@ a {
       margin-top: 5em;
       width: 100%;
     }
+    .documentation-content pre {
+      margin-bottom: 0em !important;
+    }
+
     .documentation-container {
       display: flex;
       margin-top: 1.8em;
