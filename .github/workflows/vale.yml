@@ -28,7 +28,12 @@ jobs:
             jq '.[] | select(.user.id == 41898282) | select(.body | contains("vale")) | .url')
           
           for review_url in "${reviews[@]}"; do
-            echo "$review_url"
+            curl -L \
+              -X DELETE \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              "$review_url"
+            
           done
 
           
