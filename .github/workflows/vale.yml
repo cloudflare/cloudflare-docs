@@ -32,7 +32,7 @@ jobs:
               -X DELETE \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GITHUB_TOKEN" \
-              ${review_url}
+              "${review_url}"
           done
 
           
