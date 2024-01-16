@@ -1,4 +1,4 @@
-name: reviewdog
+name: Vale checks
 on:
   pull_request:
     types:
@@ -34,3 +34,4 @@ jobs:
         with:
           files: ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
+          reporter: github-pr-review
