@@ -43,147 +43,11 @@ If you chose to deploy, you will receive a unique subdomain for your project on 
 
 {{<Aside type="note">}}
 
-The following steps are only applicable to projects that have not been created and deployd via create-cloudflare.
+The following steps are only applicable to projects that have not been created and deployed via create-cloudflare.
 
 {{</Aside>}}
 
-To begin, you'll create a new project with `create-next-app`:
-
-```sh
-$ npx create-next-app
-```
-
-From within the project directory, you'll also need to create a new repo for your project.
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-git remote add origin https://github.com/<GH_USERNAME>/<REPOSITORY_NAME>
-git branch -M main
-git push -u origin main
-```
-
-## Consider if you need the Edge Runtime
-
-The Edge Runtime allows applications to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props), [Server Components](https://nextjs.org/docs/getting-started/react-essentials#server-components), and [Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
-
-For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) which explains the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
-
-
-## Use the Edge Runtime
-
-### Configure the application to use the Edge Runtime
-
-The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (for example, API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
-
-```js
-export const runtime = 'edge';
-```
-
-As an example, an [Edge Route Handler](https://nextjs.org/docs/app/building-your-application/routing/router-handlers#edge-and-nodejs-runtimes) might look like this:
-
-{{<tabs labels="js | ts">}}
-{{<tab label="js" default="true">}}
-
-```js
----
-filename: app/api/hello/route.js
----
-import { cookies } from 'next/headers';
-
-export const runtime = 'edge';
-
-export async function GET(request) {
-	const cookieStore = cookies();
-	const token = cookieStore.get('token');
-
-	return new Response('Hello, Next.js!', {
-		status: 200,
-		headers: { 'Set-Cookie': `token=${token}` },
-	});
-}
-```
-
-{{</tab>}}
-{{<tab label="ts">}}
-
-```ts
----
-filename: app/api/hello/route.ts
----
-import { cookies } from 'next/headers';
-
-export const runtime = 'edge';
-
-export async function GET(request: Request) {
-	const cookieStore = cookies();
-	const token = cookieStore.get('token');
-
-	return new Response('Hello, Next.js!', {
-		status: 200,
-		headers: { 'Set-Cookie': `token=${token}` },
-	});
-}
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-For more examples of this and for Next.js versions prior to v13.3.1, refer to [`@cloudflare/next-on-pages` examples](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/supported.md).
-
-### Deploy via the Cloudflare dashboard
-
-To deploy your application to Cloudflare Pages via the Cloudflare Dashboard, you need to install the `@cloudflare/next-on-pages` package into your project. This library builds your Next.js project in a format that can be deployed to Pages, and handles the runtime logic for your application.
-
-```sh
-$ npm install --save-dev @cloudflare/next-on-pages
-```
-
-To deploy your site to Pages:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js_ as your **Framework preset**. Your selection will provide the following information.
-
-{{<pages-build-preset framework="next-js">}}
-
-4. Next.js requires a specific Node.js version to build successfully. Refer to [System Requirements in Next.js Installation guide](https://nextjs.org/docs/getting-started/installation) to review the required Node.js version. To set your Node.js version, go to your Pages project > **Settings** > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of the required version. For example, if the required Node.js version on Next.js's Installation guide is Node.js `16.8` or later, your environment variable value must be set to `16` or greater.
-5. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
-6. In your Pages project, go to **Settings** > **Functions** > **Compatibility Flags**.
-7. Configure a `nodejs_compat` flag for both production and preview.
-8. Above **Compatibility Flags**, go to **Compatibility Date**  and configure a compatibility date that is at least `2022-11-30` for both production and preview.
-
-{{<Aside type="note">}}
-
-The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/functions/advanced-mode/). The library attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](/workers/platform/limits/#worker-size). If you notice any bugs, file a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
-
-{{</Aside>}}
-
-## Deploy via a static export
-
-If you already have a Next.js project that you wish to deploy, ensure that it is [configured for static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports), change to its directory, and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project.
-
-```sh
-$ npx create-next-app --example with-static-export my-app
-```
-
-After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template. Change to this directory to continue.
-
-```sh
-$ cd my-app
-```
-
-### Deploy your application to Cloudflare Pages
-
-To deploy your site to Pages:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js (Static HTML Export)_ as your **Framework preset**. Your selection will provide the following information.
-
-{{<pages-build-preset framework="next-js-static">}}
-
-After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
+If you already have a Next.js project or wish to manually create and deploy one, we recommend that you use `@cloudflare/next-on-pages`. Its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) contains setup instructions and additional information to help you develop and deploy your project. 
 
 ## Preview your site
 
@@ -196,11 +60,11 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
 
-There are two ways to interact with Cloudflare bindings: locally and remotely.
+Cloudflare bindings must be set up for local and remote development.
 
-### Access bindings locally
+### Set up local bindings
 
-To access bindings locally, you'll use the `setupDevBindings` function provided by `@cloudflare/next-on-pages/next-dev`. This function allows you to specify bindings that will work locally, and can be accessed the same way remote bindings are.
+To set up bindings for use in local development, you will use the `setupDevBindings` function provided by `@cloudflare/next-on-pages/next-dev`. This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
 For example to work with a KV binding locally, you need to open `next.config.js` and add:
 
@@ -223,7 +87,7 @@ if (process.env.NODE_ENV === "development") {
 }
 ```
 
-You should then be able run `next dev` and access the binding in your code like this:
+You should then be able to access the binding in your code via `process.env` like this:
 
 ```js
 import type { NextRequest } from 'next/server'
@@ -244,9 +108,7 @@ export async function GET(request: NextRequest) {
 
 ### Access bindings remotely
 
-The following code shows an example of accessing a remote KV namespace in a TypeScript Next.js project.
-
-You'll first need to [configure](/workers/configuration/bindings/) any necessary bindings for your project.
+For remote bindings running on Cloudflare's network, you'll first need to [configure](/workers/configuration/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
 
 Then, the binding can be accessed directly from `process.env`:
 
