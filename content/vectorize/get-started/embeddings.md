@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 {{<render file="_vectorize-beta.md">}}
 
-Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
+Vectorize allows you to generate [vector embeddings](/vectorize/reference/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
@@ -259,10 +259,10 @@ Extend this example by:
 
 - Adding more inputs and generating a larger set of vectors.
 - Accepting a custom query parameter passed in the URL, for example via `URL.searchParams`.
-- Creating a new index with a different [distance metric](/vectorize/learning/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
+- Creating a new index with a different [distance metric](/vectorize/configuration/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
 
 ## Next steps
 
 - Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
-- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
-- Read [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+- Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.

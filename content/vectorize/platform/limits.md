@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Limits
-weight: 9
+weight: 2
 ---
 
 {{<Aside type="note" heading="Vectorize public beta limits">}}

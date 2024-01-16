@@ -338,5 +338,5 @@ In a real-world application, the `queryVector` would be the vector embedding rep
 ## Next steps
 
 - [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
-- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 - Read [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers.

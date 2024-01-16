@@ -1206,6 +1206,17 @@
 /kv/learning/kv-bindings/ /kv/reference/kv-bindings/ 301
 /kv/learning/kv-namespaces/ /kv/reference/kv-namespaces/ 301
 
+# vectorize
+
+/vectorize/learning/what-is-a-vector-database/ /vectorize/reference/what-is-a-vector-database/ 301
+/vectorize/learning/create-indexes/ /vectorize/configuration/create-indexes/ 301
+/vectorize/learning/insert-vectors/ /vectorize/configuration/insert-vectors/ 301
+/vectorize/learning/query-vectors/ /vectorize/configuration/query-vectors/ 301
+/vectorize/learning/metadata-filtering/ /vectorize/reference/metadata-filtering/ 301  
+/vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
+
+
+
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
