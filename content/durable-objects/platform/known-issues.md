@@ -19,7 +19,9 @@ A Durable Object may be replaced in the event of a network partition or a softwa
 
 ## Code updates
 
-Code changes for Workers and Durable Objects are released globally in an eventually consistent manner. Because Durable Objects are globally unique, the situation can arise that a Worker is running in a part of the world that has been updated and a Durable Object can be running in a part of the world that has not yet been updated, or vice versa. For this reason, it is best practice to ensure that API changes between Workers and Durable Objects are forward and backward compatible across code updates.
+Code changes for Workers and Durable Objects are released globally in an eventually consistent manner. Because each Durable Object is globally unique, the situation can arise that a request arrives to the latest version of your Worker (running in one part of the world), which then calls to a unique Durable Object running the previous version of your code for a short period of time (typically seconds to minutes).
+
+For this reason, it is best practice to ensure that API changes between your Workers and Durable Objects are forward and backward compatible across code updates.
 
 ## Development tools
 
