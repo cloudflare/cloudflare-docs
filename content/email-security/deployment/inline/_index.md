@@ -9,7 +9,7 @@ meta:
 
 # Inline deployment
 
-{{<render file="_setup-inline-overview.md">}}
+{{<render file="deployment/_setup-inline-overview.md">}}
 
 ## Get started
 

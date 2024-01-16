@@ -14,13 +14,13 @@ updated: 2023-01-12
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
 
-{{<render file="_o365-gcc.md">}}
+{{<render file="deployment/_o365-gcc.md">}}
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 {{<render file="_outbound-email.md">}}
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to Allow List
 
@@ -216,8 +216,8 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts. For example:
 
-{{<render file="_mx-deployment-values.md">}}
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 

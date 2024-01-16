@@ -8,7 +8,7 @@ weight: 5
 
 Email Retro Scan allows you to scan up to 14 days of old messages in your Office 365 (O365) inboxes and check if your current email security solution missed any threats. Contact your account manager to enable this feature.
 
-{{<render file="_o365-gcc.md">}}
+{{<render file="deployment/_o365-gcc.md">}}
 
 ## Scan for threats
 
