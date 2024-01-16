@@ -109,4 +109,4 @@ Assign the Incoming Content Filters created in [step 3](#3-create-incoming-conte
 
 ## 5. Geographic locations
 
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}

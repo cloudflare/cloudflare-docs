@@ -13,7 +13,7 @@ For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph 
 
 ![Email flow when setting up Area 1 with the Microsoft Graph API](/images/email-security/deployment/api-setup/ms-graph/ms-graph.png)
 
-{{<render file="_o365-gcc.md">}}
+{{<render file="deployment/_o365-gcc.md">}}
 
 ## User roles
 

@@ -21,7 +21,7 @@ In this tutorial, you will learn how to configure Google Workspace with Area 1 a
 * Access to the Google administrator console ([**Google administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
 * Access to the domain nameserver hosting the MX records for the domains that will be processed by Area 1.
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to the Inbound gateway configuration
 
@@ -151,8 +151,8 @@ Google handles Groups (that is, distributions lists) differently from user mail 
 
 Instructions to update your MX records will depend on the DNS provider you are using. You need to replace the existing Google MX records with the Area 1 hosts. For example:
 
-{{<render file="_mx-deployment-values.md">}}
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
