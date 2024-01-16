@@ -205,10 +205,27 @@
 /constellation/ /workers-ai/ 301
 
 # d1
-/d1/client-api/ /d1/platform/client-api/ 301
+/d1/client-api/ /d1/reference/client-api/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
-/d1/migrations/ /d1/platform/migrations/ 301
+/d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
+/d1/platform/community-projects/ /d1/reference/community-projects/ 301
+/d1/platform/client-api/ /d1/reference/client-api/ 301
+/d1/platform/data-security/ /d1/reference/data-security/ 301
+/d1/platform/environments/ /d1/configuration/environments/ 301
+/d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
+/d1/platform/migrations/ /d1/reference/migrations/ 301
+/d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
+/d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
+/d1/learning/local-development/ /d1/configuration/local-development/ 301
+/d1/learning/remote-development/ /d1/configuration/remote-development/ 301
+/d1/learning/data-location/ /d1/configuration/data-location/ 301
+/d1/reference/environments/ /d1/configuration/environments/ 301
+/d1/learning/using-indexes/ /d1/how-to/using-indexes/ 301
+/d1/learning/querying-json/ /d1/how-to/querying-json/ 301
+/d1/learning/importing-data/ /d1/how-to/importing-data/ 301
+/d1/learning/generated-columns/ /d1/how-to/generated-columns/ 301
+
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
@@ -258,10 +275,18 @@
 /support/dns/troubleshooting/my-dns-doesnt-work/ /dns/troubleshooting/dns-issues/ 301
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
-/durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-location-example/ 301
+/durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-in-memory-state/ 301
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
-
+/durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
+/durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
+/durable-objects/platform/graphql-analytics/ /durable-objects/reference/graphql-analytics/ 301
+/durable-objects/platform/troubleshooting/ /durable-objects/reference/troubleshooting/ 301
+/durable-objects/learning/ /durable-objects/reference/ 301
+/durable-objects/learning/in-memory-state/ /durable-objects/reference/in-memory-state/ 301
+/durable-objects/learning/durable-objects-migrations/ /durable-objects/reference/durable-objects-migrations/ 301
+/durable-objects/learning/websockets/ /durable-objects/reference/websockets/ 301
+/durable-objects/examples/durable-object-location-example/ /durable-objects/examples/durable-object-in-memory-state/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -589,7 +614,7 @@
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
 /pages/framework-guides/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
-/pages/platform/github-integration/ /pages/platform/git-integration/ 301
+/pages/platform/github-integration/ /pages/configuration/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
 /pages/platform/direct-upload/ /pages/get-started/direct-upload/ 301
 /pages/platform/functions/billing/ /pages/functions/pricing/ 301
@@ -623,6 +648,21 @@
 /pages/platform/functions/debugging-and-logging/ /pages/functions/debugging-and-logging/ 301
 /pages/platform/functions/module-support/ /pages/functions/module-support/ 301
 /pages/platform/functions/smart-placement/ /pages/functions/smart-placement/ 301
+/pages/platform/api/ /pages/configuration/api/ 301
+/pages/platform/branch-build-controls/ /pages/configuration/branch-build-controls/ 301
+/pages/platform/build-caching/ /pages/configuration/build-caching/ 301
+/pages/platform/build-configuration/ /pages/configuration/build-configuration/ 301
+/pages/platform/custom-domains/ /pages/configuration/custom-domains/ 301
+/pages/platform/debugging-pages/ /pages/configuration/debugging-pages/ 301
+/pages/platform/deploy-hooks/ /pages/configuration/deploy-hooks/ 301
+/pages/platform/early-hints/ /pages/configuration/early-hints/ 301
+/pages/platform/git-integration/ /pages/configuration/git-integration/ 301
+/pages/platform/headers/ /pages/configuration/headers/ 301
+/pages/platform/language-support-and-tools/ /pages/configuration/language-support-and-tools/ 301
+/pages/platform/preview-deployments/ /pages/configuration/preview-deployments/ 301
+/pages/platform/redirects/ /pages/configuration/redirects/ 301
+/pages/platform/rollbacks/ /pages/configuration/rollbacks/ 301
+/pages/platform/serving-pages/ /pages/configuration/serving-pages/ 301
 
 # partners
 /partners/ /fundamentals/reference/partners/ 301
@@ -643,11 +683,21 @@
 /support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
 
 # queues
-/queues/configuration/ /queues/platform/configuration/ 301
-/queues/javascript-apis/ /queues/platform/javascript-apis/ 301
+/queues/configuration/ /queues/reference/configuration/ 301
+/queues/javascript-apis/ /queues/reference/javascript-apis/ 301
 /queues/limits/ /queues/platform/limits/ 301
 /queues/pricing/ /queues/platform/pricing/ 301
 /queues/examples/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-rendering/ 301
+/queues/platform/javascript-apis/ /queues/reference/javascript-apis/ 301
+/queues/platform/configuration/ /queues/reference/configuration/ 301
+/queues/changelog/ /queues/platform/changelog/ 301
+/queues/learning/how-queues-works/ /queues/reference/how-queues-works/ 301
+/queues/learning/delivery-guarantees/ /queues/reference/delivery-guarantees/ 301
+/queues/learning/batching-retries/ /queues/reference/batching-retries/ 301
+/queues/learning/consumer-concurrency/ /queues/reference/consumer-concurrency/ 301
+/queues/learning/metrics/ /queues/reference/metrics/ 301
+/queues/learning/local-development/ /queues/reference/local-development/ 301
+/queues/learning/ /queues/reference/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
@@ -737,6 +787,15 @@
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/start/hostname-verification-backoff-schedule/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/backoff-schedule/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/ 301
+
+# workers for platforms
+/cloudflare-for-platforms/workers-for-platforms/learning/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
+/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/observability/ /cloudflare-for-platforms/workers-for-platforms/reference/observability/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/tags/ /cloudflare-for-platforms/workers-for-platforms/reference/tags/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/metadata/  /cloudflare-for-platforms/workers-for-platforms/reference/metadata/ 301
+
 # Includes dynamic redirects listed at bottom
 
 # stream
@@ -815,6 +874,9 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/basic-tasks/recovering-from-hacked-site/ 301
+/support/firewall/learn-more/configuring-token-authentication/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
+/support/firewall/learn-more/ /waf/troubleshooting/ 301
+/support/firewall/ /waf/troubleshooting/ 301
 /support/about-cloudflare/better-internet-initiatives/faqs-for-cryptographic-attestation-of-personhood/ /fundamentals/reference/cryptographic-personhood/ 301
 /support/troubleshooting/general-troubleshooting/registrar-troubleshoot-stalled-domain-transfers/ /registrar/troubleshooting/ 301
 /support/troubleshooting/general-troubleshooting/troubleshooting-issues-sharing-to-facebook/ /waf/troubleshooting/facebook-sharing/ 301
@@ -830,6 +892,8 @@
 /support/ssl-tls/edge-certificates-ssl-tls-configuration/ /ssl/edge-certificates/ 301
 /support/ssl-tls/faq-and-reference/match-ssl-cipher-names-from-ssl-labs-to-cloudflare-naming-conventions/ /ssl/reference/cipher-suites/troubleshooting/ 301
 /support/ssl-tls/faq-and-reference/ /ssl/reference/ 301
+/support/account-management-billing/account-privacy-and-security/understanding-samesite-cookie-interaction-with-cloudflare/ /waf/troubleshooting/samesite-cookie-interaction/ 301
+/support/account-management-billing/account-privacy-and-security/ /support/account-management-billing/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
@@ -912,6 +976,7 @@
 /waf/change-log/historical/ /waf/change-log/historical-2019/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
+/waf/custom-rules/use-cases/require-valid-hmac-token/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -934,10 +999,13 @@
 /web3/ipfs-gateway/browsing-ipfs/ /web3/how-to/use-ipfs-gateway/ 301
 /web3/ipfs-gateway/connecting-website/ /web3/how-to/manage-gateways/ 301
 /web3/ipfs-gateway/setting-up-a-server/ /web3/ipfs-gateway/ 301
+/web3/how-to/use-polygon-gateway/ /web3/how-to/ 301
 
 # workers
-/workers/about/ /workers/learning/ 301
-/workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
+/workers/about/ /workers/reference/ 301
+/workers/learning/ /workers/reference/ 301
+/workers/about/how-it-works/ /workers/reference/how-workers-works/ 301
+/workers/learning/how-workers-works/ /workers/reference/how-workers-works/ 301
 /workers/about/limits/ /workers/platform/limits/ 301
 /workers/about/metrics/ /workers/observability/metrics-and-analytics/ 301
 /workers/about/pricing/ /workers/platform/pricing/ 301
@@ -945,7 +1013,8 @@
 /workers/platform/routes/ /workers/configuration/routing/ 301
 /workers/about/tips/debugging/ /workers/observability/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
-/workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
+/workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
+/workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
 /workers/api/resource-bindings/webassembly-modules/ /api/operations/worker-script-list-workers 301
@@ -957,14 +1026,14 @@
 /workers/cli-wrangler/authentication/ /workers/wrangler/install-and-update/ 301
 /workers/cli-wrangler/webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
-/workers/deploying-workers/serverless/ /workers/learning/integrations/ 301
-/workers/deploying-workers/terraform/ /workers/learning/integrations/ 301
+/workers/deploying-workers/serverless/ /workers/configuration/integrations/ 301
+/workers/deploying-workers/terraform/ /workers/configuration/integrations/ 301
 /workers/examples/signed-request/ /workers/examples/signing-requests/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
 /workers/kv/writing-data/ /workers/platform/storage-options/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
-/workers/learning/profiling-workers/ /workers/learning/ 301
+/workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
 /workers/platform/scripts/ /api/operations/worker-script-list-workers 301
 /workers/platform/services/ /workers/configuration/bindings/about-service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
@@ -978,7 +1047,6 @@
 /workers/recipes/random-content-cookies/ /workers/examples/ab-testing/ 301
 /workers/recipes/signed-requests/ /workers/examples/signing-requests/ 301
 /workers/recipes/streaming-responses/ /workers/ 301
-/workers/reference/ /workers/ 301
 /workers/reference/apis/ /workers/runtime-apis/ 301
 /workers/reference/apis/cache/ /workers/runtime-apis/cache/ 301
 /workers/reference/apis/environment-variables/ /workers/platform/environment-variables/ 301
@@ -1000,7 +1068,7 @@
 /workers/reference/storage/overview/ /workers/platform/storage-options/ 301
 /workers/reference/storage/reading-data/ /workers/platform/storage-options/ 301
 /workers/reference/tooling/ /workers/wrangler/ 301
-/workers/reference/workers-concepts/using-cache/ /workers/learning/how-the-cache-works/ 301
+/workers/reference/workers-concepts/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/sites/ /workers/platform/sites/ 301
 /workers/sites/start-from-scratch/ /workers/platform/sites/start-from-scratch/ 301
 /workers/starters/ /workers/get-started/quickstarts/ 301
@@ -1024,9 +1092,9 @@
 /workers/templates/snippets/post_data/ /workers/examples/read-post/ 301
 /workers/tooling/ /workers/wrangler/ 301
 /workers/tooling/api/bindings/ /workers/platform/bindings/ 301
-/workers/tooling/playground/ /workers/learning/playground/ 301
+/workers/tooling/playground/ /workers/playground/ 301
 /workers/learning/playground/ /workers/playground/ 301
-/workers/tooling/serverless/ /workers/learning/integrations/ 301
+/workers/tooling/serverless/ /workers/configuration/integrations/ 301
 /workers/tooling/wrangler/ /workers/wrangler/ 301
 /workers/tooling/wrangler/commands/ /workers/wrangler/commands/ 301
 /workers/tooling/wrangler/configuration/ /workers/wrangler/configuration/ 301
@@ -1044,7 +1112,7 @@
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
-/workers/writing-workers/debugging-tips/ /workers/learning/debugging-workers/ 301
+/workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -1056,8 +1124,9 @@
 /workers/wrangler-legacy/migration/ /workers/wrangler/migration/ 301
 /workers/wrangler/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler/migration/migrating-from-wrangler-1/ /workers/wrangler/migration/v1-to-v2/ 301
-/workers/learning/service-worker/ /workers/learning/migrate-to-module-workers/#service-worker-syntax/ 301
-/workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
+/workers/learning/service-worker/ /workers/reference/migrate-to-module-workers/ 301
+/workers/learning/migrating-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
+/workers/learning/migrate-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/durable-objects/ /durable-objects/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/headers/ /workers/runtime-apis/headers/ 301
@@ -1081,8 +1150,10 @@
 /workers/platform/triggers/custom-domains/ /workers/configuration/routing/custom-domains/ 301
 /workers/learning/using-durable-objects/ /durable-objects/ 301
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
-/workers/platform/languages/ /workers/learning/languages/ 301
-/workers/platform/protocols/ /workers/learning/protocols/ 301
+/workers/platform/languages/ /workers/reference/languages/ 301
+/workers/learning/languages/ /workers/reference/languages/ 301
+/workers/platform/protocols/ /workers/reference/protocols/ 301
+/workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
 /workers/platform/bindings/about-service-bindings/ /workers/configuration/bindings/about-service-bindings/ 301
@@ -1109,7 +1180,7 @@
 /workers/runtime-apis/email-event/ /email-routing/email-workers/runtime-api/ 301
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
-/workers/runtime-apis/add-event-listener/ /workers/learning/migrate-to-module-workers/ 301
+/workers/runtime-apis/add-event-listener/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/tail-event/ /workers/runtime-apis/handlers/tail/ 301
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
@@ -1119,12 +1190,21 @@
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 /workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
+/workers/learning/security-model/ /workers/reference/security-model/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
 /workers-ai/models/speech-to-text/ /workers-ai/models/speech-recognition/ 301
 /workers-ai/models/sentiment-analysis/ /workers-ai/models/text-classification/ 301
 /workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
+
+# workers KV
+/kv/platform/environments/ /kv/reference/environments/ 301
+/kv/platform/kv-commands/ /kv/reference/kv-commands/ 301
+/kv/learning/ /kv/reference/ 301
+/kv/learning/how-kv-works/ /kv/reference/how-kv-works/ 301
+/kv/learning/kv-bindings/ /kv/reference/kv-bindings/ 301
+/kv/learning/kv-namespaces/ /kv/reference/kv-namespaces/ 301
 
 # zaraz
 
@@ -1186,6 +1266,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/ /cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/grafana/ /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ 301
+/cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ 301
 /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
 /cloudflare-one/connections/connect-networks/private-net/create-private-networks/ /cloudflare-one/connections/connect-networks/private-net/warp-to-warp/ 301
 /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
@@ -1338,6 +1419,7 @@
 /waf/custom-rulesets/* /waf/custom-rules/custom-rulesets/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
+/web3/polygon-gateway/* /web3/ 301
 
 # Old WAF changelog entries
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301
@@ -1359,7 +1441,6 @@
 # Workers
 /workers/recipes/vcl-conversion/* /workers/ 301
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
-/workers/reference/* /workers/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
 
 # Others

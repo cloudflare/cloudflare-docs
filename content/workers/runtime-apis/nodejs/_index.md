@@ -43,7 +43,7 @@ compatibility_flags = [ "nodejs_compat" ]
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
 ```sh
-$ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
+$ npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
 ```
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
@@ -56,3 +56,7 @@ To enable Node.js for your Pages Function from the Cloudflare dashboard:
 2. Select **Workers & Pages** and in **Overview**, select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+
+## Related resources
+
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

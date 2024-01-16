@@ -82,3 +82,7 @@ export default {
   },
 };
 ```
+
+## Related resources
+
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

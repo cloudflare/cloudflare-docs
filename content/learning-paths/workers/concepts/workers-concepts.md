@@ -17,11 +17,11 @@ To understand the fundamentals of Workers technology, refer to these Cloudflare 
 
 ### Workers
 
-Explore Cloudflare Workers developer documentation by starting with [How Workers works](/workers/learning/how-workers-works/), and learn the difference between the Workers runtime versus traditional browsers and Node.js. If you are a Node.js user, review [Node.js compatibility](/workers/runtime-apis/nodejs/) in the Workers documentation.
+Explore Cloudflare Workers developer documentation by starting with [How Workers works](/workers/reference/how-workers-works/), and learn the difference between the Workers runtime versus traditional browsers and Node.js. If you are a Node.js user, review [Node.js compatibility](/workers/runtime-apis/nodejs/) in the Workers documentation.
 
 ### The cache
 
-Learn how Workers interacts with the Cloudflare cache by reading [How the cache works](/workers/learning/how-the-cache-works/).
+Learn how Workers interacts with the Cloudflare cache by reading [How the cache works](/workers/reference/how-the-cache-works/).
 
 ### Developer Platform
 
@@ -31,6 +31,6 @@ Cloudflare Workers is part of the [Cloudflare Developer Platform](https://www.cl
 
 The Cloudflare blog offers updates and further insights to developers on the Cloudflare developer platform, which includes Workers. Explore some curated blog posts below on Workers speed, and scalability.
 
-* Learn about the Workers security model, supported languages and more in the [Learning](/workers/learning/) section of the Workers documentation.
+* Learn about the Workers security model, supported languages and more in the [Reference](/workers/reference/) section of the Workers documentation.
 * [Cloudflare Workers versus Lambda versus Lambda@Edge](https://blog.cloudflare.com/serverless-performance-comparison-workers-lambda/)
 * [Cloudflare blog posts related to Workers](https://blog.cloudflare.com/tag/workers/)

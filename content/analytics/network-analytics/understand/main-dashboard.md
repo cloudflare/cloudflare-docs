@@ -39,11 +39,35 @@ Network Analytics will not show other traffic, such as:
 
 ## High-level metrics
 
-The side panels in the Network Analytics page provide a summary of activity over the period selected in the timeframe drop-down list.
+The side panels in the Network Analytics page provide a summary of activity over the period selected in the time frame drop-down list.
 
 ![Available high-level metrics in the Network Analytics dashboard](/images/analytics/network-analytics/high-level-metrics.png)
 
 Selecting one of the metrics in the sidebar will define the base unit (packets or bits/bytes) for the data displayed in the dashboard.
+
+## Executive summary
+
+![Executive summary card in the Network Analytics dashboard.](/images/analytics/network-analytics/executive-summary-card.png)
+
+The executive summary provides top insights and trends about DDoS attacks targeting your network, including the amount of attacks, percentage of attacks traffic mitigated relative to your traffic, largest attack rates, total mitigated attack bytes, top source, and estimated duration of the attacks.
+
+These insights are adaptive based on the selected time frame and the **Packets** or **Bytes** [metrics](#high-level-metrics) selector. The insights are also accompanied by the trends relative to the selected time period, visualized as period-over-period change in percentage and indicator arrows.
+
+The executive summary also features a one-liner summary at the top, informing you about recent and ongoing attacks.
+
+### Total attacks
+
+The total number of attacks is based on unique attack IDs of mitigations issued by the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
+
+Since the mitigation system may generate several mitigation rules (and therefore several attack IDs) for a single attack, the actual number of attacks may seem higher in some cases.
+
+To obtain the metadata of recently mitigated DDoS attacks, query the [`dosdAttackAnalyticsGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/#dosdattackanalyticsgroups) GraphQL node.
+
+{{<Aside type="note" header="Note about attack rates">}}
+Attack rates in the executive summary may seem lower than the ones displayed in the time series graph because they are calculated based on the maximum rate of unique attack events and only by the Network-layer DDoS Attack Protection managed ruleset. However, in practice, multiple attacks and mitigation systems can contribute to blocking a single attack, resulting in a larger rate than the one displayed.
+
+Additionally, attack rates may change based on the sampling and adaptive bit rate (ABR) as you zoom in and out in the time series graph. Refer to [Concepts](/analytics/network-analytics/understand/concepts/) for more information.
+{{</Aside>}}
 
 ## Filters
 

@@ -1,7 +1,7 @@
 ---
 title: Client-side error codes
 pcx_content_type: reference
-weight: 14
+weight: 15
 layout: single
 ---
 

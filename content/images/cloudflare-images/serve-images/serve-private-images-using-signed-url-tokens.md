@@ -44,8 +44,8 @@ async function generateSignedUrl(url) {
   // `url` now looks like
   // https://imagedelivery.net/cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
 
-  const stringToSign = url.pathname + '?' + url.searchParams.toString();
-  // for example, /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
+  const stringToSign = url.pathname;
+  // for example, /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile
 
   // Generate the signature
   const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(stringToSign));

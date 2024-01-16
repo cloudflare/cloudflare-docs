@@ -57,7 +57,7 @@ jobs:
             fi
           else
             # Construct the comment body for changed files
-            comment_body="This PR changes current filenames or deletes current files. Make sure you have [redirects](https://developers.cloudflare.com/pages/platform/redirects/) set up to cover the following paths:"
+            comment_body="This PR changes current filenames or deletes current files. Make sure you have [redirects](https://developers.cloudflare.com/pages/configuration/redirects/) set up to cover the following paths:"
             for path in $CHANGED_FILES; do
               clean_path=$(echo $path | sed 's/"//g')  # Remove quotation marks
               comment_body="$comment_body

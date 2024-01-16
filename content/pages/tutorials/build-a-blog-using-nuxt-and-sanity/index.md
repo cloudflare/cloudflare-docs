@@ -431,7 +431,7 @@ After you have pushed your project to GitHub, deploy your site to Pages:
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
-In order to automatically deploy your project when your Sanity.io data changes, you can use [Deploy Hooks](/pages/platform/deploy-hooks/). Create a new Deploy Hook URL in your **Pages project** > **Settings**. In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below:
+In order to automatically deploy your project when your Sanity.io data changes, you can use [Deploy Hooks](/pages/configuration/deploy-hooks/). Create a new Deploy Hook URL in your **Pages project** > **Settings**. In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below:
 
 ![Adding a Deploy Hook URL on Sanity's dashboard](/images/pages/tutorials/hooks.png)
 
