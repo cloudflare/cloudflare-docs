@@ -47,6 +47,7 @@ jobs:
           done
 
       - name: Get Changed Files from Pull Request
+        if: ${{ !cancelled() }}
         run: |
           # get file names and structure as JSON
           files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} echo "\"{}\"" | tr '\n' ',' | sed 's/,$/\n/' | awk '{print "["$0"]"}')
@@ -58,7 +59,7 @@ jobs:
 
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
-        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() }}
         with:
           files: ${{ env.CHANGED_FILES }}
           reporter: github-pr-review
