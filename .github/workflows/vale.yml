@@ -22,12 +22,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get reviews and filter based on state and reviewer id
-          filtered_reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions") | .id')
-          echo "FILTERED_REVIEWS=$filtered_reviews" >> "$GITHUB_ENV" 
+          reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions") | .id')
+          echo "FILTERED_REVIEWS=$reviews" >> "$GITHUB_ENV" 
 
       - name: Delete reviews
         if: ${{ env.FILTERED_REVIEWS != '' }}
-        run: echo ${{ FILTERED_REVIEWS }}
+        run: echo ${{ env.FILTERED_REVIEWS }}
 
       - name: Get Changed Files from Pull Request
         run: |
