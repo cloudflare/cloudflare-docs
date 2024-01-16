@@ -53,7 +53,7 @@ The WARP client will now show **Disabled by Admin Override** and the time when t
 
 {{<details header="Feature availability">}}
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Windows, macOS, Linux | Gateway with WARP, Proxy mode                                                        | All plans                                                     |
 
@@ -65,9 +65,25 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 {{<details header="Feature availability">}}
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Windows, macOS, Linux | Gateway with WARP, Secure Web Gateway without DNS Filtering                                                        | All plans                                                     |
+
+{{</details>}}
+
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul> <li> Gateway with WARP </li> <li> Secure Web Gateway without DNS Filtering </li> </ul>| All plans  |
+
+| Windows | macOS | Linux | iOS | Android | ChromeOS |
+| - | - | - | - | - | - |
+| ✅ {{<fnref num="1">}} |  ✅ {{<fnref num="1">}}  |  ✅ {{<fnref num="1">}} | ❌ | ❌ | ❌ |
+
+{{<fnsection>}}
+{{<fnentry num="1">}}Minimum WARP version: 2024.1.7.1{{</fnentry>}}
+{{</fnsection>}}
 
 {{</details>}}
 
@@ -95,7 +111,7 @@ Since captive portal implementations vary, WARP may not detect all captive porta
 
 {{<details header="Feature availability">}}
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems | Any mode                                                                        | All plans                                                     |
 
@@ -107,7 +123,7 @@ When `Enabled`, users have the option to switch between [Gateway with WARP](/clo
 
 {{<details header="Feature availability">}}
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems | Any mode                                                                                  | All plans                                                     |
 
@@ -135,7 +151,7 @@ On MDM deployments, you must also include the `auto_connect` parameter with at l
 
 {{<details header="Feature availability">}}
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | macOS, Windows, Linux | Any mode                                                                                  | All plans                                                     |
 
@@ -175,7 +191,7 @@ Allows you to choose the operational mode of the client. Refer to [WARP Modes](/
 
 {{<details header="Feature availability">}}
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems | Gateway with WARP, Gateway with DoH   | All plans                                                     |
 
