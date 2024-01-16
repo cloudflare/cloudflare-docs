@@ -7,10 +7,7 @@ title: Deploy a Next.js site
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 
-This guide will instruct you how to deploy a:
-
-* Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
-* Static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
+This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -29,7 +26,7 @@ $ npm create cloudflare@latest my-next-app -- --framework=next
 - allow you to setup a new git repo
 - allow you to deploy your new project
 
-After creating your project, a new `my-next-app` directory will be generated using the official default template, and will be fully compatible with Cloudflare. 
+After creating your project, a new `my-next-app` directory will be generated using the official default template, and will be fully compatible with Cloudflare.
 
 Change to this directory to continue development.
 
@@ -54,8 +51,6 @@ If you already have a Next.js project or wish to manually create and deploy one,
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 ## Use bindings in your Next.js application
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
@@ -64,7 +59,7 @@ Cloudflare bindings must be set up for local and remote development.
 
 ### Set up local bindings
 
-To set up bindings for use in local development, you will use the `setupDevBindings` function provided by `@cloudflare/next-on-pages/next-dev`. This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
+To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
 For example to work with a KV binding locally, you need to open `next.config.js` and add:
 
