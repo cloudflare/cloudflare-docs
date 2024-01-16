@@ -26,7 +26,7 @@ jobs:
           
           echo $reviews
           
-          if [$reviews != '']; then
+          if [$reviews[0] != '']; then
             echo 'reached'
           else
             echo "not reached"
