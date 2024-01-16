@@ -26,7 +26,7 @@ jobs:
           echo "FILTERED_REVIEWS=$filtered_reviews" >> "$GITHUB_ENV" 
 
       - name: Delete reviews
-        if: ${{ FILTERED_REVIEWS != '' }}
+        if: ${{ env.FILTERED_REVIEWS != '' }}
         run: echo ${{ FILTERED_REVIEWS }}
 
       - name: Get Changed Files from Pull Request
