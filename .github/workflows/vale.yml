@@ -15,6 +15,29 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      
+      - name: Fetch PR Reviews
+        id: fetch_reviews
+        run: |
+          reviews=$(gh pr review-list ${{ github.event.pull_request.number }} --json state,user --jq '.[].state,.[].user.id')
+          echo "PR_REVIEWS=$reviews" >> "$GITHUB_ENV"
+
+      - name: Delete previous bot comments
+        if: ${{ steps.fetch_reviews.outputs.PR_REVIEWS != '' }}
+        run: |
+          user_id_to_remove=41898282
+          IFS=$'\n' read -ra reviews <<< "${{ steps.fetch_reviews.outputs.PR_REVIEWS }}"
+          
+          for ((i=0; i<${#reviews[@]}; i+=2)); do
+            state=${reviews[i]}
+            reviewer_id=${reviews[i+1]}
+            
+            if [[ "$state" == "COMMENTED" && "$reviewer_id" == "$user_id_to_remove" ]]; then
+              review_id=$(gh pr review-list ${{ github.event.pull_request.number }} --json id --jq ".[$((i/2))].id")
+              gh pr review $review_id --json state --jq '.state' | grep -q '"COMMENTED"' && gh pr review $review_id --delete
+            fi
+          done
+        shell: bash
 
       - name: Get Changed Files from Pull Request
         env:
