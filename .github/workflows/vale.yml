@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Get and filter reviews
+      - name: Get and delete existing reviews
         id: get-and-filter-reviews
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,13 +31,8 @@ jobs:
 
           # Print the array elements
           for review_id in "${reviews_array[@]}"; do
-            echo "Review ID: $review_id"
+            gh pr review ${{ github.event.pull_request.number }} -D "${review_id}"
           done
-
-          echo "FILTERED_REVIEWS=$reviews_array" >> "$GITHUB_ENV"
-
-      - name: Output Changed Files
-        run: echo ${{ env.FILTERED_REVIEWS }}
 
       - name: Get Changed Files from Pull Request
         run: |
