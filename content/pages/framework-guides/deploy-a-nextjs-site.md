@@ -9,8 +9,6 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 
-{{<render file="_tutorials-before-you-start.md">}}
-
 ## Use the create-cloudflare CLI (C3)
 
 The fastest way to create a new Next.js site and deploy it to Cloudflare is open up your terminal and run:
