@@ -50,7 +50,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           # get file names and structure as JSON
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} echo "\"{}\"" | tr '\n' ',' | sed 's/,$/\n/' | awk '{print "["$0"]"}')
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only )
 
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
@@ -63,3 +63,4 @@ jobs:
         with:
           files: ${{ env.CHANGED_FILES }}
           reporter: github-pr-review
+          filter_mode: diff_context
