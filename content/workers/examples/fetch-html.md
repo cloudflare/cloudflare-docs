@@ -8,7 +8,6 @@ pcx_content_type: configuration
 title: Fetch HTML
 weight: 3
 layout: example
-playground: true
 updated: 2024-01-11
 ---
 
@@ -16,6 +15,9 @@ updated: 2024-01-11
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     /**

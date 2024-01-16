@@ -10,7 +10,7 @@ meta:
 
 # API deployment
 
-{{<render file="_setup-api-overview.md">}}
+{{<render file="deployment/_setup-api-overview.md">}}
 
 ## Get started
 

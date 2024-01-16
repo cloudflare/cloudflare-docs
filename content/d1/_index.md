@@ -21,7 +21,7 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 D1 is Cloudflare’s native serverless database. D1 allows you to build applications that handle large amounts of users at no extra cost. With D1, you can restore your database to any minute within the last 30 days.
 
-Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/learning/importing-data/), and how to [query your database](/d1/reference/client-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
+Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/how-to/importing-data/), and how to [query your database](/d1/reference/client-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
 
 {{<Aside type="note" header="D1 is in public beta">}}
 
@@ -41,7 +41,7 @@ Create your first D1 database, establish a schema, import data and query D1 dire
 
 {{</feature>}}
 
-{{<feature header="Time Travel" href="/d1/learning/time-travel/" cta="Learn about Time Travel">}}
+{{<feature header="Time Travel" href="/d1/reference/time-travel/" cta="Learn about Time Travel">}}
 
 Time Travel is D1’s approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.
 

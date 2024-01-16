@@ -285,6 +285,7 @@ export function zarazTrackDocEvents() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
   const dropdowns = document.getElementsByTagName("details")
   const glossaryTooltips = document.getElementsByClassName("glossary-tooltip")
+  const playgroundLinks = document.getElementsByClassName("playground-link")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
@@ -322,6 +323,13 @@ export function zarazTrackDocEvents() {
       });
   }
 }
+  if (playgroundLinks.length > 0) {
+    for (const playgroundLink of playgroundLinks as any) { 
+      playgroundLink.addEventListener("click", () => {
+        $zarazLinkEvent('playground link click', playgroundLink);
+      });
+  }
+  }
   });
 }
 
