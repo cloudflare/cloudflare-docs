@@ -16,28 +16,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Fetch PR Reviews
-        id: fetch_reviews
-        run: |
-          reviews=$(gh pr review ${{ github.event.pull_request.number }} --json state,user --jq '.[].state,.[].user.id')
-          echo "PR_REVIEWS=$reviews" >> "$GITHUB_ENV"
+      - name: List reviews
+        id: reviews
+        run: echo "::set-output name=reviews::$(gh pr review list --json state --json user --ref HEAD --number ${{ github.event.pull_request.number }})"
 
-      - name: Delete previous bot comments
-        if: ${{ steps.fetch_reviews.outputs.PR_REVIEWS != '' }}
+      - name: Delete reviews based on criteria
         run: |
-          user_id_to_remove=41898282
-          IFS=$'\n' read -ra reviews <<< "${{ steps.fetch_reviews.outputs.PR_REVIEWS }}"
+          REVIEWS=$(echo "${{ steps.reviews.outputs.reviews }}" | jq -c 'select(.state == "COMMENTED" and .user.id == "41898282") | .id')
           
-          for ((i=0; i<${#reviews[@]}; i+=2)); do
-            state=${reviews[i]}
-            reviewer_id=${reviews[i+1]}
-            
-            if [[ "$state" == "COMMENTED" && "$reviewer_id" == "$user_id_to_remove" ]]; then
-              review_id=$(gh pr review ${{ github.event.pull_request.number }} --json id --jq ".[$((i/2))].id")
-              gh pr review $review_id --json state --jq '.state' | grep -q '"COMMENTED"' && gh pr review $review_id --delete
-            fi
-          done
-        shell: bash
+          if [ -n "$REVIEWS" ]; then
+            for REVIEW_ID in $REVIEWS; do
+              gh pr review delete --review $REVIEW_ID --number ${{ steps.pr.outputs.number }}
+            done
+          fi
 
       - name: Get Changed Files from Pull Request
         env:
