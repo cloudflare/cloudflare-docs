@@ -27,7 +27,7 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments" | \
             jq -r '.[] | select(.user.id=="41898282") | select(.body | contains("vale")) | .url')
           
-         echo $reviews
+          echo $reviews
 
           
 
