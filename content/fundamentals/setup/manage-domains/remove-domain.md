@@ -30,7 +30,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
 * [Cancel active add-on subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/).
 
-* [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#step-4---delete-a-job)
+* [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#optional---delete-a-job)
 
 * If you use Cloudflare Registrar:
 
