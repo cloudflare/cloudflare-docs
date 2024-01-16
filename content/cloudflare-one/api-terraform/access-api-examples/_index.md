@@ -38,4 +38,4 @@ You can use the Cloudflare Access API to create policies, including individual r
 
 ## Example rule configurations
 
-{{<list-examples directory="/cloudflare-one/api-terraform/rule-api-examples/">}}
+{{<list-examples directory="/cloudflare-one/api-terraform/access-api-examples/">}}

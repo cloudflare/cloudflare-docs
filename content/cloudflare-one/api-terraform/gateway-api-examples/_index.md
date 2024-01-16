@@ -8,7 +8,11 @@ layout: wide
 
 # Gateway API examples
 
+{{<content-column>}}
+
 You can use the Cloudflare Gateway API to create DNS, network, and HTTP policies, including policies with multiple traffic, identity, and device posture conditions.
+
+{{</content-column>}}
 
 ## Example policies
 

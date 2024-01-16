@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Ethereum Gateway
 weight: 4
+layout: wide
 ---
 
 # Ethereum Gateway
