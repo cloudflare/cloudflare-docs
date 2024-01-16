@@ -9,7 +9,7 @@ weight: 10
 
 ## Why do I not see scripts after I activated Page Shield?
 
-Page Shield doesn't collect data on every single page view. Instead, it uses a sampling approach to gather information efficiently. This means that domains with lower traffic might take longer to generate initial reports, as they need more page views to accumulate enough samples. To speed up the reporting process, it's recommended to actively generate traffic to your application. This will provide Page Shield with more data to work with, leading to faster report generation.
+Page Shield does not collect data on every single page view. Instead, it uses a sampling approach to gather information efficiently. This means that domains with lower traffic might take longer to generate initial reports, as these domains need more page views to accumulate enough samples. To speed up the reporting process, it is recommended that you actively generate traffic to your application after [activating Page Shield](/page-shield/get-started/). This will provide Page Shield with more data to work with, leading to faster report generation.
 
 ## Why do I see scripts that I do not recognize?
 
