@@ -26,8 +26,8 @@ jobs:
           
           echo $reviews
 
-          # Create an array from the multi-line string
-          IFS=$'\s' read -r -a reviews_array <<< "$reviews"
+          # Create an array from any spaces in the string
+          IFS=' ' read -r -a reviews_array <<< "$reviews"
 
           # Print the array elements
           for review_id in "${reviews_array[@]}"; do
