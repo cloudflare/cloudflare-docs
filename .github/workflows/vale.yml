@@ -22,7 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get reviews and filter based on state and reviewer id
-          filtered_reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .user.id == "41898282")')
+          filtered_reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions")')
           echo "FILTERED_REVIEWS=$filtered_reviews" >> "$GITHUB_ENV"
 
       - name: Delete reviews
