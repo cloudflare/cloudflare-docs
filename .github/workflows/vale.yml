@@ -22,9 +22,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get reviews and filter based on state and reviewer id
-          reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions")')
+          reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions") | .id')
           
-          echo "FILTERED_REVIEWS=$reviews" >> "$GITHUB_ENV"
+          # Create an array from the multi-line string
+          IFS=$'\n' read -r -a reviews_array <<< "$reviews"
+
+          # Print the array elements
+          for review_id in "${reviews_array[@]}"; do
+            echo "Review ID: $review_id"
+          done
+
+          echo "FILTERED_REVIEWS=$reviews_array" >> "$GITHUB_ENV"
 
       - name: Output Changed Files
         run: echo ${{ env.FILTERED_REVIEWS }}
