@@ -7,6 +7,10 @@ weight: 1
 
 # Cloudflare 1.1.1.1
 
+Test misppelling.
+
+Test a bad link [here](/1.1.1.1/).
+
 {{<description>}}
 Speed up your online experience with Cloudflare's public DNS resolver.
 {{</description>}}
