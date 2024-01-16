@@ -16,9 +16,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: List reviews
-        id: reviews
-        run: echo "reviews = $(gh pr review list --json state --json user --ref HEAD --number ${{ github.event.pull_request.number }})" >> "$GITHUB_ENV"
+      - name: Get and filter reviews
+        id: get-and-filter-reviews
+        run: |
+          # Get reviews and filter based on state and reviewer id
+          filtered_reviews=$(gh pr view --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .user.id == "41898282")')
+          echo "FILTERED_REVIEWS=$filtered_reviews" >> "$GITHUB_ENV"
+
+      - name: Delete reviews
+        if: ${{ env.FILTERED_REVIEWS != '' }}
+        run: |
+          # Loop through the filtered reviews and delete each one
+          for review in ${{ env.FILTERED_REVIEWS }}; do
+            review_id=$(echo "$review" | jq -r '.id')
+            gh pr review -D "$review_id"
+          done
 
       - name: Delete reviews based on criteria
         if: ${{ env.reviews != '' }}
