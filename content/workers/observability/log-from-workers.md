@@ -26,7 +26,7 @@ To push your Worker logs to a third-party provider, refer to [Logpush](/workers/
 
 {{</Aside>}}
 
-## Adding custom logs
+## Add custom logs
 
 Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
 
@@ -148,3 +148,4 @@ Refer to the [Workers Logpush documentation](/workers/observability/logpush/) to
 
 * [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
 * [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [Local development and testing]()
