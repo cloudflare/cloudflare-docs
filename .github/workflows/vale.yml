@@ -43,6 +43,8 @@ jobs:
 
       - name: Get Changed Files from Pull Request
         if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and structure as JSON
           files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only )
