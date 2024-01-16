@@ -23,11 +23,17 @@ jobs:
         run: |
           # Get reviews and filter based on state and reviewer id
           reviews=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
+            -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments" | \
             jq '.[] | select(.user.id == 41898282) | select(.body | contains("vale")) | .url')
           
-          echo $reviews
+          for review_url in "${reviews[@]}"; do
+            curl -L \
+              -X DELETE \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              ${review_url}
+          done
 
           
 
