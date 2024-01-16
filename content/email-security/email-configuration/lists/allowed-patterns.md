@@ -22,7 +22,7 @@ To create a new allowed pattern:
 
         - **Email addresses**: Must be a valid email.
         - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
-        - **Regular expressions**: Must be [valid](https://www.freeformatter.com/java-regex-tester.html) Java expressions.
+        - **Regular expressions**: Must be [valid Java expressions](https://www.freeformatter.com/java-regex-tester.html).
 
     - **Allow Type**: Choose one or more of the following types:
 
