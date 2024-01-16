@@ -34,4 +34,3 @@ jobs:
         with:
           files: ${{ env.CHANGED_FILES }}
           filter_mode: diff_context
-          reporter: github-pr-annotations
