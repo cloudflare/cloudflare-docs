@@ -36,13 +36,7 @@ If you chose to deploy, you will receive a unique subdomain for your project on 
 
 ## Manually configure and deploy your project
 
-{{<Aside type="note">}}
-
-The following steps are only applicable to projects that have not been created and deployed via create-cloudflare.
-
-{{</Aside>}}
-
-If you already have a Next.js project or wish to manually create and deploy one, we recommend that you use `@cloudflare/next-on-pages`. Its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) contains setup instructions and additional information to help you develop and deploy your project. 
+If you already have a Next.js project or wish to manually create and deploy one without using c3, we recommend that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project. 
 
 ## Preview your site
 
@@ -56,6 +50,12 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 Cloudflare bindings must be set up for local and remote development.
 
 ### Set up local bindings
+
+{{<Aside type="note">}}
+
+Projects created with create-cloudflare have local bindings set up by default.
+
+{{</Aside>}}
 
 To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
@@ -99,9 +99,9 @@ export async function GET(request: NextRequest) {
 ```
 
 
-### Access bindings remotely
+### Access bindings in the deployed application
 
-For remote bindings running on Cloudflare's network, you'll first need to [configure](/workers/configuration/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
+To access bindings in your deployed application, you'll first need to [configure](/workers/configuration/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
 
 Then, the binding can be accessed directly from `process.env`:
 
@@ -122,6 +122,12 @@ export async function GET(request: Request) {
 ```
 
 ### Use bindings in Typescript
+
+{{<Aside type="note">}}
+
+Projects created with create-cloudflare have a default `env.d.ts` file.
+
+{{</Aside>}}
 
 In order to get proper type support, you'll need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
 
