@@ -19,7 +19,7 @@ jobs:
       - name: Fetch PR Reviews
         id: fetch_reviews
         run: |
-          reviews=$(gh pr review-list ${{ github.event.pull_request.number }} --json state,user --jq '.[].state,.[].user.id')
+          reviews=$(gh pr review-list ${{ github.event.pull_request.number }} state,user --jq '.[].state,.[].user.id')
           echo "PR_REVIEWS=$reviews" >> "$GITHUB_ENV"
 
       - name: Delete previous bot comments
