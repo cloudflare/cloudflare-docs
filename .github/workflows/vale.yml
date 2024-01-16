@@ -22,7 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get reviews and filter based on state and reviewer id
-          reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions"))
+          reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions")')
           echo $reviews
 
       
