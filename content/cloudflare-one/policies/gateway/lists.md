@@ -40,3 +40,5 @@ Lists cannot have duplicate entries. Because hostnames are converted to [Punycod
 {{<render file="gateway/_url-slash.md">}}
 
 ### Extended email addresses
+
+{{<render file="gateway/_extended-email.md">}}
