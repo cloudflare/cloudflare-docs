@@ -22,17 +22,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get reviews and filter based on state and reviewer id
-          reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[] | select(.state == "COMMENTED" and .author.login == "github-actions") | .id')
+          reviews=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments" | \
+            jq -r '.[] | select(.user.id=="41898282") | select(.body | contains("vale")) | .url')
           
-          echo $reviews
+         echo $reviews
 
-          # Create an array from any spaces in the string
-          readarray -t reviews_array <<< "$reviews"
-
-          # Print the array elements
-          for review_id in "${reviews_array[@]}"; do
-            gh pr review ${{ github.event.pull_request.number }} -D "${review_id}"
-          done
+          
 
       - name: Get Changed Files from Pull Request
         run: |
