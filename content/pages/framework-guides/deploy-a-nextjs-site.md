@@ -169,7 +169,7 @@ When developing a `next-on-pages` application, this is the development workflow 
   
   If you've created your project manually, you'll need to run `npx @cloudflare/next-on-pages --watch` and preview it by running `wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat`. 
   
-  By doing this, you can run your site locally to make sure everything is working as you expect it to.
+  By doing this, you can run your app locally to make sure everything is working as you expect it to.
 - **Deploy your app and iterate**\
   Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via direct uploads or git integration) and iterate over the process to make new changes.
 
