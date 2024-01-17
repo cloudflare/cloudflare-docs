@@ -46,7 +46,7 @@ However, in applications with more complex state, explicitly storing state in yo
 
 ##  `state.blockConcurrencyWhile()` method
 
-`state.blockConcurrencyWhile()` is a method that allows you to run critical sections of the code while guaranteeing ordering.
+`state.blockConcurrencyWhile()` is a method that guarantees ordering, blocking concurrency within an object while the critical section is running.
 
 `state.blockConcurrencyWhile()` executes a callback (which may be `async`) while blocking any other events from being delivered to the object until the callback completes. 
 
@@ -54,9 +54,10 @@ This allows you to execute code that performs I/O (such as a `fetch()`) with the
 
 Events that will be blocked include new incoming requests and responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
 
-`state.blockConcurrencyWhile()` is useful within the constructor of your object to perform initialization that must occur before any requests are delivered.
+`state.blockConcurrencyWhile()` is useful within the constructor of your object to perform initialization that must occur before any requests are delivered. `state.blockConcurrencyWhile()` may also be useful anywhere else other than within the constructor. For example, if you want to run a sequence of storage operations and want to avoid concurrent actions changing the status of the storage, run your sequence of operations inside the `state.blockConcurrencyWhile()` and no operation will be interfered.
+
 If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
 
-`state.blockConcurrencyWhile()` takes effects right away, pausing everything else, other than the currently executing event and any I/O kicked off from within the `state.blockConcurrencyWhile()` callback. The value returned by the callback becomes the value return by `state.blockConcurrencyWhile()` itself. 
+`state.blockConcurrencyWhile()` takes effects right away, pausing everything else, other than the currently executing event and any I/O kicked off from within the `state.blockConcurrencyWhile()` callback. The value returned by the callback becomes the value returned by `state.blockConcurrencyWhile()` itself. 
 
-To simulate eviction, use `state.blockConcurrencyWhile()`. Inside the callback, throw an exception. Throwing an exception causes the system to recreate the in-memory Object, without affecting the durable storage. Alternatively, use the `abort()` method. 
+To simulate eviction, use `state.blockConcurrencyWhile()`. Inside the callback, throw an exception. Throwing an exception causes the system to recreate the in-memory object, without affecting the durable storage. Uncaught exceptions inside the `state.blockConcurrencyWhile()` will break the actor. Alternatively, use the `abort()` method to simulate eviction. 
