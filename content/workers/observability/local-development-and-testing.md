@@ -35,7 +35,7 @@ $ npx wrangler dev
 
 Wrangler will store all locally created resources and storage in a `.wrangler` folder. This folder should be added to your `.gitignore` file.
 
-If you need to clear local storage, you can delete this folder. It will be recreated the next time you run `wrangler dev`.
+If you need to clear local storage, you can delete the `.wrangler/state` folder. It will be recreated the next time you run `wrangler dev`.
 
 ### Develop locally using remote resources and bindings
 
