@@ -65,7 +65,7 @@ To create a LAN:
 4. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 5. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
     1. **DHCP**: Choose this option if the IP address for your Connector is fetched from a DHCP server.
-    2. **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**.
+    2. **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](#dhcp-server).
 6. Select **Save**.
 7. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
@@ -96,7 +96,7 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 
 #### DHCP static address reservation
 
-If you configure your Connector to be a DHCP server, you can also assign IP addresses to specific devices on your network if needed. To reserve IP addresses:
+If you configure your Connector to be a DHCP server, you can also assign IP addresses to specific devices on your network. To reserve IP addresses:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
@@ -105,7 +105,7 @@ If you configure your Connector to be a DHCP server, you can also assign IP addr
 5. In **LAN configuration**, select the LAN where you need to reserve DHCP static addresses.
 6. Select **Edit**.
 7. In **Addressing**, select **Add DHCP Reservation**.
-8. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
+8. In **Hardware Address** enter the [MAC address](https://en.wikipedia.org/wiki/MAC_address) for the device you want a specific IP address for.
 9. In **IP Address**, enter the IP address for that device.
 10. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
 
