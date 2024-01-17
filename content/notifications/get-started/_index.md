@@ -8,9 +8,19 @@ weight: 1
 
 The list of notifications available depends on the type of account you have. Refer to [Available Notifications](/notifications/notification-available/) to learn more about what each notification does and what do to when receiving one.
 
+You can check the [Notification History](/notifications/notification-history/) using the API to view notifications that have been generated for your account.
+
+## Permissions
+
+To create a notification via the Cloudflare dashboard, you will need to have the Super Administrator or Administrator role. 
+
+You can also create a notification if you have an edit role for the feature that you want to create an alert for. For example, if you want to create a Load Balancing Pool Enablement notification, you will need to have the Load Balancer role.
+
+An API token needs to have the [Notifications Read/Write permission](https://developers.cloudflare.com/fundamentals/api/reference/permissions/) to create a notification,
+
 ## Configure notifications
 
-This guide will help you configure Cloudflare notifications using the Cloudflare dashboard.
+This guide will help you create, edit, test, or delete notifications using the Cloudflare dashboard.
 
 ### Create a notification
 
@@ -56,3 +66,9 @@ You can delete or disable existing Notifications via the Cloudflare dashboard.
 To verify that notifications will be sent to the correct location or to view which details are available, you can test a notification by selecting **Test** on any enabled notification.
 
 This action sends a notification with fake data.
+
+## Limitations 
+
+Notifications are configured per zone. At the moment, it is not possible to configure alerts for a specific path or hostname.
+
+The conditions in which the alerts are triggered cannot be configured. However, it is possible to define a specific threshold of 10,000 requests on HTTP `500` errors or an alert on 10TB of traffic.
