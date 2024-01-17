@@ -238,7 +238,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 #### `format`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing](/images/image-resizing/url-format/).{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing](/images/transform-images/).{{</Aside>}}
 
 The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. Cloudflare will default to JPEG when possible due to the large size of PNG files.
 
@@ -272,7 +272,7 @@ header: Workers
 cf: {image: {format: "avif"}}
 ```
 
-For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
+For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/serve-images/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
 
 ```js
 ---
