@@ -2,6 +2,7 @@ akamai
 geo
 nameserver
 nameservers
+namespace
 subnet
 hostname
 hostnames
