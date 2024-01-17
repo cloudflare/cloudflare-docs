@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Hello World in Rust
-layout: single
 ---
 
 # Hello World in Rust

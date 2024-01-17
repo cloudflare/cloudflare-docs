@@ -2,8 +2,6 @@
 title: Domain management
 pcx_content_type: reference
 weight: 10
-layout: single
-
 ---
 
 # Domain management

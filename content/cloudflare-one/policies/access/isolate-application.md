@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Isolate self-hosted application
 weight: 4
-layout: single
 ---
 
 # Isolate self-hosted application

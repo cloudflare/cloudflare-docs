@@ -3,7 +3,7 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: wide
 meta:
   title: Cloudflare Zero Trust
 ---

@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: WARP modes
 weight: 2
-layout: single
 ---
 
 # WARP modes

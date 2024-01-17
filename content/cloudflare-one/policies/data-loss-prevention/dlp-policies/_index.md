@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Scan HTTP traffic
 weight: 1
-layout: single
 ---
 
 # Scan HTTP traffic with DLP

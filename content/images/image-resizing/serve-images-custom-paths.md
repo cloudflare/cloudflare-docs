@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Custom paths
-layout: single
 meta:
     title: Serve images from custom paths
 ---
@@ -22,7 +21,7 @@ To create a rule, log in to the Cloudflare dashboard and select your account and
 
 Every rule runs before and after the Image Resizing request.
 
-If the path for the request matches the path where the original images are stored on your server, this may cause the request to fetch the original image to loop. 
+If the path for the request matches the path where the original images are stored on your server, this may cause the request to fetch the original image to loop.
 
 To direct the request to the origin server, you can check for the string `image-resizing` in the `Via` header:
 
@@ -101,7 +100,7 @@ header: Text in Expression Editor
 header: Text in Path > Rewrite to... > Dynamic
 ---
 regex_replace(
-  http.request.uri.path, 
+  http.request.uri.path,
   "^/(.*)\\?width=([0-9]+)&height=([0-9]+)$",
   "/cdn-cgi/image/width=${2},height=${3}/${1}"
 )

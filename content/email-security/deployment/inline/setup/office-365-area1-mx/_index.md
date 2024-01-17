@@ -2,7 +2,6 @@
 title: Office 365 - Area 1 as MX Record
 pcx_content_type: integration-guide
 weight: 1
-layout: single
 meta:
    title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
 updated: 2023-01-12

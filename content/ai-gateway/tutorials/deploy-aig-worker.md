@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Deploy a Worker that connects to OpenAI via AI Gateway
-layout: single
 ---
 
 # Deploy a Worker that connects to OpenAI via AI Gateway
@@ -13,7 +12,7 @@ layout: single
 
 In this tutorial, you will learn how to deploy a Worker that makes calls to OpenAI through AI Gateway. AI Gateway helps you better observe and control your AI applications with more analytics, caching, rate limiting, and logging.
 
-This tutorial uses the most recent v4 OpenAI node library, an update released in August 2023. 
+This tutorial uses the most recent v4 OpenAI node library, an update released in August 2023.
 
 ## Before you start
 

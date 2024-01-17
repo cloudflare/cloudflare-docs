@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Switch between Zero Trust organizations
-layout: single
 weight: 3
 ---
 

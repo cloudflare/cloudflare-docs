@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Egress policies
-layout: single
 weight: 5
 ---
 

@@ -2,7 +2,7 @@
 title: Available products and features
 pcx_content_type: reference
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Available products and features

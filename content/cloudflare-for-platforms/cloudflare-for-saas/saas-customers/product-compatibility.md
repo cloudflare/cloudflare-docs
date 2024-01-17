@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Product compatibility
-layout: list
+layout: wide
 weight: 3
 meta:
     title: Product compatibility | Orange-to-Orange zones
@@ -49,6 +49,6 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Waiting Room](/waiting-room/) | Yes | Yes |
 | [Websockets](/network/websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Zaraz](/zaraz/) | Yes | No | 
+| [Zaraz](/zaraz/) | Yes | No |
 
 {{</table-wrap>}}
