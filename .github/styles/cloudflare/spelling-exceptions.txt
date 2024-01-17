@@ -1,0 +1,5 @@
+akamai
+geo
+nameserver
+nameservers
+subnet
