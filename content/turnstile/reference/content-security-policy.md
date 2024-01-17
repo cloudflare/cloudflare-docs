@@ -2,7 +2,6 @@
 title: Content Security Policy
 pcx_content_type: reference
 weight: 16
-layout: single
 ---
 
 # Content Security Policy

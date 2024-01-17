@@ -4,7 +4,7 @@ title: Managed rules
 weight: 7
 meta:
   title: WAF Managed Rules
-layout: list
+layout: wide
 ---
 
 # WAF Managed Rules

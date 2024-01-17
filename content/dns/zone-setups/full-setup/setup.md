@@ -28,7 +28,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 - Have previously created a [Cloudflare account](/fundamentals/setup/account-setup/create-account/).
 - Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
-  
+
 {{<render file="_dnssec-providers.md">}}
 
 {{<render file="_dnssec-enabled-migration.md">}}
@@ -124,7 +124,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 - [Tucows](http://www.tucowsdomains.com/name-server-dns-changes/how-do-i-change-my-name-servers-dns/)
 - [Yahoo!](http://support.hostgator.com/articles/how-to-change-name-servers-with-yahoo-com)
 - [Yola](https://www.yola.com/tutorials/article/Changing-the-name-servers-1285944436498/Publishing_domains_and_email)
-  
+
   {{</details>}}
 
 {{<Aside type="note">}}
@@ -146,7 +146,7 @@ When your domain is **Active**:
 
 ```txt
 *Linux/Unix*
-dig <DOMAIN_NAME> +trace @1.1.1.1 
+dig <DOMAIN_NAME> +trace @1.1.1.1
 dig <DOMAIN_NAME> +trace @8.8.8.8
 
 *Windows*

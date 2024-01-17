@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Logpush integration
-layout: single
 weight: 8
 ---
 

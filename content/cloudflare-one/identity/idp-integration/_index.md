@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SSO integration
 weight: 3
-layout: single
 ---
 
 # Integrate Single Sign-On (SSO)

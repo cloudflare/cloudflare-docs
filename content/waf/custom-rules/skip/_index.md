@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 4
 meta:
   title: Configure a custom rule with the Skip action
-layout: single
 ---
 
 # Configure a custom rule with the Skip action

@@ -1,6 +1,5 @@
 ---
 pcx_content_type: concept
-layout: single
 title: Browser TTL
 ---
 

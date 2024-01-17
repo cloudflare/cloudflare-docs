@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Update and deploy rulesets
 weight: 6
-layout: list
+layout: wide
 ---
 
 # Update and deploy rulesets

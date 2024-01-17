@@ -2,8 +2,8 @@
 title: Rotate secret key
 pcx_content_type: how-to
 weight: 9
-layout: single
 ---
+
 # Rotate the secret key
 
 You can rotate the {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}} using the following steps: 

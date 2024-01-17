@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Add locations
-layout: single
 weight: 1
 ---
 
