@@ -36,9 +36,9 @@ To add a site:
 ### Create a WAN
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
-2. **Network name**: Enter a descriptive name for your WAN.
-3. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
-4. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
+2. In **Network name**, enter a descriptive name for your WAN.
+3. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
+4. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 5. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
   <div class="medium-img">
@@ -78,26 +78,39 @@ To create a LAN:
     ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-static.png)
 
     </div>
+6. Select **Save**.
+7. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
 #### DHCP static address reservation
 
 If you configure your Connector to be a DHCP server, you can also assign IP addresses to specific devices on your network if needed. To reserve IP addresses:
 
-6. Still in the **Addressing** part of the LAN configuration, select **Add DHCP Reservation**.
-7. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
-8. In **IP Address**, enter the IP address for that device.
-9. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Sites**.
+3. Select your site > **Edit**.
+4. Select **Network**.
+5. In **LAN configuration**, select the LAN where you need to reserve DHCP static addresses.
+6. Select **Edit**.
+7. In **Addressing**, select **Add DHCP Reservation**.
+8. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
+9. In **IP Address**, enter the IP address for that device.
+10. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
 
 #### DHCP relay
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
-Still in the **Addressing** part of the LAN configuration:
+To configure DHCP relay:
 
-10. Select **This is a DHCP Relay**.
-11. Enter the IP address of your DHCP server.
-12. Select **Save**.
-13. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Sites**.
+3. Select your site > **Edit**.
+4. Select **Network**.
+5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
+6. Select **Edit**.
+7. Select **This is a DHCP Relay**.
+8. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
+9. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
 
 ## 2. Set up your Magic WAN Connector
 
