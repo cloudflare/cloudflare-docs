@@ -45,7 +45,7 @@ To upload an image using the Cloudflare dashboard:
 
 ### Upload with the API
 
-To upload your image with the [Upload via URL](/images/upload-images/upload-via-url/) API, refer to the example below:
+To upload your image with the [Upload via URL](/images/upload-images/upload-url/) API, refer to the example below:
 
 ```sh
 $ curl --request POST \
@@ -399,7 +399,7 @@ export default {
 }
 ```
 
-Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/api-request/).
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/get-started/).
 
 Run your Worker and go to the `/original-image` route to review your image.
 
