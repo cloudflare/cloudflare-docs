@@ -64,8 +64,8 @@ To create a LAN:
 3. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
 4. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 5. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
-    1. **DHCP**: Choose this one if the IP address for your Connector is fetched from a DHCP server.
-    2. **Static**: Choose this one if your Connector needs a static address. Enter the IP address in **Static address**.
+    1. **DHCP**: Choose this option if the IP address for your Connector is fetched from a DHCP server.
+    2. **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**.
     3. (Optional) **This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
         1. The DNS server address
         2. The DHCP pool start
