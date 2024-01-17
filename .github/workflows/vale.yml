@@ -40,7 +40,7 @@ jobs:
                 $review_url
             done
           fi
-
+      
       - name: Get Changed Files from Pull Request
         if: ${{ !cancelled() }}
         env:
@@ -53,6 +53,19 @@ jobs:
 
       - name: Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
+
+      - name: Get Changed Files from Pull Request2
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # get file names and structure as JSON
+          files2=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | [.filename] | [.] | @tsv' | jq -s 'split("\t") | map(select(. != ""))')
+
+          echo "CHANGED_FILES2=$files2" >> "$GITHUB_ENV"
+
+      - name: Output Changed Files2
+        run: echo ${{ env.CHANGED_FILES2 }}
 
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
