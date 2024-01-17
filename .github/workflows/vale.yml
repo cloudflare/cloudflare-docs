@@ -61,8 +61,8 @@ jobs:
         run: |
           # get file names and structure as JSON
           otherFiles=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename')
-          fileArray=($otherFiles | jq -c -s)
-          echo $fileArray
+          json_array=$(echo "[$(echo "$input_data" | sed 's/ /","/g')]")
+          echo $json_array
 
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
