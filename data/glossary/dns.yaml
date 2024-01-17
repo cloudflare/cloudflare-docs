@@ -52,6 +52,7 @@ entries:
   associated_products:
     - Load Balancing
     - Cloudflare One
+    - 1.1.1.1 (DNS Resolver)
 
 - term: hostname
   general_definition: |-
