@@ -65,6 +65,11 @@ jobs:
           echo $fileArray
           echo $json_array
 
+          echo "OTHER_CHANGED_FILES=$json_array" >> "$GITHUB_ENV"
+        
+      - name: Output Changed Files
+        run: echo ${{ env.OTHER_CHANGED_FILES }}
+
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
         if: ${{ !cancelled() }}
