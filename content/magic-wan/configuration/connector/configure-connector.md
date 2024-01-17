@@ -98,16 +98,11 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 
 If you configure your Connector to be a DHCP server, you can also assign IP addresses to specific devices on your network. To reserve IP addresses:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select your site > **Edit**.
-4. Select **Network**.
-5. In **LAN configuration**, select the LAN where you need to reserve DHCP static addresses.
-6. Select **Edit**.
-7. In **Addressing**, select **Add DHCP Reservation**.
-8. In **Hardware Address** enter the [MAC address](https://en.wikipedia.org/wiki/MAC_address) for the device you want a specific IP address for.
-9. In **IP Address**, enter the IP address for that device.
-10. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
+1. Configure your Connector to be a [DHCP server](#dhcp-server).
+2. Select **Add DHCP Reservation**.
+3. In **Hardware Address** enter the [MAC address](https://en.wikipedia.org/wiki/MAC_address) for the device you want a specific IP address for.
+4. In **IP Address**, enter the IP address for that device.
+5. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
 
 #### DHCP relay
 
@@ -121,9 +116,10 @@ To configure DHCP relay:
 4. Select **Network**.
 5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
 6. Select **Edit**.
-7. Select **This is a DHCP Relay**.
-8. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
-9. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
+7. In **Addressing**, make sure you choose **Static** and enter a static IP address for your Connector.
+8. Select **This is a DHCP Relay**.
+9. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
+10. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
 
 ## 2. Set up your Magic WAN Connector
 
