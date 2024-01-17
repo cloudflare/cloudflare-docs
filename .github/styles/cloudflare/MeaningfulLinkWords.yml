@@ -5,10 +5,9 @@
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: existence
-message: "Improve SEO and accessibility by rewriting the link text for `%s`."
+message: "Improve SEO and accessibility by rewriting the link text for `%s`." For more information, refer to [Descriptive link text](https://developers.cloudflare.com/style-guide/formatting/structure/links/).
 level: warning
 ignorecase: true
-link: https://docs.gitlab.com/ee/development/documentation/styleguide/index.html#text-for-links
 scope: raw
 nonword: true
 tokens:
