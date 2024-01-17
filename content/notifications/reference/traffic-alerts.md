@@ -2,7 +2,7 @@
 title: HTTP Traffic Alerts
 pcx_content_type: reference
 type: overview
-title: HTTP Traffic Alerts
+weight: 1
 ---
 
 # HTTP Traffic Alerts
