@@ -24,7 +24,7 @@ Since Cloudflare recommends installing Wrangler locally in your project (rather 
 
 {{<Aside type="warning">}}
 
-If Wrangler is not installed, running `npx wrangler` will install the latest version of Wrangler in the current local folder.
+If Wrangler is not installed, running `npx wrangler` will use the latest version of Wrangler.
 
 {{</Aside>}}
 
