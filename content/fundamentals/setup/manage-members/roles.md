@@ -83,7 +83,5 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domains in an account. |
 | Domain Waiting Room Admin | Can edit [waiting rooms](/waiting-room/) configuration. |
 | Domain Waiting Room Read | Can read [waiting rooms](/waiting-room/) configuration. |
-| Domain Page Shield | Grants write access to [Page Shield](/page-shield/) for domain. |
-| Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domain. |
 | Zone Versioning | Grants full access to [Zone Versioning](/version-management/). |
 | Zone Versioning Read | Grants read-only access to [Zone Versioning](/version-management/). |
