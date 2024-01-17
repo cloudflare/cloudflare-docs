@@ -16,7 +16,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 
 | Role | Description |
 | --- | --- |
-| Administrator | Can access the full account including subscriptions, except for membership management and billing. |
+| Administrator | Can access the full account and edit subscriptions. Cannot manage memberships nor billing profile. |
 | Super Administrator - All Privileges | Can edit any Cloudflare setting, make purchases, update billing, and manage memberships. Super Administrators can revoke the access of other Super Administrators. |
 | Administrator Read Only | Can access the full account in read-only mode. |
 | Analytics | Can read Analytics. |
@@ -83,7 +83,5 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domains in an account. |
 | Domain Waiting Room Admin | Can edit [waiting rooms](/waiting-room/) configuration. |
 | Domain Waiting Room Read | Can read [waiting rooms](/waiting-room/) configuration. |
-| Domain Page Shield | Grants write access to [Page Shield](/page-shield/) for domain. |
-| Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domain. |
 | Zone Versioning | Grants full access to [Zone Versioning](/version-management/). |
 | Zone Versioning Read | Grants read-only access to [Zone Versioning](/version-management/). |

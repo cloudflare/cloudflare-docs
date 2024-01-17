@@ -34,5 +34,5 @@ In most cases, it takes 3 operations to deliver a message: 1 write, 1 read, and 
 Additionally:
 
 * Each retry incurs a read operation. A batch of 10 messages that is retried would incur 10 operations for each retry.
-* Messages that reach the maximum retries and that are written to a [Dead Letter Queue](/queues/learning/batching-retries) incur a write operation for each 64 KB chunk. A message that was retried 3 times (the default), fails delivery on the fourth time and is written to a Dead Letter Queue would incur five (5) read operations.
+* Messages that reach the maximum retries and that are written to a [Dead Letter Queue](/queues/reference/batching-retries/) incur a write operation for each 64 KB chunk. A message that was retried 3 times (the default), fails delivery on the fourth time and is written to a Dead Letter Queue would incur five (5) read operations.
 * Messages that are written to a queue, but that reach the maximum persistence duration (or "expire") before they are read, incur only a write and delete operation per 64 KB chunk.

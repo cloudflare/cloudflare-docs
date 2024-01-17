@@ -13,7 +13,7 @@ Gateway logs will only show the public Source IP address. Private IP addresses a
 
 {{</Aside>}}
 
-{{<render file="gateway/_gateway-logs-description.md" productFolder="cloudflare-one">}}
+{{<render file="gateway/_activity-logs.md" productFolder="cloudflare-one">}}
 
 ## Selective logging
 

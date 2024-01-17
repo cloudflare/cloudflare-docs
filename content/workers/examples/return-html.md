@@ -8,12 +8,16 @@ pcx_content_type: configuration
 title: Return small HTML page
 weight: 1
 layout: example
+updated: 2024-01-11
 ---
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     const html = `<!DOCTYPE html>
@@ -35,7 +39,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default <ExportedHandler>{
   async fetch(request: Request) {
     const html = `<!DOCTYPE html>
 		<body>
@@ -50,8 +54,6 @@ const handler: ExportedHandler = {
     });
   },
 };
-
-export default handler;
 ```
 
 {{</tab>}}

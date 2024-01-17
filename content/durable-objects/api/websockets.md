@@ -11,7 +11,7 @@ WebSockets are long-lived TCP connections that enable bi-directional, real-time 
 
 [Durable Objects](/durable-objects/) support WebSockets — your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
-For more information beyond the API reference, refer to [Use WebSockets in Durable Objects](/durable-objects/learning/websockets/).
+For more information beyond the API reference, refer to [Use WebSockets in Durable Objects](/durable-objects/reference/websockets/).
 
 ## WebSocket Methods
 
@@ -39,7 +39,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{<definitions>}}
 
-- `event` {{<type-link href="#events">}}WebSocketEvent{{</type-link>}}
+- `event` {{<type-link href="#websocketevent">}}WebSocketEvent{{</type-link>}}
 
   - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
@@ -98,10 +98,10 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 {{<definitions>}}
 
 - {{<code>}}serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
-  - This method is part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
+  - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
-  
+
   - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
 
 {{</definitions>}}
@@ -111,7 +111,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 {{<definitions>}}
 
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
-  - This method is part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
+  - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
   - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
 
@@ -119,7 +119,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{<heading-pill style="beta" heading="h2">}}State Methods{{</heading-pill>}}
 
-These methods are part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
+These methods are part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
 ### acceptWebSocket
 
@@ -127,12 +127,12 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 - {{<code>}}acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
-  
-  - After calling `state.acceptWebSocket(ws)`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
-  
+  - Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect.
+
+  - After calling `state.acceptWebSocket(ws)`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object.
+
   - `tags` are optional string tags used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
-  
+
   - The Hibernatable WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 {{</definitions>}}
@@ -155,9 +155,9 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 - {{<code>}}setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}: {{<type>}}void{{</type>}}
 
-  - Sets an application level auto response that does not wake hibernated WebSockets. 
-  
-  - `state.setWebSocketAutoResponse` receives {{<code>}}WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}}){{</code>}} as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`. 
+  - Sets an application level auto response that does not wake hibernated WebSockets.
+
+  - `state.setWebSocketAutoResponse` receives {{<code>}}WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}}){{</code>}} as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`.
 
   - `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the WebSocket from hibernation, preventing unnecessary duration charges.
 
@@ -173,7 +173,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 - {{<code>}}getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
 
-  - Gets the {{<code>}}WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}}){{</code>}} currently set, or `null` if there is none. 
+  - Gets the {{<code>}}WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}}){{</code>}} currently set, or `null` if there is none.
 
   - Each {{<code>}}WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}}){{</code>}} Object provides methods for `getRequest()` and  `getResponse()`.
 
@@ -191,7 +191,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 {{<heading-pill style="beta" heading="h2">}}Handler Methods{{</heading-pill>}}
 
-These methods are part of the [Hibernatable WebSockets API](/durable-objects/learning/websockets/#websocket-hibernation).
+These methods are part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
 ### webSocketMessage
 
@@ -203,8 +203,8 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
   - This method can be `async`.
 
-  - This method is not called for WebSocket control frames. The system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation. 
- 
+  - This method is not called for WebSocket control frames. The system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation.
+
 {{</definitions>}}
 
 ### webSocketClose
@@ -219,14 +219,14 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/lea
 
 {{</definitions>}}
 
-### webSocketError 
+### webSocketError
 
 {{<definitions>}}
 
 - {{<code>}}webSocketError(ws{{<param-type>}}WebSocket{{</param-type>}}, error{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Called by the system when any non-disconnection related errors occur.
-  
+
   - This method can be `async`.
 
 {{</definitions>}}

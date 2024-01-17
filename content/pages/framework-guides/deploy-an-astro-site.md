@@ -70,7 +70,7 @@ You will see your first deployment in progress. Pages installs all dependencies 
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 {{<Aside type="note">}}
 
@@ -82,7 +82,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 There are currently two modes supported when using Pages Functions with the [`@astrojs/cloudflare`](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) adapter.
 
-1. [**Advanced**](/pages/platform/functions/advanced-mode/) mode: This mode is used when you want to run your Function in `advanced` mode. This mode picks up the `_worker.js` in `dist`, or a directory mode where Pages will compile the Worker out of a Functions folder in the project root.
+1. [**Advanced**](/pages/functions/advanced-mode/) mode: This mode is used when you want to run your Function in `advanced` mode. This mode picks up the `_worker.js` in `dist`, or a directory mode where Pages will compile the Worker out of a Functions folder in the project root.
 
 {{<Aside type="note">}}
 
@@ -90,7 +90,7 @@ If no mode is set, the default is `"advanced"`.
 
 {{</Aside>}}
 
-2. **Directory** mode: This mode is used when you want to run your Pages Function in `directory` mode. In this mode, the adapter will compile the client-side part of your application the same way, but it will move the Worker into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder. This allows you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/middleware/) which can be checked into version control.
+2. **Directory** mode: This mode is used when you want to run your Pages Function in `directory` mode. In this mode, the adapter will compile the client-side part of your application the same way, but it will move the Worker into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder. This allows you to add [Pages Plugins](/pages/functions/plugins/) and [Middleware](/pages/functions/middleware/) which can be checked into version control.
 
 To use `directory` mode, modify your `astro.config.mjs` file to add `mode: "directory"` to the adapter configuration:
 
@@ -110,7 +110,7 @@ export default defineConfig({
 
 ## Use bindings in your Astro application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 Use bindings in Astro components and API routes by using `context.local` from [Astro Middleware](https://docs.astro.build/en/guides/middleware/) to access the Cloudflare runtime which amongst other fields contains the Cloudflare's environment and consecutively any bindings set for your application.
 

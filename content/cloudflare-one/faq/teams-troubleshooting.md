@@ -112,6 +112,18 @@ An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First
 
 For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
+## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
+
+This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
+
+```txt
+ingress:
+  - hostname: test.example.com
+    service: https://localhost:443
+    originRequest:
+      originServerName: test.example.com
+```
+
 ## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
 
 This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/cloudflare-one/identity/users/short-lived-certificates/).
@@ -161,7 +173,7 @@ If `cloudflared` returns error `error="remote error: tls: handshake failure"`, c
 
 ## Tunnel connections fail with `Too many open files` error.
 
-If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/downloads/system-requirements/#recommended-ulimits) on the machine running `cloudflared`.
+If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/#ulimits) on the machine running `cloudflared`.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 

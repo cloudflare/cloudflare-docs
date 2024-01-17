@@ -16,6 +16,12 @@ Public buckets can be set up in either one of two ways:
 To configure WAF custom rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
 Using a custom domain does not require enabling `r2.dev`.
 
+{{<Aside type="note">}}
+
+Currently, public buckets do not let you list the bucket contents at the root of your (sub) domain.
+
+{{</Aside>}}
+
 ## Custom domains
 
 ### Caching
@@ -33,7 +39,7 @@ By default, only certain file types are cached. To cache all files in your bucke
 To restrict access to your custom domain's bucket, use Cloudflare's existing security products.
 
 - [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates.
-- [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S): Restricts access to documents, files, and media to selected users by providing them with an access token.
+- [Cloudflare WAF Token Authentication](/waf/custom-rules/use-cases/configure-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
 
 {{<Aside type="warning">}}
 
@@ -122,4 +128,4 @@ To disable public access for your bucket:
 3. Under **Bucket Details** > **R2.dev subdomain**, select **Disallow Access**.
 4. In **Disallow Public Access?**, type ‘disallow’ to confirm and select **Disallow**.
 
-Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
+Your bucket and its objects can no longer be accessed using the Public Bucket URL.

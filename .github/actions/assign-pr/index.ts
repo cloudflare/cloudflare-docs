@@ -163,12 +163,12 @@ function parse(filename: string): string | void {
         if (requested.size > 0) {
           console.log("~> had reviewers at creation");
         } else if (products.size > 0) {
-          console.log('~> ping "haleycode" for assignment');
+          console.log('~> ping "kodster28" for assignment');
           await client.rest.issues.addAssignees({
             repo: repository.name,
             owner: repository.owner.login,
             issue_number: prnumber,
-            assignees: ["haleycode"],
+            assignees: ["kodster28"],
           });
         } else {
           console.log("~> no products changed; engineering?");

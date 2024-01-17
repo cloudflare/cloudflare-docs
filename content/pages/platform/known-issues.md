@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Known issues
+weight: 4
 ---
 
 # Known issues
@@ -15,7 +16,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Incremental builds are currently not supported in Cloudflare Pages.
 
-- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#using-functions)).
+- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#functions)).
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
@@ -28,9 +29,9 @@ Here are some known bugs and issues with Cloudflare Pages:
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
 - Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.101.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.101.0` or the Hugo version of your choice.
 
-- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
+- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/configuration/build-configuration/) for configuration options.
 
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/platform/functions/) are available as an equivalent to Netlify's Serverless Functions.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
 ## Custom Domains
 
@@ -49,7 +50,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Pages Functions
 
-- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
+- [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
@@ -99,13 +100,13 @@ As a workaround, review the following steps to delete all deployments in your Pa
 4. In the `delete-all-deployments` directory, run `npm install` to install dependencies.
 5. Review the following commands to decide which deletion you would like to proceed with:
 
-* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases)): 
+* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases)):
 
 ```sh
 $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> npm start
 ```
 
-* To delete all deployments except for the live production deployment (including [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases), for example, `staging.example.pages.dev`):
+* To delete all deployments except for the live production deployment (including [aliased deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases), for example, `staging.example.pages.dev`):
 
 ```sh
 $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> CF_DELETE_ALIASED_DEPLOYMENTS=true npm start

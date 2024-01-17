@@ -47,7 +47,13 @@ When you [attach a monitor to a pool](/load-balancing/monitors/create-monitor/#c
 
 ## Host header prioritization
 
-When a load balancer runs health monitor requests, headers set on an origin override headers set on a monitor. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
+The host headers used on health monitor requests can be configured either [on the monitor itself](/load-balancing/monitors/create-monitor/) or on the [origins within an origin pool](/load-balancing/pools/create-pool/).
+
+When a host header is specified both on the monitor and on the origin, the host header configured on the origin takes precedence over the host header configured on the monitor.
+
+When no host header is specified, Cloudflare uses the **Origin Address** configured on the origins as the host header for the health monitor requests.
+
+For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 
 ---
 

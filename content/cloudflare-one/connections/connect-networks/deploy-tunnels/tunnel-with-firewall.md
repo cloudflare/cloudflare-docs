@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Tunnel with firewall
-weight: 3
+weight: 1
 ---
 
 # Tunnel with firewall

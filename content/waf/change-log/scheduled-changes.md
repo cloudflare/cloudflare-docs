@@ -29,7 +29,7 @@ layout: list
       <td>N/A</td>
       <td>N/A</td>
       <td>N/A</td>
-      <td>No updates scheduled</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

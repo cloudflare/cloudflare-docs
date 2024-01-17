@@ -100,13 +100,13 @@ If you are a postmaster and are having trouble receiving Email Routing's emails,
 
 **IPv4**
 
-`104.30.0.0/19`
+`104.30.0.0/20`
 
 **IPv6**
 
 `2405:8100:c000::/38`
 
-_Ranges last updated: October 4th, 2022_
+_Ranges last updated: December 13th, 2023_
 
 ### Sender rewriting
 
@@ -116,7 +116,7 @@ This has no effect to the end user's experience, though. The message headers wil
 
 ### SMTP errors
 
-In most cases, Email Routing simply forwards the upstream SMTP errors back to the sender client in-session.
+In most cases, Email Routing forwards the upstream SMTP errors back to the sender client in-session.
 
 ### Spam and abusive traffic
 
