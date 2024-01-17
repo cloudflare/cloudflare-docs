@@ -9,4 +9,4 @@ message: "**Warning**: Use a relative link instead of a URL."
 level: error
 scope: raw
 raw:
-  - '\[[^\]]+\]\(https?:\/\/developers\.cloudflare\.com\/)'
+  - '\[[^\]]+\]\(https?:\/\/developers\.cloudflare\.com\/\)'
