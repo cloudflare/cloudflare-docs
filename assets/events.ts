@@ -347,6 +347,7 @@ function $zarazGlossaryTooltipEvent(term: string) {
 
 export function zarazTrackHomepageLinks() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
+  const playgroundLinks = document.getElementsByClassName("playground-link")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
@@ -354,6 +355,13 @@ export function zarazTrackHomepageLinks() {
           zaraz.track('homepage link click', {href: link.href})
         });
       } 
+    }
+    if (playgroundLinks.length > 0) {
+      for (const playgroundLink of playgroundLinks as any) { 
+        playgroundLink.addEventListener("click", () => {
+          $zarazLinkEvent('playground link click', playgroundLink);
+        });
+    }
     }
   });
 }
