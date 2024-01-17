@@ -15,7 +15,7 @@ You can access logs and exceptions for your Workers by logging into [the dashboa
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 
-{{<Aside type="warning" header="Cloudflare China Network">}}
+{{<Aside type="warning">}}
 
 This feature is not available for zones on the [Cloudflare China Network](/china-network/).
 
@@ -147,4 +147,4 @@ Refer to the [Workers Logpush documentation](/workers/observability/logpush/) to
 
 * [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
 * [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
-* [Local development and testing]()
+* [Local development and testing](/workers/observability/local-development-and-testing/) - Developed and test you Workers locally.
