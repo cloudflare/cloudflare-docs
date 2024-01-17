@@ -14,4 +14,4 @@ extends: spelling
 message: "Check the spelling of '%s'. If the spelling is correct, add this word to the [spelling exception list](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/styles/cloudflare/spelling-exceptions.txt)."
 level: warning
 ignore:
-  - /cloudflare/spelling-exceptions.txt
+  - cloudflare/spelling-exceptions.txt
