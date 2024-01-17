@@ -15,7 +15,8 @@ You can access logs and exceptions for your Workers by logging into [the dashboa
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 
-{{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning" header="Cloudflare China Network">}}
+
 This feature is not available for zones on the [Cloudflare China Network](/china-network/).
 
 {{</Aside>}}
@@ -86,7 +87,7 @@ $ npx wrangler tail --format=pretty
 
 With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
-To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
+To get started, run `wrangler tail` in your Worker project directory. This will log any incoming requests to your application available in your local terminal.
 
 The output of each `wrangler tail` log is a structured JSON object:
 
@@ -117,19 +118,17 @@ $ npx wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/page-data/app-data.json"
 ```
 
-You can customize how `wrangler tail` works to fit your needs: refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
+You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
 
 ## View logs from the dashboard
 
-Review the production logs associated with any Worker:
+To review the production logs associated with any Worker:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, go to **Workers & Pages**.
 3. In **Overview**, select your **Worker** > and select **Logs**. 
 
-Logging is available for all customers, including those on the free plan.
-
-![Cloudflare dashboard showing logs for a Worker named logging-example](/images/workers/learning/workers-logging-dashboard.png)
+Logging is available for all customers, including those on the Free plan.
 
 Note that:
 
