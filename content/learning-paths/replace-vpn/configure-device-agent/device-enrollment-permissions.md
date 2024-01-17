@@ -23,6 +23,4 @@ Mutual TLS authentication is only available on Enterprise plans.
 
 ## Best practices
 
-????????
-
-Use a single source of truth identity for your corporate users, for example by requiring company email addresses to login with your primary identity provider. Only allow other login methods or identity providers for contractors, vendors, or acquired corporations who may need access to your network.
+Most businesses use a single identity provider as the source of truth for their user directory. You should use this source of truth to onboard your corporate users to Zero Trust, for example by requiring company email addresses to login with your primary identity provider. Later on, you can add other login methods or identity providers as necessary for any contractors, vendors, or acquired corporations who may need access to your network.
