@@ -11,6 +11,9 @@ layout: single
 
 ## Create a new profile
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Profile settings** card, select **Create profile**. This will make a copy of the **Default** profile.
 3. Enter any name for the profile.
@@ -24,6 +27,38 @@ At this time, **Split Tunnels** and **Local Domain Fallback** can only be modifi
 6. Select **Create profile**.
 
 Your profile will appear in the **Profile settings** list. You can rearrange the profiles in the list according to your desired [order of precedence](#order-of-precedence).
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "allow_mode_switch": false,
+  "allow_updates": false,
+  "allowed_to_leave": false,
+  "auto_connect": 900,
+  "captive_portal": 180,
+  "description": "Cloudflare'\''s basic device settings profile, recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/",
+  "disable_auto_fallback": true,
+  "enabled": true,
+  "exclude_office_ips": false,
+  "match": "identity.email == \"me@mycompany.com\"",
+  "name": "Cloudflare basic device profile",
+  "precedence": 101,
+  "service_mode_v2": {
+    "mode": "warp"},
+  "support_url": "https://it.company.com/help",
+  "switch_locked": true
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Edit profile settings
 
