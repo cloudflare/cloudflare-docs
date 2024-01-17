@@ -1,12 +1,12 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: reference
 title: HTTP test
 weight: 1
 ---
 
-# Run an HTTP test
+# HTTP test
 
-An HTTP test sends a `GET` request from an end-user device to a specific web application. You can use the [response metrics](/cloudflare-one/insights/dex/tests/view-results/#http-get) to troubleshoot connectivity issues. For example, you can check whether the application is inaccessible for all users in your organization, or only certain ones.
+An HTTP test sends a `GET` request from an end-user device to a specific web application. You can use the response metrics to troubleshoot connectivity issues. For example, you can check whether the application is inaccessible for all users in your organization, or only certain ones.
 
 ## Create a test
 
@@ -24,7 +24,18 @@ The test will now run on all [supported devices](#supported-devices) connected t
 
 Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of your test.
 
-### Supported devices
+## Test results
+
+An HTTP test measures the following data:
+
+| Data | Description |
+| ----------- | ----------- |
+| Resource fetch time | Difference between the start and end time of the test. Calculated by adding the server response time + DNS response time. |
+| Server response time | Round-trip time for the device to receive a response from the target. |
+| DNS response time | Round-trip time for the DNS query to resolve. |
+| HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target. |
+
+## Supported devices
 
 To run an HTTP test, the device must be connected to Zero Trust via the WARP client. Refer to the table below for client version requirements.
 

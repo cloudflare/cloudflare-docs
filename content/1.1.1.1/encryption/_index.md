@@ -2,7 +2,6 @@
 weight: 3
 pcx_content_type: reference
 title: Encryption
-layout: single
 meta:
     title: Encrypt DNS traffic
 ---

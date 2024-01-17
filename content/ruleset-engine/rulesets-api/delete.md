@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Delete rulesets
 weight: 10
-layout: list
+layout: wide
 ---
 
 # Delete rulesets

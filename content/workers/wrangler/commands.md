@@ -60,7 +60,7 @@ The following global flags work on every command.
 
 ---
 
-## Background
+## How to run Wrangler commands
 
 This page provides a reference for Wrangler commands.
 

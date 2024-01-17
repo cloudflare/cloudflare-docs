@@ -4,7 +4,6 @@ pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Intermediate
 title: Build an API for your front end using Pages Functions
-layout: single
 ---
 
 # Build an API for your front end using Pages Functions
@@ -165,9 +164,9 @@ You will now create a Pages Functions that stores your blog content and retrieve
 
 To create the Pages Function that will act as your JSON API:
 
-1. Create a `functions` directory in your `blog-frontend` directory. 
-2. In `functions`, create a directory named `api`. 
-3. In `api`, create a `posts.js` file in the `api` directory. 
+1. Create a `functions` directory in your `blog-frontend` directory.
+2. In `functions`, create a directory named `api`.
+3. In `api`, create a `posts.js` file in the `api` directory.
 4. Populate `posts.js` with the following code:
 
 ```js
@@ -208,7 +207,7 @@ const posts = [
 
 export default posts
 ```
-8. In the `post` directory, create an `[[id]].js` file. 
+8. In the `post` directory, create an `[[id]].js` file.
 9. Populate `[[id]].js` with the following code:
 
 ```js

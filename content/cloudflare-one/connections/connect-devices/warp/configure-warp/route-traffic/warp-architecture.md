@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: WARP architecture
 weight: 5
-layout: single
 ---
 
 # WARP architecture
@@ -192,9 +191,9 @@ highlight: 4
 $ ifconfig
 <redacted>
 utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
-	inet 172.16.0.2 --> 172.16.0.2 netmask 0xffffffff 
-	inet6 fe80::f6d4:88ff:fe82:6d9e%utun3 prefixlen 64 scopeid 0x17 
-	inet6 2606:4700:110:8c7d:7369:7526:a59b:5636 prefixlen 128 
+	inet 172.16.0.2 --> 172.16.0.2 netmask 0xffffffff
+	inet6 fe80::f6d4:88ff:fe82:6d9e%utun3 prefixlen 64 scopeid 0x17
+	inet6 2606:4700:110:8c7d:7369:7526:a59b:5636 prefixlen 128
 	nd6 options=201<PERFORMNUD,DAD>
 ```
 
@@ -241,12 +240,12 @@ highlight: 5
 $ ip addr
 <redacted>
 3: CloudflareWARP: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1280 qdisc mq state UNKNOWN group default qlen 500
-    link/none 
+    link/none
     inet 172.16.0.2/32 scope global CloudflareWARP
        valid_lft forever preferred_lft forever
-    inet6 2606:4700:110:8a2e:a5f7:a8de:a1f9:919/128 scope global 
+    inet6 2606:4700:110:8a2e:a5f7:a8de:a1f9:919/128 scope global
        valid_lft forever preferred_lft forever
-    inet6 fe80::117e:276b:8a79:c498/64 scope link stable-privacy 
+    inet6 fe80::117e:276b:8a79:c498/64 scope link stable-privacy
        valid_lft forever preferred_lft forever
 ```
 
@@ -278,7 +277,7 @@ destination: 136.0.0.0
   interface: utun3
       flags: <UP,DONE,PRCLONING>
  recvpipe  sendpipe  ssthresh  rtt,msec    rttvar  hopcount      mtu     expire
-       0         0         0         0         0         0      1280         0 
+       0         0         0         0         0         0      1280         0
 ```
 
 In contrast, this DHCP address is excluded from WARP and uses the default interface:
@@ -287,14 +286,14 @@ In contrast, this DHCP address is excluded from WARP and uses the default interf
 ---
 highlight: 5
 ---
-$ route get 169.254.0.0   
+$ route get 169.254.0.0
    route to: 169.254.0.0
 destination: 169.254.0.0
        mask: 255.255.0.0
   interface: en0
       flags: <UP,DONE,CLONING,STATIC>
  recvpipe  sendpipe  ssthresh  rtt,msec    rttvar  hopcount      mtu     expire
-       0         0         0         0         0         0      1500   -210842 
+       0         0         0         0         0         0      1500   -210842
 ```
 
 {{</tab>}}
@@ -332,16 +331,16 @@ You can also search the routing table for an IP address. In this example, we see
 
 ```sh
 $ ip route get 1.1.1.1
-1.1.1.1 dev CloudflareWARP table 65743 src 172.16.0.2 uid 1000 
-    cache 
+1.1.1.1 dev CloudflareWARP table 65743 src 172.16.0.2 uid 1000
+    cache
 ```
 
 In contrast, this DHCP address is excluded from WARP and uses the default interface:
 
 ```sh
 $ ip route get 169.254.0.0
-169.254.0.0 dev ens18 src 172.24.8.6 uid 1000 
-    cache 
+169.254.0.0 dev ens18 src 172.24.8.6 uid 1000
+    cache
 ```
 
 {{</tab>}}

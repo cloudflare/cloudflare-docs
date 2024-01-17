@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Scan for sensitive data
 weight: 3
-layout: single
 ---
 
 # Scan SaaS applications with DLP

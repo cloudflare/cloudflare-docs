@@ -2,7 +2,7 @@
 title: How we detect phish
 pcx_content_type: reference
 weight: 1
-layout: list
+layout: wide
 ---
 
 # How we detect phish

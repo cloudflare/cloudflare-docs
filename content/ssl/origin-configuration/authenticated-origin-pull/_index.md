@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Authenticated Origin Pulls (mTLS)
 weight: 4
-layout: single
 meta:
     description: Authenticated Origin Pulls helps ensure requests to your origin server come from the Cloudflare network.
 ---

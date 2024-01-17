@@ -3,8 +3,8 @@ pcx_content_type: changelog
 title: Historical (2020)
 weight: 10048
 meta:
-    description: Changes to WAF managed rulesets done in 2020.
-layout: list
+  description: Changes to WAF managed rulesets done in 2020.
+layout: wide
 ---
 
 # Historical - 2020

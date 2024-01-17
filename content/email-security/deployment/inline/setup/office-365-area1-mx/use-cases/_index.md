@@ -2,7 +2,6 @@
 title: Use cases
 pcx_content_type: how-to
 weight: 1
-layout: single
 meta:
    title: Office 365 use cases
 ---

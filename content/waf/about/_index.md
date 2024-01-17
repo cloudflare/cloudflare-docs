@@ -2,7 +2,6 @@
 title: Concepts
 pcx_content_type: concept
 weight: 2
-layout: single
 ---
 
 # Concepts
