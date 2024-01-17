@@ -6,7 +6,7 @@ entries:
     title: HTTP API query vectors request and response format change
     description: |-
       Vectorize `/query` HTTP endpoint has the following changes:
-      - `returnVectors` request body property is deprecated in favor of `returnValues` and `returnMetadata` properties
+      - `returnVectors` request body property is deprecated in favor of `returnValues` and `returnMetadata` properties.
       - Response format has changed to the below format to match [Workers API change](/workers/configuration/compatibility-dates/#vectorize-query-with-metadata-optionally-returned)
 
       ```json
