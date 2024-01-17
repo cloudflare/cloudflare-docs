@@ -1,0 +1,12 @@
+---
+# Error: cloudflare.RelativeLinks
+#
+# Checks for the presence of absolute hyperlinks that should be relative.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+extends: existence
+message: "**Warning**: Use a relative link instead of a URL."
+level: error
+scope: raw
+raw:
+  - '\[[^\]]+\]\(https?:\/\/developers\.cloudflare\.com\/)'
