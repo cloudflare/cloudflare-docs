@@ -6,15 +6,15 @@ weight: 5
 
 # Query Vectors
 
-Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/learning/create-indexes/#distance-metrics).
+Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/configuration/create-indexes/#distance-metrics).
 
-Optionally, you can apply [metadata filters](/vectorize/learning/metadata-filtering/) or a [namespace](/vectorize/learning/insert-vectors/#namespaces) to narrow the vector search space.
+Optionally, you can apply [metadata filters](/vectorize/reference/metadata-filtering/) or a [namespace](/vectorize/configuration/insert-vectors/#namespaces) to narrow the vector search space.
 
 ## Example query
 
 To pass a vector as a query to an index, use the `query()` method on the index itself.
 
-A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/learning/insert-vectors/), a query vector does not need an ID or metadata.
+A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/configuration/insert-vectors/), a query vector does not need an ID or metadata.
 
 ```ts
 let queryVector = [54.8, 5.5, 3.1];
@@ -41,7 +41,7 @@ This would return a set of matches resembling the following, based on a `cosine`
 {"matches":{"count":1,"matches":[{"score":0.999909486,"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}]}}
 ```
 
-Refer to the [Workers Client API documentation](/vectorize/platform/client-api/) for additional examples.
+Refer to the [Workers Client API documentation](/vectorize/reference/client-api/) for additional examples.
 
 ## Workers AI
 

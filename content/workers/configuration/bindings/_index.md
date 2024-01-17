@@ -65,7 +65,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 [Vectorize](/vectorize/) bindings allow you to interact with and query a Vectorize index from your Worker.
 
 * [Configure a Vectorize binding](/vectorize/get-started/)
-* Learn more about how to query a Vectorize index using the [client API](/vectorize/platform/client-api/).
+* Learn more about how to query a Vectorize index using the [client API](/vectorize/reference/client-api/).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 

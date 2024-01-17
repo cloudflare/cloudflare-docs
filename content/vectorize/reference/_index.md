@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Platform
+title: Reference
 weight: 5
 ---
 
-# Platform
+# Reference
 
 {{<directory-listing>}}
