@@ -1,6 +1,9 @@
 ---
+updated: 2023-07-17
+difficulty: Beginner
 title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
+content_type:  📝 Tutorial
 pcx_content_type: tutorial
 weight: 1002
 meta:
