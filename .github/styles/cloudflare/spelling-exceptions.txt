@@ -4,3 +4,6 @@ nameserver
 nameservers
 namespace
 subnet
+hostname
+hostnames
+punycode
