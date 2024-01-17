@@ -204,7 +204,7 @@ declare namespace App {
 }
 ```
 
-Finally the binding can be accessed directly from `locals` in API endpoints:
+Finally, the binding can be accessed directly from `locals` in API endpoints:
 
 ```typescript
 ---
@@ -224,7 +224,7 @@ export async function GET({ locals }: APIContext) {
 
 Or from `Astro.locals` in Astro components:
 
-```javascript
+```typescript
 ---
 filename: src/pages/index.astro
 highlight: [2, 3]

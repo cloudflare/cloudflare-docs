@@ -144,7 +144,7 @@ For more information about SvelteKit API Routes, refer to the [SvelteKit documen
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In SvelteKit, add server-side code via standard API routes as mentioned above, via [Server Loaders](https://kit.svelte.dev/docs/load) and more. In all cases you can access Cloudflare bindings via a `platform` object that SvelteKit exposes to you.
+In SvelteKit, add server-side code via standard API routes as mentioned above, via [Server Loaders](https://kit.svelte.dev/docs/load) and more. In all cases you can access Cloudflare bindings via the `platform` object that SvelteKit exposes to you.
 
 The following code examples show how to access a KV binding called `MY_KV` in SvelteKit applications written in JavaScript and TypeScript respectively.
 
@@ -158,7 +158,7 @@ filename: src/routes/+page.server.js
 highlight: [2]
 ---
 export function load({ platform }) {
-  const myKv = platform!.env.MY_KV;
+  const myKv = platform.env.MY_KV;
 
   // ...
 };

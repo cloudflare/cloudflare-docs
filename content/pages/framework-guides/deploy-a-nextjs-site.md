@@ -237,7 +237,7 @@ declare global {
 }
 ```
 
-Finally the binding can be accessed directly from `process.env`:
+Finally, the binding can be accessed directly from `process.env`:
 
 ```typescript
 ---
