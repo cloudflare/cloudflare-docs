@@ -3,3 +3,6 @@ geo
 nameserver
 nameservers
 subnet
+hostname
+hostnames
+punycode
