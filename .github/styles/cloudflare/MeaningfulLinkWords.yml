@@ -1,11 +1,11 @@
 ---
-# Warning: gitlab.MeaningfulLinkWords
+# Warning: cloudflare.MeaningfulLinkWords
 #
 # Checks for the presence of semantically unhelpful words in link text.
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: existence
-message: "Improve SEO and accessibility by rewriting the link text for `%s`. For more information, refer to [Descriptive link text](https://developers.cloudflare.com/style-guide/formatting/structure/links/)."
+message: "Improve SEO and accessibility by rewriting the link text for `%s`. For more information, refer to [Descriptive link text](https://developers.cloudflare.com/style-guide/formatting/structure/links/#descriptive-link-text)."
 level: warning
 ignorecase: true
 scope: raw
@@ -13,4 +13,5 @@ nonword: true
 tokens:
   - \[here\]\(.*\)
   - \[this page\]\(.*\)
+  - \[read more\]\(.*\)
 

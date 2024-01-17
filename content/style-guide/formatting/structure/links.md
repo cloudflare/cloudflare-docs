@@ -23,7 +23,9 @@ Do not use the following constructions:
 
 ## Descriptive link text
 
-Use descriptive text for links, rather than words like `here` or `this page`.
+The more descriptive your link text, the easier it is for people to navigate your site and for Google to understand what you are linking to.
+
+Practically, this means you should avoid link text like `here`, `this page`, or `read more`.
 
 For example, instead of:
 
