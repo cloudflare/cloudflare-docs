@@ -60,12 +60,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and structure as JSON
-          files2=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename' | jq -s .)
+          otherFiles=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename' | jq -s .)
 
-          echo "CHANGED_FILES2=$files2" >> "$GITHUB_ENV"
+          echo "OTHER_CHANGED_FILES=$otherFiles" >> "$GITHUB_ENV"
 
       - name: Output Changed Files2
-        run: echo ${{ env.CHANGED_FILES2 }}
+        run: echo ${{ env.OTHER_CHANGED_FILES }}
 
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
