@@ -20,6 +20,8 @@ Contact your account representative to learn more about purchasing options for t
 
 ## 2. Define a site configuration
 
+### Create a site
+
 Sites represent the local network where you have installed your Magic WAN Connector — for example, a branch office location.
 
 To add a site:
@@ -35,64 +37,65 @@ To add a site:
 
 ### Create a WAN
 
-9. Create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/) under **WAN configuration**. Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}. Select **Create**, and define the following settings:
-    1. **Network name**: Enter a descriptive name for your WAN.
-    2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
-    3. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
-    4. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
+1. In **WAN configuration**, select **Create**. You can create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}. Define the following settings:
+  1. **Network name**: Enter a descriptive name for your WAN.
+  2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
+  3. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
+**Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
 
-    <div class="medium-img">
+  <div class="medium-img">
+  ![An example of how to configure you Magic WAN Connector WAN](/images/magic-wan/connector/wan-config.png)
+  </div>
 
-    ![An example of how to configure you Magic WAN Connector WAN](/images/magic-wan/connector/wan-config.png)
-
-    </div>
-
-10. Select **Save** when you are finished.
+2. Select **Save** when you are finished.
 
 ### Create a LAN
 
-DHCP can be configured in several ways when you create a LAN. IPs can be sourced from:
-- A DHCP server
-- A static IP address
+When you create a LAN, there are different types of DHCP configurations you can use for Magic WAN Connector. You can:
+- Connect it to a DHCP server.
+- Use a static IP address instead of connecting to a DHCP server.
+- Configure the Connector as a DHCP server.
+- Use DHCP relay to connect to a DHCP server outside the location your Magic WAN Connector is in.
 
-If your DHCP server is not on the same location as your Connector, use the DHCP Relay option to forward DHCP discover messages
+To create a LAN:
 
+1. In **LAN configuration**, select **Create**.
+2. Enter a descriptive name for your LAN in **Network name**.
+3. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
+4. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
+5. In **Addressing** define if the IP address for the Connector should be fetched from a DHCP server, or if it is a static address:
+  1. **DHCP**: Choose this one if the IP address for your Connector is fetched from a DHCP server.
+  2. **Static**: Choose this one if your Connector needs a static address. Enter the IP address in **Static address**.
+6. (Optional) **This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
+  1. The DNS server address
+  2. The DHCP pool start
+  3. The DHCP pool end
 
-You can also configure Connector to act as a DHCP server, and choose to reserve certain IP addresses for certain devices in your network.
+  For example:
 
-
-
-
-11. In **LAN configuration**, select **Create**, and repeat the process to define your LAN:
-    1. **Network name**: Enter a descriptive name for your LAN.
-    2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
-    3. **Overlay subnet**: The subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
-    4. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address:
-      1. **DHCP**: Chose this one if the IP address for you Connector if fetched from a DHCP server.
-      2. Static: Chose this one if your Connector should have a static address, and enter the IP address.
-      3. (Optional) **This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
-        - The DNS server address
-        - The DHCP pool start
-        - The DHCP pool end
-
-    For example:
-
-    <div class="medium-img">
-
-    ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-config.png)
-
-    </div>
+  <div class="medium-img">
+  ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-static.png)
+  </div>
 
 #### DHCP static address reservation
 
-If you configure your LAN with a DHCP server, you can also assign IP addresses to specific devices on your network if needed.
+If you configure your LAN with a DHCP server, you can also assign IP addresses to specific devices on your network if needed. In the **Addressing** part of the LAN configuration:
 
-12. Select **Add DHCP Reservation**.
-13. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
-14. In **IP Address**, enter the IP address for that device.
-15. (Optional) If you need to reserve more IP addresses for specific devices, select **Add DHCP Reservation**, and enter the new values.
-16. Select **Save**.
-17. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+7. Select **Add DHCP Reservation**.
+8. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
+9. In **IP Address**, enter the IP address for that device.
+10. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation**, and enter the new values.
+11. Select **Save**.
+12. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+
+#### DHCP relay
+
+DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
+
+Still in the **Addressing** part of the LAN configuration:
+
+13. Select **This is a DHCP Relay**.
+14. Enter the IP address of your DHCP server.
 
 ## 3. Set up your Magic WAN Connector
 
