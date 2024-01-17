@@ -19,13 +19,13 @@ Before building your policies, it is helpful to ask yourself a few questions:
 
 ## Prepare to build policies
 
-We recommend approaching Zero Trust Network Access in three distinct steps to guide policy building.
+We recommend the following approach when planning your Zero Trust Network Access policies.
 
 ### 1. Determine your sources of truth
 
 #### Identity
 
-Determine which identity provider you will use as the source of truth for [identity-based attributes](/cloudflare-one/policies/gateway/identity-selectors/) such as user email and user groups.
+Determine which identity provider you will use as the source of truth for user email, user groups, and other[identity-based attributes](/cloudflare-one/policies/gateway/identity-selectors/).
 
 {{<Aside type="note">}}
 Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/).
@@ -52,16 +52,25 @@ Be sure to [enable the device posture checks](/cloudflare-one/identity/devices/)
 Almost all businesses have a series of interconnected networks, either physical or virtual. Prepare a list of all relevant networks, subnets, or segments within your network that users currently access, either locally or when using the VPN. For example,
 
 | Network name | Location | IP range | Accessible by VPN? |
-|- | - | - |-|
+| - | - | - |-|
+| Corporate DC | AWS US East - VA, USA | `10.0.0.0/8` | Yes |
 
 ### 3. Define your applications
 
 Next, prepare a list of all relevant internal applications on your networks that will have distinct policy requirements (for example, different user identity or device posture requirements). Each application should be defined by an IP list, a hostname/domain list, or sometimes both.
 
 | Application name | Local IPs   | Hostnames | Accessible via IP? | Static or dynamic IP? |
-| ---------------- | ---------- | ----------| -------- | ------------------|
-| Company Wiki     |            | `wiki.internal.com`   |   Yes      | Static |
+| ---------------- | ----------- | ----------| -------- | ------------------|
+| Company Wiki     | `10.128.0.10` | `wiki.internal.com`   |   Yes      | Static |
 
 For example, you may have an application at `a.internal.com` which points to a load balancer with a static IP address, balancing a series of dynamic hosts serving the application on `a.internal.com`. Because the IPs of the application hosts are dynamic, the best practice would be to build two policies: a network policy for the load balancer IP, and a DNS policy for the application hostnames.
 
 On the other hand, if the IPs behind the load balancer are static or only semi-dynamic, it may make sense to directly use the application IPs in your network policy. You can build a workflow to update the application IP list via a Cloudflare API call whenever host changes are made in your infrastructure provider.
+
+### 4. List existing policies
+
+Gather any existing security policies or block lists that you wish to migrate from your VPN provider to Zero Trust.
+
+{{<Aside header="Descaler program">}}
+If you are an Enterprise organization migrating from Zscaler, you can use our [Descaler toolkit](https://blog.cloudflare.com/descaler-program/) to export policies from Zscaler Internet Access (ZIA) and import them into Cloudflare Gateway.
+{{</Aside>}}
