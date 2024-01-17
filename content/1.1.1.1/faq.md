@@ -78,7 +78,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 {{<faq-answer>}}
 
-1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the {{<glossary-tooltip term_id="EDNS Client Subnet (ECS)">}}EDNS Client Subnet (ECS){{</glossary-tooltip>}} header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
+1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the {{<glossary-tooltip term_id="EDNS Client Subnet (ECS)" link="/glossary/?term=ecs">}}EDNS Client Subnet (ECS){{</glossary-tooltip>}} header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
 
 {{</faq-answer>}}
 {{</faq-item>}}
