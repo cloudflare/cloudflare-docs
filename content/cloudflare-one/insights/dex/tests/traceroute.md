@@ -1,12 +1,12 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: reference
 title: Traceroute test
 weight: 2
 ---
 
-# Run a traceroute test
+# Traceroute test
 
-A traceroute test measures the network path of an IP packet from an end-user device to a server. You can use the [test results](/cloudflare-one/insights/dex/tests/view-results/#traceroute) to troubleshoot network issues. For example, increased latency may indicate a problem with connectivity along the network path.
+A traceroute test measures the network path of an IP packet from an end-user device to a server. You can use the test results to troubleshoot network issues. For example, increased latency may indicate a problem with connectivity along the network path.
 
 ## Create a test
 
@@ -24,7 +24,18 @@ The test will now run on all [supported devices](#supported-devices) connected t
 
 Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of your test.
 
-### Supported devices
+## Test results
+
+A traceroute test measures the following data:
+
+| Data | Description |
+| ----------- | ----------- |
+| Round trip time | Time between sending out a packet and receiving a response from the target. |
+| Number of hops | Number of routers encountered between the device and the target. |
+| Packet loss | Percentage of IP packets that failed to receive a response. |
+| Availability | Percentage of tests where at least one packet reached the destination. |
+
+## Supported devices
 
 To run a traceroute test, the device must be connected to Zero Trust via the WARP client. Refer to the table below for client version requirements.
 

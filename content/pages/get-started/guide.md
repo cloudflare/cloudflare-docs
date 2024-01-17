@@ -2,7 +2,6 @@
 title: Guide
 pcx_content_type: get-started
 weight: 1
-layout: single
 meta:
   title: Get started guide
 ---

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Preview services
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Preview services

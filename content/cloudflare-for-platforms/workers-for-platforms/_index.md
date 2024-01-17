@@ -27,7 +27,7 @@ Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per accou
 Learn how to set up Workers for Platforms.
 {{</feature>}}
 
-{{<feature header="Workers for Platforms Architecture" href="/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/" cta="Learn more">}}
+{{<feature header="Workers for Platforms architecture" href="/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/" cta="Learn more">}}
 Learn about Workers for Platforms architecture.
 {{</feature>}}
 

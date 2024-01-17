@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Tunnel availability and failover
-layout: single
 weight: 2
 ---
 
@@ -70,9 +69,9 @@ The new replica will appear on the **Connectors** list for the tunnel.
 You can run the same tunnel across various `cloudflared` processes for up to 100 connections (25 replicas) per tunnel. Cloudflare Load Balancers and DNS records can still point to the tunnel and its UUID. Traffic will be sent to all `cloudflared` processes associated with the tunnel.
 
 {{<Aside type="note" header="Deploy replicas with Kubernetes">}}
-  
+
 For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
-  
+
 {{</Aside>}}
 
 ## Cloudflare Load Balancers

@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
-layout: single
 ---
 
 # GitHub SMS notifications using Twilio

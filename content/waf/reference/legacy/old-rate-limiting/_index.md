@@ -3,7 +3,6 @@ pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configuring-Cloudflare-Rate-Limiting
 title: Rate Limiting (previous version)
 weight: 3
-layout: single
 ---
 
 # Cloudflare Rate Limiting (previous version)

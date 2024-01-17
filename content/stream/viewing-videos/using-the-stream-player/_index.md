@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Use the Stream Player
 weight: 2
-layout: single
 ---
 
 # Use the Stream Player

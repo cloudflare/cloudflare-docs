@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Scan SaaS applications
-layout: single
 weight: 3
 ---
 

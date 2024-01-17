@@ -1,7 +1,6 @@
 ---
 title: Troubleshooting
 pcx_content_type: navigation
-layout: single
 weight: 5
 ---
 
