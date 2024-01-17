@@ -12,7 +12,7 @@ entries:
       ```json
       {
         "result": {
-          "count": 0,
+          "count": 1,
           "matches": [
             {
               "id": "4",
