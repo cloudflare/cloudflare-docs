@@ -5,8 +5,8 @@
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: existence
-message: "**Error**: When referring another page our docs, use a relative link (`/1.1.1.1/`) instead of the full URL (`https://developers.cloudflare.com`/1.1.1.1/`)."
+message: "**Error**: When referring another page our docs, use a relative link (`/1.1.1.1/`) instead of the full URL (`https://developers.cloudflare.com/1.1.1.1/`)."
 level: error
 scope: raw
 raw:
-  - '\[(.+)\]\(https?:\/\/developers\.cloudflare\.com\/(.+)\)'
+  - '\[.+\]\(https?:\/\/developers\.cloudflare\.com\/.+\)'
