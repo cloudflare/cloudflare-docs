@@ -186,6 +186,7 @@ monospace
 multifactor
 nameserver
 nameservers
+<<<<<<< HEAD
 namespace
 namespaced
 namespaces
@@ -381,3 +382,7 @@ zaraz
 zaraz's
 zayo
 Zscaler
+=======
+subnet
+miniflare
+>>>>>>> 5453a90b5 (add miniflare to spelling exception list)
