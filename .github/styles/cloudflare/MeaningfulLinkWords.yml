@@ -7,7 +7,8 @@
 extends: existence
 message: "**Warning**: Rewrite the link text for `%s` to be more descriptive.
 
-For more information, refer to [Descriptive link text](https://developers.cloudflare.com/style-guide/formatting/structure/links/#descriptive-link-text)."
+
+\n\n\nFor more information, refer to [Descriptive link text](https://developers.cloudflare.com/style-guide/formatting/structure/links/#descriptive-link-text)."
 level: warning
 ignorecase: true
 scope: raw
