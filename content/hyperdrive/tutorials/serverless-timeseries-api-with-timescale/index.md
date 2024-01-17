@@ -135,7 +135,7 @@ $ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -297,6 +297,6 @@ In this tutorial, you have learned how to create a working example to ingest and
 
 ## Next steps
 
-- Learn more about [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/).
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
 - Learn more about [Timescale](https://timescale.com).
-- Refer to the [troubleshooting guide](/hyperdrive/learning/troubleshooting/) to debug common issues.
+- Refer to the [troubleshooting guide](/hyperdrive/reference/troubleshooting/) to debug common issues.

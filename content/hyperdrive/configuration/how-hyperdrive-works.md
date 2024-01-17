@@ -14,7 +14,7 @@ Traditional databases usually handle a maximum number of connections. With any r
 
 Hyperdrive solves these challenges by managing the number of global connections to your origin database, selectively parsing and choosing which query response to cache while reducing loading on your database and accelerating your database queries.
 
-![Hyperdrive connection](/hyperdrive/learning/hyperdrive-comparison.svg)
+![Hyperdrive connection](/images/hyperdrive/configuration/hyperdrive-comparison.svg)
 
 ## Connection Pooling
 
@@ -50,4 +50,4 @@ Caching reduces the burden on your origin database and accelerates the response 
 
 ## Related resources
 
-- [Query caching](/hyperdrive/learning/query-caching/)
+- [Query caching](/hyperdrive/configuration/query-caching/)
