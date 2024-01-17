@@ -55,12 +55,12 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field                      | Description                          |
-| -------------------------- | ------------------------------------ |
-| **Address**                | Address of your custom resolver.     |
-| **Policy**                 | Name of the matched resolver policy. |
-| **Response**               |                                      |
-| **Time (in milliseconds)** |                                      |
+| Field                      | Description                                                 |
+| -------------------------- | ----------------------------------------------------------- |
+| **Address**                | Address of your custom resolver.                            |
+| **Policy**                 | Name of the matched resolver policy.                        |
+| **Response**               | Status of the custom resolver response.                     |
+| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond |
 
 {{</table-wrap>}}
 
@@ -85,8 +85,8 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | Field                           | Description                                                                                                                         |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | **Query Type**                  | Type of DNS query. [This page](https://en.wikipedia.org/wiki/List_of_DNS_record_types) contains a list of all the DNS query types.  |
-| **Query Category**              | Content categories that the domain belongs to.                                                                                      |
-| **Matched Categories**          |                                                                                                                                     |
+| **Query Category**              | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to.                               |
+| **Matched Categories**          | Name of the Gateway policy category that match the domain.                                                                          |
 | **Matched Indicator Feed Name** | Name of the indicator feeds that matched a Gateway policy (if any).                                                                 |
 | **Query Indicator Feed Name**   | Name of the indicator feeds that a matched domain or IP belongs to (if any).                                                        |
 | **Source IP**                   | Public source IP address of the DNS query.                                                                                          |
