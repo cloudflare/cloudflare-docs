@@ -50,4 +50,4 @@ Caching reduces the burden on your origin database and accelerates the response 
 
 ## Related resources
 
-- [Query caching](/hyperdrive/learning/query-caching/)
+- [Query caching](/hyperdrive/configuration/query-caching/)

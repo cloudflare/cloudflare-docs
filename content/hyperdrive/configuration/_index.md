@@ -1,9 +1,9 @@
 ---
+title: Configuration
 pcx_content_type: navigation
-title: Platform
-weight: 6
+weight: 5
 ---
 
-# Platform
+# Configuration
 
 {{<directory-listing>}}
