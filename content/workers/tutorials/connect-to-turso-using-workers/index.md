@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to and query your Turso database using Workers
-layout: single
 ---
 
 # Connect to and query your Turso database using Workers

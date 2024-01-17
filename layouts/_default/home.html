@@ -7,9 +7,7 @@
   {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-  {{- if or (eq .Page.RelPermalink "/changelog/") (eq .Page.RelPermalink "/glossary/") -}}
-  <link rel="stylesheet preconnect" href="/changelog.css" />
-  {{- end -}}
+  <link rel="stylesheet preconnect" href="/codeBlock.css" />
 
   <link rel="stylesheet preconnect" href="/home.css" />
   {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
@@ -62,7 +60,7 @@
           <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
           <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
           <a class="SiteHeader--nav-link"
-            href="https://dash.cloudflare.com/?to=/:account/support"><span>Support</span></a>
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
         </div>
         <div class="SiteHeader--theme-toggle">
           <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>

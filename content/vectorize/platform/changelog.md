@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 20
+weight: 4
 layout: changelog
 changelog_file_name: [vectorize]
 outputs:

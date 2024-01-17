@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Adaptive image format
 meta:
     title: Adaptive optimized format delivery
-layout: single
 weight: 1
 ---
 

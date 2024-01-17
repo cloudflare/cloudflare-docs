@@ -2,7 +2,6 @@
 pcx_content_type: tutorial
 title: Use GraphQL to create widgets
 weight: 46
-layout: single
 ---
 
 # Use GraphQL to create widgets

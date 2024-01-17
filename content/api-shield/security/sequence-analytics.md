@@ -3,7 +3,7 @@ pcx_content_type: concept
 type: overview
 title: Sequence Analytics
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Sequence Analytics
@@ -14,7 +14,7 @@ Sequence Analytics surfaces a subset of important API request sequences found in
 
 ### Sequence building
 
-A sequence is a time-ordered list of HTTP API requests made by a specific visitor as they browse a website, use a mobile app, or interact with a B2B partner via API. 
+A sequence is a time-ordered list of HTTP API requests made by a specific visitor as they browse a website, use a mobile app, or interact with a B2B partner via API.
 
 For example, a portion of a sequence made during a bank funds transfer could look like:
 
@@ -33,7 +33,7 @@ API Shield scores sequences by a metric we call Correlation Score. Sequence Anal
 
 ### Important sequences
 
-You should inspect each of your sequences to understand their correlation scores. High correlation score sequences may consist of rarely used {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (potentially anomalous user behavior) as well as commonly used endpoints (likely benign user behavior). Since the endpoints found in these sequences commonly occur together, they represent true usage patterns of your API. 
+You should inspect each of your sequences to understand their correlation scores. High correlation score sequences may consist of rarely used {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (potentially anomalous user behavior) as well as commonly used endpoints (likely benign user behavior). Since the endpoints found in these sequences commonly occur together, they represent true usage patterns of your API.
 
 You should apply all possible API Shield protections to these endpoints ([rate limiting suggestions](/api-shield/security/volumetric-abuse-detection/), [Schema Validation](/api-shield/security/schema-validation/), [JWT Validation](/api-shield/security/jwt-validation/), and [mTLS](/api-shield/security/mtls/)) and check their specific endpoint order with your development team.
 

@@ -2,7 +2,7 @@
 title: Cipher suites
 pcx_content_type: reference
 weight: 6
-layout: list
+layout: wide
 meta:
   title: Cipher suites — Origin
   description: Review a list of cipher suites that Cloudflare presents to origins during an SSL/TLS handshake.

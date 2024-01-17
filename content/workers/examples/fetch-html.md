@@ -14,21 +14,7 @@ updated: 2024-01-11
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 
-```js
----
-playground: true
----
-export default {
-  async fetch(request) {
-    /**
-     * Replace `remote` with the host you wish to send requests to
-     */
-    const remote = "https://example.com";
-
-    return await fetch(remote, request);
-  },
-};
-```
+{{<render file="_fetch-html-example-js.md">}}
 
 {{</tab>}}
 {{<tab label="ts">}}

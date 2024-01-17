@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Access
-layout: single
 weight: 2
 meta:
   title: Access policies

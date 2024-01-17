@@ -2,7 +2,6 @@
 title: Create a locally-managed tunnel (CLI)
 pcx_content_type: how-to
 weight: 2
-layout: single
 ---
 
 # Set up a tunnel locally

@@ -2,7 +2,6 @@
 title: Configuration
 pcx_content_type: navigation
 weight: 4
-layout: single
 ---
 
 # Configuration

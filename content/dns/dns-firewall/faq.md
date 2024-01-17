@@ -28,9 +28,9 @@ No. If the customer's nameservers respond with a SERVFAIL, the DNS Firewall will
 
 {{</details>}}
 
-{{<details header="Does DNS Firewall support EDNS-Client-Subnet?">}}
+{{<details header="Does DNS Firewall support EDNS Client Subnet (ECS)?">}}
 
-Yes. Often, DNS providers want to see a client's IP via [EDNS](https://datatracker.ietf.org/doc/html/rfc7871)-Client-Subnet because they serve geographically specific DNS answers based on the client's IP. With EDNS-Client-Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the upstream nameserver.
+Yes. Often, DNS providers want to see a client's IP via {{<glossary-tooltip term_id="EDNS Client Subnet (ECS)" link="/dns/glossary/?term=ecs">}}EDNS Client Subnet (ECS){{</glossary-tooltip>}} ([RFC 7871](https://www.rfc-editor.org/rfc/inline-errata/rfc7871.html)) because they serve geographically specific DNS answers based on the client's IP. With EDNS Client Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the upstream nameserver.
 
 When EDNS is enabled, the DNS Firewall gives out the geographically correct answer in cache based on the client IP subnet. To do this, the DNS Firewall segments its cache. For example:
 

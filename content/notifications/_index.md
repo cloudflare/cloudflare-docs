@@ -3,10 +3,7 @@ type: overview
 pcx_content_type: overview
 title: Notifications
 weight: 1
-layout: list
 ---
-
-{{<content-column>}}
 
 # Cloudflare Notifications
 
@@ -28,5 +25,3 @@ The availability of delivery methods like PagerDuty and webhooks in Free or Prof
 * PagerDuty is available in zones on a Free/Professional plan if your Cloudflare account has at least one zone in a Business plan (or higher).
 * Webhooks are available in zones on a Free plan if your Cloudflare account has at least one zone in a Professional plan (or higher).
 {{</Aside>}}
-
-{{</content-column>}}

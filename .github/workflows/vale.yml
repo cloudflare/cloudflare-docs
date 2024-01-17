@@ -1,0 +1,63 @@
+name: Style guide
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Get existing review comments
+        id: get-and-filter-reviews
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get reviews and filter based on state and reviewer id
+          reviews=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments" | \
+            jq '.[] | select(.user.id == 41898282) | select(.body | contains("[vale]")) | .url')
+
+          if [[ "$reviews" != "" ]]; then
+            for review_url in "${reviews[@]}"; do
+              # Remove double quotes from the URL
+              review_url=$(echo $review_url | tr -d '"')
+              
+              # Use double quotes around the URL to handle potential spaces or special characters
+              curl -L \
+                -X DELETE \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GITHUB_TOKEN" \
+                $review_url
+            done
+          fi
+
+      - name: Get Changed Files from Pull Request
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # get file names and structure as JSON
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} echo "\"{}\"" | tr '\n' ',' | sed 's/,$/\n/' | awk '{print "["$0"]"}')
+
+          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
+
+      - name: Output Changed Files
+        run: echo ${{ env.CHANGED_FILES }}
+
+      - name: Vale
+        uses: errata-ai/vale-action@reviewdog
+        if: ${{ !cancelled() }}
+        with:
+          files: ${{ env.CHANGED_FILES }}
+          reporter: github-pr-review
+          filter_mode: diff_context
