@@ -61,7 +61,7 @@ jobs:
         run: |
           # get file names and structure as JSON
           otherFiles=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename')
-          json_array=$(echo "$otherFiles" | grep -o 'content/[^ ]*\.md' | sed 's/^/"/;s/$/"/' | jq -s .)
+          json_array=$(echo "$otherFiles" | grep -o 'content/[^ ]*\.md' | sed 's/^/"/;s/$/",/' | sed '$s/,$//' | jq -s .)
           echo $fileArray
           echo $json_array
 
