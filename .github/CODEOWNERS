@@ -23,9 +23,9 @@
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
-/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
-/content/data-localization/ @soheiokamoto @tlozoot @cloudflare/pcx-technical-writing
-/content/logs/ @bharatnc @jherre @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
+/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
+/content/data-localization/ @soheiokamoto @cloudflare/pcx-technical-writing
+/content/logs/ @bharatnc @jherre @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
 
 # API & Zones
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
