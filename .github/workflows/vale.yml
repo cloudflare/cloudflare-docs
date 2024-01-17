@@ -62,10 +62,7 @@ jobs:
           # get file names and structure as JSON
           otherFiles=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename')
 
-          echo "OTHER_CHANGED_FILES=$otherFiles" >> "$GITHUB_ENV"
-
-      - name: Output Changed Files2
-        run: echo ${{ env.OTHER_CHANGED_FILES }}
+          echo $otherFiles
 
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
