@@ -11,7 +11,7 @@
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 
 extends: spelling
-message: "Check the spelling of '%s'. If the spelling is correct, add this word to the [spelling exception list](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/styles/cloudflare/spelling-exceptions.txt)."
+message: "Check the spelling of '%s'. If the spelling is correct, add this word to the spelling exception list located at `/.github/styles/cloudflare/spelling-exceptions.txt`."
 level: warning
 ignore:
   - cloudflare/spelling-exceptions.txt
