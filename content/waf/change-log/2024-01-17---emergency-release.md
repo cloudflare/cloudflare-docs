@@ -1,5 +1,5 @@
 ---
-title: 2024-01-17
+title: 2024-01-17 - Emergency
 type: table
 pcx_content_type: changelog
 weight: 841
