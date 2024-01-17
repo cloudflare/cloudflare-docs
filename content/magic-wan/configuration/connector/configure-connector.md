@@ -51,12 +51,26 @@ To add a site:
 
 ### Create a LAN
 
+DHCP can be configured in several ways when you create a LAN. IPs can be sourced from:
+- A DHCP server
+- A static IP address
+
+If your DHCP server is not on the same location as your Connector, use the DHCP Relay option to forward DHCP discover messages
+
+
+You can also configure Connector to act as a DHCP server, and choose to reserve certain IP addresses for certain devices in your network.
+
+
+
+
 11. In **LAN configuration**, select **Create**, and repeat the process to define your LAN:
     1. **Network name**: Enter a descriptive name for your LAN.
     2. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
     3. **Overlay subnet**: The subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
-    4. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address.
-    5. **(Optional) This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
+    4. **Addressing**: Specify if your IP address should be fetched from a DHCP server, or if it is a static address:
+      1. **DHCP**: Chose this one if the IP address for you Connector if fetched from a DHCP server.
+      2. Static: Chose this one if your Connector should have a static address, and enter the IP address.
+      3. (Optional) **This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
         - The DNS server address
         - The DHCP pool start
         - The DHCP pool end
