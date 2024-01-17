@@ -21,4 +21,4 @@ Connection pooling improves the connection latency between a client (such as Clo
 
 Query caching and analytics allow Hyperdrive to cache your most popular read queries and provide detailed analytics around cache hit rates, query latencies, and table-level statistics.
 
-Read [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/) for more details on how connections and query caching operate.
+Read [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/) for more details on how connections and query caching operate.
