@@ -183,10 +183,10 @@ Vectorize allows you to:
 
 * Store embeddings from any vector embeddings model (Bring Your Own embeddings) for semantic search and classification tasks.
 * Add context to Large Language Model (LLM) queries by using vector search as part of a [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) (RAG) workflow.
-* [Filter on vector metadata](/vectorize/learning/metadata-filtering/) to reduce the search space and return more relevant results.
+* [Filter on vector metadata](/vectorize/reference/metadata-filtering/) to reduce the search space and return more relevant results.
 
 To get started with Vectorize:  
 
 * [Create your first vector database](/vectorize/get-started/intro/).
 * Combine [Workers AI and Vectorize](/vectorize/get-started/embeddings/) to generate, store and query text embeddings.
-* Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
+* Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
