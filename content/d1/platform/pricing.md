@@ -67,7 +67,7 @@ Every query returns a `meta` object that contains a total count of the rows read
 }
 ```
 
-These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/reference/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
+These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/observability/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
 
 - Does D1 charge for data transfer / egress?
 
@@ -83,7 +83,7 @@ Yes, any queries you issue against your database, including inserting (`INSERT`)
 
 - Can I use an index to reduce the number of rows read by a query?
 
-Yes, you can use an index to reduce the number of rows read by a query. [Creating indexes](/d1/learning/using-indexes/) for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
+Yes, you can use an index to reduce the number of rows read by a query. [Creating indexes](/d1/how-to/using-indexes/) for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
 
 - Does a freshly created database, and/or an empty table with no rows, contribute to my storage?
 

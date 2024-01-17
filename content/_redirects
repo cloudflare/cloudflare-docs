@@ -212,9 +212,19 @@
 /d1/platform/community-projects/ /d1/reference/community-projects/ 301
 /d1/platform/client-api/ /d1/reference/client-api/ 301
 /d1/platform/data-security/ /d1/reference/data-security/ 301
-/d1/platform/environments/ /d1/reference/environments/ 301
-/d1/platform/metrics-analytics/ /d1/reference/metrics-analytics/ 301
+/d1/platform/environments/ /d1/configuration/environments/ 301
+/d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/platform/migrations/ /d1/reference/migrations/ 301
+/d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
+/d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
+/d1/learning/local-development/ /d1/configuration/local-development/ 301
+/d1/learning/remote-development/ /d1/configuration/remote-development/ 301
+/d1/learning/data-location/ /d1/configuration/data-location/ 301
+/d1/reference/environments/ /d1/configuration/environments/ 301
+/d1/learning/using-indexes/ /d1/how-to/using-indexes/ 301
+/d1/learning/querying-json/ /d1/how-to/querying-json/ 301
+/d1/learning/importing-data/ /d1/how-to/importing-data/ 301
+/d1/learning/generated-columns/ /d1/how-to/generated-columns/ 301
 
 
 # data loss prevention (dlp)
@@ -777,6 +787,15 @@
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/start/hostname-verification-backoff-schedule/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/backoff-schedule/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/ 301
+
+# workers for platforms
+/cloudflare-for-platforms/workers-for-platforms/learning/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
+/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/observability/ /cloudflare-for-platforms/workers-for-platforms/reference/observability/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/tags/ /cloudflare-for-platforms/workers-for-platforms/reference/tags/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/metadata/  /cloudflare-for-platforms/workers-for-platforms/reference/metadata/ 301
+
 # Includes dynamic redirects listed at bottom
 
 # stream
@@ -1170,7 +1189,6 @@
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
-/workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 /workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 /workers/learning/security-model/ /workers/reference/security-model/ 301
 
