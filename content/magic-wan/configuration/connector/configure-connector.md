@@ -8,21 +8,21 @@ weight: 3
 
 ## Prerequisites
 
-You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) to be able to purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+1. You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+
+2. You also need to purchase Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
 
 Refer to the steps below to configure your Magic WAN Connector.
 
 ---
 
-## 1. Purchase a Magic WAN Connector device
-
-Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
-
-## 2. Define a site configuration
+## 1. Configure Cloudflare dashboard settings
 
 ### Create a site
 
 Sites represent the local network where you have installed your Magic WAN Connector — for example, a branch office location.
+
+You need to create a site and set up all the settings associated with it before you can connect your Magic WAN Connector to the Internet.
 
 To add a site:
 
@@ -30,8 +30,8 @@ To add a site:
 2. Go to **Magic WAN** > **Sites**.
 3. Select **Create** to create a new site and start the configuration wizard.
 4. Add a name and description for your new site.
-5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account.
-6. Choose from the list the Connector corresponding to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Select **Add Connector** when you are ready to proceed.
+5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows in this list.
+6. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Device activation](#device-activation) for more details.
 8. Select **Next** to proceed.
 
@@ -41,7 +41,7 @@ To add a site:
 2. **Network name**: Enter a descriptive name for your WAN.
 3. **Physical port**: Refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
 4. **Priority**: The priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
-5. **Addressing**: Specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
+5. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
   <div class="medium-img">
 
@@ -53,10 +53,10 @@ To add a site:
 
 ### Create a LAN
 
-When you create a LAN, there are different types of DHCP configurations you can use for Magic WAN Connector. You can:
-- Connect it to a DHCP server.
+Magic WAN Connector supports different types of DHCP configurations. You can define that Magic WAN Connector should:
+- Connect to a DHCP server.
 - Use a static IP address instead of connecting to a DHCP server.
-- Configure the Connector as a DHCP server.
+- Act as a DHCP server.
 - Use DHCP relay to connect to a DHCP server outside the location your Magic WAN Connector is in.
 
 To create a LAN:
@@ -68,10 +68,10 @@ To create a LAN:
 5. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
     1. **DHCP**: Choose this one if the IP address for your Connector is fetched from a DHCP server.
     2. **Static**: Choose this one if your Connector needs a static address. Enter the IP address in **Static address**.
-6. (Optional) **This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
-    1. The DNS server address
-    2. The DHCP pool start
-    3. The DHCP pool end
+    3. (Optional) **This is a DHCP Server**: Enable this to set up the Connector as a DHCP server. If you enable this option, you will also have to specify:
+        1. The DNS server address
+        2. The DHCP pool start
+        3. The DHCP pool end
 
     For example:
 
@@ -83,12 +83,12 @@ To create a LAN:
 
 #### DHCP static address reservation
 
-If you configure your LAN with a DHCP server, you can also assign IP addresses to specific devices on your network if needed. Still in the **Addressing** part of the LAN configuration:
+If you configure your Connector to be a DHCP server, you can also assign IP addresses to specific devices on your network if needed. To reserve IP addresses:
 
-7. Select **Add DHCP Reservation**.
-8. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
-9. In **IP Address**, enter the IP address for that device.
-10. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation**, and enter the new values.
+6. Still in the **Addressing** part of the LAN configuration, select **Add DHCP Reservation**.
+7. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
+8. In **IP Address**, enter the IP address for that device.
+9. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation**, and enter the new values.
 
 #### DHCP relay
 
@@ -96,12 +96,12 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 
 Still in the **Addressing** part of the LAN configuration:
 
-11. Select **This is a DHCP Relay**.
-12. Enter the IP address of your DHCP server.
-13. Select **Save**.
-14. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+10. Select **This is a DHCP Relay**.
+11. Enter the IP address of your DHCP server.
+12. Select **Save**.
+13. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
-## 3. Set up your Magic WAN Connector
+## 2. Set up your Magic WAN Connector
 
 The Magic WAN Connector is shipped to you deactivated, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you are ready to establish the connection.
 
