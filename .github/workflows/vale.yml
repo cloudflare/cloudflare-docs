@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and structure as JSON
-          files2=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | [.filename] | [.] | @tsv' | jq -s 'split("\t") | map(select(. != ""))')
+          files2=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename' | jq -s .)
 
           echo "CHANGED_FILES2=$files2" >> "$GITHUB_ENV"
 
