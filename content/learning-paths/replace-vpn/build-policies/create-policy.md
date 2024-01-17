@@ -17,6 +17,9 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 
 ## Example DNS policy
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 | Traffic Selector | Operator | Value                  |
 | -------- | -------- | ---------------------- |
 | Domain   | in list  | `Company Wiki domains` |
@@ -29,7 +32,58 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 | ------ |
 | Allow  |
 
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "name": "Company Wiki DNS policy",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": {
+        "any": {
+          "in": {
+            "lhs": {
+              "splat": "dns.domains"
+            },
+            "rhs": "$<DOMAIN_LIST_ID>"
+          }
+        }
+      }
+    },
+    {
+      "type": "identity",
+      "expression": {
+        "matches": {
+          "lhs": "identity.email",
+          "rhs": ".*@example.com"
+        }
+      }
+    }
+  ],
+  "action": "allow",
+  "precedence": 13002,
+  "enabled": true,
+  "description": "Allow employees to access company wiki domains.",
+  "filters": [
+    "dns"
+  ]
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ## Example network policy
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 | Traffic Selector | Operator | Value                  |
 | -------- | -------- | ---------------------- |
@@ -43,18 +97,114 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 | ------ |
 | Allow  |
 
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "name": "Company Wiki network policy",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": {
+        "in": {
+          "lhs": "net.dst.ip",
+          "rhs": "$<IP_LIST_ID>"
+        }
+      }
+    },
+    {
+      "type": "identity",
+      "expression": {
+        "matches": {
+          "lhs": "identity.email",
+          "rhs": ".*@example.com"
+        }
+      }
+    }
+  ],
+  "action": "allow",
+  "precedence": 13002,
+  "enabled": true,
+  "description": "Allow employees to access company wiki IPs.",
+  "filters": [
+    "l4"
+  ]
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Catch-all policy
 
 We recommend adding a catch-all policy to the bottom of your network policy list. An effective Zero Trust model should prioritize default-deny actions to avoid any overly permissive policy building. For example,
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 | Traffic Selector | Operator | Value          | Logic |
 | -------- | -------- | ---------------------- | ----- |
 | Destination IP   | in list  | `All private network ranges` | Or  |
-| SNI Hostname   | in list | `All private apex domains` | |
+| SNI Domain  | in list | `All private apex domains` | |
 
 | Action |
 | ------ |
 | Block  |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "name": "Catch-all block policy",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": {
+        "or": [
+          {
+            "in": {
+              "lhs": "net.dst.ip",
+              "rhs": "$<IP_LIST_ID>"
+            }
+          },
+          {
+            "any": {
+              "in": {
+                "lhs": {
+                  "splat": "net.sni.domains"
+                },
+                "rhs": "$<DOMAIN_LIST_ID>"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "action": "block",
+  "precedence": 14002,
+  "enabled": true,
+  "description": "Block access to private network.",
+  "filters": [
+    "l4"
+  ]
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 Network policies are evaluated in [top-down order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so if a user does not match an explicitly defined policy for an application, they will be blocked.
 To learn how multiple policies interact, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/).

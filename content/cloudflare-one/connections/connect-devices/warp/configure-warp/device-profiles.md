@@ -32,7 +32,7 @@ Your profile will appear in the **Profile settings** list. You can rearrange the
 
 {{<tab label="api" no-code="true">}}
 
-```sh
+```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \

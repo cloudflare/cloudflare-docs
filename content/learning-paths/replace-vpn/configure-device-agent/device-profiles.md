@@ -46,7 +46,7 @@ To customize the default settings:
 
 1. Update the default device settings profile:
 
-```sh
+```bash
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
 --header "X-Auth-Email: <EMAIL>" \
@@ -69,7 +69,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
 
 2. Update global settings:
 
-```sh
+```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/settings \
 --header "X-Auth-Email: <EMAIL>" \
