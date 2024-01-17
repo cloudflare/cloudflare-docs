@@ -147,4 +147,4 @@ Refer to the [Workers Logpush documentation](/workers/observability/logpush/) to
 
 * [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
 * [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
-* [Local development and testing](/workers/observability/local-development-and-testing/) - Developed and test you Workers locally.
+* [Local development and testing](/workers/observability/local-development-and-testing/) - Develop and test you Workers locally.
