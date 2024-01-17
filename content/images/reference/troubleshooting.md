@@ -25,7 +25,7 @@ ___
 When resizing fails, the response body contains an error message explaining the reason, as well as the `Cf-Resized` header containing `err=code`:
 
 -  9401 — The required arguments in `{cf:image{…}}` options are missing or are invalid. Try again. Refer to [Fetch options](/images/serve-images/resize-with-workers/#fetch-options) for supported arguments.
--  9402 — The image was too large or the connection was interrupted. Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) for more information.
+-  9402 — The image was too large or the connection was interrupted. Refer to [Supported formats and limitations](/images/transform-images/) for more information.
 -  9403 — A [request loop](/images/serve-images/resize-with-workers/#prevent-request-loops) occurred because the image was already resized or the Worker fetched its own URL. Verify your Worker path and image path on the server do not overlap.
 -  9406 & 9419 — The image URL is a non-HTTPS URL or the URL has spaces or unescaped Unicode. Check your URL and try again.
 -  9407 — A lookup error occurred with the origin server's domain name. Check your DNS settings and try again.
@@ -38,7 +38,7 @@ When resizing fails, the response body contains an error message explaining the 
 -  9421 — The origin server redirected too many times. Confirm settings at your origin and try again.
 -  9504, 9505, & 9510 — The origin server could not be contacted because the origin server may be down or overloaded. Try again later.
 -  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. As an alternative you can [resize within the Worker](/images/serve-images/resize-with-workers/). This can also happen when using a `pages.dev` URL of a [Cloudflare Pages](/pages/) project. In that case, you can use a [Custom Domain](/pages/configuration/custom-domains/) instead.
--  9511 — The image format is not supported. Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) to learn about supported input and output formats.
+-  9511 — The image format is not supported. Refer to [Supported formats and limitations](/images/transform-images/) to learn about supported input and output formats.
 -  9522 — The image exceeded the processing limit. This may happen briefly after purging an entire zone or when files with very large dimensions are requested. If the problem persists, contact support.
 -  9424, 9516, 9517, 9518, 9522 & 9523 — Internal errors. Please contact support if you encounter these errors.
 
@@ -54,7 +54,7 @@ ___
 
 Image requests to the origin will be anonymized (no cookies, no auth, no custom headers). This is because we have to have one public cache for resized images, and it would be unsafe to share images that are personalized for individual visitors.
 
-However, in cases where customers agree to store such images in public cache, Cloudflare supports resizing images through Workers [on authenticated origins](/images/image-resizing/control-origin-access/#authenticated-origin).
+However, in cases where customers agree to store such images in public cache, Cloudflare supports resizing images through Workers [on authenticated origins](/images/serve-images/resize-with-workers/).
 
 ___
 

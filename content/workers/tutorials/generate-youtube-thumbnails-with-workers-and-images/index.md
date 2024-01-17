@@ -14,7 +14,7 @@ title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
-This tutorial will help you understand how to work with [Images](/images/cloudflare-images/),[Image Resizing](/images/image-resizing/) and [Cloudflare Workers](/workers/).
+This tutorial will help you understand how to work with [Images](/images/),[Image Resizing](/images/transform-images/resize-images/) and [Cloudflare Workers](/workers/).
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ To upload an image using the Cloudflare dashboard:
 
 ### Upload with the API
 
-To upload your image with the [Upload via URL](/images/cloudflare-images/upload-images/upload-via-url/) API, refer to the example below:
+To upload your image with the [Upload via URL](/images/upload-images/upload-via-url/) API, refer to the example below:
 
 ```sh
 $ curl --request POST \
@@ -399,13 +399,13 @@ export default {
 }
 ```
 
-Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/cloudflare-images/api-request/).
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/api-request/).
 
 Run your Worker and go to the `/original-image` route to review your image.
 
 ## Add custom text on your image
 
-You will now use [Cloudflare Image Resizing](/images/image-resizing/), with the `fetch` method, to add your dynamic text image as an overlay on top of your background image. Start by displaying the resulting image on a different route. Call the new route `/thumbnail`.
+You will now use [Cloudflare Image Resizing](/images/transform-images/resize-images/), with the `fetch` method, to add your dynamic text image as an overlay on top of your background image. Start by displaying the resulting image on a different route. Call the new route `/thumbnail`.
 
 
 ```js

@@ -6,7 +6,7 @@ weight: 8
 
 # Pricing
 
-For more information on how you can save costs by increasing caching in browsers, refer to [Browser TTL](/images/cloudflare-images/serve-images/browser-ttl/).
+For more information on how you can save costs by increasing caching in browsers, refer to [Browser TTL](/images/serve-images/browser-ttl/).
 
 | <div style="width:150px">Plan</div>| Description | Pricing |
 |-----------|-------------|---------|
