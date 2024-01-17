@@ -61,9 +61,11 @@ jobs:
         run: |
           # get file names and structure as JSON
           otherFiles=$(gh api /repos/cloudflare/cloudflare-docs/pulls/12545/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename')
-          json_array=$(echo "$otherFiles" | jq -s | grep -o 'content/[^ ]*\.md')
-          echo $fileArray
+          json_array=$($otherFiles | grep -o 'content/[^ ]*\.md')
+          json_array_e=$($otherFiles | grep -E 'content/[^ ]*\.md')
+          echo $otherFiles
           echo $json_array
+          echo $json_array_e
 
           echo "OTHER_CHANGED_FILES=$json_array" >> "$GITHUB_ENV"
         
