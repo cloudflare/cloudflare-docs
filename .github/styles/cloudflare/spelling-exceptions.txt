@@ -3,3 +3,5 @@ geo
 nameserver
 nameservers
 subnet
+Ivanti
+Ruleset
