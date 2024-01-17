@@ -12,8 +12,6 @@ weight: 3
 
 2. You also need to purchase Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
 
-Refer to the steps below to configure your Magic WAN Connector.
-
 ---
 
 ## 1. Configure Cloudflare dashboard settings
@@ -88,7 +86,7 @@ If you configure your Connector to be a DHCP server, you can also assign IP addr
 6. Still in the **Addressing** part of the LAN configuration, select **Add DHCP Reservation**.
 7. In **Hardware Address** enter the hardware address for the device you want a specific IP address for.
 8. In **IP Address**, enter the IP address for that device.
-9. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation**, and enter the new values.
+9. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
 
 #### DHCP relay
 
