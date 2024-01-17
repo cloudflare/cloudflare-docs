@@ -15,7 +15,7 @@ To present a client certificate when communicating with a service, create a [mTL
 
 {{<Aside type="warning">}}
 
-Currently, mTLS for Workers cannot be used for requests made to a service that is a [proxied zone](/dns/manage-dns-records/reference/proxied-dns-records/) on Cloudflare. If your Worker presents a client certificate to a service proxied by Cloudflare, Cloudflare will return a`520` error.
+Currently, mTLS for Workers cannot be used for requests made to a service that is a [proxied zone](/dns/manage-dns-records/reference/proxied-dns-records/) on Cloudflare. If your Worker presents a client certificate to a service proxied by Cloudflare, Cloudflare will return a `520` error.
 
 {{</Aside>}}
 
