@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Resize images
+title: Create variants
 weight: 5
 ---
 
-# Resize images
+# Create variants
 
 Create a new variant for your image with new dimensions.
 

@@ -4,7 +4,7 @@ title: Direct creator upload
 weight: 5
 ---
 
-# Direct creator upload
+# Accept direct creator uploads
 
 The Direct Creator Upload feature in Cloudflare Images lets your users upload images with a one-time upload URL without exposing your API key or token to the client. Using a direct creator upload also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
 

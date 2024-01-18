@@ -4,7 +4,7 @@ title: Blur images
 weight: 7
 ---
 
-# Blur images
+# Apply blur to variants
 
 You can apply blur to image variants by creating a specific variant for this effect first or by editing a previously created variant. Note that you cannot blur an SVG file.
 
