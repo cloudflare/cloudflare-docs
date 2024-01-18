@@ -30,4 +30,4 @@ In this example:
 - `083eb7b2-5392-4565-b69e-aff66acddd00` is the image ID. You can also use Custom IDs instead of the generated ID.
 - `public` is the variant name.
 
-When a user requests an image, Cloudflare Images chooses the optimal format, which is determined by client headers and the image type. Refer to [Adaptive optimized format delivery](/images/serve-images/adapative-optimized-format-delivery/) for more information.
+When a user requests an image, Cloudflare Images chooses the optimal format, which is determined by client headers and the image type. Refer to [Adaptive optimized format delivery](/images/serve-images/adaptive-optimized-format-delivery/) for more information.

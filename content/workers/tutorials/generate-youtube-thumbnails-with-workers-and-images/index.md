@@ -489,7 +489,7 @@ if (url.pathname === '/thumbnail') {
 }
 ```
 
-Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/image-resizing/draw-overlays/#draw-options) option to add overlay text using the deployed URL of your `text-to-image` Worker.
+Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/serve-images/resize-with-workers/) option to add overlay text using the deployed URL of your `text-to-image` Worker.
 
 ```js
 ---
@@ -573,7 +573,4 @@ By completing this tutorial, you have successfully made a custom YouTube thumbna
 
 ## Related resources
 
-In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom YouTube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to the following resources:
-
-- [Draw overlay and watermarks](/images/image-resizing/draw-overlays/)
-- [Resize an image with a Worker](/images/serve-images/resize-with-workers/)
+In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom YouTube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to [Resize an image with a Worker](/images/serve-images/resize-with-workers/).

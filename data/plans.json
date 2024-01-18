@@ -2046,8 +2046,8 @@
       }
     },
     "image_resizing": {
-      "title": "Image Resizing",
-      "link": "/images/image-resizing/",
+      "title": "Image Optimization",
+      "link": "/images/",
       "paid_add_on": true,
       "paid_add_on_plans": ["pro", "biz", "ent"],
       "properties": {
