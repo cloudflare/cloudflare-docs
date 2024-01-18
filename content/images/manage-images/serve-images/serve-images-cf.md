@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Serve images from Cloudflare
+title: Serve uploaded images
 weight: 6
 ---
 
-# Serve images from Cloudflare
+# Serve uploaded images
 
 To serve images uploaded to Cloudflare Images, you must have:
 
@@ -31,3 +31,9 @@ In this example:
 - `public` is the variant name.
 
 When a user requests an image, Cloudflare Images chooses the optimal format, which is determined by client headers and the image type. Refer to [Adaptive optimized format delivery](/images/serve-images/adaptive-optimized-format-delivery/) for more information.
+
+## Optimize format
+
+Cloudflare Images automatically transcodes uploaded PNG, JPEG and GIF files to the more efficient AVIF and WebP formats. This happens whenever the customer browser supports them. If the browser does not support AVIF, Cloudflare Images will fall back to WebP. If there is no support for WebP, then Cloudflare Images will serve compressed files in the original format.
+
+Uploaded SVG files are served as [sanitized SVGs](/images/cloudflare-images/upload-images/formats-limitations/#sanitized-svgs).

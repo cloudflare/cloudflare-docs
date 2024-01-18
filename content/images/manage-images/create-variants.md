@@ -6,7 +6,7 @@ weight: 5
 
 # Create variants
 
-Create a new variant for your image with new dimensions.
+Variants let you specify how images should be resized for different use cases. By default, images are served with a `public` variant, but you can create up to 100 variants to fit your needs. Follow these steps to create a variant.
 
 {{<Aside type="note">}}
 Cloudflare Images can deliver SVG files but will not resize them because it is an inherently scalable format.

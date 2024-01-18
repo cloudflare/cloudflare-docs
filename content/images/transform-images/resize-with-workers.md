@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Resize with Cloudflare Workers
+title: Transform via Workers
 weight: 10
 ---
 
-# Resize with Cloudflare Workers
+# Transform via Workers
 
 Using Cloudflare Workers to transform with a custom URL scheme gives you powerful programmatic control over every image request.
 

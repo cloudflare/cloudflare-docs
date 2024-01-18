@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Blur images
+title: Apply blur
 weight: 7
 ---
 

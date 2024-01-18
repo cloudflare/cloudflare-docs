@@ -7,12 +7,6 @@ weight: 4
 
 # Transform images
 
-You can transform your images through the use of variants, and transformation options can be defined as a named variant which can help with cleaner URLs. Variants are separate versions of your images that you can modify for different use cases to fit your needs. Each variant has multiple settings that allow you to customize the size, fit, metadata, blurring, and public access.
-
-## URL format
-
-Most of the options listed in this section can be saved as named variants for stored images.
-
 You can convert and resize images by requesting them via a specially-formatted URL. This way you do not need to write any code, only change HTML markup of your website to use the new URLs. The format is:
 
 ```txt

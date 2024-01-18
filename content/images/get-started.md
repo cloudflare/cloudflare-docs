@@ -35,3 +35,9 @@ To use transformations, you’ll need to enable this feature on each zone:
 3. Select the zone where you want to enable transformations.
 4. Select **Enable**.
 5. To transform images only from the enabled zone, uncheck **Resize images from any origin**. This will prevent third parties from resizing images at any origin.
+
+{{<Aside type="note">}}
+
+If you are using Image Resizing in a Worker, you need to include the appropriate logic in your Worker code to prevent resizing images from any origin. Unchecking this option in the dash does not apply to image resizing requests coming from Cloudflare Workers.
+
+{{</Aside>}}
