@@ -44,3 +44,9 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/reference/how-the-cache-works/#single-file-purge--assets-cached-by-a-worker).
 
 {{</Aside>}}
+
+{{<Aside type="warning" header="Warning">}}
+
+If you have in place a [Transform Rule](/rules/transform/) that is removing part of a URL path, when performing single file purge, you must use the non-transform (end user) URL so that purge can take effect.
+
+{{</Aside>}}
