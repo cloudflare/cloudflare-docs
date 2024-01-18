@@ -182,7 +182,7 @@ For more information on creating overrides, refer to [Override a managed ruleset
 To define the score threshold value, or to specify the action to perform when the threat score is greater than the threshold, create a rule override for the last rule in the managed ruleset that:
 
 * Specifies the action to take in the `action` property.
-* Defines the desired threat score threshold (an integer value) in the `score_threshold` property.
+* Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.
 
 #### Example
 
