@@ -14,7 +14,7 @@ title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
-This tutorial will help you understand how to work with [Images](/images/),[Image Resizing](/images/transform-images/resize-images/) and [Cloudflare Workers](/workers/).
+This tutorial will help you understand how to work with [Images](/images/),[Image Resizing](/images/manage-images/create-variants/) and [Cloudflare Workers](/workers/).
 
 ## Prerequisites
 
@@ -405,7 +405,7 @@ Run your Worker and go to the `/original-image` route to review your image.
 
 ## Add custom text on your image
 
-You will now use [Cloudflare Image Resizing](/images/transform-images/resize-images/), with the `fetch` method, to add your dynamic text image as an overlay on top of your background image. Start by displaying the resulting image on a different route. Call the new route `/thumbnail`.
+You will now use [Cloudflare Image Resizing](/images/manage-images/create-variants/), with the `fetch` method, to add your dynamic text image as an overlay on top of your background image. Start by displaying the resulting image on a different route. Call the new route `/thumbnail`.
 
 
 ```js
@@ -489,7 +489,7 @@ if (url.pathname === '/thumbnail') {
 }
 ```
 
-Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/serve-images/resize-with-workers/) option to add overlay text using the deployed URL of your `text-to-image` Worker.
+Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/transform-images/transform-via-workers/) option to add overlay text using the deployed URL of your `text-to-image` Worker.
 
 ```js
 ---
@@ -573,4 +573,4 @@ By completing this tutorial, you have successfully made a custom YouTube thumbna
 
 ## Related resources
 
-In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom YouTube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to [Resize an image with a Worker](/images/serve-images/resize-with-workers/).
+In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom YouTube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to [Resize an image with a Worker](/images/transform-images/transform-via-workers/).

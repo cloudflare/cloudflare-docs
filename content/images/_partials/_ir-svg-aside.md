@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-{{<Aside type="note">}}You can use Image Resizing to sanitize SVGs, but not to resize them. Refer to [Resize with Workers](/images/serve-images/resize-with-workers/) for more information.{{</Aside>}}
+{{<Aside type="note">}}You can use Image Resizing to sanitize SVGs, but not to resize them. Refer to [Resize with Workers](/images/transform-images/transform-via-workers/) for more information.{{</Aside>}}

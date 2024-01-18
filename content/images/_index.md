@@ -41,7 +41,7 @@ Accept uploads directly and securely from your users by generating a one-time to
 Add up to 100 variants to specify how images should be resized for various use cases.
 {{</feature>}}
 
-{{<feature header="Signed URLs" href="/images/serve-images/serve-private-images" cta="Serve private images">}}
+{{<feature header="Signed URLs" href="/images/manage-images/serve-images/serve-private-images" cta="Serve private images">}}
 Control access to your images by using signed URL tokens.
 {{</feature>}}
 

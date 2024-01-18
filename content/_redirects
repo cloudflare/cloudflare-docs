@@ -478,15 +478,15 @@
 
 # images
 /images/cloudflare-images/upload-images/supported-formats/ /images/upload-images/ 301
-/image-resizing/ /images/transform-images/resize-images/ 301
+/image-resizing/ /images/manage-images/create-variants/ 301
 /image-resizing/url-format/ /images/transform-images/ 301
 /images/about/ /images/ 301
 /images/images/ /images/ 301
-/images/keys/ /images/serve-images/serve-private-images/ 301
-/images/resizing-with-workers/ /images/serve-images/resize-with-workers/ 301
+/images/keys/ /images/manage-images/serve-images/serve-private-images/ 301
+/images/resizing-with-workers/ /images/transform-images/transform-via-workers/ 301
 /images/url-format/ /images/transform-images/ 301
 /images/variants/ /images/transform-images/enable-flexible-variants/ 301
-/images/worker/ /images/serve-images/resize-with-workers/ 301
+/images/worker/ /images/transform-images/transform-via-workers/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/reference/troubleshooting/ 301
 /images/cloudflare-images/ /images/ 301
@@ -497,10 +497,10 @@
 /images/cloudflare-images/serve-images/adaptive-images-format/ /images/serve-images/adaptive-optimized-format-delivery/ 301
 /images/cloudflare-images/serve-images/browser-ttl/ /images/serve-images/browser-ttl/ 301
 /images/cloudflare-images/serve-images/serve-images-custom-domains/ /images/serve-images/serve-from-custom-domains/ 301
-/images/cloudflare-images/sourcing-kit/ /images/platform/sourcing-kit/ 301
-/images/cloudflare-images/sourcing-kit/credentials/ /images/platform/sourcing-kit/credentials/ 301
-/images/cloudflare-images/sourcing-kit/edit/ /images/platform/sourcing-kit/edit/ 301
-/images/cloudflare-images/sourcing-kit/enable/ /images/platform/sourcing-kit/enable/ 301
+/images/cloudflare-images/sourcing-kit/ /images/upload-images/sourcing-kit/ 301
+/images/cloudflare-images/sourcing-kit/credentials/ /images/upload-images/sourcing-kit/credentials/ 301
+/images/cloudflare-images/sourcing-kit/edit/ /images/upload-images/sourcing-kit/edit/ 301
+/images/cloudflare-images/sourcing-kit/enable/ /images/upload-images/sourcing-kit/enable/ 301
 /images/cloudflare-images/transform/ /images/transform-images/ 301
 /images/cloudflare-images/transform/blur-images/ /images/transform-images/blur-images/ 301
 /images/cloudflare-images/transform/delete-images/ /images/transform-images/delete-images/ 301
@@ -508,7 +508,7 @@
 /images/cloudflare-images/transform/edit-images/ /images/transform-images/edit-images/ 301
 /images/cloudflare-images/transform/export-image/ /images/transform-images/export-images/ 301
 /images/cloudflare-images/transform/flexible-variants/ /images/transform-images/enable-flexible-variants/ 301
-/images/cloudflare-images/transform/resize-images/ /images/transform-images/resize-images/ 301
+/images/cloudflare-images/transform/resize-images/ /images/manage-images/create-variants/ 301
 /images/cloudflare-images/tutorials/ /images/ 301
 /images/cloudflare-images/tutorials/integrate-cloudflare-images/ /images/ 301
 /images/cloudflare-images/upload-images/ /images/upload-images/ 301
@@ -518,11 +518,11 @@
 /images/cloudflare-images/upload-images/images-batch/ /api/operations/cloudflare-images-list-images 301
 /images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
 /images/faq /images/ 301
-/images/image-resizing/ /images/transform-images/resize-images/ 301
+/images/image-resizing/ /images/manage-images/create-variants/ 301
 /images/image-resizing/format-limitations/ /images/transform-images/ 301
 /images/image-resizing/url-format/ /images/transform-images/ 301
-/images/image-resizing/resize-with-workers/ /images/serve-images/resize-with-workers/ 301
-/images/image-resizing/responsive-images/ /images/transform-images/resize-images/ 301
+/images/image-resizing/resize-with-workers/ /images/transform-images/transform-via-workers/ 301
+/images/image-resizing/responsive-images/ /images/manage-images/create-variants/ 301
 
 
 # learning-paths

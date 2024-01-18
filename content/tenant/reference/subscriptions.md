@@ -43,7 +43,7 @@ The following table lists sample values for various Developer platform subscript
 | Feature | Subscription IDs |
 | --- | --- |
 | [Images](/images/) | `IMAGES_ENT`,`IMAGES_BASIC`|
-| [Image resizing](/images/transform-images/resize-images/) | `IMAGE_RESIZING_ENT`, `IMAGE_RESIZING_BASIC` |
+| [Image resizing](/images/manage-images/create-variants/) | `IMAGE_RESIZING_ENT`, `IMAGE_RESIZING_BASIC` |
 | [Stream](/stream/) | `PARTNERS_STREAM_ENT`, `PARTNERS_STREAM_BASIC`, `STREAM_BASIC` |
 | [Workers](/workers) | `PARTNERS_WORKERS_ENT`, `WORKERS_PAID`, `PARTNERS_WORKERS_SS`, `PARTNERS_WORKERS_BASIC` |
 
