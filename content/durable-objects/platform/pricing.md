@@ -14,7 +14,6 @@ These examples exclude the costs for the Workers calling the Durable Objects. Wh
 
 * Inactive objects receiving no requests do not incur any duration charges.
 * The [Hibernatable WebSocket API](/durable-objects/reference/websockets/#websocket-hibernation) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occassionally at sparse intervals.
-* 
 
 ### Example 1
 
