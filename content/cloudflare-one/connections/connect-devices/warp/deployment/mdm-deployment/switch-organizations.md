@@ -6,6 +6,23 @@ weight: 3
 
 {{<heading-pill style="beta">}} Switch between Zero Trust organizations {{</heading-pill>}}
 
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| All modes | All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2024.1.7.1           |
+| macOS    | ✅           | 2024.1.7.1           |
+| Linux    | ✅           | 2024.1.7.1           |
+| iOS      | ❌           |       |
+| Android  | ✅           | 1.4   |
+| ChromeOS | ✅           | 1.4   |
+
+{{</details>}}
+
 In Cloudflare WARP, users can switch between multiple Zero Trust organizations (or other [MDM parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/)) that administrators specify in an MDM file. Common use cases include:
 
 - Allow IT security staff to switch between test and production environments.
