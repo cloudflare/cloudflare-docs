@@ -188,4 +188,4 @@ header: Bucket list response example
 {{</tab>}}
 {{</tabs>}}
 
-To learn how to collect packet captures, refer to [Collect packet captures](/magic-firewall/how-to/collect-pcaps).
+To learn how to collect packet captures, refer to [Collect packet captures](/magic-firewall/packet-captures/collect-pcaps/).
