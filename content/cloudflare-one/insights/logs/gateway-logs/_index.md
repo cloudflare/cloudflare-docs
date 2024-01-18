@@ -29,13 +29,13 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field             | Description                                                                                                                                                                                                                                                                                                                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **DNS**           | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
-| **Email**         | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
-| **Action**        | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                   |
-| **Time**          | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
-| Resolver Decision | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
+| Field                 | Description                                                                                                                                                                                                                                                                                                                                                                                            |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **DNS**               | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
+| **Email**             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
+| **Action**            | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                   |
+| **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
+| **Resolver Decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
 
 {{</table-wrap>}}
 
@@ -161,7 +161,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **User ID**            | ID of the user sending the packet. This is generated by the WARP client.            |
 | **Device Name**        | Name of the device that sent the packet.                                            |
 | **Device ID**          | ID of the device that sent the packet. This is generated by the WARP client.        |
-| **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                                   |
+| **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                          |
 
 {{</table-wrap>}}
 
@@ -182,7 +182,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **SNI**                 | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                               |
 | **Virtual Network**     | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
 | **Category details**    | Category or categories associated with the packet.                                                                                                |
-| **Proxy PAC Endpoint**  | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.      |
+| **Proxy PAC Endpoint**  | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.          |
 
 {{</table-wrap>}}
 
@@ -210,7 +210,7 @@ When an HTTP request results in an error, the first 512 bytes of the request are
 | **Source Internal IP**       | Private IP address assigned by the user's local network.                                                                                                   |
 | **User Agent**               | User agent header sent in the request by the originating device.                                                                                           |
 | **Policy details**           | Policy corresponding to the decision Gateway made based on the traffic criteria of the request.                                                            |
-| **DLP profiles**             | Name of the matched [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) (if there is one).                                                                                                         |
+| **DLP profiles**             | Name of the matched [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) (if there is one).                                          |
 | **DLP profile entries**      | Name of the matched entry within the DLP profile (if there is one).                                                                                        |
 | **Uploaded/downloaded file** | {{<render file="gateway/_uploaded-downloaded-file.md">}}                                                                                                   |
 
@@ -238,7 +238,7 @@ When an HTTP request results in an error, the first 512 bytes of the request are
 | **User ID**            | ID of the user who made the request. This is generated by the WARP client.                                           |
 | **Device Name**        | Name of the device that made the request.                                                                            |
 | **Device ID**          | ID of the device that made the request. This is generated by the WARP client on the device that created the request. |
-| **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                                                                    |
+| **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                                                           |
 
 {{</table-wrap>}}
 
@@ -268,15 +268,15 @@ When an HTTP request results in an error, the first 512 bytes of the request are
 
 {{<table-wrap>}}
 
-| Field        | Description                                        |
-| ------------ | -------------------------------------------------- |
-| Name         | Name of the detected file.                         |
-| Type         | File type of the detected file.                    |
-| Size         | Size of the detected file.                         |
-| Hash         | Hash of the detected file, generated by DLP.       |
-| Content type | MIME type of the detected file.                    |
-| Direction    | Upload or download direction of the detected file. |
-| Action       | The Action Gateway applied to the request.         |
+| Field            | Description                                        |
+| ---------------- | -------------------------------------------------- |
+| **Name**         | Name of the detected file.                         |
+| **Type**         | File type of the detected file.                    |
+| **Size**         | Size of the detected file.                         |
+| **Hash**         | Hash of the detected file, generated by DLP.       |
+| **Content type** | MIME type of the detected file.                    |
+| **Direction**    | Upload or download direction of the detected file. |
+| **Action**       | The Action Gateway applied to the request.         |
 
 {{</table-wrap>}}
 
