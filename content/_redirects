@@ -551,6 +551,8 @@
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
+/magic-firewall/how-to/pcaps-bucket-setup/ /magic-firewall/packet-captures/pcaps-bucket-setup/ 301
+/magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
@@ -1212,7 +1214,7 @@
 /vectorize/learning/create-indexes/ /vectorize/configuration/create-indexes/ 301
 /vectorize/learning/insert-vectors/ /vectorize/configuration/insert-vectors/ 301
 /vectorize/learning/query-vectors/ /vectorize/configuration/query-vectors/ 301
-/vectorize/learning/metadata-filtering/ /vectorize/reference/metadata-filtering/ 301  
+/vectorize/learning/metadata-filtering/ /vectorize/reference/metadata-filtering/ 301
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
 
