@@ -4,8 +4,8 @@ pcx_content_type: navigation
 weight: 5
 ---
 
-# How to
+# Packet captures
 
-Review the content below to learn how to complete tasks using Magic Firewall.
+Review the content below to learn how to use packet captures
 
 {{<directory-listing>}}
