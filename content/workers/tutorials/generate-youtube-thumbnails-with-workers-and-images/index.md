@@ -4,7 +4,6 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
-layout: single
 ---
 
 # Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
@@ -342,7 +341,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 After you have finished updating your project, start a local server for developing your Worker by running:
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
 
 This should spin up a `localhost` instance with the image displayed:
@@ -377,7 +376,7 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 Create a Worker to serve the image you uploaded to Images by running:
 
 ```sh
-$ wrangler init thumbnail-image
+$ npx wrangler init thumbnail-image
 ```
 
 This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:

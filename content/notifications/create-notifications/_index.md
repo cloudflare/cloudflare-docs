@@ -2,12 +2,11 @@
 pcx_content_type: how-to
 title: Create a Notification
 weight: 3
-layout: single
 ---
 
 # Create a Notification
 
-Cloudflare Notifications is available in your Cloudflare dashboard. 
+Cloudflare Notifications is available in your Cloudflare dashboard.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Notifications**.

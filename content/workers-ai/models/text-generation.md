@@ -163,7 +163,7 @@ Here's an example of a simple question, without templating:
 };
 ```
 
-Here's an input example of a [Mistral](https://docs.mistral.ai/llm/mistral-instruct-v0.1#chat-template) chat template prompt:
+Here's an input example of a [Mistral](https://docs.mistral.ai/models/#chat-template) chat template prompt:
 
 ```javascript
 {

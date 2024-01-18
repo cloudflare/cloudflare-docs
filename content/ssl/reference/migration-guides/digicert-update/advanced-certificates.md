@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Advanced certificates
 weight: 2
-layout: list
+layout: wide
 meta:
     title: Advanced certificates - DigiCert migration guide
 ---

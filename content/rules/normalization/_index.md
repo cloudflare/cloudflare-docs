@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: URL normalization
 weight: 4
-layout: single
 ---
 
 # URL normalization

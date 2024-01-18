@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Manage findings
-layout: single
 weight: 1
 meta:
   title: Manage security findings

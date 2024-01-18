@@ -2,7 +2,6 @@
 title: Enable Splunk
 pcx_content_type: how-to
 weight: 64
-layout: single
 meta:
   title: Enable Logpush to Splunk
 ---

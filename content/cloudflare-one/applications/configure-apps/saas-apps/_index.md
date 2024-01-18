@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SaaS applications
 weight: 1
-layout: single
 ---
 
 # Add a SaaS application to Access

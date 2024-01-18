@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: OpenAI GPT function calling with JavaScript and Cloudflare Workers 
-layout: single
 ---
 
 # Use OpenAI GPT function calling with JavaScript and Cloudflare Workers 

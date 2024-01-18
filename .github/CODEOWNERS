@@ -6,6 +6,7 @@
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
+/.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
 /components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
@@ -22,9 +23,9 @@
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
-/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
-/content/data-localization/ @soheiokamoto @tlozoot @cloudflare/pcx-technical-writing
-/content/logs/ @bharatnc @jherre @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
+/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
+/content/data-localization/ @soheiokamoto @cloudflare/pcx-technical-writing
+/content/logs/ @bharatnc @jherre @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
 
 # API & Zones
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
@@ -34,7 +35,7 @@
 /content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
-/content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
+/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @cloudflare/pcx-technical-writing
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
@@ -59,11 +60,11 @@
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF

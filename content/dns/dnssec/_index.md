@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: DNSSEC
 weight: 5
-layout: single
 ---
 
 # DNSSEC
@@ -27,7 +26,7 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 {{<render file="_dnssec-cloudflare-steps.md">}}
 
-### Step 2 — Add DS record to your registrar
+### Step 2 - Add DS record to your registrar
 
 {{<render file="_dnssec-registrar-steps.md">}}
 

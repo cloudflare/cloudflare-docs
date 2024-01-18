@@ -2,9 +2,9 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: Settings
-layout: list
+layout: wide
 meta:
-    title: Settings | Page Rules
+  title: Settings | Page Rules
 weight: 3
 ---
 
@@ -40,7 +40,7 @@ Below is the full list of settings available, presented in the order that they a
 | [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) | Turn on or off **Email Obfuscation**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | Forwarding URL | Redirects one URL to another using an `HTTP 301/302` redirect. Refer to [Wildcard matching and referencing](/rules/page-rules/reference/wildcard-matching/). | All |
 | [Host Header Override](/rules/page-rules/how-to/rewrite-host-headers/) | Apply a specific host header.{{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#host-header">}} | Enterprise |
-| IP Geolocation Header | Cloudflare adds a `CF-IPCountry` HTTP header containing the country code that corresponds to the visitor. {{<Aside type="note">}}You can accomplish the same effect with the [**Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/).{{</Aside>}} | All |
+| IP Geolocation Header | Cloudflare adds a `CF-IPCountry` HTTP header containing the country code that corresponds to the visitor. {{<Aside type="note">}}You can accomplish the same effect with the [**Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/#add-visitor-location-headers).{{</Aside>}} | All |
 | [Mirage](/speed/optimization/images/mirage/) | Turn on or off **Mirage**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | Pro and above |
 | [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) | Turn on or off the **Opportunistic Encryption**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Origin Cache Control](/cache/concepts/cache-control/) | Origin Cache Control is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |

@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
@@ -16,7 +16,7 @@ Local development uses local storage. It cannot access data stored on Cloudflare
 
 ## KV namespaces
 
-[Workers KV](/kv/learning/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
+[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -205,7 +205,7 @@ Specifically:
 * If your database is bound to `NORTHWIND_DB` and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1 NORTHWIND_DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
-Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API methods available on your D1 binding.
+Refer to the [D1 client API documentation](/d1/reference/client-api/) for the API methods available on your D1 binding.
 
 ## Workers AI
 [Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
@@ -308,7 +308,7 @@ To interact with a [service binding](/workers/configuration/bindings/about-servi
 
 ## Queue Producers
 
-[Queue Producers](/queues/platform/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
+[Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.

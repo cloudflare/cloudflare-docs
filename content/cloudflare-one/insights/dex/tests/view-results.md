@@ -1,21 +1,19 @@
 ---
-pcx_content_type: reference
-title: Test results
+pcx_content_type: how-to
+title: View test results
 weight: 3
 ---
 
-# Test results
+# View test results
 
 You can use the results of a DEX test to monitor availability and performance for a specific application.
 
-## View test results
-
-### Prerequisites
+## Prerequisites
 
 - At least one test has been created under **DEX** > **Tests**.
 - Admins must have at least the [Cloudflare Zero Trust Reporting role](/cloudflare-one/roles-permissions/#zero-trust-roles).
 
-### View results for all devices
+## View results for all devices
 
 To view an overview of test results for all devices:
 
@@ -23,7 +21,7 @@ To view an overview of test results for all devices:
 2. Select the **Tests** tab.
 3. Under **Application tests**, select a test to view detailed results.
 
-### View results for an individual device
+## View results for an individual device
 
 To view analytics on a per-device level:
 
@@ -31,26 +29,6 @@ To view analytics on a per-device level:
 2. Select the device you want to view, and then select **View details**.
 3. Select the **Tests** tab.
 4. Select a test to view detailed results.
-
-## Explanation of the fields
-
-### HTTP GET
-
-| Data | Description |
-| ----------- | ----------- |
-| Resource fetch time | Difference between the start and end time of the test. Calculated by adding the server response time + DNS response time. |
-| Server response time | Round-trip time for the device to receive a response from the target. |
-| DNS response time | Round-trip time for the DNS query to resolve. |
-| HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target. |
-
-### Traceroute
-
-| Data | Description |
-| ----------- | ----------- |
-| Round trip time | Time between sending out a packet and receiving a response from the target. |
-| Number of hops | Number of routers encountered between the device and the target. |
-| Packet loss | Percentage of IP packets that failed to receive a response. |
-| Availability | Percentage of tests where at least one packet reached the destination. |
 
 ## Data retention
 

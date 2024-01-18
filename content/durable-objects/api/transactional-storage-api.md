@@ -105,13 +105,13 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     
     - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
     
-    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
+    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed` to `true` to opt out of the default behavior. 
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
     - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. 
     
-    - Use `noCache()` if the key will not be used again in the near future. `noCache()` will never change the semantics of your code, but it may affect performance. 
+    - Use `noCache` if the key will not be used again in the near future. `noCache` will never change the semantics of your code, but it may affect performance. 
     
     - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
@@ -184,7 +184,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Synchronizes any pending writes to disk.
 
-  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed()`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
 ### getAlarm
 
@@ -194,7 +194,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 #### Supported options
 
-- Same options as [`get()`](/durable-objects/api/transactional-storage-api/#get), but without `noCache()`.
+- Same options as [`get()`](/durable-objects/api/transactional-storage-api/#get), but without `noCache`.
 
 ### setAlarm
 
@@ -212,7 +212,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 #### Supported options
 
-- `setAlarm()` and `deleteAlarm()` support the same options as [`put()`](/durable-objects/api/transactional-storage-api/#put), but without `noCache()`.
+- `setAlarm()` and `deleteAlarm()` support the same options as [`put()`](/durable-objects/api/transactional-storage-api/#put), but without `noCache`.
 
 {{</definitions>}}
 

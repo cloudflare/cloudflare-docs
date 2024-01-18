@@ -48,4 +48,4 @@ If you are using your gateway for backend services, you may want to use Cloudfla
 
 ## Step 6 - Use the gateway
 
-Once you have created a gateway and updated your Cloudflare settings, you can start using your [IPFS](/web3/how-to/use-ipfs-gateway/), [Ethereum](/web3/how-to/use-ethereum-gateway/), or [Polygon](/web3/how-to/use-polygon-gateway/) gateway.
+Once you have created a gateway and updated your Cloudflare settings, you can start using your [IPFS](/web3/how-to/use-ipfs-gateway/) or [Ethereum](/web3/how-to/use-ethereum-gateway/).

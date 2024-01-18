@@ -66,7 +66,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/platform/javascript-apis/#consumer) |     |
+| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/reference/javascript-apis/#consumer) |     |
 | [Duration](#duration)       |   None                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
@@ -216,7 +216,18 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 1 MB on the Workers Free plan.
+A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan, and up to 1 MB on the Workers Free plan.
+
+You can assess the size of your Worker bundle after compression by performing a dry-run with `wrangler` and reviewing the final compressed (`gzip`) size output by `wrangler`:
+
+```sh
+$ wrangler deploy --outdir bundled/ --dry-run
+
+# Output will resemble the below:
+Total Upload: 259.61 KiB / gzip: 47.23 KiB
+```
+
+Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code. 
 
 {{<render file="_limits_increase.md">}}
 

@@ -9,6 +9,6 @@ title: Enable Zaraz
 
 ## Enable
 
-To enable Zaraz on Cloudflare Pages, you need a [custom domain](/pages/platform/custom-domains/) associated with your project.
+To enable Zaraz on Cloudflare Pages, you need a [custom domain](/pages/configuration/custom-domains/) associated with your project.
 
 After that, [set up Zaraz](/zaraz/get-started/) on the custom domain.

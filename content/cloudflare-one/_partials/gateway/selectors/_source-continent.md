@@ -8,14 +8,16 @@ inputParameters: param1
 
 Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a continent, enter its two-letter code into the **Value** field:
 
-- AF – Africa
-- AN – Antarctica
-- AS – Asia
-- EU – Europe
-- NA – North America
-- OC – Oceania
-- SA – South America
-- T1 – Tor network
+| Continent     | Code |
+|---------------|------|
+| Africa        | `AF` |
+| Antarctica    | `AN` |
+| Asia          | `AS` |
+| Europe        | `EU` |
+| North America | `NA` |
+| Oceania       | `OC` |
+| South America | `SA` |
+| Tor network   | `T1` |
 
 | UI name                         | API example                           | Evaluation phase      |
 | ------------------------------- | ------------------------------------- | --------------------- |

@@ -2,7 +2,6 @@
 title: Third-party integration
 pcx_content_type: navigation
 weight: 2
-layout: single
 meta:
     title: Third-party integration tutorials
     description: Learn how to integrate Cloudflare Magic WAN with third-party products.

@@ -3,7 +3,7 @@ type: table
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Scheduled changes
@@ -23,12 +23,12 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-12-18</td>
-      <td>2023-12-26</td>
-      <td>Block</td>
-      <td>100612</td>
-      <td>...53c7ccde</td>
-      <td>SnakeYAML - CVE:CVE-2022-1471</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
       <td>N/A</td>
     </tr>
   </tbody>

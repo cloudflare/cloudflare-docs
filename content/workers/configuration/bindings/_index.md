@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Bindings
-layout: single
 meta:
   description: Interact with storage and other resources on the Cloudflare Developer Platform.
 ---
@@ -11,6 +10,8 @@ meta:
 Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
 There are multiple types of bindings available today.
+
+To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
 ## Configuration
 
@@ -29,7 +30,7 @@ Service bindings allow for communication with another Worker.
 
 KV namespace bindings allow for communication between a Worker and a KV namespace.
 
-* Learn more about [KV namespace bindings](/kv/learning/kv-bindings/).
+* Learn more about [KV namespace bindings](/kv/reference/kv-bindings/).
 * Configure KV namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#kv-namespaces).
 
 ### Durable Object bindings
@@ -50,21 +51,21 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
-* Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
+* Configure Queue bindings via your [`wrangler.toml` file](/queues/reference/configuration/).
 
 ### D1 database bindings
 
 [D1](/d1) bindings allow you to query a D1 database from your Worker.
 
 * [Configure a D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
-* Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
+* Learn more about how to query a D1 database using the [client API](/d1/reference/client-api/).
 
 ### Vectorize database bindings
 
 [Vectorize](/vectorize/) bindings allow you to interact with and query a Vectorize index from your Worker.
 
 * [Configure a Vectorize binding](/vectorize/get-started/)
-* Learn more about how to query a Vectorize index using the [client API](/vectorize/platform/client-api/).
+* Learn more about how to query a Vectorize index using the [client API](/vectorize/reference/client-api/).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 

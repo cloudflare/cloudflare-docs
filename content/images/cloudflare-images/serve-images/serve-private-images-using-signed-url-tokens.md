@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Serve private images
-layout: single
 meta:
   title: Serve private images using signed URL tokens
 weight: 3
@@ -13,7 +12,7 @@ If an image is marked to require a signed URL, it cannot be accessed without a t
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Images** > **Keys**.
-3. Copy your key and use it to generate an expiring tokenized URL. 
+3. Copy your key and use it to generate an expiring tokenized URL.
 
 Here is an example Worker that takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the `const EXPIRATION` value.
 
@@ -44,8 +43,8 @@ async function generateSignedUrl(url) {
   // `url` now looks like
   // https://imagedelivery.net/cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
 
-  const stringToSign = url.pathname + '?' + url.searchParams.toString();
-  // for example, /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
+  const stringToSign = url.pathname;
+  // for example, /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile
 
   // Generate the signature
   const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(stringToSign));

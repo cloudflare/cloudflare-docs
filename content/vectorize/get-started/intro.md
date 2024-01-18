@@ -28,7 +28,7 @@ To continue:
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 
@@ -121,7 +121,7 @@ Specifically:
 
 - The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/platform/client-api/) is exposed on this binding for use within your Workers application.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
 
 ## 4. Insert vectors
 
@@ -338,5 +338,5 @@ In a real-world application, the `queryVector` would be the vector embedding rep
 ## Next steps
 
 - [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
-- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
-- Read [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+- Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.
