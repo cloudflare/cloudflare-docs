@@ -10,7 +10,7 @@ Browser TTL controls how long an image stays in a browser's cache and specifical
 
 ### Default TTL
 
-By default, an image's TTL is set to two days to meet user needs, such as re-uploading an image under the same [Custom ID](/images/cloudflare-images/upload-images/custom-id/).
+By default, an image's TTL is set to two days to meet user needs, such as re-uploading an image under the same [Custom ID](/images/upload-images/upload-custom-path/).
 
 ## Custom setting
 
@@ -60,6 +60,6 @@ When the Browser TTL is set to one day for images requested with this variant, t
 
 {{<Aside type="note">}}
 
-[Private images](/images/cloudflare-images/make-an-image-private/) do not respect default or custom TTL settings. The private images cache time is set according to the expiration time and can be as short as one hour.
+[Private images](/images/serve-images/serve-private-images/) do not respect default or custom TTL settings. The private images cache time is set according to the expiration time and can be as short as one hour.
 
 {{</Aside>}}

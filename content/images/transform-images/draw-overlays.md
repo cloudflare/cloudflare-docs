@@ -8,7 +8,7 @@ weight: 7
 
 You can draw additional images on top of a resized image, with transparency and blending effects. This enables adding of watermarks, logos, signatures, vignettes, and other effects to resized images.
 
-This feature is available only in [Workers](/images/image-resizing/resize-with-workers/). To draw overlay images, add an array of drawing commands to options of `fetch()` requests. The drawing options are nested in `options.cf.image.draw`, like in the following example:
+This feature is available only in [Workers](/images/transform-images/transform-via-workers/). To draw overlay images, add an array of drawing commands to options of `fetch()` requests. The drawing options are nested in `options.cf.image.draw`, like in the following example:
 
 ```js
 fetch(imageURL, {
@@ -44,7 +44,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
   - Maximum size of the overlay image, in pixels. It must be an integer.
 
 - `fit` and `gravity`
-  - Affects interpretation of `width` and `height`. Same as [for the main image](/images/image-resizing/resize-with-workers/#fetch-options).
+  - Affects interpretation of `width` and `height`. Same as [for the main image](/images/transform-images/transform-via-workers/#fetch-options).
 
 - `opacity`
   - Floating-point number between `0` (transparent) and `1` (opaque). For example, `opacity: 0.5` makes overlay semitransparent.
@@ -62,10 +62,10 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
     If no position is specified, the image will be centered.
 
 - `background`
-  - Background color to add underneath the overlay image. Same as [for the main image](/images/image-resizing/resize-with-workers/#fetch-options).
+  - Background color to add underneath the overlay image. Same as [for the main image](/images/transform-images/transform-via-workers/#fetch-options).
 
 - `rotate`
-  - Number of degrees to rotate the overlay image by. Same as [for the main image](/images/image-resizing/resize-with-workers/#fetch-options).
+  - Number of degrees to rotate the overlay image by. Same as [for the main image](/images/transform-images/transform-via-workers/#fetch-options).
 {{</definitions>}}
 
 ## Examples

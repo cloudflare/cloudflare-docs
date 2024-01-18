@@ -6,9 +6,31 @@ weight: 22
 
 # Serve images from custom domains
 
+Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
+
+```txt
+https://example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
+```
+
+Example with a custom domain:
+
+```txt
+https://example.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
+```
+
+In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different:
+
+* `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
+* `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
+* `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash. This can be found in the Cloudflare Images Dashboard.
+* `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
+* `public`: The variant name.
+
+## Custom paths 
+
 By default, Images are served from the `/cdn-cgi/imagedelivery/` path. You can use Transform Rules to rewrite URLs and serve images from custom paths.
 
-## Basic version
+### Basic version
 
 Free and Pro plans only support string matching rules that do not require regular expressions.
 
@@ -33,7 +55,7 @@ concat(
 
 8. Select **Deploy** when you are done.
 
-## ​​Advanced version
+### ​​Advanced version
 
 {{<Aside type="note">}}
 This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to Cloudflare [Transform Rules Availability](/rules/transform/#availability) for more information.
