@@ -1,24 +1,24 @@
 ---
 pcx_content_type: how-to
 title: Configure webhooks
-weight: 2
+weight: 3
 ---
 
 # Configure webhooks
 
 {{<Aside type="note">}}
-This feature is only available if your account has at least one paid feature. For more information, refer to our [plans page](https://www.cloudflare.com/plans/).
+This feature is only available if your account has at least one paid feature. For more information, refer to our [plans](https://www.cloudflare.com/plans/).
 {{</Aside>}}
 
-There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Refer to the table below to learn how to connect your Cloudflare account to [popular webhook services](#popular-webhook-services).
+There are a variety of services you can connect to Cloudflare using webhooks to receive notifications from your Cloudflare account. Refer to the table below to learn how to connect your Cloudflare account to [popular webhook services](#popular-webhook-services).
 
 ## Configure webhooks
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Notifications** > **Destinations**.
 3. In the **Webhooks** card, select **Create**.
-4. Give your webhook a name, so you can identify it later.
-5. In the **URL** field, enter the URL of the third-party service you previously set up and want to connect to your Cloudflare account.
+4. Give your webhook a name to use for identification later.
+5. In the **URL** field, enter the URL of the third-party service that you have previously set up and want to connect to your Cloudflare account.
 6. If needed, insert the **Secret**. Secrets are how webhooks are encrypted and vary according to the service you are connecting to Cloudflare.
 7. Select **Save and Test** to finish setting up your webhook.
 
@@ -30,18 +30,18 @@ You can only edit the name of webhooks and/or delete them.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Notifications** > **Destinations**.
-3. In the **Webhooks** card, select **Edit** on the webhook you want to edit.
+3. In the **Webhooks** card, select **Edit** on the webhook that you want to edit.
 4. Update the webhook's name and select **Save**.
 
-{{<Aside type="note" header="Note">}}
-You can also delete a webhook after selecting **Edit**. However, it is faster to select **Delete** in the list of webhooks displayed in the **Destinations** card.
-{{</Aside>}}
+You can delete a webhook after selecting **Edit** or by selecting **Delete** in the list of webhooks displayed in the **Destinations** card.
 
 ## Generic webhooks
 
-If you use a service that is not covered by Cloudflare's currently available webhooks, you can configure your own. Follow the steps above to configure webhooks, and enter a valid webhook URL. It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
+If you use a service that is not covered by Cloudflare's currently available webhooks, you can [configure your own](#configure-webhooks), and enter a valid webhook URL. 
 
-After selecting **Save and Test**, your webhook should now be configured as a destination you can use to attach to policies.
+It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
+
+After selecting **Save and Test**, your webhook should now be configured as a destination that you can use to attach to policies.
 
 When Cloudflare sends you a webhook, it will have the following schema:
 
@@ -71,7 +71,6 @@ You can use Cloudflare Workers with a generic webhook to deliver notifications t
 Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/) to help you understand how you can use [Workers](/workers/) and generic webhooks. The example provided transforms a generic webhook response in order for it to be delivered to Rocket.Chat. The code provided is heavily commented to guide you in the process of adapting the example to your needs.
 
 ## Popular webhook services
-
 
 <table>
   <thead>
