@@ -31,7 +31,7 @@ Transformations let you optimize images that are stored outside of Cloudflare Im
 To use transformations, you’ll need to enable this feature on each zone:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Images** > T**ransformations**.
+2. Go to **Images** > **Transformations**.
 3. Select the zone where you want to enable transformations.
 4. Select **Enable**.
 5. To transform images only from the enabled zone, uncheck **Resize images from any origin**. This will prevent third parties from resizing images at any origin.
