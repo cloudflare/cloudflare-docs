@@ -190,7 +190,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<Aside type="note">}}
 
-When an HTTP request results in an error, the first 512 bytes of the request are logged for 30 days for internal troubleshooting. Otherwise, HTTP bodies are not logged.
+When an HTTP request results in an error, Gateway logs the first 512 bytes of the request for 30 days for internal troubleshooting. Otherwise, Gateway does not log HTTP bodies.
 
 {{</Aside>}}
 
@@ -292,6 +292,4 @@ To enable:
 
 ### Isolate requests
 
-When a user creates a policy to isolate traffic, the initial request that triggers isolation will be logged as an `Isolate` decision and the `is_isolated` field will return `false`. This is because that initial request is not isolated yet — but it initiates an isolated session.
-
-Since the request is generated in an isolated browser, the result is rendered in the isolated browser and rendered back to the user securely. This request and all subsequent requests in the isolated browser are logged to include the terminal Gateway action that gets applied (e.g. Allow / Block) and the `is_isolated` field as `true`.
+When a user creates a [policy to isolate traffic](/cloudflare-one/policies/browser-isolation/isolation-policies/), Gateway logs the initial request that triggers isolation as an Isolate decision, and the `is_isolated` field will return `false`. This is because the initial request is not isolated yet. Because the request triggers an isolated browser, Zero Trust securely renders the result to the user in the isolated browser. Gateway logs the request and all subsequent requests in the isolated browser to include the terminal Gateway action (such as Allow or Block), and the `is_isolated` field will return `true`.
