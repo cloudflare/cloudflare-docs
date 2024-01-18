@@ -453,6 +453,10 @@ header: wrangler.toml
 durable_objects.bindings = [
   { name = "<TEST_OBJECT>", class_name = "<TEST_CLASS>" }
 ]
+
+# or
+
+
 ```
 
 #### Migrations
