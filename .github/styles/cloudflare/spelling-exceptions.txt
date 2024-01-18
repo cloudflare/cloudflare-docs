@@ -109,6 +109,7 @@ healthchecks
 Heartbleed
 hellix
 hexo
+hibernatable
 hono
 hostname
 hostnames
