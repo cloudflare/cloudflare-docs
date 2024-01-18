@@ -1,12 +1,12 @@
 ---
 title: Collect PCAPs
 pcx_content_type: how-to
-weight: 5
+weight: 3
 ---
 
 # Collect packet captures (PCAPs)
 
-After a {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](/magic-firewall/how-to/pcaps-bucket-setup/).
+After a {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](/magic-firewall/packet-captures/pcaps-bucket-setup/).
 
 {{<Aside type="note">}}
 
