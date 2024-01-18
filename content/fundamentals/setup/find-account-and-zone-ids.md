@@ -29,6 +29,6 @@ You can also find your account ID within the **Workers & Pages** section of your
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account.
 3. Go to **Workers & Pages**.
-4. The **Account details** section contains your **Account ID**. To copy this values for API commands or other tasks, select **Click to copy**.
+4. The **Account details** section contains your **Account ID**. To copy these values for API commands or other tasks, select **Click to copy**.
 
     ![Screenshot of the Workers & Pages Overview page with the account ID section highlighted](/images/fundamentals/get-started/workers-account-id.png)
