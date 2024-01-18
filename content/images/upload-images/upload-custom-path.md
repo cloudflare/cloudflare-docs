@@ -10,7 +10,7 @@ You can use a custom ID path to upload an image instead of the path automaticall
 
 Custom paths support:
 
-- Up to 1024 characters.
+- Up to 1,024 characters.
 - Any number of subpaths.
 - The [UTF-8 encoding standard](https://en.wikipedia.org/wiki/UTF-8) for characters.
 
