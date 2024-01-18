@@ -24,7 +24,7 @@ To create a rule:
 6. Under **Path**, select **Rewrite to**.
 7. Select *Dynamic* and enter the following in the text field.
 
-```
+```txt
 concat(
   "/cdn-cgi/imagedelivery/<ACCOUNT_HASH>",
   substring(http.request.uri.path, 7)
@@ -36,10 +36,10 @@ concat(
 ## ​​Advanced version
 
 {{<Aside type="note">}}
-This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to Cloudflare Transform Rules Availability for more information.
+This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to Cloudflare [Transform Rules Availability](/rules/transform/#availability) for more information.
 {{</Aside>}}
 
-This example lets you rewrite a request from `example.com/images/some-image-id/w100,h300` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/some-image-id/width=100,height=300` and implies Flexible variants feature is turned on.
+This example lets you rewrite a request from `example.com/images/some-image-id/w100,h300` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/some-image-id/width=100,height=300` and assumes Flexible variants feature is turned on.
 
 To create a rule:
 
@@ -51,7 +51,7 @@ To create a rule:
 6. Under **Path**, select **Rewrite to**.
 7. Select *Dynamic* and enter the following in the text field.
 
-```
+```txt
 regex_replace(
   http.request.uri.path,
   "^/images/(.*)\\?w([0-9]+)&h([0-9]+)$",
@@ -61,6 +61,4 @@ regex_replace(
 
 ## Limitations
 
-When using a custom domain, it is not possible to directly set up WAF rules that act on requests hitting the `/cdn-cgi/imagedelivery/` path. If you need to set up WAF rules, you can:
-
-Use a Cloudflare Worker to access your images and a Route using your domain to execute the worker. For an example worker, refer to [Serve private images using signed URL tokens](/images/serve-images/serve-private-images/).
+When using a custom domain, it is not possible to directly set up WAF rules that act on requests hitting the `/cdn-cgi/imagedelivery/` path. If you need to set up WAF rules, you can use a Cloudflare Worker to access your images and a Route using your domain to execute the worker. For an example worker, refer to [Serve private images using signed URL tokens](/images/serve-images/serve-private-images/).

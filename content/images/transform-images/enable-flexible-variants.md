@@ -16,12 +16,12 @@ Flexible variants allow you to create variants with dynamic resizing which can p
 
 ## Enable flexible variants via the API
 
-Make a PATCH request to the [Update a variant endpoint](/api/operations/cloudflare-images-variants-update-a-variant).
+Make a `PATCH` request to the [Update a variant endpoint](/api/operations/cloudflare-images-variants-update-a-variant).
 
-```curl
+```bash
 curl -X PATCH https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/config \
-    -H "Authorization: Bearer <API_TOKEN>" \
-    -H "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{"flexible_variants": true}'
 ```
 

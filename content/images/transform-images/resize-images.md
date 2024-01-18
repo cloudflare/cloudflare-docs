@@ -20,12 +20,12 @@ Resize via the Cloudflare dashboard.
 
 ## Resize via the API
 
-Make a POST request to [create a variant](/api/operations/cloudflare-images-variants-create-a-variant).
+Make a `POST` request to [create a variant](/api/operations/cloudflare-images-variants-create-a-variant).
 
-```curl
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/variants" \
-  -H "Authorization: Bearer <API_TOKEN>" \
-  -H "Content-Type: application/json" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
   --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
 ```
 

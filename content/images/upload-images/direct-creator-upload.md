@@ -10,11 +10,11 @@ The Direct Creator Upload feature in Cloudflare Images lets your users upload im
 
 ## Request a one-time upload URL
 
-Make a POST request to the `direct_upload` endpoint using the example below as reference.
+Make a `POST` request to the `direct_upload` endpoint using the example below as reference.
 
-```curl
+```bash
 curl --request POST \
- --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v2/direct_upload \
+ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v2/direct_upload \
  --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'requireSignedURLs=true' \
  --form 'metadata={"key":"value"}'
@@ -22,7 +22,7 @@ curl --request POST \
 
 After a successful request, you will receive a response similar to the example below. The `id` field is a future image identifier that will be uploaded by a creator.
 
-```curl
+```json
 {
   "result": {
     "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
@@ -41,15 +41,14 @@ After calling the endpoint, a new draft image record is created, but the image w
 
 To check the status of a new draft image record, use the one-time upload URL as shown in the example below.
 
-```curl
-curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
- --header 'Content-Type: application/json' \
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
  --header 'Authorization: Bearer <API_TOKEN>'
 ```
 
 After a successful request, you should receive a response similar to the example below. The `draft` field is set to `true` until a creator uploads an image. After an image is uploaded, the draft field is removed. 
 
-```curl
+```json
 {
   "result": {
     "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
@@ -74,6 +73,8 @@ The backend endpoint should return the `uploadURL` property to the client, which
 Below is an example of an HTML page that takes a one-time upload URL and uploads any image the user selects.
 
 ```html
+<!DOCTYPE html>
+<html>
 <body>
 <form
 action="INSERT_UPLOAD_URL_HERE"
@@ -89,7 +90,7 @@ enctype="multipart/form-data"
 
 By default, the `uploadURL` expires after 30 minutes if unused. To override this option, add the following argument to the cURL command:
 
-```curl
+```txt
 --data '{"expiry":"2021-09-14T16:00:00Z"}'
 ```
 
@@ -101,6 +102,6 @@ You can specify a [custom ID](/images/upload-images/upload-custom-path/) when yo
 
 To specify a custom ID, pass a form field with the name ID and corresponding custom ID value as shown in the example below.
 
-```curl
+```txt
 --form 'id=this/is/my-customid'
 ```

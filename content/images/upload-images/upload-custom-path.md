@@ -20,7 +20,7 @@ Images with custom ID paths cannot be made private using [signed URL tokens](/im
 
 Make a `POST` request using the example below as reference. You can use custom ID paths when you upload via a URL or with a direct file upload.
 
-```curl
+```bash
 curl --request POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT_ID>/images/v1 \
   --header 'Authorization: Bearer <API_TOKEN>' \
   --form 'url=https://<REMOTE_PATH_TO_IMAGE>' \
@@ -29,7 +29,7 @@ curl --request POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT
 
 After successfully uploading the image, you will receive a response similar to the example below.
 
-```curl
+```json
 {
   "result": {
     "id": "<PATH_TO_YOUR_IMAGE>",

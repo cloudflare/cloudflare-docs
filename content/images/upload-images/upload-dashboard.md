@@ -12,5 +12,5 @@ To upload an image from the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images**. 
-3. Drag and drop your image into the **Quick Upload** section or click **Drop images here** or select to browse to select your image locally.
+3. Drag and drop your image into the **Quick Upload** section. Alternatively, you can select **Drop images here** or browse to select your image locally.
 4. After the upload finishes, your image appears in the list of files.
