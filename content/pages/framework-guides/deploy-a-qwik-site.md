@@ -73,7 +73,7 @@ Access the binding directly from the `platform` object:
 filename: src/routes/greet/index.js
 highlight: [2]
 ---
-export const onRequest = async ({ platform }) => {
+export const onGet = async ({ platform }) => {
   const myKv = platform.env.MY_KV;
 
   // ...
