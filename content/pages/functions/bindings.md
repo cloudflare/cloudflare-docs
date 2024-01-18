@@ -205,7 +205,7 @@ Specifically:
 * If your database is bound to `NORTHWIND_DB` and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1 NORTHWIND_DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
-Refer to the [D1 client API documentation](/d1/reference/client-api/) for the API methods available on your D1 binding.
+Refer to the [D1 client API documentation](/d1/how-to/query-databases/) for the API methods available on your D1 binding.
 
 ## Workers AI
 [Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
