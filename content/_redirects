@@ -519,9 +519,9 @@
 /images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
 /images/faq /images/ 301
 /images/image-resizing/ /images/transform-images/resize-images/ 301
-/images/image-resizing/format-limitations/#svg-files /images/transform-images/ 301
+/images/image-resizing/format-limitations/ /images/transform-images/ 301
 /images/image-resizing/url-format/ /images/transform-images/ 301
-/images/image-resizing/resize-with-workers/#an-example-worker /images/serve-images/resize-with-workers/ 301
+/images/image-resizing/resize-with-workers/ /images/serve-images/resize-with-workers/ 301
 /images/image-resizing/responsive-images/ /images/transform-images/resize-images/ 301
 
 
