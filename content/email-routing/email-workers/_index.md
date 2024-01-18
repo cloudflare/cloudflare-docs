@@ -41,6 +41,14 @@ The route, or email address, bound to the Worker forwards emails to your Email W
 
 For example, say that you create an allowlist Email Worker and bind it to a `hello@my-company.com` route. This route will be the email address you share with the world, to make sure that only email addresses on your allowlist are forwarded to your destination address. All other emails will be dropped.
 
+## Guidelines
+
+It's important to keep the following in mind when writing Email Workers:
+
+1. Unhandled exceptions will result in a permanent SMTP failures. Email Workers should generally have a top-level `try/catch` block to prevent throwing unhandled exceptions.
+2. Email Workers that take longer than 50 seconds to respond will result in a permanent SMTP failure. If some work can be done in the background, consider using [context.waitUntil()](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to execute background tasks after the Email Worker returns.
+3. Senders will typically consider permanent SMTP errors to be a bounce, and may stop sending email to addresses which bounce too often. So it's important to not cause unexpected bounces when writing Email Workers.
+
 ## Limits
 
 If you encounter any allocation errors while using Email Workers, refer to [Limits](/email-routing/limits/#email-workers-size-limits) for more information.
