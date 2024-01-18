@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Delete images
-weight: 9
+weight: 17
 ---
 
 # Delete images

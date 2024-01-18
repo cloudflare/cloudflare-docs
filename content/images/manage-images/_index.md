@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Manage images
-weight: 6
+weight: 4
 ---
 
 # Manage images

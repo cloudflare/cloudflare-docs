@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Export images
-weight: 10
+weight: 16
 ---
 
 # Export images

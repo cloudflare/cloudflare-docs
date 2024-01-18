@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Serve private images
-weight: 11
+weight: 23
 ---
 
 # Serve private images

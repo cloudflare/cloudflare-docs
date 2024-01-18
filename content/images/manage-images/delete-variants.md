@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Delete variants
-weight: 9
+weight: 13
 ---
 
 # Delete variants

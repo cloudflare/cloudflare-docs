@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Serve images from custom domains
-weight: 9
+weight: 22
 ---
 
 # Serve images from custom domains
@@ -61,4 +61,4 @@ regex_replace(
 
 ## Limitations
 
-When using a custom domain, it is not possible to directly set up WAF rules that act on requests hitting the `/cdn-cgi/imagedelivery/` path. If you need to set up WAF rules, you can use a Cloudflare Worker to access your images and a Route using your domain to execute the worker. For an example worker, refer to [Serve private images using signed URL tokens](/images/serve-images/serve-private-images/).
+When using a custom domain, it is not possible to directly set up WAF rules that act on requests hitting the `/cdn-cgi/imagedelivery/` path. If you need to set up WAF rules, you can use a Cloudflare Worker to access your images and a Route using your domain to execute the worker. For an example worker, refer to [Serve private images using signed URL tokens](/images/manage-images/serve-images/serve-private-images/).

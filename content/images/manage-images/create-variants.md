@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Create variants
-weight: 5
+weight: 10
 ---
 
 # Create variants
@@ -51,4 +51,4 @@ Variants allow you to choose what to do with your image’s metadata information
 
 ## Public access
 
-When the **Always allow public access** option is selected, particular variants will always be publicly accessible, even when images are made private through the use of [signed URLs](/images/serve-images/serve-private-images).
+When the **Always allow public access** option is selected, particular variants will always be publicly accessible, even when images are made private through the use of [signed URLs](/images/manage-images/serve-images/serve-private-images).

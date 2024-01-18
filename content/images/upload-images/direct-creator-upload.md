@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Direct creator upload
+title: Accept direct creator uploads
 weight: 5
 ---
 
@@ -98,7 +98,7 @@ The expiry value must be a minimum of two minutes and maximum of six hours in th
 
 ## Direct Creator Upload with custom ID
 
-You can specify a [custom ID](/images/upload-images/upload-custom-path/) when you first request a one-time upload URL, instead of using the automatically generated ID for your image. Note that images with a custom ID cannot be made private with the [signed URL tokens](/images/serve-images/serve-private-images) feature (`--requireSignedURLs=true`).
+You can specify a [custom ID](/images/upload-images/upload-custom-path/) when you first request a one-time upload URL, instead of using the automatically generated ID for your image. Note that images with a custom ID cannot be made private with the [signed URL tokens](/images/manage-images/serve-images/serve-private-images) feature (`--requireSignedURLs=true`).
 
 To specify a custom ID, pass a form field with the name ID and corresponding custom ID value as shown in the example below.
 

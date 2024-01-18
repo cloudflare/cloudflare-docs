@@ -15,7 +15,7 @@ Custom paths support:
 - The [UTF-8 encoding standard](https://en.wikipedia.org/wiki/UTF-8) for characters.
 
 {{<Aside type="note">}}
-Images with custom ID paths cannot be made private using [signed URL tokens](/images/serve-images/serve-private-images). Additionally, when [serving images](/images/serve-images/), any `%` characters present in Custom IDs must be encoded to `%25` in the image delivery URLs.
+Images with custom ID paths cannot be made private using [signed URL tokens](/images/manage-images/serve-images/serve-private-images). Additionally, when [serving images](/images/manage-images/serve-images/), any `%` characters present in Custom IDs must be encoded to `%25` in the image delivery URLs.
 {{</Aside>}}
 
 Make a `POST` request using the example below as reference. You can use custom ID paths when you upload via a URL or with a direct file upload.

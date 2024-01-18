@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Enable flexible variants
-weight: 6
+weight: 11
 ---
 
 # Enable flexible variants
@@ -29,4 +29,4 @@ After activation, you can use the resizing parameters on any Cloudflare image. F
 
 `https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/w=400,sharpen=3`
 
-Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/serve-images/serve-private-images).
+Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/manage-images/serve-images/serve-private-images).

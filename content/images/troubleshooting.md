@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troublesh
 title: Troubleshooting
 meta:
     title: Troubleshooting | Image Resizing
-weight: 10
+weight: 8
 ---
 
 # Troubleshooting

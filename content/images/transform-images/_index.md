@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Transform images
 layout: single
-weight: 4
+weight: 5
 ---
 
 # Transform images

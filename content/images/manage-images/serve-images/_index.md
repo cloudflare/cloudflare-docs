@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Serve images
-weight: 5
+weight: 15
 ---
 
 # Serve images

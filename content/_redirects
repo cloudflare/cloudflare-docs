@@ -492,11 +492,11 @@
 /images/cloudflare-images/ /images/ 301
 /images/cloudflare-images/api-request/ /images/get-started/ 301
 /images/cloudflare-images/images-analytics/ /images/ 301
-/images/cloudflare-images/make-an-image-private/ /images/serve-images/serve-private-images/ 301
-/images/cloudflare-images/serve-images/ /images/serve-images/ 301
-/images/cloudflare-images/serve-images/adaptive-images-format/ /images/serve-images/adaptive-optimized-format-delivery/ 301
-/images/cloudflare-images/serve-images/browser-ttl/ /images/serve-images/browser-ttl/ 301
-/images/cloudflare-images/serve-images/serve-images-custom-domains/ /images/serve-images/serve-from-custom-domains/ 301
+/images/cloudflare-images/make-an-image-private/ /images/manage-images/serve-images/serve-private-images/ 301
+/images/cloudflare-images/serve-images/ /images/manage-images/serve-images/ 301
+/images/cloudflare-images/serve-images/adaptive-images-format/ /images/manage-images/serve-images/serve-uploaded-images/ 301
+/images/cloudflare-images/serve-images/browser-ttl/ /images/manage-images/browser-ttl/ 301
+/images/cloudflare-images/serve-images/serve-images-custom-domains/ /images/manage-images/serve-images/serve-from-custom-domains/ 301
 /images/cloudflare-images/sourcing-kit/ /images/upload-images/sourcing-kit/ 301
 /images/cloudflare-images/sourcing-kit/credentials/ /images/upload-images/sourcing-kit/credentials/ 301
 /images/cloudflare-images/sourcing-kit/edit/ /images/upload-images/sourcing-kit/edit/ 301

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Apply blur
-weight: 7
+weight: 12
 ---
 
 # Apply blur to variants

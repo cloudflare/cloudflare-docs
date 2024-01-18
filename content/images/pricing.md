@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
 title: Pricing
-weight: 8
+weight: 6
 ---
 
 # Pricing
 
-For more information on how you can save costs by increasing caching in browsers, refer to [Browser TTL](/images/serve-images/browser-ttl/).
+For more information on how you can save costs by increasing caching in browsers, refer to [Browser TTL](/images/manage-images/browser-ttl/).
 
 | <div style="width:150px">Plan</div>| Description | Pricing |
 |-----------|-------------|---------|
