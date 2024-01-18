@@ -47,6 +47,6 @@ For information on how to use single-file purge to purge assets cached by a Work
 
 {{<Aside type="warning" header="Warning">}}
 
-If you have in place a [Transform Rule](/rules/transform/) that is removing part of a URL path, when performing single file purge, you must use the non-transform (end user) URL so that purge can take effect.
+If you have in place a [Transform Rule](/rules/transform/) that is modifying part of a URL path, when performing single file purge, you must use the non-transform (end user) URL so that purge can take effect.
 
 {{</Aside>}}
