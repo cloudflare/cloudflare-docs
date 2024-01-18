@@ -23,8 +23,8 @@ export default {
     } else {
       await message.forward("inbox@corp");
     }
-  }
-}
+  },
+};
 ```
 
 Refer to the [Workers Languages](/workers/reference/languages/) for more information regarding the languages you can use with Workers.
@@ -45,9 +45,8 @@ For example, say that you create an allowlist Email Worker and bind it to a `hel
 
 It's important to keep the following in mind when writing Email Workers:
 
-1. Unhandled exceptions will result in a permanent SMTP failures. Email Workers should generally have a top-level `try/catch` block to prevent throwing unhandled exceptions.
-2. Email Workers that take longer than 50 seconds to respond will result in a permanent SMTP failure. If some work can be done in the background, consider using [context.waitUntil()](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to execute background tasks after the Email Worker returns.
-3. Senders will typically consider permanent SMTP errors to be a bounce, and may stop sending email to addresses which bounce too often. So it's important to not cause unexpected bounces when writing Email Workers.
+1. Unhandled exceptions will result in temporary SMTP failures, which typically results in the sender retrying later. If you don't want senders retrying, consider adding a top-level `try/catch` block to ensure there are no unhandled exceptions. Some senders may stop sending email to addresses with too many temporary failures.
+2. Email Workers that take longer than 50 seconds to respond will result in a permanent SMTP failure. If some work can be done in the background, consider using [context.waitUntil()](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to execute background tasks after the Email Worker returns. Senders will typically consider permanent SMTP errors to be a bounce, and may stop sending email to addresses which bounce too often. So it's important to not cause unexpected bounces when writing Email Workers.
 
 ## Limits
 
