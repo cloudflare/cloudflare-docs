@@ -1,5 +1,5 @@
 ---
-weight: 4
+weight: 2
 title: PCAPs bucket setup
 pcx_content_type: how-to
 ---

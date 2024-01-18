@@ -1,7 +1,7 @@
 ---
 title: Collect PCAPs
 pcx_content_type: how-to
-weight: 5
+weight: 3
 ---
 
 # Collect packet captures (PCAPs)
