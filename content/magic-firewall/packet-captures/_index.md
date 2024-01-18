@@ -6,6 +6,6 @@ weight: 5
 
 # Packet captures
 
-Review the content below to learn how to use packet captures.
+Learn how to use packet captures.
 
 {{<directory-listing>}}
