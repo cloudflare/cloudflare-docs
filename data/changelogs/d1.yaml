@@ -2,6 +2,11 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-01-18"
+    title: Support for LIMIT on UPDATE and DELETE statements
+    description: |-
+      D1 now supports adding a `LIMIT` clause to `UPDATE` and `DELETE` statements, which allows you to limit the impact of a potentially dangerous operation. 
+
   - publish_date: "2023-12-18"
     title: Legacy alpha automated backups disabled
     description: |-
