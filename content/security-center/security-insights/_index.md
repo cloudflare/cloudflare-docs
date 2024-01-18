@@ -6,6 +6,10 @@ weight: 4
 
 # Security Insights
 
+{{<Aside type="warning" header="Temporarily Disabled">}}
+The Security Insights tab is temporarily disabled and not visible in the Cloudflare Dashboard at the moment. 
+{{</Aside>}}
+
 Security Insights provides you with a list of insights, covering different areas of your Cloudflare environment, such as: Cloudflare account settings, DNS record configurations, SSL/TLS certificates configurations, Cloudflare Access configurations and Cloudflare WAF configurations.
 
 The currently available Security Insights are listed below:
