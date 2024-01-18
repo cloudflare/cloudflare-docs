@@ -6,7 +6,7 @@ weight: 2
 
 # Review Security Insights
 
-{{<render file="_temporary-disable.md" productFolder="security-center" withParameters="Security Insights">}}
+{{<render file="_temporary-disable.md" withParameters="Security Insights">}}
 
 After [enabling Security Insights](/security-center/get-started/) and letting the first scan run, check the **Security Insights** tab for a list of detected insights that you should address.
 

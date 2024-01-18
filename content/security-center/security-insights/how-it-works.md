@@ -6,7 +6,7 @@ weight: 1
 
 # How it works
 
-{{<render file="_temporary-disable.md" productFolder="security-center" withParameters="Security Insights">}}
+{{<render file="_temporary-disable.md" withParameters="Security Insights">}}
 
 Once you [enable Security Insights](/security-center/get-started/), Cloudflare runs regular security scans on the infrastructure associated with your Cloudflare account. These scans perform a series of checks on your Cloudflare account settings and on the configurations of different Cloudflare products for the domains in your Cloudflare account.
 

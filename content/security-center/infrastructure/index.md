@@ -6,7 +6,7 @@ weight: 5
 
 # Review the infrastructure
 
-{{<render file="_temporary-disable.md" productFolder="security-center" withParameters="Infrastructure">}}
+{{<render file="_temporary-disable.md" withParameters="Infrastructure">}}
 
 After [enabling Security Insights](/security-center/get-started/) and letting the first scan run, the **Infrastructure** tab displays an overview of the infrastructure associated with your Cloudflare account.
 

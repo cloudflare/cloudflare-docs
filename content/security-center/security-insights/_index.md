@@ -6,7 +6,7 @@ weight: 4
 
 # Security Insights
 
-{{<render file="_temporary-disable.md" productFolder="security-center" withParameters="Security Insights">}} 
+{{<render file="_temporary-disable.md" withParameters="Security Insights">}} 
 
 Security Insights provides you with a list of insights, covering different areas of your Cloudflare environment, such as: Cloudflare account settings, DNS record configurations, SSL/TLS certificates configurations, Cloudflare Access configurations and Cloudflare WAF configurations.
 
