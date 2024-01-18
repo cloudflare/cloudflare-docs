@@ -119,7 +119,7 @@ This code block consists of four parts:
 
 2. The event handler: `async fetch(request)`
 
-This [`fetch()` handler](<(/workers/runtime-apis/handlers/fetch/)>) will be called when your Worker receives an HTTP request. You can define additional event handlers in the exported object to respond to different types of events. For example, add a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) to respond to Worker invocations via a [Cron Trigger](/workers/configuration/cron-triggers/).
+This [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) will be called when your Worker receives an HTTP request. You can define additional event handlers in the exported object to respond to different types of events. For example, add a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) to respond to Worker invocations via a [Cron Trigger](/workers/configuration/cron-triggers/).
 
 3. Parameters: `request`, `env`, `context`
 
