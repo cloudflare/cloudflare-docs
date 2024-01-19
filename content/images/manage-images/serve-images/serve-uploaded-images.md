@@ -36,4 +36,4 @@ When a user requests an image, Cloudflare Images chooses the optimal format, whi
 
 Cloudflare Images automatically transcodes uploaded PNG, JPEG and GIF files to the more efficient AVIF and WebP formats. This happens whenever the customer browser supports them. If the browser does not support AVIF, Cloudflare Images will fall back to WebP. If there is no support for WebP, then Cloudflare Images will serve compressed files in the original format.
 
-Uploaded SVG files are served as [sanitized SVGs](/images/cloudflare-images/upload-images/formats-limitations/#sanitized-svgs).
+Uploaded SVG files are served as [sanitized SVGs](/images/upload-images/).

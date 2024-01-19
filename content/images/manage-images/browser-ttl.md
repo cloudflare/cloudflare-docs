@@ -60,6 +60,6 @@ When the Browser TTL is set to one day for images requested with this variant, t
 
 {{<Aside type="note">}}
 
-[Private images](/images/serve-images/serve-private-images/) do not respect default or custom TTL settings. The private images cache time is set according to the expiration time and can be as short as one hour.
+[Private images](/images/manage-images/serve-images/serve-private-images/) do not respect default or custom TTL settings. The private images cache time is set according to the expiration time and can be as short as one hour.
 
 {{</Aside>}}

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Make responsive images
-weight: 5
+weight: 26
 ---
 
 # Make responsive images

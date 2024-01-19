@@ -10,3 +10,5 @@ Depending on where your images are stored, Cloudflare Images lets you serve imag
 
 - Serve images uploaded to Cloudflare Images.
 - Serve images from one of your domains by making a request via a specially-formatted URL.
+
+{{<directory-listing>}}

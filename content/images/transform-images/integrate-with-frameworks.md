@@ -1,7 +1,7 @@
 ---
 title: Integrate with frameworks
 pcx_content_type: reference
-weight: 9
+weight: 25
 ---
 
 # Integrate with frameworks
@@ -84,7 +84,7 @@ const MyImage = props => {
 
 {{<Aside type="note">}}
 
-For local development, you can enable [Resize images from any origin checkbox](/images/image-resizing/enable-image-resizing/) for your zone. Then, replace `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}` with an absolute URL path:
+For local development, you can enable [Resize images from any origin checkbox](/images/get-started/) for your zone. Then, replace `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}` with an absolute URL path:
 
 `https://<YOUR_DOMAIN.COM>/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
 
