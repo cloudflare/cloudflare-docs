@@ -38,7 +38,7 @@ You can purge prefixes via the Cloudflare API. For more information, refer to th
 
 {{<Aside type="warning" header="Warning">}}
 
-If you have in place a [Transform Rule](/rules/transform/) that is modifying part of a URL path, when performing a prefix purge, you must use the post-transformed (origin) URL so that purge can take effect.
+If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the post-transformed (origin) URL when performing a prefix purge so that purge can take effect.
 
 {{</Aside>}}
 
