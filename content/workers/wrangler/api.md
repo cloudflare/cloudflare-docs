@@ -263,11 +263,6 @@ console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 
 You should see the returned value: `test`.
 
-{{<Aside type="note">}}
-
-For a demo of this API, see [getBindingsProxy-poc-demo](https://github.com/dario-piotrowicz/getBindingsProxy-poc-demo).
-
-{{</Aside>}}
 
 ### Supported bindings
 
