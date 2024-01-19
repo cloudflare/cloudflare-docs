@@ -203,8 +203,8 @@ Interact with Cloudflare's D1 service.
 
 Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
 
-```sh
-$ npx wrangler d1 create <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 create <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -220,8 +220,8 @@ $ npx wrangler d1 create <DATABASE_NAME> [OPTIONS]
 
 Get information about a D1 database, including the current database size and state.
 
-```sh
-$ npx wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 info <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -237,8 +237,8 @@ $ npx wrangler d1 info <DATABASE_NAME> [OPTIONS]
 
 List all D1 databases in your account.
 
-```sh
-$ npx wrangler d1 list [OPTIONS]
+```txt
+wrangler d1 list [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -252,8 +252,8 @@ $ npx wrangler d1 list [OPTIONS]
 
 Delete a D1 database.
 
-```sh
-$ npx wrangler d1 delete <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -306,8 +306,8 @@ You must provide either `--command` or `--file` for this command to run successf
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
-```sh
-$ npx wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -327,8 +327,8 @@ $ npx wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 
 Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
-```sh
-$ npx wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -346,8 +346,8 @@ $ npx wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 
 Initiate a D1 backup.
 
-```sh
-$ npx wrangler d1 backup create <DATABASE_NAME>
+```txt
+wrangler d1 backup create <DATABASE_NAME>
 ```
 
 {{<definitions>}}
@@ -361,8 +361,8 @@ $ npx wrangler d1 backup create <DATABASE_NAME>
 
 List all available backups.
 
-```sh
-$ npx wrangler d1 backup list <DATABASE_NAME>
+```txt
+wrangler d1 backup list <DATABASE_NAME>
 ```
 
 {{<definitions>}}
@@ -376,8 +376,8 @@ $ npx wrangler d1 backup list <DATABASE_NAME>
 
 Restore a backup into a D1 database.
 
-```sh
-$ npx wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```txt
+wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -399,8 +399,8 @@ This command will not work on databases that are created during the current beta
 
 Download existing data to your local machine.
 
-```sh
-$ npx wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
+```txt
+wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -424,8 +424,8 @@ This will generate a new versioned file inside the `migrations` folder. Name you
 
 The filename will include a version number and the migration name you specify below.
 
-```sh
-$ npx wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
+```txt
+wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
 ```
 
 {{<definitions>}}
@@ -441,8 +441,8 @@ $ npx wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
 
 View a list of unapplied migration files.
 
-```sh
-$ npx wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -470,8 +470,8 @@ When running the apply command in a CI/CD environment or another non-interactive
 
 If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
 
-```sh
-$ npx wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
