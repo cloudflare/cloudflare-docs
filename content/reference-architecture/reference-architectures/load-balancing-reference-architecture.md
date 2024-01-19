@@ -2,6 +2,8 @@
 title: Load Balancing
 pcx_content_type: reference-architecture
 weight: 1
+meta:
+    title: "Reference Architecture: Cloudflare Load Balancing Reference Architecture"
 ---
 
 # Cloudflare Load Balancing Reference Architecture
@@ -23,7 +25,7 @@ As a result, Cloudflare operates within ~50 ms of ~95% of the world’s Internet
 This document describes a reference architecture for organizations looking to deploy both global and local traffic management load balancing solutions.
 
 
-### What to expect from reading this document
+### Who is this document for and what will you learn?
 
 This reference architecture is designed for IT, web hosting, and network professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with networking concepts such as routing, DNS, and IP addressing, as well as basic understanding of load balancer functionality. 
 
