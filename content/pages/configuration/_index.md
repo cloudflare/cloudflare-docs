@@ -6,4 +6,6 @@ weight: 5
 
 # Configuration
 
+{{<render file="_pages_survey.md">}}
+
 {{<directory-listing>}}
