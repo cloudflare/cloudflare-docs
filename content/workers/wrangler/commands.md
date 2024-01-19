@@ -410,7 +410,7 @@ $ npx wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
 - `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The .sqlite3 file to write to (defaults to `'<db-name>.<short-backup-id>.sqlite3'`).
+  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
 
 {{</definitions>}}
 
@@ -454,7 +454,7 @@ $ npx wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
 
 {{</definitions>}}
 
@@ -483,7 +483,7 @@ $ npx wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
 - `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Number of queries to send in a single batch.
 
