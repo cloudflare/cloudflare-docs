@@ -416,6 +416,8 @@ header: wrangler.toml
 binding = "PROD_DB"
 database_name = "test-db"
 database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+
+# How to write more than one D1 binding needed here
 ```
 
 ### Durable Objects
@@ -456,7 +458,11 @@ durable_objects.bindings = [
 
 # or
 
+[[durable_objects.bindings]]
+name = "<DURABLE_OBJECT>"
+class_name = "<TEST_CLASS>"
 
+# How to write more than one DO binding needed here
 ```
 
 #### Migrations
@@ -533,6 +539,12 @@ header: wrangler.toml
 kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
+
+# or
+
+[[kv_namespaces]]
+binding = "<NAMESPACE>"
+id = "<ID>"
 ```
 
 ### Queues
@@ -562,6 +574,8 @@ header: wrangler.toml
 [[queues.producers]]
   queue = "my-queue"
   binding = "MY_QUEUE"
+
+# More than one
 ```
 
 To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
@@ -610,6 +624,8 @@ header: wrangler.toml
   max_retries = 10
   dead_letter_queue = "my-queue-dlq"
   max_concurrency = 5
+
+# More than one
 ```
 
 ### R2 buckets
@@ -653,6 +669,14 @@ header: wrangler.toml
 r2_buckets  = [
   { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
 ]
+
+# or
+
+[[r2_buckets]]
+binding = "<TEST_BUCKET>"
+bucket_name = "<TEST_BUCKET>"
+
+# More than one
 ```
 
 ### Vectorize indexes
@@ -716,6 +740,14 @@ header: wrangler.toml
 services = [
   { binding = "<TEST_BINDING>", service = "<TEST_WORKER>" }
 ]
+
+# or
+
+[[services]]
+binding = "MY_SERVICE"
+service = "my-service"
+
+# more than one
 ```
 
 ### Analytics Engine Datasets
@@ -774,6 +806,12 @@ header: wrangler.toml
 mtls_certificates = [
     { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
 ]
+
+# or
+
+[[mtls_certificates]]
+binding = "<BINDING_NAME>"
+certificate_id = "<CERTIFICATE_ID>
 ```
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
@@ -805,6 +843,8 @@ whether that be from Workers, Pages, or anywhere via REST API.
 Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
 even in local development.
 
+Unlike other bindings, this binding is limited to one AI binding per Worker project.
+
 {{<definitions>}}
 
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -820,7 +860,7 @@ Example:
 filename: wrangler.toml
 ---
 [ai]
-binding = "AI" # i.e. available in your Worker on env.AI
+binding = "AI" # available in your Worker code on `env.AI`
 ```
 
 ## Bundling
