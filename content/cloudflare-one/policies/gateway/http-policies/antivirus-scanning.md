@@ -58,7 +58,7 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 
 | Selector | Operator      | Value           | Action      |
 | -------- | ------------- | --------------- | ----------- |
-| Hostname | Matches Regex | `.*example.com` | Do Not Scan |
+| Hostname | matches regex |   | Do Not Scan |
 
 Opting out of AV scanning applies to both uploads and downloads of files (i.e., it matches the global AV scanning setting). If an admin has chosen, for example, to only globally scan uploads, then opting out of AV scanning only applies to uploads.
 
@@ -66,48 +66,48 @@ When traffic matches a Do Not Scan rule, nothing is scanned, regardless of file 
 
 ## Supported compressed file types
 
-In addition to standard object files like PDFs, the following archive types are supported for AV scanning:
+In addition to standard object files like PDFs, Zero Trust supports AV scanning for the following archive types:
 
-- ARJ
 - ZIP
 - GZIP compressed files
 - TAR
-- Self-extracting ARJ
-- Self-extracting ZIP
-- UUE and XXE compressed files
-- LZH/LHA
-- Self-extracting LZH/LHA
-- ZOO
-- MIME base64
-- Microsoft TNEF
-- MSCOMPRESS
-- Microsoft CAB
-- Self-extracting CA
 - RAR
-- Self-extracting RAR
-- Java ARchive
-- Binhex (Mac)
-- BZ2
+- 7-Zip
+- LZH/LHA
+- ISO 9660
 - ACE
-- ACE SFX
-- BASE64
-- PGP signed message, document, etc.
-- MacBinary
-- CHM Help Files
+- BZ2
+- ARJ
+- ZOO
+- XZ file format
+- BINHEX (Mac)
+- NSIS Nullsoft Installer
+- MIME base64
+- Microsoft CAB
+- Smart Install Maker
 - CPIO SVR4
 - RPM
-- NSIS Nullsoft Installer
-- 7-Zip
-- 7-Zip SFX
+- CHM Help Files
 - AutoIt
-- SAPCar
 - Inno Setup
 - eXtensible ARchive format (XAR)
-- XZ file format
-- AutoHotkey
-- Smart Install Maker
-- Chrome Extension (CRX) Package Format
-- Office Legacy XML
-- Indigo Rose Setup Factory
-- ISO 9660
 - Windows Imaging File (WIM)
+- Self-extracting ZIP
+- Self-extracting RAR
+- Self-extracting ARJ
+- Self-extracting LZH/LHA
+- Microsoft TNEF
+- MSCOMPRESS
+- Self-extracting CA
+- ACE SFX
+- 7-Zip SFX
+- AutoHotkey
+- SAPCar
+- Indigo Rose Setup Factory
+- XE compressed files (UUE and XXE)
+- PGP signed message, document, etc.
+- Java ARchive
+- MacBinary
+- BASE64
+- Office Legacy XML
+- Chrome Extension (CRX) Package Format
