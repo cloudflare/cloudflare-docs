@@ -43,7 +43,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 - 50 messages per minute \* 100 Durable Objects \* 60 minutes \* 8 hours \* 30 days = 72,000,000 requests.
 - (72 million requests - included 1 million requests) x $0.15 / 1,000,000 = $10.65.
 - 100 Durable Objects \* 60 seconds \* 60 minutes \* 8 hours \* 30 days / 2 = 43,200,000 seconds.
-- 129,600,000 seconds \* 128 MB / 1 GB = 5,529,600 GB-s.
+- 43,200,000 seconds \* 128 MB / 1 GB = 5,529,600 GB-s.
 - (5,529,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $64.12.
 
 **Estimated total**: $10.65 (requests) + $64.12 (compute duration) = $74.77 per month.
