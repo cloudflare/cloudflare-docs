@@ -1614,43 +1614,7 @@
           "ent": "Yes",
           "ent_plus": "Yes"
         },
-        "c_new_script_new_domain_alerts": {
-          "title": "New Resources Alerts<br/> and New Domain Alerts",
-          "summary": "Business and above",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes",
-          "ent_plus": "Yes"
-        },
-        "d_page_attribution": {
-          "title": "Page attribution",
-          "summary": "Business and above",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes",
-          "ent_plus": "Yes"
-        },
-        "e_malicious_scripts": {
-          "title": "Malicious script detection<br/> and alerting",
-          "summary": "Enterprise with add-on",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
-        },
-        "f_code_change_detection": {
-          "title": "Code change detection<br /> and alerting",
-          "summary": "Enterprise with add-on",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
-        },
-        "h_connection_monitor": {
+        "c_connection_monitor": {
           "title": "Connection monitor",
           "summary": "Business and above",
           "free": "No",
@@ -1659,7 +1623,52 @@
           "ent": "Yes",
           "ent_plus": "Yes"
         },
-        "i_malicious_connections": {
+        "d_cookie_monitor": {
+          "title": "Cookie monitor",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "e_page_attribution": {
+          "title": "Page attribution",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "f_new_script_new_domain_alerts": {
+          "title": "New Resources, New Domain,<br/> and New Cookie Alerts",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "h_malicious_scripts": {
+          "title": "Malicious script detection<br/> and alerting",
+          "summary": "Enterprise with add-on",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "No",
+          "ent_plus": "Yes"
+        },
+        "j_code_change_detection": {
+          "title": "Code change detection<br /> and alerting",
+          "summary": "Enterprise with add-on",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "No",
+          "ent_plus": "Yes"
+        },
+        "k_malicious_connections": {
           "title": "Malicious connection detection<br/> and alerting",
           "summary": "Enterprise with add-on",
           "free": "No",
@@ -1668,7 +1677,16 @@
           "ent": "No",
           "ent_plus": "Yes"
         },
-        "k_policies": {
+        "l_cookie_advanced_fields": {
+          "title": "Cookie monitor<br/> advanced fields",
+          "summary": "Enterprise with add-on",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "No",
+          "ent_plus": "Yes"
+        },
+        "m_policies": {
           "title": "Number of policies<br/>(positive blocking)",
           "summary": "Enterprise with add-on",
           "free": 0,
@@ -1677,7 +1695,7 @@
           "ent": 0,
           "ent_plus": 3
         },
-        "l_logpush_jobs": {
+        "n_logpush_jobs": {
           "title": "Number of Logpush jobs",
           "summary": "Enterprise with add-on",
           "free": 0,
