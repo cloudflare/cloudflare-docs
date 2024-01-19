@@ -1,14 +1,32 @@
 ---
-title: CDN
+title: Content Delivery Network (CDN)
 pcx_content_type: reference-architecture
 weight: 1
+meta:
+    title: "Reference Architecture: Cloudflare Content Delivery Network (CDN)"
 ---
 
 # Cloudflare CDN Reference Architecture
 
-## Overview
+## Introduction
 
 Every day, users of the Internet enjoy the benefits of performance and reliability provided by [content delivery networks](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (CDNs). CDNs have become a must-have to combat latency and a requirement for any major company delivering content to users on the Internet. While providing performance and reliability for customers, CDNs also enable companies to further secure their applications and cut costs. This document discusses the traditional challenges customers face with web applications, how the Cloudflare CDN resolves these challenges, and CDN architecture and design.
+
+### Who is this document for and what will you learn?
+This reference architecture is designed for IT or network professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies and concepts important to content delivery, including caching, DNS and firewalls.
+
+To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
+
+- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
+- What is a CDN? | [Website](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (5 minute read)
+- Whitepaper: [Cloudflare CDN](https://cfl.re/CDN-whitepaper) (3 minute read)
+- Blog: [IDC MarketScape positions Cloudflare as a Leader among worldwide Commercial CDN providers](https://blog.cloudflare.com/idc-marketscape-cdn-leader-2022/) (14 minute read)
+
+Those who read this reference architecture will learn:
+
+- How Cloudflare CDN can significanly improve the delivery of content to your customers
+- How anycast IP routing is important in ensuring reliable CDN performance
+- The range of tiered caching options and how to choose the one for your needs
 
 ## Traditional challenges deploying web applications
 

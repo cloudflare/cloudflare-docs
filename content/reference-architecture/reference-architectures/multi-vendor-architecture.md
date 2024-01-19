@@ -2,11 +2,13 @@
 title: Multi-Vendor Architecture
 pcx_content_type: reference-architecture
 weight: 1
+meta:
+    title: "Reference Architecture: Multi-vendor Application Security and Performance"
 ---
 
 # Multi-vendor Application Security and Performance
 
-## Overview
+## Introduction
 
 Over time and with the rapidly evolving application security and performance industries, companies have come to deploy multiple vendors to provide services. Sometimes customers opt for using multiple vendors for reasons of regulatory/company compliance, resiliency, performance, or cost.
 
@@ -14,6 +16,17 @@ Although some customers look to implement multi-vendor solutions for various rea
 
 This document examines why some customers deploy a multiple or dual vendor approach and how Cloudflare can be incorporated into such a solution. Specifically, this document describes how a multi-vendor approach for application security and performance can be accomplished. This document is targeted for architects and those interested in using multi-vendor cloud-based solutions for security and performance.
 
+### Who is this document for and what will you learn?
+This reference architecture is designed for IT, security or network professionals with some responsibility over or familiarity with their organization’s existing network infrastructure. It is useful to have some experience with technologies and concepts important to application security and performance, including proxies, DNS and firewalls.
+
+To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
+
+- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
+
+Those who read this reference architecture will learn:
+
+- How Cloudflare application security and performance capabilities can work alongside existing technology vendors
+- Understanding the decisions to be made when using many vendors
 
 ## Cloud based security and performance providers
 

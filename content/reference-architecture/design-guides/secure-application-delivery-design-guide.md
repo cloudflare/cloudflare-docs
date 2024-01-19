@@ -3,10 +3,10 @@ title: "Secure application delivery"
 pcx_content_type: reference-architecture
 weight:
 meta:
-  title: "Design guide: securely deliver applications with Cloudflare"
+  title: "Design guide: Securely deliver applications with Cloudflare"
 ---
 
-# Design guide: securely deliver applications with Cloudflare
+# Securely deliver applications with Cloudflare
 
 ## Overview and the Cloudflare advantage
 
