@@ -66,9 +66,3 @@ You can delete or disable existing Notifications via the Cloudflare dashboard.
 To verify that notifications will be sent to the correct location or to view which details are available, you can test a notification by selecting **Test** on any enabled notification.
 
 This action sends a notification with fake data.
-
-## Limitations 
-
-Notifications are configured per zone. At the moment, it is not possible to configure alerts for a specific path or hostname.
-
-The conditions in which the alerts are triggered cannot be configured. However, it is possible to define a specific threshold of 10,000 requests on HTTP `500` errors or an alert on 10TB of traffic.

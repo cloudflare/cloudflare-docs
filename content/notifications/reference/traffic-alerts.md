@@ -36,3 +36,11 @@ ___
 Traffic Anomalies alerts must have a z-score of more than 3.5 or less than -3.5, and a total of more than 200 requests. A z-score is the number of standard deviations the current value is to the mean. The mean and standard deviation is calculated by comparing the current five minutes to the past four hours. This is measured every five minutes.
 
 You can filter the alerts by domain, whether or not to include traffic already mitigated by the WAF and DoS, and specific status codes. You can also choose if you want to be alerted on drops and/or spikes in your traffic.
+
+___
+
+## Limitations 
+
+Notifications are configured per zone. At the moment, it is not possible to configure alerts for a specific path or hostname.
+
+The conditions in which the alerts are triggered cannot be configured. However, it is possible to define a specific threshold of 10,000 requests on HTTP `500` errors or an alert on 10TB of traffic.
