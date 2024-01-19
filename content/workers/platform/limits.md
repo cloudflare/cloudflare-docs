@@ -269,7 +269,7 @@ When configuring [routing](/workers/configuration/routing/), the maximum number 
 
 ## Image Resizing with Workers
 
-When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
+When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/transform-images/) for more information on the applied limits.
 
 ---
 
