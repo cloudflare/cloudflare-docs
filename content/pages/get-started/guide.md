@@ -1,5 +1,5 @@
 ---
-title: Manual setup
+title: Dashboard guide
 pcx_content_type: get-started
 weight: 1
 layout: single
