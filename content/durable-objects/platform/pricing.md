@@ -6,6 +6,8 @@ weight: 1
 
 # Pricing
 
+## Billing metrics
+
 {{<render file="_durable_objects_pricing.md" productFolder="workers">}}
 
 ## Durable Objects billing examples
