@@ -62,7 +62,7 @@ To disable Zone Versioning:
 
     Save the `id` of each HTTP application.
 
-5. Using the `id` of those HTTP applications, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for every application.
+5. Using the `id` of those HTTP applications, send `DELETE` requests for every application.
 
     ```bash
     curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/http_applications/{http_application_id}" \
