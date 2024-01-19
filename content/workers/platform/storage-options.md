@@ -140,7 +140,7 @@ To get started with D1:
 
 * Read [the documentation](/d1)
 * Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-* Review the [D1 client API](/d1/reference/client-api/).
+* Review the [D1 client API](/d1/how-to/query-databases/).
 
 
 ## Queues
@@ -172,7 +172,7 @@ Hyperdrive allows you to:
 To get started with Hyperdrive:
 
 * [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
-* Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/learning/how-hyperdrive-works/).
+* Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/configuration/how-hyperdrive-works/).
 
 
 ## Vectorize

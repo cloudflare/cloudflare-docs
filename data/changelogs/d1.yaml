@@ -2,6 +2,11 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-01-18"
+    title: Support for LIMIT on UPDATE and DELETE statements
+    description: |-
+      D1 now supports adding a `LIMIT` clause to `UPDATE` and `DELETE` statements, which allows you to limit the impact of a potentially dangerous operation. 
+
   - publish_date: "2023-12-18"
     title: Legacy alpha automated backups disabled
     description: |-
@@ -37,7 +42,7 @@ entries:
     description: |-
       D1 now returns a count of `rows_written` and `rows_read` for every query executed, allowing you to assess the cost of query for both [pricing](/d1/platform/pricing/) and [index optimization](/d1/how-to/using-indexes/) purposes.
 
-      The `meta` object returned in [D1's Client API](/d1/reference/client-api/) contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for example, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
+      The `meta` object returned in [D1's Client API](/d1/how-to/query-databases/) contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for example, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
       ```json
       "meta": {
         "duration": 0.20472300052642825,
@@ -97,7 +102,7 @@ entries:
   - publish_date: "2023-06-12"
     title: Deprecating Error.cause
     description: |-
-      As of [`wrangler v3.1.1`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1) the [D1 client API](/d1/reference/client-api/) now returns [detailed error messages](/d1/reference/client-api/#errors) within the top-level `Error.message` property, and no longer requires developers to inspect the `Error.cause.message` property.
+      As of [`wrangler v3.1.1`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1) the [D1 client API](/d1/how-to/query-databases/) now returns [detailed error messages](/d1/how-to/query-databases/#errors) within the top-level `Error.message` property, and no longer requires developers to inspect the `Error.cause.message` property.
 
       To facilitate a transition from the previous `Error.cause` behaviour, detailed error messages will continue to be populated within `Error.cause` as well as the top-level `Error` object until approximately July 14th, 2023. Future versions of both `wrangler` and the D1 client API will no longer populate `Error.cause` after this date.
   - publish_date: "2023-05-19"
