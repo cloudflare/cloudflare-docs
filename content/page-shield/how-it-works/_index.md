@@ -11,9 +11,9 @@ meta:
 
 Page Shield helps manage resources loaded by your website visitors, including scripts, their connections, and cookies. It can trigger alert notifications when resources change or are considered malicious.
 
-Enabling Page Shield adds a {{<glossary-tooltip term_id="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">}}Content Security Policy (CSP){{</glossary-tooltip>}} deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints. Page Shield also monitors ingress and egress traffic to monitor cookies set by origin servers or by the visitor's browser.
+Enabling Page Shield adds a {{<glossary-tooltip term_id="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">}}Content Security Policy (CSP){{</glossary-tooltip>}} deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints. Page Shield also monitors ingress and egress traffic for cookies, either set by origin servers or by the visitor's browser.
 
-The **Monitors** dashboard shows the list of [active](/page-shield/reference/script-statuses/) scripts and connections, as well as a list of detected cookies. The **All Reported Scripts** and **All Reported Connections** dashboards show the full list of detected scripts and connections in your domain, respectively, including infrequent and inactive ones.
+The **Monitors** dashboard shows the list of [active](/page-shield/reference/script-statuses/) scripts, connections, and cookies. The **All Reported Scripts** and **All Reported Connections** dashboards show the full list of detected scripts and connections in your domain, respectively, including infrequent and inactive ones.
 
 Since Page Shield monitoring is based on sampling, there may be a small delay between deploying a script or cookie and having its data displayed in Page Shield's dashboards.
 
