@@ -33,7 +33,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **DNS**               | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
 | **Email**             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
-| **Action**            | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                   |
+| **Action**            | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (such as Allow or Block).                                                                                                                                                                                                                                                                            |
 | **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
 | **Resolver Decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
 
@@ -95,7 +95,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Resolver IP**                 | Public IP address of the DNS resolver.                                                                                              |
 | **Resolved IPs**                | Resolved IP addresses in the response (if any).                                                                                     |
 | **Port**                        | Port that was used to make the DNS query.                                                                                           |
-| **Protocol**                    | Protocol that was used to make the DNS query (for example, `https`).                                                                |
+| **Protocol**                    | Protocol that was used to make the DNS query (such as `https`).                                                                     |
 | **DNS Location**                | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
 | **Location ID**                 | ID of the DNS location where the query originated.                                                                                  |
 
@@ -105,18 +105,18 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| **Value**              | **Description**                                             |
-| ---------------------- | ----------------------------------------------------------- |
-| allowedByQueryName     | Domain or hostname in the query matched an Allow policy.    |
-| blockedByQueryName     | Domain or hostname in the query matched a Block policy.     |
-| allowedRule            | IP address in the response matched an Allow policy.         |
-| blockedRule            | IP address in the response matched a Block policy.          |
-| blockedByCategory      | Domain or hostname matched a category in a Block policy.    |
-| blockedAlwaysCategory  | Domain or hostname is always blocked by Cloudflare.         |
-| allowedOnNoLocation    | Allowed because query did not match a Gateway DNS location. |
-| allowedOnNoPolicyMatch | Allowed because query did not match a policy.               |
-| overrideForSafeSearch  | Response was overridden by a Safe Search policy.            |
-| overrideApplied        | Response was overridden by an Override policy.              |
+| **Value**                | **Description**                                             |
+| ------------------------ | ----------------------------------------------------------- |
+| `allowedByQueryName`     | Domain or hostname in the query matched an Allow policy.    |
+| `blockedByQueryName`     | Domain or hostname in the query matched a Block policy.     |
+| `allowedRule`            | IP address in the response matched an Allow policy.         |
+| `blockedRule`            | IP address in the response matched a Block policy.          |
+| `blockedByCategory`      | Domain or hostname matched a category in a Block policy.    |
+| `blockedAlwaysCategory`  | Domain or hostname is always blocked by Cloudflare.         |
+| `allowedOnNoLocation`    | Allowed because query did not match a Gateway DNS location. |
+| `allowedOnNoPolicyMatch` | Allowed because query did not match a policy.               |
+| `overrideForSafeSearch`  | Response was overridden by a Safe Search policy.            |
+| `overrideApplied`        | Response was overridden by an Override policy.              |
 
 {{</table-wrap>}}
 
@@ -128,14 +128,14 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| Field                  | Description                                                                                                                                                |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Source IP**          | IP address of the user sending the packet.                                                                                                                 |
-| **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                                   |
-| **Destination IP**     | IP address of the packet’s target.                                                                                                                         |
-| **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
-| **Session ID**         | ID of the unique session.                                                                                                                                  |
-| **Time**               | Date and time of the session.                                                                                                                              |
+| Field                  | Description                                                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Source IP**          | IP address of the user sending the packet.                                                                                                        |
+| **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                          |
+| **Destination IP**     | IP address of the packet’s target.                                                                                                                |
+| **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
+| **Session ID**         | ID of the unique session.                                                                                                                         |
+| **Time**               | Date and time of the session.                                                                                                                     |
 
 {{</table-wrap>}}
 
@@ -200,19 +200,19 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 
 {{<table-wrap>}}
 
-| Field                        | Description                                                                                                                                                |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Host**                     | Hostname in the HTTP header for the HTTP request.                                                                                                          |
-| **Email**                    | Email address of the user who made the HTTP request. This is generated by the WARP client.                                                                 |
-| **Action**                   | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
-| **Request ID**               | Unique ID of the request.                                                                                                                                  |
-| **Time**                     | Date and time of the HTTP request.                                                                                                                         |
-| **Source Internal IP**       | Private IP address assigned by the user's local network.                                                                                                   |
-| **User Agent**               | User agent header sent in the request by the originating device.                                                                                           |
-| **Policy details**           | Policy corresponding to the decision Gateway made based on the traffic criteria of the request.                                                            |
-| **DLP profiles**             | Name of the matched [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) (if there is one).                                          |
-| **DLP profile entries**      | Name of the matched entry within the DLP profile (if there is one).                                                                                        |
-| **Uploaded/downloaded file** | {{<render file="gateway/_uploaded-downloaded-file.md">}}                                                                                                   |
+| Field                        | Description                                                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Host**                     | Hostname in the HTTP header for the HTTP request.                                                                                                 |
+| **Email**                    | Email address of the user who made the HTTP request. This is generated by the WARP client.                                                        |
+| **Action**                   | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
+| **Request ID**               | Unique ID of the request.                                                                                                                         |
+| **Time**                     | Date and time of the HTTP request.                                                                                                                |
+| **Source Internal IP**       | Private IP address assigned by the user's local network.                                                                                          |
+| **User Agent**               | User agent header sent in the request by the originating device.                                                                                  |
+| **Policy details**           | Policy corresponding to the decision Gateway made based on the traffic criteria of the request.                                                   |
+| **DLP profiles**             | Name of the matched [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) (if there is one).                                 |
+| **DLP profile entries**      | Name of the matched entry within the DLP profile (if there is one).                                                                               |
+| **Uploaded/downloaded file** | {{<render file="gateway/_uploaded-downloaded-file.md">}}                                                                                          |
 
 {{</table-wrap>}}
 
@@ -249,7 +249,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | Field                      | Description                                                                                                 |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **HTTP Version**           | HTTP version of the origin that Gateway connected to on behalf of the user.                                 |
-| **HTTP Method**            | HTTP method used for the request (for example, `GET` or `POST`).                                            |
+| **HTTP Method**            | HTTP method used for the request (such as `GET` or `POST`).                                                 |
 | **HTTP Status Code**       | [HTTP status code](/support/troubleshooting/http-status-codes/http-status-codes/) returned in the response. |
 | **URL**                    | Full URL of the HTTP request.                                                                               |
 | **Referer**                | Referer request header containing the address of the page making the request.                               |
