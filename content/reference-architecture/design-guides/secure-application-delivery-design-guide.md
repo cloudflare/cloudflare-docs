@@ -1,5 +1,5 @@
 ---
-title: "Design guide: secure application delivery"
+title: "Secure application delivery"
 pcx_content_type: reference-architecture
 weight:
 meta:
