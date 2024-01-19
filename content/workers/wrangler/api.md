@@ -268,8 +268,3 @@ You should see the returned value: `test`.
 
 All supported bindings found in your `wrangler.toml` are available to you via `bindings`. Supported bindings currently include: kv, r2, d1, service, queue-producer, and var.
 
-{{<Aside type="note">}}
-
-While this function works for both Workers and Pages projects, Durable Objects integration has not been implemented for Pages.
-
-{{</Aside>}}
