@@ -38,6 +38,6 @@ To use transformations, you’ll need to enable this feature on each zone:
 
 {{<Aside type="note">}}
 
-If you are using Image Resizing in a Worker, you need to include the appropriate logic in your Worker code to prevent resizing images from any origin. Unchecking this option in the dash does not apply to image resizing requests coming from Cloudflare Workers.
+If you are using transformations in a Worker, you need to include the appropriate logic in your Worker code to prevent resizing images from any origin. Unchecking this option in the dash does not apply to transformation requests coming from Cloudflare Workers.
 
 {{</Aside>}}

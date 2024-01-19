@@ -16,7 +16,7 @@ Here is a breakdown of each part of the URL:
 
 {{<definitions>}}
 - `<ZONE>`
-  - Your domain name on Cloudflare. Unlike other third-party image resizing services, Image Resizing does not use a separate domain name for an API. Every Cloudflare zone with Image Resizing enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
+  - Your domain name on Cloudflare. Unlike other third-party image resizing services, image transformations do not use a separate domain name for an API. Every Cloudflare zone with image transformations enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
 
 - `/cdn-cgi/image/`
   - A fixed prefix that identifies that this is a special path handled by Cloudflare's built-in Worker.

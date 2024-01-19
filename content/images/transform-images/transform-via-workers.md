@@ -78,11 +78,11 @@ addEventListener("fetch", event => {
 
 {{<Aside type="note" header="Note">}}
 
-Image Resizing is not simulated in the preview of in the Workers dashboard editor.
+Image transformations are not simulated in the preview of in the Workers dashboard editor.
 
 {{</Aside>}}
 
-The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of Image Resizing you must deploy the Worker script and use it outside of the editor.
+The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of image transformations you must deploy the Worker script and use it outside of the editor.
 
 ## Error handling
 

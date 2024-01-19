@@ -28,7 +28,7 @@ The examples below are only suggestions, and do not have to be followed exactly.
 
 {{<Aside type="warning" header="Warning">}}
 
-When testing Image Resizing, make sure you deploy the script and test it from a regular web browser window. The preview in the dashboard does not simulate Image Resizing.
+When testing image transformations, make sure you deploy the script and test it from a regular web browser window. The preview in the dashboard does not simulate transformations.
 
 {{</Aside>}}
 
@@ -104,7 +104,7 @@ async function handleRequest(request) {
 
 ## Authenticated origin
 
-Cloudflare Image Resizing caches resized images to aid performance. Images stored with restricted access are generally not recommended for resizing because sharing images customized for individual visitors is unsafe. However, in cases where the customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers. At the moment, this is supported on authenticated AWS, Azure, Google Cloud, SecureAuth origins and origins behind Cloudflare Access.
+Cloudflare image transformations cache resized images to aid performance. Images stored with restricted access are generally not recommended for resizing because sharing images customized for individual visitors is unsafe. However, in cases where the customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers. At the moment, this is supported on authenticated AWS, Azure, Google Cloud, SecureAuth origins and origins behind Cloudflare Access.
 
 ```js
 ---

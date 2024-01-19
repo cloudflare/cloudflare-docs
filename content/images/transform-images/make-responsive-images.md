@@ -8,7 +8,7 @@ weight: 26
 
 The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) allows browsers to automatically choose an image that is best suited for user’s screen resolution.
 
-`srcset` requires providing multiple resized versions of every image, and with Cloudflare’s Image Resizing this is an easy task to accomplish.
+`srcset` requires providing multiple resized versions of every image, and with Cloudflare’s image transformations this is an easy task to accomplish.
 
 There are two different scenarios where it is useful to use `srcset`:
 

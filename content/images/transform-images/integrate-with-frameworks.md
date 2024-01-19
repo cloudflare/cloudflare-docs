@@ -8,17 +8,17 @@ weight: 25
 
 ## Next.js
 
-Image Resizing can be used automatically with the Next.js [`<Image />` component](https://nextjs.org/docs/api-reference/next/image).
+Image transformations can be used automatically with the Next.js [`<Image />` component](https://nextjs.org/docs/api-reference/next/image).
 
-To use Image Resizing, define a global image loader or multiple custom loaders for each `<Image />` component.
+To use image transformations, define a global image loader or multiple custom loaders for each `<Image />` component.
 
 Next.js will request the image with the correct parameters for width and quality.
 
-Image Resizing will be responsible for caching and serving an optimal format to the client.
+Image transformations will be responsible for caching and serving an optimal format to the client.
 
 ### Global Loader
 
-To use Image Resizing with **all** your app's images, define a global [loaderFile](https://nextjs.org/docs/pages/api-reference/components/image#loaderfile) for your app.
+To use Images with **all** your app's images, define a global [loaderFile](https://nextjs.org/docs/pages/api-reference/components/image#loaderfile) for your app.
 
 Add the following settings to the **next.config.js** file located at the root our your Next.js application.
 

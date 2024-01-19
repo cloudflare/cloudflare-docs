@@ -34,7 +34,7 @@ You can transform an image by using a [specially-formatted URL](/images/transfor
 
 ### Supported features
 
-Image Resizing can:
+Transformations can:
 
 * Resize and generate JPEG and PNG images, and optionally AVIF or WebP.
 * Save animations as GIF or animated WebP.
