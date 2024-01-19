@@ -159,9 +159,11 @@ WARP will automatically exclude the IP address of the TLS endpoint from all [Spl
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Under **Profile settings**, create a new [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) or edit an existing profile.
 3. To apply this profile whenever a device connects to your network, add the following rule:
-| Selector | Operator | Value |
-| -------  | -------- | ------|
-| Managed network | is | `<NETWORK-NAME>` |
+
+   | Selector        | Operator | Value            |
+   | --------------- | -------- | ---------------- |
+   | Managed network | is       | `<NETWORK-NAME>` |
+
 4. Save the profile.
 
 Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing Wi-Fi networks), the WARP client will determine its network location and apply the corresponding settings profile.
