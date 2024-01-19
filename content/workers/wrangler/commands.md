@@ -1315,6 +1315,7 @@ wrangler r2 bucket list
 ```
 
 ### `sippy enable`
+
 {{<Aside type="note">}}
 Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
 {{</Aside>}}
@@ -1373,8 +1374,9 @@ wrangler r2 bucket sippy get <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to get the status of Sippy.
-
+  
 {{</definitions>}}
+
 ---
 
 ## `r2 object`
