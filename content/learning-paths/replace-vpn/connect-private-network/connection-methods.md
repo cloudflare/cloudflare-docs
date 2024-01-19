@@ -19,9 +19,9 @@ WARP connector is a more flexible and advanced option to connect your network tr
 
 |     | cloudflared | WARP connector |
 | --- | ------------- | -------------- |
-| High availability and failover | ✅  | ❌  |
+| High availability and failover | ✅  | Coming soon |
 | Bidirectional traffic |  ❌    |       ✅    |
-| Source IP of request| `cloudflared` host machine | Device that made the request |
+| Source IP of request| `cloudflared` host machine | Virtual IP of requesting device |
 | Host machine | Linux, macOS, Windows | AMD Linux |
 | IPv4 | ✅ | ✅ |
 | IPv6 |  ✅  | ❌  |

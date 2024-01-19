@@ -9,8 +9,4 @@ With Cloudflare Gateway, you can log and filter DNS, network, and HTTP traffic f
 
 ## Enable the proxy
 
-To forward network and HTTP traffic to Gateway:
-
-{{<render file="gateway/_enable-gateway-proxy.md" productFolder="cloudflare-one">}}
-
-To learn more about these settings, refer to [Proxy protocols](/cloudflare-one/policies/gateway/proxy/#proxy-protocols).
+{{<render file="tunnel/_enable-gateway-proxy.md" productFolder="cloudflare-one">}}

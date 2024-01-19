@@ -34,4 +34,6 @@ The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `tracero
 
 ## Enable the Gateway proxy
 
-{{<render file="gateway/_enable-gateway-proxy.md" productFolder="cloudflare-one">}}
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+2. Enable **Proxy** for TCP.
+3. (Optional) Depending on your use case, you can enable **UDP** and/or **ICMP**.

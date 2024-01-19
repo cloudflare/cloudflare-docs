@@ -25,7 +25,7 @@ We recommend the following approach when planning your Zero Trust Network Access
 
 #### Identity
 
-Determine which identity provider you will use as the source of truth for user email, user groups, and other[identity-based attributes](/cloudflare-one/policies/gateway/identity-selectors/).
+Determine which identity provider you will use as the source of truth for user email, user groups, and other [identity-based attributes](/cloudflare-one/policies/gateway/identity-selectors/).
 
 {{<Aside type="note">}}
 Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/).
