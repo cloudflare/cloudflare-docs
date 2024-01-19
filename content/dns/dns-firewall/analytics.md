@@ -21,9 +21,9 @@ The following table provides a description for each of the values that might be 
 
 | Value     | Description                                                                                                                                |
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `success`                 | Response was successfully served.                                                                                                           |
-| `upstream_failure`        | Response could not be fetched from upstream due to the upstream failing to respond.                                                        |
-| `upstream_servfail`       | Response could not be fetched from upstream due to `SERVFAIL` response code from the upstream.                                               |
+| `success`                 | Response was successfully served, either from Cloudflare cache or forwarded from the upstream.                                                                                                           |
+| `upstream_failure`        | Response could not be fetched from the upstream due to the upstream failing to respond.                                                        |
+| `upstream_servfail`       | Response could not be fetched from the upstream due to the upstream responding with `SERVFAIL`.                                               |
 | `invalid_query`           | Query is invalid and cannot be processed.                                                                                                  |
 | `any_type_blocked`        | Query of type `ANY` was blocked according to your [DNS Firewall settings](/dns/dns-firewall/setup/) ([RFC 8482](https://www.rfc-editor.org/rfc/rfc8482.html)).                                                                    |
 | `rate_limit`              | Query was rate limited according to your [DNS Firewall settings](/dns/dns-firewall/setup/).                                                                                      |
