@@ -58,7 +58,7 @@ This will create a new directory, which will include either a `src/index.js` or 
 
 ## 3. Write a class to define a Durable Object
 
-Before you create and access a Durable Object its behavior must be defined by an ordinary exported JavaScript class.
+Before you create and access a Durable Object, its behavior must be defined by an ordinary exported JavaScript class.
 
 {{<Aside type="note">}}
 If you do not use JavaScript or TypeScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
