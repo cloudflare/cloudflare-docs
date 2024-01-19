@@ -22,4 +22,4 @@ jobs:
       - uses: lee-dohm/no-response@v0.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          daysUntilClose: 10
+          daysUntilClose: 14
