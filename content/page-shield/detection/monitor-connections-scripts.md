@@ -3,12 +3,12 @@ title: Monitor loaded resources
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Monitor loaded resources like scripts and cookies
+  title: Monitor loaded resources (scripts, connections, and cookies)
 ---
 
 # Monitor loaded resources
 
-Once you [activate Page Shield](/page-shield/get-started/), the **Monitors** dashboard will show which [active](/page-shield/reference/script-statuses/) scripts and connections are running on your domain, as well as the cookies detected in HTTP requests.
+Once you [activate Page Shield](/page-shield/get-started/), the **Monitors** dashboard will show which [active](/page-shield/reference/script-statuses/) scripts and connections are running on your domain, as well as the cookies recently detected in HTTP traffic.
 
 If you notice unexpected scripts or connections on the dashboard, check them for signs of malicious activity. Enterprise customers with a paid add-on will have their [connections and scripts classified as potentially malicious](/page-shield/how-it-works/malicious-script-detection/) based on threat feeds. You should also check for any new or unexpected cookies.
 
@@ -57,6 +57,20 @@ The details of each connection/script include:
 - **Page URLs**: The most recent pages where the resource was detected (up to ten pages).
 - **First page URL**: The page where the resource was first detected.
 
+The details of each cookie include:
+
+- **Type**: A cookie can have the following types:
+    - **First-party**: Cookies set by the origin server (through a `set-cookie` HTTP response header)
+    - **Third-party**: Cookies known to be from a third-party, according to Page Shield data
+    - **Unknown**: All other situations. Most third-party cookies will show as "unknown" to begin with.
+- **Set by**: Which entity set the cookie, according to analysed traffic (_Server_, _Browser_, or _Both_).
+- **Domain**: The value of the `Domain` cookie attribute. Only available for Enterprise customers with a paid add-on.
+- **SameSite**: The value of the `SameSite` cookie attribute. Only available for Enterprise customers with a paid add-on.
+- **Last seen**: How long ago the resource was last detected (in the last 30 days).
+- **First seen at**: The date and time when the cookie was first detected.
+- **Page URLs**: The most recent pages where the cookie was detected (up to ten pages).
+- **First page URL**: The page where the cookie was first detected.
+
 ## Export resource data
 
 ### Scripts and connections
@@ -75,4 +89,4 @@ The data in the exported file will honor any filters you configure in the dashbo
 Cookie export is available in Business plans and above.
 {{</Aside>}}
 
-To export the list of detected cookies, select **Export** in the **Active cookies** dashboard in the **Monitors** tab. The data in the exported file will honor any filters you configure in the dashboard.
+To export the list of detected cookies in CSV format, select **Export** in the **Active cookies** dashboard in the **Monitors** tab. The data in the exported file will honor any filters you configure in the dashboard.
