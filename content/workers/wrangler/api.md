@@ -239,35 +239,39 @@ This function is used to get a proxy for **local** `workerd` bindings that can b
 
 ### Usage
 
-The function can accept inline definitions for the bindings. For example,:
+The function uses bindings found in `wrangler.toml`. For example, if you have this in `wrangler.toml`:
 
 ```js
-const { bindings } = await getBindingsProxy({
-    bindings: {
-        'MY_VARIABLE': {
-            type: 'var',
-            value: "production_value",
-        },
-        // ...
-    }
-});
+[vars]
+
+MY_VARIABLE = "test"
 ```
 
-Then add the following to your code:
+You can access the bindings by importing `getBindingsProxy` like this:
+
+```js
+import { getBindingsProxy } from "wrangler";
+
+const { bindings } = await getBindingsProxy();
+```
+
+To access the value of the `MY_VARIABLE` binding add the following to your code:
 
 ```js
 console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 ```
 
-You should see the returned value: `production_value`.
+You should see the returned value: `test`.
 
-If you prefer to take bindings directly from a `wrangler.toml` file (for Workers only), you would provide no binding definition, like this:
+{{<Aside type="note">}}
 
-```js
-const { bindings } = await getBindingsProxy({});
-```
+For a demo of this API, see [getBindingsProxy-poc-demo](https://github.com/dario-piotrowicz/getBindingsProxy-poc-demo).
 
-All of supported bindings found in your `wrangler.toml` would then be available to you via `bindings`. Supported bindings currently include: kv, r2, d1, service, queue-producer, and var.
+{{</Aside>}}
+
+### Supported bindings
+
+All supported bindings found in your `wrangler.toml` are available to you via `bindings`. Supported bindings currently include: kv, r2, d1, service, queue-producer, and var.
 
 {{<Aside type="note">}}
 
