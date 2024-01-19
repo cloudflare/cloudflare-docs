@@ -26,7 +26,7 @@ curl --request POST \
 
 ## Enable transformations
 
-Transformations let you optimize images that are stored outside of Cloudflare Images. Cloudflare will automatically cache every transformed image at the edge so that you store only the original image at your origin.
+Transformations let you optimize images that are stored outside of Cloudflare Images. Cloudflare will automatically cache every transformed image on our global network so that you store only the original image at your origin.
 
 To use transformations, you’ll need to enable this feature on each zone:
 

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Custom paths
+title: Serve images from custom paths
 weight: 27
 meta:
     title: Serve images from custom paths
