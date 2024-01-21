@@ -65,10 +65,33 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
+You can access bound resources within a Remix application, by using [`loader`](https://remix.run/docs/en/main/route/loader) functions.
 
-The following code examples show how to access a KV binding called `MY_KV` in Remix applications written in JavaScript and TypeScript respectively, making the assumption that your loader function is: `(context) => ({ env: context.env })`.
+The following code examples show how to access a KV binding called `MY_KV` in Remix applications written in JavaScript and TypeScript respectively.
 
+### Local setup
+
+First of all, before using the KV namespace binding we want to make sure that the `getLoadContext` function of your [server](https://remix.run/docs/en/main/file-conventions/remix-config#server) includes an `env` field in its result, as this is where we will be accessing the KV binding from in the following examples.
+
+A typical server file should therefore look something like this:
+```js
+---
+highlight: [11]
+---
+import { logDevReady } from "@remix-run/cloudflare";
+import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
+import * as build from "@remix-run/dev/server-build";
+
+if (process.env.NODE_ENV === "development") {
+  logDevReady(build);
+}
+
+export const onRequest = createPagesFunctionHandler({
+  build,
+  getLoadContext: (context) => ({ env: context.env }),
+  mode: process.env.NODE_ENV,
+});
+```
 
 ### Javascript example
 
