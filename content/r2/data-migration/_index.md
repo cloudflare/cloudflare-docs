@@ -20,6 +20,19 @@ Quickly and easily migrate data from other cloud providers to R2. Explore each o
     </th>
     <tr>
       <td colspan="5" rowspan="1">
+        <a href="/r2/data-migration/cloudflare-images/">Cloudflare Images</a>
+      </td>
+      <td colspan="5" rowspan="1">
+        Migrate all images from Cloudflare Images to an R2 bucket.
+      </td>
+      <td colspan="5" rowspan="1">
+        <ul>
+            <li>For one-time, comprehensive transfers.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
         <a href="/r2/data-migration/super-slurper/">Super Slurper</a>
       </td>
       <td colspan="5" rowspan="1">
