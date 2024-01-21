@@ -25,13 +25,13 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const uploadedImges = await exportImagesBatch(env, null);
+		const uploadedImages = await exportImagesBatch(env, null);
 
 		return new Response(`${uploadedImages} images was uploaded.`);
 	},
 };
 
-async function exportImagesBatch(env: Env, continuationToken: string | null, imagesCount: number = 0): Promise<null> {
+async function exportImagesBatch(env: Env, continuationToken: string | null, imagesCount: number = 0): Promise<number> {
 	const imagesList = await getImagesList(env, continuationToken);
 
 	if(!imagesList.result.images.length) {
