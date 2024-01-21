@@ -25,9 +25,9 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		await exportImagesBatch(env, null);
+		const uploadedImges = await exportImagesBatch(env, null);
 
-		return new Response("");
+		return new Response(`${uploadedImages} images was uploaded.`);
 	},
 };
 
@@ -37,7 +37,7 @@ async function exportImagesBatch(env: Env, continuationToken: string | null, ima
 	if(!imagesList.result.images.length) {
 		console.debug("Reached the end of the image list.");
 
-		return null;
+		return imagesCount;
 	}
 
 	await Promise.all(imagesList.result.images.map(async (image) => {
