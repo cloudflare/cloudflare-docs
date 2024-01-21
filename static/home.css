@@ -911,6 +911,106 @@ a {
     }
 }
 
+@media (min-width: 978px) {
+    .TryOutSection {
+      margin-top: 5em;
+      width: 100%;
+    }
+    .documentation-content pre {
+      margin-bottom: 0em !important;
+    }
+
+    .documentation-container {
+      display: flex;
+      margin-top: 1.8em;
+    }
+  
+    input[type="radio"] {
+      display: none;
+    }
+  
+    .documentation-sidebar {
+      width: 14em;
+      background: #f2f2f2;
+      padding: 20px;
+      box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+  
+    [theme="dark"] .documentation-sidebar {
+      background: #222629;
+    }
+  
+    .documentation-sidebar label {
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      word-wrap: normal;
+    }
+  
+    .documentation-sidebar label:hover {
+      background: rgba(var(--orange-rgb), 0.2);
+    }
+  
+    #section1Content, #section2Content, #section3Content, #section4Content, #section5Content {
+      display: none;
+    }
+  
+    .documentation-content {
+      margin-left: 2em;
+      width: 90%;
+      margin-right: 2em;
+      background: #f2f2f2;
+      border-radius: 20px;
+    }
+
+    [theme="dark"] .documentation-content {
+      background: #222629;
+    }
+  
+    #section1:checked ~ .documentation-content #section1Content,
+    #section2:checked ~ .documentation-content #section2Content,
+    #section3:checked ~ .documentation-content #section3Content,
+    #section4:checked ~ .documentation-content #section4Content,
+    #section5:checked ~ .documentation-content #section5Content
+     {
+      display: block;
+    }
+
+    #section1:checked ~ .documentation-sidebar #section1Label,
+    #section2:checked ~ .documentation-sidebar #section2Label,
+    #section3:checked ~ .documentation-sidebar #section3Label,
+    #section4:checked ~ .documentation-sidebar #section4Label,
+    #section5:checked ~ .documentation-sidebar #section5Label
+     {
+        background: rgba(var(--orange-rgb), 0.2);
+    }
+  
+    .section-label {
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+  }
+  
+  @media (max-width: 978px) {
+    .TryOutSection {
+      display: none;
+    }
+    .ViewProducts {
+      display: none
+    }
+  }
+
+.ViewProducts {
+    margin-top: 2em;
+    margin-left: .3em;
+}
+
 .FeaturedContentSection {
     margin-top: 2em;
 }

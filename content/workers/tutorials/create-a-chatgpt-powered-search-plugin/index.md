@@ -2,7 +2,6 @@
 content_type: 📝 Tutorial
 difficulty: Intermediate
 pcx_content_type: tutorial
-layout: single
 title: Build a ChatGPT search plugin with Notion and Pinecone
 updated: 2023-08-14
 weight: 1

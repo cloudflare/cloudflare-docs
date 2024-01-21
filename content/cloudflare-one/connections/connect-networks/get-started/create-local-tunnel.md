@@ -2,7 +2,6 @@
 title: Create a locally-managed tunnel (CLI)
 pcx_content_type: how-to
 weight: 2
-layout: single
 ---
 
 # Set up a tunnel locally
@@ -33,15 +32,15 @@ PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudfla
 
 {{</tab>}}
 {{<tab label="macos" no-code="true">}}
- 
+
 To download and install `cloudflared`:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-one/connections/connect-networks/downloads/) directly.
- 
+
 {{</tab>}}
 {{<tab label="linux" no-code="true">}}
 

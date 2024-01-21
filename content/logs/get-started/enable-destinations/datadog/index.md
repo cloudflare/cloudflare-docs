@@ -2,7 +2,6 @@
 title: Enable Datadog
 pcx_content_type: how-to
 weight: 59
-layout: single
 meta:
   title: Enable Logpush to Datadog
 ---

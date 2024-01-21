@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: WARP settings
 weight: 2
-layout: single
 ---
 
 # WARP settings
@@ -71,13 +70,13 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 {{</details>}}
 
-Overrides the default IP address of the [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) created by WARP.
+Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
 
 **Value:**
 
-- `Disabled`: (default) The local interface IP is set to `172.16.0.2` on all devices.
+- `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices.
 
-- `Enabled`: Each device in your organization is assigned a unique IP address in the `100.96.0.0/12` range. The new local interface IP takes effect when the user reconnects or re-enrolls the WARP client.
+- `Enabled`: Sets the local interface IP on each device to its {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}}.  The change takes effect within 24 hours.
 
 This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
 

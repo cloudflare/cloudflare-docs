@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Discovery
 weight: 3
-layout: single
 ---
 
 # Discovery

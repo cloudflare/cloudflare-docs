@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
-layout: single
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale
@@ -136,7 +135,7 @@ $ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -291,13 +290,13 @@ EOF
 ---
 header: Query some data
 ---
-$ curl 'https://timescale-api.<YOUR_SUBDOMAIN>jsewell.workers.dev/readings?limit=10'
+$ curl "https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings?limit=10"
 ```
 
 In this tutorial, you have learned how to create a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive, and TypeScript.
 
 ## Next steps
 
-- Learn more about [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/).
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
 - Learn more about [Timescale](https://timescale.com).
-- Refer to the [troubleshooting guide](/hyperdrive/learning/troubleshooting/) to debug common issues.
+- Refer to the [troubleshooting guide](/hyperdrive/reference/troubleshooting/) to debug common issues.

@@ -1,12 +1,11 @@
 ---
-link: "/vectorize/changelog/"
+link: "/vectorize/platform/changelog/"
 productName: Vectorize
 entries:
   - publish_date: "2023-12-06"
     title: Metadata filtering
     description: |-
-      Vectorize now supports [metadata filtering](/vectorize/learning/metadata-filtering) with equals (`$eq`) and not equals (`$neq`) operators. Metadata filtering limits `query()` results to only vectors that fulfill new `filter` property.
-
+      Vectorize now supports [metadata filtering](/vectorize/reference/metadata-filtering) with equals (`$eq`) and not equals (`$neq`) operators. Metadata filtering limits `query()` results to only vectors that fulfill new `filter` property.
       ```ts
       let metadataMatches = await env.YOUR_INDEX.query(queryVector, { topK: 3, filter: { streaming_platform: "netflix" }, returnValues: true, returnMetadata: true } )
       ```

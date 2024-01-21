@@ -6,7 +6,7 @@ pcx_content_type: how-to
 
 {{<heading-pill style="beta">}}Enable DMARC Management{{</heading-pill>}}
 
-You need to enable DMARC Management to allow Cloudflare to process DMARC reports on your behalf. Before enabling DMARC Management, note that it does not support subdomains. You can only use it with your primary domain on [each zone](/fundamentals/concepts/accounts-and-zones/) of your Cloudflare account.
+You need to enable DMARC Management to allow Cloudflare to process DMARC reports on your behalf. DMARC Management only works with {{<glossary-tooltip term_id="apex domain">}}apex domains{{</glossary-tooltip>}} and not domains in [subdomain setups](/dns/zone-setups/subdomain-setup/).
 
 {{<Aside type="warning" header="A warning on DMARC Management and SPF records">}}
 DMARC Management does not support actions on SPF records when your zone has a CNAME record that points to a different domain. Changing the SPF record would make DMARC rules invalid, as Cloudflare cannot change other DNS records to reflect your updates.

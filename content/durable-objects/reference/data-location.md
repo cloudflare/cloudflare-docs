@@ -80,19 +80,29 @@ Durable Object IDs will be logged outside of the specified jurisdiction for bill
 
 ## Provide a location hint
 
-Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. 
+Durable Objects, as with any stateful API, will often add response latency as requests must be forwarded to the data center where the Durable Object, or state, is located.
 
-To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular Object will respect the hint.
+Durable Objects do not currently change locations after they are created<sup>1</sup>. By default, a Durable Object is instantiated in a data center close to where the initial `get()` request is made. This may not be in the same data center that the `get()` request is made from, but in most cases, it will be in close proximity.
+
+{{<Aside type="warning" header="Initial requests to Durable Objects">}}
+
+It can negatively impact latency to pre-create Durable Objects prior to the first client request or when the first client request is not representative of where the majority of requests will come from. It is better for latency to create Durable Objects in response to actual production traffic or provide explicit location hints.
+
+{{</Aside>}}
+
+Location hints are the mechanism provided to specify the location that a Durable Object should be located regardless of where the initial `get()` request comes from.
+
+To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `get()`. Only the first call to `get()` for a particular Object will respect the hint.
 
 ```js
 let durableObjectStub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
 ```
 
-The following locations are supported. Hints are a best effort and not a guarantee. 
-
 {{<Aside type="warning">}}
-Durable Objects do not currently run in all locations below. The closest nearby region will be used until those locations are fully supported.
+Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable Objects will not necessarily be instantiated in the hinted location, but instead instantiated in a data center selected to minimize latency from the hinted location.
 {{</Aside>}}
+
+The following locations are supported:
 
 | Location Hint Parameter  | Location              |
 | ------------------------ | --------------------- |

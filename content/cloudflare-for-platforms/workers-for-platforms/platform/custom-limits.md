@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom limits
+weight: 2
 ---
 
 # Custom limits

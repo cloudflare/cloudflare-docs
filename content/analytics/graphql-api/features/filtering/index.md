@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Filtering
 weight: 11
-layout: single
 ---
 
 # Filtering
@@ -223,7 +222,7 @@ WHERE has(ruleIDs, 'rule-id-1') AND has(ruleIDs, 'rule-id-2')
 
 ### Filter end users
 
-Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.  
+Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.
 
 ## Subqueries (advanced filters)
 

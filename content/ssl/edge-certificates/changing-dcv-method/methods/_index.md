@@ -2,7 +2,6 @@
 title: Methods
 pcx_content_type: concept
 weight: 1
-layout: single
 meta:
   title: Methods — Domain Control Validation
   description: Review different methods to perform Domain Control Validation when using Cloudflare SSL/TLS.

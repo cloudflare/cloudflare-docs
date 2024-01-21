@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: SSL for SaaS
 weight: 3
-layout: list
+layout: wide
 meta:
     title: SSL for SaaS certificates - DigiCert migration guide
 ---

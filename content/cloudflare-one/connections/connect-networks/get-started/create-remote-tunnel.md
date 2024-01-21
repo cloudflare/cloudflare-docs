@@ -2,7 +2,6 @@
 title: Create a remotely-managed tunnel (dashboard)
 pcx_content_type: how-to
 weight: 1
-layout: single
 ---
 
 # Set up a tunnel through the dashboard

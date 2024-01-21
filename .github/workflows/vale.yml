@@ -1,0 +1,38 @@
+name: Style guide
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files from Pull Request
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # get file names and structure as JSON
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | grep -E "\.md$" | xargs -I {} echo "\"{}\"" | tr '\n' ',' | sed 's/,$/\n/' | awk '{print "["$0"]"}')
+
+          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
+
+      - name: Output Changed Files
+        run: echo ${{ env.CHANGED_FILES }}
+
+      - name: Vale
+        uses: errata-ai/vale-action@reviewdog
+        if: ${{ !cancelled() }}
+        with:
+          files: ${{ env.CHANGED_FILES }}
+          reporter: github-pr-review
+          filter_mode: diff_context

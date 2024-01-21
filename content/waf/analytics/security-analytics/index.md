@@ -2,7 +2,6 @@
 title: Security Analytics
 pcx_content_type: concept
 weight: 1
-layout: single
 ---
 
 {{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}

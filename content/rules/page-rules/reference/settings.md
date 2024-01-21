@@ -2,9 +2,9 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: Settings
-layout: list
+layout: wide
 meta:
-    title: Settings | Page Rules
+  title: Settings | Page Rules
 weight: 3
 ---
 

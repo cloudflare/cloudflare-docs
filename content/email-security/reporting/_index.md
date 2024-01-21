@@ -2,7 +2,6 @@
 title: Reporting
 pcx_content_type: navigation
 weight: 5
-layout: single
 ---
 
 # Reporting

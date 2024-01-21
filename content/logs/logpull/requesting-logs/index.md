@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Requesting logs
 weight: 15
-layout: single
 ---
 
 # Request logs

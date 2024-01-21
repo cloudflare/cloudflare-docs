@@ -2,7 +2,7 @@
 title: Configure JWT Validation
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure JWT Validation
 ---
@@ -11,16 +11,15 @@ meta:
 
 Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-validation/), which requires Token Configurations and Token Validation Rules.
 
-## Token Configurations 
+## Token Configurations
 
-A Token Configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request. 
+A Token Configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request.
 
 | Field name | Description | Example | Notes |
 | --- | --- | --- | --- |
 |  `token type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. |
 | `title` | A human-readable name for the configuration that allows to quickly identify the purpose of the configuration. | Production JWT configuration |
 | `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} in endpoint management and checks the JWT in the authorization header.|
-| `action` | How we should configure the firewall to act on the validation result. | `block` | possible: `log` or `block` |
 | `enabled` | This enables or disables acting on the validation result. | `true` | possible: `true` or `false` |
 | `allow_absent_token` | How API Shield should handle requests that do not have a JWT present. Setting this to `true` allows hybrid endpoints where JWTs, if present, must be valid, but JWTs are still allowed to be absent. | `true` | possible: `true` or `false` |
 | `token_schema` | This describes where the JWT can be found on a request. Currently, we only support extracting them from headers. | See example below. |The type must be `header`. The name field denotes the header name from which to extract the JWT. |
@@ -52,7 +51,7 @@ Refer to the [Ruleset Engine documentation](/ruleset-engine/rules-language/field
 
 ### Credentials
 
-API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them. 
+API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them.
 
 We allow up to 4 different keys in order to aid in key rollover.
 
@@ -133,7 +132,7 @@ header: Example response
 
 ## Token Validation Rules
 
-Token Validation Rules allow you to enforce a security policy using existing Token Configurations. 
+Token Validation Rules allow you to enforce a security policy using existing Token Configurations.
 
 Token Validation Rules can be configured using the Cloudflare API or [dashboard](/api-shield/security/jwt-validation/#add-a-jwt-validation-rule).
 
@@ -152,7 +151,7 @@ Selectors control the scope of your token validation rule.
 
 If you only need JWT Validation on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include it in the JWT Validation rule.
 
-If you need to exclude endpoints from JWT validation that never have valid JWTs used with them (by design), such as a path and method used to establish a valid JWT in the first place, you must use the endpoint’s operation ID to exclude the endpoint in a selector. 
+If you need to exclude endpoints from JWT validation that never have valid JWTs used with them (by design), such as a path and method used to establish a valid JWT in the first place, you must use the endpoint’s operation ID to exclude the endpoint in a selector.
 
 To find the operation ID, refer to [Endpoint Management](/api-shield/management-and-monitoring/) or use the [Cloudflare API](/api/operations/api-shield-endpoint-management-retrieve-information-about-all-operations-on-a-zone).
 
@@ -182,7 +181,7 @@ The following functions can be used to interact with JWT Tokens on a request:
 | `is_jwt_valid(token_configuration_id String) bool` | `True` if the request has a valid token according to the Token Configuration with the ID `token_configuration_id`. | `token_configuration_id` must be the ID of an existing Token Configuration. This will return `false` if the token is missing from the request. |
 | `is_jwt_present(token_configuration_id String) bool` | `True` if the request has a token as configured in the Token Configuration with the ID `token_configuration_id`. | `token_configuration_id` must be the ID of an existing Token Configuration. |
 
-### Common use cases 
+### Common use cases
 
 Refer to the following example use cases to understand which security policy to use. For most use cases, Cloudflare recommends requiring a valid token across your API and excluding any paths that are used to establish or refresh tokens using selectors.
 
@@ -274,7 +273,7 @@ curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gate
     }'
 ```
 
-The response will include all operations on a zone with an additional `state` field. 
+The response will include all operations on a zone with an additional `state` field.
 
 The `state` field can be `ignored`, `excluded`, or `included`. Included operations will match the hostname selectors you specified. Excluded operations will match the operation IDs you specified in the selector. Ignored operations are those that do not match anything specified in the selector.
 

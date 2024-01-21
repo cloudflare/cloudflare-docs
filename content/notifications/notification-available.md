@@ -2,7 +2,6 @@
 title: Available Notifications
 pcx_content_type: concept
 weight: 2
-layout: single
 ---
 
 # Available Notifications
@@ -911,6 +910,10 @@ Enterprise plans.
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing.
 2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
 
+**Limitations**
+
+{{<render file="_traffic-monitoring-limitations.md">}}
+
 {{</details>}}
 
 {{<details header="Origin Error Rate Alert">}}
@@ -941,6 +944,10 @@ Enterprise plans.
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
 2. {{<render file="_errors.md">}}
 
+**Limitations**
+
+{{<render file="_traffic-monitoring-limitations.md">}}
+
 {{</details>}}
 
 {{<details header="Passive Origin Monitoring">}}
@@ -960,6 +967,10 @@ All Cloudflare plans.
 **What should you do if you receive one?**
 
 {{<render file="_errors.md">}}
+
+**Limitations**
+
+{{<render file="_traffic-monitoring-limitations.md">}}
 
 {{</details>}}
 
@@ -986,6 +997,12 @@ Enterprise plans.
 **What should you do if you receive one?**
 
 1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
+
+**Limitations**
+
+Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
+
+These thresholds cannot be configured. Z-score is used to determine the threshold.
 
 {{</details>}}
 
@@ -1117,6 +1134,10 @@ Enterprise plans.
 
 Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
+**Limitations**
+
+{{<render file="_security-events-limitations.md">}}
+
 {{</details>}}
 
 {{<details header="Security Events Alert">}}
@@ -1139,6 +1160,10 @@ Business and Enterprise plans.
 **What should you do if you receive one?**
 
 Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+
+**Limitations**
+
+{{<render file="_security-events-limitations.md">}}
 
 {{</details>}}
 

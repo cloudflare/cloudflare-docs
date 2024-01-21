@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Securely access and upload assets with Cloudflare R2
-layout: single
 ---
 
 # Securely access and upload assets with Cloudflare R2
