@@ -60,7 +60,7 @@ You can create Zero Trust policies to manage access to specific applications on 
      | Selector       | Operator      | Value            | Logic | Action |
      | -------------- | ------------- | ---------------- | ----- | ------ |
      | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
-     | User email     | Matches regex | `.*@example.com` |       |        |
+     | User Email     | matches regex | `.*@example.com` |       |        |
 
    - **Policy 2**
      | Selector       | Operator | Value        | Action |
