@@ -19,4 +19,4 @@ PagerDuty needs to be configured under [connected notification services](/notifi
 
 When you remove a user from your account via **Manage Account** > **Members** in the Cloudflare dashboard, their email address is not removed from existing notifications.
 
-You need to remove the email address from the configuration of the notifications by [editing the notification recepient](/notifications/get-started/#edit-a-notification).
+You need to remove the email address from the configuration of the notifications by [editing the notification recipient](/notifications/get-started/#edit-a-notification).
