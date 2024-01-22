@@ -104,7 +104,7 @@ inputParameters: editWord
 | Magic Transit Read                                           | Grants read access to manage a user's [Magic Transit prefixes](/magic-transit/how-to/advertise-prefixes/).                                               |
 | Magic Transit $1                                           | Grants write access to manage a user's [Magic Transit prefixes](/magic-transit/how-to/advertise-prefixes/).                                              |
 | Notifications Read                                           | Grants read access to [Notifications](/notifications/).                                                                                     |
-| Notifications $1                                           | Grants read access to [Notifications](/notifications/).                                                                                     |
+| Notifications $1                                           | Grants write access to [Notifications](/notifications/).                                                                                     |
 | Page Shield Read                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
 | Page Shield $1                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
 | Pub/Sub Read                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
