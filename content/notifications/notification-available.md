@@ -443,7 +443,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-No action is needed. You can [go to the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
+No action is needed. You can go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
 
 {{</details>}}
 
