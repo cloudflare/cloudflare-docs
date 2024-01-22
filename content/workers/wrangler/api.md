@@ -266,5 +266,13 @@ You should see the returned value: `test`.
 
 ### Supported bindings
 
-All supported bindings found in your `wrangler.toml` are available to you via `bindings`. Supported bindings currently include: kv, r2, d1, service, queue-producer, and var.
+All supported bindings found in your `wrangler.toml` are available to you via `bindings`.
+
+The bindings supported by `getBindingsProxy` are:
+ - [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
+ - [Service bindings](/workers/configuration/bindings/#service-bindings)
+ - [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
+ - [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
+ - [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+ - [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
 
