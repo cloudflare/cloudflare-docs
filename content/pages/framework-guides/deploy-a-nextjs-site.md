@@ -11,7 +11,7 @@ This guide will instruct you how to deploy a full-stack Next.js project which us
 
 ## Use the create-cloudflare CLI (C3)
 
-The fastest way to create a new Next.js site and deploy it to Cloudflare is open up your terminal and run:
+To create a new Next.js site, open up your terminal and run:
 
 ```sh
 $ npm create cloudflare@latest my-next-app -- --framework=next
