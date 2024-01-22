@@ -26,7 +26,7 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 
 | Identity Selector | Operator | Value                  |
 | -------- | -------- | ---------------------- |
-| User email  | Matches regex  | `.*@example.com` |
+| User email  | matches regex  | `.*@example.com` |
 
 | Action |
 | ------ |
