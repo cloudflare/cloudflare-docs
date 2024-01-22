@@ -47,19 +47,34 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 
 ```js
 let response = await durableObjectStub.fetch(request);
+// Alternatively, passing a URL directly:
 let response = await durableObjectStub.fetch(url, options);
 ```
 
-The `fetch()` method of a stub has the exact same signature as the global [`fetch()`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the Object points.
+The `url` passed to the `fetch()` handler of your Durable Object must be a well-formed URL, but does not have to be a publicly-resolvable hostname. You can:
 
-Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise. 
+* Pass the client `Request` directly into the `fetch()` handler as is.
+* Use an internal URL scheme, such as `http://do/some-path`, as the `url` parameter in the `fetch()` handler. This allows you to construct your own path or query parameter based approach to sharing state between your client-facing Worker and your Durable Object.
+* Alternatively, you can construct your own [`Request` object](/workers/runtime-apis/request/), which allows you to use a [`Headers`](/workers/runtime-apis/headers/) object to pass in key-value pairs, representing data you wish to pass to your Durable Objects.
 
-If an uncaught exception is thrown by the Durable Object's `fetch()` handler, then the exception propagated to the caller's `fetch()` promise will include a `.remote` property, which will be set to `True`. 
+The example below shows you how to construct your own `Request` object:
 
-If the caller's `fetch()` failed as a result of being unable to reach the Durable Object, the exception thrown to the caller's `fetch()` will not have the `.remote` property, indicating the exception was not generated remotely.
+```ts
+// Constructing a new Request and passing metadata to the Durable Object via headers
+let doReq = new Request("http://do/write", { headers: { "user-id": userId }})
+let resp = await durableObjectStub.fetch(doReq)
+
+// Alternatively, using URL query params or paths
+let resp = await durableObjectStub.fetch(`http://do/write?userId=${userId}`)
+```
+
+{{<Aside type="note">}}
+
+To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/reference/error-handling/) documentation.
+
+{{</Aside>}}
 
 ## 3. List Durable Objects
 
 The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a Durable Object namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
-
 
