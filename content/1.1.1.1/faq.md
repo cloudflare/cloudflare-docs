@@ -7,6 +7,8 @@ structured_data: true
 
 # FAQ
 
+TEST
+
 Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
 {{<faq-item>}}
