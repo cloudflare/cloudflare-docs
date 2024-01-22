@@ -851,7 +851,7 @@ Customers can input Stream Live IDs to receive notifications only about those in
 The following input states will fire notifications. Customers can toggle them on or off:
 
 - `live_input.connected`
-- `Live_input.disconnected`
+- `live_input.disconnected`
 
 **Included with**
 
