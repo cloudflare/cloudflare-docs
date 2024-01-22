@@ -20,7 +20,7 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 - What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
 - What is a CDN? | [Website](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (5 minute read)
 - Whitepaper: [Cloudflare CDN](https://cfl.re/CDN-whitepaper) (3 minute read)
-- Blog: [IDC MarketScape positions Cloudflare as a Leader among worldwide Commercial CDN providers](https://blog.cloudflare.com/idc-marketscape-cdn-leader-2022/) (14 minute read)
+- Analyst Report: [Cloudflare named Leader in 2024 GigaOm Radar for Content Delivery Networks](https://www.cloudflare.com/lp/gigaom-radar-cdn/) (20 minute read)
 
 Those who read this reference architecture will learn:
 
