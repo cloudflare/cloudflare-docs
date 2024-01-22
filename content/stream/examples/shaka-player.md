@@ -29,8 +29,8 @@ const manifestUri =
 	'https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd';
 
 document.addEventListener('DOMContentLoaded', () => {
-	const player = new shaka.Player(video);
 	const video = document.getElementById('video');
+  const player = new shaka.Player(video);
 	await player.load(manifestUri);
 });
 ```
