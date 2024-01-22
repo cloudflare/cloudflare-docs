@@ -68,46 +68,45 @@ When traffic matches a Do Not Scan rule, nothing is scanned, regardless of file 
 
 In addition to standard object files like PDFs, Zero Trust supports AV scanning for the following archive types:
 
-- ZIP
-- GZIP compressed files
-- TAR
-- RAR
 - 7-Zip
-- LZH/LHA
-- ISO 9660
-- PGP signed message, document, etc.
-- Java ARchive
-- Chrome Extension (CRX) Package Format
-- Microsoft CAB
-- Windows Imaging File (WIM)
-- Office Legacy XML
+- 7-Zip SFX
+- ACE
+- ACE SFX
+- AutoHotkey
+- AutoIt
 - BASE64
 - BZ2
-- ARJ
-- ZOO
-- XZ file format
-- BINHEX (Mac)
-- NSIS Nullsoft Installer
-- MIME base64
-- Smart Install Maker
-- CPIO SVR4
-- RPM
 - CHM Help Files
-- AutoIt
-- Inno Setup
+- CPIO SVR4
+- Chrome Extension (CRX) Package Format
 - eXtensible ARchive format (XAR)
-- Self-extracting ZIP
-- Self-extracting RAR
-- Self-extracting ARJ
-- Self-extracting LZH/LHA
-- ACE
-- Microsoft TNEF
-- MSCOMPRESS
-- Self-extracting CA
-- ACE SFX
-- 7-Zip SFX
-- AutoHotkey
-- SAPCar
+- GZIP compressed files
+- ISO 9660
+- Inno Setup
 - Indigo Rose Setup Factory
-- XE compressed files (UUE and XXE)
+- Java ARchive
+- LZH/LHA
 - MacBinary
+- MIME base64
+- MSCOMPRESS
+- Microsoft CAB
+- Microsoft TNEF
+- NSIS Nullsoft Installer
+- Office Legacy XML
+- PGP signed message, document, etc.
+- RPM
+- RAR
+- SAPCar
+- Self-extracting ARJ
+- Self-extracting CA
+- Self-extracting LZH/LHA
+- Self-extracting RAR
+- Self-extracting ZIP
+- Smart Install Maker
+- TAR
+- UUE and XXE compressed files
+- Windows Imaging File (WIM)
+- XE compressed files (UUE and XXE)
+- XZ file format
+- ZIP
+- ZOO
