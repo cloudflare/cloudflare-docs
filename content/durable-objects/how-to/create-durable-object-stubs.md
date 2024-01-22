@@ -51,11 +51,13 @@ let response = await durableObjectStub.fetch(request);
 let response = await durableObjectStub.fetch(url, options);
 ```
 
-The `url` passed to the `fetch` handler of your Durable Object must be a well-formed URL, but does not have to be a publicly-resolvable hostname. You can:
+The `url` passed to the `fetch()` handler of your Durable Object must be a well-formed URL, but does not have to be a publicly-resolvable hostname. You can:
 
-* Pass the client `Request` directly into the `fetch` handler as-is.
-* Use an internal URL scheme, such as `http://do/some-path`, as the `url` parameter in the `fetch` handler. This can allow you to construct your own path or query parameter based approach to sharing state between your client-facing Worker and your Durable Object.
-* Alternatively, you can construct your own [`Request` object](/workers/runtime-apis/request/), which allows you to use a [`Headers`](/workers/runtime-apis/headers/) object to pass in key-value pairs, representing data you wish to pass to your Durable Objects:
+* Pass the client `Request` directly into the `fetch()` handler as is.
+* Use an internal URL scheme, such as `http://do/some-path`, as the `url` parameter in the `fetch()` handler. This allows you to construct your own path or query parameter based approach to sharing state between your client-facing Worker and your Durable Object.
+* Alternatively, you can construct your own [`Request` object](/workers/runtime-apis/request/), which allows you to use a [`Headers`](/workers/runtime-apis/headers/) object to pass in key-value pairs, representing data you wish to pass to your Durable Objects.
+
+The example below shows you how to construct your own `Request` object:
 
 ```ts
 // Constructing a new Request and passing metadata to the Durable Object via headers
@@ -68,7 +70,7 @@ let resp = await durableObjectStub.fetch(`http://do/write?userId=${userId}`)
 
 {{<Aside type="note">}}
 
-To understand how exceptions are thrown from within a Durable Object, visit the [error handling](/durable-objects/reference/error-handling/) documentation.
+To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/reference/error-handling/) documentation.
 
 {{</Aside>}}
 
