@@ -91,7 +91,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 
 | Identity Selector | Operator | Value                  |
 | -------- | -------- | ---------------------- |
-| User email  | Matches regex  | `.*@example.com` |
+| User Email  | matches regex  | `.*@example.com` |
 
 | Action |
 | ------ |
