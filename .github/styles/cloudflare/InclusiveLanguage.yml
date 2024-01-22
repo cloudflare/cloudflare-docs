@@ -20,4 +20,6 @@ swap:
   hers: their
   sanity (?:check|test): check for completeness
   dummy: placeholder, sample, fake
+  normal: "typical' or 'standard"
+  normally: "usually' or 'typically"
 
