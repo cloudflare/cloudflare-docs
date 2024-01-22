@@ -79,7 +79,7 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 | Selector | Operator | Value         | Action |
 | -------- | -------- | ------------- | ------ |
-| Host     | in list  | Your new list | Block  |
+| Host     | in list  | <NEW_HOSTNAME_LIST> | Block  |
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 
