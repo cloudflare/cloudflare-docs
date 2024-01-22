@@ -75,7 +75,13 @@ In addition to standard object files like PDFs, Zero Trust supports AV scanning 
 - 7-Zip
 - LZH/LHA
 - ISO 9660
-- ACE
+- PGP signed message, document, etc.
+- Java ARchive
+- Chrome Extension (CRX) Package Format
+- Microsoft CAB
+- Windows Imaging File (WIM)
+- Office Legacy XML
+- BASE64
 - BZ2
 - ARJ
 - ZOO
@@ -83,7 +89,6 @@ In addition to standard object files like PDFs, Zero Trust supports AV scanning 
 - BINHEX (Mac)
 - NSIS Nullsoft Installer
 - MIME base64
-- Microsoft CAB
 - Smart Install Maker
 - CPIO SVR4
 - RPM
@@ -91,11 +96,11 @@ In addition to standard object files like PDFs, Zero Trust supports AV scanning 
 - AutoIt
 - Inno Setup
 - eXtensible ARchive format (XAR)
-- Windows Imaging File (WIM)
 - Self-extracting ZIP
 - Self-extracting RAR
 - Self-extracting ARJ
 - Self-extracting LZH/LHA
+- ACE
 - Microsoft TNEF
 - MSCOMPRESS
 - Self-extracting CA
@@ -105,9 +110,4 @@ In addition to standard object files like PDFs, Zero Trust supports AV scanning 
 - SAPCar
 - Indigo Rose Setup Factory
 - XE compressed files (UUE and XXE)
-- PGP signed message, document, etc.
-- Java ARchive
 - MacBinary
-- BASE64
-- Office Legacy XML
-- Chrome Extension (CRX) Package Format
