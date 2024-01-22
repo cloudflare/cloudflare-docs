@@ -75,13 +75,11 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 1. Go to **Gateway** > **Firewall Policies** > **HTTP policies**.
 2. Select **Add a policy**.
-3. Set the expression to:
+3. Create the following policy.
 
-    - Selector: `Host`
-    - Operator: `In List`
-    - Value: your newly created list name.
-
-4. Set the Action to `Block`.
+| Selector | Operator | Value         | Action |
+| -------- | -------- | ------------- | ------ |
+| Host     | in list  | Your new list | Block  |
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 

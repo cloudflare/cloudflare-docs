@@ -56,9 +56,9 @@ The following files cannot be scanned and will be blocked or allowed based on wh
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. All [HTTP selectors](/cloudflare-one/policies/gateway/http-policies/#selectors) can be used to opt HTTP traffic out from AV scanning using the Do Not Scan action. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
-| Selector | Operator      | Value           | Action      |
-| -------- | ------------- | --------------- | ----------- |
-| Hostname | matches regex |   | Do Not Scan |
+| Selector | Operator      | Value         | Action      |
+| -------- | ------------- | ------------- | ----------- |
+| Hostname | matches regex | `example.com` | Do Not Scan |
 
 Opting out of AV scanning applies to both uploads and downloads of files (i.e., it matches the global AV scanning setting). If an admin has chosen, for example, to only globally scan uploads, then opting out of AV scanning only applies to uploads.
 
