@@ -14,6 +14,9 @@ layout: example
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     const response = await fetch(request);
@@ -33,6 +36,8 @@ export default {
 
     // Adjust the value for an existing header
     newResponse.headers.set("x-header-to-change", "NewValue");
+    // Remove logging from final output
+    console.log(new Map(newResponse.headers))
     return newResponse;
   },
 };
