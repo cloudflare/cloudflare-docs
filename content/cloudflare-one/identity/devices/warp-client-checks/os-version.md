@@ -42,7 +42,7 @@ Example: `(a)`
 
 {{<tab label="linux" no-code="true">}}
 
-In **Distro name** and **Distro revision**, enter the Linux distribution you want devices to match. The distro version always matches with an equal-to operator (==), regardless of the **Operator** setting.
+In **Distro name** and **Distro revision**, enter the Linux distribution you want devices to match. The distro version always matches with an equal-to operator (`==`), regardless of the **Operator** setting.
 
 Example: `ubuntu 22.04`
 
