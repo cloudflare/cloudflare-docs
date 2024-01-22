@@ -714,7 +714,7 @@ Confirm your traffic is healthy. Reach out to your transit providers to ensure y
 
 **Who is it for?**
 
-[Access](/access/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate.
+[Access](/cloudflare-one/policies/access/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate.
 
 **Other options / filters**
 
