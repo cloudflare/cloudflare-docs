@@ -9,7 +9,7 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 
-## Use the create-cloudflare CLI (C3)
+## Create a new project using the `create-cloudflare` CLI (C3)
 
 To create a new Next.js site, open up your terminal and run:
 
@@ -19,7 +19,7 @@ $ npm create cloudflare@latest my-next-app -- --framework=next
 
 `create-cloudflare` will:
 
--  install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter
+- install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter
 - ask you a series of setup questions
 - allow you to setup a new git repo
 - allow you to deploy your new project
@@ -34,7 +34,7 @@ $ cd my-next-app
 
 If you chose to deploy, you will receive a unique subdomain for your project on `*.pages.dev`, and you can access it almost immediately.
 
-## Manually configure and deploy your project
+## Configure and deploy a project without C3
 
 If you already have a Next.js project or wish to manually create and deploy one without using c3, we recommend that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project. 
 
@@ -49,7 +49,7 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 
 Cloudflare bindings must be set up for local and remote development.
 
-### Set up local bindings
+### Set up bindings for local development
 
 {{<Aside type="note">}}
 
@@ -80,13 +80,38 @@ if (process.env.NODE_ENV === "development") {
 }
 ```
 
-You should then be able to access the binding in your code via `process.env` like this:
+### Set up bindings for a deployed application
 
+In orer to access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
+
+### Access bindings in the application
+
+Local and remote bindings can be accessed directly from `process.env`:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
-import type { NextRequest } from 'next/server'
+---
+filename: app/api/hello/route.js
+highlight: [3]
+---
+export async function GET(request) {
+  // this is the KV binding you defined in next.config.js
+  const myKv = process.env.MY_KV;
 
-export const runtime = 'edge'
+  // get a value from the namespace
+  const kvValue = await myKv.get(`kvTest`) || false;
 
+  return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: app/api/hello/route.ts
+highlight: [3]
+---
 export async function GET(request: NextRequest) {
   // this is the KV binding you defined in next.config.js
   const myKv = process.env.MY_KV;
@@ -97,31 +122,10 @@ export async function GET(request: NextRequest) {
   return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
-
-### Access bindings in the deployed application
-
-To access bindings in your deployed application, you'll first need to [configure](/workers/configuration/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
-
-Then, the binding can be accessed directly from `process.env`:
-
-```typescript
----
-filename: app/api/hello/route.ts
-highlight: [4]
----
-// ...
-
-export async function GET(request: Request) {
-  const myKv = process.env.MY_KV;
-
-  return new Response(
-    // ...
-  );
-};
-```
-
-### Use bindings in Typescript
+### Add bindings to Typescript projects
 
 {{<Aside type="note">}}
 
@@ -133,7 +137,7 @@ In order to get proper type support, you'll need to create a new `env.d.ts` file
 
 The following is an example of adding a `KVNamespace` binding:
 
-```typescript
+```ts
 ---
 filename: env.d.ts
 highlight: [5-11]
@@ -160,26 +164,31 @@ export {};
 
 When developing a `next-on-pages` application, this is the development workflow that we recommend:
 
-- **Develop using the standard Next.js dev server**\
-  In order to have a very fast and polished dev experience the standard dev server provided by Next.js is the best available option. So use it to quickly make changes and iterate over them, while still having access to your Cloudflare bindings thanks to the `next-dev` submodule (as described in the [local bindings section](#set-up-local-bindings) above).
-- **Build and preview your worker locally**\
-  In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you're comfortable checking the correctness of the application during your development process you'll want to build your worker and preview it locally using Cloudflare's `workerd` JavaScript runtime. 
+### Develop using the standard Next.js dev server
+
+  In order to have a very fast and polished dev experience the standard dev server provided by Next.js is the best available option. So use it to quickly make changes and iterate over them, while still having access to your Cloudflare bindings thanks to the `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above).
+
+### Build and preview your worker locally
+
+  In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you're comfortable checking the correctness of the application during your development process you'll want to build your worker and preview it locally using Cloudflare's `workerd` JavaScript runtime.
   
-  If you've created your project with C3, you can do this by running `npm run pages:build && npm run pages:dev`. 
+  If you've created your project with C3, you can do this by running `npm run pages:build && npm run pages:dev`.
   
-  If you've created your project manually, you'll need to run `npx @cloudflare/next-on-pages --watch` and preview it by running `wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat`. 
+  If you've created your project manually, you'll need to run `npx @cloudflare/next-on-pages --watch` and preview it by running `wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat`.
   
   By doing this, you can run your app locally to make sure everything is working as you expect it to.
-- **Deploy your app and iterate**\
+
+### Deploy your app and iterate
+
   Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via direct uploads or git integration) and iterate over the process to make new changes.
 
 ## `Image` component
 
 The Cloudflare network does not provide the same image optimization support as the Vercel network does, because of this the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
 
- - If you build your application as a static site, the `<Image />` component will not serve any images.
+- If you build your application as a static site, the `<Image />` component will not serve any images.
 
- - If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
+- If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
 
 Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/cloudflare-images/), refer to the [Next.js image resizing integration guide](/images/image-resizing/integration-with-frameworks/#nextjs).
 
