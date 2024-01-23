@@ -30,6 +30,8 @@ These permissions follow the principle of least privilege to ensure that only th
 
 Identify files and folders that have been shared in a potentially insecure fashion.
 
+{{<render file="casb/_shared-links.md">}}
+
 | Finding                                               | Severity |
 | ----------------------------------------------------- | -------- |
 | Box File publicly accessible read write               | Critical |
