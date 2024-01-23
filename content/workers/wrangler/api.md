@@ -261,7 +261,7 @@ To access the value of the `MY_VARIABLE` binding add the following to your code:
 console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 ```
 
-You should see the returned value: `test`.
+In your terminal you should see: `MY_VARIABLE = test`
 
 
 ### Supported bindings
