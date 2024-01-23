@@ -12,7 +12,7 @@ This section covers the most common errors you might encounter when connecting r
 
 If you see this error when installing a remotely-managed tunnel, ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
 
-## `An A, AAAA, or CNAME record with that host already exists`.
+## I see `An A, AAAA, or CNAME record with that host already exists`.
 
 If you are unable to save your tunnel's public hostname, choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
 
