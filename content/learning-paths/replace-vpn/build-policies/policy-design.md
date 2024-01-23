@@ -31,13 +31,7 @@ Determine which identity provider you will use as the source of truth for user e
 Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/).
 {{</Aside>}}
 
-If you plan to grant access to services based on group membership, verify that the groups are being passed from your identity provider to Gateway:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**. This page lists the users who have authenticated to the WARP client.
-2. Select a user.
-3. Under **User Registry identity**, select the user name.
-
-You will see the identity that Gateway will use when evaluating policies.
+If you plan to grant access to services based on group membership, [view the user registry](/cloudflare-one/policies/gateway/identity-selectors/#view-a-users-identity) and verify that the groups are being passed from your identity provider to Gateway.
 
 #### Device posture
 
