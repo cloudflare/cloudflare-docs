@@ -184,7 +184,7 @@ By doing this, you can run your application locally to make sure everything is w
 
 ### Deploy your app and iterate
 
-Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via direct uploads or git integration) and iterate over the process to make new changes.
+Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via [direct uploads](pages/get-started/direct-upload/) or git integration) and iterate over the process to make new changes.
 
 ## `Image` component
 
