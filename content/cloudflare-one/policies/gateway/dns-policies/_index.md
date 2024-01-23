@@ -104,7 +104,7 @@ Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Rest
 
 | Selector   | Operator | Value         | Action             |
 | ---------- | -------- | ------------- | ------------------ |
-| DNS Domain | Is       | `youtube.com` | YouTube Restricted |
+| DNS Domain | is       | `youtube.com` | YouTube Restricted |
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
 
