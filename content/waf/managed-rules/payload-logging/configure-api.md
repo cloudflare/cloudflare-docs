@@ -38,7 +38,7 @@ You can generate a public key [in the command line](/waf/managed-rules/payload-l
 
 ### Example
 
-The following example `PATCH` request updates rule `{rule_id_1}` that executes the Cloudflare Managed Ruleset for zone `{zone_id}`, configuring payload logging with the provided public key.
+The following `PATCH` request example updates rule `{rule_id_1}` that executes the Cloudflare Managed Ruleset for zone `{zone_id}`, configuring payload logging with the provided public key.
 
 ```bash
 ---
