@@ -31,7 +31,7 @@ Other actions you can take include [creating an HTTP block policy](#resolve-find
 
 ### View shared files
 
-File findings for some integrations (such as [Microsoft 365](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/#file-sharing) and [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#file-sharing)) will provide an inaccessible file. To view the actual shared file:
+File findings for some integrations (such as [Microsoft 365](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/#file-sharing) and [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#file-sharing)) may link to an inaccessible file. To access the actual shared file:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. Locate the individual finding, then select **View**.
