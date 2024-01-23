@@ -10,6 +10,10 @@ meta:
 
 # Cloudflare API Shield
 
+Go to [this page](/1.1.1.1./).
+
+And then the the thing works.
+
 Cloudflare offers a range of products to help identify and address API vulnerabilities.
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
