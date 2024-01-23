@@ -17,6 +17,6 @@ You must be a user who has brought your own IP address to Cloudflare, which incl
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2.  Select **Notifications** > **Add**.
 3.  Locate **Route Leak Detection** from the list > **Select**.
-5.  Enter a name and description for the notification.
-6.  Enter one or more email addresses to receive the notifications.
-7.  Select **Save**.
+4.  Enter a name and description for the notification.
+5.  Enter one or more email addresses to receive the notifications.
+6.  Select **Save**.
