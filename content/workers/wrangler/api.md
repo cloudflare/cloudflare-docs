@@ -263,7 +263,6 @@ console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 
 In your terminal you should see: `MY_VARIABLE = test`
 
-
 ### Supported bindings
 
 All supported bindings found in your `wrangler.toml` are available to you via `bindings`.
