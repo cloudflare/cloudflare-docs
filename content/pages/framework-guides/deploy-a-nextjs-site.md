@@ -24,7 +24,7 @@ $ npm create cloudflare@latest my-next-app -- --framework=next
 - allow you to setup a new git repo
 - allow you to deploy your new project
 
-After creating your project, a new `my-next-app` directory will be generated using the the default Next.js template, updated to be fully compatible with Cloudflare Pages.
+After creating your project, a new `my-next-app` directory will be generated using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
 
 Change to this directory to continue development.
 
