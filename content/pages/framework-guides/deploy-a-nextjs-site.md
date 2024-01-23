@@ -36,7 +36,7 @@ If you chose to deploy, you will receive a unique subdomain for your project on 
 
 ## Configure and deploy a project without C3
 
-If you already have a Next.js project or wish to manually create and deploy one without using c3, we recommend that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project. 
+If you already have a Next.js project or wish to manually create and deploy one without using c3, we recommend that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
 
 ## Preview your site
 
@@ -67,7 +67,7 @@ For example to work with a KV binding locally, you need to open `next.config.js`
 if (process.env.NODE_ENV === "development") {
   // import the utility from the next-dev submodule
   const { setupDevBindings } = require("@cloudflare/next-on-pages/next-dev");
- 
+
   // call the utility with the bindings you want to have access to
   setupDevBindings({
     bindings: {
@@ -90,6 +90,7 @@ Local and remote bindings can be accessed directly from `process.env`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 ---
 filename: app/api/hello/route.js
@@ -105,8 +106,10 @@ export async function GET(request) {
   return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 ---
 filename: app/api/hello/route.ts
@@ -122,6 +125,7 @@ export async function GET(request: NextRequest) {
   return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -166,21 +170,21 @@ When developing a `next-on-pages` application, this is the development workflow 
 
 ### Develop using the standard Next.js dev server
 
-  The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
+The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
 
 ### Build and preview your worker locally
 
-  In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you're comfortable checking the correctness of the application during your development process you'll want to build your worker and preview it locally using Cloudflare's `workerd` JavaScript runtime.
-  
-  If you've created your project with C3, you can do this by running `npm run pages:build && npm run pages:dev`.
-  
-  If you've created your project manually, you'll need to run `npx @cloudflare/next-on-pages --watch` and preview it by running `wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat`.
-  
-  By doing this, you can run your app locally to make sure everything is working as you expect it to.
+In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you're comfortable checking the correctness of the application during your development process you'll want to build your worker and preview it locally using Cloudflare's `workerd` JavaScript runtime.
+
+If you have created your project with C3, you can do this by running `npm run pages:build && npm run pages:dev`.
+
+If you have created your project manually, you will need to run `npx @cloudflare/next-on-pages --watch` and preview it by running `wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat`.
+
+By doing this, you can run your application locally to make sure everything is working as you expect it to.
 
 ### Deploy your app and iterate
 
-  Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via direct uploads or git integration) and iterate over the process to make new changes.
+Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via direct uploads or git integration) and iterate over the process to make new changes.
 
 ## `Image` component
 
@@ -191,6 +195,5 @@ The Cloudflare network does not provide the same image optimization support as t
 - If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
 
 Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/cloudflare-images/), refer to the [Next.js image resizing integration guide](/images/image-resizing/integration-with-frameworks/#nextjs).
-
 
 {{<render file="_learn-more.md" withParameters="Next.js">}}
