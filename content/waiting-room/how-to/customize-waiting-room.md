@@ -100,7 +100,7 @@ When you create a waiting room with custom HTML, you can have access to several 
 
 #### Multiple-language support
 
-Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTimeMinutes` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
+Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTime` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
 
 If you would like to display different languages within your custom waiting room depending on path or subdomain, you can add JavaScript code to your custom HTML to do so. Below you can find a couple of starter templates that you can use as an example to start from:
 

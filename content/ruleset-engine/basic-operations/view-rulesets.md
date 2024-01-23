@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: View rulesets
 weight: 2
-layout: list
+layout: wide
 ---
 
 # View rulesets

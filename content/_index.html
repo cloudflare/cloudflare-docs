@@ -47,9 +47,9 @@ meta:
 
 - ![screw](/icons/troubleshoot.svg) [Troubleshoot errors](/support/troubleshooting/cloudflare-errors/)
 - ![domain](/icons/domain.svg) [Register a domain](/registrar/)
-- ![diagnostics](/icons/review.svg) [Site diagnostics](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
+- ![diagnostics](/icons/1.1.1.1.svg) [Set up 1.1.1.1](/1.1.1.1/setup/)
 - ![dns](/icons/dns.svg) [Update DNS records](/dns/manage-dns-records/)
-- ![caching](/icons/caching.svg) [Customize caching](/cache/)
+- ![caching](/icons/caching.svg) [Set up caching](/cache/get-started/)
 
 [View all products](/products/)
 
@@ -102,6 +102,57 @@ meta:
 {{</tri-block>}}
 </div>
 </div>
+
+<div class="TryOutSection">
+  <h2>Build with Cloudflare</h2>
+  <div class="documentation-container">
+    <input type="radio" id="section1" name="sections" checked>
+    <input type="radio" id="section2" name="sections">
+    <input type="radio" id="section3" name="sections">
+    <input type="radio" id="section4" name="sections">
+    <input type="radio" id="section5" name="sections">
+  
+    <div class="documentation-sidebar">
+      <label for="section1" id="section1Label">Return HTML</label>
+      <label for="section2" id="section2Label">Return JSON</label>
+      <label for="section3" id="section3Label">Fetch HTML</label>
+      <label for="section4" id="section4Label">Redirect</label>
+      <label for="section5" id="section5Label">Respond with a new site</label>
+    </div>
+  
+    <div class="documentation-content">
+  <div class="content" id="section1Content">
+  {{<markdown>}}
+  {{<render file="_return-html-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section2Content">
+  {{<markdown>}}
+  {{<render file="_return-json-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section3Content">
+  {{<markdown>}}
+  {{<render file="_fetch-html-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section4Content">
+  {{<markdown>}}
+  {{<render file="_redirect-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+  <div class="content" id="section5Content">
+  {{<markdown>}}
+  {{<render file="_respond-another-site-example-js.md" productFolder="workers">}}
+  {{</markdown>}}
+  </div>
+    </div>
+  </div>
+  <div class="ViewProducts">
+  {{<markdown>}}
+  [Learn more about Workers >](/workers/)
+  {{</markdown>}}
+  </div>
 
 <div class="FeaturedContentSection">
 <div>

@@ -4,7 +4,6 @@ pcx_content_type: overview
 weight: 3
 meta:
   title: Cloudflare Network Analytics
-layout: single
 ---
 
 # Cloudflare Network Analytics

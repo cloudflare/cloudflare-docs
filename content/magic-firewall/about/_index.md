@@ -2,7 +2,6 @@
 title: About
 pcx_content_type: navigation
 weight: 3
-layout: single
 ---
 
 # About

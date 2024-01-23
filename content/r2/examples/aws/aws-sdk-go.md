@@ -3,7 +3,7 @@ title: aws-sdk-go
 pcx_content_type: configuration
 ---
 
-# Configure `aws-sdk-go` for R2
+# Configure `aws-sdk-go` for R2 
 
 {{<render file="_keys.md">}}<br>
 
@@ -38,6 +38,7 @@ func main() {
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithEndpointResolverWithOptions(r2Resolver),
 		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyId, accessKeySecret, "")),
+		config.WithRegion("auto"),
 	)
 	if err != nil {
 		log.Fatal(err)

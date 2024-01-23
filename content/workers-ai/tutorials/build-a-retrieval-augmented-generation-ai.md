@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
-layout: single
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI

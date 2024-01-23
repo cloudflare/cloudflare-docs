@@ -77,8 +77,6 @@ To review Workers bound to your Worker in the Cloudflare dashboard:
 2. Select **Workers & Pages** and in **Overview**, select your **Worker**.
 3. Go to **Triggers** > **Bound Services**. Your team can view cross-service dependencies in this manner.
 
-![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers & Pages > your Worker > Triggers](/images/workers/platform/bindings/service-bindings-triggers.png)
-
 ## Compose an example Worker
 
 In the following example, you will create a `gateway` Worker that invokes an `auth` Worker to handle authorization checks.
@@ -93,8 +91,6 @@ To manage Service bindings:
 2. In Account Home, select **Workers & Pages**. 
 3. Select your Worker > **Settings**.
 4. In **Variables**, find **Service bindings** > **Edit variables**.
-
-![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/images/workers/platform/bindings/service-bindings.png)
 
 Once added, the `gateway` Worker can access the Workers Service binding directly from the code, as in the example below. It utilizes the `fetch` API.
 

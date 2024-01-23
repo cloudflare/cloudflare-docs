@@ -9,9 +9,7 @@ weight: 10
 
 ## Why do I not see scripts after I activated Page Shield?
 
-If you recently [activated](/page-shield/get-started/) Page Shield, you may see a delay in reporting.
-
-Cloudflare creates reports based on a sample of your application traffic. These reports need a certain amount of traffic to be statistically valid.
+Page Shield does not collect data on every single page view. Instead, it uses a sampling approach to gather information efficiently. This means that domains with lower traffic might take longer to generate initial reports, as these domains need more page views to accumulate enough samples. To speed up the reporting process, it is recommended that you actively generate traffic to your application after [activating Page Shield](/page-shield/get-started/). This will provide Page Shield with more data to work with, leading to faster report generation.
 
 ## Why do I see scripts that I do not recognize?
 

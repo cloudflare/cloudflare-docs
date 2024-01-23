@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Advanced certificates
 weight: 2
-layout: single
 ---
 
 # Advanced certificates

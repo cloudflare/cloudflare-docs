@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Posture logs
-layout: single
 weight: 7
 ---
 

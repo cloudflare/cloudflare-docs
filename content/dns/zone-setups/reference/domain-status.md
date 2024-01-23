@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Zone status
-layout: list
+layout: wide
 ---
 
 # Zone status

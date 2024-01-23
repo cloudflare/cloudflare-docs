@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: List and ack messages from the dashboard
 summary: Use the dashboard to fetch and acknowledge the messages currently in a queue.
 weight: 1004
-layout: single
 meta:
   title: Cloudflare Queues - Listing and acking messages from the dashboard
 ---

@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create an HTML form
-layout: single
 ---
 
 # Create an HTML form

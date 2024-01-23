@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Total TLS
 weight: 14
-layout: single
 ---
 
 # Total TLS
@@ -22,7 +21,7 @@ When issued, these certificates will have a type of **Advanced - Total TLS**.
 ## Availability
 
 Total TLS is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).
-  
+
 ## Limitations
 
 ### Load Balancing
@@ -31,6 +30,6 @@ Because Total TLS does not issue certificates for any subdomain used by [Cloudfl
 
 ### Deleting certificates
 
-Once you [enable Total TLS](/ssl/edge-certificates/additional-options/total-tls/enable/), be careful deleting any certificates associated with proxied hostnames. 
+Once you [enable Total TLS](/ssl/edge-certificates/additional-options/total-tls/enable/), be careful deleting any certificates associated with proxied hostnames.
 
 If you do, our system assumes you want to opt that hostname out of Total TLS certificate and will not order new certificates for the hostname in the future. This behavior applies even if you delete and re-create the hostname's DNS record.

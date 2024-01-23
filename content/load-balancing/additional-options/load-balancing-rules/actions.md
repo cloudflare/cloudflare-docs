@@ -3,7 +3,7 @@ title: Actions
 type: overview
 pcx_content_type: reference
 weight: 31
-layout: list
+layout: wide
 meta:
   title: Load Balancing actions
 ---

@@ -15,7 +15,7 @@ To present a client certificate when communicating with a service, create a [mTL
 
 {{<Aside type="warning">}}
 
-Currently, mTLS for Workers is not supported for domains [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) by Cloudflare.
+Currently, mTLS for Workers cannot be used for requests made to a service that is a [proxied zone](/dns/manage-dns-records/reference/proxied-dns-records/) on Cloudflare. If your Worker presents a client certificate to a service proxied by Cloudflare, Cloudflare will return a `520` error.
 
 {{</Aside>}}
 
@@ -38,7 +38,7 @@ Then, update your Worker project's `wrangler.toml` file to create an mTLS certif
 header: wrangler.toml
 ---
 mtls_certificates = [
-  { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" } 
+  { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" }
 ]
 ```
 
