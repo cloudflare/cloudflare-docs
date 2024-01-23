@@ -10,7 +10,7 @@ meta:
 # Cloudflare Network Interconnect
 
 {{<description>}}
-Improve performance and security, while decreasing your overall bandwidth costs.
+Improve your network's performance and security.
 
 
 {{</description>}}
