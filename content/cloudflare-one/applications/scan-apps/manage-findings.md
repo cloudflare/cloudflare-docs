@@ -33,9 +33,10 @@ Other actions you can take include [creating an HTTP block policy](#resolve-find
 
 File findings for some integrations (such as Microsoft 365 and Box) will provide a non-accessible file. To view the actual shared file:
 
-1. Go to the individual finding.
-2. In **Active Instances**, select the file name.
-3. In **Shared Links**, select the linked file instance.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+2. Locate the individual finding, then select **View**.
+3. In **Active Instances**, select the file name.
+4. In **Shared Links**, select the linked file instance.
 
 ## Severity levels
 
