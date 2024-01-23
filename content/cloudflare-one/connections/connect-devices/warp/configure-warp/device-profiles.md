@@ -32,6 +32,8 @@ Your profile will appear in the **Profile settings** list. You can rearrange the
 
 {{<tab label="api" no-code="true">}}
 
+Send a `POST` request to the [Devices endpoint](/api/operations/devices-create-device-settings-policy):
+
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
 --header "X-Auth-Email: <EMAIL>" \
