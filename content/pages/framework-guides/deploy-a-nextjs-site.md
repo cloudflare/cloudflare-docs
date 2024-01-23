@@ -175,9 +175,9 @@ When developing a `next-on-pages` application, this is the development workflow 
 
 The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
 
-### Build and preview your worker locally
+### Build and preview your application locally
 
-In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you're comfortable checking the correctness of the application during your development process you'll want to build your worker and preview it locally using Cloudflare's `workerd` JavaScript runtime.
+In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you're comfortable checking the correctness of the application during your development process you'll want to build and preview it locally using Cloudflare's `workerd` JavaScript runtime.
 
 If you have created your project with C3, you can do this by running `npm run pages:build && npm run pages:dev`.
 
