@@ -21,26 +21,45 @@ Follow this troubleshooting procedure when users have issues connecting to your 
 ## 3. Is the user blocked by a Gateway policy?
 
 To check if a Gateway block event occurred:
+  1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway**.
+  2. Select the **DNS**, **Network**, or **HTTP** tab.
+  3. Apply the following filters:
+      - **Email**: User’s email address
+      - **Event**: _Blocked_
+      - **Date Time Range**: Time period when the user accessed the application
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway**.
-2. Select the **DNS**, **Network**, or **HTTP** tab.
-3. Apply the following filters:
-    - **Email**: User’s email address
-    - **Event**: _Blocked_
-    - **Date Time Range**: Time period when the user accessed the application
+## 4. Is the user matching the correct Gateway policy?
+
+1. To determine the policy that was matched:
+    1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway**.
+    2. Select the **DNS**, **Network**, or **HTTP** tab.
+    3. Apply the following filters:
+        - **Email**: User’s email address
+        - **Date Time Range**: Time period when the user accessed the application
+    4. In the search box, filter by the destination IP or FQDN.
+    5. In the results, select a log and note its **Policy Name** value.
+2. In **Gateway** > **Firewall Policies**, compare the [order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/) of the matched policy and the intended policy.
+3. Cross-reference the log fields with the policy that should have matched.
 
 ### Verify user identity values
 
+If the mismatched log field is related to user identity, check the identity registry and verify OIDC groups used on the Policy are being reported for the user generating the traffic
+
+If the information is not updated with the new OIDC groups, ask the user to Re-authenticate WARP locally on the WARP endpoint (Preferences - Account - ‘Re-Authenticate Session’)
+
 ### Verify device posture values
 
-## 4. Is the Gateway proxy enabled?
+If device posture related, check the device details and confirm Device Posture Checks used on the policy are passed for the users’ endpoint
+Go to My Team - Devices - Click on the device - View Details - Posture Checks
+
+## 5. Is the Gateway proxy enabled?
 
 Go to **Settings** > **Network** and ensure that **Proxy** is enabled for TCP, UDP, and ICMP traffic.
 
-## 5. Is the user's traffic reaching the tunnel?
+## 6. Is the user's traffic reaching the tunnel?
 
-## 6. Is the tunnel forwarding requests to the origin service?
+## 7. Is the tunnel forwarding requests to the origin service?
 
-## 7. How is the origin service handling requests?
+## 8. How is the origin service handling requests?
 
-## 8. Is TLS inspection affecting the connection to the origin service?
+## 9. Is TLS inspection affecting the connection to the origin service?
