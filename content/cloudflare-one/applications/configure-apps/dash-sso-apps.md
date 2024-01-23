@@ -18,7 +18,10 @@ All users in your email domain must exist as a member in your Cloudflare account
 
 {{<Aside>}}
 
-Cloudflare dashboard SSO does not support users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
+Cloudflare dashboard SSO does not support:
+
+1. Users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
+2. IDP initiated logins such as a tile in Okta. All login attempts must originate from https://dash.cloudflare.com. You can create a bookmark for this URl in your IDP to assist users. 
 
 {{</Aside>}}
 
