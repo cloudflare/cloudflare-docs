@@ -6,6 +6,8 @@ weight: 1
 
 # Pricing
 
+## Billing metrics
+
 {{<render file="_durable_objects_pricing.md" productFolder="workers">}}
 
 ## Durable Objects billing examples
@@ -34,16 +36,16 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 This example represents a moderately trafficked Durable Objects based application using WebSockets to broadcast game, chat or real-time user state across connected clients:
 
-* 100 Durable Objects each have 50 WebSocket connections established to each of them.
+* 100 Durable Objects have 50 WebSocket connections established to each of them.
 * Clients send approximately one message a minute for eight active hours a day, every day of the month.
 
 In this scenario, the estimated monthly cost would be calculated as:
 
 - 50 requests to establish the WebSockets.
-- 100 messages per minute \* 50 Durable Objects \* 60 minutes \* 8 hours \* 30 days = 72,000,000 requests.
+- 50 messages per minute \* 100 Durable Objects \* 60 minutes \* 8 hours \* 30 days = 72,000,000 requests.
 - (72 million requests - included 1 million requests) x $0.15 / 1,000,000 = $10.65.
-- 100 Durable Objects \* 60 seconds \* 60 minutes \* 8 hours \* 30 days / 2 = 42,200,000 seconds.
-- 129,600,000 seconds \* 128 MB / 1 GB = 5,529,600 GB-s.
+- 100 Durable Objects \* 60 seconds \* 60 minutes \* 8 hours \* 30 days / 2 = 43,200,000 seconds.
+- 43,200,000 seconds \* 128 MB / 1 GB = 5,529,600 GB-s.
 - (5,529,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $64.12.
 
 **Estimated total**: $10.65 (requests) + $64.12 (compute duration) = $74.77 per month.
