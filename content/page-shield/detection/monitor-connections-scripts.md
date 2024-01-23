@@ -60,9 +60,11 @@ The details of each connection/script include:
 The details of each cookie include:
 
 - **Type**: A cookie can have the following types:
+
     - **First-party**: Cookies set by the origin server (through a `set-cookie` HTTP response header)
     - **Third-party**: Cookies known to be from a third-party, according to Page Shield data
     - **Unknown**: All other situations. Most third-party cookies will show as "unknown" to begin with.
+
 - **Set by**: Which entity set the cookie, according to analysed traffic (_Server_, _Browser_, or _Both_).
 - **Domain**: The value of the `Domain` cookie attribute. Only available for Enterprise customers with a paid add-on.
 - **SameSite**: The value of the `SameSite` cookie attribute. Only available for Enterprise customers with a paid add-on.
