@@ -11,4 +11,4 @@ Example: the device's address.
 
 ## Usage
 
-Do not use `“ ” ‘ ’`, which are double or single typographer’s (“curly”) quotation marks. Use straight quotes instead.
+Do not use `“ ” ‘ ’`, which are double or single typographer’s (“curly”) quotation marks. Use standard quotation marks instead.
