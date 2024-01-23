@@ -54,7 +54,7 @@ inputParameters: editWord
 | Cloudchamber Read | Grants read access to Cloudchamber deployments. |
 | Cloudchamber $1 | Grants write access to Cloudchamber deployments. |
 | Cloudflare Calls Read | Grants read access to Cloudflare Calls. |
-| Cloudflare Calls Write | Grants write access to Cloudflare Calls. |
+| Cloudflare Calls $1 | Grants write access to Cloudflare Calls. |
 | Cloudflare DEX Read                                          | Grants read access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                    |
 | Cloudflare DEX $1                                          | Grants write access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                   |
 | Cloudflare Images Read                                       | Grants read access to [Cloudflare Images](/images/).                                                                                   |
