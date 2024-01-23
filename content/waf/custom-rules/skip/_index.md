@@ -31,7 +31,7 @@ For more information on the available options, refer to [Available skip options]
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure custom rules via API.
 
-Refer to [API examples](/waf/custom-rules/skip/api-examples/) for example API requests.
+Refer to [API examples](/waf/custom-rules/skip/api-examples/) for examples of creating skip rules.
 
 {{</tab>}}
 {{</tabs>}}
