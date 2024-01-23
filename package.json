@@ -19,7 +19,9 @@
     "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
+    "algoliasearch": "^4.22.1",
     "fromnow": "3.0.1",
+    "instantsearch.js": "^4.64.0",
     "mermaid": "9.1.7",
     "node-html-parser": "6.1.6",
     "vue": "^3.2.45"
