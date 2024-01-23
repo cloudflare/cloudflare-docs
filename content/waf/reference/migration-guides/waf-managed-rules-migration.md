@@ -265,6 +265,7 @@ The returned configuration in the example above, which would match the existing 
     curl --request PUT \
     "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
     --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "default",
       "rules": [
@@ -299,6 +300,7 @@ The returned configuration in the example above, which would match the existing 
     curl --request PUT \
     "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
     --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "default",
       "rules": [
