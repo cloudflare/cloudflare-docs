@@ -36,3 +36,4 @@ In summary, five steps have to succeed after Cloudflare requests a CA to issue o
 * Settings that interfere with the validation URLs can cause issues with your certificate issuance or renewal. Refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
 * The DCV tokens are generated and controlled by the CA and not by Cloudflare.
 * Certificate authority authorization (CAA) records may block certificate issuance. Refer to [CAA records](/ssl/edge-certificates/caa-records/).
+* The DCV tokens may change upon verification failures. For example, if a DCV check fails because of a DNSSEC issue, new tokens may be generated.
