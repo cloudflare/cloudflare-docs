@@ -166,7 +166,7 @@ When developing a `next-on-pages` application, this is the development workflow 
 
 ### Develop using the standard Next.js dev server
 
-  In order to have a very fast and polished dev experience the standard dev server provided by Next.js is the best available option. So use it to quickly make changes and iterate over them, while still having access to your Cloudflare bindings thanks to the `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above).
+  The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
 
 ### Build and preview your worker locally
 
