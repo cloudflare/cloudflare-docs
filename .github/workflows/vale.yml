@@ -31,7 +31,7 @@ jobs:
 
       - name: Vale
         uses: errata-ai/vale-action@reviewdog
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
         with:
           files: ${{ env.CHANGED_FILES }}
           reporter: github-pr-review
