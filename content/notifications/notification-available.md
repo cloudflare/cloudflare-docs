@@ -303,7 +303,7 @@ Enterprise plans.
 
 **Who is it for?**
 
-[BYOIP](/byoip/) and [Magic Transit](/magic-transit/) customers with [Network Analytics](/analytics/network-analytics/)) who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+[BYOIP](/byoip/) and [Magic Transit](/magic-transit/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
 
 **Other options / filters**
 
