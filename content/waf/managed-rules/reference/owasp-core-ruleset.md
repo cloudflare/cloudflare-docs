@@ -150,6 +150,7 @@ highlight: 9-20
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "action": "execute",
   "action_parameters": {
@@ -343,6 +344,7 @@ highlight: 9-17
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "action": "execute",
   "action_parameters": {
