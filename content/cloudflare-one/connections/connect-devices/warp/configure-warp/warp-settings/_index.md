@@ -196,7 +196,22 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 
 {{<heading-pill style="beta" heading="h3">}} Allow users to enable local network exclusion {{</heading-pill>}}
 
-{{<render file="warp/_all-systems-modes-plans.md">}}
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2024.1.7.1           |
+| macOS    | ✅           | 2024.1.7.1           |
+| Linux    | ✅           | 2024.1.7.1           |
+| iOS      | ❌           |       |
+| Android  | ✅           | 1.4   |
+| ChromeOS | ✅           | 1.4   |
+
+{{</details>}}
 
 This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network.
 
