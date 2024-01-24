@@ -289,12 +289,13 @@ export function zarazTrackDocEvents() {
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
-        if (link.hostname !== "developers.cloudflare.com") {
-          if (link.href.includes("workers.cloudflare.com/playground#")) {
+        const linkURL = new URL(link)
+        if (linkURL.hostname !== "developers.cloudflare.com") {
+          if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('playground link click', link);
             });
-          } else if (link.hostname.includes("cloudflare.com")) {
+          } else if (["blog.cloudflare.com", "community.cloudflare.com", "dash.cloudflare.com", "one.dash.cloudflare.com", "r2-calculator.cloudflare.com", "radar.cloudflare.com", "speed.cloudflare.com", "www.cloudflare.com"].includes(linkURL.hostname)) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('Cross Domain Click', link);
             });
