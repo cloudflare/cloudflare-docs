@@ -37,9 +37,10 @@ To add a site:
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Network name**, enter a descriptive name for your WAN.
-3. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
-4. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
-5. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
+3. VLAN ID**: Specify a [VLAN ID](#vlan-id) to create virtual LANs.
+4. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
+5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
+6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
   <div class="medium-img">
 
@@ -61,13 +62,14 @@ To create a LAN:
 
 1. In **LAN configuration**, select **Create**.
 2. Enter a descriptive name for your LAN in **Network name**.
-3. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
-4. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
-5. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
+3. VLAN ID**: Specify a [VLAN ID](#vlan-id) to create virtual LANs.
+4. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
+5. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
+6. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
     1. **DHCP**: Choose this option if the IP address for your Connector is fetched from a DHCP server.
     2. **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](#dhcp-server).
-6. Select **Save**.
-7. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+7. Select **Save**.
+8. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
 
 #### DHCP server
@@ -178,6 +180,14 @@ To check the IPsec tunnels and static routes created by your Magic Wan Connector
 2. Go to **Magic WAN** > **Sites**.
 3. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
 4. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+
+---
+
+## VLAN ID
+
+This feature allows you to have multiple [VLANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
+
+A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN / LAN.
 
 ---
 
