@@ -9,7 +9,9 @@ weight: 2
 layout: example
 ---
 
-This example shows how to build a rate limiter using Durable Objects and Workers that can be used to protect upstream resources. This example also discusses some decisions that need to be made when designing a system, such as a rate limiter, with Durable Objects.
+This example shows how to build a rate limiter using Durable Objects and Workers that can be used to protect upstream resources, including third-party APIs that your application relies on and/or services that may be costly for you to invoke.
+
+This example also discusses some decisions that need to be made when designing a system, such as a rate limiter, with Durable Objects.
 
 The Worker creates a `RateLimiter` Durable Object on a per IP basis to protect upstream resources. IP based rate limiting can be effective without negatively impacting latency because any given IP will remain within a small geographic area colocated with the `RateLimiter` Durable Object instance. Furthermore, throughput is also improved because each IP gets its own Durable Object.
 
