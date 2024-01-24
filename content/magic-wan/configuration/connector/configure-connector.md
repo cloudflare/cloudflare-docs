@@ -183,14 +183,6 @@ To check the IPsec tunnels and static routes created by your Magic Wan Connector
 
 ---
 
-## VLAN ID
-
-This feature allows you to have multiple [VLANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
-
-A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN / LAN.
-
----
-
 ## Maintenance
 
 After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/configuration/connector/device-information/#heartbeat).
@@ -213,3 +205,18 @@ The interrupt service window defines when Magic WAN Connector can update its sys
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
 3. Find the Connector you want to deactivate, select the three dots next to it > **Edit**.
 4. In **Interrupt service window**, select the most appropriate time for the Connector to update its systems.
+
+---
+
+## VLAN ID
+
+This feature allows you to have multiple [VLANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
+
+A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN / LAN.
+
+## Next steps
+
+Refer to [Device information](/magic-wan/configuration/connector/device-information/) to learn more about:
+- [Magic WAN Connector security](/magic-wan/configuration/connector/device-information/#security-and-other-information)
+- [How to interpret Magic WAN Connector heartbeat](/magic-wan/configuration/connector/device-information/#heartbeat)
+- [Metrics](/magic-wan/configuration/connector/device-information/#device-metrics)
