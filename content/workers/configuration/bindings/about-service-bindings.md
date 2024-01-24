@@ -40,13 +40,13 @@ To configure a Service binding in your `wrangler.toml`, use the following syntax
 
 ```toml
 [[services]]
-binding = "<MY_SERVICE>"
+binding = "<BINDING_NAME>"
 service = "<WORKER_NAME>"
 
 # or
 
 services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", environment = "<ENVIRONMENT_NAME>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
 ```
 The `wrangler.toml` options are:
@@ -59,11 +59,19 @@ The `wrangler.toml` options are:
 For the example outlined above, a `wrangler.toml` might look like this:
 
 ```toml
-## Need a double example here from Samuel
+[[services]]
+binding = "AUTH"
+service = "<AUTH_WORKER>"
+
+[[services]]
+binding = "LOGOUT"
+service = "<LOGOUT_WORKER>"
+
+# or
 
 services = [
-  { binding = "auth", service = "authentication" },
-  { binding = "logout", service = "logout" }
+  { binding = "auth", service = "<AUTH_WORKER>" },
+  { binding = "logout", service = "<LOGOUT_WORKER>" }
 ]
 ```
 

@@ -412,12 +412,24 @@ Example:
 ---
 header: wrangler.toml
 ---
+d1_databases = [
+  { binding = "PROD_DB", database_name = "<AUTH_WORKER>", database_id = "" },
+  { binding = "PROD_DB", database_name = "<AUTH_WORKER>", database_id = "" }
+]
+
+# or
+
 [[d1_databases]]
 binding = "PROD_DB"
 database_name = "test-db"
 database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
-# How to write more than one D1 binding needed here
+[[d1_databases]]
+binding = "PROD_DB"
+database_name = "test-db"
+database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+
+# ask max about this use case
 ```
 
 ### Durable Objects
@@ -462,7 +474,10 @@ durable_objects.bindings = [
 name = "<DURABLE_OBJECT>"
 class_name = "<TEST_CLASS>"
 
-# How to write more than one DO binding needed here
+[[durable_objects.bindings]]
+name = "<DURABLE_OBJECT>"
+class_name = "<TEST_CLASS>"
+
 ```
 
 #### Migrations
@@ -496,10 +511,13 @@ Example:
 header: wrangler.toml
 ---
 [[migrations]]
-tag = ""
-new_classes = [""]
-renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }]
-deleted_classes = ["DeprecatedClass"]
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+
+[[migrations]]
+tag = "v2"
+renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
+deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
 ### KV namespaces
@@ -537,7 +555,8 @@ Example:
 header: wrangler.toml
 ---
 kv_namespaces = [
-  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
+  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" },
+  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>"
 ]
 
 # or
@@ -545,6 +564,11 @@ kv_namespaces = [
 [[kv_namespaces]]
 binding = "<NAMESPACE>"
 id = "<ID>"
+
+[[kv_namespaces]]
+binding = "<NAMESPACE>"
+id = "<ID>"
+# KV name 
 ```
 
 ### Queues
@@ -572,10 +596,12 @@ Example:
 header: wrangler.toml
 ---
 [[queues.producers]]
-  queue = "my-queue"
   binding = "MY_QUEUE"
+  queue = "my-queue"
 
-# More than one
+[[queues.producers]]
+  binding = "MY_QUEUE"
+  queue = "my-queue"
 ```
 
 To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
@@ -667,6 +693,7 @@ Example:
 header: wrangler.toml
 ---
 r2_buckets  = [
+  { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"},
   { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
 ]
 
@@ -676,7 +703,9 @@ r2_buckets  = [
 binding = "<TEST_BUCKET>"
 bucket_name = "<TEST_BUCKET>"
 
-# More than one
+[[r2_buckets]]
+binding = "<TEST_BUCKET>"
+bucket_name = "<TEST_BUCKET>"
 ```
 
 ### Vectorize indexes
@@ -703,10 +732,20 @@ Example:
 ---
 header: wrangler.toml
 ---
+vectorize  = [
+  { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"},
+  { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"}
+]
+
+# or
 
 [[vectorize]]
-binding = "<INDEX_NAME>"
-index_name = "<YOUR_INDEX>"
+binding = "<BINDING_NAME>"
+index_name = "<INDEX_NAME>"
+
+[[vectorize]]
+binding = "<BINDING_NAME>"
+index_name = "<INDEX_NAME>"
 ```
 
 ### Service bindings
@@ -774,9 +813,17 @@ Example:
 ---
 filename: wrangler.toml
 ---
+analytics_engine_datasets = [
+  { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
+
+# or
+
 [[analytics_engine_datasets]]
 binding = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
+
+# tanushree?
 ```
 
 ### mTLS Certificates
@@ -804,10 +851,15 @@ Example of a `wrangler.toml` configuration that includes an mTLS certificate bin
 header: wrangler.toml
 ---
 mtls_certificates = [
+    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" },
     { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
 ]
 
 # or
+
+[[mtls_certificates]]
+binding = "<BINDING_NAME>"
+certificate_id = "<CERTIFICATE_ID>
 
 [[mtls_certificates]]
 binding = "<BINDING_NAME>"
@@ -823,11 +875,15 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 {{<definitions>}}
 
-- `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - 
+
+- `destination_address` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Defines that you are creating bindings for sending emails from your Worker.
 
-- `attribute` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `allowed_destination_addresses` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Defines the type of binding. Refer to [Types of bindings](/email-routing/email-workers/send-email-workers/#types-of-bindings) for more information.
 
@@ -859,6 +915,10 @@ Example:
 ---
 filename: wrangler.toml
 ---
+ai = { binding = "AI" }
+
+# or
+
 [ai]
 binding = "AI" # available in your Worker code on `env.AI`
 ```
