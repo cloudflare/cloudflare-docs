@@ -11,7 +11,7 @@ meta:
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
-- [`getBindingsProxy`](#getBindingsProxy) - Get bindings via Wrangler and use them in your code.
+- [`getBindingsProxy`](#getBindingsProxy) - Get [bindings](/workers/configuration/bindings/) via Wrangler and use them in your code.
 
 ## `unstable_dev`
 
