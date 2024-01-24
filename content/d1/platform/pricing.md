@@ -69,6 +69,10 @@ Every query returns a `meta` object that contains a total count of the rows read
 
 These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare.com) and the [analytics API](/d1/observability/metrics-analytics/), allowing you to attribute read and write volumes to specific databases, time periods, or both.
 
+- How are deletes metered?
+
+Deleting rows are metered as writes. A `DELETE` statement will return a `rows_written` count that reflects the number of rows deleted. Deleting rows in a database is the same underlying storage operation as writing rows.
+
 - Does D1 charge for data transfer / egress?
 
 No.
