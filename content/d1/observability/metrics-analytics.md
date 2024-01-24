@@ -19,7 +19,7 @@ D1 currently exports the below metrics:
 | Read Queries (qps)      | `readQueries`              | The number of read queries issued against a database. This is the raw number of read queries, and is not used for billing. |
 | Write Queries (qps)     | `writeQueries`             | The number of write queries issued against a database. This is the raw number of write queries, and is not used for billing. |
 | Rows read (count) | `rowsRead` | The number of rows read (scanned) across your queries. See [Pricing](/d1/platform/pricing/) for more details on how rows are counted. |
-| Rows written (count) | `rowsWritten` | The number of rows written across your queries. |
+| Rows written (count) | `rowsWritten` | The number of rows written and/or deleted across your queries. |
 | Query Response (bytes)  | `queryBatchResponseBytes`  | The total response size of the serialized query response, including any/all column names, rows and metadata. Reported in bytes. |
 | Query Latency (ms)      | `queryBatchTimeMs`         | The total query response time, including response serialization, on the server-side. Reported in milliseconds. |
 
