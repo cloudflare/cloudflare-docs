@@ -37,7 +37,7 @@ export default {
       console.log(`Based on ${country}-based request, your user would go to ${url}.` )
       return Response.redirect(url);
     } else {
-      return fetch(request);
+      return fetch("https://example.com", request);
     }
   },
 };

@@ -19,7 +19,7 @@ playground: true
 ---
 export default {
   async fetch(request) {
-    const response = await fetch(request);
+    const response = await fetch("https://example.com", request);
 
     // Clone the response so that it's no longer immutable
     const newResponse = new Response(response.body, response);
