@@ -37,7 +37,7 @@ To add a site:
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Network name**, enter a descriptive name for your WAN.
-3. VLAN ID**: Specify a [VLAN ID](#vlan-id) to create virtual LANs.
+3. In **VLAN ID**, specify a [VLAN ID](#vlan-id) to create virtual LANs.
 4. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
@@ -62,7 +62,7 @@ To create a LAN:
 
 1. In **LAN configuration**, select **Create**.
 2. Enter a descriptive name for your LAN in **Network name**.
-3. VLAN ID**: Specify a [VLAN ID](#vlan-id) to create virtual LANs.
+3. In **VLAN ID**, specify a [VLAN ID](#vlan-id) to create virtual LANs.
 4. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
 5. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 6. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
