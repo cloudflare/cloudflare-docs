@@ -235,7 +235,7 @@ describe("multi-worker testing", () => {
 
 ## `getBindingsProxy`
 
-This function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
+The `getBindingsProxy` function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
 
 ### Usage
 
