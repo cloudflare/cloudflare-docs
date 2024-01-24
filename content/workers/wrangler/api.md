@@ -239,7 +239,7 @@ The `getBindingsProxy` function is used to get a proxy for **local** `workerd` b
 
 ### Usage
 
-The function uses bindings found in `wrangler.toml`. For example, if you have this in `wrangler.toml`:
+The `getBindingsProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
 
 ```js
 [vars]
