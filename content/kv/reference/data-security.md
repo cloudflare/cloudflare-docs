@@ -30,4 +30,4 @@ API access via the HTTP API or using the [wrangler](/workers/wrangler/install-an
 
 ## Compliance
 
-To learn more about Cloudflare's adherence to industry-standard security compliance certifications, visit the Cloudflare [Trust Hub](https://www.cloudflare.com/trust-hub/compliance-resources/).
+To learn more about Cloudflare's adherence to industry-standard security compliance certifications, refer to Cloudflare's [Trust Hub](https://www.cloudflare.com/trust-hub/compliance-resources/).

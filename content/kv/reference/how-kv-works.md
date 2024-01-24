@@ -60,4 +60,4 @@ If you need stronger consistency guarantees, consider using [Durable Objects](/d
 An approach to achieve write-after-write consistency is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
 ## Security
 
-Visit the [data security documentation](/kv/reference/data-security/) to understand how Workers KV secures data.
+Refer to [Data security documentation](/kv/reference/data-security/) to understand how Workers KV secures data.
