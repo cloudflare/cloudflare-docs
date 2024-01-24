@@ -10,7 +10,7 @@ Regional Services gives you the ability to accommodate regional restrictions by 
 
 Regional Services proceeds and processes traffic within certain regions for customers who have to meet regional compliance or have preferences for maintaining regional control over their data. Examples of use cases could be a customer that needs to accommodate regional restrictions like [GDPR](https://www.cloudflare.com/trust-hub/gdpr/) (General Data Protection Regulation), or customers that are bound by agreement with their own customers that include geographic restrictions on data flows or data processing.
 
-With Regional Services, TLS is only terminated inside the configured region. For example, if a hostname is configured to regionalize to the EU, any HTTPS request from the US will route to the EU.
+With Regional Services, TLS is only terminated inside the configured region. For example, if a hostname is configured to regionalize to the European Union (EU), any HTTPS request from the United States (US) will route to the EU.
 
 ## Global traffic management
 
@@ -39,16 +39,16 @@ sequenceDiagram
  
     User in USA->>CloudflarePoPNYC: TCP connection
     Note right of User in USA: TLS encryption
-    Note left of CloudflarePoPNYC: TCP connection (no TLS unwrapping)
+    Note left of CloudflarePoPNYC: TCP connection<br> (no TLS unwrapping)
     Note right of CloudflarePoPNYC: L3 DDoS protection
-    CloudflarePoPNYC-->>CloudflarePoPDUB: Forwards encrypted request
+    CloudflarePoPNYC-->>CloudflarePoPDUB: Forwards<br> encrypted request
     Note right of CloudflarePoPDUB: TLS termination (decryption)
-    Note right of CloudflarePoPDUB: Applies security and performance features (for example, WAF, Configuration Rules, Load Balancing)
+    Note right of CloudflarePoPDUB: Applies security<br> and performance features<br> (for example, WAF, Configuration Rules, <br>Load Balancing)
     Note right of CloudflarePoPDUB: TLS encryption
     CloudflarePoPDUB-->>EUOriginServer: Requests content
     EUOriginServer-->>CloudflarePoPDUB: Response content
     Note right of CloudflarePoPDUB: TLS termination (decryption)
-    Note right of CloudflarePoPDUB: Caches eligible static content (on encrypted disks)
+    Note right of CloudflarePoPDUB: Caches eligible static content<br> (on encrypted disks)
     Note right of CloudflarePoPDUB: TLS encryption
     CloudflarePoPDUB->>User in USA: Forwards response with content
 ```
