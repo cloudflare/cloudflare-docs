@@ -37,7 +37,7 @@ Use Cloudflare’s edge network to store your images.
 Accept uploads directly and securely from your users by generating a one-time token.
 {{</feature>}}
 
-{{<feature header="Variants" href="/images/transform-images" cta="Create variants by transoforming images">}}
+{{<feature header="Variants" href="/images/transform-images" cta="Create variants by transforming images">}}
 Add up to 100 variants to specify how images should be resized for various use cases.
 {{</feature>}}
 
