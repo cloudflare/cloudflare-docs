@@ -15,7 +15,11 @@ This example also discusses some decisions that need to be made when designing a
 
 The Worker creates a `RateLimiter` Durable Object on a per IP basis to protect upstream resources. IP based rate limiting can be effective without negatively impacting latency because any given IP will remain within a small geographic area colocated with the `RateLimiter` Durable Object instance. Furthermore, throughput is also improved because each IP gets its own Durable Object.
 
-It might seem simpler to implement a global rate limiter, `const id = env.RATE_LIMITER.idFromName("global");`, which can provide better guarantees on the request rate to the upstream resource. However, this would require all requests globally to make a subrequest to a single Durable Object. This would add additional latency for requests not colocated with the Durable Object and global throughput would be capped to the throughput of a single Durable Object.
+It might seem simpler to implement a global rate limiter, `const id = env.RATE_LIMITER.idFromName("global");`, which can provide better guarantees on the request rate to the upstream resource. However:
+
+* this would require all requests globally to make a sub-request to a single Durable Object.
+* This would add additional latency for requests not colocated with the Durable Object and global throughput would be capped to the throughput of a single Durable Object.
+* A single Durable Object that all of your requests rely on is thus typically considered an anti-pattern. Durable Objects work best when they are scoped to a user, room, service and/or the specific subset of your application that requires global co-ordination.
 {{<Aside type="note">}}
 
 If you don't need unique or custom rate-limiting capabilities, see the [rate limiting documentation](/waf/rate-limiting-rules/) that is part of our Web Application Firewall (WAF) product. 
