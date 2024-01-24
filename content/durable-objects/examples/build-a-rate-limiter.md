@@ -27,7 +27,11 @@ If you don't need unique or custom rate-limiting capabilities, see the [rate lim
 {{</Aside>}}
 The Durable Object uses a token bucket algorithm to implement rate limiting. The naive idea is that each request requires a token to complete and the tokens are replinished according to the reciprocal of the desired number of requests per second. As an example, a 1000 requests per second rate limit will have a token replinished every millisecond (as specified by milliseconds_per_request) up to a given capacity limit.
 
-This example makes use of the [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method is called and in this case will add a token to the "Bucket". This implementation is made more efficient by adding tokens in bulk (as specified by milliseconds_for_updates) and preventing the alarm handler from being invoked every millisecond. This would lead to high duration charges for the durable object otherwise.
+This example makes use of Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future. 
+
+* When the alarm's scheduled time comes, the `alarm()` handler method is called and in this case will add a token to the "Bucket".
+* This implementation is made more efficient by adding tokens in bulk (as specified by milliseconds_for_updates) and preventing the alarm handler from being invoked every millisecond.
+* This would lead to high duration charges for the Durable Object otherwise: using alarms reduces the need for the Durable Object to be active.
 
 The first implementation of a rate limiter is below:
 
