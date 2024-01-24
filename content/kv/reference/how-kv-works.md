@@ -59,6 +59,3 @@ If you need stronger consistency guarantees, consider using [Durable Objects](/d
 
 An approach to achieve write-after-write consistency is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
 
-## Security
-
-All values are encrypted at rest with 256-bit AES-GCM, and only decrypted by the process executing your Worker code or responding to your API requests.
