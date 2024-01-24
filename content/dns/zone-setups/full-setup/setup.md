@@ -112,7 +112,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 - [MediaTemple](https://mediatemple.net/community/products/dv/204643220/how-do-i-edit-my-domain's-nameservers)
 - [MelbourneIT](https://support.melbourneit.com.au/articles/help/Domain-Name-Administration-FAQ/?q%3Dedit%2Bnameservers%26fs%3DSearch%26pn%3D1)
 - [Moniker](https://faq.moniker.com/register-own-nameservers)
-- [Name.com](https://www.name.com/support/articles/205934547-Changing-Your-Name-Servers)
+- [Name.com](https://www.name.com/support/articles/205934457-registering-custom-nameservers)
 - [NameCheap](https://www.namecheap.com/support/knowledgebase/article.aspx/767/10/how-can-i-change-the-nameservers-for-my-domain)
 - [Network Solutions](https://www.networksolutions.com/manage-it/edit-nameservers.jsp)
 - [OVH](https://docs.ovh.com/gb/en/domains/web_hosting_general_information_about_dns_servers/#step-2-edit-your-domains-dns-servers)

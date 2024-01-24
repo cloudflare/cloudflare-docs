@@ -263,7 +263,7 @@ Test for an SNI mismatch via an online tool such as: [SSL Shopper](https://www.
 
 Provide Cloudflare Support the following information:
 
-1.  A [HAR file](https://support.cloudflare.com/hc/articles/203118044) captured while duplicating the error.
+1.  A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error.
 
 ___
 

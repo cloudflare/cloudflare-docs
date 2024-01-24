@@ -56,7 +56,7 @@ However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in
 {{<Aside type="note">}}
 If you observe blank or white pages when visiting your website, confirm
 whether the issue occurs when [temporarily pausing
-Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753)
+Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/)
 and contact your hosting provider for assistance.
 {{</Aside>}}
 
