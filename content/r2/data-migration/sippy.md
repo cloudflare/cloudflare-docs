@@ -38,7 +38,7 @@ If you are looking to migrate all of your data from an existing cloud provider t
 
 ## Get started with Sippy
 
-Before getting started, you'll need:
+Before getting started, you will need:
 
 - An existing R2 bucket. If you don’t already have one, refer to [Create buckets](/r2/buckets/create-buckets/).
 - [API credentials](/r2/data-migration/sippy/#create-credentials-for-storage-providers) for your source object storage bucket.
@@ -61,7 +61,8 @@ $ npx wrangler r2 bucket sippy enable <BUCKET_NAME>
 This will prompt you to select between supported object storage providers and lead you through setup.
 
 ### Enable Sippy via API
-The example below shows how to enable Sippy for an R2 bucket with the AWS S3 provider using cURL. For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
+
+The following example shows how to enable Sippy for an R2 bucket with the AWS S3 provider using cURL. For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
 {{<Aside type="note">}}
 
@@ -109,7 +110,7 @@ curl -X DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/r2/buc
 ```
 
 ## Supported cloud storage providers
-We currently support copying data from the following cloud object storage providers to R2:
+Cloudflare currently supports copying data from the following cloud object storage providers to R2:
 - Amazon S3
 - Google Cloud Storage (GCS)
 
@@ -176,7 +177,7 @@ Actions not listed above have no change in behavior. For more information, refer
 
 ### Amazon S3
 
-To copy objects from Amazon S3, Sippy requires access permissions to your bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions, we recommend you create a user with a narrow set of permissions.
+To copy objects from Amazon S3, Sippy requires access permissions to your bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions, Cloudflare recommends you create a user with a narrow set of permissions.
 
 To create credentials with the correct permissions:
 
@@ -207,13 +208,14 @@ To create credentials with the correct permissions:
 You can now use both the Access Key ID and Secret Access Key when enabling Sippy.
 
 ### Google Cloud Storage
-To copy objects from Google Cloud Storage (GCS), Sippy requires access permissions to your bucket. We recommend using the Google Cloud predefined `Storage Object Viewer` role.
+
+To copy objects from Google Cloud Storage (GCS), Sippy requires access permissions to your bucket. Cloudflare recommends using the Google Cloud predefined `Storage Object Viewer` role.
 
 To create credentials with the correct permissions:
 1. Log in to your Google Cloud console.
-2. Navigate to **IAM & Admin** > **Service Accounts**.
+2. Go to **IAM & Admin** > **Service Accounts**.
 3. Create a service account with the predefined `Storage Object Viewer` role.
-4. Navigate to the **Keys** tab of the service account you created.
+4. Go to the **Keys** tab of the service account you created.
 5. Select **Add Key** > **Create a new key** and download the JSON key file.
 
 You can now use this JSON key file when enabling Sippy via Wrangler or API.
