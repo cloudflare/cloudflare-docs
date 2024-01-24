@@ -33,7 +33,7 @@ Cloudflare advertises all of its Anycast prefixes including [BYOP](/byoip/) pref
 
 {{<Aside type="note">}}
 
-Your CNI needs to accept all of Cloudflare's prefixes to ensure it is fully utilized, and traffic routed from PoPs back to the CNI is secure, fast, and reliable.
+Your CNI needs to accept all of Cloudflare's prefixes to ensure it is fully utilized, and traffic routed from the data centers back to the CNI is secure, fast, and reliable.
 
 {{</Aside>}}
 

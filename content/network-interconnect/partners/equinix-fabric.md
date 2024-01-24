@@ -12,7 +12,7 @@ meta:
 
 After you confirm the locations and speed with you account team, order the Equinix Fabric connections to Cloudflare.
 
-1.  Go to [https://fabric.equinix.com/](https://fabric.equinix.com/)
+1.  Go to [Equinix Fabric](https://fabric.equinix.com/)
 2.  Under **I want to connect to:**, select **A Service Provider**.
 3.  Under **Select a Service Provider**, search for **Cloudflare** > **Select**.
 4.  Select **Magic Transit** or **Cloudflare NaaS**. If you are unsure, select **Cloudflare NaaS** which can be used to configure any service.
