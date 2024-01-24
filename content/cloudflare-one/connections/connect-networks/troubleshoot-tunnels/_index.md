@@ -43,18 +43,15 @@ To check if a Gateway block event occurred:
 
 ### Verify user identity values
 
-If the mismatched log field is related to user identity, check the identity registry and verify OIDC groups used on the Policy are being reported for the user generating the traffic
-
-If the information is not updated with the new OIDC groups, ask the user to Re-authenticate WARP locally on the WARP endpoint (Preferences - Account - ‘Re-Authenticate Session’)
+If the mismatched log field is related to identity, [check the user registry](/cloudflare-one/policies/gateway/identity-selectors/#view-a-users-identity) and verify the values that are passed to Gateway from your IdP. The registry is updated when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** - **Re-Authenticate Session**).
 
 ### Verify device posture values
 
-If device posture related, check the device details and confirm Device Posture Checks used on the policy are passed for the users’ endpoint
-Go to My Team - Devices - Click on the device - View Details - Posture Checks
+If the mismatched log field is related to device posture, [view posture check results](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for the user's device. Verify that the device passes the posture checks configured in the policy.
 
 ## 5. Is the Gateway proxy enabled?
 
-Go to **Settings** > **Network** and ensure that **Proxy** is enabled for TCP, UDP, and ICMP traffic.
+Under **Settings** > **Network**, ensure that **Proxy** is enabled for TCP, UDP, and ICMP traffic.
 
 ## 6. Is the user's traffic reaching the tunnel?
 
