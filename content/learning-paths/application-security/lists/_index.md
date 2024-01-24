@@ -1,7 +1,7 @@
 ---
 title: Lists
 pcx_content_type: overview
-weight: 6
+weight: 5
 layout: learning-module
 ---
 
