@@ -113,7 +113,7 @@ Investigate and potentially block any suspicious domains that may be trying to i
 
 **Who is it for?**
 
-Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers.
 
 Specifically, the notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
 

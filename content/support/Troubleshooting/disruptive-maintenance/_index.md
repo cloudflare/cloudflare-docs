@@ -8,7 +8,7 @@ title: Disruptive Maintenance
 
 ## Scheduled Maintenance Windows
 
-Maintenances will be published on the status page using a _calendar_ that is updated on a daily basis.
+Planned maintenances will be published on the status page using a _calendar_ that is updated on a daily basis.
 
 During these maintenance windows, customers may experience a slight increase in latency to the edge location which is under maintenance.
 
@@ -32,6 +32,7 @@ Cloudflare operates a redundant [Anycast network](https://www.cloudflare.com/en-
 To check for unplanned maintenance, you can confirm at all times if a location was re-routed by verifying if its status is listed as "Re-routed" in our status page https://www.cloudflarestatus.com. Exceptionally, an incident may be declared for maintenance at a location, in which case updates will be available in our status page at https://www.cloudflarestatus.com.
 
 ## Interconnections at locations under maintenance
+
 If you have a [CNI connection](/network-interconnect/) with Cloudflare at a re-routed location, it may become temporarily unavailable during planned or unplanned maintenance, and regular internet routing may be used instead to reach your network.
 
 In the Magic family of products, the routing is defined explicitly using [static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) to send traffic to the specified tunnels, with customer-configured priorities. If you have a CNI tunnel, we strongly recommend that you also add routes to an alternative tunnel, such as a fallback Internet tunnel, to make sure your traffic can be routed at all times.
