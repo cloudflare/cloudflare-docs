@@ -71,7 +71,7 @@ These are also included in the D1 [Cloudflare dashboard](https://dash.cloudflare
 
 - How are deletes metered?
 
-Deleting rows are metered as writes. A `DELETE` statement will return a `rows_written` count that reflects the number of rows deleted. Deleting rows in a database is the same underlying storage operation as writing rows.
+Deleting rows are metered as both reads and writes, as a `DELETE` needs to scan for the rows to delete. A `DELETE` statement will return a `rows_read` count equivalent to a `SELECT` statement over the same data, and a `rows_written` count that reflects the number of rows deleted Deleting rows in a database is the same underlying storage operation as writing rows.
 
 - Does D1 charge for data transfer / egress?
 
