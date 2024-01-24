@@ -218,5 +218,5 @@ A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handl
 
 Refer to [Device information](/magic-wan/configuration/connector/device-information/) to learn more about:
 - [Magic WAN Connector security](/magic-wan/configuration/connector/device-information/#security-and-other-information)
-- [How to interpret Magic WAN Connector heartbeat](/magic-wan/configuration/connector/device-information/#heartbeat)
-- [Metrics](/magic-wan/configuration/connector/device-information/#device-metrics)
+- [How to interpret heartbeat information](/magic-wan/configuration/connector/device-information/#heartbeat)
+- [Device metrics](/magic-wan/configuration/connector/device-information/#device-metrics)
