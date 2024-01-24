@@ -26,19 +26,19 @@ Regional Services ensures that all edge application services operate within the 
 
 ## Request flow example
 
-The following diagram is a high-level example of the flow of a request coming from an end user located within the USA connecting to a website using Cloudflare Regional Services set to EU.
+The following diagram is a high-level example of the flow of a request coming from an end user located within the US connecting to a website using Cloudflare Regional Services set to EU.
 
 <br>
 
 ```mermaid
 sequenceDiagram
-    participant User in USA as End user in USA
-    participant CloudflarePoPNYC as Closest data center in USA
+    participant User in US as End user in US
+    participant CloudflarePoPNYC as Closest data center in US
     participant CloudflarePoPDUB as Data center in EU
     participant EUOriginServer as Origin Server
  
-    User in USA->>CloudflarePoPNYC: TCP connection
-    Note right of User in USA: TLS encryption
+    User in US->>CloudflarePoPNYC: TCP connection
+    Note right of User in US: TLS encryption
     Note left of CloudflarePoPNYC: TCP connection<br> (no TLS unwrapping)
     Note right of CloudflarePoPNYC: L3 DDoS protection
     CloudflarePoPNYC-->>CloudflarePoPDUB: Forwards<br> encrypted request
@@ -50,7 +50,7 @@ sequenceDiagram
     Note right of CloudflarePoPDUB: TLS termination (decryption)
     Note right of CloudflarePoPDUB: Caches eligible static content<br> (on encrypted disks)
     Note right of CloudflarePoPDUB: TLS encryption
-    CloudflarePoPDUB->>User in USA: Forwards response with content
+    CloudflarePoPDUB->>User in US: Forwards response with content
 ```
 
 <br>
