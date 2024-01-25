@@ -1098,7 +1098,9 @@ For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
-- Customers can search for and add domains from their list of enterprise zones.
+A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on. 
+
+- Customers can also search for and add domains from their list of enterprise zones.
 - Customers can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
 - Customers can filter events by a targeted action.
 
@@ -1126,7 +1128,9 @@ For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
-- Customers can search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
+A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on. 
+
+- Customers can also search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
 - Customers can filter events by a targeted action.
 
 **Included with**
