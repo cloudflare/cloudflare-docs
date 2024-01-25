@@ -86,7 +86,7 @@ If the output shows `TcpTestSucceeded : False`, check your infrastructure for fi
 {{</tab>}}
 {{</tabs>}}
 
-You can also use a packet capture tool such as `tcpdump` or Wireshark to trace whether traffic from the user device successfully reaches `cloudflared` and routes to the application. Traffic to the application will use the source IP of the `cloudflared` host.
+You can also use a packet capture tool such as `tcpdump` or Wireshark to trace whether traffic from the user device successfully reaches `cloudflared` and routes to your application. Traffic to your application will carry the source IP of the `cloudflared` host.
 
 ## 8. How is your application handling requests?
 
