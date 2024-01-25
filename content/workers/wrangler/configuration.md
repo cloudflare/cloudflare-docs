@@ -413,23 +413,15 @@ Example:
 header: wrangler.toml
 ---
 d1_databases = [
-  { binding = "PROD_DB", database_name = "<AUTH_WORKER>", database_id = "" },
-  { binding = "PROD_DB", database_name = "<AUTH_WORKER>", database_id = "" }
+  { binding = "<BINDING_NAME>", database_name = "<DATABASE_NAME>", database_id = "<DATABASE_ID>" }
 ]
 
 # or
 
 [[d1_databases]]
-binding = "PROD_DB"
-database_name = "test-db"
-database_id = "c020574a-5623-407b-be0c-cd192bab9545"
-
-[[d1_databases]]
-binding = "PROD_DB"
-database_name = "test-db"
-database_id = "c020574a-5623-407b-be0c-cd192bab9545"
-
-# ask max about this use case
+binding = "<BINDING_NAME>"
+database_name = "<DATABASE_NAME>"
+database_id = "<DATABASE_ID>"
 ```
 
 ### Durable Objects
@@ -465,18 +457,14 @@ Example:
 header: wrangler.toml
 ---
 durable_objects.bindings = [
-  { name = "<TEST_OBJECT>", class_name = "<TEST_CLASS>" }
+  { name = "<BINDING_NAME>", class_name = "<CLASS_NAME>" }
 ]
 
 # or
 
 [[durable_objects.bindings]]
-name = "<DURABLE_OBJECT>"
-class_name = "<TEST_CLASS>"
-
-[[durable_objects.bindings]]
-name = "<DURABLE_OBJECT>"
-class_name = "<TEST_CLASS>"
+name = "<BINDING_NAME>"
+class_name = "<CLASS_NAME>"
 
 ```
 
@@ -555,20 +543,19 @@ Example:
 header: wrangler.toml
 ---
 kv_namespaces = [
-  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" },
-  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>"
+  { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
+  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
 ]
 
 # or
 
 [[kv_namespaces]]
-binding = "<NAMESPACE>"
-id = "<ID>"
+binding = "<BINDING_NAME1>"
+id = "<NAMESPACE_ID1>"
 
 [[kv_namespaces]]
-binding = "<NAMESPACE>"
-id = "<ID>"
-# KV name 
+binding = "<BINDING_NAME2>"
+id = "<NAMESPACE_ID2>"
 ```
 
 ### Queues
@@ -596,12 +583,8 @@ Example:
 header: wrangler.toml
 ---
 [[queues.producers]]
-  binding = "MY_QUEUE"
-  queue = "my-queue"
-
-[[queues.producers]]
-  binding = "MY_QUEUE"
-  queue = "my-queue"
+  binding = "<BINDING_NAME>"
+  queue = "<QUEUE_NAME>"
 ```
 
 To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
@@ -650,8 +633,6 @@ header: wrangler.toml
   max_retries = 10
   dead_letter_queue = "my-queue-dlq"
   max_concurrency = 5
-
-# More than one
 ```
 
 ### R2 buckets
@@ -693,19 +674,19 @@ Example:
 header: wrangler.toml
 ---
 r2_buckets  = [
-  { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"},
-  { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
+  { binding = "<BINDING_NAME1>", bucket_name = "<BUCKET_NAME1>"},
+  { binding = "<BINDING_NAME2>", bucket_name = "<BUCKET_NAME2>"}
 ]
 
 # or
 
 [[r2_buckets]]
-binding = "<TEST_BUCKET>"
-bucket_name = "<TEST_BUCKET>"
+binding = "<BINDING_NAME1>"
+bucket_name = "<BUCKET_NAME1>"
 
 [[r2_buckets]]
-binding = "<TEST_BUCKET>"
-bucket_name = "<TEST_BUCKET>"
+binding = "<BINDINGS_NAME2>"
+bucket_name = "<BUCKET_NAME2>"
 ```
 
 ### Vectorize indexes
@@ -733,15 +714,10 @@ Example:
 header: wrangler.toml
 ---
 vectorize  = [
-  { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"},
   { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"}
 ]
 
 # or
-
-[[vectorize]]
-binding = "<BINDING_NAME>"
-index_name = "<INDEX_NAME>"
 
 [[vectorize]]
 binding = "<BINDING_NAME>"
@@ -758,15 +734,11 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The binding name used to refer to the bound service.
+  - The binding name used to refer to the bound Worker.
 
 - `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the service.
-
-- `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/wrangler/environments/).
+  - The name of the Worker.
 
 {{</definitions>}}
 
@@ -777,16 +749,14 @@ Example:
 header: wrangler.toml
 ---
 services = [
-  { binding = "<TEST_BINDING>", service = "<TEST_WORKER>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
 
 # or
 
 [[services]]
-binding = "MY_SERVICE"
-service = "my-service"
-
-# more than one
+binding = "<BINDING_NAME>"
+service = "<WORKER_NAME>"
 ```
 
 ### Analytics Engine Datasets
@@ -813,17 +783,13 @@ Example:
 ---
 filename: wrangler.toml
 ---
-analytics_engine_datasets = [
-  { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+analytics_engine_datasets = { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
 
 # or
 
 [[analytics_engine_datasets]]
 binding = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
-
-# tanushree?
 ```
 
 ### mTLS Certificates
@@ -851,19 +817,19 @@ Example of a `wrangler.toml` configuration that includes an mTLS certificate bin
 header: wrangler.toml
 ---
 mtls_certificates = [
-    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" },
-    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
+    { binding = "<BINDING_NAME1>", certificate_id = "<CERTIFICATE_ID1>" },
+    { binding = "<BINDING_NAME2>", certificate_id = "<CERTIFICATE_ID2>" }
 ]
 
 # or
 
 [[mtls_certificates]]
-binding = "<BINDING_NAME>"
-certificate_id = "<CERTIFICATE_ID>
+binding = "<BINDING_NAME1>"
+certificate_id = "<CERTIFICATE_ID1>
 
 [[mtls_certificates]]
-binding = "<BINDING_NAME>"
-certificate_id = "<CERTIFICATE_ID>
+binding = "<BINDING_NAME2>"
+certificate_id = "<CERTIFICATE_ID2>
 ```
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
@@ -915,7 +881,7 @@ Example:
 ---
 filename: wrangler.toml
 ---
-ai = { binding = "AI" }
+ai = { binding = "<AI>" }
 
 # or
 

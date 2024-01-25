@@ -39,15 +39,15 @@ To manage a Workers Service binding:
 To configure a Service binding in your `wrangler.toml`, use the following syntax:
 
 ```toml
-[[services]]
-binding = "<BINDING_NAME>"
-service = "<WORKER_NAME>"
-
-# or
-
 services = [
   { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
+
+# or
+
+[[services]]
+binding = "<BINDING_NAME>"
+service = "<WORKER_NAME>"
 ```
 The `wrangler.toml` options are:
 
@@ -70,8 +70,8 @@ service = "<LOGOUT_WORKER>"
 # or
 
 services = [
-  { binding = "auth", service = "<AUTH_WORKER>" },
-  { binding = "logout", service = "<LOGOUT_WORKER>" }
+  { binding = "AUTH", service = "<AUTH_WORKER>" },
+  { binding = "LOGOUT", service = "<LOGOUT_WORKER>" }
 ]
 ```
 
