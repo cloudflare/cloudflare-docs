@@ -685,7 +685,7 @@ binding = "<BINDING_NAME1>"
 bucket_name = "<BUCKET_NAME1>"
 
 [[r2_buckets]]
-binding = "<BINDINGS_NAME2>"
+binding = "<BINDING_NAME2>"
 bucket_name = "<BUCKET_NAME2>"
 ```
 
