@@ -29,7 +29,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Cache Purge | Can purge the edge cache. |
 | Cloudflare DEX | Can edit [Cloudflare DEX](/cloudflare-one/insights/dex/). |
 | Cloudflare Gateway | Can edit [Cloudflare Gateway](/cloudflare-one/policies/gateway/) and read [Access](/cloudflare-one/identity/). |
-| Cloudflare Images | Can access [Cloudflare Images](/images/cloudflare-images/) data. |
+| Cloudflare Images | Can access [Cloudflare Images](/images/) data. |
 | Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |

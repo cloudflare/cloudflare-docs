@@ -11,6 +11,12 @@ meta:
 
 This integration allows you to connect to a Sentry project from your Worker to automcatically send errors and uncaught exceptions to Sentry with no code changes needed in the Workers application.
 
+{{<Aside type="note">}}
+
+Sentry integration is available to all Enterprise customers and Free, Pro, and Business customers on the [Workers Paid plan](/workers/platform/pricing/).
+
+{{</Aside>}}
+
 ## How it works
 
 This integration adds a [Tail Worker](/workers/observability/tail-workers) to your application Worker. The Tail Worker automatically sends errors and uncaught exceptions to the Sentry project you have configured.

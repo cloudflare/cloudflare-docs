@@ -22,7 +22,7 @@ Refer to information below to understand what each Notification does and what to
 
 **Who is it for?**
 
-Access customers who want to receive a notification when their service token is about to expire.
+[Access](/cloudflare-one/policies/access/) customers who want to receive a notification when their service token is about to expire.
 
 **Other options / filters**
 
@@ -44,14 +44,16 @@ Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.
 
 **Who is it for?**
 
-Customers who want to receive a notification when usage of a product goes above a set level.
+Customers who want to receive a notification when the usage of a product goes above a set level.
 
 **Other options / filters**
 
-Customers can choose the **Product** they want to be notified about and the threshold that fires the notification. Thresholds depend on the product chosen. For example:
+Customers can choose the product that they want to be notified about and the threshold that fires the notification. Thresholds depend on the product chosen. 
 
-- **Argo Smart Routing**: has **Notify when total bytes of traffic exceeds** as threshold.
-- **Load Balancing**: has **Notify when total number of DNS Queries exceeds** as threshold.
+For example:
+
+- **Argo Smart Routing** has **Notify when total bytes of traffic exceeds** as a threshold.
+- **Load Balancing** has **Notify when total number of DNS Queries exceeds** as a threshold.
 
 **Included with**
 
@@ -59,7 +61,7 @@ Professional plans or higher.
 
 **What should you do if you receive one?**
 
-Review your usage of the product and adjust the configuration and/or increase the alerting threshold.
+Review your product usage and adjust the configuration and/or increase the alerting threshold.
 
 {{</details>}}
 
@@ -227,7 +229,7 @@ No action needed. Everything is working correctly.
 
 **Who is it for?**
 
-Customers who are using Cloudflare for Secondary DNS and want to receive notifications about failure or success of zone transfers from their primary nameservers.
+Customers who are using Cloudflare for Secondary DNS and want to receive notifications about the failure or success of zone transfers from their primary nameservers.
 
 **Other options / filters**
 
@@ -239,7 +241,9 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include:
+Success alerts require no further action. Actions for failure notifications will depend on the type of failure. 
+
+Possible actions include:
 
 - Checking the Access Control List (ACL) on your primary nameserver.
 - Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
@@ -253,7 +257,7 @@ Success alerts require no further action. Actions for failure notifications will
 
 **Who is it for?**
 
-WAF/CDN customers who want to receive a notification when Cloudflare has mitigated an attack.
+[WAF](/waf/) or [CDN](/cache/) customers who want to receive a notification when Cloudflare has mitigated an attack.
 
 **Other options / filters**
 
@@ -273,11 +277,13 @@ All Cloudflare plans.
 
 **Who is it for?**
 
-WAF/CDN customers with the Advanced DDoS Protection subscription who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+[WAF](/waf/) or [CDN](/cache/) customers with the [Advanced DDoS Protection](/ddos-protection/) subscription who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
 
 **Other options / filters**
 
-Customers can choose when to trigger a notification. Available filters are:
+Customers can choose when to trigger a notification. 
+
+Available filters include:
 
 - The zones in the account for which they wish to receive notifications.
 - The specific hostnames for which they wish to receive notifications.
@@ -297,11 +303,13 @@ Enterprise plans.
 
 **Who is it for?**
 
-BYOIP and Magic Transit customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+[BYOIP](/byoip/) and [Magic Transit](/magic-transit/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
 
 **Other options / filters**
 
-Customers can choose when to trigger a notification. Available filters are:
+Customers can choose when to trigger a notification. 
+
+Available filters include:
 
 - The IP prefixes for which they wish to receive notifications.
 - The specific IP addresses for which they wish to receive notifications.
@@ -329,13 +337,10 @@ Customers who want to be warned about changes to server health as determined by 
 
 **Other options / filters**
 
-Multiple filters available:
+Available filters include:
 
 - Customers can search for and add health checks from their list of health checks.
-- Customers can choose a trigger to fire the notification. Available triggers are:
-  - Becomes unhealthy
-  - Becomes healthy
-  - Becomes either healthy or unhealthy
+- Customers can choose a trigger to fire the notification when their server becomes **unhealthy**, **healthy**, or **either healthy or unhealthy**.
 
 **Included with**
 
@@ -357,21 +362,18 @@ Customers who want to be warned about status changes (enabled/disabled) in their
 
 **Other options / filters**
 
-Multiple filters available:
+Available filters include:
 
 - Customers can search for and add pools from their list of pools.
-- Customers can also choose the trigger that fires the notification. Available triggers are:
-  - Load Balancing pool enabled
-  - Load Balancing pool disabled
-  - Load Balancing pool enabled / disabled
+- Customers can also choose the trigger that fires the notification when the Load Balancing pool is **enabled**, **disabled**, and **either enabled or disabled**.
 
 **Included with**
 
-All Cloudflare plans with [Load Balancing purchase](/load-balancing/get-started/enable-load-balancing/).
+Purchase of [Load Balancing](/load-balancing/get-started/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
-No direct call to action.
+No action is needed.
 
 {{</details>}}
 
@@ -383,22 +385,15 @@ Customers who want to be warned about [changes in health status](/load-balancing
 
 **Other options / filters**
 
-Multiple filters available:
+Available filters include:
 
 - Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
-- Customers can also choose the trigger that fires the notification. Available options are:
-  - _Health status trigger_:
-    - Becomes unhealthy or healthy
-    - Becomes unhealthy
-    - Becomes healthy
-  - _Event source trigger_:
-    - Health status changes in either pool or origin
-    - Health status changes in pool
-    - Health status changes in origin
+- Customers can choose the trigger that fires the notification when the health status becomes **unhealthy**, **healthy**, or **either unhealthy or healthy**
+- Customers can choose the trigger that fires the notification when the event source health status changes in **pool**, **origin**, or **either pool or origin**.
 
 **Included with**
 
-All Cloudflare plans with [Load Balancing purchase](/load-balancing/get-started/enable-load-balancing/).
+Purchase of [Load Balancing](/load-balancing/get-started/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
@@ -412,16 +407,13 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 **Who is it for?**
 
-Enterprise customers who use Logpush and want to monitor their job health.
+Enterprise customers who use [Logpush](/logs/) and want to monitor their job health.
 
 **Other options / filters**
 
-- Notification Name
-  - Custom name for this notification
-- Description (optional)
-  - Custom description for this notification
-- Notification Email (can be multiple emails)
-  - Email address of recipient for this notification
+- Notification Name: A custom name for the notification.
+- Description (optional): A custom description for the notification.
+- Notification Email (can be multiple emails): The email address of the recipient for the notification.
 
 **Included with**
 
@@ -439,7 +431,7 @@ In the email for the notification, you can find the destination name for the fai
 
 **Who is it for?**
 
-[Magic Transit on-demand](/magic-transit/on-demand/) customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
+[Magic Transit on-demand](/magic-transit/on-demand/) customers who use Flow-Based Monitoring and want alerts when Magic Transit is automatically enabled.
 
 **Other options / filters**
 
@@ -451,7 +443,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
+No action is needed. You can go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
 
 {{</details>}}
 
@@ -479,7 +471,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 **Who is it for?**
 
-[Magic Transit on-demand](/magic-transit/on-demand/) customers who are using Flow-based Monitoring to detect attacks when Magic Transit is disabled.
+[Magic Transit on-demand](/magic-transit/on-demand/) customers who are using Flow-Based Monitoring to detect attacks when Magic Transit is disabled.
 
 **Other options / filters**
 
@@ -503,17 +495,12 @@ Magic Transit and Magic WAN customers who wish to receive alerts when the percen
 
 **Other options / filters**
 
-- Notification Name
-  - Custom name for this notification
-- Description (optional)
-  - Custom description for this notification
-- Notification Email (can be multiple emails)
-  - Email address of recipient for this notification
+- Notification Name: A custom name for the notification.
+- Description (optional): A custom description for the notification.
+- Notification Email (can be multiple emails): The email address of recipient for the notification.
 - Webhooks
-- Tunnels
-  - Choose one or more tunnels to monitor
-- SLO
-  - Define SLO threshold for Magic Tunnel health alerts. Available options are _High_, _Medium_, and _Low_.
+- Tunnels: Choose one or more tunnels to monitor.
+- SLO: Define SLO threshold for Magic Tunnel health alerts. Available options are _High_, _Medium_, and _Low_.
 
 **Included with**
 
@@ -535,14 +522,11 @@ Customers who want to receive notifications about project-level events in [Cloud
 
 **Other options / filters**
 
-Multiple filters available, including filtering by:
+Available filters include: 
 
-- Pages projects.
-- Environments.
-- Different events:
-  - **Deployment started**
-  - **Deployment failed**
-  - **Deployment success**
+- Pages projects
+- Environments
+- Different events: **Deployment started**, **Deployment failed**, or **Deployment success**
 
 **Included with**
 
@@ -560,7 +544,7 @@ For failed deployments, review our [debugging guide](/pages/configuration/debugg
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
+[Page Shield](/page-shield/) customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
 
 **Other options / filters**
 
@@ -572,7 +556,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-Investigate to confirm it is an expected change.
+Investigate to confirm that it is an expected change.
 
 {{</details>}}
 
@@ -580,7 +564,7 @@ Investigate to confirm it is an expected change.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when resources from new host domains appear in their domain.
+[Page Shield](/page-shield/) customers who want to receive a notification when resources from new host domains appear in their domain.
 
 **Other options / filters**
 
@@ -592,7 +576,7 @@ Business plans or higher.
 
 **What should you do if you receive one?**
 
-Investigate to confirm it is an expected change.
+Investigate to confirm that it is an expected change.
 
 {{</details>}}
 
@@ -600,9 +584,9 @@ Investigate to confirm it is an expected change.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
+[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious domain appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}}
 
 **Other options / filters**
 
@@ -622,9 +606,9 @@ Enterprise plans with paid add-on.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
+[Page Shield](/page-shield/) customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}}
 
 **Other options / filters**
 
@@ -644,9 +628,9 @@ Enterprise plans with paid add-on.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
+[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious URL appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}}
 
 **Other options / filters**
 
@@ -666,7 +650,7 @@ Enterprise plans with paid add-on.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when new resources appear in their domain.
+[Page Shield](/page-shield/) customers who want to receive a notification when new resources appear in their domain.
 
 **Other options / filters**
 
@@ -678,7 +662,7 @@ Business plans or higher.
 
 **What should you do if you receive one?**
 
-Investigate to confirm it is an expected change.
+Investigate to confirm that it is an expected change.
 
 {{</details>}}
 
@@ -686,7 +670,7 @@ Investigate to confirm it is an expected change.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when a resource's URL exceeds the maximum allowed length.
+[Page Shield](/page-shield/) customers who want to receive a notification when a resource's URL exceeds the maximum allowed length.
 
 **Other options / filters**
 
@@ -720,7 +704,7 @@ Purchase of BYOIP.
 
 **What should you do if you receive one?**
 
-Confirm your traffic is healthy: reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.
+Confirm your traffic is healthy. Reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.
 
 {{</details>}}
 
@@ -730,7 +714,7 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 
 **Who is it for?**
 
-Access customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate.
+[Access](/cloudflare-one/policies/access/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate.
 
 **Other options / filters**
 
@@ -738,7 +722,7 @@ None.
 
 **Included with**
 
-[Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
+Purchase of [Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and/or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
 
 **What should you do if you receive one?**
 
@@ -802,7 +786,7 @@ None.
 
 **Included with**
 
-Purchase of Cloudflare for SaaS.
+Purchase of [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
 
 **What should you do if you receive one?**
 
@@ -833,6 +817,7 @@ All Cloudflare plans.
 {{<details header="Zone-level Authenticated Origin Pulls Certificate Expiration Alert">}}
 
 **Who is it for?**
+
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
 AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.
@@ -842,9 +827,11 @@ AOP certificate expiration notifications are sent 30 days and 14 days before the
 None.
 
 **Included with**
+
 Authenticated Origin Pull
 
 **What should you do if you receive one?**
+
 Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
 
 {{</details>}}
@@ -855,7 +842,7 @@ Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configurati
 
 **Who is it for?**
 
-Customers who are using Stream and want to receive webhooks with the status of their videos.
+Customers who are using [Stream](/stream/) and want to receive webhooks with the status of their videos.
 
 **Other options / filters**
 
@@ -864,7 +851,7 @@ Customers can input Stream Live IDs to receive notifications only about those in
 The following input states will fire notifications. Customers can toggle them on or off:
 
 - `live_input.connected`
-- `Live_input.disconnected`
+- `live_input.disconnected`
 
 **Included with**
 
@@ -888,18 +875,11 @@ Enterprise customers who want to receive a notification when Cloudflare detects 
 
 **Other options / filters**
 
-Multiple filters available:
+Available filters include:
 
 - Customers can search and add domains from their list of domains.
-- Customers can filter alerts by:
-  - Edge status code
-  - Origin status code
-  - IP Address
-- Customers can also choose the trigger that fires the notification. Available triggers are:
-  - Low sensitivity
-  - Medium sensitivity
-  - High sensitivity
-  - Very High sensitivity
+- Customers can filter alerts by **edge status code**, **origin status code**, and the **IP Address**.
+- Customers can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
 
 **Included with**
 
@@ -907,8 +887,12 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to see which error codes Cloudflare is seeing.
+1. Use the link in the notification you received to see which error codes Cloudflare is seeing.
 2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
+
+**Limitations**
+
+{{<render file="_traffic-monitoring-limitations.md">}}
 
 {{</details>}}
 
@@ -925,11 +909,7 @@ Enterprise customers who want to receive a notification when Cloudflare is unabl
 Multiple filters available:
 
 - Customers can search and add domains from their list of domains.
-- Customers can also choose the trigger that fires the notification. Available triggers are:
-  - Low sensitivity
-  - Medium sensitivity
-  - High sensitivity
-  - Very High sensitivity
+- Customers can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
 
 **Included with**
 
@@ -939,6 +919,10 @@ Enterprise plans.
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
 2. {{<render file="_errors.md">}}
+
+**Limitations**
+
+{{<render file="_traffic-monitoring-limitations.md">}}
 
 {{</details>}}
 
@@ -960,6 +944,10 @@ All Cloudflare plans.
 
 {{<render file="_errors.md">}}
 
+**Limitations**
+
+{{<render file="_traffic-monitoring-limitations.md">}}
+
 {{</details>}}
 
 {{<details header="Traffic Anomalies Alert">}}
@@ -975,7 +963,7 @@ Enterprise customers who want to receive a notification when one zone is experie
 Multiple filters available:
 
 - Customers can search and add domains from their list of domains.
-- Customers can include or exclude traffic mitigated by the Web Application Firewall.
+- Customers can include or exclude traffic mitigated by the [Web Application Firewall (WAF)](/waf/).
 - Customers can choose whether to be notified of either spikes or drops in traffic.
 
 **Included with**
@@ -984,7 +972,13 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
+Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.
+
+**Limitations**
+
+Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
+
+These thresholds cannot be configured. Z-score is used to determine the threshold.
 
 {{</details>}}
 
@@ -1068,7 +1062,7 @@ All Cloudflare Zero Trust plans.
 
 **What should you do if you receive one?**
 
-No direct call to action.
+No action is needed. 
 
 {{</details>}}
 
@@ -1116,6 +1110,10 @@ Enterprise plans.
 
 Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
+**Limitations**
+
+{{<render file="_security-events-limitations.md">}}
+
 {{</details>}}
 
 {{<details header="Security Events Alert">}}
@@ -1139,6 +1137,10 @@ Business and Enterprise plans.
 
 Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
+**Limitations**
+
+{{<render file="_security-events-limitations.md">}}
+
 {{</details>}}
 
 ## Web Analytics
@@ -1147,7 +1149,7 @@ Review the information in [Security Events](/waf/analytics/security-events/paid-
 
 **Who is it for?**
 
-Customers using Web Analytics to monitor their website's performance.
+Customers using [Web Analytics](/analytics/web-analytics/) to monitor their website's performance.
 
 **Other options / filters**
 
@@ -1159,6 +1161,6 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
+No action is needed. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
 
 {{</details>}}

@@ -117,7 +117,7 @@
           {
             "url_path": "/images/",
             "link_title": "Image Optimization",
-            "additional_description": "Choose between Cloudflare Images, Cloudflare Image Resizing, and Polish, three products tailored to your different image needs."
+            "additional_description": "Choose between Cloudflare Images and Polish, two products tailored to your different image needs."
           },
           {
             "url_path": "/load-balancing/",

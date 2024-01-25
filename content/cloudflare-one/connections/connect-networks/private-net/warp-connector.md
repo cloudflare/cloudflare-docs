@@ -39,13 +39,15 @@ Next, create a device enrollment rule that allows the WARP connector to authenti
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Device enrollment** card, select **Manage**.
 3. Select **Add a rule**.
-4. Name the rule and configure the following fields:
+4. Name the rule.
+6. For **Rule action**, select _Service Auth_.
+7. Configure the following fields:
 
-    | Rule Action  | Rule type | Selector      | Value          |
-    | ------------ | --------- | ------------- | -------------- |
-    | Service Auth | Include   | Service Token | `<SERVICE-TOKEN-NAME>` |
+    | Selector      | Value          |
+    | ------------- | -------------- |
+    | Service Token | `<SERVICE-TOKEN-NAME>` |
 
-5. Select **Save**.
+8. Select **Save**.
 
 ## 3. Enable CGNAT routing
 

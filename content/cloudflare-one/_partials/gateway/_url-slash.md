@@ -5,6 +5,8 @@ _build:
   list: never
 ---
 
-{{<Aside type="warning">}}
+<div class="special-class" markdown="1">
+
 Gateway ignores trailing forward slashes (`/`) in URLs. For example, `https://example.com` and `https://example.com/` will count as the same URL and may return a duplicate error.
-{{</Aside>}}
+
+</div>
