@@ -79,7 +79,7 @@ header: Text in Path > Rewrite to... > Dynamic
 regex_replace(http.request.uri.path, "^/images/", "/cdn-cgi/image/")
 ```
 
-## Modify existing URLS to be compatible with transformations in Images
+## Modify existing URLs to be compatible with transformations in Images
 
 {{<Aside type="note">}}
 
@@ -101,7 +101,7 @@ header: Text in Expression Editor
 header: Text in Path > Rewrite to... > Dynamic
 ---
 regex_replace(
-  http.request.uri.path,
+  http.request.uri,
   "^/(.*)\\?width=([0-9]+)&height=([0-9]+)$",
   "/cdn-cgi/image/width=${2},height=${3}/${1}"
 )
