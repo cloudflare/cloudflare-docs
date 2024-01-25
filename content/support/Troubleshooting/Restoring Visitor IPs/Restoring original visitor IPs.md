@@ -275,7 +275,7 @@ lighttpd.conf as an alternative solution:
 
 ##### For IIS 7 - 8:
 
-Follow the directions [here](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
+Follow the directions in the [Microsoft Community](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
 
 ##### For IIS 8.5 - 10:
 

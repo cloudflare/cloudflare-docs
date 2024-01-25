@@ -41,7 +41,7 @@ export default {
 };
 ```
 
-See below for more complete examples of different use cases. To see the documentation for the Zaraz Context object, click [here](/zaraz/reference/context/).
+Keep reading for more complete examples of different use cases or refer to [Zaraz Context](/zaraz/reference/context/).
 
 ## Configuring your Context Enricher
 
