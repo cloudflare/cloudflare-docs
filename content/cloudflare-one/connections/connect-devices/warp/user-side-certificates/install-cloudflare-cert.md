@@ -504,7 +504,7 @@ Google Apps Manager (GAM) uses its own certificate store. To add the Cloudflare 
 
 ### AWS CLI
 
-If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
 ### PHP Composer
 
@@ -648,4 +648,4 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 ### Minikube
 
-Instructions on how to install the Cloudflare root certificate are available [here](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority)
+To trust the Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).
