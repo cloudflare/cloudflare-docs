@@ -648,4 +648,4 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 ### Minikube
 
-To trust the Cloudflare root certificate in Minikube, refer to [certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).
+To trust the Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).

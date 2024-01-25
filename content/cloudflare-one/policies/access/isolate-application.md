@@ -47,4 +47,4 @@ For example, if your application is hosted on `internal.site.com`, the following
 
 ## Product compatibility
 
-For a list of products that are incompatible with the **Isolate application** featur, refer to [Product Compatibility](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) .
+For a list of products that are incompatible with the **Isolate application** feature, refer to [Product Compatibility](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) .
