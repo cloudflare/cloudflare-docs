@@ -825,11 +825,11 @@ mtls_certificates = [
 
 [[mtls_certificates]]
 binding = "<BINDING_NAME1>"
-certificate_id = "<CERTIFICATE_ID1>
+certificate_id = "<CERTIFICATE_ID1>"
 
 [[mtls_certificates]]
 binding = "<BINDING_NAME2>"
-certificate_id = "<CERTIFICATE_ID2>
+certificate_id = "<CERTIFICATE_ID2>"
 ```
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
@@ -847,11 +847,11 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 - `destination_address` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The chosen email address you send emails to.
+  - The [chosen email address](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
 
 - `allowed_destination_addresses` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The allowlist of email addresses you send emails to.
+  - The [allowlist of email addresses](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
 
 {{</definitions>}}
 
