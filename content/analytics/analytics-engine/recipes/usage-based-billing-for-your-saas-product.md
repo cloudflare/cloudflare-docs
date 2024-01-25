@@ -74,8 +74,8 @@ FROM
   usage_indexed_by_customer_id
 WHERE
   customer_id = 'substitute_customer_id_here'
-  AND timestamp >= '2023-03-01 00:00:00'
-  AND timestamp < '2023-04-01 00:00:00'
+  AND timestamp >= toDateTime('2023-03-01 00:00:00')
+  AND timestamp < toDateTime('2023-04-01 00:00:00')
 GROUP BY customer_id, request_endpoint
 ```
 
@@ -93,8 +93,8 @@ FROM
   usage_indexed_by_customer_id
 WHERE
   customer_id = 'x'
-  AND timestamp >= '2023-03-01 00:00:00'
-  AND timestamp < '2023-04-01 00:00:00'
+  AND timestamp >= toDateTime('2023-03-01 00:00:00')
+  AND timestamp < toDateTime('2023-04-01 00:00:00')
 GROUP BY customer_id, date, request_endpoint
 ```
 

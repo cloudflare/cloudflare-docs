@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Environments
+meta:
+  description: Deploy the same Worker application with different configuration for each environment.
 ---
 
 # Environments
@@ -18,7 +20,7 @@ Review the following environments flow:
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
 
-Environments are used with the `--env` or `-e` flag on `wrangler dev`, `wrangler deploy`, and `wrangler secret`.
+Environments are used with the `--env` or `-e` flag on `wrangler dev`, `npx wrangler deploy`, and `wrangler secret`.
 
 ## Configuration
 
@@ -78,7 +80,7 @@ kv_namespaces = [
 ]
 ```
 
-You may assign environment-specific [secrets](/workers/configuration/environment-variables/#add-secrets-to-your-project) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3). 
+You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3).
 
 ---
 
@@ -127,7 +129,7 @@ Published my-worker-staging
 ```
 
 ```sh
-~/my-worker $ wrangler deploy --env production
+~/my-worker $ npx wrangler deploy --env production
 Uploaded my-worker-production
 Published my-worker-production
   example.com/*

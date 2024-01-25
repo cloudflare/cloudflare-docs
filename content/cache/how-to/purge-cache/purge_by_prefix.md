@@ -8,10 +8,10 @@ weight: 5
 
 Enterprise customers can purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
-- `www.example.com/`
-- `www.example.com/foo/`
-- `www.example.com/foo/bar/`
-- `www.example.com/foo/bar/baz/`
+- `www.example.com`
+- `www.example.com/foo`
+- `www.example.com/foo/bar`
+- `www.example.com/foo/bar/baz`
 - `www.example.com/foo/bar/baz/qux.jpg`
 
 Purging by prefix is useful in different scenarios, such as:
@@ -33,6 +33,12 @@ Purging by prefix is useful in different scenarios, such as:
 {{<Aside type="note" header="API">}}
 
 You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
+
+{{</Aside>}}
+
+{{<Aside type="warning" header="Warning">}}
+
+If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the post-transformed (origin) URL when performing a prefix purge so that purge can take effect.
 
 {{</Aside>}}
 

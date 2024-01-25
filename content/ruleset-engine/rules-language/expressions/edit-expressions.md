@@ -36,7 +36,7 @@ The **Expression Editor** is a text-only interface for defining rule expressions
 
 To access the Expression Editor, select **Edit expression** next to the **Expression Preview**:
 
-![Selecting Edit expression in the Create firewall rule page to switch to the Expression Editor](/images/ruleset-engine/language/expression-builder.png)
+![Selecting Edit expression in the Create custom rule page to switch to the Expression Editor](/images/ruleset-engine/language/expression-builder.png)
 
 To switch back from the Expression Editor to the Expression Builder, select **Use expression builder**.
 

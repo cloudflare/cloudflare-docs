@@ -8,11 +8,11 @@ meta:
 
 # Configure the network cross-connect
 
-The Cloudflare Infrastructure uses your information to configure the cross-connect, but the configuration process varies slightly for physical and virtual links. This process can take one to two weeks and can take longer depending on the provider. Your Customer Success Manager will remain in contact with you to ensure your cross-connect is on track.
+The Cloudflare Infrastructure uses your information to configure the cross-connect. The configuration process varies slightly for physical and virtual links. This process can take one to two weeks, or longer depending on the provider. Your Customer Success Manager will remain in contact with you to ensure your cross-connect is on track.
 
 ## Physical links
 
-To configure the network cross-connect for physical links, Cloudflare generates a Letter of Authorization (LOA)/service key and sends it to you. After you receive the LOA, you can:
+To configure the network cross-connect for physical links, Cloudflare generates a Letter of Agency (LOA)/service key - sometimes referred to as a Letter of Authorization - and sends it to you. After you receive the LOA, you can:
 
 - Order cross-connects at the locations the LOA specifies.
 - Verify when the cross-connects are complete.

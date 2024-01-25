@@ -9,7 +9,7 @@ meta:
 
 # Analytics
 
-Cloudflare visualizes the metadata collected by our products in the Cloudflare dashboard. Refer to [Types of analytics](/fundamentals/data-products/types-of-analytics/) for more information about the various types of analytics and where they exist in the dashboard.
+Cloudflare visualizes the metadata collected by our products in the Cloudflare dashboard. Refer to [Types of analytics](/analytics/types-of-analytics/) for more information about the various types of analytics and where they exist in the dashboard.
 
 ---
 

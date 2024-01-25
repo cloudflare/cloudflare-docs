@@ -4,7 +4,6 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to a PostgreSQL database with Cloudflare Workers
-layout: single
 ---
 
 # Connect to a PostgreSQL database with Cloudflare Workers
@@ -17,7 +16,7 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 4. Make sure you have access to a PostgreSQL database.
 
 ## 1. Create a Worker application
@@ -35,7 +34,7 @@ $ npm create cloudflare@latest
 {{<tab label="yarn" no-code="true">}}
 
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 
 {{</tab>}}
@@ -48,9 +47,20 @@ To continue with this guide:
 1. Give your new Worker application a name.
 2. Select `"Hello World" Worker` for the type of application.
 3. Choose `Yes` to using TypeScript.
-4. Select `No` to deploying your application. 
+4. Select `No` to deploying your application.
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+
+### Enable Node.js compatibility
+
+[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml`.
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
 
 ## 2. Add the PostgreSQL connection library
 
@@ -66,8 +76,8 @@ Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earl
 
 Choose one of the two methods to connect to your PostgreSQL database:
 
-1. [Use a connection string](#using-a-connection-string).
-2. [Set explicit parameters](#setting-explicit-parameters).
+1. [Use a connection string](#use-a-connection-string).
+2. [Set explicit parameters](#set-explicit-parameters).
 
 ### Use a connection string
 
@@ -79,10 +89,10 @@ postgresql://username:password@host:port/database
 
 Replace `username`, `password`, `host`, `port`, and `database` with the appropriate values for your PostgreSQL database.
 
-Set your connection string as a [secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
+Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
 
 ```sh
-$ wrangler secret put DB_URL
+$ npx wrangler secret put DB_URL
 ➜  wrangler secret put DB_URL
 -------------------------------------------------------
 ? Enter a secret value: › ********************
@@ -106,10 +116,10 @@ DB_PORT = "5432"
 DB_NAME = "productsdb"
 ```
 
-To set your password as a [secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
-$ wrangler secret put DB_PASSWORD
+$ npx wrangler secret put DB_PASSWORD
 -------------------------------------------------------
 ? Enter a secret value: › ********************
 ✨ Success! Uploaded secret DB_PASSWORD
@@ -178,7 +188,7 @@ Replace the existing code in your `worker.ts` file with the following code:
 ```typescript
 ---
 filename: worker.ts
---- 
+---
 export default {
   async fetch(
     request: Request,

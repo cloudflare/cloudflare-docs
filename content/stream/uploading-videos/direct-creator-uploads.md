@@ -13,19 +13,13 @@ Direct creator uploads let your end users to upload videos directly to Cloudflar
 1. For videos under 200MB, [generate URLs that accept an HTTP POST request](/stream/uploading-videos/direct-creator-uploads#basic-upload-flow-for-small-videos).
 2. For videos over 200 MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#advanced-upload-flow-using-tus-for-large-videos).
 
-#### Example Apps
-
-- [Direct Creator Uploads (using a HTTP POST request)](https://workers.new/stream/upload/direct-creator-uploads)
-- [Direct Creator Uploads (using tus for resumable, multi-part uploads)](https://workers.new/stream/upload/direct-creator-uploads-tus)
-
 ## Basic upload flow, for small videos
 
 Use this if your users upload videos under 200MB, and you do not need to allow resumable uploads.
 
 ### Step 1: Generate a unique one-time upload URL
 
-- [End-to-end code example on StackBlitz](https://workers.new/stream/direct-creator-uploads)
-- [API Reference Docs for `/direct_upload`](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls)
+[API Reference Docs for `/direct_upload`](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls)
 
 
 ```bash
@@ -81,8 +75,6 @@ size, you will receive a `4xx` HTTP status code response.
 
 ### Step 1: Create your own API endpoint that returns an upload URL
 
-[Run and edit this code in your browser using StackBlitz](https://workers.new/stream/direct-creator-uploads-tus)
-
 ```javascript
 ---
 header: Example API endpoint that requests a one-time tus upload URL from Cloudflare Stream, and returns it in the location header
@@ -121,7 +113,6 @@ Note in the example above that the one-time upload URL is returned in the `Locat
 
 Use this API endpoint **directly** in your tus client. A common mistake is to extract the upload URL from your new API endpoint, and use this directly. See below for a complete example of how to use the API from Step 1 with the uppy tus client.
 
-[Run and edit this code in your browser using StackBlitz](https://workers.new/stream/upload/direct-creator-uploads-tus)
 
 ```html
 ---

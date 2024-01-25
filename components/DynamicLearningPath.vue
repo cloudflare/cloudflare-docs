@@ -8,7 +8,7 @@ interface LearningPath {
   priority: number;
   description: string;
   products: string[];
-  category: string[];
+  product_group: string[];
   elements: Element[];
   detailed_description?: string;
 }

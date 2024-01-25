@@ -221,3 +221,25 @@ zaraz.consent.sendQueuedEvents();
 {{</definitions>}}
 
 If some Pageview-based events were not sent due to a lack of consent, they can be sent using this method after consent was granted.
+
+## Examples
+
+### Restricting consent checks based on location
+
+You can combine multiple features of Zaraz to effectively disable Consent Management for some visitors. For example, if you would like to use it only for visitors from the EU, you can disable the automatic showing of the consent modal and add a Custom HTML tool with the following script:
+
+```html
+<script>
+document.addEventListener("zarazConsentAPIReady", () => {
+  if ({{system.device.location.isEUCountry}} === 1) {
+    zaraz.consent.modal = true
+  } else { 
+    zaraz.consent.setAll(true)
+    zaraz.consent.sendQueuedEvents()
+  }
+});
+
+</script>
+```
+
+By letting this Custom HTML tool to run without consent requirements, the modal will appear to all EU consent, while for other visitors consent will be automatically granted. The `{{ system.device.location.isEUCountry }}` property will be `1` if the visitor is from an EU country and `0` otherwise. You can use any other property or variable to customize the Consent Management behavior in a similar manner, such as `{{ system.device.location.country }}` to restrict consent checks based on country code.

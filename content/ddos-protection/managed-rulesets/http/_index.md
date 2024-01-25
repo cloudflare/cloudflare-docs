@@ -4,18 +4,17 @@ pcx_content_type: concept
 weight: 3
 meta:
   title: HTTP DDoS Attack Protection managed ruleset
-layout: single
 ---
 
 # HTTP DDoS Attack Protection managed ruleset
 
 The Cloudflare HTTP DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at layer 7 (application layer) on the Cloudflare global network. The rules match known attack patterns and tools, suspicious patterns, protocol violations, requests causing large amounts of origin errors, excessive traffic hitting the origin/cache, and additional attack vectors at the application layer.
 
-Cloudflare updates the list of rules in the managed ruleset on a regular basis.
+Cloudflare updates the list of rules in the managed ruleset on a regular basis. Refer to the [changelog](/ddos-protection/change-log/http/) for more information on recent and upcoming changes.
 
 The HTTP DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
-The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS managed rules.
+The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/analytics/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS managed rules.
 
 ## Ruleset configuration
 
@@ -41,7 +40,7 @@ For more information on the available configuration parameters, refer to [Manage
 
 ## Availability
 
-The HTTP DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans. All customers can customize the ruleset both at the zone level and at the account level.
+The HTTP DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans for zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/). All customers can customize the ruleset both at the zone level and at the account level.
 
 Customers on Enterprise plans with the Advanced DDoS Protection subscription can create up to 10 overrides (or up to 10 rules, for API users) with custom [expressions](/ddos-protection/managed-rulesets/http/override-expressions/), to customize the DDoS protection for different incoming requests.
 

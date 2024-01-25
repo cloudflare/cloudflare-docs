@@ -30,7 +30,7 @@ The authorization process grants Area 1 access to the Azure environment with the
 
     ![Access the retract settings in Area 1](/images/email-security/email-retraction/o365/step2-retract-settings.png)
 
-{{<Aside type="note">}}If you do not see the Retract Settings option, [contact customer support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to enable the feature.{{</Aside>}}
+{{<Aside type="note">}}If you do not see the Retract Settings option, [contact customer support](/support/contacting-cloudflare-support/) to enable the feature.{{</Aside>}}
 
 3. You need to authorize Area 1 to execute retractions through the Graph API of Office 365. Make sure that the account that you will be using to authenticate has the appropriate administrative roles assigned. Select **Authorize** to start the process.
 
@@ -50,16 +50,25 @@ The authorization process grants Area 1 access to the Azure environment with the
 
 ## 2. Configure auto-retraction actions
 
-{{<render file="_auto-retraction.md">}}
+{{<render file="_auto-retraction.md"  withParameters="Office 365 messages cannot be recovered without using the eDiscovery feature or the Exchange admin center. Refer to [Recover hard deleted messages](#recover-hard-deleted-messages) for more information.">}}
 
 ## 3. Configure journaling
 
-{{<render file="_journaling-connector.md">}}
+{{<render file="deployment/_journaling-connector.md">}}
 
 ## 4. Manual message retraction
 
 {{<render file="_manual-retraction.md">}}
 
+## Recover hard deleted messages
+
+Office 365 has two ways for recovering hard deleted email messages:
+
+- **[eDiscovery](https://learn.microsoft.com/en-us/purview/ediscovery?view=o365-worldwide)**
+- **[Exchange admin center](https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/manage-user-mailboxes/recover-deleted-messages)**
+
+Refer to Microsoft's documentation to learn more about how to use these tools to recover deleted email messages.
+
 ## Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md">}}
+{{<render file="deployment/_bcc-table-geographic-locations.md">}}

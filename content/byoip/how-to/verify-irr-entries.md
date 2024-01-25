@@ -5,7 +5,7 @@ pcx_content_type: reference
 
 # Verify IRR entries
 
-Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefixes Cloudflare advertises for you match the correct autonomous system numbers (ASNs).
+Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefixes Cloudflare advertises for you match the correct {{<glossary-tooltip term_id="autonomous system numbers (ASNs)">}}autonomous system numbers (ASNs){{</glossary-tooltip>}}.
 
 Each IRR entry record must include the following information:
 
@@ -15,7 +15,7 @@ Each IRR entry record must include the following information:
 
 ## Add or update IRR entries
 
-[Add or update IRR entries](/byoip/best-practices/irr-entries/) when they meet any of these criteria:
+[Add or update IRR entries](/byoip/concepts/irr-entries/best-practices/) when they meet any of these criteria:
 
 - The entry is missing.
 - The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
@@ -93,10 +93,8 @@ last-modified:  2018-03-16T16:58:06Z
 source:         APNIC
 ```
 
-{{<Aside type="note" header="Note:">}}
-
+{{<Aside type="note">}}
 WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
-For more information, see [best practices for IRR entry updates](/byoip/best-practices/irr-entries/).
-
+For more information, see [best practices for IRR entry updates](/byoip/concepts/irr-entries/best-practices/).
 {{</Aside>}}

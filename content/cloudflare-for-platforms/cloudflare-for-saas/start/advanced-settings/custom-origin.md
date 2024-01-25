@@ -16,6 +16,7 @@ To use a custom origin server, you need to meet the following requirements:
 
 - Your fallback proxy zone has an entitlement for Custom Origin Servers.
 - Each custom origin needs to be a valid hostname with a proxied (orange-clouded) A, AAAA, or CNAME record in your account's DNS. You cannot use an IP address.
+- The DNS record for the custom origin server does not currently support wildcard values. 
 
 ## Use a custom origin
 
@@ -23,7 +24,7 @@ To use a custom origin, select that option when [creating a new custom hostname]
 
 ## SNI rewrites
 
-When Cloudflare establishes a connection to your default origin server, the `Host` header and [SNI](/fundamentals/glossary/#server-name-indication-sni) will both be the value of the original custom hostname.
+When Cloudflare establishes a connection to your default origin server, the `Host` header and {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}SNI{{</glossary-tooltip>}} will both be the value of the original custom hostname.
 
 However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) on your origins.
 

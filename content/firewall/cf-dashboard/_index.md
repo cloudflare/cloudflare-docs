@@ -4,12 +4,13 @@ pcx_content_type: navigation
 weight: 3
 meta:
   title: Manage firewall rules in the Cloudflare dashboard
-layout: single
 ---
 
 # Manage firewall rules in the Cloudflare dashboard
 
 To configure firewall rules in the Cloudflare dashboard, open **Firewall rules** in **Security** > **WAF**.
+
+{{<render file="_deprecation-notice.md">}}
 
 As depicted in the image below, the **Firewall rules** dashboard interface lets you:
 

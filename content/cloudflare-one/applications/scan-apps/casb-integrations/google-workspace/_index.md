@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Google Workspace
 rss: file
+meta:
+    title: Google Workspace - CASB
 ---
 
 # Google Workspace
@@ -66,7 +68,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ### Data Loss Prevention (optional)
 
-These findings will only appear if you [added DLP profiles](/cloudflare-one/applications/scan-apps/casb-dlp/) to your CASB integration.
+{{<render file="casb/_data-loss-prevention.md">}}
 
 | Finding                                                        | Severity | Description                                                                                |
 | -------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------ |

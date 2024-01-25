@@ -31,5 +31,5 @@ The frequency of security scans depends on your Cloudflare plan — refer to [Sc
 
 ## Limitations
 
-*   Users with a [Administrator Read Only](/fundamentals/account-and-billing/members/roles/#account-scoped-roles) role cannot access the Cloudflare Security Center.
+*   Users with a [Administrator Read Only](/fundamentals/setup/manage-members/roles/#account-scoped-roles) role cannot access the Cloudflare Security Center.
 *   Only Cloudflare accounts with at least one Business or Enterprise zone, or accounts on the Teams Standard or Teams Enterprise plans, can manually start a new scan.

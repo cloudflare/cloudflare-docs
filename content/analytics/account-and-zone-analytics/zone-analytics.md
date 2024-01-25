@@ -10,7 +10,7 @@ weight: 1
 The Cloudflare zone analytics is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
 {{<Aside type="note">}}
-Read [Cloudflare Analytics](/fundamentals/data-products/about-analytics/)
+Read [Cloudflare Analytics](/analytics/faq/about-analytics/)
 for general information about all of Cloudflare's analytics offerings.
 You can also understand the characteristics of the data that Cloudflare
 captures and processes.

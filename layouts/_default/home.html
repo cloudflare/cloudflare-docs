@@ -7,12 +7,14 @@
   {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
+  <link rel="stylesheet preconnect" href="/codeBlock.css" />
+
   <link rel="stylesheet preconnect" href="/home.css" />
   {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
   <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
   {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
   {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
-  <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
+  <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
   {{- end -}}
 </head>
 
@@ -58,7 +60,7 @@
           <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
           <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
           <a class="SiteHeader--nav-link"
-            href="https://dash.cloudflare.com/?to=/:account/support"><span>Support</span></a>
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
         </div>
         <div class="SiteHeader--theme-toggle">
           <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
@@ -76,7 +78,7 @@
       </div>
     </div>
 
-    {{ if or (.IsHome) (eq .Page.RelPermalink "/zero-trust/") }}
+    {{ if .IsHome }}
     {{ else }}
     <div class="SiteHeader---shadow"></div>
     <div class="SiteHeader---shadow-cover"></div>
@@ -85,22 +87,19 @@
     <main class="DocsBody">
       {{ if .IsHome }}
       <div class="HeroImage">
-        {{ else if eq .Page.RelPermalink "/zero-trust/" }}
-        <div class="ZTHeroImage">
-          {{ end }}
+      {{ end }}
           <div id="docs-content" data-reach-skip-nav-content></div>
           <div class="DocsContent" page-type="developers-site">
             <article class="DocsMarkdown">
               {{- .Content -}}
             </article>
           </div>
-          {{ if or (.IsHome) (eq .Page.RelPermalink "/zero-trust/") }}
+          {{ if .IsHome }}
         </div>
         {{ end }}
     </main>
     {{- partial "home.footer" -}}
   </div>
-  {{- partial "gtag" -}}
 </body>
 
 </html>

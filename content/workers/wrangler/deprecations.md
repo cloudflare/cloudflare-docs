@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Deprecations
+meta:
+  description: The differences between Wrangler versions, specifically deprecations and breaking changes.
 ---
 
 # Deprecations
@@ -17,25 +19,19 @@ The following commands are deprecated in Wrangler as of Wrangler v3. These comma
 
 The `wrangler generate` command is deprecated, but still active in v3. `wrangler generate` will be fully removed in v4.
 
-Try using `npm create cloudflare@latest` for new Workers and Pages projects.
-
-#### `init`
-
-The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
-
-Try using `npm create cloudflare@latest` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
+Use `npm create cloudflare@latest` for new Workers and Pages projects.
 
 #### `publish`
 
 The `wrangler publish` command is deprecated, but still active in v3. `wrangler publish` will be fully removed in v4.
 
-Try using [`wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Workers.
+Use [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Workers.
 
 #### `pages publish`
 
 The `wrangler pages publish` command is deprecated, but still active in v3. `wrangler pages publish` will be fully removed in v4.
 
-Try using [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
+Use [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
 
 ### Deprecated options
 

@@ -12,20 +12,18 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 
 ## Setting up a new project
 
-Create a new project by running the [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) command in your terminal, giving it a title:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
+To use `create-cloudflare` to create a new Svelte project, run the following command:
+
+To use create-cloudflare to create a new Svelte project, run the following command:
 
 ```sh
-$ npm init svelte@latest my-svelte-app
+$ npm create cloudflare@latest my-svelte-app -- --framework=svelte
 ```
 
-During `init`, SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this tutorial. Choose the options that better suit your project.
+SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this guide. Choose the options that suit your project.
 
-After creating your project, go to your project directory and install its dependencies:
-
-```sh
-$ cd my-svelte-app
-$ npm install
-```
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@sveltejs/adapter-cloudflare` adapter, and ask you setup questions.
 
 After you have installed your project dependencies, start your application:
 
@@ -39,7 +37,9 @@ $ npm run dev
 
 ## SvelteKit Cloudflare configuration
 
-To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare) to your application:
+To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare) to your application.
+
+{{<render file="_c3-adapter.md">}}
 
 1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-cloudflare` in your terminal.
 2. Include the adapter in `svelte.config.js`:
@@ -89,11 +89,11 @@ declare namespace App {
 
 ```
 
-4. Access the added KV or Durable objects (or generally any [binding](/pages/platform/functions/bindings/)) in your endpoint with `env`:
+4. Access the added KV or Durable objects (or generally any [binding](/pages/functions/bindings/)) in your endpoint with `env`:
 
 ```js
-export async function post({ request, platform }) {
-  const counter = platform.env.COUNTER.idFromName("A");
+export async function post(context) {
+  const counter = context.platform.env.COUNTER.idFromName("A");
 }
 ```
 
@@ -121,7 +121,9 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Svelte">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
@@ -136,12 +138,6 @@ Select the new GitHub repository that you created and, in **Set up builds and de
 
 </div>
 
-{{<Aside type="warning">}}
-
-You can select the _SvelteKit_ preset from the **Framework preset** input, it auto populates the values for you, but you still need to manually insert the node version environment variable.
-
-{{</Aside>}}
-
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
 After completing configuration, click the **Save and Deploy** button.
@@ -150,7 +146,7 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 {{<Aside type="note">}}
 
@@ -162,7 +158,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file.
 
-To have the functionality equivalent to Pages Functions [`onRequests`](/pages/platform/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
+To have the functionality equivalent to Pages Functions [`onRequests`](/pages/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
 
 ```ts
 ---

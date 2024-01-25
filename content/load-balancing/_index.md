@@ -23,13 +23,13 @@ Cloudflare Load Balancing distributes traffic across your servers, which reduces
 
 ## Features
 
-{{<feature header="Load balancing and failover" href="/load-balancing/understand-basics/load-balancers/">}}
+{{<feature header="Load balancing and failover" href="/load-balancing/load-balancers/">}}
 
 Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
 
 {{</feature>}}
 
-{{<feature header="Active monitoring" href="/load-balancing/understand-basics/monitors/">}}
+{{<feature header="Active monitoring" href="/load-balancing/monitors/">}}
 
 Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
 

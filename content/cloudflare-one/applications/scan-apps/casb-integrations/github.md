@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: GitHub
 rss: file
+meta:
+    title: GitHub - CASB
 ---
 
 # GitHub

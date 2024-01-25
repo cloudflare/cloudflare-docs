@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: HTMLRewriter
+meta:
+  description: Build comprehensive and expressive HTML parsers inside of a Worker application.
 ---
 
 # HTMLRewriter

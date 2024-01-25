@@ -30,3 +30,11 @@ Crawler Hints also means less traffic hitting your origin, improving resource co
 3.  Enable **Crawler Hints**.
 
 After enabling Crawler Hints, Cloudflare will begin sending hints to search engines about when they should crawl particular parts of your website.
+
+## Prevent indexing for a specific page
+
+When enabled, Crawler Hints is a global setting for your entire website. You can stop a specific page from being indexed by either:
+
+* Having the origin server send through the header `X-Robots-Tag: noindex` on any pages that should not be indexed.
+* Including `<meta name="robots" content="noindex, nofollow" />` in the HTML of any pages that should not be indexed.
+* Creating a [Response header Transform Rule](/rules/transform/response-header-modification/) in Cloudflare to add the `X-Robots-Tag: noindex` header instead of doing it from the origin server.

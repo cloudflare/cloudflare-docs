@@ -21,8 +21,8 @@ When you order an [advanced certificate](/ssl/edge-certificates/advanced-certifi
 | --- | --- | --- |
 | 1 year | 30 days | Soon to be [deprecated](/ssl/reference/migration-guides/digicert-update/) |
 | 3 months | 30 days |
-| 1 month | 7 days | Not supported by [Let's Encrypt](/ssl/reference/certificate-authorities/#main-features)
-| 2 weeks | 3 days | Not supported by [Let's Encrypt](/ssl/reference/certificate-authorities/#main-features)
+| 1 month | 7 days | Not supported by [Let's Encrypt](/ssl/reference/certificate-authorities/#lets-encrypt)
+| 2 weeks | 3 days | Not supported by [Let's Encrypt](/ssl/reference/certificate-authorities/#lets-encrypt)
 
 {{<Aside type="note">}}
 

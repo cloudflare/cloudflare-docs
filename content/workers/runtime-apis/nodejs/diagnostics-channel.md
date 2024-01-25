@@ -42,8 +42,10 @@ When using [Tail Workers](/workers/observability/tail-workers/), all messages pu
 ```js
 export default {
   async tail(events) {
-    for (const event of events.diagnosticsChannelEvents) {
-      console.log(event.timestamp, event.channel, event.message);
+    for (const event of events) {
+      for (const messageData of event.diagnosticsChannelEvents) {
+        console.log(messageData.timestamp, messageData.channel, messageData.message);
+      }
     }
   }
 }
@@ -86,7 +88,7 @@ channels.subscribe({
   },
 });
 
-// The subcriber handlers will be invoked while tracing the execution of the async
+// The subscriber handlers will be invoked while tracing the execution of the async
 // function passed into `channel.tracePromise`...
 channel.tracePromise(async () => {
   // Perform some asynchronous work...

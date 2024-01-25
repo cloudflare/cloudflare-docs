@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Connections
-weight: 6
+weight: 5
 ---
 
 # Connections

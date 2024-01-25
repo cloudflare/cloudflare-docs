@@ -10,8 +10,6 @@ declare global {
   }
 }
 
-const currentLocation = window.location.href;
-
 (function () {
   navs.init();
   timeago.init();
@@ -23,4 +21,5 @@ const currentLocation = window.location.href;
   events.toggleSidebar();
   events.activeTab();
   events.tabs();
+  events.zarazTrackDocEvents();
 })();

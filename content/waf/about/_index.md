@@ -2,7 +2,6 @@
 title: Concepts
 pcx_content_type: concept
 weight: 2
-layout: single
 ---
 
 # Concepts
@@ -38,11 +37,11 @@ You can define a configuration that affects an entire managed ruleset, or config
 
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
-1. [Firewall rules](/firewall/cf-firewall-rules/)
-2. [Custom rulesets](/waf/custom-rulesets/)
+1. [Firewall rules](/firewall/cf-firewall-rules/) (deprecated)
+2. [Custom rulesets](/waf/custom-rules/custom-rulesets/)
 3. [Custom rules](/waf/custom-rules/)
 4. [Rate limiting rules](/waf/rate-limiting-rules/)
 5. [WAF Managed Rules](/waf/managed-rules/)
-6. [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)
+6. [Cloudflare Rate Limiting](/waf/reference/legacy/old-rate-limiting/) (previous version, deprecated)
 
 For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).

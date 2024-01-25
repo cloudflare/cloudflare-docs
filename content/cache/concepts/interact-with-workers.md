@@ -11,4 +11,4 @@ To determine how to cache a resource by setting TTLs, custom cache keys, and cac
 
 To use the Cache API to store responses in Cloudflare's cache, refer to [Using the Cache API](/workers/examples/cache-api/).
 
-To understand more about how Cache and Workers interact refer to [Cache in Workers](/workers/learning/how-the-cache-works/).
+To understand more about how Cache and Workers interact refer to [Cache in Workers](/workers/reference/how-the-cache-works/).

@@ -33,6 +33,10 @@ Create rules to indicate specific traffic or areas of your site or application t
 Get insights into the traffic going through your waiting room.
 {{</feature>}}
 
+{{<feature header="Additional hostname and path coverage" href="/waiting-room/how-to/place-waiting-room/">}}
+Apply a single waiting room to multiple hostnames and paths within the same zone.
+{{</feature>}}
+
 ---
 
 ## Related products

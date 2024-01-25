@@ -1,19 +1,18 @@
 ---
 pcx_content_type: how-to
 title: Managed deployment
-layout: single
 weight: 1
 ---
 
 # Managed deployment
 
-{{<render file="_mdm-intro.md">}}
+{{<render file="warp/_mdm-intro.md">}}
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 {{<Aside type="warning">}}
 
-{{<render file="_mdm-dash-conflict.md">}}
+{{<render file="warp/_mdm-dash-conflict.md">}}
 
 {{</Aside>}}
 
@@ -29,7 +28,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 
 To install the WARP client, run the following command:
 
-```txt
+```bash
 msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
@@ -37,10 +36,20 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ### Uninstall WARP
 
-To uninstall the WARP client, run the following command:
+To uninstall the WARP client:
 
-```txt
-msiexec /x Cloudflare_WARP_Release-x64.msi /quiet
+1. First, locate the `.msi` package with the following Powershell command:
+```bash
+PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+
+IdentifyingNumber                      Name            LocalPackage
+-----------------                      ----            ------------
+{5RA4DJWK-13D8-2NSX-QRF8-UANLODWD6D90} Cloudflare WARP C:\WINDOWS\Installer\3f476db.msi
+```
+
+2. You can then use the LocalPackage output in the uninstall command. For example,
+```bash
+msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
 ```
 
 ### Update the configuration
@@ -115,7 +124,11 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ## iOS
 
-The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP iOS client, known in the App Store as [Cloudflare One Agent](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
 
 To proceed with the installation, here is an example of the XML code you will need:
 
@@ -138,7 +151,11 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ## Android
 
-The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en_US&gl=US) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP Android client, known in the Google Play store as [Cloudflare One Agent](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent), allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
 To proceed with the installation, here is an example of the XML code you will need:
 

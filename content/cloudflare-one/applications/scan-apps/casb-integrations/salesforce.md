@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Salesforce
 rss: file
+meta:
+    title: Salesforce - CASB
 ---
 
 # Salesforce

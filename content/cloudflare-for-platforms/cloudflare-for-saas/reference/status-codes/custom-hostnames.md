@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Custom hostnames
 weight: 2
+meta:
+    title: Status codes - Custom hostnames
 ---
 
 # Custom hostnames

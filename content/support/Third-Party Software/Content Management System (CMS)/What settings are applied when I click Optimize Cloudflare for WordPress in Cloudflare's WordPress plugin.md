@@ -22,7 +22,7 @@ If you're using Cloudflare's Wordpress plugin, our "Optimize Cloudflare for Wor
 | Browser Cache TTL | 4 hours |
 | Always Online | On |
 | Development Mode | Disabled |
-| IPV6 Compatibility | Off |
+| IPV6 Compatibility | On |
 | WebSockets | On |
 | IP Geolocation | On |
 | Email Address Obfuscation | On |

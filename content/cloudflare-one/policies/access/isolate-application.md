@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Isolate self-hosted application
 weight: 4
-layout: single
 ---
 
 # Isolate self-hosted application
@@ -46,6 +45,6 @@ For example, if your application is hosted on `internal.site.com`, the following
 | Domain      | in       | `internal.site.com`     | And   | Block  |
 | DLP Profile | in       | `Financial Information` |       |        |
 
-## Limitations
+## Product compatibility
 
-- [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/enable-signed-exchange/), [Automatic Platform Optimization](/automatic-platform-optimization) and [Zaraz](/zaraz) are currently not supported and if enabled, should be disabled using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
+Refer to [this page](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) for a list of products that are incompatible with the **Isolate application** feature.

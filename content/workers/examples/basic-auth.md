@@ -9,11 +9,17 @@ pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001
 layout: example
+updated: 2024-01-11
 ---
+
+{{<Aside type="note">}}
+
+This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
+{{</Aside>}}
 
 {{<Aside type="warning" header="Caution when using in production">}}
 
-This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, refer to the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
+This code is provided as a sample, and is not suitable for production use. Basic Authentication sends credentials unencrypted, and must be used with an HTTPS connection to be considered secure. For a production-ready authentication system, consider using [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps/).
 
 {{</Aside>}}
 
@@ -21,98 +27,58 @@ This code is provided as a sample, and is not suitable for production code witho
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 /**
  * Shows how to restrict access using the HTTP Basic schema.
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
  * @see https://tools.ietf.org/html/rfc7617
  *
- * A user-id containing a colon (":") character is invalid, as the
- * first colon in a user-pass string separates user and password.
  */
+
+import { Buffer } from "node:buffer";
+
+const encoder = new TextEncoder();
+
+/**
+ * Protect against timing attacks by safely comparing values using `timingSafeEqual`.
+ * Refer to https://developers.cloudflare.com/workers/runtime-apis/web-crypto/#timingsafeequal for more details
+ * @param {string} a
+ * @param {string} b
+ * @returns {boolean}
+ */
+function timingSafeEqual(a, b) {
+  const aBytes = encoder.encode(a);
+  const bBytes = encoder.encode(b);
+
+  if (aBytes.byteLength !== bBytes.byteLength) {
+    // Strings must be the same length in order to compare
+    // with crypto.subtle.timingSafeEqual
+    return false;
+  }
+
+  return crypto.subtle.timingSafeEqual(aBytes, bBytes);
+}
+
 export default {
-  async fetch(request) {
+  /**
+   *
+   * @param {Request} request
+   * @param {{PASSWORD: string}} env
+   * @returns
+   */
+  async fetch(request, env) {
     const BASIC_USER = "admin";
-    const BASIC_PASS = "admin";
 
-    /**
-     * Throws exception on verification failure.
-     * @param {string} user
-     * @param {string} pass
-     * @throws {UnauthorizedException}
-     */
-    async function verifyCredentials(user, pass) {
-      if (BASIC_USER !== user) {
-        throw new UnauthorizedException("Invalid credentials.");
-      }
+    // You will need an admin password. This should be
+    // attached to your Worker as an encrypted secret.
+    // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+    const BASIC_PASS = env.PASSWORD ?? "password";
 
-      if (BASIC_PASS !== pass) {
-        throw new UnauthorizedException("Invalid credentials.");
-      }
-    }
+    const url = new URL(request.url);
 
-    /**
-     * Parse HTTP Basic Authorization value.
-     * @param {Request} request
-     * @throws {BadRequestException}
-     * @returns {{ user: string, pass: string }}
-     */
-    async function basicAuthentication(request) {
-      const Authorization = request.headers.get("Authorization");
-
-      const [scheme, encoded] = Authorization.split(" ");
-
-      // The Authorization header must start with Basic, followed by a space.
-      if (!encoded || scheme !== "Basic") {
-        throw new BadRequestException("Malformed authorization header.");
-      }
-
-      // Decodes the base64 value and performs unicode normalization.
-      // @see https://datatracker.ietf.org/doc/html/rfc7613#section-3.3.2 (and #section-4.2.2)
-      // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-      const buffer = Uint8Array.from(atob(encoded), (character) =>
-        character.charCodeAt(0)
-      );
-      const decoded = new TextDecoder().decode(buffer).normalize();
-
-      // The username & password are split by the first colon.
-      //=> example: "username:password"
-      const index = decoded.indexOf(":");
-
-      // The user & password are split by the first colon and MUST NOT contain control characters.
-      // @see https://tools.ietf.org/html/rfc5234#appendix-B.1 (=> "CTL = %x00-1F / %x7F")
-      if (index === -1 || /[\0-\x1F\x7F]/.test(decoded)) {
-        throw new BadRequestException("Invalid authorization value.");
-      }
-
-      return {
-        user: decoded.substring(0, index),
-        pass: decoded.substring(index + 1),
-      };
-    }
-
-    async function UnauthorizedException(reason) {
-      this.status = 401;
-      this.statusText = "Unauthorized";
-      this.reason = reason;
-    }
-
-    async function BadRequestException(reason) {
-      this.status = 400;
-      this.statusText = "Bad Request";
-      this.reason = reason;
-    }
-
-    const { protocol, pathname } = new URL(request.url);
-
-    // In the case of a Basic authentication, the exchange MUST happen over an HTTPS (TLS) connection to be secure.
-    if (
-      "https:" !== protocol ||
-      "https" !== request.headers.get("x-forwarded-proto")
-    ) {
-      throw new BadRequestException("Please use a HTTPS connection.");
-    }
-
-    switch (pathname) {
+    switch (url.pathname) {
       case "/":
         return new Response("Anyone can access the homepage.");
 
@@ -124,33 +90,53 @@ export default {
 
       case "/admin": {
         // The "Authorization" header is sent when authenticated.
-        if (request.headers.has("Authorization")) {
-          // Throws exception when authorization fails.
-          const { user, pass } = basicAuthentication(request);
-          verifyCredentials(user, pass);
-
-          // Only returns this response when no exception is thrown.
-          return new Response("You have private access.", {
-            status: 200,
+        const authorization = request.headers.get("Authorization");
+        if (!authorization) {
+          return new Response("You need to login.", {
+            status: 401,
             headers: {
-              "Cache-Control": "no-store",
+              // Prompts the user for credentials.
+              "WWW-Authenticate": 'Basic realm="my scope", charset="UTF-8"',
+            },
+          });
+        }
+        const [scheme, encoded] = authorization.split(" ");
+
+        // The Authorization header must start with Basic, followed by a space.
+        if (!encoded || scheme !== "Basic") {
+          return new Response("Malformed authorization header.", {
+            status: 400,
+          });
+        }
+
+        const credentials = Buffer.from(encoded, "base64").toString();
+
+        // The username & password are split by the first colon.
+        //=> example: "username:password"
+        const index = credentials.indexOf(":");
+        const user = credentials.substring(0, index);
+        const pass = credentials.substring(index + 1);
+
+        if (
+          !timingSafeEqual(BASIC_USER, user) ||
+          !timingSafeEqual(BASIC_PASS, pass)
+        ) {
+          return new Response("You need to login.", {
+            status: 401,
+            headers: {
+              // Prompts the user for credentials.
+              "WWW-Authenticate": 'Basic realm="my scope", charset="UTF-8"',
             },
           });
         }
 
-        // Not authenticated.
-        return new Response("You need to login.", {
-          status: 401,
+        return new Response("🎉 You have private access!", {
+          status: 200,
           headers: {
-            // Prompts the user for credentials.
-            "WWW-Authenticate": 'Basic realm="my scope", charset="UTF-8"',
+            "Cache-Control": "no-store",
           },
         });
       }
-
-      case "/favicon.ico":
-      case "/robots.txt":
-        return new Response(null, { status: 204 });
     }
 
     return new Response("Not Found.", { status: 404 });
@@ -162,90 +148,46 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+/**
+ * Shows how to restrict access using the HTTP Basic schema.
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
+ * @see https://tools.ietf.org/html/rfc7617
+ *
+ */
+
+import { Buffer } from "node:buffer";
+
+const encoder = new TextEncoder();
+
+/**
+ * Protect against timing attacks by safely comparing values using `timingSafeEqual`.
+ * Refer to https://developers.cloudflare.com/workers/runtime-apis/web-crypto/#timingsafeequal for more details
+ */
+function timingSafeEqual(a: string, b: string) {
+  const aBytes = encoder.encode(a);
+  const bBytes = encoder.encode(b);
+
+  if (aBytes.byteLength !== bBytes.byteLength) {
+    // Strings must be the same length in order to compare
+    // with crypto.subtle.timingSafeEqual
+    return false;
+  }
+
+  return crypto.subtle.timingSafeEqual(aBytes, bBytes);
+}
+
+export default <ExportedHandler<{ PASSWORD: string }>>{
+  async fetch(request, env) {
     const BASIC_USER = "admin";
-    const BASIC_PASS = "admin";
 
-    /**
-     * Throws exception on verification failure.
-     * @param {string} user
-     * @param {string} pass
-     * @throws {UnauthorizedException}
-     */
-    async function verifyCredentials(user, pass) {
-      if (BASIC_USER !== user) {
-        throw new UnauthorizedException("Invalid credentials.");
-      }
+    // You will need an admin password. This should be
+    // attached to your Worker as an encrypted secret.
+    // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+    const BASIC_PASS = env.PASSWORD ?? "password";
 
-      if (BASIC_PASS !== pass) {
-        throw new UnauthorizedException("Invalid credentials.");
-      }
-    }
+    const url = new URL(request.url);
 
-    /**
-     * Parse HTTP Basic Authorization value.
-     * @param {Request} request
-     * @throws {BadRequestException}
-     * @returns {{ user: string, pass: string }}
-     */
-    async function basicAuthentication(request) {
-      const Authorization = request.headers.get("Authorization");
-
-      const [scheme, encoded] = Authorization.split(" ");
-
-      // The Authorization header must start with Basic, followed by a space.
-      if (!encoded || scheme !== "Basic") {
-        throw new BadRequestException("Malformed authorization header.");
-      }
-
-      // Decodes the base64 value and performs unicode normalization.
-      // @see https://datatracker.ietf.org/doc/html/rfc7613#section-3.3.2 (and #section-4.2.2)
-      // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-      const buffer = Uint8Array.from(atob(encoded), (character) =>
-        character.charCodeAt(0)
-      );
-      const decoded = new TextDecoder().decode(buffer).normalize();
-
-      // The username & password are split by the first colon.
-      //=> example: "username:password"
-      const index = decoded.indexOf(":");
-
-      // The user & password are split by the first colon and MUST NOT contain control characters.
-      // @see https://tools.ietf.org/html/rfc5234#appendix-B.1 (=> "CTL = %x00-1F / %x7F")
-      if (index === -1 || /[\0-\x1F\x7F]/.test(decoded)) {
-        throw new BadRequestException("Invalid authorization value.");
-      }
-
-      return {
-        user: decoded.substring(0, index),
-        pass: decoded.substring(index + 1),
-      };
-    }
-
-    async function UnauthorizedException(reason) {
-      this.status = 401;
-      this.statusText = "Unauthorized";
-      this.reason = reason;
-    }
-
-    async function BadRequestException(reason) {
-      this.status = 400;
-      this.statusText = "Bad Request";
-      this.reason = reason;
-    }
-
-    const { protocol, pathname } = new URL(request.url);
-
-    // In the case of a Basic authentication, the exchange MUST happen over an HTTPS (TLS) connection to be secure.
-    if (
-      "https:" !== protocol ||
-      "https" !== request.headers.get("x-forwarded-proto")
-    ) {
-      throw new BadRequestException("Please use a HTTPS connection.");
-    }
-
-    switch (pathname) {
+    switch (url.pathname) {
       case "/":
         return new Response("Anyone can access the homepage.");
 
@@ -257,40 +199,58 @@ const handler: ExportedHandler = {
 
       case "/admin": {
         // The "Authorization" header is sent when authenticated.
-        if (request.headers.has("Authorization")) {
-          // Throws exception when authorization fails.
-          const { user, pass } = basicAuthentication(request);
-          verifyCredentials(user, pass);
-
-          // Only returns this response when no exception is thrown.
-          return new Response("You have private access.", {
-            status: 200,
+        const authorization = request.headers.get("Authorization");
+        if (!authorization) {
+          return new Response("You need to login.", {
+            status: 401,
             headers: {
-              "Cache-Control": "no-store",
+              // Prompts the user for credentials.
+              "WWW-Authenticate": 'Basic realm="my scope", charset="UTF-8"',
+            },
+          });
+        }
+        const [scheme, encoded] = authorization.split(" ");
+
+        // The Authorization header must start with Basic, followed by a space.
+        if (!encoded || scheme !== "Basic") {
+          return new Response("Malformed authorization header.", {
+            status: 400,
+          });
+        }
+
+        const credentials = Buffer.from(encoded, "base64").toString();
+
+        // The username and password are split by the first colon.
+        //=> example: "username:password"
+        const index = credentials.indexOf(":");
+        const user = credentials.substring(0, index);
+        const pass = credentials.substring(index + 1);
+
+        if (
+          !timingSafeEqual(BASIC_USER, user) ||
+          !timingSafeEqual(BASIC_PASS, pass)
+        ) {
+          return new Response("You need to login.", {
+            status: 401,
+            headers: {
+              // Prompts the user for credentials.
+              "WWW-Authenticate": 'Basic realm="my scope", charset="UTF-8"',
             },
           });
         }
 
-        // Not authenticated.
-        return new Response("You need to login.", {
-          status: 401,
+        return new Response("🎉 You have private access!", {
+          status: 200,
           headers: {
-            // Prompts the user for credentials.
-            "WWW-Authenticate": 'Basic realm="my scope", charset="UTF-8"',
+            "Cache-Control": "no-store",
           },
         });
       }
-
-      case "/favicon.ico":
-      case "/robots.txt":
-        return new Response(null, { status: 204 });
     }
 
     return new Response("Not Found.", { status: 404 });
   },
 };
-
-export default handler;
 ```
 
 {{</tab>}}

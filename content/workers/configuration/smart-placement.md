@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
 title: Smart Placement (beta)
+meta:
+  description: Speed up your Worker application by automatically placing your workloads in an optimal location that minimizes latency.
 ---
 
-{{<beta>}}Smart Placement{{</beta>}}
+{{<heading-pill style="beta">}}Smart Placement{{</heading-pill>}}
 
-By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications. 
+By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications. 
 
 You may benefit from Smart Placement if you are making multiple round trips to a centralized database, API or origin server in a Worker. 
 
@@ -30,6 +32,12 @@ Smart Placement is only active for Workers that **make more than one roundtrip**
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
 
+Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
+
+### D1
+
+Workers with a [D1](/d1/) binding will always be placed in a data center near the location of the D1 database they are bound to. Subrequests to other back-end services are ignored by Smart Placement in this case.
+
 ### Unsupported back-end services
 
 There are some back-end services that are not considered by the Smart Placement algorithm:
@@ -38,14 +46,12 @@ There are some back-end services that are not considered by the Smart Placement 
     - Examples: Google APIs, services using Fastly or Akamai's CDN.
 
 
-- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/fetch-event/?ref=blog.cloudflare.com#waituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
+- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization. 
     - Examples: New Relic, Datadog, Tinybird, Grafana, Amplitude, Honeycomb.
 
 ## Enable Smart Placement (beta)
 
 Smart Placement is available to users on all Workers plans.
-
-Smart Placement is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/configuration/cron-triggers/).
 
 ### Enable Smart Placement via Wrangler
 
@@ -91,7 +97,7 @@ $ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers
 Possible placement states include:
 - _(not present)_: The Worker has not been analyzed for Smart Placement yet.
 - `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
-- `NO_VALID_HOSTS`: The Worker does not send subrequests to [back-end services supported by Smart Placement](/workers/configuration/smart-placement/#supported-back-end-services).
+- `NO_VALID_HOSTS`: The Worker does not send subrequests to back-end services supported by Smart Placement.
 - `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid back-end services.
 - `SUCCESS`: The Worker has been successfully analyzed and will be optimized by Smart Placement.
 

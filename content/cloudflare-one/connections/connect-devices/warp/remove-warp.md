@@ -50,7 +50,7 @@ $ sudo apt remove cloudflare-warp
 
 ## iOS and Android
 
-1. Find the 1.1.1.1 application on the home screen.
+1. Find the Cloudflare One Agent application (or the legacy 1.1.1.1 application) on the home screen.
 2. Select and hold the application tile, and then select **Remove App**.
 3. Select **Delete App**.
 

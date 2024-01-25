@@ -106,7 +106,8 @@ https://api.staging.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{roo
       "categories": [
         {
           "category": "simple",
-          "enabled": true
+          "enabled": true,
+          "action": "log"
         }
       ]
     }

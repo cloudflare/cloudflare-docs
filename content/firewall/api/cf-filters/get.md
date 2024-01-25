@@ -2,6 +2,8 @@
 title: GET examples
 pcx_content_type: reference
 weight: 5
+meta:
+  title: GET examples - Filters
 ---
 
 # GET examples

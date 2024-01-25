@@ -238,9 +238,9 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 #### `format`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing](/images/image-resizing/url-format/).{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/).{{</Aside>}}
 
-The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. Cloudflare will default to JPEG when possible due to the large size of PNG files.
 
 Workers integration supports:
 - `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
@@ -272,7 +272,7 @@ header: Workers
 cf: {image: {format: "avif"}}
 ```
 
-For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
+For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/transform-images/transform-via-workers/#an-example-worker) for a complete overview of how to set up an image transformation Worker.
 
 ```js
 ---
@@ -339,7 +339,13 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
   - `side`  
   A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
 
-    For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image. Example:
+    For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+
+  {{<Aside type="note">}}
+    
+  Note that you must subtract the height of the image before you calculate the focal point.
+    
+  {{</Aside>}}
 
   ```js
   ---
@@ -390,7 +396,15 @@ cf: {image: {height: 250}}
 
 #### `metadata`
 
-Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect. Options are:
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect.
+
+{{<Aside type="note">}}
+
+Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. More information can be found [here](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
+
+{{</Aside>}}
+
+Options are:
 
   - `keep`  
   Preserves most of EXIF metadata, including GPS location if present. Example:
@@ -528,7 +542,7 @@ cf: {image: {sharpen: 2}}
 
 #### `trim`
 
-Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left` or via separate values `trim.width`,`trim.height`, `trim.left`,`trim.top`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For image transformations and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left` or via separate values `trim.width`,`trim.height`, `trim.left`,`trim.top`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
 
 ```js
 ---

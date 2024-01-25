@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Least Outstanding Requests
 weight: 4
 meta:
-  title: Least Outstanding Requests steering
+  title: Least Outstanding Requests steering - Origin-level steering
 ---
 
 # Least Outstanding Requests steering

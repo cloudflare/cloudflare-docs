@@ -18,12 +18,10 @@ Assign a Railgun to a domain.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/user_get_all HTTP/1.1
@@ -37,12 +35,9 @@ email=user%40cloudflare.com
 tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -112,8 +107,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET user\_get\_all
 
@@ -123,12 +117,10 @@ Assign a Railgun to a domain.
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/user_get_all?email=&tkn= HTTP/1.1
@@ -142,12 +134,9 @@ email=user%40cloudflare.com
 tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -217,8 +206,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST zone\_conn\_get\_active
 
@@ -228,12 +216,10 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/zone_conn_get_active HTTP/1.1
@@ -248,12 +234,9 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -277,8 +260,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET zone\_conn\_get\_active
 
@@ -288,12 +270,10 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
+* `email` – User account email
+* `tkn` – User API token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/zone_conn_get_active?email=&tkn=&z= HTTP/1.1
@@ -308,12 +288,9 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 z=example.com
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -337,5 +314,4 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}

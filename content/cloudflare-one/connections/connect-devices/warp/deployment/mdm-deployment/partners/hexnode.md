@@ -124,7 +124,7 @@ This will push the app along with the configurations to the selected devices.
 
 2. Select _iOS_ as the app platform.
 
-3. Search for [**1.1.1.1: Faster Internet**](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) and **Add** the app.
+3. Search for [**Cloudflare One Agent**](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492) and **Add** the app.
 
 4. Set up an XML file with the supported app configurations for the app. Refer this sample XML code to identify the supported arguments:
 
@@ -144,9 +144,8 @@ This will push the app along with the configurations to the selected devices.
    ```
 
 5. Upload the app configurations in Hexnode:
-
    1. On your Hexnode console, go to the **Apps** tab.
-   2. Find the 1.1.1.1 app and select its name.
+   2. Find the Cloudflare One Agent app and select its name.
    3. Select the settings icon and choose **App Configuration**.
    4. Upload the XML file in the corresponding field.
    5. Select **Save**.
@@ -169,11 +168,11 @@ This will push the app along with the configurations to the selected devices.
 {{</Aside>}}
 
 1. On your Hexnode console, go to **Apps** > **Add Apps** > **Managed Google Apps**.
-2. Search for the app [**1.1.1.1: Faster & Safer Internet**](https://play.google.com/work/apps/details?id=com.cloudflare.onedotonedotonedotone).
+2. Search for the app [**Cloudflare One Agent**](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent).
 3. Approve the app as a Managed Google Play app.
 4. Go to **Policies** and create a new policy.
 5. Go to **Android** > **App Configurations** > **Add new configuration**.
-6. Find the **1.1.1.1 Faster & Safer Internet** app and set up your custom configurations.
+6. Find the **Cloudflare One Agent** app and set up your custom configurations.
 7. Go to **Policy Targets** and associate the policy with the required target devices.
 8. Save the policy.
 

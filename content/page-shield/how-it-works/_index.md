@@ -2,7 +2,6 @@
 title: How it works
 pcx_content_type: concept
 weight: 3
-layout: single
 meta:
   title: How Page Shield works
   description: Page Shield tracks resources (such as scripts) loaded in your domain's pages and provides alerts when it detects new or malicious resources.
@@ -12,7 +11,7 @@ meta:
 
 Page Shield simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. Page Shield also tracks the connections made by scripts on your domain's pages and checks if they are malicious based on their destination.
 
-Enabling Page Shield adds a [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints.
+Enabling Page Shield adds a {{<glossary-tooltip term_id="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">}}Content Security Policy (CSP){{</glossary-tooltip>}} deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints.
 
 The **Monitors** dashboard will show the list of [active](/page-shield/reference/script-statuses/) scripts and connections. The **All Reported Scripts** and **All Reported Connections** dashboards show the full list of detected scripts and connections in your domain, respectively, including infrequent and inactive ones.
 

@@ -4,17 +4,28 @@
 {{- $contentPath := replaceRE `\/$` "" $.RelPermalink -}}
 {{- $folderPlaceholder := "" -}}
 {{ $rssFeed := "" }}
+{{ $rssIconDescription := "" -}}
+{{- $githubURL := "https://github.com/cloudflare/cloudflare-docs" -}}
 
 <div class="DocsToolbar--tools">
-  <button data-feedback="true" class="DocsToolbar--feedback Button Button-is-docs-secondary">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
       <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
         fill="currentColor"></path>
       <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
     </svg>Give Feedback
-  </button>
+  </a>
 
+  {{- with $.OutputFormats.Get "rss" -}}
+  
+  {{- $rssFeed = print $.RelPermalink "index.xml" -}}
+  {{- $rssIconDescription = "View RSS feed" -}}
+
+  {{- end -}}
+  
   {{ with .Params.rss }}
+
+  {{- $rssIconDescription = "View GitHub RSS feed" -}}
 
   {{ if eq . "folder" }}
 
@@ -35,6 +46,8 @@
   {{ $rssFeed = . }}
 
   {{ end }}
+  {{ end }}
+  {{ if ne $rssFeed "" -}}
 
   <div class="DocsToolbar--tools-spacer"></div>
 
@@ -52,7 +65,7 @@
       </div>
 
       <span class="Tooltip" role="tooltip" position="bottom-end">
-        View GitHub RSS Feed
+        {{ $rssIconDescription }}
       </span>
     </div>
   </div>
@@ -61,10 +74,13 @@
 
   <div class="DocsToolbar--tools-spacer"></div>
 
+  {{- with .File -}} {{- $githubURL = (printf
+    "https://github.com/cloudflare/cloudflare-docs/blob/production/content/%s"
+    (replace .Path "\\" "/")) -}} {{- end -}}
   <div class="DocsToolbar--tools-icon-item">
     <div class="Tooltip---root">
       <div class="DocsToolbar--tools-icon-item-content">
-        <a class="Link Link-without-underline" href="https://github.com/cloudflare/cloudflare-docs" target="_blank">
+        <a class="Link Link-without-underline" href="{{$githubURL}}" target="_blank">
           <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-6991762763429039"
             xmlns="http://www.w3.org/2000/svg">
             <title id="title-6991762763429039">GitHub icon</title>
@@ -76,7 +92,7 @@
       </div>
 
       <span class="Tooltip" role="tooltip" position="bottom-end">
-        Visit {{ $title }} on GitHub
+        Edit this page on GitHub
       </span>
     </div>
   </div>

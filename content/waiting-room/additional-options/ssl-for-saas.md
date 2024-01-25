@@ -14,4 +14,4 @@ If your application is already using Cloudflare, create a waiting room using the
 
 ## Applications not on Cloudflare
 
-If your application is not using Cloudflare, you need to ask your SaaS provider to [configure a waiting room](/waiting-room/how-to/create-waiting-room/) on their Cloudflare for SaaS zone (using your custom hostname as the **Hostname** value).
+If your application is not using Cloudflare, you need to ask your SaaS provider to configure a waiting room on [your Cloudflare for SaaS zone](/waiting-room/how-to/place-waiting-room/#custom-hostnames).

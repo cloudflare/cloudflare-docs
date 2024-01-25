@@ -6,9 +6,7 @@ weight: 1
 
 # Deploy an existing static site
 
-{{<Aside type="note" header="Cloudflare Pages">}}
-Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
-{{</Aside>}}
+{{<render file="_workers_sites.md">}}
 
 Workers Sites require [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
 
@@ -115,11 +113,11 @@ async function handleEvent(event) {
 {{</tab>}}
 {{</tabs>}}
 
-5.  Run `wrangler dev` or `wrangler deploy` to preview or deploy your site on Cloudflare.
+5.  Run `wrangler dev` or `npx wrangler deploy` to preview or deploy your site on Cloudflare.
     Wrangler will automatically upload the assets found in the configured directory.
 
     ```sh
-    $ wrangler deploy
+    $ npx wrangler deploy
     ```
 
 6.  Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.

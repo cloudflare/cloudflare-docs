@@ -1,14 +1,17 @@
 ---
 pcx_content_type: configuration
 title: Configuration
+meta:
+  title: Configuration - Wrangler
+  description: Use a `wrangler.toml` configuration file to customize the development and deployment setup for your Worker project and other Developer Platform products.
 ---
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deploying setup for a Worker.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deployment setup for a Worker.
 
 {{<Aside type="warning">}}
-Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
 {{</Aside>}}
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
@@ -45,7 +48,7 @@ kv_namespaces = [
 The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `wrangler deploy --env staging`.
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
 
 The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
@@ -101,7 +104,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#usage-models).
+  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
+
+{{<Aside type="note">}}
+After you have opted into the [Workers Standard](/workers/platform/pricing/#workers) usage model, the usage model configured in your Worker's `wrangler.toml` will be ignored . Your usage model must instead be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
+  {{</Aside>}}
 
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -121,7 +128,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `node_compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Add polyfills for node builtin modules and globals. Refer to [node compatibility](#node-compatibility).
+  - Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
 
 - `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -134,6 +141,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 - `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+
+- `limits` {{<type-link href="#limits">}}Limits{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
 {{</definitions>}}
 
@@ -163,23 +174,60 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
 
+- `vectorize` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of Vectorize indexes that your Worker should be bound to.. Refer to [Vectorize indexes](#vectorize-indexes).
+
 - `services` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
+
+- `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
 
 {{</definitions>}}
 
 ## Types of routes
 
-There are four types of routes.
+There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and `workers.dev`.
 
-### Simple route
+### Custom Domains
 
-This is a simple route that only requires a pattern.
+[Custom Domains](/workers/configuration/routing/custom-domains/) allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management.
 
-Example: `"example.com/*"`
+{{<definitions>}}
 
-### Zone ID route
+- `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The pattern that your Worker should be run on, for example, `"example.com"`.
+
+- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+route = { pattern = "example.com", custom_domain = true }
+
+# or
+
+routes = [
+	{ pattern = "shop.example.com", custom_domain = true }
+]
+```
+
+### Routes
+
+[Routes](/workers/configuration/routing/routes/) allow users to map a URL pattern to a Worker. A route can be configured as a zone ID route, a zone name route, or a simple route.
+
+#### Zone ID route
 
 {{<definitions>}}
 
@@ -189,17 +237,22 @@ Example: `"example.com/*"`
 
 - `zone_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
+  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_id = "foo" }`
+Example:
 
-### Zone name route
+```toml
+---
+header: wrangler.toml
+---
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
+]
+```
+
+#### Zone name route
 
 {{<definitions>}}
 
@@ -211,28 +264,6 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
   - The name of the zone that your `pattern` is associated with. If you are using API tokens, this will require the `Account` scope.
 
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
-
-{{</definitions>}}
-
-Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
-
-### Custom Domain route
-
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
-
-{{<definitions>}}
-
-- `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The pattern that your Worker should be run on, for example, `"example.com"`.
-
-- `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
-
 {{</definitions>}}
 
 Example:
@@ -241,7 +272,22 @@ Example:
 ---
 header: wrangler.toml
 ---
-route = { pattern = "example.com", custom_domain = true }
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
+]
+```
+
+#### Simple route
+
+This is a simple route that only requires a pattern.
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+route = "example.com/*"
 ```
 
 ## Triggers
@@ -299,11 +345,36 @@ cwd = "build_cwd"
 watch_dir = "build_watch_dir"
 ```
 
+## Limits
+
+You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model). Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
+
+Limits have some built-in flexibility to allow for cases where your Worker infrequently runs over the configured limit. If your Worker starts hitting the limit consistently, its execution will be terminated according to the limit configured.
+
+
+{{<definitions>}}
+
+- `cpu_ms` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum CPU time allowed per invocation, in milliseconds.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[limits]
+cpu_ms = 100
+```
+
 ## Bindings
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/how-to/query-databases/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -313,15 +384,27 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
 
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `database_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
+  - The name of the database. This is a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
 
-- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+
+- `preview_database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The preview ID of this D1 database. If provided, `wrangler dev` will use this ID. Otherwise, it will use `database_id`. This option is required when using `wrangler dev --remote`.
 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
 
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+
+{{</Aside>}}
 
 Example:
 
@@ -353,7 +436,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The script where the Durable Object is defined, if it is external to this Worker.
+  - The Worker script where the Durable Object is defined, if it is external to this Worker.
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -374,7 +457,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/learning/durable-objects-migrations/).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/).
 
 {{<definitions>}}
 
@@ -411,7 +494,7 @@ deleted_classes = ["DeprecatedClass"]
 
 ### KV namespaces
 
-[Workers KV](/workers/runtime-apis/kv/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
+[Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
@@ -427,9 +510,15 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 - `preview_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The ID of the KV namespace used during `wrangler dev`.
+  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources. If developing locally (without `--remote`), this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
 
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+
+{{</Aside>}}
 
 Example:
 
@@ -440,6 +529,83 @@ header: wrangler.toml
 kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
+```
+
+### Queues
+
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/reference/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+
+To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
+
+{{<definitions>}}
+
+- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the queue, used on the Cloudflare dashboard.
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.producers]]
+  queue = "my-queue"
+  binding = "MY_QUEUE"
+```
+
+To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
+
+{{<definitions>}}
+
+- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the queue, used on the Cloudflare dashboard.
+
+- `max_batch_size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of messages allowed in each batch.
+
+- `max_batch_timeout` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of seconds to wait for messages to fill a batch before the batch is sent to the consumer Worker.
+
+- `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
+
+- `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of another queue to send a message if it fails processing at least `max_retries` times.
+  - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will be discarded.
+  - If there is no queue with the specified name, it will be created automatically.
+
+- `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
+  - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.consumers]]
+  queue = "my-queue"
+  max_batch_size = 10
+  max_batch_timeout = 30
+  max_retries = 10
+  dead_letter_queue = "my-queue-dlq"
+  max_concurrency = 5
 ```
 
 ### R2 buckets
@@ -458,9 +624,19 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
   - The name of this R2 bucket.
 
+- `jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
 - `preview_bucket_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The preview name of this R2 bucket used during `wrangler dev`.
+  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote`.
+
+{{<Aside type="note">}}
+
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+
+{{</Aside>}}
 
 {{</definitions>}}
 
@@ -473,6 +649,36 @@ header: wrangler.toml
 r2_buckets  = [
   { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
 ]
+```
+
+### Vectorize indexes
+
+A [Vectorize index](/vectorize/) allows you to insert and query vector embeddings for semantic search, classification and other vector search use-cases.
+
+To bind Vectorize indexes to your Worker, assign an array of the below object to the `vectorize` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the bound index from your Worker code.
+
+- `index_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the index to bind.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+
+[[vectorize]]
+binding = "<INDEX_NAME>"
+index_name = "<YOUR_INDEX>"
 ```
 
 ### Service bindings
@@ -587,6 +793,32 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 {{<render file="_types-bindings.md" productFolder="/email-routing/">}}
 
+### AI
+
+[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
+whether that be from Workers, Pages, or anywhere via REST API.
+
+Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
+even in local development.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+filename: wrangler.toml
+---
+[ai]
+binding = "AI" # i.e. available in your Worker on env.AI
+```
+
 ## Bundling
 
 You can bundle assets into your Worker using the `rules` key, making these assets available to be imported when your Worker is invoked. The `rules` key will be an array of the below object.
@@ -691,7 +923,7 @@ SECRET_KEY=value
 
 ## Node compatibility
 
-If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of node.js APIs to your own code.
+If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of Node.js APIs to your own code.
 
 ### Use runtime APIs directly
 
@@ -706,7 +938,7 @@ compatibility_flags = [ "nodejs_compat" ]
 
 ### Add polyfills using Wrangler
 
-Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+Add polyfills for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
 
 ```toml
 ---
@@ -778,12 +1010,12 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler. 
+We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
 
 If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behaviour).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

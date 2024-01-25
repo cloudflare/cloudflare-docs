@@ -7,7 +7,7 @@ meta:
 
 # Zaraz settings
 
-To configure Zaraz's general settings, select [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**. Make sure you save your changes, by selecting the **Save** button  after making them. 
+To configure Zaraz's general settings, select [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**. Make sure you save your changes, by selecting the **Save** button after making them.
 
 ## Workflow
 
@@ -37,13 +37,13 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 
 Zaraz offers privacy settings you can turn on, such as:
 
-* **Remove URL query parameters**: Removes all query parameters from URLs. For example, `https://example.com/?q=hello` becomes `https://example.com/`.
+- **Remove URL query parameters**: Removes all query parameters from URLs. For example, `https://example.com/?q=hello` becomes `https://example.com/`.
 
-* **Trim IP addresses**: Trims part of the IP address before passing it to server-side loaded tools, to hide it from third-parties.
+- **Trim IP addresses**: Trims part of the IP address before passing it to server-side loaded tools, to hide it from third-parties.
 
-* **Clean User Agent strings**: Clear sensitive information from the User Agent string by removing information such as operating system version, extensions installed, among others.
+- **Clean User Agent strings**: Clear sensitive information from the User Agent string by removing information such as operating system version, extensions installed, among others.
 
-* **Remove external referrers**: Hides the page referrers URL if the hostname is different from the website's.
+- **Remove external referrers**: Hides the page referrers URL if the hostname is different from the website's.
 
 ## Injection
 
@@ -74,3 +74,9 @@ This is an example of a custom pathname to host Zaraz's initialization script:
 ### HTTP Events API
 
 Refer to [HTTP Events API](/zaraz/http-events-api/) for more information on this endpoint.
+
+## Other
+
+### Context Enricher
+
+Refer to the [Context Enricher](/zaraz/advanced/context-enricher/) for more information on this setting.

@@ -10,7 +10,7 @@ Kandji deploys Cloudflare WARP as a custom app. For an overview of how Kandji de
 
 ## macOS
 
-For the simplest deployment, Kandji has created a downloadable configuration profile that enables Cloudfare WARP’s user notifications and configures its Privacy Preference Policy Control ([PPPC](https://support.kandji.io/create-a-privacy-preferences-policy-control-profile)) to have Full Disk Access.
+For the simplest deployment, Kandji has created a downloadable configuration profile that enables Cloudflare WARP’s user notifications and configures its Privacy Preference Policy Control ([PPPC](https://support.kandji.io/create-a-privacy-preferences-policy-control-profile)) to have Full Disk Access.
 
 1. Download the [custom profile](https://github.com/kandji-inc/support/blob/master/Configuration%20Profiles/cloudflare_warp.mobileconfig).
 

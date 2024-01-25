@@ -48,4 +48,5 @@ Flexible mode is only supported for HTTPS connections on port 443 (default port)
 
 If your application contains sensitive information (personalized data, user login), use [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (Strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes instead.
 
-{{<render file="_partials/_ssl-mode-no-aop.md">}}
+{{<render file="_ssl-mode-no-aop.md">}}
+<br/>

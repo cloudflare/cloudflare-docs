@@ -6,6 +6,8 @@ weight: 4
 
 # Workers Sites configuration
 
+{{<render file="_workers_sites.md">}}
+
 Workers Sites require the latest version of [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).
 
 ## wrangler.toml

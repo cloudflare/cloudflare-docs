@@ -2,6 +2,8 @@
 title: POST example
 pcx_content_type: reference
 weight: 3
+meta:
+  title: POST examples - Firewall rules
 ---
 
 # POST example

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Log the payload of matched rules
-weight: 8
+weight: 11
 ---
 
 # Log the payload of matched rules
@@ -39,4 +39,4 @@ Cloudflare cannot decrypt encrypted payloads, since this operation requires your
 
 ## User role requirements
 
-Only users with the [Super Administrator role](/fundamentals/account-and-billing/members/roles/) can enable payload logging or edit the payload logging configuration.
+Only users with the [Super Administrator role](/fundamentals/setup/manage-members/roles/) can enable payload logging or edit the payload logging configuration.

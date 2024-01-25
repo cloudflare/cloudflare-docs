@@ -3,7 +3,6 @@ pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configuring-Cloudflare-Rate-Limiting
 title: Rate Limiting (previous version)
 weight: 3
-layout: single
 ---
 
 # Cloudflare Rate Limiting (previous version)
@@ -30,7 +29,7 @@ Are you trying to enable Rate Limiting? [Enable Rate Limiting](https://dash.clou
 
 ### Rate limiting and SEO
 
-Cached resources and known Search Engine crawlers are exempted from your rate limiting rules (previous version only). Therefore, they do not affect your website's [SEO ranking](/fundamentals/get-started/task-guides/improve-seo/).
+Cached resources and known Search Engine crawlers are exempted from your rate limiting rules (previous version only). Therefore, they do not affect your website's [SEO ranking](/fundamentals/basic-tasks/improve-seo/).
 
 ___
 
@@ -132,7 +131,7 @@ Rate limit actions are based on the domain plan as mentioned in [Availability](#
 - **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 
-For more information on challenge actions, refer to [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/).
+For more information on challenge actions, refer to [Cloudflare challenges](/waf/reference/cloudflare-challenges/).
 
 #### Ban duration
 

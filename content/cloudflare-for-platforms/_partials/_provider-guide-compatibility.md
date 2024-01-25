@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-When your zone uses O2O, certain Cloudflare features can interrupt the flow of traffic to your site or display incorrect data to your visitors, including:
+When a hostname within your Cloudflare Zone has O2O enabled, you assume additional responsibility for the traffic on that hostname because you can now configure various Cloudflare products to affect that traffic. Some of the Cloudflare products compatible with O2O are:
 
 - [Caching](/cache/)
 - [Workers](/workers/)

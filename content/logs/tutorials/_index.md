@@ -6,7 +6,7 @@ weight: 81
 
 # Tutorials
 
-Learn to manage and analyze your Cloudflare Logs with the following resources. For information about Cloudflare's analytics integrations, refer to [Analytics Integrations](/fundamentals/data-products/analytics-integrations/).
+Learn to manage and analyze your Cloudflare Logs with the following resources. For information about Cloudflare's analytics integrations, refer to [Analytics Integrations](/analytics/analytics-integrations/).
 
 ## Logpull and Logpush
 

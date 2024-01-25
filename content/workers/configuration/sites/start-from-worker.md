@@ -6,9 +6,7 @@ weight: 3
 
 # Add static assets to an existing Workers project
 
-{{<Aside type="note" header="Cloudflare Pages">}}
-Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
-{{</Aside>}}
+{{<render file="_workers_sites.md">}}
 
 Workers Sites require [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
 
@@ -91,9 +89,9 @@ async function handleEvent(event) {
 
    For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
-5.  Run `wrangler dev` or `wrangler deploy` as you would normally with your Worker project.
+5.  Run `wrangler dev` or `npx wrangler deploy` as you would normally with your Worker project.
     Wrangler will automatically upload the assets found in the configured directory.
 
     ```sh
-    $ wrangler deploy
+    $ npx wrangler deploy
     ```

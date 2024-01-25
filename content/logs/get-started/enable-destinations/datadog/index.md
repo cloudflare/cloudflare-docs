@@ -2,7 +2,6 @@
 title: Enable Datadog
 pcx_content_type: how-to
 weight: 59
-layout: single
 meta:
   title: Enable Logpush to Datadog
 ---
@@ -163,5 +162,5 @@ The Datadog destination is exclusive to new jobs and might not be backward compa
 {{</Aside>}}
 
 {{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare metrics using the Cloudflare Integration tile for Datadog, follow the steps in the [Datadog Analytics integration page](/fundamentals/data-products/analytics-integrations/datadog/).
+To analyze and visualize Cloudflare metrics using the Cloudflare Integration tile for Datadog, follow the steps in the [Datadog Analytics integration page](/analytics/analytics-integrations/datadog/).
 {{</Aside>}}

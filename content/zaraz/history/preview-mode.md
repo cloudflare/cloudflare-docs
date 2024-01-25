@@ -19,8 +19,8 @@ After enabling Preview & Publish you will also have access to [Zaraz History](/z
 By default, Zaraz is configured to commit changes in real time. To enable preview mode and test new features you are adding to Zaraz:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Zaraz** > **Settings**.
-3. In **Workflow**, choose **Preview & Publish**.
+2. Go to **Zaraz** > **History**.
+3. Enable **Preview & Publish Workflow**.
 
 You are now working in preview mode. To commit changes and make them live, you will have to select **Publish** on your account.
 
@@ -46,8 +46,8 @@ To exit preview mode, close Zaraz debugger.
 Disable Preview & Publish mode to work in real time. When you work in real time, any changes made on the dashboard are applied instantly to the domain you are working on.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Zaraz** > **Settings**.
-3. In **Workflow**, choose **Real-time**.
+2. Go to **Zaraz** > **History**.
+3. Disable **Preview & Publish Workflow**.
 4. In the modal, decide if you want to delete all unpublished changes, or if you want to publish any change made in the meantime.
 
 Zaraz is now working in real time. Any change you make will be immediately applied the domain you are working on.

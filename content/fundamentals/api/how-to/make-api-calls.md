@@ -1,7 +1,7 @@
 ---
 title: Make API calls
 pcx_content_type: how-to
-weight: 11
+weight: 2
 ---
 
 # Make API calls
@@ -9,8 +9,8 @@ weight: 11
 Once you create your API token, all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <API_TOKEN>` interface. An example request is shown below.
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>" \
--H "Authorization: Bearer YQSn-xWAQiiEh9qM58wZNnyQS7FUdoqGIUAbrh7T"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}" \
+--header "Authorization: Bearer YQSn-xWAQiiEh9qM58wZNnyQS7FUdoqGIUAbrh7T"
 ```
 
 Never send or store your API token secret in plaintext. Also be sure not to check it into code repositories, especially public ones.
@@ -20,8 +20,8 @@ To format JSON output for readability in the command line, you can use a tool li
 The following example will format the curl JSON output using `jq`:
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>" \
--H "Authorization: Bearer <API_TOKEN>" | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ## Using Cloudflare’s APIs
@@ -48,17 +48,16 @@ Sometimes there will be too many results to display via the default page size, f
 There are two options, which can be combined to paginate across the results.
 
 * `page=x` enables you to select a specific page.
-* `per-page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
+* `per_page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
 
 An example might be `https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2`.
 
 Other options are:
 
-* `order`: select the attribute to order by
-* `direction` - either `ASC` (ascending) or `DESC` (descending)
+* `order`: Select the attribute to order by.
+* `direction`: Either `ASC` (ascending order) or `DESC` (descending order).
 
 The available options will be listed at the end of the `result_info` of all endpoints in the [API documentation](/api/).
-
 
 ## Making API calls on Windows
 
@@ -71,7 +70,7 @@ To use the Cloudflare API with curl on a Command Prompt window, you must use dou
 A typical `PATCH` request will be similar to the following:
 
 ```txt
-C:\> curl -X PATCH "https://api.cloudflare.com/client/v4/user/invites/<ID>" -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -d "{""status"": ""accepted""}"
+C:\> curl --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "X-Auth-Email: <EMAIL>" --header "X-Auth-Key: <API_KEY>" --data "{""status"": ""accepted""}"
 ```
 
 To escape a double quote character in a request body (for example, a body specified with `-d` or `--data` in a `POST`/`PATCH` request), prepend it with another double quote (`"`) or a backslash (`\`) character.
@@ -79,11 +78,11 @@ To escape a double quote character in a request body (for example, a body specif
 To break a single command in two or more lines, use `^` as the line continuation character at the end of a line:
 
 ```txt
-C:\> curl -X PATCH ^
-"https://api.cloudflare.com/client/v4/user/invites/<ID>" ^
--H "X-Auth-Email: <EMAIL>" ^
--H "X-Auth-Key: <API_KEY>" ^
--d "{""status"": ""accepted""}"
+C:\> curl --request PATCH ^
+"https://api.cloudflare.com/client/v4/user/invites/{id}" ^
+--header "X-Auth-Email: <EMAIL>" ^
+--header "X-Auth-Key: <API_KEY>" ^
+--data "{""status"": ""accepted""}"
 ```
 
 ### Using PowerShell
@@ -97,7 +96,7 @@ PowerShell has specific cmdlets (`Invoke-RestMethod` and `ConvertFrom-Json`) for
 The following example uses the `Invoke-RestMethod` cmdlet:
 
 ```txt
-PS C:\> Invoke-RestMethod -URI https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/ssl/certificate_packs?ssl_status=all -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'}
+PS C:\> Invoke-RestMethod -URI https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'}
 
 result      : {@{id=78411cfa-5727-4dc1-8d4a-773d01f17c7c; type=universal; hosts=System.Object[];
               primary_certificate=c173c8a1-9724-4e96-a748-2c4494186098; status=active; certificates=System.Object[];
@@ -112,7 +111,7 @@ messages    : {}
 By default, the output will only contain the first level of the JSON object hierarchy (in the above example, the content of objects such as `hosts` and `certificates` is not shown). To show additional levels and format the output like the `jq` tool, you can use the `ConvertFrom-Json` cmdlet specifying the desired maximum depth (by default, `2`):
 
 ```txt
-PS C:\> Invoke-RestMethod -URI https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/ssl/certificate_packs?ssl_status=all -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'} | ConvertTo-Json -Depth 5
+PS C:\> Invoke-RestMethod -URI https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'} | ConvertTo-Json -Depth 5
 
 {
     "result":  [
@@ -162,7 +161,7 @@ You can also use the curl tool in PowerShell. However, in PowerShell `curl` is a
 A typical `PATCH` request with curl will be similar to the following:
 
 ```txt
-PS C:\> curl.exe -X PATCH "https://api.cloudflare.com/client/v4/user/invites/<ID>" -H "Authorization: Bearer <API_TOKEN>" -d '{\"status\": \"accepted\"}'
+PS C:\> curl.exe --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "Authorization: Bearer <API_TOKEN>" --data '{\"status\": \"accepted\"}'
 ```
 
 To escape a double quote (`"`) character in a request body (specified with `-d` or `--data`), prepend it with another double quote (`"`) or a backslash (`\`). You must escape double quotes even when using single quotes (`'`) as string delimiters.
@@ -170,9 +169,9 @@ To escape a double quote (`"`) character in a request body (specified with `-d` 
 To break a single command in two or more lines, use a backtick (`` ` ``) character as the line continuation character at the end of a line:
 
 ```txt
-PS C:\> curl.exe -X PATCH `
-"https://api.cloudflare.com/client/v4/user/invites/<ID>" `
--H "X-Auth-Email: <EMAIL>" `
--H "X-Auth-Key: <API_KEY>" `
--d '{\"status\": \"accepted\"}'
+PS C:\> curl.exe --request PATCH `
+"https://api.cloudflare.com/client/v4/user/invites/{id}" `
+--header "X-Auth-Email: <EMAIL>" `
+--header "X-Auth-Key: <API_KEY>" `
+--data '{\"status\": \"accepted\"}'
 ```

@@ -6,4 +6,6 @@ weight: 2
 
 # Get started
 
+{{<render file="_pages_survey.md">}}
+
 {{<directory-listing>}}

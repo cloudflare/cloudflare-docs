@@ -4,6 +4,7 @@ weight: 3
 pcx_content_type: how-to
 meta:
     title: Configure email security records
+    description: Learn how to configure SPF records, DKIM records, and DMARC records in your Cloudflare account to help improve email security.
 ---
 
 # Configure email security records

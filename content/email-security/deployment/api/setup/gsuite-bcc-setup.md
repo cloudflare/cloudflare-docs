@@ -1,6 +1,6 @@
 ---
 title: Gmail BCC setup
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 meta:
     title: Setup phishing risk assessment for Gmail with Area 1
@@ -15,8 +15,8 @@ For customers using Gmail, setting up Area 1 via BCC is quick and easy. All you 
 
 To setup Area 1 phishing risk assessment for Gmail:
 
-{{<render file="_gmail-bcc-setup.md">}}
+{{<render file="deployment/_gmail-bcc-setup.md">}}
 
 ## Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md">}}
+{{<render file="deployment/_bcc-table-geographic-locations.md">}}

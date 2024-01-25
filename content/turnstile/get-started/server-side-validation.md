@@ -2,7 +2,6 @@
 title: Server-side validation
 pcx_content_type: get-started
 weight: 5
-layout: single
 ---
 
 # Server-side validation
@@ -11,15 +10,11 @@ Customers must call the siteverify endpoint to validate the Turnstile widget res
 
 Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint.
 
-The siteverify endpoint needs to be passed a secret key that is associated with the sitekey. The secret key will be provisioned alongside the sitekey when you create a widget.
+The siteverify endpoint needs to be passed a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}} that is associated with the {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}}. The secret key will be provisioned alongside the sitekey when you create a widget.
 
 Furthermore, the response needs to be passed to the siteverify endpoint.
 
-{{<Aside type="note">}}
-
 A response may only be validated once. If the same response is presented twice, the second and each subsequent request will generate an error stating that the response has already been consumed. If an application requires to retry failed requests, it must utilize the idempotency functionality. You can do so by providing a UUID as the `idempotency_key` parameter of your `POST` request when initially validating the response and the same UUID with any subsequent request for that response.
-
-{{</Aside>}}
 
 <div>
 
@@ -78,7 +73,7 @@ async function handlePost(request) {
 
 ```javascript
 ---
-header: Example using indempotency functionality
+header: Example using idempotency functionality
 ---
 // This is the demo secret key. In production, we recommend
 // you store your secret key(s) safely.
@@ -117,7 +112,7 @@ async function handlePost(request) {
 		method: 'POST',
 	});
 
-	const subsequentOutcome = await firstResult.json();
+	const subsequentOutcome = await subsequentResult.json();
 	if (subsequentOutcome.success) {
 		// ...
 	}
@@ -139,7 +134,7 @@ Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-
 
 {{<Aside type="note">}}
 
-Remote IP helps prevent abuses by ensuring that the current visitor is the one who received the token.
+The `remoteip` parameter helps to prevent abuse by ensuring the current visitor is the one who received the token. This is currently not strictly validated.
 
 {{</Aside>}}
 

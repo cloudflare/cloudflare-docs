@@ -10,9 +10,11 @@ To begin using Magic Network Monitoring, complete the list of tasks below. If yo
 
 If you are an Enterprise customer and would like to use Magic Network Monitoring and Magic Transit On Demand together, begin by [configuring Magic Transit](/magic-transit/get-started/).
 
+There is also a [free version](/magic-network-monitoring/magic-network-monitoring-free/) of Magic Network Monitoring in a closed beta right now. Refer to it to learn about the functionalities and limits of this version.
+
 ## 1. Verify NetFlow or sFlow capabilities
 
-Verify your routers are capable of exporting NetFlow or sFlow to an IP address on Cloudflare’s network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Verify your routers are capable of exporting {{<glossary-tooltip term_id="NetFlow">}}NetFlow{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="sFlow">}}sFlow{{</glossary-tooltip>}} to an IP address on Cloudflare’s network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
 Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
 
@@ -25,7 +27,7 @@ When you register your router with Cloudflare, your router links your NetFlow or
 3. In **Magic Network Monitoring Analytics**, select **Configure Magic Network Monitoring**.
 4. Select the **Configure routers** tab.
 5. Under **IP Address**, enter your router's public IP address.
-6. Under **Default router sampling rate**, enter a value for the sampling rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
+6. Under **Default router sampling rate**, enter a value for the {{<glossary-tooltip term_id="sampling">}}sampling{{</glossary-tooltip>}} rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
 7. Select **Next**.
 
 ## 3. Configure your router 

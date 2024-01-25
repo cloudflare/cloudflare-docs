@@ -26,10 +26,11 @@ When you use Cloudflare for SaaS, it helps you to:
 
 If your customers already have their applications on Cloudflare, they cannot control some Cloudflare features for hostnames managed by your Custom Hostnames configuration, including:
 
-*   Wildcard DNS
-*   Spectrum
 *   Argo
+*   Early Hints
 *   Page Shield
+*   Spectrum
+*   Wildcard DNS
 
 ## How it works
 

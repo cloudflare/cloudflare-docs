@@ -86,7 +86,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
 4. Modify `wrangler.toml` to include the following values:
 
-   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
    - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
@@ -162,7 +162,7 @@ Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-po
 
    | Selector         | Operator | Value                                         | Logic | Action  |
    | ---------------- | -------- | --------------------------------------------- | ----- | ------- |
-   | Domain           | In       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
+   | Domain           | in       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
    | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |       |         |
 
 To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk).

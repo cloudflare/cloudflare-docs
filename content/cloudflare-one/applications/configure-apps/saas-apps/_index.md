@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SaaS applications
 weight: 1
-layout: single
 ---
 
 # Add a SaaS application to Access
@@ -38,15 +37,13 @@ Obtain the following URLs from your SaaS application account:
 If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 {{</Aside>}}
 
-9. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+9. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-10. {{<render file="_access-block-page.md">}}
+10. {{<render file="access/_access-block-page.md">}}
 
-11. Next, choose the **Identity providers** you want to enable for your application.
+11. {{<render file="access/_access-choose-idps.md">}}
 
-12. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
-
-13. Select **Next**.
+12. Select **Next**.
 
 ## 2. Add an Access policy
 
@@ -60,11 +57,11 @@ Finally, you will need to configure your SaaS application to require users to lo
 
 1. Configure the following fields with your SAML SSO-compliant application:
 
-   - **SSO endpoint** (If your SaaS app supports a metadata file config, appending `/saml-metadata` to this URL will produce a metadata file that can be uploaded)
+   - **SSO endpoint**
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata`
+   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO Endpoint>/saml-metadata`. The SSO Endpoint can be copied out of the dashboard.
 
 2. Select **Done**.
 

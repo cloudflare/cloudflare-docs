@@ -36,7 +36,7 @@ title: Integrate Cloudflare Area 1 with Access for SaaS
    | **Assertion Consumer Service URL** | `https://horizon.area1security.com/api/users/saml`|
    | **Name ID Format**| _Email_ |
 
-6. (Optional) In **Application Appearance**, customize your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
+6. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
 7. Choose the **Identity providers** you want to enable for your application.
 

@@ -2,9 +2,7 @@ DirectoryPath: "public"
 EnforceHTTPS: false
 IgnoreURLs:
 - "/api/*"
-IgnoreDirs:
-- "support/other-languages/"
-CheckLinks: false
+CheckLinks: true
 CheckImages: false
 CheckScripts: false
 CheckGeneric: false

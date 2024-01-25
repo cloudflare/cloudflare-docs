@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Egress policies
-layout: single
 weight: 5
 ---
 
@@ -15,9 +14,11 @@ When your users connect to the Internet through Cloudflare Gateway, by default t
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
 
-To control whether only IPv4 or IPv6 is used to egress, you can use a DNS policy to [block AAAA or A records](/cloudflare-one/policies/gateway/dns-policies/common-policies/#control-ip-version).
+## Force IP version
 
-## Example
+To control whether only IPv4 or IPv6 is used to egress, ensure you are [filtering DNS traffic](/cloudflare-one/policies/gateway/initial-setup/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/policies/gateway/dns-policies/common-policies/#control-ip-version).
+
+## Example policies
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
 
@@ -25,11 +26,13 @@ The following egress policy configures all traffic destined for a third-party ne
 | --------------------------- | -------------- | -------- | ---------------- | ------------------------------- |
 | Access third-party provider | Destination IP | is       | `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
 
+### Catch-all policy
+
 For the best performance, we recommend creating a catch-all policy to route all other users through the default Zero Trust IP range:
 
-| Policy name           | Selector       | Operator | Value     | Egress method                    |
-| --------------------- | -------------- | -------- | --------- | -------------------------------- |
-| Default egress policy | Destination IP | is not   | `0.0.0.0` | Cloudflare default egress method |
+| Policy name           | Selector | Operator | Value                    | Egress method                    |
+| --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
+| Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
 Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will use the closest dedicated egress IP location.
 
@@ -39,7 +42,7 @@ Choose one of the following options for your egress policy:
 
 - **Default Cloudflare egress**: uses the default source IP range shared across all Zero Trust accounts. Ensures the most performant Internet experience as user traffic egresses from the nearest Cloudflare data center.
 
-- **Dedicated Cloudflare egress IPs** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. You can optionally specify a secondary IPv4 address in case the primary data center goes down. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#egress-location).
+- **Dedicated Cloudflare egress IPs** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. You can optionally specify a secondary IPv4 address in a different data center. If the primary data center goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#egress-location).
 
 ## Selectors
 
@@ -47,57 +50,57 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Destination Continent
 
-{{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-continent.md" withParameters="net.dst">}}
 
 ### Destination Country
 
-{{<render file="gateway/_destination-country.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-country.md" withParameters="net.dst">}}
 
 ### Destination IP
 
-{{<render file="gateway/_destination-ip.md">}}
+{{<render file="gateway/selectors/_destination-ip.md">}}
 
 ### Destination Port
 
-{{<render file="gateway/_destination-port.md">}}
+{{<render file="gateway/selectors/_destination-port.md">}}
 
 ### Device Posture
 
-{{<render file="gateway/_device-posture.md">}}
+{{<render file="gateway/selectors/_device-posture.md">}}
 
 ### Protocol
 
-{{<render file="gateway/_protocol.md">}}
+{{<render file="gateway/selectors/_protocol.md">}}
 
 ### Proxy Endpoint
 
-{{<render file="gateway/_proxy-endpoint.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### Source Continent
 
 The continent of the user making the request.
-{{<render file="gateway/_source-continent.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="net.src">}}
 
 ### Source Country
 
 The country of the user making the request.
-{{<render file="gateway/_source-country.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="net.src">}}
 
 ### Source IP
 
-{{<render file="gateway/_source-ip-net.md">}}
+{{<render file="gateway/selectors/_source-ip-net.md">}}
 
 ### Source Port
 
-{{<render file="gateway/_source-port.md">}}
+{{<render file="gateway/selectors/_source-port.md">}}
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ### Virtual Network
 
-{{<render file="gateway/_virtual-network.md">}}
+{{<render file="gateway/selectors/_virtual-network.md">}}
 
 ## Comparison operators
 

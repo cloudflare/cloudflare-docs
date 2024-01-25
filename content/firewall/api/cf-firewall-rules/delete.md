@@ -2,6 +2,8 @@
 title: DELETE examples
 pcx_content_type: reference
 weight: 6
+meta:
+  title: DELETE examples - Firewall rules
 ---
 
 # DELETE examples

@@ -22,7 +22,7 @@ To set up a notification:
 
 5. Enter a notification name and (optionally) a description.
 
-6. Configure a delivery method for the notification. The available delivery methods depend on your Cloudflare plan. For more information, refer to [Cloudflare Notifications](/fundamentals/notifications/).
+6. Configure a delivery method for the notification. The available delivery methods depend on your Cloudflare plan. For more information, refer to [Cloudflare Notifications](/notifications/).
 
 7. If you are creating a notification for one of the advanced DDoS attack alerts, select **Next** and define the parameters that will filter the notifications you will receive.
 

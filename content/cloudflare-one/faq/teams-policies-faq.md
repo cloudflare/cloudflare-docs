@@ -4,6 +4,7 @@ title: Policies
 weight: 5
 meta:
     description: Review frequently asked questions about policies in Cloudflare Zero Trust.
+    title: Policies FAQ
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

@@ -1,12 +1,12 @@
 ---
 title: Review audit logs
 pcx_content_type: how-to
-weight: 3
+weight: 5
 ---
 
 # Review audit logs
 
-Audit logs summarize the history of changes made within your Cloudflare account. Audit logs include account level actions like login and logout, as well as zone configuration changes.
+Audit logs summarize the history of changes made within your Cloudflare account. Audit logs include account level actions like login, as well as zone configuration changes.
 
 Audit Logs are available on all plan types and are captured for both individual users and for multi-user organizations.
 

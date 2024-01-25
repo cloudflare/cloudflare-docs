@@ -6,13 +6,9 @@ weight: 7
 
 # Admin Quarantine
 
-Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the [disposition](/email-security/reference/dispositions-and-attributes/) assigned by Area 1.
+Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}} assigned by Area 1.
 
 The messages sent to Admin Quarantine are determined by your [domain settings](/email-security/email-configuration/domains-and-routing/domains/).
-
-Enabling quarantine by disposition is hierarchical and you cannot enable only one disposition if there are other dispositions above it. For example, if you try to enable just `SPAM`, Area 1 will also enable `MALICIOUS`, the disposition that sits above `SPAM`. Similarly, if you enable `SPOOF` everything above this disposition will be enabled. `MALICIOUS` is the only disposition that can be enabled without additional dispositions.
-    
-![Choosing a disposition is hierarchical](/images/email-security/admin-quarantine/quarantine-by-disposition.png)
 
 ## Quarantine emails by disposition
 

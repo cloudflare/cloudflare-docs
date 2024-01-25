@@ -21,10 +21,14 @@ weight: 2
 5. Select **OK**.
 6. In the **Name** field, we recommend entering the version number of the package being uploaded.
 7. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
-8. In the **Command-line arguments** field, enter a [valid installation command](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#windows). \
-   You do not need to fill other optional fields. Once you have entered all the necessary values, select **Next**.
-9. Add the users or groups who require Cloudflare WARP and select **Next**.
-10. Review your configuration and select **Create**.
+8. In the **Command-line arguments** field, enter a valid installation command. For example,
+    ```txt
+    /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
+    ```
+    Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
+9. Select **Next**.
+10. Add the users or groups who require Cloudflare WARP and select **Next**.
+11. Review your configuration and select **Create**.
 
 Intune is now configured to deploy the WARP client.
 

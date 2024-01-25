@@ -48,7 +48,7 @@ Jamf is now configured to deploy the Cloudflare WARP client.
 
 ## iOS
 
-The WARP client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via Jamf.
+The Cloudflare One Agent allows for an automated install via Jamf.
 
 ### Prerequisites
 
@@ -59,10 +59,10 @@ Create an [XML file](/cloudflare-one/connections/connect-devices/warp/deployment
 1. Log in to your [Jamf](https://www.jamf.com/) account.
 2. Go to **Devices** > **Mobile Device Apps** > **+ New**.
 3. Select _App store app or apps purchased in volume_ and select **Next**.
-4. In the search box, enter `1.1.1.1: Faster Internet`. Select **Next**.
-5. In the row for _1.1.1.1: Faster Internet by Cloudflare Inc._, select **Add**. To verify that it is the correct application, select [this App Store link](https://apps.apple.com/us/app/id1423538627).
+4. In the search box, enter `Cloudflare One Agent`. Select **Next**.
+5. In the row for _Cloudflare One Agent by Cloudflare Inc._, select **Add**. To verify that it is the correct application, view it in the [App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492).
 6. Go to **Scope** and specify the devices in your organization that will receive the application.
 7. Go to **App Configuration** and copy/paste your XML file.
 8. Select **Save**.
 
-Jamf is now configured to deploy the WARP client.
+Jamf is now configured to deploy the Cloudflare One Agent.

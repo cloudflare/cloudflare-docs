@@ -2,6 +2,8 @@
 title: POST example
 pcx_content_type: reference
 weight: 4
+meta:
+  title: POST examples - Filters
 ---
 
 # POST example

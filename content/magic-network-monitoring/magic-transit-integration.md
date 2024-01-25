@@ -1,7 +1,7 @@
 ---
 title: Magic Transit integration
 pcx_content_type: reference
-weight: 6
+weight: 7
 ---
 
 #  Magic Transit integration

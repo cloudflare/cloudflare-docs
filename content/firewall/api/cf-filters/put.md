@@ -2,6 +2,8 @@
 title: PUT examples
 pcx_content_type: reference
 weight: 6
+meta:
+  title: PUT examples - Filters
 ---
 
 # PUT examples

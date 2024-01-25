@@ -22,7 +22,7 @@ This documentation is for the consumer version of WARP. If you are using WARP wi
 ## Features
 
 {{<feature header="WARP modes" href="/warp-client/warp-modes/">}}
-The WARP client has several modes to better suit your connection needs
+The WARP client has several modes to better suit your connection needs.
 {{</feature>}}
 
 {{<feature header="OS clients" href="/warp-client/get-started/">}}

@@ -5,6 +5,7 @@ product:
   title: Tenant
   url: /tenant/
   group: Cloudflare essentials
+  additional_groups: [Developer platform]
 
 meta:
   title: Cloudflare Tenant docs

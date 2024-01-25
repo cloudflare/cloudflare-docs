@@ -1,10 +1,10 @@
 ---
-title: How to
+title: Configuration
 pcx_content_type: navigation
 weight: 4
 ---
 
-# How to
+# Configuration
 
 Review the content below to learn more about tasks related to BYOIP.
 

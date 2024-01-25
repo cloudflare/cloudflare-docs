@@ -6,16 +6,9 @@ weight: 3
 
 # Mutual TLS
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP not required                                                                         | Enterprise plans                                              |
-
-</div>
-</details>
+{{<Aside type="note">}}
+Only available on Enterprise plans.
+{{</Aside>}}
 
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
@@ -40,6 +33,9 @@ To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com
 3. Select **Add mTLS Certificate**.
 4. Give the Root CA any name.
 5. Paste the content of the `ca.pem` file into the **Certificate content** field.
+
+   {{<render file="_byo-ca-mtls-cert-requirements.md" productFolder="ssl" >}}
+
 6. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
    These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
@@ -247,5 +243,6 @@ You will need to add the CRL to your server or enforce the revocation in a Cloud
 ## Known limitations
 
 mTLS does not currently work for:
+
 - HTTP/3 traffic
-- Cloudflare Pages site served on a [custom domain](/pages/platform/custom-domains/)
+- Cloudflare Pages site served on a [custom domain](/pages/configuration/custom-domains/)

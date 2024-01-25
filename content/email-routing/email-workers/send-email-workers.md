@@ -1,10 +1,10 @@
 ---
-title: Send emails from Workers (beta)
+title: Send emails from Workers
 pcx_content_type: how-to
-weight: 3
+weight: 4
 ---
 
-{{<beta>}}Send emails from Workers{{</beta>}}
+# Send emails from Workers
 
 {{<render file="_send-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings):">}}
 
@@ -38,7 +38,7 @@ export default {
  async fetch(request, env) {
    const msg = createMimeMessage();
    msg.setSender({ name: "GPT-4", addr: "<SENDER>@example.com" });
-   msg.setRecipient("<RECIPIENT>@example2.com");
+   msg.setRecipient("<RECIPIENT>@example.com");
    msg.setSubject("An email generated in a worker");
    msg.addMessage({
        contentType: 'text/plain',

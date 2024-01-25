@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: mTLS
+meta:
+  description: Configure your Worker to present a client certificate to services that enforce an mTLS connection.
 ---
 
 # Client authentication with mTLS
@@ -13,14 +15,20 @@ To present a client certificate when communicating with a service, create a [mTL
 
 {{<Aside type="warning">}}
 
-Currently, mTLS for Workers is not supported for domains [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) by Cloudflare.
+Currently, mTLS for Workers cannot be used for requests made to a service that is a [proxied zone](/dns/manage-dns-records/reference/proxied-dns-records/) on Cloudflare. If your Worker presents a client certificate to a service proxied by Cloudflare, Cloudflare will return a `520` error.
 
 {{</Aside>}}
 
 First, upload a certificate and its private key to your account using the [`wrangler mtls-certificate`](/workers/wrangler/commands/#mtls-certificate) command:
 
+{{<Aside type="warning">}}
+
+
+The `wrangler mtls-certificate upload` command requires the [SSL and Certificates Edit API token scope](/fundamentals/api/reference/permissions/). If you are using the OAuth flow triggered by  `wrangler login`, the correct scope is set automatically. If you are using API tokens, refer to [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) to set the right scope for your API token.
+{{</Aside>}}
+
 ```sh
-$ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
+$ npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
 ```
 
 Then, update your Worker project's `wrangler.toml` file to create an mTLS certificate binding:
@@ -30,7 +38,7 @@ Then, update your Worker project's `wrangler.toml` file to create an mTLS certif
 header: wrangler.toml
 ---
 mtls_certificates = [
-  { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" } 
+  { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" }
 ]
 ```
 

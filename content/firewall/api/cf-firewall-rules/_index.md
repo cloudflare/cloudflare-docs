@@ -2,12 +2,13 @@
 pcx_content_type: reference
 title: Firewall Rules API
 weight: 1
-layout: single
 ---
 
 # Firewall Rules API
 
 Use the Firewall Rules API to programmatically manage your rules.
+
+{{<render file="_deprecation-notice.md">}}
 
 When working with the Firewall Rules API, refer to these topics for additional context:
 

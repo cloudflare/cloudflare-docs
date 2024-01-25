@@ -2,6 +2,8 @@
 pcx_content_type: get-started
 title: Get started
 weight: 1
+meta:
+    title: Get started - Gateway Policies
 ---
 
 # Get started

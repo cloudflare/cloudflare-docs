@@ -10,46 +10,25 @@ pcx_content_type: configuration
 title: Return JSON
 weight: 2
 layout: example
+updated: 2024-01-11
 ---
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 
-```js
-export default {
-  async fetch(request) {
-    const data = {
-      hello: "world",
-    };
-
-    const json = JSON.stringify(data, null, 2);
-
-    return new Response(json, {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
-  },
-};
-```
+{{<render file="_return-json-example-js.md">}}
 
 {{</tab>}}
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default <ExportedHandler>{
   async fetch(request: Request) {
     const data = {
       hello: "world",
     };
 
-    const json = JSON.stringify(data, null, 2);
-
-    return new Response(json, {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
+    return Response.json(data);
   },
 };
 ```
