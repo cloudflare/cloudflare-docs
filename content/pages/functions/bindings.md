@@ -479,7 +479,7 @@ To add secrets to your Pages project:
 5. Select **Encrypt** to create your secret.
 6. Select **Save**.
 
-You use secrets the same way as environment variables, [see here](#environment-variables) for how to use them.
+You use secrets the same way as environment variables. For more guidance, refer to [Environment variables](#environment-variables).
 
 ### Interact with your secrets locally
 
