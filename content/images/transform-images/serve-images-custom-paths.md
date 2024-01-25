@@ -101,7 +101,7 @@ header: Text in Expression Editor
 header: Text in Path > Rewrite to... > Dynamic
 ---
 regex_replace(
-  http.request.uri.path,
+  http.request.uri,
   "^/(.*)\\?width=([0-9]+)&height=([0-9]+)$",
   "/cdn-cgi/image/width=${2},height=${3}/${1}"
 )
