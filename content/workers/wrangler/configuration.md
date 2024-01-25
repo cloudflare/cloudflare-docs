@@ -843,15 +843,15 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - 
+  - The binding name.
 
 - `destination_address` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Defines that you are creating bindings for sending emails from your Worker.
+  - The chosen email address you send emails to.
 
 - `allowed_destination_addresses` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Defines the type of binding. Refer to [Types of bindings](/email-routing/email-workers/send-email-workers/#types-of-bindings) for more information.
+  - The allowlist of email addresses you send emails to.
 
 {{</definitions>}}
 
