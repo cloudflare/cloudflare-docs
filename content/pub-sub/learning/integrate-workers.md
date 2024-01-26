@@ -38,7 +38,7 @@ To connect a Worker to a Pub/Sub Broker as an on-publish hook, you'll need to:
 2. Configure the broker to send messages to the Worker by setting the `on_publish.url` field on your Broker.
 3. **Important**: Verify the signature of the payload using the public keys associated with your Broker to confirm the request was from your Pub/Sub Broker, and **not** an untrusted third-party or another broker.
 4. Inspect or mutate the message (the HTTP request payload) as you see fit!
-5. Return an HTTP 200 OK with a well-formed response, which allows the broker to send the message on to any subscribers. 
+5. Return an HTTP 200 OK with a well-formed response, which allows the broker to send the message on to any subscribers.
 
 The following is an end-to-end example showing how to:
 
@@ -49,7 +49,7 @@ The following is an end-to-end example showing how to:
 {{<Aside type="note">}}
 
 You should be familiar with setting up a [Worker](/workers/get-started/guide/) before continuing with this example.
-  
+
 {{</Aside>}}
 
 To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/configuration/environment-variables/). To do so, we can fetch the public keys from our Broker:
@@ -86,7 +86,7 @@ Copy the array of public keys into your `wrangler.toml` as an environmental vari
 {{<Aside type="note">}}
 
 Your public keys will be unique to your own Pub/Sub Broker: you should ensure you're copying the keys associated with your own Broker.
-  
+
 {{</Aside>}}
 
 ```toml
@@ -266,9 +266,9 @@ This metadata includes:
 - the `broker` the message was associated with, so that your code can distinguish between messages from multiple Brokers
 - the `topic` the message was published to by the client. **Note that this is readonly: attempting to change the topic in the Worker is invalid and will result in that message being dropped**.
 - a `receivedTimestamp`, set when Pub/Sub first parses and deserializes the message
-- the `mid` (“message id”) of the message. This is a unique ID allowing Pub/Sub to track messages sent to your Worker, including which messages were dropped (if any). The `mid` field is immutable and returning a modified or missing `mid` will likely cause messages to be dropped.
+- the `mid` ("message id") of the message. This is a unique ID allowing Pub/Sub to track messages sent to your Worker, including which messages were dropped (if any). The `mid` field is immutable and returning a modified or missing `mid` will likely cause messages to be dropped.
 
-This metadata, including their JavaScript types and whether they are immutable (“`readonly`”), are expressed as the `PubSubMessage` interface in the [@cloudflare/pubsub](https://github.com/cloudflare/pubsub) library.
+This metadata, including their JavaScript types and whether they are immutable ("`readonly`"), are expressed as the `PubSubMessage` interface in the [@cloudflare/pubsub](https://github.com/cloudflare/pubsub) library.
 
 The `PubSubMessage` type may grow to include additional fields over time, and we recommend importing `@cloudflare/pubsub` (instead of copy+pasting) to ensure your code can benefit from any future changes.
 

@@ -73,7 +73,7 @@ By default WARP will use the user’s default browser to perform registration. Y
 
 To use an embedded browser:
 
-1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
+1. Download and install WebView2 by following the [Microsoft instructions](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
 2. Add a registry key with the following command:
    ```txt
    REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
