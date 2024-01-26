@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Profile settings
 weight: 4
-layout: single
 ---
 
 # Profile settings

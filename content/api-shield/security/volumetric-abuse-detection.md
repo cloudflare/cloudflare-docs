@@ -3,7 +3,7 @@ pcx_content_type: concept
 type: overview
 title: Volumetric Abuse Detection
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Volumetric Abuse Detection
@@ -57,7 +57,7 @@ To create rate limits:
 {{<Aside type="note">}}
 Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule.
 {{</Aside>}}
-5. Give your rule a name, action, and duration. 
+5. Give your rule a name, action, and duration.
 6. Select **Deploy** to activate your rule.
 
 ## API

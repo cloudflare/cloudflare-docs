@@ -1,7 +1,6 @@
 ---
 pcx_content_type: navigation
 title: Routes and domains
-layout: single
 meta:
   description: Connect your Worker to an external endpoint (via Routes, Custom Domains or a `workers.dev` subdomain) such that it can be accessed by the Internet.
 ---

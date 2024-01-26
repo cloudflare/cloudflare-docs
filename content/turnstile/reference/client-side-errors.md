@@ -2,7 +2,6 @@
 title: Client-side error codes
 pcx_content_type: reference
 weight: 15
-layout: single
 ---
 
 # Turnstile client-side error codes

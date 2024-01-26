@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Node.js compatibility
-layout: single
 meta:
   description: Implemented Node.js runtime APIs and enablement instructions for your Worker project.
 ---

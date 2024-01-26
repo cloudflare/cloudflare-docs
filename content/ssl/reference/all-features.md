@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Features and plans
 weight: 9
-layout: list
+layout: wide
 meta:
     description: Review information on all Cloudflare SSL/TLS features and their availability.
 ---

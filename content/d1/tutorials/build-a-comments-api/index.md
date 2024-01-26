@@ -138,7 +138,7 @@ app.get('/api/posts/:slug/comments', async c => {
 })
 ```
 
-The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to [Client API](/d1/platform/client-api) for a list of all methods available in D1's client API.
+The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to the [querying databases documentation](/d1/how-to/query-databases/) for a list of all methods available in D1's client API.
 
 In this function, you accept a `slug` URL query parameter and set up a new SQL statement where you select all comments with a matching `post_slug` value to your query parameter. You can then return it as a JSON response.
 

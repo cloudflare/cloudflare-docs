@@ -42,14 +42,14 @@ entries:
 - term: DNS over HTTPS
   general_definition: |-
     DNS over HTTPS (DoH) is a standard for encrypting DNS traffic, preventing tracking and spoofing of DNS queries.
-  associated_products: 
+  associated_products:
     - 1.1.1.1
     - Cloudflare One
 
 - term: DNS over TLS
   general_definition: |-
     DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (853) and TLS encryption.
-  associated_products: 
+  associated_products:
     - 1.1.1.1
     - Cloudflare One
 ```
@@ -69,7 +69,7 @@ Relevant values include the following:
      - `general_definition` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
         - Definition of the term. Should be general enough to apply to multiple products. Should also start with a lowercase letter unless starting with a proper noun.
-    
+
      - `associated_products` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
         - If the term is associated with other products. Any names used should correspond to the `productName` of that associated file.
@@ -92,7 +92,7 @@ header: /dns/glossary.md
 ---
 title: Glossary
 pcx_content_type: glossary
-layout: list
+layout: wide
 ---
 
 # Glossary

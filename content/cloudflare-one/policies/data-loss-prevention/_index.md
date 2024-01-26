@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Data Loss Prevention
-layout: single
 weight: 5
 ---
 

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Custom Origin Trust Store
-layout: single
 weight: 5
 meta:
     description: Custom Origin Trust Store allows you to upload certificate authorities (CAs) that Cloudflare will use to authenticate connections to your origin server.

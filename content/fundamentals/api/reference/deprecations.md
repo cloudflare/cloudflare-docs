@@ -8,6 +8,16 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Mobile Redirect 
+**End of life date: June 30th, 2024**
+
+This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+
+Deprecated API:
+ - GET /zones/:zone_identifier/settings/mobile_redirect
+ - PATCH /zones/:zone_identifier/settings/mobile_redirect
+
+Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
 
 ## Privacy Pass API Removal
 **End of life date: March 31st, 2024**

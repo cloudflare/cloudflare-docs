@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Cloudflare Polish
-weight: 4
+weight: 7
 ---
 
 # Cloudflare Polish

@@ -1,7 +1,6 @@
 ---
 title: Use your own player
 weight: 1
-layout: single
 pcx_content_type: how-to
 ---
 
