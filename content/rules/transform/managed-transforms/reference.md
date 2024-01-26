@@ -6,12 +6,18 @@ weight: 2
 
 # Available Managed Transforms
 
+{{<Aside type="warning" header="HTTP header names are case-insensitive">}}
+
+The names of HTTP headers are case-insensitive. Ensure that your origin server can handle HTTP headers added through Managed Transforms whose names have a different capitalization than the one presented in this page.
+
+{{</Aside>}}
+
 ## HTTP request headers
 
 ### Add bot protection headers
 
 {{<Aside type="note">}}
-Requires a Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+This Managed Transform requires an Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 {{</Aside>}}
 
 Adds HTTP headers with bot-related values to the request sent to the origin server:
@@ -61,7 +67,7 @@ Adds HTTP headers with location information for the visitor's IP address to the 
 ### Add "True-Client-IP" header
 
 {{<Aside type="note">}}
-Only available on Enterprise plans.
+This Managed Transform is only available on Enterprise plans.
 {{</Aside>}}
 
 Adds a `true-client-ip` request header with the visitor's IP address.
