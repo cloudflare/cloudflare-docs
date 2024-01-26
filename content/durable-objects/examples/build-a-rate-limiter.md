@@ -17,21 +17,20 @@ The Worker creates a `RateLimiter` Durable Object on a per IP basis to protect u
 
 It might seem simpler to implement a global rate limiter, `const id = env.RATE_LIMITER.idFromName("global");`, which can provide better guarantees on the request rate to the upstream resource. However:
 
-* this would require all requests globally to make a sub-request to a single Durable Object.
-* This would add additional latency for requests not colocated with the Durable Object and global throughput would be capped to the throughput of a single Durable Object.
-* A single Durable Object that all of your requests rely on is thus typically considered an anti-pattern. Durable Objects work best when they are scoped to a user, room, service and/or the specific subset of your application that requires global co-ordination.
+* This would require all requests globally to make a sub-request to a single Durable Object.
+* Implementing a global rate limiter would add additional latency for requests not colocated with the Durable Object, and global throughput would be capped to the throughput of a single Durable Object.
+* A single Durable Object that all requests rely on is typically considered an anti-pattern. Durable Objects work best when they are scoped to a user, room, service and/or the specific subset of your application that requires global co-ordination.
 {{<Aside type="note">}}
 
-If you don't need unique or custom rate-limiting capabilities, see the [rate limiting documentation](/waf/rate-limiting-rules/) that is part of our Web Application Firewall (WAF) product. 
+If you do not need unique or custom rate-limiting capabilities, refer to [Rate limiting rules](/waf/rate-limiting-rules/) that are part of Cloudflare's Web Application Firewall (WAF) product. 
 
 {{</Aside>}}
-The Durable Object uses a token bucket algorithm to implement rate limiting. The naive idea is that each request requires a token to complete and the tokens are replinished according to the reciprocal of the desired number of requests per second. As an example, a 1000 requests per second rate limit will have a token replinished every millisecond (as specified by milliseconds_per_request) up to a given capacity limit.
+The Durable Object uses a token bucket algorithm to implement rate limiting. The naive idea is that each request requires a token to complete, and the tokens are replenished according to the reciprocal of the desired number of requests per second. As an example, a 1000 requests per second rate limit will have a token replenished every millisecond (as specified by milliseconds_per_request) up to a given capacity limit.
 
-This example makes use of Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future. 
+This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future. 
 
-* When the alarm's scheduled time comes, the `alarm()` handler method is called and in this case will add a token to the "Bucket".
-* This implementation is made more efficient by adding tokens in bulk (as specified by milliseconds_for_updates) and preventing the alarm handler from being invoked every millisecond.
-* This would lead to high duration charges for the Durable Object otherwise: using alarms reduces the need for the Durable Object to be active.
+* When the alarm's scheduled time comes, the `alarm()` handler method is called, and in this case, the alarm will add a token to the "Bucket".
+* The implementation is made more efficient by adding tokens in bulk (as specified by milliseconds_for_updates) and preventing the alarm handler from being invoked every millisecond. More frequent invocations of Durable Objects will lead to higher invocation and duration charges.
 
 The first implementation of a rate limiter is below:
 
@@ -207,7 +206,7 @@ export class RateLimiter implements DurableObject {
 {{</tab>}}
 {{</tabs>}}
 
-While the token bucket algorithm is popular for implementing rate limiting and it makes use of Durable Object features, there is a simpler approach:
+While the token bucket algorithm is popular for implementing rate limiting and uses Durable Object features, there is a simpler approach:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -295,4 +294,4 @@ new_classes = ["RateLimiter"]
 
 - Learn more about Durable Object's [Alarms API](/durable-objects/api/alarms) and how to configure alarms.
 - [Understand how to troubleshoot](/durable-objects/reference/troubleshooting/) common errors related with Durable Objects.
-- See how [Durable Objects are priced](/durable-objects/platform/pricing/), including pricing examples.
+- Review how [Durable Objects are priced](/durable-objects/platform/pricing/), including pricing examples.
