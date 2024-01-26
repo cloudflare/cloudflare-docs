@@ -6,13 +6,11 @@ weight: 2
 
 # Available Managed Transforms
 
-{{<Aside type="warning" header="HTTP header names are case-insensitive">}}
-
-The names of HTTP headers are case-insensitive. Ensure that your origin server can handle HTTP headers added through Managed Transforms whose names have a different capitalization than the one presented in this page.
-
-{{</Aside>}}
+This page lists the available Managed Transforms. They can modify HTTP request headers or response headers.
 
 ## HTTP request headers
+
+The names of HTTP headers are case-insensitive. Ensure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
 
 ### Add bot protection headers
 
