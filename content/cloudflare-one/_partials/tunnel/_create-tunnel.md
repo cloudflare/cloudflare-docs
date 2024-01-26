@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com) and go to **Networks** > **Tunnels**. For some users, tunnel creation is located under **Access** > **Tunnels**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com) and go to **Networks** > **Tunnels**.
 
 2. Select **Create a tunnel**.
 
