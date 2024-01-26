@@ -12,7 +12,7 @@ Geo Key Manager offers enhanced control over the storage location of private SSL
 
 By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. Geo Key Manager allows you to choose where you want to store your private keys.
 
-Geo Key Manager was restricted to the US, EU, and high-security data centers, but with the new version of Geo Key Manager, available in [Closed Beta](https://blog.cloudflare.com/configurable-and-scalable-geo-key-manager-closed-beta/), you can now create `allowlists` and `blocklists` of countries in which your private keys will be stored. That means that you will be able to create specifications, such as storing your private keys exclusively in Australia or limiting private keys storage to the EU and the UK.
+Geo Key Manager was restricted to the US, EU, and high-security data centers, but with the new version of Geo Key Manager, available in [Closed Beta](https://blog.cloudflare.com/configurable-and-scalable-geo-key-manager-closed-beta/), you can now create `allowlists` and `blocklists` of countries in which your private keys will be stored. That means that you will be able define specific geographic locations where to store keys, for instance you can store your private keys exclusively in Australia or limit private keys storage to the EU and the UK. 
 
 ## Cloudflare data center flow example
 
@@ -37,4 +37,4 @@ sequenceDiagram
 
 <br>
 
-For detailed information on implementation and configuration, refer to [Geo Key Manager documentation](/ssl/edge-certificates/geokey-manager/).
+For detailed information on setup and supported options, refer to [Geo Key Manager documentation](/ssl/edge-certificates/geokey-manager/).
