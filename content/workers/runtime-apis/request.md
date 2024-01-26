@@ -254,7 +254,7 @@ All plans have access to:
 
 *   `tlsClientHelloLength` {{<type>}}string{{</type>}}
 
-    *   The length of the the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello, after the the hexidecimal bytes have been decoded.
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello, after the the hexidecimal bytes have been decoded.
 
 *   `tlsClientRandom` {{<type>}}string{{</type>}}
 
