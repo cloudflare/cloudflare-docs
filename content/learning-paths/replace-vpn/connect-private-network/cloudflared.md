@@ -20,7 +20,10 @@ To connect your private network:
 All internal applications and services in this IP range are now connected to Cloudflare.
 
 {{<Aside type="note">}}
-If the tunnel is disconnected, ensure that your on-premise or cloud firewall allows egress traffic on the [required ports](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
+If the tunnel is disconnected:
+- Ensure that your on-premise or cloud firewall allows egress traffic on the [required ports](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
+- Ensure that the `cloudflared` host machine can connect to your internal applications and services. Verify that the host has the proper security group memberships and that no firewalls will block traffic between the host and the target services.
+
 {{</Aside>}}
 
 ## Best practices
