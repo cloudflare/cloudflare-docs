@@ -148,6 +148,14 @@ The `URLPattern` API provides a mechanism for matching URLs based on a convenien
 
 ---
 
+## `Intl`
+
+The `Intl` API allows you to format dates, times, numbers, and more to the format that is used by a provided locale (language and region).
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+
+---
+
 ## `navigator.userAgent`
 
 When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
