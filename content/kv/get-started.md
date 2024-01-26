@@ -256,7 +256,7 @@ To have `wrangler dev` connect to your Workers KV namespace running on Cloudflar
 While in your project directory, test your KV locally by running:
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see your value printed on the browser.
