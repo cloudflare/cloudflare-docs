@@ -15,17 +15,13 @@ On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 {{<Aside type="warning">}}
 
-The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023.
+The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
 
 {{</Aside>}}
 
-On **October 26, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
+On **October 26, 2023**, Cloudflare will gradually stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
-{{<Aside type="warning">}}
-
-{{<render file="_digicert-caa-warning.md">}}
-
-{{</Aside>}}
+{{<render file="_digicert-caa-warning.md">}}<br />
 
 ## Summary of changes
 
@@ -52,11 +48,17 @@ If your system integrates with the Cloudflare API to [order advanced certificate
 
 ### Changes after October 26, 2023
 
+{{<Aside type="warning">}}
+
+The advanced certificate renewals offboarding started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
+
+{{</Aside>}}
+
 The following changes will automatically affect certificates that are renewed after October 26, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate.
 
 #### Certificate authorities
 
-DigiCert certificates renewed after October 26, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
+Throughout the gradual rollout, DigiCert certificates renewed after October 26, 2023, will be issued through a certificate authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
