@@ -44,7 +44,7 @@ Block unauthorized applications to limit their users' access to certain web-base
 
 ## 5. All-DNS-GeoCountryIP-Blocklist
 
-Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization’s customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
 | Selector                        | Operator | Value                                                                                                                                  | Action |
 | ------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------ |
