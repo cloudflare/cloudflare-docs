@@ -2,6 +2,9 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-01-31'
+  description: |-
+    - The [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object now includes two additional properties, `tlsClientHelloLength` and `tlsClientRandom`
 - publish_date: '2023-07-14'
   description: |-
     - An implementation of the [`util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype)
