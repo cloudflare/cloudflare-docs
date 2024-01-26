@@ -15,7 +15,7 @@ On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 {{<Aside type="warning">}}
 
-The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March, 2024.
+The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
 
 {{</Aside>}}
 
@@ -50,7 +50,7 @@ If your system integrates with the Cloudflare API to [order advanced certificate
 
 {{<Aside type="warning">}}
 
-The advanced certificate renewals offboarding started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March, 2024.
+The advanced certificate renewals offboarding started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
 
 {{</Aside>}}
 
