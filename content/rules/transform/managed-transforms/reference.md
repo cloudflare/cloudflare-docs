@@ -8,9 +8,12 @@ weight: 2
 
 This page lists the available Managed Transforms. They can modify HTTP request headers or response headers.
 
+{{<Aside type="note" header="Note">}}
+The names of HTTP headers are case-insensitive. Cloudflare may use a capitalization different from the one presented in this page. Make sure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
+{{</Aside>}}
+
 ## HTTP request headers
 
-The names of HTTP headers are case-insensitive. Ensure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
 
 ### Add bot protection headers
 
