@@ -133,7 +133,7 @@ export default {
 
     return fetch(new URL(url.pathname, "https://example.com"), request);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}
