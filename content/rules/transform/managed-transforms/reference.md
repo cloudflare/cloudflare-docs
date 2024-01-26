@@ -14,11 +14,10 @@ The names of HTTP headers are case-insensitive. Cloudflare may use a capitalizat
 
 ## HTTP request headers
 
-
 ### Add bot protection headers
 
 {{<Aside type="note">}}
-This Managed Transform requires an Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+Requires an Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 {{</Aside>}}
 
 Adds HTTP headers with bot-related values to the request sent to the origin server:
@@ -68,7 +67,7 @@ Adds HTTP headers with location information for the visitor's IP address to the 
 ### Add "True-Client-IP" header
 
 {{<Aside type="note">}}
-This Managed Transform is only available on Enterprise plans.
+Only available on Enterprise plans.
 {{</Aside>}}
 
 Adds a `true-client-ip` request header with the visitor's IP address.
