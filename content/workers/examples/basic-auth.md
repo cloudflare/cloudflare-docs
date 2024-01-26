@@ -250,7 +250,7 @@ export default {
 
     return new Response("Not Found.", { status: 404 });
   },
-} satisfies <ExportedHandler<{ PASSWORD: string }>>;
+} satisfies ExportedHandler<{ PASSWORD: string }>;
 ```
 
 {{</tab>}}
