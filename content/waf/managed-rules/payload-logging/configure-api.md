@@ -38,16 +38,17 @@ You can generate a public key [in the command line](/waf/managed-rules/payload-l
 
 ### Example
 
-The following example updates rule `{rule_id_1}` that executes the Cloudflare Managed Ruleset for zone `{zone_id}`, configuring payload logging with the provided public key.
+The following `PATCH` request example updates rule `{rule_id_1}` that executes the Cloudflare Managed Ruleset for zone `{zone_id}`, configuring payload logging with the provided public key.
 
 ```bash
 ---
 header: Request
-highlight: 9-11
+highlight: 8-10
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zone/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_1}" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "action": "execute",
   "action_parameters": {

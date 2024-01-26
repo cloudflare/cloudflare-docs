@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Transform Rules
 weight: 3
-layout: single
 ---
 
 # Transform Rules
@@ -30,7 +29,9 @@ Managed Transforms run before other types of Transform Rules that modify HTTP he
 
 Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
 
-Request and response fields are immutable within each [phase](/ruleset-engine/about/phases/) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](/ruleset-engine/about/rules/#rule-evaluation-and-field-values).
+Request and response fields are immutable within each [phase](/ruleset-engine/about/phases/) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](/ruleset-engine/about/rules/#rule-evaluation).
+
+{{<render file="_challenge-issues.md" withParameters="Rules features such as Transform Rules">}}
 
 ## Availability
 

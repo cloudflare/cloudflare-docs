@@ -3,7 +3,6 @@ pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configuring-Cloudflare-Rate-Limiting
 title: Rate Limiting (previous version)
 weight: 3
-layout: single
 ---
 
 # Cloudflare Rate Limiting (previous version)
@@ -132,7 +131,7 @@ Rate limit actions are based on the domain plan as mentioned in [Availability](#
 - **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 
-For more information on challenge actions, refer to [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/).
+For more information on challenge actions, refer to [Cloudflare challenges](/waf/reference/cloudflare-challenges/).
 
 #### Ban duration
 

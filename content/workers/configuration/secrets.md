@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Secrets
+meta:
+  description: Store sensitive information, like API keys and auth tokens, in your Worker.
 ---
 
 # Secrets
@@ -35,7 +37,7 @@ To add a secret to a Worker, run the [`wrangler secret put` command](/workers/wr
 ---
 filename: wrangler secret put
 ---
-$ wrangler secret put <KEY>
+$ npx wrangler secret put <KEY>
 ```
 
 #### Via the dashboard
@@ -61,7 +63,7 @@ To delete a secret from your Worker project, run the [`wrangler secret delete` c
 ---
 filename: wrangler secret delete
 ---
-$ wrangler secret delete <KEY>
+$ npx wrangler secret delete <KEY>
 ```
 
 ### Via the dashboard

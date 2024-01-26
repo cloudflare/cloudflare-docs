@@ -1,23 +1,20 @@
 ---
-title: Firewall rules are becoming custom rules
+title: Firewall Rules to WAF custom rules migration
 pcx_content_type: reference
 weight: 2
 ---
 
-# Firewall rules are becoming WAF custom rules
+# Firewall Rules to WAF custom rules migration
 
-Cloudflare started converting existing firewall rules into [WAF custom rules](/waf/custom-rules/). With custom rules you get the same level of protection and a few additional features. Custom rules are available in the Cloudflare dashboard under **Security** > **WAF** > **Custom rules**.
+Cloudflare converted existing [firewall rules](/firewall/) into [WAF custom rules](/waf/custom-rules/). With custom rules, you get the same level of protection and a few additional features. Custom rules are available in the Cloudflare dashboard at **Security** > **WAF** > **Custom rules**.
 
-Cloudflare started this conversion as a phased rollout on 2023-02-28. Your zones will soon have WAF custom rules instead of firewall rules.
+{{<Aside type="warning" header="Deprecation notice">}}
 
-**Cloudflare Firewall Rules are now deprecated.** For most users, their firewall rules will now be displayed as WAF custom rules in the Cloudflare dashboard. If you were among the Enterprise customers who got early access to WAF custom rules before December 2022, you might still have both firewall rules and custom rules running in parallel. In this case, contact your account team which will help you migrate your firewall rules to custom rules.
+**Cloudflare Firewall Rules is now deprecated.** The Firewall Rules API and Filters API, as well as the `cloudflare_firewall_rule` and `cloudflare_filter` Terraform resources, will only be available until 2024-05-01. If you have any automation based on these APIs and resources, you must migrate to the new APIs and resources before 2024-05-01 to avoid any issues.
 
-The Firewall Rules API and Filters API, as well as the `cloudflare_firewall_rule` and `cloudflare_filter` Terraform resources, will be available until 2024-05-01. After this date, you will no longer be able to manage firewall rules via Firewall Rules API or through firewall rules' Terraform resources. All remaining active firewall rules will be disabled.
+On 2024-05-01, the APIs and resources mentioned above will stop working. Any remaining active firewall rules will be disabled, and the **Firewall rules** tab in the dashboard will be removed.
 
-{{<Aside type="note" header="Migration status">}}
-
-* Cloudflare already migrated all zones in Free, Professional, and Business plans. However, the automated migration failed for zones with more firewall rules than the ones allowed in the zone plan. If your zone is in this situation, delete any extra firewall rules you may have. Cloudflare will try to migrate the zone again in the near future. Both your current quota and the quota included in your plan are displayed in the Cloudflare dashboard in **Security** > **WAF** > **Firewall rules**.
-* Enterprise zones are being gradually migrated. If you have an Enterprise zone and you do not have a **Custom rules** tab under **Security** > **WAF** in your dashboard yet, check again later.
+If you have not migrated to WAF custom rules yet, you may have some invalid configuration that prevents the migration from happening. In this case, contact your account team to get help with the migration to WAF custom rules.
 
 {{</Aside>}}
 
@@ -58,9 +55,9 @@ For more information on Custom Pages, refer to [Configuring Custom Pages](/suppo
 
 ### New Skip action replacing both Allow and Bypass actions
 
-Firewall Rules support the _Allow_ and _Bypass_ actions, often used together. These actions are commonly used for handling known legitimate requests — for example, requests coming from trusted IP addresses.
+Firewall Rules supported the _Allow_ and _Bypass_ actions, often used together. These actions were commonly used for handling known legitimate requests — for example, requests coming from trusted IP addresses.
 
-When a request triggers _Allow_, all remaining firewall rules are not evaluated, effectively allowing the request to continue to the next security product. The _Bypass_ action is designed to specify which security products (such as WAF managed rules, rate limiting rules, and User Agent Blocking) should not run on the request triggering the action.
+When a request triggered _Allow_, all remaining firewall rules were not evaluated, effectively allowing the request to continue to the next security product. The _Bypass_ action was designed to specify which security products (such as WAF managed rules, rate limiting rules, and User Agent Blocking) should not run on the request triggering the action.
 
 With Firewall Rules, if you wanted to stop running all security products for a given request, you would create two rules:
 
@@ -83,14 +80,14 @@ The Firewall Rules API does not support the _Skip_ action. When you create a cus
 
 ### Custom rules are evaluated in order
 
-Firewall rules actions have a specific [order of precedence](/firewall/cf-firewall-rules/actions/) when using [priority ordering](/firewall/cf-firewall-rules/order-priority/#managing-rule-evaluation-by-priority-order). In contrast, custom rules actions do not have such an order. Custom rules are always evaluated in order, and some actions like _Block_ will stop the evaluation of other rules.
+Firewall rules actions had a specific [order of precedence](/firewall/cf-firewall-rules/actions/) when using [priority ordering](/firewall/cf-firewall-rules/order-priority/#managing-rule-evaluation-by-priority-order). In contrast, custom rules actions do not have such an order. Custom rules are always evaluated in order, and some actions like _Block_ will stop the evaluation of other rules.
 
 For example, if you were using priority ordering and had the following firewall rules with the same priority both matching an incoming request:
 
 * Firewall rule #1 — Priority: 2 / Action: _Block_
 * Firewall rule #2 — Priority: 2 / Action: _Allow_
 
-The request would be allowed, since the _Allow_ action in Firewall Rules takes precedence over the _Block_ action.
+The request would be allowed, since the _Allow_ action in Firewall Rules would have precedence over the _Block_ action.
 
 In contrast, if you create two custom rules where both rules match an incoming request:
 
@@ -105,7 +102,7 @@ For the custom rules converted from your existing firewall rules, Cloudflare wil
 
 ### Logs and events
 
-Events logged by custom rules are shown in [Security Events](/waf/security-events/), available at **Security** > **Events**, with `Custom Rules` as their source.
+Events logged by custom rules are shown in [Security Events](/waf/analytics/security-events/), available at **Security** > **Events**, with `Custom Rules` as their source.
 
 You may still find events generated by Firewall Rules in the Security Events page when you select a time frame including the days when the transition to custom rules occurred. Similarly, you may still find events with both _Skip_ and _Allow_ actions in the same view during the transition period.
 
@@ -113,48 +110,40 @@ You may still find events generated by Firewall Rules in the Security Events pag
 
 The preferred API for managing WAF custom rules is the [Rulesets API](/waf/custom-rules/create-api/). The Rulesets API is used on all recent Cloudflare security products to provide a uniform user experience when interacting with our API. For more information on migrating to the Rulesets API, refer to [Relevant changes for API users](#relevant-changes-for-api-users).
 
-The Firewall Rules API and Filters API will still work for now. There will be a single list of rules for both firewall rules and WAF custom rules, and this list contains WAF custom rules. Thanks to an internal conversion process, the Firewall Rules API and Filters API will return firewall rules/filters converted from these WAF custom rules.
+The Firewall Rules API and Filters API will still work until 2024-05-01. There will be a single list of rules for both firewall rules and WAF custom rules, and this list contains WAF custom rules. Thanks to an internal conversion process, the Firewall Rules API and Filters API will return firewall rules/filters converted from these WAF custom rules.
 
 If you are using Terraform, the preferred way of configuring WAF custom rules is using [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resources configured with the `http_request_firewall_custom` phase. For more information on updating your Terraform configuration, refer to [Relevant changes for Terraform users](#relevant-changes-for-terraform-users).
 
 ## Relevant changes for dashboard users
 
-If you are currently using firewall rules, your rules will be displayed as WAF custom rules in the Cloudflare dashboard, available at **Security** > **WAF** > **Custom rules**.
+**The Firewall Rules tab in the Cloudflare dashboard is now deprecated**. Firewall rules are displayed as WAF custom rules in the Cloudflare dashboard at **Security** > **WAF** > **Custom rules**.
 
 ![The Custom rules tab, available in the Cloudflare dashboard under Security > WAF.](/images/waf/custom-rules/custom-rules-tab.png)
 
-Most customers will have access to the **Custom rules** tab instead of the **Firewall rules** tab in the Cloudflare dashboard, which will display the rules that Cloudflare automatically converted from existing firewall rules.
-
-If you are a customer with access to both products, you will see both tabs in the Cloudflare dashboard, and you can edit rules in any tab (you will be editing the same set of rules). It is recommended that you start configuring custom rules instead of firewall rules. Even though there is an internal conversion process (for now) between firewall rules and custom rules, the firewall rules interface will be removed from the Cloudflare dashboard on 2024-05-01, and only the WAF custom rules interface will be available. You should contact your account team which will help you migrate your firewall rules to custom rules.
-
-**Cloudflare Firewall Rules are now deprecated**. For most users, their firewall rules will now be displayed as WAF custom rules in the Cloudflare dashboard. For users that had access to both products, the **Firewall rules** tab will only be available until 2024-05-01.
+For users that still have access to both products, the **Firewall rules** tab will only be available until 2024-05-01.
 
 ## Relevant changes for API users
 
-If you are currently using the [Firewall Rules API](/firewall/api/cf-firewall-rules/) and [Filters API](/firewall/api/cf-filters/), you can keep using these APIs for now. Cloudflare will internally convert your API calls into the corresponding [Rulesets API](/waf/custom-rules/create-api/) calls. However, going forward you will only be able to manage WAF custom rules via API using the [Rulesets API](/waf/custom-rules/create-api/).
+**The [Firewall Rules API](/firewall/api/cf-firewall-rules/) and the associated [Cloudflare Filters API](/firewall/api/cf-filters/) are now deprecated.** These APIs will stop working on 2024-05-01. You must migrate any automation based on the Firewall Rules API or Cloudflare Filters API to the [Rulesets API](/waf/custom-rules/create-api/) before this date to prevent any issues. Rule IDs are different between firewall rules and custom rules, which may affect automated processes dealing with specific rule IDs.
 
-API requests internally converted from the Firewall Rules API to the Rulesets API will appear in audit logs as generated by Cloudflare and not by the actual user making the requests.
+For the time being, all three APIs will be available (Firewall Rules API, Filters API, and Rulesets API). Cloudflare will internally convert your [Firewall Rules API](/firewall/api/cf-firewall-rules/) and [Filters API](/firewall/api/cf-filters/) calls into the corresponding [Rulesets API](/waf/custom-rules/create-api/) calls. The converted API calls between the Firewall Rules API/Filters API and the Rulesets API appear in audit logs as generated by Cloudflare and not by the actual user making the requests. There will be a single list of rules for both firewall rules and WAF custom rules.
 
-The rule IDs will be different between firewall rules and custom rules, which may affect any automated processes you may have set up with specific rule IDs.
-
-**The [Firewall Rules API](/firewall/api/cf-firewall-rules/) and the associated [Cloudflare Filters API](/firewall/api/cf-filters/) are now deprecated.** These APIs will stop working on 2024-05-01. You must migrate any automation based on the Firewall Rules API or Cloudflare Filters API to the Rulesets API before this date to prevent any issues.
-
-For the time being, all three APIs will be available (Firewall Rules API, Filters API, and Rulesets API). There will be a single list of rules for both firewall rules and WAF custom rules. Some new features of WAF custom rules, like custom responses for blocked requests and the _Skip_ action, are not supported in the Firewall Rules API. To take advantage of the new features, Cloudflare recommends that you use the custom rules page in the Cloudflare dashboard or the Rulesets API.
+Some new features of WAF custom rules, like custom responses for blocked requests and the _Skip_ action, are not supported in the Firewall Rules API. To take advantage of these features, Cloudflare recommends that you use the custom rules page in the Cloudflare dashboard or the Rulesets API.
 
 Refer to the WAF documentation for [examples of managing WAF custom rules using the Rulesets API](/waf/custom-rules/create-api/).
 
 ## Relevant changes for Terraform users
 
-If you are currently using the [`cloudflare_firewall_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/firewall_rule) and [`cloudflare_filter`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/filter) Terraform resources from the Cloudflare provider to manage your Firewall Rules configuration, you can keep using these resources for now. However, going forward you will only be able to manage WAF custom rules via Terraform using the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource.
-
-**The following Terraform resources are now deprecated:**
+**The following Terraform resources from the Cloudflare provider are now deprecated:**
 
 * [`cloudflare_firewall_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/firewall_rule)
 * [`cloudflare_filter`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/filter)
 
-These resources will stop working on 2024-05-01. You must manually migrate any Terraform configuration based on these resources to [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resources before this date to prevent any issues.
+These resources will stop working on 2024-05-01. If you are currently using these resources to manage your Firewall Rules configuration, you must manually migrate any Terraform configuration to [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resources before this date to prevent any issues.
 
-For the time being, all three Terraform resources will be available (`cloudflare_firewall_rule`, `cloudflare_filter`, and `cloudflare_ruleset`). There will be a single list of rules for both firewall rules and WAF custom rules. Some features of WAF custom rules are not supported in the deprecated Terraform resources. To take advantage of the new features, Cloudflare recommends that you use the `cloudflare_ruleset` resource.
+For the time being, all three Terraform resources will be available (`cloudflare_firewall_rule`, `cloudflare_filter`, and `cloudflare_ruleset`). There will be a single list of rules for both firewall rules and WAF custom rules.
+
+Some new features of WAF custom rules are not supported in the deprecated Terraform resources. To take advantage of these features, Cloudflare recommends that you use the `cloudflare_ruleset` resource.
 
 Refer to the documentation about Terraform for [examples of configuring WAF custom rules using Terraform](/terraform/additional-configurations/waf-custom-rules/).
 

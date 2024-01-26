@@ -2,7 +2,6 @@
 title: Server-side validation
 pcx_content_type: get-started
 weight: 5
-layout: single
 ---
 
 # Server-side validation
@@ -11,7 +10,7 @@ Customers must call the siteverify endpoint to validate the Turnstile widget res
 
 Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint.
 
-The siteverify endpoint needs to be passed a secret key that is associated with the sitekey. The secret key will be provisioned alongside the sitekey when you create a widget.
+The siteverify endpoint needs to be passed a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}} that is associated with the {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}}. The secret key will be provisioned alongside the sitekey when you create a widget.
 
 Furthermore, the response needs to be passed to the siteverify endpoint.
 
@@ -113,7 +112,7 @@ async function handlePost(request) {
 		method: 'POST',
 	});
 
-	const subsequentOutcome = await firstResult.json();
+	const subsequentOutcome = await subsequentResult.json();
 	if (subsequentOutcome.success) {
 		// ...
 	}

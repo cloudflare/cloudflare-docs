@@ -1,6 +1,7 @@
 ---
 title: Magic Transit
 pcx_content_type: reference-architecture
+weight: 1
 ---
 # Magic Transit Use Cases and Reference Architecture
 
@@ -22,7 +23,7 @@ At a high level, Magic Transit works as follows:
 * **Protect and Process:** All customer traffic is inspected for attacks. Advanced and automated mitigation techniques are applied immediately upon detecting an attack. Additional functions such as load balancing, next-generation firewall, content caching, and serverless compute are also available as a service.
 
 
-* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/reference/tunnels/).
+* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. For more details specifically on tunnels and encapsulation, refer to [GRE and IPsec tunnels](/magic-transit/reference/tunnels/).
 
 ### Baking resilience into our network using Anycast
 
@@ -157,7 +158,7 @@ Of all approaches and deployment options, the always-on method provides the most
 
 However, depending on the provider, diverting all traffic through the DDoS mitigation provider’s cloud might add latency that is suboptimal for business-critical applications. Cloudflare is architected so that customers do not incur a latency penalty as a result of attacks — even for always-on deployments. Analyzing traffic at the edge is the only way to mitigate at scale without impacting performance. 
 
-This is because ingesting traffic via Anycast ensures that traffic travels only to the nearest Cloudflare data center for inspection. With data centers in hundreds of cities across more than 100 countries, it is likely to be a short distance. This eliminates the trombone effect. 
+This is because ingesting traffic via Anycast ensures that traffic travels only to the nearest Cloudflare data center for inspection. With data centers in [hundreds of cities worldwide](https://www.cloudflare.com/network/), it is likely to be a short distance. This eliminates the trombone effect. 
 
 In many cases, [traffic is faster when routed over Cloudflare](https://www.cloudflare.com/static/360e550c8890054d5e5835efb9fb8dd1/Magic_Transit_protects_networks_while_also_improving_performance__1_.pdf) than over the public Internet. We believe customers should not have to sacrifice performance to achieve comprehensive security.
 

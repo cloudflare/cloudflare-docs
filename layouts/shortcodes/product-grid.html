@@ -66,6 +66,10 @@
   width: 80%;
 }
 
+.ProductGrid--link:hover {
+ background: rgba(var(--orange-rgb), .2)
+}
+
 .emptyState a {
   text-decoration: underline;
 }
@@ -365,7 +369,7 @@ span a img {
         <legend class="FilterLegend">Product Group</legend>
         {{- range $availableOptions -}}
         <div>
-          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="product-group">
+          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="product-group" onclick="zarazTrackSelect('product grid select filter', 'product-group | {{.}}')">
           <label class="CheckboxLabel" for="{{- . -}}">{{- . -}}</label>
         </div>
         {{- end -}}
@@ -375,7 +379,7 @@ span a img {
         <span><a href="/fundamentals/account-and-billing/preview-services/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
-        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available">
+        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available" onclick="zarazTrackSelect('product grid select filter', 'preview available | preview available')">
         <label class="CheckboxLabel" for="preview-available">True</label>
       </div>
   </fieldset>
@@ -397,6 +401,7 @@ span a img {
           href="{{ .url }}"
           data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
+          onclick="zarazTrackSelect('product grid option selected', '{{.title}}')"
         >
           <span>{{ .title }}</span>
         </a>
@@ -546,7 +551,13 @@ function hideElement(id) {
 }
 
 function triggerSearch() {
+  let searchBox = document.getElementById('search');
+  zaraz.track('product grid additional search', {input: searchBox.value})
   document.querySelector(".DocSearch.DocSearch-Button").click()
+}
+
+function zarazTrackSelect(eventName, selectedOption) {
+  zaraz.track(eventName, {selected_option: selectedOption})
 }
 
 </script>

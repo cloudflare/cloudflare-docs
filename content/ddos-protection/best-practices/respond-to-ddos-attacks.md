@@ -6,7 +6,7 @@ title: Respond to DDoS attacks
 
 # Respond to DDoS attacks
 
-Cloudflare's network automatically mitigates large [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), but these attacks can still affect your application.
+Cloudflare's network automatically mitigates large {{<glossary-tooltip term_id="distributed denial-of-service (DDoS) attack" link="https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/">}}DDoS attacks{{</glossary-tooltip>}}, but these attacks can still affect your application.
 
 ## All customers
 

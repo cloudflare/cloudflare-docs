@@ -58,11 +58,10 @@ resource "cloudflare_ruleset" "zone_rl" {
 {{<render file="_add-new-rule.md" withParameters="rate limiting rule">}}
 <br/>
 
-<details>
-<summary>Account-level example configuration</summary>
-<div>
+{{<details header="Account-level example configuration">}}
 
 {{<Aside type="note" header="Before you start">}}
+
 * Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
 
 * Custom rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
@@ -115,12 +114,12 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Create an advanced rate limiting rule
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` with:
+
 * A custom counting expression that includes a response field (`http.response.code`).
 * A custom JSON response for rate limited requests.
 

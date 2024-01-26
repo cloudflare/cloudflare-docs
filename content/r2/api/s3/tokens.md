@@ -28,9 +28,20 @@ You will not be able to access your **Secret Access Key** again after this step.
 
 {{</Aside>}}
 
-The S3 endpoint is available via the `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` endpoint. 
+You will also need to configure the `endpoint` in your S3 client to `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`.
 
 Find your [account ID in the Cloudflare dashboard](/fundamentals/setup/find-account-and-zone-ids/).
+
+Buckets created with jurisdictions must be accessed via jurisdiction-specific `endpoint`s:
+
+- European Union (EU): `https://<ACCOUNT_ID>.eu.r2.cloudflarestorage.com`
+- FedRAMP: `https://<ACCOUNT_ID>.fedramp.r2.cloudflarestorage.com`
+
+{{<Aside type="warning">}}
+
+Jurisdictional buckets can only be accessed via the corresponding jurisdictional endpoint. Most S3 clients will not let you configure multiple `endpoint`s, so you'll generally have to initialize one client per jurisdiction.
+
+{{</Aside>}}
 
 ## Permissions
 

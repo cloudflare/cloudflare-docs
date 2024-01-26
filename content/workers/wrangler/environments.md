@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Environments
+meta:
+  description: Deploy the same Worker application with different configuration for each environment.
 ---
 
 # Environments
@@ -127,7 +129,7 @@ Published my-worker-staging
 ```
 
 ```sh
-~/my-worker $ wrangler deploy --env production
+~/my-worker $ npx wrangler deploy --env production
 Uploaded my-worker-production
 Published my-worker-production
   example.com/*

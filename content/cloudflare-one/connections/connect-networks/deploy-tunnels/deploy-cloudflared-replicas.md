@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Tunnel availability and failover
-layout: single
 weight: 2
 ---
 
@@ -25,9 +24,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it on multiple hosts. If your tunnel runs as a service, only one `cloudflared` instance is allowed per host.
 
-<details>
-<summary>Via the dashboard</summary>
-<div>
+{{<details header="Via the dashboard">}}
 
 1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
@@ -37,12 +34,9 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 
 The new replica will appear on the **Connectors** list for the tunnel.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Via the command line</summary>
-<div>
+{{<details header="Via the command line">}}
 
 1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/).
 
@@ -70,15 +64,14 @@ The new replica will appear on the **Connectors** list for the tunnel.
 
   This will output your tunnel UUID as well as two Connector IDs, one for each `cloudflared` process running your tunnel. With this command, you can also see that your tunnel is now being served by eight connections.
 
-</div>
-</details>
+{{</details>}}
 
 You can run the same tunnel across various `cloudflared` processes for up to 100 connections (25 replicas) per tunnel. Cloudflare Load Balancers and DNS records can still point to the tunnel and its UUID. Traffic will be sent to all `cloudflared` processes associated with the tunnel.
 
 {{<Aside type="note" header="Deploy replicas with Kubernetes">}}
-  
+
 For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
-  
+
 {{</Aside>}}
 
 ## Cloudflare Load Balancers

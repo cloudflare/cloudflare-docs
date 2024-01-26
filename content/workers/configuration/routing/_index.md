@@ -1,10 +1,11 @@
 ---
 pcx_content_type: navigation
-title: Routing
-layout: single
+title: Routes and domains
+meta:
+  description: Connect your Worker to an external endpoint (via Routes, Custom Domains or a `workers.dev` subdomain) such that it can be accessed by the Internet.
 ---
 
-# Routing
+# Routes and domains
 
 To allow a Worker to receive inbound HTTP requests, you must connect it to an external endpoint such that it can be accessed by the Internet.
 

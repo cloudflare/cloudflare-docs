@@ -8,7 +8,7 @@ weight: 88
 
 You can manage your Cloudflare Logpush service from the command line using cURL.
 
-Before getting started, review:
+Before getting started, review the following documentation:
 
 - [API configuration](/logs/get-started/api-configuration/)
 - [Logpush job object definition](/api/operations/get-zones-zone_identifier-logpush-jobs)
@@ -224,7 +224,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 }
 ```
 
-## Step 4 - Delete a job
+## Optional - Delete a job
 
 ```bash
 curl -s -X DELETE \
@@ -244,7 +244,7 @@ Be careful when deleting a job because this action cannot be reversed.
 }
 ```
 
-## Step 5 - Retrieve your job
+## Optional - Retrieve your job
 
 Retrieve a specific job, using the job ID:
 
@@ -314,7 +314,7 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 }
 ```
 
-## Step 6 - Update **logpull_options**
+## Optional - Update **logpull_options**
 
 If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **logpull_options** for your zone.
 

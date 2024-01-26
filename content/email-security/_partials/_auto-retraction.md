@@ -6,7 +6,7 @@ _build:
 inputParameters: hardRetract
 ---
 
-You can set up auto-retraction to automatically move messages matching certain dispositions to specific folders within a user's mailbox.
+You can set up auto-retraction to automatically move messages matching certain {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} to specific folders within a user's mailbox.
 
 To set up automatic retraction:
 
@@ -26,7 +26,7 @@ To set up automatic retraction:
 
 ### Post delivery retractions for new threats
 
-Area 1 is continuously gathering new information about phishing campaigns. Users might have email messages in their inboxes that were scanned by Area 1 but not retracted initially because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Area 1 offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
+Area 1 is continuously gathering new information about {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} campaigns. Users might have email messages in their inboxes that were scanned by Area 1 but not retracted initially because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Area 1 offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
 
 You can enable two options: 
 

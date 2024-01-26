@@ -35,32 +35,33 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 6. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
-    <details><summary>Configure all the rules in the ruleset (ruleset override)</summary><div>
+    {{<details header="Configure all the rules in the ruleset (ruleset override)">}}
 
-    1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
-    2. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
+1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
+2. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 
-    </div></details>
+    {{</details>}}
 
-    <details><summary>Configure one or more rules</summary><div>
+    {{<details header="Configure one or more rules">}}
 
-    1. Under **Rule configuration**, select **Browse rules**.
+1. Under **Rule configuration**, select **Browse rules**.
 
-    2. Search for the rules you wish to configure using the available filters. You can search by [tag](/ddos-protection/managed-rulesets/http/rule-categories/) (also known as category).
+2. Search for the rules you wish to configure using the available filters. You can search by [tag](/ddos-protection/managed-rulesets/http/rule-categories/) (also known as category).
 
-    3. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
+3. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-        To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-    4. Select **Next**.
+4. Select **Next**.
 
-    </div></details>
+    {{</details>}}
 
     {{<Aside type="note" header="Notes">}}
+
 * Tag and rule overrides have priority over ruleset overrides.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
-    {{</Aside>}}
 
+    {{</Aside>}}
 
 7. Select **Save**.
 

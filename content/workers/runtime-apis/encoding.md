@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Encoding
+meta:
+  description: Takes a stream of code points as input and emits a stream of bytes.
 ---
 
 # Encoding
@@ -79,3 +81,4 @@ let decoder = new TextDecoder();
   - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s `TextDecoder` documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
 
 {{</definitions>}}
+

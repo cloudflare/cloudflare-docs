@@ -6,7 +6,7 @@ weight: 2
 
 # Available settings
 
-When you use Version Management, you can edit various configuration settings, such as Page Rules, [WAF custom rules](/waf/custom-rules/), and [Cache settings](/cache/).
+When you use Version Management, you can edit various configuration settings, such as [WAF custom rules](/waf/custom-rules/) and [Cache settings](/cache/).
 
 Generally, you are allowed to edit all zone-level configurations except for the following:
 

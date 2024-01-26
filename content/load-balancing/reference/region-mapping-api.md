@@ -1,7 +1,7 @@
 ---
 title: Regions API
 pcx_content_type: reference
-weight: 0
+weight: 47
 meta:
   title: Cloudflare Load Balancing Regions API
 ---

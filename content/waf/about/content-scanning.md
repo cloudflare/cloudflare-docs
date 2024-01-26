@@ -53,12 +53,13 @@ curl --request POST \
 
 ### 2. (Optional) Configure a custom scan expression
 
-If you wish to check uploaded content in a way that is not covered by the [default configuration](#default-configuration), add a custom scan expression. For example:
+If you wish to check uploaded content in a way that is not covered by the [default configuration](#default-configuration), add a custom scan expression using a `POST` request. For example:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '[
   {
     "payload": "lookup_json_string(http.request.body.raw, \"file\")"
@@ -66,7 +67,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/p
 ]'
 ```
 
-The above `POST` request will add the following expression to the current list of custom scan expressions:
+The above request will add the following expression to the current list of custom scan expressions:
 
 ```txt
 lookup_json_string(http.request.body.raw, "file")
@@ -171,18 +172,22 @@ When enabled, WAF content scanning provides the following fields you can use in 
 ## Example rules
 
 The following custom rule example logs all requests with at least one uploaded content object:
+
 * Expression: `cf.waf.content_scan.has_obj`
 * Action: _Log_
 
 The following example blocks requests addressed at `/upload.php` that contain at least one uploaded content object considered malicious:
+
 * Expression: `cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php"`
 * Action: _Block_
 
 The following example blocks requests addressed at `/upload` with uploaded content objects that are not PDF files:
+
 * Expression: `any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"`
 * Action: _Block_
 
 The following example blocks requests addressed at `/upload` with uploaded content objects over 500 KB in size:
+
 * Expression: `any(cf.waf.content_scan.obj_sizes[*] > 500000) and http.request.uri.path eq "/upload"`
 * Action: _Block_
 
@@ -192,9 +197,7 @@ The following example blocks requests addressed at `/upload` with uploaded conte
 
 ### General operations
 
-<details>
-<summary>Enable WAF content scanning</summary>
-<div>
+{{<details header="Enable WAF content scanning">}}
 
 To enable content scanning, use a `POST` request similar to the following:
 
@@ -208,12 +211,9 @@ curl --request POST \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Disable WAF content scanning</summary>
-<div>
+{{<details header="Disable WAF content scanning">}}
 
 To disable content scanning, use a `POST` request similar to the following:
 
@@ -227,12 +227,9 @@ curl --request POST \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Get WAF content scanning status</summary>
-<div>
+{{<details header="Get WAF content scanning status">}}
 
 To obtain the current status of the content scanning feature, use a `GET` request similar to the following:
 
@@ -245,14 +242,11 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/s
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### Custom expression operations
 
-<details>
-<summary>Get existing custom scan expressions</summary>
-<div>
+{{<details header="Get existing custom scan expressions">}}
 
 To get a list of existing custom scan expressions, use a `GET` request similar to the following:
 
@@ -282,12 +276,9 @@ header: Example response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Add a custom scan expression</summary>
-<div>
+{{<details header="Add a custom scan expression">}}
 
 Use a `POST` request similar to the following:
 
@@ -298,6 +289,7 @@ header: Example request
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '[
   {
     "payload": "lookup_json_string(http.request.body.raw, \"file\")"
@@ -305,12 +297,9 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/p
 ]'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Delete a custom scan expression</summary>
-<div>
+{{<details header="Delete a custom scan expression">}}
 
 Use a `DELETE` request similar to the following:
 
@@ -324,5 +313,4 @@ curl --request DELETE \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-</div>
-</details>
+{{</details>}}

@@ -1,19 +1,18 @@
 ---
 pcx_content_type: how-to
 title: Managed deployment
-layout: single
 weight: 1
 ---
 
 # Managed deployment
 
-{{<render file="_mdm-intro.md">}}
+{{<render file="warp/_mdm-intro.md">}}
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 {{<Aside type="warning">}}
 
-{{<render file="_mdm-dash-conflict.md">}}
+{{<render file="warp/_mdm-dash-conflict.md">}}
 
 {{</Aside>}}
 
@@ -29,7 +28,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 
 To install the WARP client, run the following command:
 
-```txt
+```bash
 msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
@@ -37,10 +36,20 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ### Uninstall WARP
 
-To uninstall the WARP client, run the following command:
+To uninstall the WARP client:
 
-```txt
-msiexec /x Cloudflare_WARP_Release-x64.msi /quiet
+1. First, locate the `.msi` package with the following Powershell command:
+```bash
+PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+
+IdentifyingNumber                      Name            LocalPackage
+-----------------                      ----            ------------
+{5RA4DJWK-13D8-2NSX-QRF8-UANLODWD6D90} Cloudflare WARP C:\WINDOWS\Installer\3f476db.msi
+```
+
+2. You can then use the LocalPackage output in the uninstall command. For example,
+```bash
+msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
 ```
 
 ### Update the configuration
@@ -64,7 +73,7 @@ By default WARP will use the user’s default browser to perform registration. Y
 
 To use an embedded browser:
 
-1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
+1. Download and install WebView2 by following the [Microsoft instructions](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
 2. Add a registry key with the following command:
    ```txt
    REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y

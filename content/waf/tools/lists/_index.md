@@ -2,7 +2,6 @@
 title: Lists
 pcx_content_type: overview
 weight: 1
-layout: single
 ---
 
 # Lists
@@ -79,7 +78,7 @@ Notes:
 
 * The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
 
-* Customers on Enterprise plans may contact their account team if they need more custom lists or a larger maximum number of items across lists.
+* Customers on Enterprise plans may contact their account team if they need more custom lists or a larger maximum number of items across lists. For these customers, the maximum number of custom lists per data type is 40 lists.
 
 * For details on the availability of Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/#availability) documentation.
 

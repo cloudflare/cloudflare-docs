@@ -59,6 +59,7 @@ Terraform functions through a working directory that contains the configuration 
    ```
 
 2. Change into the directory:
+
    ```sh
    $ cd gcp-tunnel
    ```
@@ -67,11 +68,11 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Define input variables
 
-{{<render file="_terraform_input_variables.md">}}
+{{<render file="terraform/_input-variables.md">}}
 
 ### Assign values to the variables
 
-{{<render file="_terraform_variable_values.md">}}
+{{<render file="terraform/_variable-values.md">}}
 
 ### Configure Terraform providers
 
@@ -132,16 +133,18 @@ The following configuration will modify settings in your Cloudflare account.
    ---
    filename: Cloudflare-config.tf
    ---
-   # Generates a 35-character secret for the tunnel.
-   resource "random_id" "tunnel_secret" {
-     byte_length = 35
+   # Generates a 64-character secret for the tunnel.
+   # Using `random_password` means the result is treated as sensitive and, thus,
+   # not displayed in console output. Refer to: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
+   resource "random_password" "tunnel_secret" {
+     length = 64
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
    resource "cloudflare_tunnel" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Terraform GCP tunnel"
-     secret     = random_id.tunnel_secret.b64_std
+     secret     = base64sha256(random_password.tunnel_secret.result)
    }
 
    # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
@@ -322,7 +325,7 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-1. In **Access** > **Tunnels**, verify that your tunnel is active.
+1. In **Networks** > **Tunnels**, verify that your tunnel is active.
 2. In **Access** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
 3. From any device, open a browser and go to `http_app.<cloudflare_zone>` (for example, `http_app.example.com`).
 

@@ -2,7 +2,7 @@
 title: Configure
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure Schema Validation
 ---
@@ -13,7 +13,7 @@ meta:
 Schema Validation 2.0 API is currently in an experimental functionality and may change in future updates.
 {{</Aside>}}
 
-Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual endpoints and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints. 
+Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints.
 
 {{<Aside type="note">}}
 [Classic Schema Validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only.
@@ -127,8 +127,9 @@ Schemas contain a set of servers, paths, and methods, which together define an o
 ---
 header: cURL command
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
---header "Authorization: Bearer <API_TOKEN>"
+curl --request GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&operation_status=new&page=1&per_page=5000" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header 'Content-Type: application/json'
 ```
 
 ```json
@@ -137,46 +138,22 @@ header: Result
 ---
 {
     "result":
-    {
-        "existing_operations":
         [
-            {
-                "operation_id": "5c734fcd-455d-4040-9eaa-dbb3830526ae",
-                "method": "POST",
-                "host": "example.com",
-                "endpoint": "/pets",
-                "last_updated": "2023-04-04T16:07:37.575971Z",
-                "features":
-                {
-                    "schema_info":
-                    {
-                        "active_schema":
-                        {
-                            "id": "0bf58160-5da3-48ac-80a9-069f9642c1a0",
-                            "name": "example_schema",
-                            "created_at": "2023-04-04T12:52:05.036341Z",
-                            "is_learned": false,
-                            "mitigation_action": null
-                        },
-                        "learned_available": false
-                    }
-                }
-            }
-        ],
-        "new_operations":
-        [
-            {
-                "method": "GET",
-                "host": "example.com",
-                "endpoint": "/pets",
-            }
-        ]
-    },
+          {
+              "method": "GET",
+              "host": "example.com",
+              "endpoint": "/pets"
+          }
+     ],
     "success": true,
-    "errors":
-    [],
-    "messages":
-    []
+    "errors": [],
+    "messages": [],
+    "result_info": {
+        "page": 1,
+        "per_page": 30,
+        "count": 1,
+        "total_count": 1
+    }
 }
 ```
 
@@ -228,11 +205,10 @@ You can add all operations in a schema that do not already exist in Endpoint Man
 ---
 header: cURL command
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
---header "Authorization: Bearer <API_TOKEN>" \
+curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
+--header "X-Auth-Email: <EMAIL>" --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data "(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
---header "Authorization: Bearer <API_TOKEN>" | jq ".result.new_operations")"
+--data "$(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=5000" \ --header "X-Auth-Email: <EMAIL>" / --header "X-Auth-Key: <API_KEY>" | jq ".result")"
 ```
 
 {{<Aside type="note">}}
@@ -241,7 +217,7 @@ If you run this command again immediately, it will result in an error as all `ne
 
 ### Change the default and operation-specific mitigation action
 
-If a schema is uploaded and active for a set of operations, it validates incoming requests to each operation and decides whether a mitigation action should be taken. This mitigation action is defined per operation and can take the values **none**, **log**, and **block**, which correspond to no action, logging the requests, or blocking them before they reach the origin. 
+If a schema is uploaded and active for a set of operations, it validates incoming requests to each operation and decides whether a mitigation action should be taken. This mitigation action is defined per operation and can take the values **none**, **log**, and **block**, which correspond to no action, logging the requests, or blocking them before they reach the origin.
 
 New operations will not have a mitigation action set and will use the zone-wide default mitigation action. The current default mitigation action can be retrieved using `GET`.
 
@@ -259,7 +235,7 @@ header: Result
 ---
 {
     "result":  {
-        "validation_default_mitigation_action": "none", 
+        "validation_default_mitigation_action": "none",
         "validation_override_mitigation_action": null
     }
     "success": true,
@@ -290,7 +266,7 @@ header: Result
 ---
 {
     "result":  {
-        "validation_default_mitigation_action": "block", 
+        "validation_default_mitigation_action": "block",
         "validation_override_mitigation_action": null
     }
     "success": true,
@@ -302,7 +278,7 @@ header: Result
 
 ```
 
-If the mitigation action for an individual operation is of interest, the current value can be retrieved with `GET` using the operation ID. 
+If the mitigation action for an individual operation is of interest, the current value can be retrieved with `GET` using the operation ID.
 
 ```bash
 ---
@@ -329,7 +305,7 @@ header: Result
 
 ```
 
-If the value is `null`, it means that no mitigation action has been specified for this operation and the default mitigation action is being used. 
+If the value is `null`, it means that no mitigation action has been specified for this operation and the default mitigation action is being used.
 
 You can set the mitigation action to a value out of `none`, `block`, `log`, and `null` by using `PUT`.
 
@@ -363,7 +339,7 @@ header: Result
 
 ### List all schemas
 
-You can get an overview of the schemas currently active on a zone using `GET`. 
+You can get an overview of the schemas currently active on a zone using `GET`.
 
 `validation_enabled=true` is an optional parameter.
 
@@ -486,7 +462,7 @@ header: Result
 }
 ```
 
-If you are satisfied with the inspected parameter schema, you can add and activate it using `PUT`. 
+If you are satisfied with the inspected parameter schema, you can add and activate it using `PUT`.
 
 ```bash
 ---
@@ -536,7 +512,7 @@ header: Result
 ---
 {
     "result":  {
-        "validation_default_mitigation_action": "block", 
+        "validation_default_mitigation_action": "block",
         "validation_override_mitigation_action": "none"
     }
     "success": true,

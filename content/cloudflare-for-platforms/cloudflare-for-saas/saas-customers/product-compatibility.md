@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Product compatibility
-layout: list
+layout: wide
 weight: 3
 meta:
     title: Product compatibility | Orange-to-Orange zones
@@ -21,7 +21,7 @@ This is not an exhaustive list of Cloudflare products and features.
 
 {{<table-wrap>}}
 
-| Product | Customer zone | Saas provider zone | Notes |
+| Product | Customer zone | SaaS provider zone | Notes |
 | --- | --- | --- | --- |
 | [Access](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) | Yes | Yes |
 | [API Shield](/api-shield/) | Yes | No |
@@ -32,11 +32,11 @@ This is not an exhaustive list of Cloudflare products and features.
 | [China Network](/china-network/) | No | No |
 | [DNS](/dns/) | Yes* | Yes | As a SaaS customer, do not remove the records related to your Cloudflare for SaaS setup.<br/><br/>Otherwise, your traffic will begin routing away from your SaaS provider. |
 | [HTTP/2 prioritization](https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/) | Yes | Yes* | This feature must be enabled on the customer zone to function. |
-| [Image resizing](/images/image-resizing/) | Yes | Yes |
+| [Image resizing](/images/transform-images/) | Yes | Yes |
 | IPv6 | Yes | Yes |
-| [IPv6 Compatibility](/support/network/understanding-and-configuring-cloudflares-ipv6-support/) | Yes | Yes* | If the customer zone has **IPv6 Compatibility** enabled, generally the SaaS zone should as well.<br/><br/>If not, make sure the SaaS zone enables [Pseudo IPv4](/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4). |
+| [IPv6 Compatibility](/network/ipv6-compatibility/) | Yes | Yes* | If the customer zone has **IPv6 Compatibility** enabled, generally the SaaS zone should as well.<br/><br/>If not, make sure the SaaS zone enables [Pseudo IPv4](/network/pseudo-ipv4/). |
 | [Load Balancing](/load-balancing/) | No | Yes | Customer zones can still use Load Balancing for non-O2O traffic. |
-| [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) | Yes* | Yes | Page Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
+| [Page Rules](/rules/page-rules/) | Yes* | Yes | Page Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Mirage](/speed/optimization/images/mirage/) | Yes | Yes |
 | [Origin Rules](/rules/origin-rules/) | No | Yes | Origin Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Polish](/images/polish/) | Yes* | Yes | Polish only runs on cached assets. If the customer zone is bypassing cache for SaaS zone destined traffic, then images optimized by Polish will not be loaded from origin. |
@@ -47,8 +47,8 @@ This is not an exhaustive list of Cloudflare products and features.
 | [WAF custom rules](/waf/custom-rules/) | Yes | Yes | WAF custom rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [WAF managed rules](/waf/managed-rules/) | Yes | Yes |
 | [Waiting Room](/waiting-room/) | Yes | Yes |
-| [Websockets](/support/network/using-cloudflare-with-websockets/) | No | No |
+| [Websockets](/network/websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Zaraz](/zaraz/) | Yes | No | 
+| [Zaraz](/zaraz/) | Yes | No |
 
 {{</table-wrap>}}

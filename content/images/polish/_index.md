@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Cloudflare Polish
-weight: 4
+weight: 7
 ---
 
 # Cloudflare Polish
@@ -11,6 +11,10 @@ Cloudflare Polish is a one-click image optimization product that automatically o
 When an image is fetched from your origin, our systems automatically optimize it in Cloudflare's cache. Subsequent requests for the same image will get the smaller, faster, optimized version of the image, improving the speed of your website.
 
 ![Example of Polish compression's quality.](/images/images/polish.png)
+
+## Comparison
+
+{{<render file="_comparison-mirage-polish.md" productFolder="images" withParameters="Polish;;Mirage;;/speed/optimization/images/mirage/" >}}
 
 ## Availability
 

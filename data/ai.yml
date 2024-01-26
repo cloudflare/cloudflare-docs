@@ -5,7 +5,7 @@ product:
   title: AI
   url: /ai/
   group: Developer platform
-additional_groups: [AI]
+  additional_groups: [AI]
 
 meta:
   title: Cloudflare AI

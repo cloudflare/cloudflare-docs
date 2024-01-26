@@ -59,9 +59,9 @@ The **output_options** object has the following settings:
 - **record_prefix**: string to be prepended before each record.
 - **record_suffix**: string to be appended after each record.
 - **record_template**: string to use as template for each record instead of the default comma-separated list. All fields used in the template must be present in **field_names** as well, otherwise they will end up as `null`. Format as a Go text/template without any standard functions (like conditionals, loops, sub-templates, etc.). The template can only consist of these three types of tokens:
-    - Action: this is either a `{{ .Field }}` or a `{{ "constant text" }}`.
-    - Text: this is just constant text in-between the `{{ actions }}`.
-    - Comment: the `{{/* comments */}}` are silently dropped.
+  - Action: this is either a `{{ .Field }}` or a `{{ "constant text" }}`.
+  - Text: this is just constant text in-between the `{{ actions }}`.
+  - Comment: the `{{/* comments */}}` are silently dropped.
 - **record_delimiter**: string to be inserted in-between the records as separator.
 - **field_delimiter**: string to join fields. Will be ignored when **record_template** is set.
 - **timestamp_format**: string to specify format for timestamps, such as `unixnano`, `unix`, or `rfc3339`. Default `unixnano`.
@@ -74,9 +74,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 
 ### ndjson
 
-<details>
-<summary>Default output_options for `ndjson`</summary>
-<div>
+{{<details header="Default output_options for `ndjson`">}}
 
 ```json
 {
@@ -86,12 +84,9 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output_options</summary>
-<div>
+{{<details header="Example output_options">}}
 
 ```json
 "output_options": {
@@ -100,12 +95,9 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output</summary>
-<div>
+{{<details header="Example output">}}
 
 ```json
 {"ClientIP":"89.163.242.206","EdgeStartTimestamp":1506702504433000200,"RayID":"3a6050bcbe121a87"}
@@ -113,14 +105,11 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 {"ClientIP":"89.163.242.208","EdgeStartTimestamp":1506702504433000400,"RayID":"3a6050bcbe121a89"}
 ```
 
-</div>
-</details>
+{{</details>}}
 
 - `ndjson` with different field names:
 
-<details>
-<summary>Example output_options</summary>
-<div>
+{{<details header="Example output_options">}}
 
 ```json
 "output_options": {
@@ -130,28 +119,23 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output</summary>
-<div>
+{{<details header="Example output">}}
 
 ```json
 {"client-ip":"89.163.242.206","timestamp":1506702504433000200,"ray-id":"3a6050bcbe121a87"}
 {"client-ip":"89.163.242.207","timestamp":1506702504433000300,"ray-id":"3a6050bcbe121a88"}
 {"client-ip":"89.163.242.208","timestamp":1506702504433000400,"ray-id":"3a6050bcbe121a89"}
 ```
+
 Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, can be inserted following go text/template convention, that is, `"{{`double{{curly}}braces`}}"`.
 
-</div>
-</details>
+{{</details>}}
 
 ### csv
 
-<details>
-<summary>Default output_options for CSV</summary>
-<div>
+{{<details header="Default output_options for CSV">}}
 
 ```json
 {
@@ -160,12 +144,9 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output_options</summary>
-<div>
+{{<details header="Example output_options">}}
 
 ```json
 "output_options": {
@@ -174,12 +155,9 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output</summary>
-<div>
+{{<details header="Example output">}}
 
 ```csv
 "89.163.242.206",1506702504433000200,"3a6050bcbe121a87"
@@ -188,8 +166,7 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ### csv/json variants
 
@@ -197,9 +174,7 @@ Based on above, other formats similar to csv or json are also supported:
 
 - csv with header:
 
-<details>
-<summary>Example output_options</summary>
-<div>
+{{<details header="Example output_options">}}
 
 ```json
 "output_options": {
@@ -209,12 +184,9 @@ Based on above, other formats similar to csv or json are also supported:
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output</summary>
-<div>
+{{<details header="Example output">}}
 
 ```csv
 ClientIP,EdgeStartTimestamp,RayID
@@ -223,14 +195,11 @@ ClientIP,EdgeStartTimestamp,RayID
 "89.163.242.208",1506702504433000400,"3a6050bcbe121a89"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 - tsv with header:
 
-<details>
-<summary>Example output_options</summary>
-<div>
+{{<details header="Example output_options">}}
 
 ```json
 "output_options": {
@@ -241,28 +210,22 @@ ClientIP,EdgeStartTimestamp,RayID
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output</summary>
-<div>
+{{<details header="Example output">}}
 
 ```csv
-ClientIP	EdgeStartTimestamp  RayID
+ClientIP EdgeStartTimestamp  RayID
 "89.163.242.206"    1506702504433000200 "3a6050bcbe121a87"
 "89.163.242.207"    1506702504433000300 "3a6050bcbe121a88"
 "89.163.242.208"    1506702504433000400 "3a6050bcbe121a89"
 ```
 
-</div>
-</details>
+{{</details>}}
 
 - json with nested object:
 
-<details>
-<summary>Example output_options</summary>
-<div>
+{{<details header="Example output_options">}}
 
 ```json
 "output_options": {
@@ -276,12 +239,9 @@ ClientIP	EdgeStartTimestamp  RayID
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example output</summary>
-<div>
+{{<details header="Example output">}}
 
 ```json
 {"events":[
@@ -291,8 +251,7 @@ ClientIP	EdgeStartTimestamp  RayID
 ]}
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## How to migrate
 

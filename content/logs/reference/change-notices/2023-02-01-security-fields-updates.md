@@ -13,7 +13,7 @@ Cloudflare will deploy some updates to security-related fields in Cloudflare Log
 
 ## Timeline
 
-To minimize possible impacts on our customers' existing Security Information and Event Management (SIEM) configurations, these updates will happen in two phases according to the following timeline:
+To minimize possible impacts on our customers' existing {{<glossary-tooltip term_id="SIEM">}}SIEM{{</glossary-tooltip>}} configurations, these updates will happen in two phases according to the following timeline:
 
 ### Phase 1 (February 1, 2023)
 
@@ -144,7 +144,7 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job via API
 
-Follow the instructions in [Update log_pull options](/logs/tutorials/examples/example-logpush-curl/#step-6---update-logpull_options) to update the fields in the Logpush job.
+Follow the instructions in [Update log_pull options](/logs/tutorials/examples/example-logpush-curl/#optional---update-logpull_options) to update the fields in the Logpush job.
 
 ### Update Logpush job via Terraform
 

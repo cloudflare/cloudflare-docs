@@ -3,7 +3,7 @@ title: Operators and grouping symbols
 pcx_content_type: reference
 type: overview
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Rule operators and grouping symbols
 ---
@@ -220,7 +220,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">not</code></td>
       <td><code class="InlineCode">!</code></td>
       <td>
-         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in 203.0.113.0/24 )</code>
+         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in {203.0.113.0/24} )</code>
       </td>
       <td>1</td>
    </tr>
@@ -229,7 +229,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">and</code></td>
       <td><code class="InlineCode">&amp;&amp;</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in 203.0.113.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in {203.0.113.0/24}</code>
       </td>
       <td>2</td>
    </tr>
@@ -239,7 +239,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">xor</code></td>
       <td><code class="InlineCode">^^</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in 203.0.113.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in {203.0.113.0/24}</code>
       </td>
       <td>3</td>
    </tr>

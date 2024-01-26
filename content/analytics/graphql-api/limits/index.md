@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Limits
 weight: 31
-layout: single
 meta:
     title: GraphQL API - Limits
 ---
@@ -34,8 +33,8 @@ The default quota is **300 GraphQL queries over 5-minute window**. It allows a
 user to run at least **1 query every second** or do a burst of 300 queries and
 then wait 5 minutes before issuing another query.
 
-That rate limit is applied in addition to the general rate limits enforced by
-the Cloudflare API.
+That rate limit is applied in addition to the [general rate limits enforced by
+the Cloudflare API](/fundamentals/api/reference/limits/).
 
 ## Node limits and availability
 

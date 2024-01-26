@@ -6,9 +6,7 @@ _build:
 inputParameters: param1
 ---
 
-<div class="special-class" markdown="1">
-
-To evaluate multiple conditions in an expression, select the **Add** logical operator. These expressions can be compared further with the **Or** logical operator.
+To evaluate multiple conditions in an expression, select the **And** logical operator. These expressions can be compared further with the **Or** logical operator.
 
 | Operator | Meaning                                       |
 | -------- | --------------------------------------------- |
@@ -16,5 +14,3 @@ To evaluate multiple conditions in an expression, select the **Add** logical ope
 | Or       | match any of the conditions in the expression |
 
 The **Or** operator will only work with conditions in the same expression group. For example, you cannot compare conditions in **Traffic** with conditions in $1.
-
-</div>

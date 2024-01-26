@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Manage findings
-layout: single
 weight: 1
 meta:
   title: Manage security findings
@@ -18,7 +17,7 @@ Findings are security issues detected within SaaS applications that involve user
 
 ## View findings
 
-1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **CASB** > **Findings**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 
    You will see the findings detected across all integrations.
 

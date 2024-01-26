@@ -14,8 +14,8 @@ Logs Engine gives you the ability to store your logs in R2 and query them direct
 - Create an [R2 access key](/r2/api/s3/tokens/) with at least R2 read permissions.
 - Ensure that you have Logshare read permissions.
 - Alternatively, create a Cloudflare API token with the following permissions:
-    - Account scope
-    - Logs read permissions
+  - Account scope
+  - Logs read permissions
 
 ## Query logs
 
@@ -24,15 +24,17 @@ You can use the API to query and download your logs by time range or RayID.
 ## Authentication
 
 The following headers are required for all API calls:
+
 - `X-Auth-Email` - the Cloudflare account email address associated with the domain
 - `X-Auth-Key` - the Cloudflare API key
 
 Alternatively, API tokens with Logs edit permissions can also be used for authentication:
+
 - `Authorization: Bearer <API_TOKEN>`
 
 ### Required headers
 
-In addition to the required authentication headers mentioned, the following headers are required for the API to access logs stored in your R2 bucket. 
+In addition to the required authentication headers mentioned, the following headers are required for the API to access logs stored in your R2 bucket.
 
 `R2-access-key-id` (required) - [R2 Access Key Id](/r2/api/s3/tokens/)
 `R2-secret-access-key` (required) - [R2 Secret Access Key](/r2/api/s3/tokens/)
@@ -124,14 +126,11 @@ curl -g -X GET 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/
 
 ## Troubleshooting
 
-<details>
-<summary>I am getting an error when accessing the API</summary>
-<div>
+{{<details header="I am getting an error when accessing the API">}}
 
 - **Error**: Time range returned too many results. Try reducing the time range and try again.
 
 HTTP status code `422` will be returned if the time range between the start and end parameters is too wide. Try querying a shorter time range if you are running into this limit.
-
 
 - **Error**: Provided token does not have the required features enabled.
 
@@ -139,43 +138,30 @@ Contact your account representative to have the beta Logpull RayID Lookup subscr
 
 - **Error**: Time range returned too many results. Try reducing the time range and try again.
 
-High volume zones can produce many log files in R2. Try reducing your start and end time range until you find a duration that works best for your log volume. 
+High volume zones can produce many log files in R2. Try reducing your start and end time range until you find a duration that works best for your log volume.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>How do I know what time range to index?</summary>
-<div>
+{{<details header="How do I know what time range to index?">}}
 
-Currently, there is no process to index logs as they arrive. If you have the RayID and know the time the request was made, try indexing the next 5-10 minutes of logs after the request was completed. 
+Currently, there is no process to index logs as they arrive. If you have the RayID and know the time the request was made, try indexing the next 5-10 minutes of logs after the request was completed.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>What is the time delay between when an event happens and when I can query for it?</summary>
-<div>
+{{<details header="What is the time delay between when an event happens and when I can query for it?">}}
 
 Logpush delivers logs in batches as soon as possible, generally in less than one minute. After this, logs can be accessed using Logs Engine.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Does R2 have retention controls?</summary>
-<div>
+{{<details header="Does R2 have retention controls?">}}
 
 R2 does not currently have retention controls in place. You can query back as far as when you created the Logpush job.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Which datasets is Logs Engine compatible with?</summary>
-<div>
+{{<details header="Which datasets is Logs Engine compatible with?">}}
 
 The retrieval API is compatible with all the datasets we support. The full list is available on the [Log fields](/logs/reference/log-fields/) section.
 
-</div>
-</details>
+{{</details>}}

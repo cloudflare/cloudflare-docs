@@ -49,6 +49,6 @@ Once your SSO domain is approved, a new **SSO App** application will appear unde
 5. If you can log in successfully, you have successfully set up your dashboard SSO application.
 6. If you cannot log in successfully:
 
-   1. Return to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Settings** > **Authentication**.
+   1. Return to Zero Trust and go to **Settings** > **Authentication**.
    2. For **Cloudflare dashboard SSO**, set your email domain to **Disabled**.
    3. [Re-configure your IdP](/cloudflare-one/identity/idp-integration/).

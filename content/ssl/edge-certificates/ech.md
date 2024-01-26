@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: ECH Protocol (beta)
-weight: 8
+weight: 10
 ---
 
 {{<heading-pill style="beta">}}ECH protocol{{</heading-pill>}}
@@ -58,4 +58,4 @@ However, for settings wherein DNS-based filtering is not applicable, there are t
 
 The most reliable way is via the local or recursive DNS resolver itself, by dropping ECH configurations from HTTPS resource records returned to clients, or, preferably, by returning a “no error no answer” or NXDOMAIN response to HTTPS queries. This prevents clients from obtaining the necessary information to use ECH. Note that modifying HTTPS resource records may cause failures for clients that perform DNSSEC validation, so dropping HTTPS responses may be the preferred approach. This will prevent browsers, such as Chrome from using ECH.
 
-The second way to disable ECH is via a network canary domain. In particular, your network’s DNS resolver can return a “no error no answer” or an NXDOMAIN response to queries made to the `use-application-dns.net` [canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet). This will prevent browsers, such as Firefox from using ECH. For more information, see Firefox's [frequently asked questions page](https://support.mozilla.org/en-US/kb/faq-encrypted-client-hello#w_how-will-ech-interact-with-dohs-opt-outs) for Encrypted Client Hello. 
+The second way to disable ECH is via a network canary domain. In particular, your network’s DNS resolver can return a “no error no answer” or an NXDOMAIN response to queries made to the `use-application-dns.net` [canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet). This will prevent browsers, such as Firefox from using ECH. For more information, see Firefox's [frequently asked questions page](https://support.mozilla.org/en-US/kb/faq-encrypted-client-hello#w_how-will-ech-interact-with-dohs-opt-outs) for Encrypted Client Hello.

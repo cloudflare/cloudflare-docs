@@ -8,7 +8,7 @@ meta:
 
 # Add a WAF exception via API
 
-To add a WAF exception via API, create a rule with `skip` action in a [phase entry point ruleset](/ruleset-engine/about/rulesets/#phase-entry-point-ruleset) of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
+To add a WAF exception via API, create a rule with `skip` action in a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
 
 To configure the WAF exception, define the `action_parameters` object according to the [exception type](/waf/managed-rules/waf-exceptions/#types-of-waf-exceptions).
 

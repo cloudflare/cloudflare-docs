@@ -15,6 +15,9 @@ layout: example
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(req) {
     const data =

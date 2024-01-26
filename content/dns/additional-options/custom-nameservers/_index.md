@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Custom nameservers
 weight: 2
-layout: single
 ---
 
 # Custom nameservers
@@ -18,7 +17,7 @@ To use custom nameservers, a zone must be using Cloudflare as [Primary (Full set
 ## Availability
 
 - Zone custom nameservers are available for zones on Business or Enterprise plans. Via API or on the Dashboard.
-- Account custom nameservers are available for customers on Business (after [contacting Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/)) or Enterprise plans. Once configured, account custom nameservers can be used by all zones in the account, regardless of the zone plan. Via API only.
+- Account custom nameservers are available for customers on Business (after [contacting Cloudflare Support](/support/contacting-cloudflare-support/)) or Enterprise plans. Once configured, account custom nameservers can be used by all zones in the account, regardless of the zone plan. Via API only.
 - Tenant custom nameservers, if created by the tenant owner, will be available to all zones belonging to any account that is part of the tenant. Via API only.
 
 ## Restrictions

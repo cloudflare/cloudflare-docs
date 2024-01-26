@@ -1,8 +1,8 @@
 ---
 pcx_content_type: reference
 title: Glossary
-weight: 11
-layout: list
+weight: 13
+layout: wide
 ---
 
 # Glossary

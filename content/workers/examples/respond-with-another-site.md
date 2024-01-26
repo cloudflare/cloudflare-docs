@@ -14,23 +14,7 @@ layout: example
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 
-```js
-export default {
-  async fetch(request) {
-    async function MethodNotAllowed(request) {
-      return new Response(`Method ${request.method} not allowed.`, {
-        status: 405,
-        headers: {
-          Allow: "GET",
-        },
-      });
-    }
-    // Only GET requests work with this proxy.
-    if (request.method !== "GET") return MethodNotAllowed(request);
-    return fetch(`https://example.com`);
-  },
-};
-```
+{{<render file="_respond-another-site-example-js.md">}}
 
 {{</tab>}}
 {{<tab label="ts">}}

@@ -2,12 +2,11 @@
 title: Widget types
 pcx_content_type: reference
 weight: 7
-layout: single
 ---
 
 # Widget types 
 
-Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a sitekey, and a secret key. 
+Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}}, and a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}}. 
 
 The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible**.
 

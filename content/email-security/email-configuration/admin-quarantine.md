@@ -6,7 +6,7 @@ weight: 7
 
 # Admin Quarantine
 
-Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the [disposition](/email-security/reference/dispositions-and-attributes/) assigned by Area 1.
+Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}} assigned by Area 1.
 
 The messages sent to Admin Quarantine are determined by your [domain settings](/email-security/email-configuration/domains-and-routing/domains/).
 

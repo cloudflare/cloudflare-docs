@@ -38,7 +38,7 @@ To retrieve those values:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
    ![Registering an application in Azure](/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -100,9 +100,11 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. (Optional) If you are using Azure AD groups, enable **Support Groups**.
 
-7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+7. (Optional) In **Email claim**, enter the Azure AD claim that you wish to use for user identification (for example, `preferred_username`).
 
-8. Select **Save**.
+8. (Optional) Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+
+9. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
@@ -114,7 +116,7 @@ To synchronize users and groups between Access and Azure:
 
 ### 1. Enable SCIM in Zero Trust
 
-{{<render file="_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
+{{<render file="access/_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
 
 ### 2. Configure SCIM in Azure
 

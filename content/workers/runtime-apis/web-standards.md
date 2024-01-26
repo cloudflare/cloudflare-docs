@@ -3,6 +3,7 @@ title: Web standards
 pcx_content_type: configuration
 meta:
   title: JavaScript and web standards
+  description: Standardized APIs for use by Workers running on Cloudflare's global network.
 ---
 
 # JavaScript and web standards
@@ -68,6 +69,16 @@ The following methods are available per the [Worker Global Scope](https://develo
 Timers are only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
 
 {{</Aside>}}
+
+### `performance.timeOrigin` and `performance.now()`
+
+- {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin">}}performance.timeOrigin{{</type-link>}}
+
+  - Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
+
+- {{<type-link href="">}}performance.now(){{</type-link>}}
+
+  - Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
 
 ### `EventTarget` and `Event`
 
@@ -160,4 +171,23 @@ addEventListener('rejectionhandled', (event) => {
   console.log(event.promise);  // The promise that was rejected.
   console.log(event.reason);  // The value or Error with which the promise was rejected.
 });
+```
+
+---
+
+## `navigator.sendBeacon(url[, data])`
+
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP `POST` request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or diagnostics information asynchronously on a best-effort basis.
+
+For example, you can replace:
+
+```js
+const promise = fetch('https://example.com', { method: 'POST', body: 'hello world' });
+ctx.waitUntil(promise);
+```
+
+with `navigator.sendBeacon(...)`:
+
+```js
+navigator.sendBeacon('https://example.com', 'hello world');
 ```

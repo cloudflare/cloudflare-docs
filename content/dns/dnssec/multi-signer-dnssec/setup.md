@@ -25,10 +25,10 @@ The following steps also apply if you use [Cloudflare as a secondary DNS provide
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \ 
---header 'X-Auth-Email: <EMAIL>' \ 
---header 'X-Auth-Key: <KEY>' \ 
---header 'Content-Type: application/json' \ 
+$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <KEY>' \
+--header 'Content-Type: application/json' \
 --data '{
   "status": "active",
   "dnssec_multi_signer": true
@@ -45,7 +45,7 @@ $ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_
 --data '{
   "type": "DNSKEY",
   "name": "<ZONE_NAME>",
-  "data": { 
+  "data": {
     "flags": 256,
     "protocol": 3,
     "algorithm": 13,
@@ -58,12 +58,12 @@ $ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_
 3. Add your external provider(s) nameservers as NS records on your zone apex.
 
 ```bash
-curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
+curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "type": "NS",    
+  "type": "NS",
   "name": "<ZONE_NAME>",
   "content": "<NS_DOMAIN>",
   "ttl": 86400
@@ -73,7 +73,7 @@ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnsse
 4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
 
 {{<Aside type="warning">}}
-This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, DNS queries to the zone apex requesting NS records will be responded with Cloudflare nameservers.
+This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, Cloudflare will ignore any `NS` records created on the zone apex. This means that responses to DNS queries made to the zone apex and requesting `NS` records will only contain Cloudflare nameservers.
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is not necessary.
 

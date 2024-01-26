@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: how-to
 title: Remove a domain
 weight: 3
 meta:
@@ -8,9 +8,7 @@ meta:
 
 # Remove a domain
 
-You can remove domains from Cloudflare if needed.
-
-However, Cloudflare will still retain your configuration history for 18 months, which is the default retention period for the zone's [audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). 
+Consider the following sections on how you can remove domains from Cloudflare.
 
 ## Before removing your domain
 
@@ -24,7 +22,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
 * When you remove a domain from Cloudflare, it also prevents your domain from using Cloudflare for DNS resolution. To avoid DNS errors, update your nameservers at your domain registrar to use nameservers not owned by Cloudflare.
 
-    * Refer to [Check if your nameservers are pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605) to confirm that your nameservers no longer point to Cloudflare.
+    * Refer to [Check if your nameservers are pointing to Cloudflare](/dns/zone-setups/full-setup/setup/#verify-changes) to confirm that your nameservers no longer point to Cloudflare.
 
 * At your registrar, make sure you do not have a **DS** DNS record. This record enables [DNSSEC](/dns/dnssec/) and could prevent your DNS records from being changed.
 
@@ -32,7 +30,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
 * [Cancel active add-on subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/).
 
-* [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#step-4---delete-a-job)
+* [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#optional---delete-a-job)
 
 * If you use Cloudflare Registrar:
 

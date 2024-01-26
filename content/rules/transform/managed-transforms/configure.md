@@ -2,7 +2,6 @@
 title: Configure Managed Transforms
 pcx_content_type: how-to
 weight: 1
-layout: single
 meta:
     description: Learn how to configure Managed Transforms.
 ---
@@ -41,9 +40,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -100,8 +97,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 **2. Change the status of Managed Transforms**
 
@@ -137,9 +133,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 
 The response will include all the available Managed Transforms and their new status after the update.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -196,8 +190,7 @@ The response will include all the available Managed Transforms and their new sta
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{</tab>}}
 {{</tabs>}}

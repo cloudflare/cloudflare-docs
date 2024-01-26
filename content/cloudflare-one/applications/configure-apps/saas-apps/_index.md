@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SaaS applications
 weight: 1
-layout: single
 ---
 
 # Add a SaaS application to Access
@@ -40,13 +39,11 @@ If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access 
 
 9. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-10. {{<render file="_access-block-page.md">}}
+10. {{<render file="access/_access-block-page.md">}}
 
-11. Next, choose the **Identity providers** you want to enable for your application.
+11. {{<render file="access/_access-choose-idps.md">}}
 
-12. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
-
-13. Select **Next**.
+12. Select **Next**.
 
 ## 2. Add an Access policy
 

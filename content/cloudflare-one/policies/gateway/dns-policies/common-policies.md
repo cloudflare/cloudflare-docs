@@ -12,9 +12,9 @@ The following policies are commonly used to secure DNS traffic.
 
 Refer to the [DNS policies page](/cloudflare-one/policies/gateway/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
 
-{{<render file="gateway/_recommended-dns-policies.md">}}
+{{<render file="gateway/policies/_recommended-dns-policies.md">}}
 
-{{<render file="/gateway/_policies-optional.md">}}
+{{<render file="/gateway/policies/_policies-optional.md">}}
 
 ## Restrict access to specific groups
 
@@ -38,6 +38,10 @@ The following example includes two policies. The first policy allows the specifi
 ## Control IP version
 
 Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP address is used to egress to the origin server.
+
+{{<Aside type="note">}}
+To ensure traffic routes via your preferred IP version, disable **Display block page**.
+{{</Aside>}}
 
 ### Force IPv4
 

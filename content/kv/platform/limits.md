@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Limits
-layout: list
+weight: 2
 ---
 
 # Limits
@@ -23,6 +23,8 @@ layout: list
 | Value size                            | 25 MiB                | 25 MiB      |
 
 {{</table-wrap>}}
+
+{{<render file="_limits_increase.md" productFolder="workers">}}
 
 {{<Aside type="note" header="Free versus Paid plan pricing">}}
 

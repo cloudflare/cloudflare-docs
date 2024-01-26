@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Glossary
-weight: 6
+weight: 7
 ---
 
 # Glossary
@@ -16,11 +16,11 @@ Layer 7 attack information based on mitigated requests, including the most frequ
 
 The Internet is a network of networks, and autonomous systems are the networks that make up the Internet. More specifically, an autonomous system (AS) is a large network or group of networks that has a unified routing policy - the process by which a path through one or more networks is chosen.
 
-Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASes, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more [here](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
+Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASes, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more in the [Cloudflare Learning Center](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
 
 ## BGP Announcements
 
-Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more [here](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-bgp/).
+Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more in the [Cloudflare Learning Center](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/).
 
 ## BGP Route Leaks
 
@@ -107,7 +107,7 @@ IP address geolocation is the term used for the process of associating an IP add
 
 Note that a number of factors may affect the accuracy of the geolocation information, including mobile network architecture, the use of VPN services, and the use of privacy-protecting proxy services.
 
-Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
+Learn more from [MaxMind](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
 
 ## IPv6 adoption
 
@@ -121,6 +121,9 @@ The Internet Quality Index estimates connection performance under average utiliz
 
 The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
 
+## Mobile Operating Systems
+
+The Mobile Operating Systems graph shows the distribution of mobile device requests by operating system, representing trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network. "Mobile device" includes phones and tablets only, and does not include other types of devices, such as those classified as desktops/laptops, smart TVs, or gaming consoles.
 
 ## Network-level DDoS Attacks
 

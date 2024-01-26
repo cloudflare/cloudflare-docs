@@ -2,7 +2,6 @@
 title: Modify response header
 pcx_content_type: concept
 weight: 3
-layout: single
 meta:
   title: HTTP response header modification rules
 ---
@@ -28,7 +27,7 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 
-* Currently you cannot reference [IP lists](/waf/tools/lists/custom-lists/) in expressions of HTTP response header modification rules.
+* Currently you cannot reference [IP lists](/waf/tools/lists/custom-lists/#ip-lists) in expressions of HTTP response header modification rules.
 
 * The HTTP response header removal operation will remove all response headers with the provided name.
 
@@ -36,4 +35,10 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * Currently, there is a limited number of HTTP response headers that you cannot change. Cloudflare may remove restrictions for some of these HTTP response headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
 
-* Any response header modifications will also apply to Cloudflare error pages and [custom error pages](https://support.cloudflare.com/hc/articles/200172706).
+* Any response header modifications will also apply to Cloudflare error pages and [custom error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).
+
+* Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
+
+* To add a `set-cookie` header to the response, make sure you use the _Add_ operation instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
+
+* Currently you can only use the _Add_ operation with a literal string value.

@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Advanced certificates
 weight: 2
-layout: single
 ---
 
 # Advanced certificates
@@ -22,7 +21,6 @@ Advanced certificates allow you multiple customization options:
 *   Choose the certificate authority (CA) to issue the certificate.
 *   Select the preferred validation method and includes access to [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 *   Choose the certificate validity period.
-*   Remove Cloudflare branding that is normally present on [Universal certificates](/ssl/edge-certificates/universal-ssl/).
 *   Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
 *   Control [cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
 

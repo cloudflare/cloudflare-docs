@@ -8,6 +8,32 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Mobile Redirect 
+**End of life date: June 30th, 2024**
+
+This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+
+Deprecated API:
+ - GET /zones/:zone_identifier/settings/mobile_redirect
+ - PATCH /zones/:zone_identifier/settings/mobile_redirect
+
+Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
+
+## Privacy Pass API Removal
+**End of life date: March 31st, 2024**
+
+In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to
+provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time
+since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no 
+longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting
+is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
+In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
+
+Deprecated API:
+ - GET zones/:zone_identifier/settings/privacy_pass
+ - POST zones/:zone_identifier/settings/privacy_pass
+
+
 ## ChaCha20 TLS Cipher Removal
 **End of life Date: July 1st, 2023**
 
@@ -25,7 +51,7 @@ This should not affect customer zones in any way, as clients that might currentl
 
 In addition, unlike the standard variants, these legacy cipher suites are not exposed directly through our API (e.g. through the TLS cipher suites preferences endpoint), and their deprecation will not affect customer configurations in any way.
 
-The `ChaCha20-Poly1305` ciphers will be removed from Cloudflare on July 1st, 2023. If you have clients that use these ciphers you are advised to upgrade them to newer ciphers.
+As of July 1st, 2023, the ChaCha20-Poly1305 ciphers have been deprecated and are deemed End of Life by Cloudflare. If you have clients that currently rely on these ciphers, it is strongly recommended to upgrade them to newer, more secure ciphers. Be aware that these deprecated ciphers will be completely removed in the first quarter of 2024, and requests using them will start to fail. Take proactive measures to ensure a smooth transition and maintain the security of your systems.
 
 ## Argo Tunnel
 **End of life Date: February 4, 2024**

@@ -288,7 +288,17 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
 
 ## Magic Firewall Functions
 
-{{<render file="_magic-firewall-functions.md" productFolder="magic-firewall">}}
+{{<definitions>}}
+
+- <code id="function-bit_slice">{{<name>}}bit_slice{{</name>}}(protocol {{<type>}}String{{</type>}}, offset_start {{<type>}}Number{{</type>}}, offset_end {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
+
+  - This function looks for matches on a given slice of bits.
+  - The offset starts on the given protocol header. For example, to match on the first bit of payload for a UDP packet, you must set `offset_start` to `64`.
+  - This is primarily intended for use with `ip`, `udp`, and `tcp`.
+  - The slice (`offset_end` — `offset_start`) cannot be longer than 32 bits, but multiple calls can be joined together via logical expressions.
+  - The `bit_slice` offset cannot exceed 2,040 bits.
+
+{{</definitions>}}
 
 ## HMAC validation
 
@@ -349,14 +359,14 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the `message` and the `timestamp` regions of the MessageMAC. When the generated MAC matches the `mac` region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
 
-For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
+For example, the following expression matches requests to `downloads.example.com` that do not include valid HMAC tokens:
 
 ```java
-http.host == "download.example.com"
+http.host == "downloads.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-For examples of rules that use HMAC validation, refer to [Require a valid HMAC token](/waf/custom-rules/use-cases/require-valid-hmac-token/) in the WAF documentation.
+For examples of rules that use HMAC validation, refer to [Configure token authentication](/waf/custom-rules/use-cases/configure-token-authentication/) in the WAF documentation.
 
 ### MessageMAC
 
@@ -401,7 +411,7 @@ and is composed of these parentheses-delimited expressions:
   </tbody>
 </table>
 
-For details on generating a MessageMAC, refer to [Implement token creation](/support/firewall/learn-more/configuring-token-authentication/#implement-token-creation).
+For details on generating a MessageMAC, refer to [HMAC token generation](/waf/custom-rules/use-cases/configure-token-authentication/#hmac-token-generation).
 
 ## HMAC validation examples
 

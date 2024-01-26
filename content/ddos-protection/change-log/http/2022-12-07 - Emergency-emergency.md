@@ -2,7 +2,7 @@
 title: 2022-12-07 - Emergency
 pcx_content_type: changelog
 weight: 28149
-layout: list
+layout: wide
 ---
 
 # 2022-12-07 - Emergency

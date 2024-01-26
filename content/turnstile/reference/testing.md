@@ -2,14 +2,13 @@
 title: Testing
 pcx_content_type: reference
 weight: 13
-layout: single
 ---
 
 # Testing
 
 ## Dummy sitekeys and secret keys
 
-The following sitekeys and secret keys are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
+The following {{<glossary-tooltip term_id="sitekey">}}sitekeys{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="secret key">}}secret keys{{</glossary-tooltip>}} are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
 
 | Sitekey | Description | Visibility |
 | --- | --- | --- |

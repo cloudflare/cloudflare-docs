@@ -10,7 +10,7 @@ meta:
 
 Page Shield monitors scripts loaded on your website and the connections they make. Monitored resources are displayed in the [**Monitors** dashboard](/page-shield/detection/monitor-connections-scripts/).
 
-Page Shield policies support most Content Security Policy (CSP) directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Page Shield is not monitoring these resources.
+Page Shield policies support most {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Page Shield is not monitoring these resources.
 
 Each CSP directive can contain multiple values, including schemes, hostnames, URIs, and special keywords between single quotes (such as `'none'`). Hostname and URI values support a `*` wildcard for the leftmost subdomain.
 

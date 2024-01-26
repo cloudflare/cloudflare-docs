@@ -32,7 +32,7 @@ To serve static files like CSS, image or JavaScript files, add the following to 
 
 ```javascript
 app.get("/public/*", async (ctx) => {
-  return await ctx.env.ASSETS.fetch(ctx.req);
+  return await ctx.env.ASSETS.fetch(ctx.req.raw);
 });
 ```
 
@@ -128,6 +128,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 {{<render file="_learn-more.md" withParameters="Hono">}}

@@ -1,15 +1,11 @@
 ---
 pcx_content_type: concept
 title: Deployments
+meta:
+  description: View a log of and rollback to past versions of your Worker.
 ---
 
 # Deployments
-
-{{<Aside type="note">}}
-
-Deployments are currently in Public Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
-
-{{</Aside>}}
 
 Deployments are a log of static historical versions of your Worker. Deployments track changes to the [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#workers) associated with a Worker over time.
 
@@ -90,7 +86,7 @@ Rollbacks are only valid to the latest 10 deployments.
 
 Rollbacks will not be allowed if external resources have been deleted or modified between the target deployment and the active deployment. Specifically, rollbacks will not be allowed if:
 
-- A [Durable Object migration](/durable-objects/learning/durable-objects-migrations/) has occurred between the active deployment and target deployment.
+- A [Durable Object migration](/durable-objects/reference/durable-objects-migrations/) has occurred between the active deployment and target deployment.
 - If the target deployment has a binding to an R2 bucket, KV namespace, or queue that no longer exists.
 - If the target deployment has a binding to a D1 database (this limitation will be removed in the future).
 

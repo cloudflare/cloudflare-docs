@@ -10,11 +10,11 @@ If you are noticing any encoding errors with your HTML pages, we recommend verif
 If you believe these settings are correct, please inform us. You can find more information in [setting the HTTP charset parameter](https://www.w3.org/International/articles/http-charset/index) and in [HTML charset attribute](https://www.w3schools.com/tags/att_meta_charset.asp).
 
 Alternatively, you can use a [Configuration Rule](/rules/configuration-rules/) to disable features that rewrite HTML. This will send the content as-is to the browser.
- 
+
 You also have the option to turn off these features site-wide within the dashboard:
 
-* [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), located in the **Scrape Shield** section.
-* [Server Side Excludes (SSE)](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/#what-does-server-side-excludes-sse-do), located in the **Scrape Shield** section.
+* [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/), located in the **Scrape Shield** section.
+* [Server Side Excludes (SSE)](/waf/tools/scrape-shield/server-side-excludes/), located in the **Scrape Shield** section.
 * [Rocket Loader](/speed/optimization/content/rocket-loader/), located in **Speed** > **Optimization** > **Content Optimization** section.
 * [HTML Minification](/speed/optimization/content/auto-minify/) (JavaScript and CSS can be left enabled), located in the **Speed** > **Optimization** > **Content Optimization** section.
 * [Mirage](/speed/optimization/images/mirage/#cloudflare-mirage), located in **Speed** > **Optimization** > **Image Optimization**. section.

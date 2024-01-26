@@ -14,7 +14,7 @@ As you get started with Cloudflare, explore the following resources:
 - [Setup](/fundamentals/setup/) gives step-by-step instructions on how to add your domain to Cloudflare.
 - [Account and billing](/fundamentals/account-and-billing/) help you set up your account profile, security, billing information, and more.
 - [Basic tasks](/fundamentals/basic-tasks/) provide guidance on how to perform common tasks with Cloudflare, particularly those related to new domains.
-- [Cloudflare's API](/fundamentals/api/) provides an overview on interacting with Cloudflare in a programatic way.  
+- [Cloudflare's API](/fundamentals/api/) provides an overview on interacting with Cloudflare in a programmatic way.  
 - [Reference topics](/fundamentals/reference/) offer technical details about different aspects of Cloudflare (common user agents, supported network ports, etc.).
 
 ## Resources

@@ -13,6 +13,9 @@ layout: example
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     console.log(new Map(request.headers));

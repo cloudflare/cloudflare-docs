@@ -5,7 +5,7 @@ weight: 5
 ---
 
 # Get started - Workers AI API
-In this guide, you will get started with Workers AI, experiment with a large laguage model (LLM), using the Workers AI REST API.
+In this guide, you will get started with Workers AI, experiment with a large language model (LLM), using the Workers AI REST API.
 
 ## Before you begin
 

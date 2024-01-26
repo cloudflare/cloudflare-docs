@@ -13,9 +13,10 @@ A few examples include (but are not limited to):
 
 * [Identify the Cloudflare data center serving your request](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request), which is helpful for troubleshooting (`https://<YOUR_DOMAIN>/cdn-cgi/trace`).
 * [JavaScript detection](/bots/reference/javascript-detections/) used by Cloudflare bot products (`example.com/cdn-cgi/challenge-platform/`)
-* [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`)
-* [Image resizing](/images/image-resizing/url-format/) in the new URLs you would use for images (`example.com/cdn-cgi/image/`)
-* [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
+* [Image transformations](/images/transform-images) in the new URLs you would use for images (`example.com/cdn-cgi/image/`)
+* [Email address obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
+* [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`). This endpoint returns a `204` HTTP status code.
+
 
 ## Recommended exclusions
 
@@ -29,7 +30,7 @@ To prevent scanner errors, omit the `/cdn-cgi/` endpoint from your security scan
 
 `/cdn-cgi/` also can cause issues with various web crawlers. 
 
-Search engine crawlers can encounter errors when crawling these endpoints and — though these errors do not impact site rankings — they may surface in your [webmaster dashboard](https://support.cloudflare.com/hc/articles/200169806).
+Search engine crawlers can encounter [errors when crawling these endpoints](/support/troubleshooting/general-troubleshooting/troubleshooting-crawl-errors/) and — though these errors do not impact site rankings — they may surface in your webmaster dashboard.
 
 SEO and other web crawlers may also mistakenly crawl these endpoints, thinking that they are part of your site's content.
 

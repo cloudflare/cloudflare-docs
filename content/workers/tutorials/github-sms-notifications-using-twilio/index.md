@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
-layout: single
 ---
 
 # GitHub SMS notifications using Twilio
@@ -38,7 +37,7 @@ $ npm create cloudflare@latest
 ```
 
 For setup, select the following options:
-* `Where do you want to create your application?`: Input `github-twilio-notifications`. 
+* `Where do you want to create your application?`: Input `github-twilio-notifications`.
 * `What type of application do you want to create?`: Select `"Hello World" Worker`.
 * `Do you want to use TypeScript?`: Select `No`.
 * `Do you want to deploy your application?`: Select `Yes`.
@@ -83,7 +82,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 With your local environment set up, parse the repository update with your Worker.
 
-Initially, your generated `worker.js` should look like this:
+Initially, your generated `index.js` should look like this:
 ```js
 ---
 filename: index.js
@@ -121,13 +120,9 @@ async fetch(request, env, ctx) {
     return new Response('Please send a POST request!');
   }
   try {
-    const formData = await request.json();
-    const headers = await request.headers;
-    const action = headers.get('X-GitHub-Event');
-    const repo_name = formData.repository.full_name;
-    const sender_name = formData.sender.login;
+    const rawBody = await request.text();
 
-    if (!checkSignature(formData, headers, env.GITHUB_SECRET_TOKEN)) {
+    if (!checkSignature(rawBody, request.headers, env.GITHUB_SECRET_TOKEN)) {
       return new Response("Wrong password, try again", {status: 403});
     }
   } catch (e) {
@@ -136,25 +131,26 @@ async fetch(request, env, ctx) {
 },
 ```
 
-The `checkSignature` function will use the crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the SHA1 format. You will place this function at the top of your `index.js` file, before your export.
+The `checkSignature` function will use the Node.js crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the SHA-256 format. You will place this function at the top of your `index.js` file, before your export.
 
 ```js
 ---
-filename: worker.js - checkSignature()
+filename: index.js - checkSignature()
 ---
-const crypto = require('crypto');
+import { createHmac, timingSafeEqual } from 'node:crypto';
+import { Buffer } from 'node:buffer';
 
-async function checkSignature(formData, headers, githubSecretToken) {
-  let hmac = crypto.createHmac('sha1', githubSecretToken);
-  hmac.update(formData, 'utf-8');
-  let expectedSignature = hmac.digest('hex');
+function checkSignature(text, headers, githubSecretToken) {
+  const hmac = createHmac('sha256', githubSecretToken);
+  hmac.update(text);
+  const expectedSignature = hmac.digest('hex');
+  const actualSignature = headers.get('x-hub-signature-256');
 
-  let actualSignature = headers.get('X-Hub-Signature');
+  const trusted = Buffer.from(`sha256=${expectedSignature}`, 'ascii');
+  const untrusted =  Buffer.from(actualSignature, 'ascii');
 
-  const expectedBuffer = Buffer.from(expectedSignature, 'hex');
-  const actualBuffer = Buffer.from(actualSignature, 'hex');
-  return expectedBuffer.byteLength == actualBuffer.byteLength &&
-             crypto.timingSafeEqual(expectedBuffer, actualBuffer);
+  return trusted.byteLength == untrusted.byteLength
+    && timingSafeEqual(trusted, untrusted);
 };
 ```
 
@@ -163,13 +159,13 @@ To make this work, you need to use [`wrangler secret put`](/workers/wrangler/com
 $ npx wrangler secret put GITHUB_SECRET_TOKEN
 ```
 
-Add the node_compat flag to your `wrangler.toml` file:
+Add the nodejs_compat flag to your `wrangler.toml` file:
 
 ```toml
 ---
 filename: "wrangler.toml"
 ---
-node_compat = true
+compatibility_flags = ["nodejs_compat"]
 ```
 
 ---
@@ -183,17 +179,18 @@ You can then create a helper function to send text messages by sending a `POST` 
 Create a new function called `sendText()` that will handle making the request to Twilio:
 ```js
 ---
-filename: worker.js - sendText()
+filename: index.js - sendText()
 ---
 async function sendText(accountSid, authToken, message) {
-  const endpoint = 'https://api.twilio.com/2010-04-01/Accounts/' + accountSid + '/Messages.json';
+  const endpoint = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
 
-  let encoded = new URLSearchParams();
-  encoded.append('To', "%YOUR_PHONE_NUMBER%");
-  encoded.append('From', "%YOUR_TWILIO_NUMBER%");
-  encoded.append('Body', message);
+  const encoded = new URLSearchParams({
+    'To': '%YOUR_PHONE_NUMBER%',
+    'From': '%YOUR_TWILIO_NUMBER%',
+    'Body': message
+  });
 
-  let token = btoa(accountSid + ':' + authToken);
+  const token = btoa(`${accountSid}:${authToken}`);
 
   const request = {
     body: encoded,
@@ -201,12 +198,13 @@ async function sendText(accountSid, authToken, message) {
     headers: {
       'Authorization': `Basic ${token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-    },}
+    }
+  };
 
-  let result = await fetch(endpoint, request);
-  result = await result.json();
+  const response = await fetch(endpoint, request);
+  const result = await response.json();
 
-  return new Response(JSON.stringify(result));
+  return Response.json(result);
 };
 ```
 
@@ -221,32 +219,32 @@ Modify your `githubWebhookHandler` to send a text message using the `sendText` f
 
 ```js
 ---
-filename: worker.js - fetch()
+filename: index.js - fetch()
 ---
 async fetch(request, env, ctx) {
   if(request.method !== 'POST') {
-      return new Response('Please send a POST request!');
+    return new Response('Please send a POST request!');
   }
   try {
-    const formData = await request.json();
-    const headers = await request.headers;
-    const action = headers.get('X-GitHub-Event');
-    const repo_name = formData.repository.full_name;
-    const sender_name = formData.sender.login;
-
-    if (!checkSignature(formData, headers)) {
-      return new Response("Wrong password, try again", {status: 403});
+    const rawBody = await request.text();
+    if (!checkSignature(rawBody, request.headers, env.GITHUB_SECRET_TOKEN)) {
+      return new Response('Wrong password, try again', {status: 403});
     }
 
+    const action = request.headers.get('X-GitHub-Event');
+    const json = JSON.parse(rawBody);
+    const repoName = json.repository.full_name;
+    const senderName = json.sender.login;
+
     return await sendText(
-        env.TWILIO_ACCOUNT_SID,
-        env.TWILIO_AUTH_TOKEN,
-        `${sender_name} completed ${action} onto your repo ${repo_name}`
+      env.TWILIO_ACCOUNT_SID,
+      env.TWILIO_AUTH_TOKEN,
+      `${senderName} completed ${action} onto your repo ${repoName}`
     );
   } catch (e) {
     return new Response(`Error:  ${e}`);
   }
-},
+};
 ```
 
 Run the `npx wrangler publish` command to redeploy your Worker project:

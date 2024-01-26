@@ -2,12 +2,13 @@
 pcx_content_type: concept
 title: Cloudflare Tunnel
 weight: 1
-layout: single
 ---
 
 # Cloudflare Tunnel
 
 Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates outbound-only connections to Cloudflare’s global network. Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/cloudflare-one/connections/connect-networks/use-cases/ssh/), [remote desktops](/cloudflare-one/connections/connect-networks/use-cases/rdp/), and other protocols safely to Cloudflare. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+
+Refer to our [reference architecture](/reference-architecture/sase-reference-architecture/) for details on how to implement Cloudflare Tunnel into your existing infrastructure.
 
 ## How it works
 

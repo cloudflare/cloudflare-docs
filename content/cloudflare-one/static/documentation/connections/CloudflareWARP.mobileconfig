@@ -21,16 +21,12 @@
   <key>PayloadContent</key>
 	<array>
 		<dict>
-			<key>auto_connect</key>
-			<integer>1</integer>
-			<key>organization</key>
-			<string>yourorganization</string>
-			<key>service_mode</key>
-			<string>warp</string>
-			<key>support_url</key>
-			<string>https://support.example.com</string>
-			<key>switch_locked</key>
-			<false/>
+    	<key>organization</key>
+    	<string>yourorganization</string>
+    	<key>auto_connect</key>
+    	<integer>120</integer>
+    	<key>onboarding</key>
+    	<false/>
 			<key>PayloadDisplayName</key>
 			<string>Warp Configuration</string>
 			<key>PayloadIdentifier</key>

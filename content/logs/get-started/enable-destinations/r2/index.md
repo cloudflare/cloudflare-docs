@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Enable Cloudflare R2
 weight: 40
-layout: single
 ---
 
 # Enable Logpush to Cloudflare R2
@@ -28,12 +27,6 @@ Before getting started:
 - Ensure that you have the following permissions:
 
     - R2 write, Logshare Edit.
-
-- Alternatively, create a Cloudflare API token with the following permissions:
-
-    - Zone scope, logs edit permissions.
-
-    - Account scope, R2 write permissions.
 
 ## Manage via the Cloudflare dashboard
 

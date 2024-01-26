@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Learning paths
-weight: 4
+weight: 3
 meta:
     description: View learning paths for Cloudflare Zero Trust.
 ---

@@ -28,9 +28,9 @@ ___
 ## Edge Network errors
 
 -   `400` - Bad Request intercepted at the Cloudflare Edge (for example, missing or bad HTTP header)
--   `403` - Security functionality (for example, Web Application Firewall, Browser Integrity Check, [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/), and most 1xxx error codes)
+-   `403` - Security functionality (for example, Web Application Firewall, Browser Integrity Check, [Cloudflare challenges](/waf/reference/cloudflare-challenges/), and most 1xxx error codes)
 -   `409` - DNS errors typically in the form of 1000 or 1001 error code
--   `413` - File size upload exceeded the maximum size allowed (configured under the Speed app)
+-   `413` - File size upload exceeded the maximum size allowed (configured in the dashboard under **Network** > **Maximum Upload Size**.)
 -   `444` - Used by Nginx to indicate that the server has returned no information to the client, and closed the connection. This error code is internal to Nginx and is **not** returned to the client.
 -   `499` - Used by Nginx to indicate when a connection has been closed by the client while the server is still processing its request, making the server unable to send a status code back.
 
@@ -50,7 +50,7 @@ ___
 We do count `503` errors from your origin that are passed as a response from the edge, though in this version 503 errors from the edge have multiple potential sources.
 
 -   Your origin server had a `503`.  We received this from the origin and the status code was in the response from the on the edge
--   Websocket rate-limit error
+-   WebSocket rate-limit error
 
 ___
 

@@ -1,7 +1,6 @@
 ---
 title: Search
 pcx_content_type: concept
-layout: single
 weight: 1
 meta:
     description: Search for messages with a detection disposition or that have been processeded by Area 1.
@@ -9,12 +8,14 @@ meta:
 
 # Search
 
-You can search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
+You can search for emails that have been processed by Area 1, whether they are marked with a {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}detection disposition{{</glossary-tooltip>}} or not.
 
 There are two ways for searching emails:
 
 - **Fielded Search**: Presents you with fields where you can enter search terms.
 - **Freeform Search**: Has one search field where you can construct your own search query, like `My great products`.
+
+{{<Aside type="note">}} {{<render file="_timestamp.md">}} {{</Aside>}}
 
 ## Search terms
 

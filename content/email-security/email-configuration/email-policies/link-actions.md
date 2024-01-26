@@ -8,7 +8,7 @@ weight: 2
 
 ## Disposition actions
 
-Create actions for emails with specific [dispositions](/email-security/reference/dispositions-and-attributes/). `URL defang` means that every URL in an email of the selected type will be rewritten so that the user cannot follow the link. For example, `https://www.example.com` will become `https[:]//www[.]example[.]com`.
+Create actions for emails with specific {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}dispositions{{</glossary-tooltip>}}. `URL defang` means that every URL in an email of the selected type will be rewritten so that the user cannot follow the link. For example, `https://www.example.com` will become `https[:]//www[.]example[.]com`.
 
 To update or create a new disposition action:
 

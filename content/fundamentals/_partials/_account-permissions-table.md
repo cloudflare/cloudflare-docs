@@ -40,6 +40,8 @@ inputParameters: editWord
 | Account: SSL and Certificates $1                           | Grants write access to [SSL and Certificates](/ssl/).                                                                                                    |
 | Account WAF Read                                             | Grants read access to [Account WAF](/waf/).                                                                                                              |
 | Account WAF $1                                             | Grants write access to [Account WAF](/waf/).                                                                                                             |
+| Address Maps $1 | Grants write access to [Address Maps](/byoip/proxy-ips/) |
+| Address Maps Read | Grants read access to [Address Maps](/byoip/proxy-ips/) |
 | Allow Request Tracer Read                                    | Grants read access to Request Tracer.                                                                                                                    |
 | API Gateway Read                                             | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                  |
 | API Gateway $1                                             | Grants write access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                 |
@@ -49,12 +51,14 @@ inputParameters: editWord
 | Bulk URL Redirects $1                                      | Grants write access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                      |
 | China Network Steering Read                                  | Grants read access to [China Network Steering](/china-network/).                                                                                         |
 | China Network Steering $1                                  | Grants write access to [China Network Steering](/china-network/).                                                                                        |
-| Cloudchamer Read | Grants read access to Cloudchamber deployments. |
-| Cloudchamer $1 | Grants write access to Cloudchamber deployments. |
+| Cloudchamber Read | Grants read access to Cloudchamber deployments. |
+| Cloudchamber $1 | Grants write access to Cloudchamber deployments. |
+| Cloudflare Calls Read | Grants read access to Cloudflare Calls. |
+| Cloudflare Calls $1 | Grants write access to Cloudflare Calls. |
 | Cloudflare DEX Read                                          | Grants read access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                    |
 | Cloudflare DEX $1                                          | Grants write access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                   |
-| Cloudflare Images Read                                       | Grants read access to [Cloudflare Images](/images/cloudflare-images/).                                                                                   |
-| Cloudflare Images $1                                       | Grants write access to [Cloudflare Images](/images/cloudflare-images/).                                                                                  |
+| Cloudflare Images Read                                       | Grants read access to [Cloudflare Images](/images/).                                                                                   |
+| Cloudflare Images $1                                       | Grants write access to [Cloudflare Images](/images/).                                                                                  |
 | Cloudflare One Connector: cloudflared Read | Grants read access to `cloudflared` Connectors |
 | Cloudflare One Connector: cloudflared $1 | Grants write access to `cloudflared` Connectors |
 | Cloudflare One Connector: WARP Read | Grants read access to Warp Connectors |
@@ -95,14 +99,14 @@ inputParameters: editWord
 | Logs $1                                                    | Grants read and write access to [Logpull, Logpush, and Instant Logs](/logs/).                                                                            |
 | Magic Firewall Read                                          | Grants read access to [Magic Firewall](/magic-firewall/).                                                                                                |
 | Magic Firewall $1                                          | Grants write access to [Magic Firewall](/magic-firewall/).                                                                                               |
-| Magic Firewall Packet Captures - Read PCAPs API              | Grants read access to [Packet Captures](/magic-firewall/how-to/collect-pcaps/).                                                                          |
-| Magic Firewall Packet Captures - $1 PCAPs API              | Grants write access to [Packet Captures](/magic-firewall/how-to/collect-pcaps/).                                                                         |
+| Magic Firewall Packet Captures - Read PCAPs API              | Grants read access to [Packet Captures](/magic-firewall/packet-captures/collect-pcaps/).                                                                          |
+| Magic Firewall Packet Captures - $1 PCAPs API              | Grants write access to [Packet Captures](/magic-firewall/packet-captures/collect-pcaps/).                                                                         |
 | Magic Network Monitoring Read                                | Grants read access to [Magic Network Monitoring](/magic-network-monitoring/).                                                                            |
 | Magic Network Monitoring $1                                | Grants read access to [Magic Network Monitoring](/magic-network-monitoring/).                                                                            |
 | Magic Transit Read                                           | Grants read access to manage a user's [Magic Transit prefixes](/magic-transit/how-to/advertise-prefixes/).                                               |
 | Magic Transit $1                                           | Grants write access to manage a user's [Magic Transit prefixes](/magic-transit/how-to/advertise-prefixes/).                                              |
 | Notifications Read                                           | Grants read access to [Notifications](/notifications/).                                                                                     |
-| Notifications $1                                           | Grants read access to [Notifications](/notifications/).                                                                                     |
+| Notifications $1                                           | Grants write access to [Notifications](/notifications/).                                                                                     |
 | Page Shield Read                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
 | Page Shield $1                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
 | Pub/Sub Read                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |

@@ -3,7 +3,6 @@ pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/200172016-Understanding-WAF-managed-rules-Web-Application-Firewall-
 title: WAF managed rules (previous version)
 weight: 2
-layout: single
 ---
 
 # WAF managed rules (previous version)
@@ -30,7 +29,7 @@ Managed rules includes three packages: 
 - [OWASP ModSecurity Core Rule Set](#owasp-modsecurity-core-rule-set)
 - Customer requested rules 
 
-You can use the activity log in the [Security Events](/waf/security-events/) dashboard, available at **Security** > **Events**, to review threats blocked by WAF managed rules.
+You can use the activity log in the [Security Events](/waf/analytics/security-events/) dashboard, available at **Security** > **Events**, to review threats blocked by WAF managed rules.
 
 ___
 
@@ -50,7 +49,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 - **Disable**: Turns off the specific rule within the group.
 - **Block**: Discards the request. 
 - **Interactive Challenge**: The visitor receives a challenge page that requires interaction.
-- **Simulate**: The request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans/#activity-log).
+- **Simulate**: The request is allowed through but is logged in the [**Activity log**](/waf/analytics/security-events/paid-plans/#activity-log).
 
 Cloudflare’s [WAF changelog](/waf/change-log/) allows customers to monitor ongoing changes to the Cloudflare Managed Ruleset.
 
@@ -64,7 +63,7 @@ After OWASP evaluates a request, Cloudflare compares the final score to the **Se
 
 - **Block**: The request is discarded.
 - **Challenge**: The visitor receives an interactive challenge page.
-- **Simulate**: The request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans/#activity-log).
+- **Simulate**: The request is allowed through but is logged in the [**Activity log**](/waf/analytics/security-events/paid-plans/#activity-log).
 
 The sensitivity score required to trigger the WAF for a specific **Sensitivity** is as follows:
 
@@ -78,7 +77,7 @@ For AJAX requests, the following scores are applied instead:
 - **Medium**: 80 and higher
 - **High**: 65 and higher
 
-Review the [Activity log](/waf/security-events/paid-plans/#activity-log) for the final score and for the individual triggered rules.
+Review the [Activity log](/waf/analytics/security-events/paid-plans/#activity-log) for the final score and for the individual triggered rules.
 
 ### Control the OWASP package
 
@@ -127,7 +126,7 @@ ___
 ## Related resources
 
 - [Troubleshoot WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/troubleshooting/)
-- [Security Events](/waf/security-events/)
+- [Security Events](/waf/analytics/security-events/)
 - [Cloudflare WAF](/waf/)
 - [Cloudflare’s WAF changelog](/waf/change-log/)
 - [WAF custom rules](/waf/custom-rules/)

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
 title: Streams
-layout: single
 meta:
   title: Streams - Runtime APIs
+  description: A web standard API that allows JavaScript to programmatically access and process streams of data.
 ---
 
 # Streams
@@ -95,5 +95,6 @@ The Streams API is only available inside of the [Request context](/workers/runti
 
 ## Related resources
 
-- [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
-- [Streams API spec](https://streams.spec.whatwg.org/)
+* [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+* [Streams API spec](https://streams.spec.whatwg.org/)
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

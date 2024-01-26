@@ -8,7 +8,7 @@ meta:
 
 # Find an appropriate rate limit
 
-The **Rate limit analysis** tab in [Security Analytics](/waf/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
+The **Rate limit analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
 
 {{<Aside type="note">}}
 The **Rate limit analysis** tab is only available to Enterprise customers.
@@ -50,7 +50,7 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 ### 2. Find the rate
 
-1. Choose the request properties (JA3, IP, or both) and the duration (1 min, 5 mins, or 1 hour) for your rate limit rule. The request properties you select will be used as [rate limiting rule characteristics](/waf/rate-limiting-rules/parameters/#characteristics).
+1. Choose the request properties (JA3, IP, or both) and the duration (1 min, 5 mins, or 1 hour) for your rate limit rule. The request properties you select will be used as [rate limiting rule characteristics](/waf/rate-limiting-rules/parameters/#with-the-same-characteristics).
 
 2. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
 
@@ -68,7 +68,7 @@ Answering the following questions during your adjustments can help you with your
 
 1. Repeat the rate selection process described in the previous section, but selecting a portion of traffic where you know there was an attack or traffic peak. The rate you have chosen should block the outlier traffic during the attack and allow traffic during regular periods.
 
-2. (Optional) Check the [sampled logs](/waf/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
+2. (Optional) Check the [sampled logs](/waf/analytics/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
 
 ### 4. Create a rate limiting rule
 

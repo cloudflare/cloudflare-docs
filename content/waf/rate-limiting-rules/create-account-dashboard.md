@@ -13,7 +13,7 @@ At the account level, you must first create a custom rate limiting ruleset, cont
 
 {{<Aside type="note" header="Notes">}}
 * Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
-* At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rulesets/) with one or more rate limiting rules. The concept of custom rate limiting ruleset exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
+* At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rules/custom-rulesets/) with one or more rate limiting rules. The concept of custom rate limiting ruleset exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
 {{</Aside>}}
 
 ## 1. Create a custom rate limiting ruleset

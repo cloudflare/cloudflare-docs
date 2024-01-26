@@ -18,14 +18,12 @@ Creates a Railgun. If the request is successful, a new Railgun is added to a use
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `name` – Name of Railgun
-*   `pubname` – Name of Railgun shown to users
+* `email` – User account email
+* `tkn` – User API token
+* `name` – Name of Railgun
+* `pubname` – Name of Railgun shown to users
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/init HTTP/1.1
@@ -41,12 +39,9 @@ pubname=My%20Railgun
 name=my-railgun
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -65,8 +60,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET init
 
@@ -76,14 +70,12 @@ Creates a Railgun. If the request is successful, a new Railgun is added to a use
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `name` – Name of Railgun
-*   `pubname` – Name of Railgun shown to users
+* `email` – User account email
+* `tkn` – User API token
+* `name` – Name of Railgun
+* `pubname` – Name of Railgun shown to users
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/init?email=&tkn=&pubname=&name= HTTP/1.1
@@ -99,12 +91,9 @@ pubname=My%20Railgun
 name=my-railgun
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -123,8 +112,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## POST delete
 
@@ -134,13 +122,11 @@ Deletes a Railgun. If the request is successful, the Railgun with a token matchi
 
 ### Form parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 POST /api/v2/railgun/delete HTTP/1.1
@@ -155,12 +141,9 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -176,8 +159,7 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## GET delete
 
@@ -187,13 +169,11 @@ Deletes a Railgun. If the request is successful, the Railgun with a token matchi
 
 ### Query parameters
 
-*   `email` – User account email
-*   `tkn` – User API token
-*   `rtkn` – Railgun token
+* `email` – User account email
+* `tkn` – User API token
+* `rtkn` – Railgun token
 
-<details>
-<summary>Example request</summary>
-<div>
+{{<details header="Example request">}}
 
 ```txt
 GET /api/v2/railgun/delete?email=&tkn=&rtkn= HTTP/1.1
@@ -208,12 +188,9 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Example response">}}
 
 ```json
 HTTP/1.1 200 OK
@@ -229,5 +206,4 @@ Content-Type: application/json
 }
 ```
 
-</div>
-</details>
+{{</details>}}
