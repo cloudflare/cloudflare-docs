@@ -9,20 +9,21 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 
-## Create a new project using the `create-cloudflare` CLI (C3)
+## Create a new project using C3
 
-To create a new Next.js site, open up your terminal and run:
+The simplest way to create a new Next.js site configured for Cloudflare Pages is to use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) also known as C3, you can do so by opening a terminal and run:
 
 ```sh
 $ npm create cloudflare@latest my-next-app -- --framework=next
 ```
 
-`create-cloudflare` will:
+C3 will guide you through the project setup process allowing you to create an initial project tailored to your needs and preferences. As part of it C3 will also install all the necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) adapter, and even allowing you to deploy your application straight away, giving you a real deployment URL that you can immediately share with the world.
 
-- install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter
-- ask you a series of setup questions
-- allow you to setup a new git repo
-- allow you to deploy your new project
+{{<Aside type="note">}}
+
+The C3 deployment is what we refer to as a direct upload or manual deployment, which is different from a deployment performed via the [Pages git integration](/pages/configuration/git-integration), if you want to enable the latter see the [Git Integration](#git-integration) section below.
+
+{{</Aside>}}
 
 After creating your project, a new `my-next-app` directory will be generated using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
 
@@ -34,14 +35,14 @@ $ cd my-next-app
 
 If you chose to deploy, you will receive a unique subdomain for your project on `*.pages.dev`, and you can access it almost immediately.
 
+To (re)deploy your application after having made changes, simply run the deployment script that C3 generates for you:
+```sh
+$ npm run pages:deploy
+```
+
 ## Configure and deploy a project without C3
 
 If you already have a Next.js project or wish to manually create and deploy one without using c3, we recommend that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
-
-## Preview your site (git-connected projects)
-
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your git repository, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Use bindings in your Next.js application
 
@@ -187,7 +188,7 @@ By doing this, you can run your application locally to make sure everything is w
 
 ### Deploy your app and iterate
 
-Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via [direct uploads](/pages/get-started/direct-upload/) or git integration) and iterate over the process to make new changes.
+Once you've previewed your application locally then you can deploy it to Cloudflare Pages (both via manual deployments or git integration) and iterate over the process to make new changes.
 
 ## `Image` component
 
@@ -198,5 +199,56 @@ The Cloudflare network does not provide the same image optimization support as t
 - If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
 
 Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/), refer to [resize with Cloudflare Workers](/images/transform-images/transform-via-workers/).
+
+## Git Integration
+
+Besides manual deployments, you can make use of the Pages [git integration](/pages/configuration/git-integration), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+
+This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to this [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+
+Refer to the [GitHub documentation](https://guides.github.com/introduction/git-handbook/) and [Git documentation](https://git-scm.com/book/en/v2) for more information.
+
+### Create a new GitHub repository
+
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+
+```sh
+# Skip the following 3 commands if you've built your application
+# using C3 or already committed your changes
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+
+$ git branch -M main
+$ git remote add origin https://github.com/<your-gh-username>/<repository-name>
+$ git push -u origin main
+```
+
+### Connect your application to the GitHub repository via the Cloudflare dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+
+{{<Aside type="note">}}
+
+Note that the git integration cannot currently be added to existing Pages applications, so if you've already manually deployed your application (using C3 for example), you do still need to create a new Pages application in order to add the git integration to it.
+
+{{</Aside>}}
+
+You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
+
+Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+
+{{<pages-build-preset framework="next-js">}}
+
+Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
+
+After completing configuration, click the **Save and Deploy** button.
+
+You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
+
+Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
+
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 {{<render file="_learn-more.md" withParameters="Next.js">}}
