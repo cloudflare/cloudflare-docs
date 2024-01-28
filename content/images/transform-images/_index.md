@@ -9,7 +9,7 @@ weight: 5
 
 Transformations let you optimize and manipulate images stored outside of the Cloudflare Images product. Transformed images are served from one of your zones on Cloudflare.
 
-To transform an image, you must [enable transformations for your zone](/images/get-started/#enable-transformations/).
+To transform an image, you must [enable transformations for your zone](/images/get-started/#enable-transformations).
 
 You can transform an image by using a [specially-formatted URL](/images/transform-images/transform-via-url/) or [through Workers](/images/transform-images/transform-via-workers/).
 
