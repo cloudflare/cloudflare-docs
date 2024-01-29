@@ -389,7 +389,7 @@ If you are the website owner:
 2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
 
 {{<Aside type="note">}}
-Convert the UTC timestamp of the 1005 error to your local timezone when
+Convert the UTC timestamp of the 1020 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
