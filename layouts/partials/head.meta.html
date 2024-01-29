@@ -207,6 +207,7 @@
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.js" integrity="sha256-pxkGFjfnFWYGOtV9uhCWK/spKiGS0Z7gVDKYm39LyfM=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.64.0/dist/instantsearch.production.min.js" integrity="sha256-OtorR+6G6evpfgqzuOJjl5iH4JW+87ETzSpLZiVPTDg=" crossorigin="anonymous"></script>
   {{- partial "script" (dict "src" "instantsearch.js" "defer" true) -}}
+  <link rel="stylesheet preconnect" href="/search-coveo.css" />
 
   {{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
   <link rel="stylesheet preconnect" href="/tutorial-coveo.css" />
