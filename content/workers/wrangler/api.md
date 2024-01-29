@@ -8,10 +8,10 @@ meta:
 
 # Wrangler API
 
-Wrangler offers an experimental API to programmatically manage your Cloudflare Workers.
+Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
-
+- [`getBindingsProxy`](#getBindingsProxy) - Get [bindings](/workers/configuration/bindings/) via Wrangler and use them in your code.
 
 ## `unstable_dev`
 
@@ -232,4 +232,46 @@ describe("multi-worker testing", () => {
 ```
 {{</tab>}}
 {{</tabs>}}
+
+## `getBindingsProxy`
+
+The `getBindingsProxy` function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
+
+### Usage
+
+The `getBindingsProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
+
+```js
+[vars]
+
+MY_VARIABLE = "test"
+```
+
+You can access the bindings by importing `getBindingsProxy` like this:
+
+```js
+import { getBindingsProxy } from "wrangler";
+
+const { bindings } = await getBindingsProxy();
+```
+
+To access the value of the `MY_VARIABLE` binding add the following to your code:
+
+```js
+console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
+```
+
+In your terminal you should see: `MY_VARIABLE = test`
+
+### Supported bindings
+
+All supported bindings found in your `wrangler.toml` are available to you via `bindings`.
+
+The bindings supported by `getBindingsProxy` are:
+ - [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
+ - [Service bindings](/workers/configuration/bindings/#service-bindings)
+ - [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
+ - [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
+ - [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+ - [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
 

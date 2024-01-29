@@ -13,7 +13,7 @@ title: Neon
 
 To set up an integration with Neon:
 
-1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
+1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/postgres/tutorial-createdb#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
 
 2. Create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
 

@@ -275,7 +275,7 @@ lighttpd.conf as an alternative solution:
 
 ##### For IIS 7 - 8:
 
-Follow the directions [here](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
+Follow the directions in the [Microsoft Community](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
 
 ##### For IIS 8.5 - 10:
 
@@ -392,7 +392,7 @@ ___
 
 In order to extract the original client IP in the X\_FORWARDD\_FOR header, you need to use the following configuration in HAProxy:
 
-1.  Create a text file CF`_ips.lst` containing all IP ranges from https://www.cloudflare.com/en-gb/ips/
+1.  Create a text file `CF_ips.lst` containing all IP ranges from https://www.cloudflare.com/en-gb/ips/
 2.  Ensure to disable `option forwardfor` in HAProxy
 
 HAProxy config:

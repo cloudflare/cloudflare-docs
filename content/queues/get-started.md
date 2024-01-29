@@ -77,7 +77,7 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-$ wrangler queues create <MY_FIRST_QUEUE>
+$ npx wrangler queues create <MY_FIRST_QUEUE>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
@@ -250,7 +250,7 @@ After you set up consumer Worker, you can read messages from the queue.
 Run `wrangler tail` to start waiting for our consumer to log the messages it receives:
 
 ```sh
-$ wrangler tail
+$ npx wrangler tail
 ```
 
 With `wrangler tail` running, open the Worker URL you opened in [step 4](/queues/get-started/#4-set-up-your-producer-worker). 
