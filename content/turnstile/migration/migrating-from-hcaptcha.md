@@ -1,7 +1,7 @@
 ---
 title: Migrating from hCaptcha
 pcx_content_type: migration
-weight: 4
+weight: 5
 ---
 
 # Migrating from hCaptcha

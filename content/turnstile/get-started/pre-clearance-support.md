@@ -1,7 +1,7 @@
 ---
 title: Pre-Clearance support
 pcx_content_type: reference
-weight: 14
+weight: 4
 ---
 
 # Pre-Clearance support for single-page applications
