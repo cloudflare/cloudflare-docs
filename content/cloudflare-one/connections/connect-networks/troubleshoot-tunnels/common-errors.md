@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Common errors
-weight: 1
+weight: 2
 ---
 
 # Common errors
