@@ -130,8 +130,7 @@
   {{- with .Context.Params.pcx_content_type -}}
   {{- if in $availableContentTypes . -}}
   <meta name="pcx_content_type" content="{{ . }}" />
-  {{- else -}}
-  <meta name="pcx_content_type" content="Invalid content type" />
+  <meta name="algolia_content_type" content="{{ title (replace . "-" " ") }}">
   {{- end -}}
   {{- else -}}
   <meta name="pcx_content_type" content="Not set" />
