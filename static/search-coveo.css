@@ -123,3 +123,40 @@
 .ais-Menu-item--selected {
   font-weight: bold;
 }
+
+@media (max-width: 700px) {
+  .additionalSearchContent p {
+    margin-bottom: .5em !important;
+  }
+}
+
+@media (min-width: 700px) {
+  .additionalSearchContent {
+    display: flex;
+  }
+  .additionalSearchContent p {
+    padding-right: 1em;
+  }
+}
+
+.searchResult a {
+  color: #0059b3;
+}
+
+.searchResult a:hover {
+  text-decoration: underline;
+}
+
+.ais-Hits-item {
+  padding-top: .5em;
+}
+
+/* Dark mode styling */
+
+[theme="dark"] .searchResult a {
+  color: var(--code-orange);
+}
+
+[theme="dark"] .ais-Hits-item {
+  background: #242628;
+}

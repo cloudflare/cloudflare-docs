@@ -235,22 +235,27 @@ search.addWidgets([
     templates: {
       item(hit, { html, components }) {
         return html`
+        <div class="searchResult">
         <a href=${hit.url}>
         <h3>
             ${components.Highlight({ attribute: 'title', hit })}
           </h3>
-          <p>${components.Highlight({ attribute: 'product_group', hit })}</p>
-          <p>${components.Highlight({ attribute: 'product', hit })}</p>
-          <p>${components.Highlight({ attribute: 'content_type', hit })}</p>
+          </a>
           <p>${components.Snippet({ attribute: 'content', hit })}</p>
-          </a>  
+          <div class="additionalSearchContent">
+          <p><strong>Product</strong>: ${components.Highlight({ attribute: 'product', hit })}</p>
+          <p><strong>Product group</strong>: ${components.Highlight({ attribute: 'product_group', hit })}</p>
+          <p><strong>Content type</strong>: ${components.Highlight({ attribute: 'content_type', hit })}</p>
+          </div>
+          <a href=${hit.url}>${hit.url}</a>
+          </div>
         `;
       },
     },
   }),
   configure({
     hitsPerPage: 8,
-    attributesToSnippet: ['content:40'],
+    attributesToSnippet: ['content:30'],
   }),
   productDropdown({
     container: '#product',
