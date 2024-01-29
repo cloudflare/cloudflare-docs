@@ -53,7 +53,7 @@ build_configs:
   vue:
     display_name: Vue
     build_command: npm run build
-    build_output_directory: /dist/browser/
+    build_output_directory: dist
     icon: /icons/framework-icons/logo-vue.svg
   astro:
     display_name: Astro
@@ -63,7 +63,7 @@ build_configs:
   angular-cli:
     display_name: Angular (Angular CLI)
     build_command: npx ng build --configuration production
-    build_output_directory: dist
+    build_output_directory: dist/cloudflare
     icon: /icons/framework-icons/logo-angular-cli.svg
   brunch:
     display_name: Brunch
