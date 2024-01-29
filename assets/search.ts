@@ -52,7 +52,7 @@
           // Its props
           props: {
             target: "_blank",
-            href: `/search/#q=${state.query}&t=Docs`,
+            href: `/search/?q=${state.query}`,
             // Raw text rendered in the HTML element
             children: `View all results`,
             onClick: () => {

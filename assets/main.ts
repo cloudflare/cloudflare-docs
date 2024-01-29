@@ -6,6 +6,7 @@ import * as navs from "./navlinks";
 declare global {
   interface Window {
     docsearch: any;
+    Coveo?: any;
   }
 }
 
