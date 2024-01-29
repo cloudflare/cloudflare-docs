@@ -1,11 +1,37 @@
 import { createDropdown } from './instantsearchdropdowns';
 
 const searchClient = algoliasearch('8MU1G3QO9P', '4edb0a6cef3338ff4bcfbc6b3d2db56b');
+const indexName = 'crawler_Dev Docs -> Instantsearch.js'
 
 const search = instantsearch({
-  indexName: 'crawler_Dev Docs -> Instantsearch.js',
+  indexName: indexName,
   searchClient,
   insights: true,
+  routing: {
+    stateMapping: {
+      stateToRoute(uiState) {
+        const indexUiState = uiState[indexName];
+        return {
+          q: indexUiState.query,
+          product: indexUiState.refinementList && indexUiState.refinementList.product,
+          product_group: indexUiState.refinementList && indexUiState.refinementList.product_group,
+          content_type: indexUiState.refinementList && indexUiState.refinementList.content_type,
+        }
+      },
+      routeToState(routeState) {
+        return {
+          [indexName]: {
+            query: routeState.q,
+            refinementList: {
+              product: routeState.product,
+              product_group: routeState.product_group,
+              content_type: routeState.content_type
+            }
+          },
+        };
+      },
+    },
+  },
 });
 
 const { searchBox } = instantsearch.widgets;

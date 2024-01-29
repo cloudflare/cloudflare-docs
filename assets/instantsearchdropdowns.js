@@ -56,22 +56,20 @@ export function createDropdown(
         let text;
         if (typeof buttonText === "string") {
           text = buttonText;
-        } else if (typeof buttonText === "function") {
-          text = buttonText(options);
         } else {
           // See if the widget has `attribute`
-          const attribute =
+          text =
             widgetParams && widgetParams.attribute
               ? capitalize(widgetParams.attribute)
               : "";
-          // Get the number of refinements if the widget has `items`
-          const nbRefinements = (options.items || []).filter(
-            (item) => item.isRefined
-          ).length;
-          // Format the button text
-          text =
-            nbRefinements > 0 ? `${attribute} (${nbRefinements})` : attribute;
         }
+        // Get the number of refinements if the widget has `items`
+        const nbRefinements = (options.items || []).filter(
+          (item) => item.isRefined
+        ).length;
+        // Format the button text
+        text =
+          nbRefinements > 0 ? `${text} (${nbRefinements})` : text;
 
         const classNames = [cssClasses.button];
         if (typeof buttonClassName === "string") {
