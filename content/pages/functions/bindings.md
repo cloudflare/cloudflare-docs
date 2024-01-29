@@ -55,6 +55,14 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 While developing locally, interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv=<BINDING_NAME>` to your run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
 
+Alternatively, you can interact with a KV namespace locally via a `wrangler.toml` file. See [Wrangler configuration](/workers/wrangler/configuration/#kv-namespaces) for more information.
+
+{{<Aside type="note">}}
+
+`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+
+{{</Aside>}}
+
 ## Durable Object namespaces
 
 [Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
@@ -147,7 +155,21 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your R2 buckets locally
 
-While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NAME>` to your run command.
+
+{{<Aside type="note">}}
+By default, `wrangler dev` automatically persists data.
+{{</Aside>}}
+
+If your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+
+Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` file. See [Wrangler configuration](/workers/wrangler/configuration/#r2-buckets) for more information.
+
+{{<Aside type="note">}}
+
+`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+
+{{</Aside>}}
 
 ## D1 databases
 
@@ -206,6 +228,14 @@ Specifically:
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
 Refer to the [D1 client API documentation](/d1/how-to/query-databases/) for the API methods available on your D1 binding.
+
+Alternatively, you can interact with a D1 database locally via a `wrangler.toml` file. See [Wrangler configuration](/workers/wrangler/configuration/#d1-databases) for more information.
+
+{{<Aside type="note">}}
+
+`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+
+{{</Aside>}}
 
 ## Workers AI
 [Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
@@ -305,6 +335,14 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ### Interact with your service bindings locally
 
 To interact with a [service binding](/workers/configuration/bindings/about-service-bindings/) while developing locally, run the Worker you want to bind to via `wrangler dev` and in parallel, run `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `SCRIPT_NAME` indicates the name of the Worker. For example, if your Worker is called `my-worker`, connect with this Worker by running it via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_SERVICE`).
+
+Alternatively, you can interact with a service binding locally via a `wrangler.toml` file. See [Wrangler configuration](/workers/wrangler/configuration/#service-bindings) for more information.
+
+{{<Aside type="note">}}
+
+`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+
+{{</Aside>}}
 
 ## Queue Producers
 
