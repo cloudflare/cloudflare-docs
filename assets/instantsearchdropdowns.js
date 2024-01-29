@@ -21,7 +21,6 @@ function capitalize(str) {
 }
 
 const { panel } = instantsearch.widgets;
-const { refinementList } = instantsearch.widgets;
 
 const CLASS_OPENED = "ais-Dropdown--opened";
 const CLASS_BUTTON = "ais-Dropdown-button";

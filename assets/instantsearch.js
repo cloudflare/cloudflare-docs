@@ -12,9 +12,6 @@ const { searchBox } = instantsearch.widgets;
 const { hits } = instantsearch.widgets;
 const { configure } = instantsearch.widgets;
 const { pagination } = instantsearch.widgets;
-const { highlight } = instantsearch;
-const { snippet } = instantsearch;
-const { panel } = instantsearch.widgets;
 const {refinementList} = instantsearch.widgets;
 
 
