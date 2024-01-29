@@ -31,7 +31,7 @@
       }
       },
       getMissingResultsUrl({ query }) {
-        return `/search/#q=${query}&t=Docs`;
+        return `/search/?q=${query}`;
       },
       searchParameters: {
         optionalFilters: facetFilters
