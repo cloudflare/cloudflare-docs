@@ -225,6 +225,11 @@ const productGroupDropdown = createDropdown(refinementList, {
   buttonText: 'Product group',
 });
 
+const contentTypeDropdown = createDropdown(refinementList, {
+  closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
+  buttonText: 'Content type',
+});
+
 search.addWidgets([
   searchBox({
     container: "#searchbox"
@@ -263,8 +268,13 @@ search.addWidgets([
     searchable: true,
   }),
   productGroupDropdown({
-    container: '#group',
+    container: '#product_group',
     attribute: 'product_group',
+    searchable: true,
+  }),
+  contentTypeDropdown({
+    container: '#content_type',
+    attribute: 'content_type',
     searchable: true,
   }),
   pagination({
