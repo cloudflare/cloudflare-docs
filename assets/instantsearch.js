@@ -2,6 +2,11 @@ import { createDropdown } from './instantsearchdropdowns';
 
 const searchClient = algoliasearch('8MU1G3QO9P', '4edb0a6cef3338ff4bcfbc6b3d2db56b');
 const indexName = 'crawler_Dev Docs -> Instantsearch.js'
+const { searchBox } = instantsearch.widgets;
+const { hits } = instantsearch.widgets;
+const { configure } = instantsearch.widgets;
+const { pagination } = instantsearch.widgets;
+const {refinementList} = instantsearch.widgets;
 
 const search = instantsearch({
   indexName: indexName,
@@ -33,13 +38,6 @@ const search = instantsearch({
     },
   },
 });
-
-const { searchBox } = instantsearch.widgets;
-const { hits } = instantsearch.widgets;
-const { configure } = instantsearch.widgets;
-const { pagination } = instantsearch.widgets;
-const {refinementList} = instantsearch.widgets;
-
 
 const MOBILE_WIDTH = 375;
 
