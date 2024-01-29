@@ -151,6 +151,10 @@
   padding-top: .5em;
 }
 
+.DocsMarkdown ul>:last-child {
+  margin-bottom: auto !important;
+}
+
 /* Dark mode styling */
 
 [theme="dark"] .searchResult a {
@@ -159,4 +163,21 @@
 
 [theme="dark"] .ais-Hits-item {
   background: #242628;
+}
+
+[theme="dark"] .ais-Dropdown-button:hover {
+  background: #414243 !important;
+}
+
+[theme="dark"] .ais-RefinementList {
+  background: #242628 !important;
+}
+
+[theme="dark"] .ais-Pagination-link {
+  background: #242628 !important;
+  color: inherit;
+}
+
+[theme="dark"] .ais-Pagination-item--selected a {
+  background: #414243 !important;
 }
