@@ -16,4 +16,4 @@ Available options include:
 - The widget keeps looping
 - Other
 
-Users can provide additional data in the following text field, then select **Submit**.
+Users can provide additional data in the text field and then select **Submit**.
