@@ -157,6 +157,17 @@
 
 /* Dark mode styling */
 
+[theme="dark"] .ais-SearchBox-input {
+  background-color: #242628;
+  color: inherit;
+}
+
+[theme="dark"] .ais-SearchBox-input:focus {
+  border-color: var(--code-orange);
+  box-shadow: none;
+  border-radius: 0px;
+}
+
 [theme="dark"] .searchResult a {
   color: var(--code-orange);
 }
@@ -180,4 +191,14 @@
 
 [theme="dark"] .ais-Pagination-item--selected a {
   background: #414243 !important;
+}
+
+[theme="dark"] .ais-Highlight-highlighted {
+  color: #fff;
+  background-color: var(--code-orange);
+}
+
+[theme="dark"] .ais-Snippet-highlighted {
+  color: #fff;
+  background-color: var(--code-orange);
 }
