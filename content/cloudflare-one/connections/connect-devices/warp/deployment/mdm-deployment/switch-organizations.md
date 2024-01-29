@@ -4,7 +4,7 @@ title: Switch between Zero Trust organizations
 weight: 3
 ---
 
-{{<heading-pill style="beta">}} Switch between Zero Trust organizations {{</heading-pill>}}
+# Switch between Zero Trust organizations
 
 {{<details header="Feature availability">}}
 
@@ -14,9 +14,9 @@ weight: 3
 
 | System   | Availability | Minimum WARP version |
 | ---------| -------------| ---------------------|
-| Windows  | ✅           | 2024.1.7.1           |
-| macOS    | ✅           | 2024.1.7.1           |
-| Linux    | ✅           | 2024.1.7.1           |
+| Windows  | ✅           | 2024.1.159.0         |
+| macOS    | ✅           | 2024.1.160.0         |
+| Linux    | ❌           |       |
 | iOS      | ❌           |       |
 | Android  | ✅           | 1.4   |
 | ChromeOS | ✅           | 1.4   |

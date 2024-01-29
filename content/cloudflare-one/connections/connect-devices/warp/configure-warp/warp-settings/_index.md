@@ -194,7 +194,7 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 
 Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.
 
-{{<heading-pill style="beta" heading="h3">}} Allow users to enable local network exclusion {{</heading-pill>}}
+### Allow users to enable local network exclusion
 
 {{<details header="Feature availability">}}
 
@@ -204,16 +204,16 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 
 | System   | Availability | Minimum WARP version |
 | ---------| -------------| ---------------------|
-| Windows  | ✅           | 2024.1.7.1           |
-| macOS    | ✅           | 2024.1.7.1           |
-| Linux    | ✅           | 2024.1.7.1           |
+| Windows  | ✅           | 2024.1.159.0         |
+| macOS    | ✅           | 2024.1.160.0         |
+| Linux    | ❌           |       |
 | iOS      | ❌           |       |
 | Android  | ✅           | 1.4   |
 | ChromeOS | ✅           | 1.4   |
 
 {{</details>}}
 
-This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network.
+This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
 
 When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user’s home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires.
 
