@@ -39,7 +39,7 @@ Turnstile is WCAG 2.1 AA compliant.
 
 ## Features
  
-{{<feature header="Turnstile Analytics" href="/turnstile/reference/turnstile-analytics/">}}
+{{<feature header="Turnstile Analytics" href="/turnstile/turnstile-analytics/">}}
 Assess the number of challenges issued, evaluate the challenge solve rate, and view the metrics of issued challenges.
 {{</feature>}}
  
