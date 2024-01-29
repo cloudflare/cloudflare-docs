@@ -7,73 +7,85 @@ layout: learning-unit
 
 Add the following recommended HTTP policies.
 
-## 1. Quarantined-Users-NET-Restricted-Access
+## 1. All-HTTP-Application-InspectBypass
 
-Restrict the access to the Users included in a specific IdP User Group. So the Security Team can restrict the access to those users where malicious activity was detected.
+Bypass HTTP inspection for applications which use embedded certificates. This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
-| Selector         | Operator    | Value                               | Logic | Action |
-| ---------------- | ----------- | ----------------------------------- | ----- | ------ |
-| Destination IP   | not in list | <Quarantined-Users-IPAllowlist>     | Or    | Block  |
-| SNI              | not in list | <Quarantined-Users-HostAllowlist>   | Or    |        |
-| Domain SNI       | not in list | <Quarantined-Users-DomainAllowlist> | And   |        |
-| User Group Names | in          | <Quarantined Users>                 |       |        |
+| Selector    | Operator | Value            | Action         |
+| ----------- | -------- | ---------------- | -------------- |
+| Application | in       | <Do Not Inspect> | Do Not Inspect |
 
-## 2. Posture-Fail-NET-Restricted-Access
+## 2. Android-HTTP-Application-InspectionBypass
 
-Restrict the access to the Devices where Baseline Posture Checks are not passed. If Posture Checks are integrated with service providers like Crowdstrike or Intune via API, this policy will be dynamically blocking the access to those devices that don't meet the Security Requirements.
+Bypass HTTPs inspection for the Android applications (such as Google Drive) use certificate pinning, which is incompatible with Gateway inspection.
 
-| Selector                     | Operator    | Value                                          | Logic | Action |
-| ---------------------------- | ----------- | ---------------------------------------------- | ----- | ------ |
-| Destination IP               | not in list | <Posture-Fail-IPAllowlist>                     | Or    | Block  |
-| SNI                          | not in list | <Posture-Fail-HostAllowlist>                   | Or    |        |
-| Domain SNI                   | not in list | <Posture-Fail-DomainAllowlist>                 | And   |        |
-| Passed Device Posture Checks | not in      | OS-Version \| Domain-Joined \| Disk-Encryption |       |        |
+| Selector                     | Operator    | Value                                          | Logic | Action         |
+| ---------------------------- | ----------- | ---------------------------------------------- | ----- | -------------- |
+| Application                  | in          | Google Drive                                   | And   | Do Not Inspect |
+| Passed Device Posture Checks | in          | OS Version Android                             |       |                |
 
-## 3. FinanceUsers-NET-HTTPS-FinanceServers (example)
+## 3. All-HTTP-Domain-Inspection-Bypass
 
-Allow HTTPs Access to the Finance Users to the Applications hosted in the Finance Servers.
+Bypass HTTP inspection for a custom list of domains that were identified to have issues with the TLS Inspection.
 
-| Selector         | Operator | Value             | Logic | Action |
-| ---------------- | -------- | ----------------- | ----- | ------ |
-| Destination IP   | in list  | <Finance-Servers> | And   | Allow  |
-| User Group Names | in       | <Finance-Users>   |       |        |
+| Selector | Operator | Value                                 | Logic | Action         |
+| -------- | -------- | ------------------------------------- | ----- | -------------- |
+| Domain   | in list  | <DomainInspectionBypass>              | Or    | Do Not Inspect |
+| Domain   | in list  | <Corporate Domains \| Trusted Domain> |       |                |
 
-## 4. All-NET-Internet-Blocklist
+## 4. All-HTTP-SecurityRisks-Blocklist
 
-Block the traffic to Destination IPs, SNIs and Domain SNIs known to be malicious or pose a threat to your organization. This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs).
+Block known threats such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 
-| Selector       | Operator | Value             | Logic | Action |
-| -------------- | -------- | ----------------- | ----- | ------ |
-| Destination IP | in list  | <IPBlocklist>     | Or    | Block  |
-| SNI            | in list  | <HostBlocklist>   | Or    |        |
-| Domain SNI     | in list  | <DomainBlocklist> |       |        |
+| Selector       | Operator | Value              | Action |
+| -------------- | -------- | ------------------ | ------ |
+| Security Risks | in       | All Security Risks | Block  |
 
-## 5. All-NET-SSH-Internet-Allowlist
+## 5. All-HTTP-ContentCategories-Blocklist
 
-{{<Aside type="note">}}The Detected Protocol selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).{{</Aside>}}
+Although these categories are not always a security threat it's convenient to Block or Isolate them to minimize the risk your organization be exposed to Security Threats. Block content categories which go against your organization's acceptable use policy.
 
-Allow SSH traffic to specific endpoints in Internet and for Specific users. Similar policy can be used for another Non-Web Endpoints that need to be accessed. Recommended to filter also by Source IP or IdP Group.
+Initially, Allow action will help to track the policy matching, and identify potential false positives. Finally blocking these categories, allowlisting the Trusted Domains on the 'Trusted Domain' List used on the Rule 1.
 
-| Selector          | Operator | Value               | Logic | Action |
-| ----------------- | -------- | ------------------- | ----- | ------ |
-| Destination IP    | in list  | <SSHAllowList>      | Or    | Allow  |
-| SNI               | in list  | <SSHAllowlistFQDN>  | And   |        |
-| Detected Protocol | is       | _SSH_               | And   |        |
-| User Group Names  | in       | <SSH-Allowed-Users> |       |        |
+| Selector           | Operator | Value                                                                         | Action                      |
+| ------------------ | -------- | ----------------------------------------------------------------------------- | --------------------------- |
+| Content Categories | in       | <Questionable Content, Security Risks, Miscellaneous, Adult Themes, Gambling> | <Allow \| Inspect \| Block> |
 
-## 6. All-NET-NO-HTTP-HTTPS-Internet-Deny
+## 6. All-HTTP-DomainHost-Blocklist
 
-Block Policy to block all Non-Web Traffic towards Internet. By using Detected Protocol selector we guaranty that alternative ports for HTTP and HTTPs will be allowed as well.
+Block specific Domains or Hosts that are known to be malicious or pose a threat to your organization. This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs). Ideally Incident Response Teams can feed this List with API automation.
 
-| Selector          | Operator    | Value             | Logic | Action |
-| ----------------- | ----------- | ----------------- | ----- | ------ |
-| Destination IP    | not in list | <InternalNetwork> | And   | Block  |
-| Detected Protocol | is not in   | <HTTP \| HTTPS>   |       |        |
+| Selector | Operator      | Value             | Logic | Action |
+| -------- | ------------- | ----------------- | ----- | ------ |
+| Domain   | in list       | <DomainBlocklist> | Or    | Block  |
+| Host     | in list       | <HostBlocklist>   | Or    |        |
+| Host     | matches regex | `.*example\.com`  |       |        |
 
-## 7. All-NET-InternalNetwork-ImplicitDeny
+## 7. All-HTTP-Application-Blocklist
 
-Implicit Deny Policy for all the Customer's Internal IP Ranges included in a List. It should be defined at the bottom to make sure we allow only the traffic that is explicitly allowed above.
+Block unauthorized applications to limit their users' access to certain web-based tools and minimize the risk of Shadow IT. For example, the following policy blocks AI assistants
 
-| Selector       | Operator      | Value                                       | Action |
-| -------------- | ------------- | ------------------------------------------- | ------ |
-| Destination IP | in list       | <InternalNetwork>                           | Block  |
+| Selector    | Operator | Value              | Action |
+| ----------- | -------- | ------------------ | ------ |
+| Application | in       | <Chat GPT \| Bard> | Block  |
+
+## 8. PrivilegedUsers-HTTP-Any-Isolate
+
+Isolate all the traffic for the Privileged Users and other Users that regularly have access to critical systems or they execute actions like Threat Analysis, Malware Testing, etc.
+
+Security Teams usually need to perform Threat Analysis or Malware Testing that could lead them to trigger some Malware Connection.
+
+Likewise for Privileged users that could be target of an attacker to gain access to critical systems.
+
+| Selector         | Operator | Value                               | Action  |
+| ---------------- | -------- | ----------------------------------- | ------- |
+| User Group Names | in       | <Privileged Users \| Security Team> | Isolate |
+
+## 9. All-HTTP-Domain-Isolate
+
+Isolate High Risk or a Custom List of Domains to avoid data exfiltration or malware infection. Ideally Incident Response Teams can feed this List with API automation.
+
+| Selector           | Operator | Value                            | Logic | Action  |
+| ------------------ | -------- | -------------------------------- | ----- | ------- |
+| Content Categories | in       | <New Domain, Newly Seen Domains> | Or    | Isolate |
+| Domain             | in list  | DomainIsolation                  |       |         |
