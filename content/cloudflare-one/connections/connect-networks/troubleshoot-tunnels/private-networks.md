@@ -41,7 +41,7 @@ If WARP is connected but there are no network logs, it means that your private n
 To check if a Gateway block event occurred:
 1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
 2. Apply the following filters:
-    - **Email**: User’s email address
+    - **Email**: User's email address
     - **Event**: _Blocked_
     - **Date Time Range**: Time period when the user accessed the application
 
@@ -52,7 +52,7 @@ Determine whether the user is matching any policy, or if they are matching a pol
 1. To determine the actual policy that was applied:
     1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
     2. Apply the following filters:
-        - **Email**: User’s email address
+        - **Email**: User's email address
         - **Date Time Range**: Time period when the user accessed the application
     3. In the search box, filter by the destination IP or FQDN.
     4. In the results, select a log and note its **Policy Name** value.
