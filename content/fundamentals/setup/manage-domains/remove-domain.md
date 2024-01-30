@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Remove a domain
-weight: 3
+weight: 5
 meta:
     title: Remove a domain from Cloudflare
 ---

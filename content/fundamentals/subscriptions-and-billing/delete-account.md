@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Delete your Cloudflare account
-weight: 2
 ---
 
 # Delete your Cloudflare account

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Account setup
+title: Manage account
 weight: 1
 ---
 

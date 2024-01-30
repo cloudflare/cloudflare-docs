@@ -1,7 +1,6 @@
 ---
 title: Two-factor authentication
 pcx_content_type: how-to
-weight: 2
 ---
 
 # Secure user access with two-factor authentication (2FA)

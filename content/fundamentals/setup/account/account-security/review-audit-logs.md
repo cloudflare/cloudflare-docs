@@ -1,7 +1,6 @@
 ---
 title: Review audit logs
 pcx_content_type: how-to
-weight: 5
 ---
 
 # Review audit logs

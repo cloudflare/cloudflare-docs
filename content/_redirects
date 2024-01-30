@@ -467,6 +467,8 @@
 /fundamentals/get-started/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ /fundamentals/setup/allow-cloudflare-ip-addresses/ 301
 
+
+
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
 /gateway/connecting-to-gateway/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/ 301

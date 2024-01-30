@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Change Super Administrator
-weight: 4
 ---
 
 # Change Super Administrator

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Change password or email
-weight: 1
 meta:
     description: Learn how to change your Cloudflare password or email.
 ---

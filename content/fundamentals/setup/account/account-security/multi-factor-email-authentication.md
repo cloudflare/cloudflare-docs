@@ -1,7 +1,6 @@
 ---
 title: Multi-Factor Email Authentication
 pcx_content_type: troubleshooting
-weight: 3
 ---
 
 # Multi-Factor Email Authentication (MFA)

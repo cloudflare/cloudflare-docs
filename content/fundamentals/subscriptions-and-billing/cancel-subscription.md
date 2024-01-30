@@ -1,7 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Cancel Cloudflare subscriptions
-weight: 2
+meta:
+    description: Cancel Cloudflare subscriptions
+
 ---
 
 # Cancel Cloudflare subscriptions

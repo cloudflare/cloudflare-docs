@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Manage domains
-weight: 3
+weight: 2
 ---
 
 # Manage domains

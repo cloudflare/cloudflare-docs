@@ -1,7 +1,6 @@
 ---
 title: Manage active sessions
 pcx_content_type: how-to
-weight: 5
 ---
 
 # Manage active sessions

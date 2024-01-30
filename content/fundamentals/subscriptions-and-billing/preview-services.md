@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Preview services
-weight: 4
 layout: wide
 ---
 

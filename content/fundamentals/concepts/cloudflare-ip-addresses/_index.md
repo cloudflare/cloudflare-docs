@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Cloudflare IP addresses
-weight: 3
+weight: 4
 ---
 
 # Cloudflare IP addresses

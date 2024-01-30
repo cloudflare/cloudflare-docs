@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Allow Cloudflare IP addresses
-weight: 5
+weight: 2
 ---
 
 # Allow Cloudflare IP addresses

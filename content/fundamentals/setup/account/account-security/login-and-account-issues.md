@@ -1,7 +1,6 @@
 ---
 title: Login and account issues
 pcx_content_type: troubleshooting
-weight: 1
 ---
 
 # Login and account issues

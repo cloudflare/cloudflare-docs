@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Provision with SCIM
-weight: 4
 updated: 2023-12-08
 ---
 

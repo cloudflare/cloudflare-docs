@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Allow Cloudflare access
-weight: 6
 meta:
     title: Provide edit access to Cloudflare Support
 ---

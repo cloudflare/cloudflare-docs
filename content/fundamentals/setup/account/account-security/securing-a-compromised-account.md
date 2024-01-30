@@ -1,7 +1,6 @@
 ---
 title: Secure compromised account
 pcx_content_type: tutorial
-weight: 4
 ---
 
 # Secure compromised account
