@@ -179,6 +179,10 @@
 
 /* Dark mode styling */
 
+[theme="dark"] .ais-SearchBox-form::before {
+  filter: invert(1) grayscale(100%);
+}
+
 [theme="dark"] .ais-Dropdown-button img {
   filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
