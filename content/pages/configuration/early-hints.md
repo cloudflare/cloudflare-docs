@@ -7,11 +7,6 @@ title: Early Hints
 
 [Early Hints](/cache/advanced-configuration/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains and custom domains. 
 
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com). 
-2. Select your account and zone.
-3. Go to **Speed** > **Optimization** > **Content Optimization**.
-4. Turn on the **Early Hints** toggle.
-
 Early Hints automatically caches any [`preload`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) and [`preconnect`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect) type [`Link` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) to send as Early Hints to the browser. The hints are sent to the browser before the full response is prepared, and the browser can figure out how to load the webpage faster for the end user. There are two ways to create these `Link` headers in Pages:
 
 ## Configure Early Hints
