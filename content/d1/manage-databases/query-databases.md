@@ -104,12 +104,12 @@ The `db.exec()` method returns a `D1ExecResult` object:
 
 The D1 API supports the following query statement methods:
 
-* [`await stmt.first( [column] )`](/d1/how-to/query-databases/#await-stmtfirstcolumn)
-* [`await stmt.all()`](/d1/how-to/query-databases/#await-stmtall)
-* [`await stmt.raw()`](/d1/how-to/query-databases/#await-stmtraw)
-* [`await stmt.run()`](/d1/how-to/query-databases/#await-stmtrun)
-* [`await db.dump()`](/d1/how-to/query-databases/#await-dbdump)
-* [`await db.exec()`](/d1/how-to/query-databases/#await-dbexec)
+* [`await stmt.first( [column] )`](/d1/manage-databases/query-databases/#await-stmtfirstcolumn)
+* [`await stmt.all()`](/d1/manage-databases/query-databases/#await-stmtall)
+* [`await stmt.raw()`](/d1/manage-databases/query-databases/#await-stmtraw)
+* [`await stmt.run()`](/d1/manage-databases/query-databases/#await-stmtrun)
+* [`await db.dump()`](/d1/manage-databases/query-databases/#await-dbdump)
+* [`await db.exec()`](/d1/manage-databases/query-databases/#await-dbexec)
 
 ### await stmt.first([column])
 
@@ -166,7 +166,7 @@ console.log(results);
 
 ### await stmt.raw()
 
-Same as [`stmt.all()`](/d1/how-to/query-databases/#await-stmtall), but returns an array of rows instead of objects.
+Same as [`stmt.all()`](/d1/manage-databases/query-databases/#await-stmtall), but returns an array of rows instead of objects.
 
 ```js
 const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
@@ -234,7 +234,7 @@ return new Response(dump, {
 
 Executes one or more queries directly without prepared statements or parameters binding. This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe. Only use this method for maintenance and one-shot tasks (for example, migration jobs). The input can be one or multiple queries separated by `\n`.
 
-If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/how-to/query-databases/#errors) to learn more.
+If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/manage-databases/query-databases/#errors) to learn more.
 
 ```js
 const migration = await fetch('/migration.sql');
@@ -248,7 +248,7 @@ console.log(out);
 */
 ```
 
-## Reusing prepared statements
+## Reuse prepared statements
 
 Prepared statements can be reused with new bindings:
 
@@ -278,7 +278,7 @@ console.log(old);
 */
 ```
 
-## Searching with LIKE
+## Search with LIKE
 
 Perform a search using SQL's `LIKE` operator:
 

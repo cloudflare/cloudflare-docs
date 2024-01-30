@@ -1,9 +1,9 @@
 ---
-title: How to
+title: Manage databases
 pcx_content_type: navigation
 weight: 1
 ---
 
-# How to
+# Manage databases
 
 {{<directory-listing>}}
