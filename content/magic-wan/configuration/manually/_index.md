@@ -2,7 +2,6 @@
 title: Manual configuration
 pcx_content_type: navigation
 weight: 1
-layout: single
 ---
 
 # Manual configuration

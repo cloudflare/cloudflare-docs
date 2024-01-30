@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: DNS policies
-layout: single
 weight: 2
 ---
 
@@ -21,7 +20,7 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 {{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
-{{<Aside>}}
+{{<Aside type="note">}}
 If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
 {{</Aside>}}
 
@@ -49,7 +48,7 @@ Policies with Allow actions allow DNS queries to reach destinations you specify 
 
 | Selector           | Operator | Value     | Action |
 | ------------------ | -------- | --------- | ------ |
-| Content Categories | In       | Education | Allow  |
+| Content Categories | in       | Education | Allow  |
 
 #### Disable DNSSEC validation
 
@@ -63,11 +62,15 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 | Selector           | Operator | Value        | Action |
 | ------------------ | -------- | ------------ | ------ |
-| Content Categories | In       | Adult Themes | Block  |
+| Content Categories | in       | Adult Themes | Block  |
 
 #### Custom block page
 
-When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If the block page is disabled, Gateway will respond to blocked queries with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/configuring-block-page/).
+When choosing the Block action, turn on **Display custom block page** to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If the block page is disabled, Gateway will respond to blocked queries with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/configuring-block-page/).
+
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
+
+{{<render file="gateway/_client-notifications.md">}}
 
 ### Override
 
@@ -77,9 +80,9 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
-| Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
+| Hostname | is       | `www.example.com` | Override | `1.2.3.4`         |
 
-{{<Aside>}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
+{{<Aside type="note">}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
 
 ### Safe Search
 
@@ -91,7 +94,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 | Selector | Operator | Value        | Action      |
 | -------- | -------- | ------------ | ----------- |
-| Domain   | Is       | `google.com` | Safe Search |
+| Domain   | is       | `google.com` | Safe Search |
 
 ### YouTube Restricted Mode
 
@@ -101,7 +104,7 @@ Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Rest
 
 | Selector   | Operator | Value         | Action             |
 | ---------- | -------- | ------------- | ------------------ |
-| DNS Domain | Is       | `youtube.com` | YouTube Restricted |
+| DNS Domain | is       | `youtube.com` | YouTube Restricted |
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
 
@@ -133,7 +136,7 @@ Use this selector to filter DNS responses by their `CNAME` records.
 | ------------------------ | ------------------------------------------------------------- | -------------------- |
 | DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` | After DNS resolution |
 
-{{<Aside>}}
+{{<Aside type="note">}}
 If one CNAME record points to another CNAME record, each record in the chain will be evaluated. For example, if `abc.example.com` points to `xyz.example.com`, then your DNS policy will evaluate both `abc.example.com` and `xyz.example.com`.
 {{</Aside>}}
 

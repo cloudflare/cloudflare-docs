@@ -42,7 +42,7 @@ The following example consists of two policies: the first allows specific users 
 | Selector       | Operator      | Value            | Logic | Action |
 | -------------- | ------------- | ---------------- | ----- | ------ |
 | Destination IP | in            | `10.0.0.0/8`     | And   | Allow  |
-| User Email     | Matches regex | `.*@example.com` |       |        |
+| User Email     | matches regex | `.*@example.com` |       |        |
 
 ### 2. Block everyone else
 

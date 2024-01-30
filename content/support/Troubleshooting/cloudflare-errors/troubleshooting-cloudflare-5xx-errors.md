@@ -56,7 +56,7 @@ However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in
 {{<Aside type="note">}}
 If you observe blank or white pages when visiting your website, confirm
 whether the issue occurs when [temporarily pausing
-Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753)
+Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/)
 and contact your hosting provider for assistance.
 {{</Aside>}}
 
@@ -197,7 +197,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
 
-If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/configuration/custom-domains/#add-a-custom-domain).
+If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 

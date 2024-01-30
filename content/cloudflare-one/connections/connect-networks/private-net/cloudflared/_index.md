@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Connect private networks
 weight: 1
-layout: single
 ---
 
 # Connect private networks

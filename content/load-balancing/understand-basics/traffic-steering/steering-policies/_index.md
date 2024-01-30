@@ -15,9 +15,7 @@ meta:
 
 ## EDNS Client Subnet (ECS) support
 
-EDNS Client Subnet (ECS) is a DNS extension that enables a recursive DNS resolver to include the subnet of the user’s IP. 
-
-ECS support provides customers with more control over location-based steering during gray-clouded DNS resolutions and can be used for proximity or geo (country) steering.
+{{<glossary-tooltip term_id="EDNS Client Subnet (ECS)" link="/glossary/?term=ecs">}}EDNS Client Subnet (ECS){{</glossary-tooltip>}} support provides customers with more control over location-based steering during gray-clouded DNS resolutions and can be used for proximity or geo (country) steering.
 
 Customers can configure their load balancer using the `location_strategy` parameter, which includes the properties `prefer_ecs` and `mode`.
 
@@ -30,7 +28,7 @@ Customers can configure their load balancer using the `location_strategy` parame
 | `"proximity"` | Prefers ECS only when `steering_policy="proximity"`. |
 | `"geo"` | Prefers ECS only when `steering_policy="geo"` and only supports country-level steering. |
 
-`mode` determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful. 
+`mode` determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
 
 | Type | Description |
 | --- | --- |

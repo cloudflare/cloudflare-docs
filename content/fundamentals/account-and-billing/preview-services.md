@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Preview services
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Preview services
@@ -24,7 +24,7 @@ To enable a preview service, use the **Dashboard link** in the following table. 
 | Argo Smart Routing                 | [Argo dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic)                                   | [Argo docs](/argo-smart-routing/)                                          | [Argo community](https://community.cloudflare.com/c/performance/argo/45)                            |
 | Bot Management                     | [Bot Management dashboard](https://dash.cloudflare.com/?to=/:account/:zone/security/bots)                   | [Bot Management docs](/bots/plans/bm-subscription/)                        | [Bot Management community](https://community.cloudflare.com/c/security/6)                           |
 | Cloudflare for SaaS                | [Cloudflare for SaaS dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames)   | [Cloudflare for SaaS docs](/cloudflare-for-platforms/cloudflare-for-saas/) | [Cloudflare for SaaS community](https://discord.gg/cloudflaredev) |
-| Images                             | [Images dashboard](https://dash.cloudflare.com/?to=/:account/images)                                        | [Images docs](/images/cloudflare-images/)                                  | [Images community](https://community.cloudflare.com/c/developers/images/63)                         |
+| Images                             | [Images dashboard](https://dash.cloudflare.com/?to=/:account/images)                                        | [Images docs](/images/)                                  | [Images community](https://community.cloudflare.com/c/developers/images/63)                         |
 | Load Balancing                     | [Load Balancing dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing)          | [Load Balancing docs](/load-balancing/)                                    | [Load Balancing community](https://community.cloudflare.com/tag/loadbalancing)                      |
 | Advanced Rate Limiting             | [Rate Limiting dashboard](https://dash.cloudflare.com/?to=/:account/:zone/security/waf/rate-limiting-rules) | [Rate Limiting docs](/waf/rate-limiting-rules/)                            | [Rate Limiting community](https://community.cloudflare.com/c/security/6)                            |
 | Stream                             | [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream)                                        | [Stream docs](/stream/)                                                    | [Stream community](https://community.cloudflare.com/tag/cloudflarestream)                           |

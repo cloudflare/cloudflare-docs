@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Private networks
 weight: 5
-layout: single
 ---
 
 # Private networks

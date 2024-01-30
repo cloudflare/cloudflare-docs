@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Pages Plugins
-layout: single
 weight: 9
 ---
 

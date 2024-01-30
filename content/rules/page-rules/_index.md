@@ -2,7 +2,6 @@
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: Page Rules
-layout: single
 weight: 19
 ---
 

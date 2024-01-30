@@ -41,7 +41,7 @@
 
     // Shift+D for toggle
     addEventListener("keydown", (ev) => {
-      if (ev.target !== document.body) return;
+      if (ev.target !== document.body || ev.repeat) return;
       if (ev.which === 68 && ev.shiftKey) {
         ev.preventDefault();
         setter(!btn.checked);

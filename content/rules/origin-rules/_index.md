@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Origin Rules
 weight: 6
-layout: single
 meta:
   title: Origin Rules
 ---

@@ -3,7 +3,7 @@ title: Create ruleset
 pcx_content_type: reference
 type: overview
 weight: 5
-layout: list
+layout: wide
 ---
 
 # Create ruleset

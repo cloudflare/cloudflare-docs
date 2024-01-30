@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Redirects
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Redirects

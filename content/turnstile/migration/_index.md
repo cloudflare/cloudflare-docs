@@ -2,7 +2,6 @@
 title: Migration
 pcx_content_type: migration
 weight: 2
-layout: single
 ---
 
 # Migrating from alternatives

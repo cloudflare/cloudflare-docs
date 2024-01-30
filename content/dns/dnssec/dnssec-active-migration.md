@@ -2,7 +2,7 @@
 pcx_content_type: tutorial
 title: Migration tutorial
 weight: 5
-meta: 
+meta:
     title: DNSSEC migration tutorial
 updated: 2023-06-20
 ---
@@ -34,9 +34,10 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
-curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header 'Content-Type: application/json' \
 --data '{"status": "active"}'
 ```
@@ -44,10 +45,11 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 4. Enable multi-signer DNSSEC using the following request. This step can only be achieved via the [API](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
-$ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \ 
---header 'X-Auth-Email: <EMAIL>' \ 
---header 'X-Auth-Key: <KEY>' \ 
---header 'Content-Type: application/json' \ 
+$ curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--header 'Content-Type: application/json' \
 --data '{"dnssec_multi_signer": true}'
 ```
 
@@ -58,14 +60,14 @@ $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnss
 You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/operations/dns-records-for-a-zone-create-dns-record), as in the following example.
 
 ```bash
-$ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header 'Content-Type: application/json' \
 --data '{
     "type": "DNSKEY",
     "name": "<ZONE_NAME>",
-    "data": { 
+    "data": {
       "flags": 256,
       "protocol": 3,
       "algorithm": 13,
@@ -80,9 +82,9 @@ $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_r
 API example:
 
 ```bash
-$ curl --request https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>'
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 Command line query example:

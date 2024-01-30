@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Certificate authorities
-layout: list
+layout: wide
 weight: 5
 meta:
   description: For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs features, limitations, and browser compatibility.

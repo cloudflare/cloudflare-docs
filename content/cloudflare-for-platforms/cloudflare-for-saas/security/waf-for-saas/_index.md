@@ -28,7 +28,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostna
 
 ## Step 1 - Associate custom metadata to a custom hostname
 
-To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the WAF configuration that you’d like to attach to it. Cloudflare’s product, [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) allows you to do this via the API.
+To apply WAF to your custom hostname, you need to create an association between your customer's domain and the WAF configuration that you would like to attach to it. Cloudflare's product, [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) allows you to do this via the API.
 
 1. [Locate your zone ID](/fundamentals/setup/find-account-and-zone-ids/), available in the Cloudflare dashboard.
 
@@ -44,7 +44,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnam
 
 ```
 
-4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag “security_level” to which we expect to assign three values (low, medium, and high).
+4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag `"security_level"` to which we expect to assign three values (low, medium, and high).
 
 {{<Aside type="note">}}
 
@@ -71,7 +71,7 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 1. Locate the custom metadata field in the Ruleset Engine where the WAF runs. This can be used to trigger different configurations of products such as [WAF custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and [Transform Rules](/rules/transform/).
 
-2. Build your rules either [through the dashboard](/waf/custom-rules/create-dashboard/) or via the API. An example rate limiting rule, corresponding to “security_level” low, is shown below as an API call.
+2. Build your rules either [through the dashboard](/waf/custom-rules/create-dashboard/) or via the API. An example rate limiting rule, corresponding to `"security_level"` low, is shown below as an API call.
 
 ```json
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone:id}/rulesets/phases/http_ratelimit/entrypoint" \

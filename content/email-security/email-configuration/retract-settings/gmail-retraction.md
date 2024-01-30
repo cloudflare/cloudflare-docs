@@ -70,7 +70,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
     - **Service account description**: A description for this service. For example, `Area 1 Message Retraction`
 
     Select **CREATE AND CONTINUE** when you are done.
- 
+
     ![Provide the details to create the service account](/images/email-security/email-retraction/gmail/step13-service-account-details.png)
 
 14. In **Grant this service account access to project**, select the **Select a role** drop-down menu. Then, select **Project** on the left column, and **Owner** on the right column.
@@ -112,7 +112,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
     - **OAuth scopes**: Enter the following information (the input field accepts comma separated values):
 
     ```txt
-    https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.alias.readonly, https://www.googleapis.com/auth/gmail.labels, https://mail.google.com/ 
+    https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.alias.readonly, https://www.googleapis.com/auth/gmail.labels, https://mail.google.com/
     ```
 
     Select **AUTHORIZE** when you are finished.
@@ -162,7 +162,7 @@ You have to upload the private key generated in the previous step to Area 1. Thi
 
 ## 4. Adjust the hop count in Area 1
 
-Since Area 1 is not configured as the MX record for your domains, you will need to adjust Area 1’s position (hop count) relative to Area 1’s position in the email processing order. 
+Since Area 1 is not configured as the MX record for your domains, you will need to adjust Area 1’s position (hop count) relative to Area 1’s position in the email processing order.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
@@ -182,11 +182,11 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 
 You must send copies of inbound email messages to Area 1 for inspection, so that Area 1 can automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Area 1 is deployed as MX.
 
-{{<render file="_gmail-bcc-setup.md">}}
+{{<render file="deployment/_gmail-bcc-setup.md">}}
 
 ### Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md">}}
+{{<render file="deployment/_bcc-table-geographic-locations.md">}}
 
 ## 6. Manual message retraction
 

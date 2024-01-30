@@ -19,7 +19,7 @@ If you add or remove a user from a group in your IdP, Gateway will not detect th
 - Log out from an Access-protected application and log back in.
 - In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
-## View a user's identity
+### View a user's identity
 
 To view the identity that Gateway will use when evaluating policies:
 
@@ -28,6 +28,10 @@ To view the identity that Gateway will use when evaluating policies:
 3. Under **User Registry identity**, select the user name.
 
 This page shows the information reported by the IdP when the user registered the WARP client.
+
+### Extended email addresses
+
+{{<render file="gateway/_extended-email.md">}}
 
 ## Identity-based selectors
 
@@ -101,8 +105,8 @@ Because IdPs expose user groups in different formats, reference the list below t
 
 If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
 
-| Selector       | Value                                 |
-| -------------- | ------------------------------------- |
+| Selector         | Value        |
+| ---------------- | ------------ |
 | User Group Names | `SCIM group` |
 
 ### GitHub
@@ -141,7 +145,7 @@ For a [generic SAML provider](/cloudflare-one/identity/idp-integration/generic-s
 
 | Selector        | Attribute name | Attribute value |
 | --------------- | -------------- | --------------- |
-| SAML Attributes | `department`    | `Marketing`     |
+| SAML Attributes | `department`   | `Marketing`     |
 
 ### Generic OIDC IdP
 

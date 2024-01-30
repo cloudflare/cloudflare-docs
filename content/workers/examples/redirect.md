@@ -15,15 +15,7 @@ layout: example
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 
-```js
-export default {
-  async fetch(request) {
-    const destinationURL = "https://example.com";
-    const statusCode = 301;
-    return Response.redirect(destinationURL, statusCode);
-  },
-};
-```
+{{<render file="_redirect-example-js.md">}}
 
 {{</tab>}}
 {{<tab label="ts">}}

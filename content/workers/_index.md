@@ -21,11 +21,11 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in hundreds of cities worldwide, offering both [Free and Paid plans](/workers/platform/pricing/).
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
- 
+
 ---
 
 ## Features
- 
+
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
 The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](//workers/wrangler/commands/#deploy) your Workers projects.
@@ -34,7 +34,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
@@ -47,7 +47,7 @@ The Playground is a sandbox which gives you an instant way to preview and test a
 ---
 
 ## Related products
- 
+
 {{<related header="R2" href="/r2/" product="r2">}}
 
 Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
@@ -78,16 +78,22 @@ Create a global, low-latency, key-value data storage.
 
 {{</related>}}
 
+{{<related header="Zaraz" href="/zaraz/" product="zaraz">}}
+
+Offload third-party tools and services to the cloud and improve the speed and security of your website.
+
+{{</related>}}
+
 ---
 
 ## More resources
- 
+
 {{<resource-group>}}
 
 {{<resource header="Learning Path" href="/learning-paths/workers/" icon="reference-architecture">}}New to Workers? Get started with the Workers Learning Path.{{</resource>}}
- 
+
 {{<resource header="Plans" href="/workers/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
- 
+
 {{<resource header="Limits" href="/workers/platform/limits/" icon="documentation-clipboard">}}Learn about plan limits (Free plans get 100,000 requests per day).{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
@@ -95,5 +101,5 @@ Create a global, low-latency, key-value data storage.
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
 
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
- 
+
 {{</resource-group>}}

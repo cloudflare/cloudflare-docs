@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Configure a DLP profile
 weight: 3
-layout: single
 ---
 
 # Configure a DLP profile

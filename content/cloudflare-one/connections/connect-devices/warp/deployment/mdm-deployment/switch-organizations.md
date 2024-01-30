@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Switch between Zero Trust organizations
-layout: single
 weight: 3
 ---
 
@@ -21,26 +20,26 @@ An MDM file supports a maximum of 25 configurations. The following is an example
 
 ```xml
 <array>
-<dict>
-    <key>organization</key>
-    <string>mycompany</string>
-    <key>display_name</key>
-    <string>Production environment</string>
-</dict>
-<dict>
-    <key>organization</key>
-    <string>mycompany</string>
-    <key>override_warp_endpoint</key>
-    <string>203.0.113.0:500</string>
-    <key>display_name</key>
-    <string>Cloudflare China network</string>
-</dict>
-<dict>
-    <key>organization</key>
-    <string>test-org</string>
-    <key>display_name</key>
-    <string>Test environment</string>
-</dict>
+  <dict>
+      <key>organization</key>
+      <string>mycompany</string>
+      <key>display_name</key>
+      <string>Production environment</string>
+  </dict>
+  <dict>
+      <key>organization</key>
+      <string>mycompany</string>
+      <key>override_warp_endpoint</key>
+      <string>203.0.113.0:500</string>
+      <key>display_name</key>
+      <string>Cloudflare China network</string>
+  </dict>
+  <dict>
+      <key>organization</key>
+      <string>test-org</string>
+      <key>display_name</key>
+      <string>Test environment</string>
+  </dict>
 </array>
 ```
 

@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Splunk
 weight: 104
-layout: single
 ---
 
 # Splunk

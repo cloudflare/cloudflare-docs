@@ -13,6 +13,9 @@ layout: example
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     /**
@@ -30,9 +33,11 @@ export default {
 
     if (country != null && country in countryMap) {
       const url = countryMap[country];
+      // Remove this logging statement from your final output.
+      console.log(`Based on ${country}-based request, your user would go to ${url}.` )
       return Response.redirect(url);
     } else {
-      return fetch(request);
+      return fetch("https://example.com", request);
     }
   },
 };

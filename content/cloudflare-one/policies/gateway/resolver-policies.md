@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Resolver policies
-layout: single
 weight: 6
 meta:
   title: Resolver policies
