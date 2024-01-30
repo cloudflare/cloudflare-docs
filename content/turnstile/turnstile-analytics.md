@@ -1,7 +1,7 @@
 ---
-title: Analytics
+title: Turnstile analytics
 pcx_content_type: how-to
-weight: 8
+weight: 5
 meta:
     description: Use Turnstile analytics to view the number of challenges issued, the challenge solve rate, and the metrics of issued challenges.
 ---

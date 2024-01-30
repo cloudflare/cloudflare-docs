@@ -1,6 +1,7 @@
 ---
 title: WebSockets
 pcx_content_type: configuration
+weight: 3
 ---
 
 # WebSockets

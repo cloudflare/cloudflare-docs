@@ -28,7 +28,7 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 {{<render file="gateway/_doh-instructions.md">}}
 
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/gateway/dns-policies/#location) selector.
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) selector.
 
 ### Configure operating system for DoH
 
