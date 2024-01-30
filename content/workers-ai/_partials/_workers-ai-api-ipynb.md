@@ -1,3 +1,5 @@
+[comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
+
 ## Explore the Workers AI API using Python
 
 [Workers AI](https://developers.cloudflare.com/workers-ai) allows you to run machine learning models, on the Cloudflare network, from your own code – whether that be from Workers, Pages, or anywhere via REST API.
