@@ -34,11 +34,11 @@ Use the Cloudflare dashboard or API to modify, test, or [version](/version-manag
 
 In the full setup, when you connect your domain to Cloudflare, we become your authoritative DNS provider. 
 
-This means that when Cloudflare receives a DNS query for your domain, our response is determined by the values in your DNS table, including the record’s proxy eligibility and proxy status. Your table of DNS records is managed via the Cloudflare dashboard or API.
+This means that when Cloudflare receives a DNS query for your domain, our response is determined by the values in your DNS table, including the record's proxy eligibility and proxy status. Your table of DNS records is managed via the Cloudflare dashboard or API.
 
 In addition, if an eligible record is proxied, Cloudflare will respond with an anycast IP address instead of the value defined in your DNS table. This approach ensures that the incoming request is routed to Cloudflare's network. 
 
-In contrast, when a DNS record is “DNS only,” meaning the proxy is off, Cloudflare responds with the value listed in your DNS table, which could be the origin server’s actual IP address, or a CNAME 
+In contrast, when a DNS record is 'DNS only', meaning the proxy is off, Cloudflare responds with the value listed in your DNS table, which could be the origin server's actual IP address, or a CNAME 
 
 ## Proxy eligibility 
 
@@ -65,7 +65,7 @@ The following types of DNS records may be in your DNS configuration, but are can
 
 In addition to responding to DNS queries, as described above, Cloudflare also responds to other protocols, such as HTTP. Cloudflare is both a DNS server and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) that sits between two distinct networks. This hybrid design is how Cloudflare can respond to both DNS queries and HTTP/S traffic depending on the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of the hostname. 
 
-Using the screenshot below as an example, the first network would be a request from your home network to `blog.example.com`, which routes to Cloudflare because `example.com`’s nameservers point to Cloudflare. The second network would be Cloudflare to your origin server at 192.0.2.1.
+Using the screenshot below as an example, the first network would be a request from your home network to `blog.example.com`, which routes to Cloudflare because `example.com`'s nameservers point to Cloudflare. The second network would be Cloudflare to your origin server at 192.0.2.1.
 
 In the dashboard, find the proxy statuses on the DNS records page under your domain.
 
@@ -78,7 +78,7 @@ In the screenshot above, there are two subdomain records, one with the proxy ena
 
 When the browser initiates a request to `blog.example.com`, a DNS resolver will convert the hostname into an IP address. Since the records proxy function is enabled, Cloudflare will return an anycast IP address. 
 
-Then, the browser initiates an HTTP/S request to Cloudflare. When Cloudflare receives this request, it’s processed according to the account’s and domain’s configuration, and then forwards it to the configured origin server, which is 192.0.2.1.
+Then, the browser initiates an HTTP/S request to Cloudflare. When Cloudflare receives this request, it's processed according to the account's and domain's configuration, and then forwards it to the configured origin server, which is 192.0.2.1.
 
 ## Activating your domain
 
