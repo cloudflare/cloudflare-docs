@@ -145,11 +145,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 ### Device activation
 
-<<<<<<< HEAD
-When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#1-configure-cloudflare-dashboard-settings) step.
-=======
 When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#create-a-site) step.
->>>>>>> production
 
 {{<Aside type="warning">}}Remember to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, Connector will not work.{{</Aside>}}
 
