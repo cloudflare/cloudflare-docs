@@ -33,31 +33,100 @@ In Cloudflare WARP, users can switch between multiple Zero Trust organizations (
 
 To enable multiple organizations, administrators need to modify their [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to take an array of configurations.  Each configuration must include a `display_name` parameter that will be visible to users in the WARP client GUI. Because display names are listed in the same order as they appear in the MDM file, we recommend putting the most used configurations at the top of the file. When a user opens the WARP client for the first time, they will be prompted to log into the first configuration in the list.
 
-An MDM file supports a maximum of 25 configurations. The following is an example MDM file with three configurations:
+An MDM file supports a maximum of 25 configurations. The following example includes three configurations.
+
+### plist file
 
 ```xml
-<array>
-  <dict>
-      <key>organization</key>
-      <string>mycompany</string>
-      <key>display_name</key>
-      <string>Production environment</string>
-  </dict>
-  <dict>
-      <key>organization</key>
-      <string>mycompany</string>
-      <key>override_warp_endpoint</key>
-      <string>203.0.113.0:500</string>
-      <key>display_name</key>
-      <string>Cloudflare China network</string>
-  </dict>
-  <dict>
-      <key>organization</key>
-      <string>test-org</string>
-      <key>display_name</key>
-      <string>Test environment</string>
-  </dict>
-</array>
+<plist version="1.0">
+  <array>
+    <dict>
+        <key>organization</key>
+        <string>mycompany</string>
+        <key>display_name</key>
+        <string>Production environment</string>
+    </dict>
+    <dict>
+        <key>organization</key>
+        <string>mycompany</string>
+        <key>override_warp_endpoint</key>
+        <string>203.0.113.0:500</string>
+        <key>display_name</key>
+        <string>Cloudflare China network</string>
+    </dict>
+    <dict>
+        <key>organization</key>
+        <string>test-org</string>
+        <key>display_name</key>
+        <string>Test environment</string>
+    </dict>
+  </array>
+</plist>
+```
+
+### mobileconfig file
+
+```xml
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadDisplayName</key>
+            <string>Warp Configuration</string>
+            <key>PayloadIdentifier</key>
+            <string>com.cloudflare.warp.CB8B22D4-50E1-48E8-8874-A7594627013A</string>
+            <key>PayloadOrganization</key>
+            <string>Cloudflare Ltd.</string>
+            <key>PayloadType</key>
+            <string>com.cloudflare.warp</string>
+            <key>PayloadUUID</key>
+            <string>CB8B22D4-50E1-48E8-8874-A7594627013A</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>configs</key>
+            <array>
+              <dict>
+                  <key>organization</key>
+                  <string>mycompany</string>
+                  <key>display_name</key>
+                  <string>Production environment</string>
+              </dict>
+              <dict>
+                  <key>organization</key>
+                  <string>mycompany</string>
+                  <key>override_warp_endpoint</key>
+                  <string>203.0.113.0:500</string>
+                  <key>display_name</key>
+                  <string>Cloudflare China network</string>
+              </dict>
+              <dict>
+                  <key>organization</key>
+                  <string>test-org</string>
+                  <key>display_name</key>
+                  <string>Test environment</string>
+              </dict>
+            </array>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>Cloudflare WARP</string>
+    <key>PayloadIdentifier</key>
+    <string>cloudflare_warp</string>
+    <key>PayloadOrganization</key>
+    <string>Cloudflare, Ltd.</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadScope</key>
+    <string>System</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>2B7763B8-64F6-41EB-AA5E-7761651B8131</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
 ```
 
 ## Switch organizations in WARP
