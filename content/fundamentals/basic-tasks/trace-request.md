@@ -90,3 +90,4 @@ Also, the following products will not appear in trace results:
 * [Firewall rules](/firewall/)
 * [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
 * [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
+* [Domain Localization Suite](/data-localization/)
