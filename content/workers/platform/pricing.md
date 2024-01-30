@@ -8,6 +8,12 @@ meta:
 
 # Pricing
 
+{{<Aside type="warning">}}
+
+All Workers and Pages Functions currently billed under the [Bundled and Unbound pricing models](/workers/platform/pricing/#deprecated-usage-models) will be billed under the [Standard model](/workers/platform/pricing/#example-pricing-standard-usage-model) beginning on March 1, 2024.
+
+{{</Aside>}}
+
 By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
 The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
