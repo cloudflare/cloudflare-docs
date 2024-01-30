@@ -26,7 +26,7 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 {{<tab label="api" no-code="true">}}
 
 1. To create records with the API, use the [API POST](/api/operations/dns-records-for-a-zone-create-dns-record) command.
-2. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the Hostname to create a `regional_hostnames` with a specific Region.
+2. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the hostname to create a `regional_hostnames` with a specific region.
 
 {{</tab>}}
 {{</tabs>}}

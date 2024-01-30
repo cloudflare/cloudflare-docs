@@ -12,7 +12,7 @@ Learn how to use Cloudflare products with the Data Localization Suite.
 
 ## Verify Regional Services behavior
 
-In order to verify that Regional Services is working, customers can confirm the behavior by executing the one of the following `curl` commands on a regionalized hostname:
+In order to verify that Regional Services is working, customers can confirm the behavior by executing one of the following `curl` commands on a regionalized hostname:
 
 ```bash
 curl -X GET -I https://<HOSTNAME>/ 2>&1 | grep cf-ray
