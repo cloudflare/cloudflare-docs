@@ -8,7 +8,7 @@ meta:
 
 # Configure payload logging for a managed ruleset via API
 
-You can use the [Rulesets API](https://api.cloudflare.com/) to configure payload logging for a managed ruleset.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload logging for a managed ruleset via API.
 
 ## Configure and enable payload logging
 
@@ -40,10 +40,12 @@ You can generate a public key [in the command line](/waf/managed-rules/payload-l
 
 The following `PATCH` request example updates rule `{rule_id_1}` that executes the Cloudflare Managed Ruleset for zone `{zone_id}`, configuring payload logging with the provided public key.
 
+You can find the ruleset IDs of managed rulesets in [WAF Managed Rules](/waf/managed-rules/) or using
+
 ```bash
 ---
 header: Request
-highlight: 8-10
+highlight: 9-11
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zone/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_1}" \

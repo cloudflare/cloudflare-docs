@@ -10,7 +10,7 @@ ___
 
 ## Overview
 
-The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](https://api.cloudflare.com/). HTTP 409, 530, 403, 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
+The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](/api/). HTTP 409, 530, 403, 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
 
 {{<Aside type="note">}}
 Cloudflare **[Custom Error
