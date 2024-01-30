@@ -59,21 +59,23 @@ Projects created with create-cloudflare have local bindings set up by default.
 
 To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
-For example to work with a KV binding locally, you need to open `next.config.js` and add:
+For example to work with a KV binding locally, you need to open `next.config.mjs` and add:
 
 ```js
 ---
-filename: next.config.js
-highlight: [5-15]
+filename: next.config.mjs
+highlight: [1, 6-18]
 ---
+import { setupDevBindings } from '@cloudflare/next-on-pages/next-dev';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
 // we only need to use the utility during development so we can check NODE_ENV
 // (note: this check is recommended but completely optional)
-if (process.env.NODE_ENV === "development") {
-  // import the utility from the next-dev submodule
-  const { setupDevBindings } = require("@cloudflare/next-on-pages/next-dev");
-
+if (process.env.NODE_ENV === 'development') {
   // call the utility with the bindings you want to have access to
-  setupDevBindings({
+  await setupDevBindings({
     bindings: {
       MY_KV: {
         type: "kv",
@@ -82,6 +84,8 @@ if (process.env.NODE_ENV === "development") {
     },
   });
 }
+
+export default nextConfig;
 ```
 
 ### Set up bindings for a deployed application
@@ -101,7 +105,7 @@ filename: app/api/hello/route.js
 highlight: [3]
 ---
 export async function GET(request) {
-  // this is the KV binding you defined in next.config.js
+  // this is the KV binding you defined in next.config.mjs
   const myKv = process.env.MY_KV;
 
   // get a value from the namespace
@@ -120,7 +124,7 @@ filename: app/api/hello/route.ts
 highlight: [3]
 ---
 export async function GET(request: NextRequest) {
-  // this is the KV binding you defined in next.config.js
+  // this is the KV binding you defined in next.config.mjs
   const myKv = process.env.MY_KV;
 
   // get a value from the namespace
