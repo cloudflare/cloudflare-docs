@@ -45,7 +45,7 @@ Customer Metadata Boundary applies to the Custom Domain configured, as well as t
 
 For information on available Analytics and Metrics, review the [Overview](/data-localization/) section.
 
-It is recommended to not store any Personally Identifiable Information (PII) in the Pages project's static assets.
+It is recommended not to store any Personally Identifiable Information (PII) in the Pages project's static assets.
 
 {{<Aside type="note">}}
 
