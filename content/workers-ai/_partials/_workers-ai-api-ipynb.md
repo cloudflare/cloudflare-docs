@@ -1,3 +1,10 @@
+---
+_build:
+  publishResources: false
+  render: never
+  list: never
+---
+
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
 
 ## Explore the Workers AI API using Python
