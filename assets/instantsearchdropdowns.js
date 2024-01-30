@@ -83,6 +83,7 @@ export function createDropdown(
         return `
           <button type="button" class="${cx(...classNames)}">
             ${text}
+            <img src="/icons/caret-down.svg" alt="expand" loading="lazy">
           </button>
         `;
       },

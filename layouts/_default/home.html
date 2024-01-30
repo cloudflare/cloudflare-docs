@@ -49,6 +49,9 @@
             href="/support/contacting-cloudflare-support/"><span>Support</span></a>
         </div>
         <div class="SiteHeader--theme-toggle">
+          {{- if eq .Page.RelPermalink "/search/" -}}
+
+          {{- else -}}
           <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
             <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
               xmlns="http://www.w3.org/2000/svg">
@@ -58,6 +61,7 @@
               </path>
             </svg>
           </button>
+          {{- end -}}
 
           {{- partialCached "topbar.theme" . -}}
         </div>

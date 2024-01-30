@@ -155,7 +155,33 @@
   margin-bottom: auto !important;
 }
 
+.ais-Dropdown-button {
+  display: flex;
+}
+
+.ais-Dropdown-button img {
+  padding-left: .5em;
+  padding-top: .25em;
+}
+
+.ais-RefinementList {
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .search-panel__filters {
+    flex-direction: column;
+  }
+  .ais-Panel {
+    margin-bottom: .5em;
+  }
+}
+
 /* Dark mode styling */
+
+[theme="dark"] .ais-Dropdown-button img {
+  filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
+}
 
 [theme="dark"] .ais-SearchBox-input {
   background-color: #242628;
