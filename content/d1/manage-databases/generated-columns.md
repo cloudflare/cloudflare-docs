@@ -6,7 +6,7 @@ weight: 10
 
 # Generated columns
 
-D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/how-to/querying-json).
+D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/manage-databases/querying-json).
 
 This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
 
