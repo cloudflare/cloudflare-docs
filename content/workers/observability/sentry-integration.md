@@ -9,7 +9,7 @@ meta:
 
 [Sentry](https://sentry.io/welcome/) is an error tracking and performance monitoring platform that allows developers to diagnose, fix, and optimize the performance of their code.
 
-This integration allows you to connect to a Sentry project from your Worker to automcatically send errors and uncaught exceptions to Sentry with no code changes needed in the Workers application.
+This integration allows you to connect to a Sentry project from your Worker to automatically send errors and uncaught exceptions to Sentry with no code changes needed in the Workers application.
 
 {{<Aside type="note">}}
 
