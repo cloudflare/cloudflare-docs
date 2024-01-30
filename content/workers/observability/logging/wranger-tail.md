@@ -1,17 +1,15 @@
 ---
 pcx_content_type: concept
-title: Log from Workers
+title: Real-time logs with wrangler tail
 meta:
-  description: Debug your Worker application by accessing logs and exceptions through the Cloudflare dashboard or `wrangler tail`.
+  description: Debug your Worker application by accessing logs and exceptions through `wrangler tail`.
 ---
 
 # Log from Workers
 
 Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production.
 
-{{<youtube id="8iPmy7ePYDE">}}
-
-You can access logs and exceptions for your Workers by logging into [the dashboard](/workers/observability/log-from-workers/#view-logs-from-the-dashboard) or using [`wrangler tail`](/workers/observability/log-from-workers/#use-wrangler-tail).
+You can access logs and exceptions for your Workers using [`wrangler tail`](/workers/observability/log-from-workers/#use-wrangler-tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 
@@ -21,11 +19,6 @@ This feature is not available for zones on the [Cloudflare China Network](/china
 
 {{</Aside>}}
 
-{{<Aside type="note">}}
-
-To push your Worker logs to a third-party provider, refer to [Logpush](/workers/observability/logpush/).
-
-{{</Aside>}}
 
 ## Add custom logs
 
@@ -120,31 +113,24 @@ $ npx wrangler tail | jq .event.request.url
 
 You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
 
-## View logs from the dashboard
 
-To review the production logs associated with any Worker:
+## Persisting logs
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, go to **Workers & Pages**.
-3. In **Overview**, select your **Worker** > and select **Logs**. 
+Logs can be persited in two ways: using [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
 
-Logging is available for all customers, including those on the Free plan.
+[Workers Logpush](/workers/observability/logging/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
 
-Note that:
+Refer to the [Workers Logpush documentation](/workers/observability/logging/logpush/) to learn how to create and configure Logpush jobs.
 
-- Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
-- Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
-- Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
-- A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
+[Tail Workers](/workers/observability/logging/logpush/) allow you to automatically invoke Tail Workers after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. You can filter, change the format of the data and send events to any HTTP endpoint.
 
-## Push logs to storage
+Refer to the [Tail Workers documentation](/workers/observability/logging/tail-workers/) to learn how to create and configure Tail Workers.
 
-[Workers Logpush](/workers/observability/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
-
-Refer to the [Workers Logpush documentation](/workers/observability/logpush/) to learn how to create and configure Logpush jobs.
 
 ## Related resources
 
 * [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
-* [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
 * [Local development and testing](/workers/observability/local-development-and-testing/) - Develop and test you Workers locally.
+* [Wrangler Tail](/workers/observability/logging/wrangler-tail/) - Learn how to see real-time logs with wrangler tail.
+* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [Tail Workers](/workers/observability/logging/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
