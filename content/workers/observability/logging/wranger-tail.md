@@ -118,7 +118,7 @@ You can customize how `wrangler tail` works to fit your needs. Refer to [the `wr
 
 Logs can be persited in two ways: using [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
 
-[Workers Logpush](/workers/observability/logging/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+[Workers Logpush](/workers/observability/logging/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker's Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
 
 Refer to the [Workers Logpush documentation](/workers/observability/logging/logpush/) to learn how to create and configure Logpush jobs.
 
