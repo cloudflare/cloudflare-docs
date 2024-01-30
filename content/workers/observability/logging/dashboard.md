@@ -85,12 +85,21 @@ Note that:
 
 ## Persisting logs
 
+Logs can be persited in two ways: using [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
+
 [Workers Logpush](/workers/observability/logging/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
 
 Refer to the [Workers Logpush documentation](/workers/observability/logging/logpush/) to learn how to create and configure Logpush jobs.
 
+[Tail Workers](/workers/observability/logging/logpush/) allow you to automatically invoke Tail Workers after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. You can filter, change the format of the data and send events to any HTTP endpoint.
+
+Refer to the [Tail Workers documentation](/workers/observability/logging/tail-workers/) to learn how to create and configure Tail Workers.
+
+
 ## Related resources
 
 * [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
-* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
 * [Local development and testing](/workers/observability/local-development-and-testing/) - Develop and test you Workers locally.
+* [Wrangler Tail](/workers/observability/logging/wrangler-tail/) - Learn how to see real-time logs with wrangler tail.
+* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [Tail Workers](/workers/observability/logging/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
