@@ -18,7 +18,7 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account.
 2. Go to the **Workers & Pages** tab.
 3. Select your Pages project.
-4. Follow these steps to [create a Custom Domain](/pages/platform/custom-domains/).
+4. Follow these steps to [create a Custom Domain](/pages/configuration/custom-domains/).
 5. Go to the **DNS** of the zone you configured the Custom Domain for.
 6. From the **Region** dropdown, select the region you would like to use on your domain.
 7. Select **Save**.
@@ -41,7 +41,7 @@ Regional Services only applies to the Custom Domain configured for a Pages proje
 
 ## Customer Metadata Boundary
 
-Customer Metadata Boundary applies to the Custom Domain configured, as well as the [*.pages.dev](/pages/platform/preview-deployments/) subdomain.
+Customer Metadata Boundary applies to the Custom Domain configured, as well as the [*.pages.dev](/pages/configuration/preview-deployments/) subdomain.
 
 For information on available Analytics and Metrics, review the [Overview](/data-localization/) section.
 
@@ -49,7 +49,7 @@ It is recommended to not store any Personally Identifiable Information (PII) in 
 
 {{<Aside type="note">}}
 
-Page [Functions](/pages/platform/functions/) are implemented as Cloudflare Workers. Refer to the Workers section for more information.
+Page [Functions](/pages/functions/) are implemented as Cloudflare Workers. Refer to the Workers section for more information.
 
 {{</Aside>}}
 
