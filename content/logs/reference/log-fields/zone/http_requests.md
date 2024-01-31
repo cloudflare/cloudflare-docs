@@ -101,7 +101,7 @@ The descriptions below detail the fields available for `http_requests`.
 | WorkerStatus | Status returned from worker daemon. | string |
 | WorkerSubrequest | Whether or not this request was a worker subrequest. | bool |
 | WorkerSubrequestCount | Number of subrequests issued by a worker when handling this request. | int |
-| WorkerWallTimeUs | Real-time in microseconds elapsed between start and end of worker invocation. | int |
+| WorkerWallTimeUs | Elapsed time in microseconds between the start of a Worker invocation, and when the Workers Runtime determines no more JavaScript needs to run. Specifically, this measures the wall-clock time that the JavaScript context remained open. For example, when returning a response with a large body, the Workers runtime can in some cases [determine that no more JavaScript needs to run](https://blog.cloudflare.com/workers-optimization-reduces-your-bill), and closes the JS context before all the bytes have passed through and been sent. Or if you use the [`waitUntil()`](https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/#contextwaituntil) API to perform work without blocking returning a response, this work may continue executing after the response has been returned, and will be included in `WorkerWallTimeUs`. | int |
 | ZoneName | The human-readable name of the zone (e.g. 'cloudflare.com'). Available in Logpush v2 only. | string |
 
 {{</table-wrap>}}
