@@ -131,48 +131,7 @@ To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/w
     }'
     ```
 
-    The response includes the complete ruleset after updating the rule.
-
-    ```json
-    ---
-    header: Example response
-    highlight: 10-25
-    ---
-    {
-      "result": {
-        "id": "060013b1eeb14c93b0dcd896537e0d2c",
-        "name": "default",
-        "description": "",
-        "kind": "zone",
-        "version": "4",
-        "rules": [
-          // (...)
-          {
-            "id": "1bdb49371c1f46958fc8b985efcb79e7",
-            "version": "2",
-            "action": "execute",
-            "expression": "true",
-            "last_updated": "2024-01-21T14:21:28.643979Z",
-            "ref": "1bdb49371c1f46958fc8b985efcb79e7",
-            "enabled": true,
-            "action_parameters": {
-              "id": "efb7b8c949ac4650a09736fc376e9aee",
-              "version": "latest",
-              "matched_data": {
-                "public_key": "Ycig/Zr/pZmklmFUN99nr+taURlYItL91g+NcHGYpB8="
-              }
-            }
-          },
-          // ...
-        ],
-        "last_updated": "2024-01-21T14:21:28.643979Z",
-        "phase": "http_request_firewall_managed"
-      },
-      "success": true,
-      "errors": [],
-      "messages": []
-    }
-    ```
+    The response will include the complete ruleset after updating the rule.
 
 For more information on deploying managed rulesets via API, refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) in the Ruleset Engine documentation.
 
