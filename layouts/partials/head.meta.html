@@ -107,8 +107,12 @@
   {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
   {{- $product = replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
   <meta name="pcx_product" content="{{- $product -}}">
+  {{- with $DATA.product.title -}}
+  <meta name="algolia_product_filter" content="{{- . -}}">
+  {{- end -}}
   {{- end -}}
 
+  <meta name="algolia_page_title" content="{{- $pt -}}">
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
   {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
   {{- $diffMod := now.Sub $lastMod -}}
@@ -126,8 +130,7 @@
   {{- with .Context.Params.pcx_content_type -}}
   {{- if in $availableContentTypes . -}}
   <meta name="pcx_content_type" content="{{ . }}" />
-  {{- else -}}
-  <meta name="pcx_content_type" content="Invalid content type" />
+  <meta name="algolia_content_type" content="{{ title (replace . "-" " ") }}">
   {{- end -}}
   {{- else -}}
   <meta name="pcx_content_type" content="Not set" />

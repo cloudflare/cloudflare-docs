@@ -34,8 +34,8 @@ inputParameters: editWord
 | Account Firewall Access Rules $1                           | Grants write access to account firewall access rules.                                                                                                    |
 | Account Rulesets Read                                        | Grants read access to [Account Rulesets](/ruleset-engine/about/rulesets/).                                                                               |
 | Account Rulesets $1                                        | Grants write access to [Account Rulesets](/ruleset-engine/about/rulesets/).                                                                              |
-| Account Settings Read                                        | Grants read access to [Account resources, account membership, and account level features](/fundamentals/account-and-billing/).                           |
-| Account Settings $1                                        | Grants write access to [Account resources, account membership, and account level features](/fundamentals/account-and-billing/).                          |
+| Account Settings Read                                        | Grants read access to [Account resources, account membership, and account level features](/fundamentals/subscriptions-and-billing/).                           |
+| Account Settings $1                                        | Grants write access to [Account resources, account membership, and account level features](/fundamentals/subscriptions-and-billing/).                          |
 | Account: SSL and Certificates Read                           | Grants read access to [SSL and Certificates](/ssl/).                                                                                                     |
 | Account: SSL and Certificates $1                           | Grants write access to [SSL and Certificates](/ssl/).                                                                                                    |
 | Account WAF Read                                             | Grants read access to [Account WAF](/waf/).                                                                                                              |
@@ -45,14 +45,16 @@ inputParameters: editWord
 | Allow Request Tracer Read                                    | Grants read access to Request Tracer.                                                                                                                    |
 | API Gateway Read                                             | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                  |
 | API Gateway $1                                             | Grants write access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                 |
-| Billing Read                                                 | Grants read access to [billing profile, subscriptions, and access to fetch invoices](/fundamentals/account-and-billing/) and entitlements.               |
-| Billing $1                                                 | Grants write access to [billing profile, subscriptions, and access to fetch invoices and entitlements](/fundamentals/account-and-billing/).              |
+| Billing Read                                                 | Grants read access to [billing profile, subscriptions, and access to fetch invoices](/fundamentals/subscriptions-and-billing/) and entitlements.               |
+| Billing $1                                                 | Grants write access to [billing profile, subscriptions, and access to fetch invoices and entitlements](/fundamentals/subscriptions-and-billing/).              |
 | Bulk URL Redirects Read                                      | Grants read access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                       |
 | Bulk URL Redirects $1                                      | Grants write access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                      |
 | China Network Steering Read                                  | Grants read access to [China Network Steering](/china-network/).                                                                                         |
 | China Network Steering $1                                  | Grants write access to [China Network Steering](/china-network/).                                                                                        |
 | Cloudchamber Read | Grants read access to Cloudchamber deployments. |
 | Cloudchamber $1 | Grants write access to Cloudchamber deployments. |
+| Cloudflare Calls Read | Grants read access to Cloudflare Calls. |
+| Cloudflare Calls $1 | Grants write access to Cloudflare Calls. |
 | Cloudflare DEX Read                                          | Grants read access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                    |
 | Cloudflare DEX $1                                          | Grants write access to [Digital Experience Monitoring](/cloudflare-one/insights/dex/).                                                                   |
 | Cloudflare Images Read                                       | Grants read access to [Cloudflare Images](/images/).                                                                                   |

@@ -59,6 +59,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Orange-to-Orange (O2O) | ✘ | ✘ | ✘ |
 | Stream Delivery | ✅ | ✅ | ✅ |
 | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="30">}} |
+| Trace | ✘ | ✘ | ✘ |
 | Waiting Room | ⚫️ | ✅ | ✅ |
 | Zaraz | ✅ | ✅ | ✅ |
 
