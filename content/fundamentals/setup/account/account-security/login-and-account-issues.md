@@ -62,7 +62,7 @@ ___
 
 ## Secure a compromised account
 
-If you observe suspicious activity within your Cloudflare account, secure your account using [these steps](/fundamentals/setup/account/account-security/securing-a-compromised-account/).
+If you observe suspicious activity within your Cloudflare account, secure your account using [these steps](/fundamentals/setup/account/account-security/secure-a-compromised-account/).
 
 ___
 
