@@ -1,7 +1,7 @@
 ---
 title: Alarms
 pcx_content_type: concept
-weight: 16
+weight: 1
 ---
 
 # Alarms 

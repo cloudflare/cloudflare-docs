@@ -6,7 +6,7 @@ weight: 2
 
 # Upload via dashboard
 
-Before you upload an image, check the list of [supported formats and dimensions](/images/upload-images/#supported-image-formats/) to confirm your image will be accepted.
+Before you upload an image, check the list of [supported formats and dimensions](/images/upload-images/#supported-image-formats) to confirm your image will be accepted.
 
 To upload an image from the Cloudflare dashboard:
 

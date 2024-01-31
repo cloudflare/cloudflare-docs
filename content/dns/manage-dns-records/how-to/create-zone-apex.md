@@ -22,7 +22,7 @@ To do this, create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-
 
 Once you create a domain, you may want to route that traffic to other places.
 
-For more guidance, refer to [Redirect domain to subdomain](/fundamentals/basic-tasks/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/setup/manage-domains/redirect-domain/).
+For more guidance, refer to [Redirect domain to subdomain](/fundamentals/setup/manage-domains/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/setup/manage-domains/redirect-domain/).
 
 ## Get free SSL certificates
 

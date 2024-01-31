@@ -10,7 +10,7 @@ ___
 
 ## Overview
 
-The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](https://api.cloudflare.com/). HTTP 409, 530, 403, 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
+The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](/api/). HTTP 409, 530, 403, and 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
 
 {{<Aside type="note">}}
 Cloudflare **[Custom Error
@@ -389,7 +389,7 @@ If you are the website owner:
 2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
 
 {{<Aside type="note">}}
-Convert the UTC timestamp of the 1005 error to your local timezone when
+Convert the UTC timestamp of the 1020 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 

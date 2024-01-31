@@ -126,7 +126,7 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 
 {{<feature-table id="network.max_upload_size">}}
 
-If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records), or [upgrade your plan](/fundamentals/account-and-billing/account-billing/change-plan/).
+If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records), or [upgrade your plan](/fundamentals/subscriptions-and-billing/change-plan/).
 
 ## **414 URI Too Long ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 

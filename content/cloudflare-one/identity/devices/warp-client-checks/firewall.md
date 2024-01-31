@@ -28,7 +28,7 @@ Next, go to **Logs** > **Posture** and verify that the firewall check is returni
 
 ## How WARP checks the firewall status
 
-Operating systems determine Firewall configuration in various ways. Follow the steps below to understand how the WARP client determines if the firewall is enabled.
+Operating systems determine firewall configuration in various ways. Follow the steps below to understand how the WARP client determines if the firewall is enabled.
 
 ### On macOS
 
@@ -36,16 +36,25 @@ macOS has two firewalls: an application-based firewall and a port-based firewall
 
 #### Application-based firewall
 
-1. Open **System Preferences** and go to **Security & Privacy**.
-1. Verify that **Firewall** is set to **On**.
+1. Open **System Settings** and go to **Network**.
+2. Verify that **Firewall** is `Active`.
 
 #### Port-based firewall
 
-1. Run `sudo /sbin/pfctl -s info`.
-1. Look for the value of **Status** which must be **Enabled**.
+1. Open Terminal and run:
+
+    ```sh
+    $ sudo /sbin/pfctl -s info
+    ```
+
+2. Verify that **Status** is `Enabled`.
 
 ### On Windows
 
-1. Open a PowerShell window.
-1. Run the `Get-NetFirewallProfile -Name Public` command to check the Firewall status of your public interface.
-1. Look for the value of **Enabled** which must be set to **True**.
+1. Open PowerShell and run:
+
+    ```bash
+    PS C:\Users\JohnDoe> Get-NetFirewallProfile -PolicyStore ActiveStore -Name Public
+    ```
+
+1. Verify that **Enabled** is `True`.

@@ -31,7 +31,7 @@
     },
     "zone_holds": {
       "title": "Zone holds",
-      "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
+      "link": "/fundamentals/setup/account/account-security/zone-holds/",
       "properties": {
         "availability": {
           "title": "Availability",

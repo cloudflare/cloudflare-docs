@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Manage domains
-weight: 3
+weight: 2
 ---
 
 # Manage domains
@@ -24,7 +24,7 @@ Cloudflare does not offer web hosting for most websites, though you can deploy a
 
 ## Add a domain to Cloudflare
 
-For help adding a domain to Cloudflare, refer to our [setup guide](/fundamentals/setup/account-setup/add-site/).
+For help adding a domain to Cloudflare, refer to our [setup guide](/fundamentals/setup/manage-domains/add-site/).
 
 Once you finish adding your domain, you likely will want to also [update your domain's nameservers](/dns/zone-setups/full-setup/) to get Cloudflare's performance and security benefits.
 
@@ -34,4 +34,4 @@ Cloudflare offers free, unshared, publicy trusted [Universal SSL certificates](/
 
 ## Manage subdomains
 
-For more details about subdomains (`www.example.com` or `blog.example.com`), refer to [Manage subdomains](/fundamentals/basic-tasks/manage-subdomains/).
+For more details about subdomains (`www.example.com` or `blog.example.com`), refer to [Manage subdomains](/fundamentals/setup/manage-domains/manage-subdomains/).
