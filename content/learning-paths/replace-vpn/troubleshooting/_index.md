@@ -14,4 +14,4 @@ Learn how to troubleshoot your ZTNA deployment.
 By the end of this module, you will be able to:
 
 - Investigate why users cannot connect to private network applications behind Cloudflare Tunnel.
-- Resolve the most common reasons for why connectivity issues occur.
+- Fix the most common causes of connectivity issues.
