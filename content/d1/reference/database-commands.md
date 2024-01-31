@@ -122,6 +122,6 @@ SELECT name, sql FROM sqlite_master"
 
 ## Related resources
 
-* Learn [how to create indexes](/d1/manage-databases/using-indexes/#list-indexes) in D1.
-* Use D1's [JSON functions](/d1/manage-databases/querying-json/) to query JSON data.
+* Learn [how to create indexes](/d1/manage-databases/use-indexes/#list-indexes) in D1.
+* Use D1's [JSON functions](/d1/manage-databases/query-json/) to query JSON data.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.

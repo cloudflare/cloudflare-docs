@@ -76,7 +76,7 @@ ERROR 9015: SQL engine error: query error: Error code 1: SQL error or missing da
 
 D1's support for [generated columns](/d1/manage-databases/generated-columns/) allows you to create dynamic columns that are generated based on the values of other columns, including extracted or calculated values of JSON data.
 
-These columns can be queried like any other column, and can have [indexes](/d1/manage-databases/using-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
+These columns can be queried like any other column, and can have [indexes](/d1/manage-databases/use-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
 
 For example, to define a column based on a value within a larger JSON object, use the `AS` keyword combined with a [JSON function](#supported-functions) to generate a typed column:
 
