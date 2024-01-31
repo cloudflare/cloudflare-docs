@@ -10,7 +10,7 @@ weight: 2
 
 ## Prerequisites
 
-- [Add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
+- [Add your domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
 - [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 
 ## 1. Add your application to Access
