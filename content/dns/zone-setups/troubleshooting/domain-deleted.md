@@ -16,7 +16,7 @@ ___
 
 ## Check Audit Logs
 
-Cloudflare [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/) contain information about domain deletion.
+Cloudflare [Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/) contain information about domain deletion.
 
 {{<Aside type="note">}}
 *Delete* is an **Action** that denotes domain deletion but is also commonly used for deletion of other various account settings. Therefore, ensure that **Resource** says *Zone*.

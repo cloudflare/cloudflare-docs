@@ -27,7 +27,7 @@ A security key provides phishing-resistant multifactor authentication to your Cl
 
 Cloudflare recommends configuring multiple security keys. With multiple keys, you can still use 2FA if the primary key is unavailable or if you are working on a different device.
 
-After [enabling 2FA on your Cloudflare account](/fundamentals/account-and-billing/account-security/2fa/#enable-two-factor-authentication-for-your-cloudflare-account), you can select **Manage** to configure 2FA security key authentication.
+After [enabling 2FA on your Cloudflare account](/fundamentals/setup/account/account-security/2fa/#enable-two-factor-authentication-for-your-cloudflare-account), you can select **Manage** to configure 2FA security key authentication.
 
 ### Configure a built-in authenticator (Apple Touch ID, Android fingerprint, or Windows Hello)
 
@@ -81,7 +81,7 @@ You may need to reconfigure your mobile application authentication if you join a
 Reconfiguring TOTP mobile application authentication does not turn off 2FA.
 {{</Aside>}}
 
-To reconfigure, follow [Steps 1-7](/fundamentals/account-and-billing/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) as detailed above.
+To reconfigure, follow [Steps 1-7](/fundamentals/setup/account/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) as detailed above.
 
 ___
 

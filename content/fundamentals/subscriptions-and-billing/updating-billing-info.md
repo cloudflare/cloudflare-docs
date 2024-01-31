@@ -7,7 +7,7 @@ title: Update billing information
 
 To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
 
-If Cloudflare is unable to process your payment, review [Troubleshooting failed payments](/fundamentals/account-and-billing/account-billing/troubleshooting-failed-payments/).
+If Cloudflare is unable to process your payment, review [Troubleshooting failed payments](/fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/).
 
 ---
 
@@ -107,7 +107,7 @@ If paying by PayPal, refer to PayPal's [billing address documentation](https://w
 
 ## Update billing email address
 
-Your billing email address is particularly important if you have [opted into email invoices](/fundamentals/setup/account-setup/create-billing-profile/#enable-email-invoices).
+Your billing email address is particularly important if you have [opted into email invoices](/fundamentals/subscriptions-and-billing/create-billing-profile/#enable-email-invoices).
 
 To update your billing email address:
 

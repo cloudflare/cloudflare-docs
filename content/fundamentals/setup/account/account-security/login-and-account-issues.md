@@ -50,19 +50,19 @@ ___
 
 ## Email verification issues
 
-Refer to [Verify email address](/fundamentals/setup/account-setup/verify-email-address/).
+Refer to [Verify email address](/fundamentals/setup/account/verify-email-address/).
 
 ___
 
 ## Change your Cloudflare email address or password
 
-Refer to [Change password or email address](/fundamentals/account-and-billing/account-billing/change-password-or-email/).
+Refer to [Change password or email address](/fundamentals/subscriptions-and-billing/change-password-or-email/).
 
 ___
 
 ## Secure a compromised account
 
-If you observe suspicious activity within your Cloudflare account, secure your account using [these steps](/fundamentals/account-and-billing/account-security/securing-a-compromised-account/).
+If you observe suspicious activity within your Cloudflare account, secure your account using [these steps](/fundamentals/setup/account/account-security/securing-a-compromised-account/).
 
 ___
 
@@ -74,7 +74,7 @@ You have several sign-in options for the [Cloudflare dashboard](https://dash.clo
 -   **Single sign on (SSO)**: Enter your email address (so long as your admin has [configured SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) as a sign in option).
 -   **Sign in with Apple**:
     -   _Same Cloudflare account email as Apple ID_: You can either sign in with your email and password or sign in with Apple.
-    -   _Different Cloudflare account email as Apple ID_: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](/fundamentals/account-and-billing/account-security/login-and-account-issues/) to match the one used for your Apple ID.
+    -   _Different Cloudflare account email as Apple ID_: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](/fundamentals/setup/account/account-security/login-and-account-issues/) to match the one used for your Apple ID.
 
 {{<Aside type="note">}}
 If you login to your Cloudflare user account with Single Sign-On (SSO), you will not be able to sign in with Apple.
@@ -85,6 +85,6 @@ ___
 ## Related resources
 
 -   [Move domains between Cloudflare accounts](/fundamentals/setup/manage-domains/move-domain/)
--   [Secure user access with two-factor authentication (2FA)](/fundamentals/account-and-billing/account-security/2fa/)
+-   [Secure user access with two-factor authentication (2FA)](/fundamentals/setup/account/account-security/2fa/)
 -   [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup)
 -   [Manage API keys and tokens](/fundamentals/api/get-started/)

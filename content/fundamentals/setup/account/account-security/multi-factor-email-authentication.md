@@ -20,7 +20,7 @@ Cloudflare challenges the login by sending a one-time code that expires in 30 mi
 By selecting **Remember this computer**, your device or browser will not receive MFA challenges for up to 14 days. After 14 days, Cloudflare will begin checking the IP address again for login attempts from that device/browser.
 
 {{<Aside type="note">}}
-Email MFA can only be disabled by enabling [two-factor authentication](/fundamentals/account-and-billing/account-security/2fa/).
+Email MFA can only be disabled by enabling [two-factor authentication](/fundamentals/setup/account/account-security/2fa/).
 {{</Aside>}}
 
 ___
@@ -37,4 +37,4 @@ ___
 
 ## Related resources
 
-- [Secure user access with two-factor authentication](/fundamentals/account-and-billing/account-security/2fa/)
+- [Secure user access with two-factor authentication](/fundamentals/setup/account/account-security/2fa/)

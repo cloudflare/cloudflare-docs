@@ -15,7 +15,7 @@ If payment for a recurring charge for a Cloudflare plan, add-on, or subscription
 The five-day grace period for failed payments on recurring Cloudflare charges includes weekends and holidays.
 {{</Aside>}}
 
-After confirming your payment method information, Cloudflare suggests [manually updating your plan type](/fundamentals/account-and-billing/account-billing/change-plan/) and subscriptions using the Cloudflare dashboard.
+After confirming your payment method information, Cloudflare suggests [manually updating your plan type](/fundamentals/subscriptions-and-billing/change-plan/) and subscriptions using the Cloudflare dashboard.
 
 ___
 
@@ -63,7 +63,7 @@ The billing information that Cloudflare has on file is inaccurate or incomplete.
 Gift cards and pre-payment cards may not be accepted for payment as they are not associated with a billing address.
 {{</Aside>}}
 
-To ensure all billing information is current and accurate, refer to [Updating your Cloudflare billing information](/fundamentals/account-and-billing/account-billing/updating-billing-info/).
+To ensure all billing information is current and accurate, refer to [Updating your Cloudflare billing information](/fundamentals/subscriptions-and-billing/updating-billing-info/).
 
 ### Insufficient funds
 
@@ -82,5 +82,5 @@ ___
 ## Related resources
 
 -   [Cloudflare billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/)
--   [Understand Cloudflare invoices](/fundamentals/account-and-billing/account-billing/understand-invoices/)
--   [Updat your Cloudflare billing information](/fundamentals/account-and-billing/account-billing/updating-billing-info/)
+-   [Understand Cloudflare invoices](/fundamentals/subscriptions-and-billing/understand-invoices/)
+-   [Updat your Cloudflare billing information](/fundamentals/subscriptions-and-billing/updating-billing-info/)

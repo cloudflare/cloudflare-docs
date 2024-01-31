@@ -72,7 +72,7 @@ You can have two different billing cycles on your account, one for a monthly sub
 
 ### Change in billing contact information
 
-If your billing contact information has changed, [update your Cloudflare email address](/fundamentals/account-and-billing/account-billing/change-password-or-email/#change-email-address) as soon as possible.
+If your billing contact information has changed, [update your Cloudflare email address](/fundamentals/subscriptions-and-billing/change-password-or-email/#change-email-address) as soon as possible.
 
 ### Change in Cloudflare subscription or account
 
@@ -82,7 +82,7 @@ Billing periods are 30 days. Payments for all recurring monthly costs are proces
 
 ### Cloudflare invoice without company name
 
-To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/account-and-billing/account-billing/updating-billing-info/).
+To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/subscriptions-and-billing/updating-billing-info/).
 
 ### Inconsistent invoice and payment amounts
 
