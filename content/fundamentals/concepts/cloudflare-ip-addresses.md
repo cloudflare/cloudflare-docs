@@ -26,7 +26,7 @@ weight: 4
 To avoid blocking Cloudflare IP addresses unintentionally, review your external tools to check that:
 
 - Any security plugins — such as those for WordPress — allow Cloudflare IP addresses.
-- The [mod_security](https://github.com/SpiderLabs/ModSecurity) plugin is up to date.
+- The [ModSecurity](https://github.com/SpiderLabs/ModSecurity) plugin is up to date.
 
 ### Additional recommendations
 
