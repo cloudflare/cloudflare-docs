@@ -186,7 +186,7 @@ To disable payload logging for a managed ruleset:
 
 2. Modify the rule definition so that there is no `matched_data` object in `action_parameters`.
 
-For example, the following `PATCH` request updates the rule deploying the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) so that payload logging is disabled:
+For example, the following `PATCH` request updates rule with ID `{rule_id}` deploying the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) so that payload logging is disabled:
 
 ```bash
 curl --request PATCH \
