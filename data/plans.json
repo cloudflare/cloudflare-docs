@@ -2118,20 +2118,6 @@
         }
       }
     },
-    "railgun": {
-      "title": "Railgun (deprecated)",
-      "link": "/railgun/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Business and above",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
     "rocket_loader": {
       "title": "Rocket Loader",
       "link": "/speed/optimization/content/rocket-loader/",
