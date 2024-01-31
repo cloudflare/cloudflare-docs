@@ -159,7 +159,7 @@ The different cache topologies allow customers to control how Cloudflare interac
 
 In Figure 4, Tiered Caching is enabled with Smart Tiered Cache Topology. The diagram depicts two separate traffic flows, summarized below. The first traffic flow (Client 1) is a request from a client that comes into Data Center 1. The second traffic flow (Client 2) is a subsequent request for the same resource into a different data center, Data Center 2.
 
-![Figure 4: The same diagram as Figure 3 demonstrating requests between end users and origin server over the Anycast Network, with bidirectional arrows indicating traffic flow enabled by Smart Tiered Cache.](/images/reference-architecture/cdn-reference-architecture-images/cref-arch-cdn-figure4.svg) 
+![Figure 4: The same diagram as Figure 3 demonstrating requests between end users and origin server over the Anycast Network, with bidirectional arrows indicating traffic flow enabled by Smart Tiered Cache.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure4.svg) 
 _Figure 4: HTTP requests and traffic flow through Cloudflare CDN_
 
 | Request 1 | Request 2 |
