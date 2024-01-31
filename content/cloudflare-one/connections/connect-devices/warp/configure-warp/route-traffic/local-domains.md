@@ -26,7 +26,6 @@ Local Domain Fallback configuration only impacts where DNS requests get resolved
 
 ## Add a domain
 
-
 {{<render file="warp/_view-local-domains.md" productFolder="cloudflare-one">}}
 4. In **Domain**, enter the domain that you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (in other words, `example.com` is interpreted as `*.example.com`).
 
