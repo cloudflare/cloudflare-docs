@@ -237,13 +237,73 @@ describe("multi-worker testing", () => {
 
 The `getBindingsProxy` function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
 
+This can be useful for emulating bindings access for applications that would otherwise not have it during local development (such as full stack applications running in a Node.js dev server) or for testing purposes (such as for making sure that a certain function properly interacts with a certain type of binding).
+
+{{<Aside type="note">}}
+
+Please keep in mind that the binding proxies provided by the function are a best effort emulation of the real production bindings, although they are made to be as close as possible to the real thing there might be slight differences and inconsistencies between the two.
+
+{{</Aside>}}
+
+### Syntax
+
+```js
+const bindingsProxy = await getBindingsProxy(options);
+```
+
+### Parameters
+
+{{<definitions>}}
+
+*   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+    *   Optional options object containing preferences for the bindings, such are:
+        * `configPath` {{<type>}}string{{</type>}}
+
+          The path to the config object to use (default `wrangler.toml`)
+
+        * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
+
+          Flag requiring the utility to read a json config file (`wrangler.json`), if present, instead of the toml one (`wrangler.toml`)
+
+        * `persist` {{<type>}}boolean | { path: string }{{</type>}}
+
+          Indicates if and where to persist the bindings data, if not present or `true` it defaults to the same location
+          used by wrangler v3: `.wrangler/state/v3` (so that the same data can be easily used by the caller and wrangler).
+          If `false` is specified no data is persisted on the filesystem.
+
+{{</definitions>}}
+
+### Return Type
+
+`getBindingsProxy()` returns a promise to an object containing the following fields:
+
+{{<definitions>}}
+
+*   `bindings` {{<type>}}Record<string, unknown>{{</type>}}
+
+    *   The actual bindings proxies, such can be used exactly in the same manner production bindings would. They proxy to binding implementations run inside a `workerd` instance (run by Miniflare).
+    *   Typescript Tip: `getBindingsProxy` is a generic function, you can specify to it the shape of the bindings record in order to have a more proper type without `unknown` values.
+
+*   `caches` {{<type>}}object{{</type>}}
+
+    *   Emulation of the [workers `caches` runtime API](https://developers.cloudflare.com/workers/runtime-apis/cache/).
+    *   For the time being such emulation is a no-operation one, a more accurate emulation will be made available soon.
+
+*   `dispose()` {{<type>}}() => Promise\<void>{{</type>}}
+
+    *   Function to be called to terminate the underlying workerd process.
+    *   Only needed after the bindings proxy is no longer required the the program, if you are running a long running process (such as a dev server) that can indefinitely make sure of the bindings you don't need to use this function.
+
+{{</definitions>}}
+
+
 ### Usage
 
 The `getBindingsProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
 
 ```js
 [vars]
-
 MY_VARIABLE = "test"
 ```
 
@@ -261,7 +321,7 @@ To access the value of the `MY_VARIABLE` binding add the following to your code:
 console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 ```
 
-In your terminal you should see: `MY_VARIABLE = test`
+which would print the following output: `MY_VARIABLE = test`
 
 ### Supported bindings
 
@@ -273,5 +333,7 @@ The bindings supported by `getBindingsProxy` are:
  - [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
  - [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
  - [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+ - [Queue bindings](/workers/configuration/bindings/#queue-bindings)
  - [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
+ - [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
 
