@@ -1,11 +1,12 @@
 ---
-title: Local development and testing
+title: Local development
+weight: 2
 pcx_content_type: concept
 meta:
   description: Test your Worker in local development.
 ---
 
-# Local development and testing
+# Local development
 
 Cloudflare Workers can be fully developed and tested locally - providing confidence that the applications you develop locally work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to test against remote resources. Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
