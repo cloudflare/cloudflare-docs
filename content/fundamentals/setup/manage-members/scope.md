@@ -14,6 +14,9 @@ When you assign domain specific roles to account members, you can scope these ro
 
 You choose the scope of a role when you [add a member](/fundamentals/setup/manage-members/manage/) to your account.
 
+{{<Aside type="note">}}
+You need to choose to assign either an Account Scope role or Domain Scope role. You cannot combine both scope roles for the same member. 
+{{</Aside>}}
 ### All domains
 
 If you want the member to have a role that applies to all domains within your account, use the following combination of fields.
