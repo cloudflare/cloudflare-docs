@@ -593,7 +593,7 @@
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/load-balancers/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
-/load-balancing/additional-options/railgun/ /railgun/ 301
+/load-balancing/additional-options/railgun/ / 301
 
 # logs
 /logs/get-started/logpush-configuration-api/understanding-logpush-api/ /logs/get-started/api-configuration/ 301
@@ -779,6 +779,7 @@
 /railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
 /railgun/user-guide/optimized-partner-api/ /railgun/partners/ 301
 /support/speed/optimization-delivery-railgun/railgun-faq/ /railgun/ 301
+/railgun/* / 301
 
 # registrar
 /registrar/cloudflare-registrar/domain-management/ /registrar/account-options/domain-management/ 301
