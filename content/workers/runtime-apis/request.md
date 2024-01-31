@@ -255,6 +255,14 @@ All plans have access to:
 
     *   Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
 
+*   `tlsClientHelloLength` {{<type>}}string{{</type>}}
+
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello, after the hexidecimal bytes have been decoded.
+
+*   `tlsClientRandom` {{<type>}}string{{</type>}}
+
+    *   The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). Refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2) for more details.
+
 *   `tlsVersion` {{<type>}}string{{</type>}}
 
     *   The TLS version of the connection to Cloudflare, for example, `TLSv1.3`.
