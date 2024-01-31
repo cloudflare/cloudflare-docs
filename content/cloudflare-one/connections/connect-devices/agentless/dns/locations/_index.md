@@ -14,6 +14,6 @@ weight: 1
 
 8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
 
-You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [DNS Location](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
+You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [DNS Location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) selector.
 
 {{<render file="gateway/_add-locations-static-ip-warning.md">}}

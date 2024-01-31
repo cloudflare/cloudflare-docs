@@ -10,7 +10,7 @@ Variables are reusable blocks of information. They allow you to have one source 
 
 For example, instead of typing a specific user ID in multiple fields, you can create a variable with that information instead. If there is a change and you have to update the user ID, you just need to update the variable and the change will be reflected across the dashboard.
 
-Worker Variables are a special type of variable that generates value dynamically. Learn more about Worker Variables [here](/zaraz/advanced/worker-variables/).
+[Worker Variables](/zaraz/advanced/worker-variables/) are a special type of variable that generates value dynamically.
 
 ## Create a new variable
 

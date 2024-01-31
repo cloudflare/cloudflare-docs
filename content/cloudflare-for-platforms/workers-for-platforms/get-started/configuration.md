@@ -39,7 +39,7 @@ Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/re
 To create a dispatch namespace, run:
 
 ```sh
-$ wrangler dispatch-namespace create <NAMESPACE_NAME>
+$ npx wrangler dispatch-namespace create <NAMESPACE_NAME>
 ```
 
 ## 3. Create a dynamic dispatch Worker
@@ -51,7 +51,7 @@ To create a dynamic dispatch Worker, you must create a Worker and bind it to the
 To create a Worker, run `wrangler init` followed by your Worker project name:
 
 ```sh
-$ wrangler init <YOUR_WORKER>
+$ npx wrangler init <YOUR_WORKER>
 ```
 
 To create a dynamic dispatch Worker, create a [binding](/workers/configuration/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:

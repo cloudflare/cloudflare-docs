@@ -465,7 +465,7 @@
     "link": "/fundamentals/global-configurations/",
     "custom_pages": {
       "title": "Custom error/challenge pages",
-      "link": "https://support.cloudflare.com/hc/articles/200172706",
+      "link": "/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/",
       "properties": {
         "availability": {
           "title": "Availability",

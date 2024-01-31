@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-1. Go to the [**Local Domain Fallback** page](#view-local-domains).
+1. Go to [**Local Domain Fallback**](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#view-local-domains).
 
 2. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `*.example.com`).
 

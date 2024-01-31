@@ -6,12 +6,18 @@ weight: 2
 
 # Available Managed Transforms
 
+This page lists the available Managed Transforms. They can modify HTTP request headers or response headers.
+
+{{<Aside type="note" header="Note">}}
+The names of HTTP headers are case-insensitive. Cloudflare may use a capitalization different from the one presented in this page. Make sure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
+{{</Aside>}}
+
 ## HTTP request headers
 
 ### Add bot protection headers
 
 {{<Aside type="note">}}
-Requires a Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+Requires an Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 {{</Aside>}}
 
 Adds HTTP headers with bot-related values to the request sent to the origin server:

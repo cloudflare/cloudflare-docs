@@ -80,7 +80,7 @@ Match host vm.example.com exec "/usr/local/bin/cloudflared access ssh-gen --host
 
 ### Connect through a browser-based terminal
 
-End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/cloudflare-one/applications/non-http/#rendering-in-the-browser).
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions for [Render terminal in browser](/cloudflare-one/applications/non-http/#rendering-in-the-browser).
 
 ---
 

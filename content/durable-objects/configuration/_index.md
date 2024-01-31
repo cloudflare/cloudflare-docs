@@ -1,9 +1,9 @@
 ---
-title: How to
+title: Configuration
 pcx_content_type: navigation
-weight: 7
+weight: 4
 ---
 
-# How to
+# Configuration
 
 {{<directory-listing>}}
