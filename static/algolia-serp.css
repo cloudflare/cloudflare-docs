@@ -179,6 +179,10 @@
 
 /* Dark mode styling */
 
+[theme="dark"] .ais-SearchBox-input::placeholder {
+  color: inherit;
+}
+
 [theme="dark"] .ais-SearchBox-form::before {
   filter: invert(1) grayscale(100%);
 }
