@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Setup
+title: How to use Cloudflare
 weight: 3
 meta:
   title: Set up Cloudflare
