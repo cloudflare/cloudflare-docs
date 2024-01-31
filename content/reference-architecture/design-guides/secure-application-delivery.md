@@ -229,7 +229,7 @@ Cloudflare CDN leverages Cloudflare’s global Anycast edge network. In addition
 ![Cloudflare provides analytics for visibility into caching data and performance.](/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-25.png)
 *Figure 25 : Cloudflare Caching Analytics.*
 
-There are [different caching topologies and configurations available](/reference-architecture/cdn-reference-architecture/). Below, you can see a Cache Rule has been configured to cache requests to the domain and override the origin TTL.
+There are [different caching topologies and configurations available](/reference-architecture/architecture/cdn/). Below, you can see a Cache Rule has been configured to cache requests to the domain and override the origin TTL.
 
 ![Cloudflare Cache Rules allow for granular control of caching.](/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-26.png)
 *Figure 26 : Cloudflare rule configuration.*

@@ -10,5 +10,7 @@ weight: 1
 Diagrams, design patterns and detailed best practices to help you generate solutions with Cloudflare products.
 {{</description>}}
  
+{{<render file="_description-of-ref-architectures.md" productFolder="reference-architecture">}}
+
 {{<directory-listing>}}
  
