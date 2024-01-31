@@ -13,7 +13,7 @@ meta:
 Every day, users of the Internet enjoy the benefits of performance and reliability provided by [content delivery networks](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (CDNs). CDNs have become a must-have to combat latency and a requirement for any major company delivering content to users on the Internet. While providing performance and reliability for customers, CDNs also enable companies to further secure their applications and cut costs. This document discusses the traditional challenges customers face with web applications, how the Cloudflare CDN resolves these challenges, and CDN architecture and design.
 
 ### Who is this document for and what will you learn?
-This reference architecture is designed for IT or network professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies and concepts important to content delivery, including caching, DNS and firewalls.
+This reference architecture is designed for IT or network professionals with some responsibility over or familiarity with their organization's existing infrastructure. It is useful to have some experience with technologies and concepts important to content delivery, including caching, DNS and firewalls.
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 

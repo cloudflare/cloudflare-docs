@@ -12,7 +12,7 @@ meta:
 The purpose of this document is to describe the key architecture, functionalities, and network deployment options of [Cloudflare Magic Transit](/magic-transit/) — a BGP-based DDoS protection and traffic acceleration service for Internet-facing network infrastructure. 
 
 ### Who is this document for and what will you learn?
-This reference architecture is designed for IT or network professionals with some responsibility over or familiarity with their organization’s existing network infrastructure. It is useful to have some experience with technologies and concepts important to content delivery, including routers, DNS and firewalls.
+This reference architecture is designed for IT or network professionals with some responsibility over or familiarity with their organization's existing network infrastructure. It is useful to have some experience with technologies and concepts important to content delivery, including routers, DNS and firewalls.
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
@@ -53,7 +53,7 @@ In the event of a network outage or other issues, tunnels fail over automaticall
 
 ### Default Configuration (Ingress Only, Direct Server Return)
 
-By default, Magic Transit processes traffic in the ingress direction only (from the Internet to the customer network). The server return traffic back to the clients is routed by the customer’s DC edge router via its uplinks to the Internet/ISP based on the edge router’s default routing table. This server return traffic will not transit through Cloudflare via tunnels. This is referred to as Direct Server Return (DSR).
+By default, Magic Transit processes traffic in the ingress direction only (from the Internet to the customer network). The server return traffic back to the clients is routed by the customer's DC edge router via its uplinks to the Internet/ISP based on the edge router’s default routing table. This server return traffic will not transit through Cloudflare via tunnels. This is referred to as Direct Server Return (DSR).
 
 The network diagram in Figure 2 illustrates such a Magic Transit setup, and the end-to-end packet flow of Magic Transit-protected traffic. The tunnel in this setup uses GRE for encapsulation.
 
@@ -65,20 +65,20 @@ The network diagram in Figure 2 illustrates such a Magic Transit setup, and the 
 
 * The customer end of the Anycast GRE tunnel needs to be a publicly routable address. It is typically the IP address of the WAN interface on the customer edge router. In this example it is 192.0.2.153.
 
-* The IP addresses of the tunnel interfaces are RFC 1918 private addresses. These addresses are only “locally significant” within the particular Magic Transit service instance that they are part of. Therefore, the customer can select any RFC 1918 addresses they desire, as long as they do not overlap with those of other tunnels configured within the same Magic Transit service instance.
+* The IP addresses of the tunnel interfaces are RFC 1918 private addresses. These addresses are only "locally significant" within the particular Magic Transit service instance that they are part of. Therefore, the customer can select any RFC 1918 addresses they desire, as long as they do not overlap with those of other tunnels configured within the same Magic Transit service instance.
 
-* As best practice, given the tunnels are point-to-point connections, a /31 subnet is sufficient for allocating the 2 IP addresses required for a given tunnel. In the above example, the 10.10.10.0/31 subnet is chosen, with the Cloudflare end of the tunnel interface being 10.10.10.0/31 and the customer’s DC edge router side being 10.10.10.1/31.
+* As best practice, given the tunnels are point-to-point connections, a /31 subnet is sufficient for allocating the 2 IP addresses required for a given tunnel. In the above example, the 10.10.10.0/31 subnet is chosen, with the Cloudflare end of the tunnel interface being 10.10.10.0/31 and the customer's DC edge router side being 10.10.10.1/31.
 
 * Once the tunnel is configured, a route is configured in the Magic Transit service instance to forward traffic destined to a given customer prefix onto the correct tunnel.
 
-* Traffic destined to customer prefix 203.0.113.0/24 is routed onto the tunnel whose remote end (i.e. the customer’s end, from the Cloudflare network’s perspective) of the tunnel interface is 10.10.10.1.
+* Traffic destined to customer prefix 203.0.113.0/24 is routed onto the tunnel whose remote end (i.e. the customer’s end, from the Cloudflare network's perspective) of the tunnel interface is 10.10.10.1.
 
-* Given this is a Direct Server Return (DSR) setup, the server return traffic follows the default route (ip route 0/0) configured on the customer edge router and is sent to its uplink peer (i.e. customer’s ISP’s router), en route back to the clients over the Internet. This return traffic does not traverse Cloudflare network.
+* Given this is a Direct Server Return (DSR) setup, the server return traffic follows the default route (ip route 0/0) configured on the customer edge router and is sent to its uplink peer (i.e. customer’s ISP's router), en route back to the clients over the Internet. This return traffic does not traverse Cloudflare network.
 
-**Note:** The smallest IP prefix size (i.e. with the longest IP subnet mask) that most ISPs accept in each other’s BGP advertisements is /24; e.g. x.x.x.0/24 or y.y.y.0/23 are okay, but z.z.z.0/25 is not. Therefore, the smallest IP prefix size Cloudflare Magic Transit can advertise on behalf of the customers is /24.
+**Note:** The smallest IP prefix size (i.e. with the longest IP subnet mask) that most ISPs accept in each other's BGP advertisements is /24; e.g. x.x.x.0/24 or y.y.y.0/23 are okay, but z.z.z.0/25 is not. Therefore, the smallest IP prefix size Cloudflare Magic Transit can advertise on behalf of the customers is /24.
 
 ### Magic Transit With Egress Option Enabled
-When Magic Transit is deployed with the Egress option enabled, egress traffic from the customer’s network flows over the Cloudflare network as well. This deployment option provides symmetry to the traffic flow, where both client-to-server and server-return traffic flow through the Cloudflare network. This implementation provides added security and reliability to the server-return traffic, as afforded by the Cloudflare network.
+When Magic Transit is deployed with the Egress option enabled, egress traffic from the customer's network flows over the Cloudflare network as well. This deployment option provides symmetry to the traffic flow, where both client-to-server and server-return traffic flow through the Cloudflare network. This implementation provides added security and reliability to the server-return traffic, as afforded by the Cloudflare network.
 
 The following network diagram illustrates the end-to-end packet flow between the end client and customer network when the Magic Transit Egress option is enabled. 
 
@@ -93,7 +93,7 @@ The following network diagram illustrates the end-to-end packet flow between the
 
 It is worth noting that for customers who bring their own public IP addresses ([BYOIP](/byoip/)) for cloud-hosted services, the Magic Transit Egress option can provide additional value by eliminating the need for them to purchase and implement BYOIP services with their cloud providers, reducing their cloud bill and lowering operational costs.
 
-To accomplish this, the IP tunnels that on-ramps to Magic Transit are configured between the cloud providers’ VPCs and the Cloudflare network. With the Magic Transit Egress option, both directions of client-server traffic would flow through these tunnels. The BYOIP addresses in the tunneled packets are hidden behind the outer tunnel endpoint IP addresses and the tunnel header, making them “invisible” to the underlying cloud provider network elements between the VPCs and the Cloudflare network.
+To accomplish this, the IP tunnels that on-ramps to Magic Transit are configured between the cloud providers' VPCs and the Cloudflare network. With the Magic Transit Egress option, both directions of client-server traffic would flow through these tunnels. The BYOIP addresses in the tunneled packets are hidden behind the outer tunnel endpoint IP addresses and the tunnel header, making them "invisible" to the underlying cloud provider network elements between the VPCs and the Cloudflare network.
 
 ### Magic Transit Over Cloudflare Network Interconnect (CNI)
 
@@ -134,11 +134,11 @@ Magic Transit protects services hosted on-premise and in the cloud. This use cas
 
 * In this example, the customer’s /24 or larger prefix is split into multiple smaller (i.e. longer subnet mask length) prefixes (e.g. /26) and assigned to the various VPCs in different locations. Upon establishing the tunnels from the Cloudflare network to each of the VPCs, the customer can configure routes centrally in the Magic Transit configuration to route traffic to the respective VPCs. Such configuration can be made via API or UI dashboard.
 
-Note that with the Magic Transit Egress option, the customer can bypass each cloud provider’s BYOIP services, its associated fees, and the configuration and operations complexity, by sending egress traffic (i.e. server return or server-to-Internet traffic from the protected prefix) through the Cloudflare global network via the Magic Transit tunnels. 
+Note that with the Magic Transit Egress option, the customer can bypass each cloud provider's BYOIP services, its associated fees, and the configuration and operations complexity, by sending egress traffic (i.e. server return or server-to-Internet traffic from the protected prefix) through the Cloudflare global network via the Magic Transit tunnels. 
 
 ### Magic Transit and Magic WAN
 
-In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic) with the Cloudflare Magic Transit service, customers can protect east-west “intra-enterprise” internal traffic (e.g. RFC 1918 private addresses), interconnecting all the sites of an enterprise, using [Cloudflare Magic WAN](/magic-wan/).
+In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic) with the Cloudflare Magic Transit service, customers can protect east-west "intra-enterprise" internal traffic (e.g. RFC 1918 private addresses), interconnecting all the sites of an enterprise, using [Cloudflare Magic WAN](/magic-wan/).
 
 Magic WAN replaces legacy WAN architectures with the Cloudflare network, providing global connectivity, cloud-based security, performance, and control through one simple user interface.
 
@@ -152,7 +152,7 @@ Figure 7 illustrates an example of deploying Magic Transit and Magic WAN service
 ![Figure 7: Magic Transit + Magic WAN Provide Network-as-a-Service for the Entire Enterprise](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-7.png)
 *Figure 7: Magic Transit + Magic WAN Provide Network-as-a-Service for the Entire Enterprise*
 
-* In the example, GRE tunnels are used to connect the customer’s various sites over the Cloudflare global Anycast network. The Cloudflare Anycast IP address for the Magic Transit service instance is 192.0.2.1, while the one for the Magic WAN service instance is 192.0.2.2. The Magic Transit service is enabled with the Egress option.
+* In the example, GRE tunnels are used to connect the customer's various sites over the Cloudflare global Anycast network. The Cloudflare Anycast IP address for the Magic Transit service instance is 192.0.2.1, while the one for the Magic WAN service instance is 192.0.2.2. The Magic Transit service is enabled with the Egress option.
 
 
 * The Magic Transit service protects and routes external-facing front-end client-server traffic. The Magic WAN service protects and routes enterprise internal traffic such as that of internal applications, back-end database sync, and branch-to-DC and branch-to-branch traffic.
@@ -173,7 +173,7 @@ For further details on Magic Firewall and its configuration, please refer to thi
 ## A Note on Always-On and On-Demand Deployments
 A cloud DDoS mitigation service provider can monitor traffic for threats at all times (the always-on deployment model) or reroute traffic only when an attack is detected (on-demand). This decision affects response time and time-to-mitigation. In some cases, it also has repercussions for latency.
 
-In an on-demand deployment model, inbound traffic is monitored and measured at the network edge to detect volumetric attacks. During normal operations, or “peacetime,” all traffic directly reaches applications and infrastructure without any delay or redirection. Traffic is diverted to the cloud scrubbing provider only in the case of an active DDoS attack. In many cases, a customer is required to call the service provider to redirect traffic, thereby increasing the response time. 
+In an on-demand deployment model, inbound traffic is monitored and measured at the network edge to detect volumetric attacks. During normal operations, or "peacetime," all traffic directly reaches applications and infrastructure without any delay or redirection. Traffic is diverted to the cloud scrubbing provider only in the case of an active DDoS attack. In many cases, a customer is required to call the service provider to redirect traffic, thereby increasing the response time. 
 
 The always-on mode is a hands-off approach to DDoS mitigation that does not require the customer to do anything in the event of an attack. The organization’s traffic is always routed through the cloud provider’s data centers for threat inspection, even during peacetime. This minimizes the time from detection to mitigation, and there is no service interruption. 
 
