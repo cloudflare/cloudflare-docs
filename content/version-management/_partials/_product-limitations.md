@@ -11,5 +11,6 @@ Version Management does not currently support the following products or features
 - [WAF Attack Score](/waf/about/waf-attack-score/)
 - [API Shield](/api-shield/)
 - [Workers Cache API](/workers/runtime-apis/cache/)
+- [Cache Rules](/cache/how-to/cache-rules/) when used with [Cloudflare Images](/images/)
 
 Additionally, you cannot currently manage versioning through the [Cloudflare API](/api/) or deploy Workers used by zones that have enabled versioning via [Wrangler](/workers/wrangler/).
