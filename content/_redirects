@@ -593,7 +593,7 @@
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/load-balancers/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
-/load-balancing/additional-options/railgun/ / 301
+/load-balancing/additional-options/railgun/ /load-balancing/ 301
 
 # logs
 /logs/get-started/logpush-configuration-api/understanding-logpush-api/ /logs/get-started/api-configuration/ 301
