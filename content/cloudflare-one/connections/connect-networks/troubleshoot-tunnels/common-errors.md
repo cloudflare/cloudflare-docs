@@ -40,7 +40,7 @@ The third component, the token, consists of the zone ID (for the selected domain
 
 ## I see an error: x509: certificate signed by unknown authority.
 
-This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
+This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL/TLS inspection in a proxy between your server and Cloudflare. To solve this:
 
 - Add the certificate to the system certificate pool.
 - Use the `--origin-ca-pool` flag and specify the path to the certificate.
