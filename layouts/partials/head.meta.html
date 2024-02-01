@@ -9,7 +9,7 @@
 
   {{- $availableContentTypes := slice
     "changelog" "concept" "configuration" "faq" "get-started" "glossary"
-    "how-to" "integration-guide" "learning-path" "learning-unit" "migration" 
+    "how-to" "integration-guide" "learning-path" "learning-unit" "migration"
     "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
     "tutorial"
     -}}
@@ -62,7 +62,7 @@
   {{- else -}}
     {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
   {{- end -}}
-  
+
   {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
@@ -78,6 +78,10 @@
 
   <meta charset="utf-8">
   <title>{{ $title }}</title>
+  <meta name="title" content="{{ $title }}" />
+  <link rel="canonical" href="{{ .Context.Permalink }}" />
+  <meta name="description" content="{{ $description }}" />
+
   <meta http-equiv="cleartype" content="on" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -90,9 +94,10 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#f38020" />
 
-  <meta property="og:image" content="{{ $imagePlaceholder }}" name="image" />
-  <meta property="og:title" content="{{ $title }}" name="title" />
-  <meta property="og:description" content="{{ $description }}" name="description" />
+  <meta property="og:site_name" content="Cloudflare Developer Docs" />
+  <meta property="og:image" content="{{ $imagePlaceholder }}" />
+  <meta property="og:title" content="{{ $title }}" />
+  <meta property="og:description" content="{{ $description }}" />
   <meta property="og:type" content="{{- if not .IsHome -}}article{{- else -}}website{{- end -}}" />
   <meta property="og:url" content="{{ .Context.Permalink }}" />
 
@@ -117,7 +122,7 @@
   {{- $diffMod := now.Sub $lastMod -}}
   {{- $lastModifiedDays := math.Round (div $diffMod.Hours 24) -}}
   <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
-  
+
   {{- with .Context.Params.updated -}}
   {{- $lastReview := . | time -}}
   {{- $diffReview := now.Sub $lastReview -}}
@@ -141,7 +146,7 @@
 
   <!--Add rss feed if specified via output -->
   {{ with $.Context.OutputFormats.Get "rss" }}
-  
+
   {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
 
   {{- if ne $product "" -}}
@@ -181,7 +186,6 @@
 
   {{ end }}
   <link rel="icon" href="/favicon-32x32.png" />
-  <link rel="canonical" href="{{ .Context.Permalink }}" />
   <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
   <link rel="manifest" href="/manifest.webmanifest" />
 
