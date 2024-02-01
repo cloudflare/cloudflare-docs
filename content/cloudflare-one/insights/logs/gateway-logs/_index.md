@@ -6,7 +6,7 @@ weight: 3
 
 # Gateway activity logs
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
 
@@ -124,6 +124,12 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 {{</table-wrap>}}
 
 ## Network logs
+
+{{<Aside type="warning" header="Dropped connection logs">}}
+
+Gateway will only surface dropped connection data in sessions logged via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries). This feature is only available on Enterprise plans.
+
+{{</Aside>}}
 
 ### Explanation of the fields
 
