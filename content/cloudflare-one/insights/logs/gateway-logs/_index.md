@@ -125,9 +125,9 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 ## Network logs
 
-{{<Aside type="warning" header="Dropped connection logs">}}
+{{<Aside type="warning" header="Failed connection logs">}}
 
-Gateway will only surface dropped connection data in sessions logged via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries). This feature is only available on Enterprise plans.
+Gateway will only log failed connection information in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries). For more information, contact your account team.
 
 {{</Aside>}}
 
