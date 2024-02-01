@@ -90,13 +90,11 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#f38020" />
 
-  <meta name="description" content="{{ $description }}" />
-
-  <meta name="og:image" property="og:image" content="{{ $imagePlaceholder }}" />
-  <meta name="og:title" property="og:title" content="{{ $title }}" />
-  <meta name="og:description" property="og:description" content="{{ $description }}" />
-  <meta name="og:type" property="og:type" content="{{- if .IsPage -}}article{{- else -}}website{{- end -}}" />
-  <meta name="og:url" property="og:url" content="{{ .Context.Permalink }}" />
+  <meta property="og:image" content="{{ $imagePlaceholder }}" name="image" />
+  <meta property="og:title" content="{{ $title }}" name="title" />
+  <meta property="og:description" content="{{ $description }}" name="description" />
+  <meta property="og:type" content="{{- if not .IsHome -}}article{{- else -}}website{{- end -}}" />
+  <meta property="og:url" content="{{ .Context.Permalink }}" />
 
   <meta name="twitter:title" content="{{ $title }}" />
   <meta name="twitter:image" content="{{ $imagePlaceholder }}" />
