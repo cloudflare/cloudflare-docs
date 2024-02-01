@@ -41,6 +41,10 @@ Wrangler supports the following environment variables:
 
   - Options for this are `true` and `false`, the default behavior is `false`.
 
+- `HYPERDRIVE_LOCAL_CONNECTION_STRING` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The [local connection string](/hyperdrive/configuration/local-development/) for your database to use in local development with [Hyperdrive](/hyperdrive/) - for example, `HYPERDRIVE_LOCAL_CONNECTION_STRING="postgres://user:password@127.0.0.1:5432/testdb"`
+
 - `CLOUDFLARE_API_BASE_URL` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The default value is `"https://api.cloudflare.com/client/v4"`.
