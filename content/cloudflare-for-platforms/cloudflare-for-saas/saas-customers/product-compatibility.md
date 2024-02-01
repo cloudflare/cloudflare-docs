@@ -13,6 +13,8 @@ The following table provides a list of compatibility guidelines for various Clou
 
 As a general rule, settings on the customer zone will override settings on the SaaS zone.
 
+Please note that O2O feature does not allow a custom hostname zone send traffic into another custom hostname zone. 
+
 {{<Aside type="note">}}
 
 This is not an exhaustive list of Cloudflare products and features.
