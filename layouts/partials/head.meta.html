@@ -9,7 +9,7 @@
 
   {{- $availableContentTypes := slice
     "changelog" "concept" "configuration" "faq" "get-started" "glossary"
-    "how-to" "integration-guide" "learning-path" "learning-unit" "migration" 
+    "how-to" "integration-guide" "learning-path" "learning-unit" "migration"
     "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
     "tutorial"
     -}}
@@ -67,7 +67,7 @@
   {{- else -}}
     {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
   {{- end -}}
-  
+
   {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
@@ -123,7 +123,7 @@
   {{- $diffMod := now.Sub $lastMod -}}
   {{- $lastModifiedDays := math.Round (div $diffMod.Hours 24) -}}
   <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
-  
+
   {{- with .Context.Params.updated -}}
   {{- $lastReview := . | time -}}
   {{- $diffReview := now.Sub $lastReview -}}
@@ -147,7 +147,7 @@
 
   <!--Add rss feed if specified via output -->
   {{ with $.Context.OutputFormats.Get "rss" }}
-  
+
   {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
 
   {{- if ne $product "" -}}
