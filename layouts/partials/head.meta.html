@@ -92,11 +92,11 @@
 
   <meta name="description" content="{{ $description }}" />
 
-  <meta name="image" property="og:image" content="{{ $imagePlaceholder }}" />
-  <meta name="title" property="og:title" content="{{ $title }}" />
-  <meta name="description" property="og:description" content="{{ $description }}" />
-  <meta property="og:type" content="{{- if .IsPage -}}article{{- else -}}website{{- end -}}" />
-  <meta property="og:url" content="{{ .Context.Permalink }}" />
+  <meta name="og:image" property="og:image" content="{{ $imagePlaceholder }}" />
+  <meta name="og:title" property="og:title" content="{{ $title }}" />
+  <meta name="og:description" property="og:description" content="{{ $description }}" />
+  <meta name="og:type" property="og:type" content="{{- if .IsPage -}}article{{- else -}}website{{- end -}}" />
+  <meta name="og:url" property="og:url" content="{{ .Context.Permalink }}" />
 
   <meta name="twitter:title" content="{{ $title }}" />
   <meta name="twitter:image" content="{{ $imagePlaceholder }}" />
