@@ -1,9 +1,9 @@
 ---
-title: Manage databases
+title: Build databases
 pcx_content_type: navigation
-weight: 1
+weight: 2
 ---
 
-# Manage databases
+# Build databases
 
 {{<directory-listing>}}

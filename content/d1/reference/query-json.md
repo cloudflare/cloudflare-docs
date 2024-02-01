@@ -11,7 +11,7 @@ D1 has built-in support for querying and parsing JSON data stored within a datab
 * [Query paths](#extracting-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
 * Insert and/or replace values within an object or array.
 * [Expand the contents of a JSON object](#expanding-arrays-for-in-queries) or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
-* Create [generated columns](/d1/manage-databases/generated-columns/) that are automatically populated with values from JSON objects you insert.
+* Create [generated columns](/d1/build-databases/generated-columns/) that are automatically populated with values from JSON objects you insert.
 
 One of the biggest benefits to parsing JSON within D1 directly is that it can directly reduce the number of round-trips (queries) to your database. It reduces the cases where you have to read a JSON object into your application (1), parse it, and then write it back (2).
 
@@ -19,7 +19,7 @@ This allows you to more precisely query over data and reduce the result set your
 
 ## Types
 
-JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/manage-databases/query-databases/#type-conversion) as D1 in general, including:
+JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/build-databases/query-databases/#type-conversion) as D1 in general, including:
 
 * A JSON null is treated as a D1 `NULL`.
 * A JSON number is treated as an `INTEGER` or `REAL`.
@@ -74,9 +74,9 @@ ERROR 9015: SQL engine error: query error: Error code 1: SQL error or missing da
 
 ## Generated columns
 
-D1's support for [generated columns](/d1/manage-databases/generated-columns/) allows you to create dynamic columns that are generated based on the values of other columns, including extracted or calculated values of JSON data.
+D1's support for [generated columns](/d1/build-databases/generated-columns/) allows you to create dynamic columns that are generated based on the values of other columns, including extracted or calculated values of JSON data.
 
-These columns can be queried like any other column, and can have [indexes](/d1/manage-databases/use-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
+These columns can be queried like any other column, and can have [indexes](/d1/build-databases/use-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
 
 For example, to define a column based on a value within a larger JSON object, use the `AS` keyword combined with a [JSON function](#supported-functions) to generate a typed column:
 
@@ -88,7 +88,7 @@ CREATE TABLE some_table (
 )
 ```
 
-Refer to [Generated columns](/d1/manage-databases/generated-columns/) to learn more about how to generate columns.
+Refer to [Generated columns](/d1/build-databases/generated-columns/) to learn more about how to generate columns.
 
 ## Example usage
 
@@ -204,7 +204,7 @@ key|value|type|id|fullkey|path
 2|94944|integer|3|$[2]|$
 ```
 
-You can use `json_each` with D1's [client API](/d1/manage-databases/query-databases/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/manage-databases/query-databases/#parameter-binding):
+You can use `json_each` with D1's [client API](/d1/build-databases/query-databases/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/build-databases/query-databases/#parameter-binding):
 
 ```ts
 const stmt = context.env.DB

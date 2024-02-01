@@ -10,7 +10,7 @@ D1 allows you to define generated columns based on the values of one or more oth
 
 This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
 
-Generated columns can also have [indexes defined](/d1/manage-databases/use-indexes/) against them, which can dramatically increase query performance over frequently queried fields.
+Generated columns can also have [indexes defined](/d1/build-databases/use-indexes/) against them, which can dramatically increase query performance over frequently queried fields.
 
 ## Types of generated columns
 
@@ -48,7 +48,7 @@ As a concrete example, to automatically extract the `location` value from the fo
 }
 ```
 
-To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/manage-databases/query-json/#extracting-values) function to extract the value from the `raw_data` column each time you write to that row:
+To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/build-databases/query-json/#extracting-values) function to extract the value from the `raw_data` column each time you write to that row:
 
 ```sql
 CREATE TABLE sensor_readings (
