@@ -54,6 +54,11 @@
   {{- end -}}
   {{- end -}}
 
+  <!-- Individual pages can override the opengraph (share) image in frontmatter in meta > image -->
+  {{- with .Context.Params.meta.image -}}
+  {{- $imagePlaceholder = . | absURL -}}
+  {{- end -}}
+
   {{- $pt := default .Context.Title .Context.Params.meta.title -}}
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
   {{- $titleAddition := "" -}}
