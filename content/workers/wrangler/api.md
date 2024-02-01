@@ -328,12 +328,28 @@ which would print the following output: `MY_VARIABLE = test`
 All supported bindings found in your `wrangler.toml` are available to you via `bindings`.
 
 The bindings supported by `getBindingsProxy` are:
- - [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
- - [Service bindings](/workers/configuration/bindings/#service-bindings)
- - [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
- - [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
- - [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
- - [Queue bindings](/workers/configuration/bindings/#queue-bindings)
- - [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
- - [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
+
+ * [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
+
+ * [Service bindings](/workers/configuration/bindings/#service-bindings)
+
+ * [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
+
+ * [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
+
+ * [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+
+ * [Queue bindings](/workers/configuration/bindings/#queue-bindings)
+
+ * [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
+
+ * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
+
+    * __Important__: When using the AI binding locally, computation still happens on the Cloudflare servers in
+      the exact same way it would happen for an actual deployment, thus usage of this particular binding
+      incurs usage charges even in local development
+
+    * In order to use the `AI` binding you will need to set up two environment variables:
+      `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, which values are, respectively,
+      your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a Workers AI enabled API token (which you can generate as presented in the [Workers AI documentation](/workers-ai/get-started/rest-api/#1-get-an-api-token))
 
