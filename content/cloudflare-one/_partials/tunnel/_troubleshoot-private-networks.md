@@ -13,7 +13,7 @@ The WARP client GUI should display `Connected` and `Your Internet is protected`.
 
 <div class="medium-img">
 
-![WARP client UI when connected to Cloudflare](/images/cloudflare-one/connections/warp-connected.png)
+![WARP client GUI when connected to Cloudflare](/images/cloudflare-one/connections/warp-connected.png)
 
 </div>
 
@@ -88,7 +88,7 @@ If `telnet` fails to open the connection, check your infrastructure for firewall
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-Open Powershell and run the following command:
+Open PowerShell and run the following command:
 
 ```bash
 PS C:\Users\JohnDoe> Test-NetConnection test.example.com -port 443
@@ -109,7 +109,7 @@ You can also use a packet capture tool such as `tcpdump` or Wireshark to trace w
 
 ## 10. Is TLS inspection affecting the connection to your application?
 
-If there is a problem with [TLS inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), the user will see an `Insecure Upstream` error when they access the application in a browser. They will probably not see error if they access the application outside of a browser.
+If there is a problem with [TLS inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), the user will get an `Insecure Upstream` error when they access the application in a browser. They will probably not get an error if they access the application outside of a browser.
 
 Customers who have [Logpush](/cloudflare-one/insights/logs/logpush/) enabled can check the [Gateway HTTP dataset](/logs/reference/log-fields/account/gateway_http/) for any hostnames which have an elevated rate of `526` HTTP status codes.
 
@@ -117,11 +117,11 @@ To troubleshoot TLS inspection:
 
 1. Create a temporary Gateway HTTP policy that disables TLS inspection for all traffic to the application. For example:
 
-    | Selector    | Operator | Value          | Action         |
-    | ----------- | -------- | -------------- | -------------- |
+    | Selector       | Operator | Value         | Action         |
+    | -------------- | -------- | ------------- | -------------- |
     | Destination IP | in       | `10.2.3.4/32` | Do Not Inspect |
 
-2. If the `Do Not Inspect` policy enables the user to connect, verify that the TLS certificate used by your application is trusted by a public CA and not self-signed. Cloudflare Gateway is unable to negotiate TLS with applications that use self-signed certificates. For more information, refer to [TLS inspection limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
+2. If the `Do Not Inspect` policy enables the user to connect, verify that the TLS certificate used by your application is trusted by a public {{<glossary-tooltip term_id="Certificate Authority (CA)">}}CA{{</glossary-tooltip>}} and not self-signed. Cloudflare Gateway is unable to negotiate TLS with applications that use self-signed certificates. For more information, refer to [TLS inspection limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
 
     To work around the issue:
 
