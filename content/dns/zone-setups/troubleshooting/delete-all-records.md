@@ -22,7 +22,7 @@ curl --silent "https://api.cloudflare.com/client/v4/zones/$zoneid/dns_records?pe
 --header "Authorization: Bearer $bearer" \
 | jq --raw-output '.result[].id' | while read id
 do
-curl --silent --request DELETE "https://api.cloudflare.com/client/v4/zones/$zoneid/dns_records/$id" \
+  curl --silent --request DELETE "https://api.cloudflare.com/client/v4/zones/$zoneid/dns_records/$id" \
 --header "Authorization: Bearer $bearer"
 done
 ```
