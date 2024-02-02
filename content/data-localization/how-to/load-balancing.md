@@ -38,6 +38,6 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 
 [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) are not available outside the US region when using Customer Metadata Boundary. 
 
-With the Customer Metadata Boundary set to `EU`, **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard will not be populated.
+With Customer Metadata Boundary set to `EU`, **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard will not be populated.
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more information.

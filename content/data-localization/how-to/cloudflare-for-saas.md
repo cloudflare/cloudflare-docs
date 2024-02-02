@@ -10,7 +10,7 @@ In the following sections, we will give you some details about how to configure 
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and ensure the Fallback Origin, follow these steps for the dashboard or API configuration:
+To configure Regional Services for both hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and the fallback origin, follow these steps for the dashboard or API configuration:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -30,9 +30,17 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 {{</tab>}}
 {{</tabs>}}
 
-The Regional Services functionality can be extended to Custom Hostnames and this is dependent on the target of the alias. Consider the following example: as a SaaS provider, I might want all of my customers to connect to the nearest data center to them and for all the processing and Cloudflare features to be applied there; however, I might have a few exceptions where I want the processing to only be done in the US.
+The Regional Services functionality can be extended to Custom Hostnames and this is dependent on the target of the alias.
 
-In this case, I can just keep my fallback record with `Earth` as the processing region and have all my Custom Hostnames create a CNAME record and use the fallback record as the CNAME target. For any Custom Hostnames that need to be processed in the US, I will create a DNS record for example, `us.saasprovider.com` and set the processing region as `United States of America`. In order for the US processing region to be applied, my customers must create a CNAME record and use the `us.saasprovider.com` as the CNAME target. The origin associated with the Custom Hostname is not used to set the processing region, but instead to route the traffic to the right server.
+Consider the following example.
+
+{{<Aside type="note">}}
+
+As a SaaS provider, I might want all of my customers to connect to the nearest data center to them and for all the processing and Cloudflare features to be applied there; however, I might have a few exceptions where I want the processing to only be done in the US.
+
+In this case, I can just keep my fallback record with `Earth` as the processing region and have all my Custom Hostnames create a CNAME record and use the fallback record as the CNAME target. For any Custom Hostnames that need to be processed in the US, I will create a DNS record for example, `us.saasprovider.com` and set the processing region to `United States of America`. In order for the US processing region to be applied, my customers must create a CNAME record and use the `us.saasprovider.com` as the CNAME target. The origin associated with the Custom Hostname is not used to set the processing region, but instead to route the traffic to the right server.
+
+{{</Aside>}}
 
 Below you can find a breakdown of the different ways that you might configure Cloudflare for SaaS and the corresponding processing regions:
 
