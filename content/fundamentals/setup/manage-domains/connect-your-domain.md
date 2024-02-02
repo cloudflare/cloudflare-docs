@@ -12,7 +12,23 @@ This guide reviews the concepts behind connecting your domain using Cloudflare a
 
 ## Get started
 
-To get started with Cloudflare as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/), you must first create an account and connect your domain. After creating your account, select `Add site` and follow the [step-by-step tutorial](/fundamentals/setup/account-setup/add-site/) to configure your [DNS records](/dns/manage-dns-records/), which informs Cloudflare where to forward requests.
+To get started with Cloudflare as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/), you must first create an account and connect your domain. 
+
+After creating your account, select `Add site` and follow the [step-by-step tutorial](/fundamentals/setup/account-setup/add-site/) to:
+
+1. Select a free or paid plan, which determines which Cloudflare services will apply to your proxied traffic once your domain is active
+2. Set up [DNS] (/dns/). This process varies depending on the [DNS setup]((/dns/zone-setups) you choose:
+
+- Full setup (most common): Import all DNS records
+- Secondary DNS setup (Enterprise only): Set up incoming zone transfers from your primary DNS provider
+- Partial (CNAME) setup (Business and Enterprise only): Import the individual DNS records you want to proxy
+
+3. Activate your domain to start proxying HTTP/S traffic
+
+- Full setup (most common): Change the nameservers of your domain, and wait up to 24 hours for your registrar to process the change
+- Secondary DNS setup (Enterprise only): Complete the initial incoming zone transfer from your primary DNS provider
+- Partial (CNAME) setup (Business and Enterprise only): Add a verification TXT record at your primary DNS provider
+
 
 For a domain purchased through [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), we take care of the connection process on your behalf.
 
