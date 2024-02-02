@@ -3,7 +3,7 @@ pcx_content_type: concept
 type: overview
 title: Sequence Analytics
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Sequence Analytics
@@ -14,7 +14,7 @@ Sequence Analytics surfaces a subset of important API request sequences found in
 
 ### Sequence building
 
-A sequence is a time-ordered list of HTTP API requests made by a specific visitor as they browse a website, use a mobile app, or interact with a B2B partner via API. 
+A sequence is a time-ordered list of HTTP API requests made by a specific visitor as they browse a website, use a mobile app, or interact with a B2B partner via API.
 
 For example, a portion of a sequence made during a bank funds transfer could look like:
 
@@ -25,7 +25,7 @@ For example, a portion of a sequence made during a bank funds transfer could loo
 | 3 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user. |
 | 4 | `POST` | `/api/v1/transferFunds` | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
 
-API Shield uses your configured session identifier to build a set of ordered API operations (HTTP host, method, and path) requested per session. We may surface sequences in various lengths depending how API Shield scores the sequences.
+API Shield uses your configured {{<glossary-tooltip term_id="session identifier">}}session identifier{{</glossary-tooltip>}} to build a set of ordered API operations (HTTP host, method, and path) requested per session. We may surface sequences in various lengths depending how API Shield scores the sequences.
 
 ### Sequence scoring
 
@@ -33,7 +33,7 @@ API Shield scores sequences by a metric we call Correlation Score. Sequence Anal
 
 ### Important sequences
 
-You should inspect each of your sequences to understand their correlation scores. High correlation score sequences may consist of rarely used endpoints (potentially anomalous user behavior) as well as commonly used endpoints (likely benign user behavior). Since the endpoints found in these sequences commonly occur together, they represent true usage patterns of your API. 
+You should inspect each of your sequences to understand their correlation scores. High correlation score sequences may consist of rarely used {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (potentially anomalous user behavior) as well as commonly used endpoints (likely benign user behavior). Since the endpoints found in these sequences commonly occur together, they represent true usage patterns of your API.
 
 You should apply all possible API Shield protections to these endpoints ([rate limiting suggestions](/api-shield/security/volumetric-abuse-detection/), [Schema Validation](/api-shield/security/schema-validation/), [JWT Validation](/api-shield/security/jwt-validation/), and [mTLS](/api-shield/security/mtls/)) and check their specific endpoint order with your development team.
 

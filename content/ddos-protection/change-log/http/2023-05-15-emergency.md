@@ -2,7 +2,7 @@
 title: 2023-05-15 - Emergency
 pcx_content_type: changelog
 weight: 27990
-layout: list
+layout: wide
 ---
 
 # 2023-05-15 - Emergency

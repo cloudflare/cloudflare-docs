@@ -41,7 +41,7 @@ Use Logs Engine to store your logs in R2 and query them directly.
 
 ## Related products
 
-{{<related header="Audit Logs" href="/fundamentals/account-and-billing/account-security/review-audit-logs/" product="fundamentals">}}
+{{<related header="Audit Logs" href="/fundamentals/setup/account/account-security/review-audit-logs/" product="fundamentals">}}
 Summarize the history of changes made within your Cloudflare account.
 {{</related>}}
 

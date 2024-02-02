@@ -441,7 +441,7 @@ end
 
 ## Monitor Cloudflare Magic IPsec tunnel health checks
 
-{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.;;**Magic WAN** > **Tunnel health**" >}}
 
 ## Troubleshooting
 

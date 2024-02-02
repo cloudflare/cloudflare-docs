@@ -41,6 +41,8 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 {{</Aside>}}
 
+{{<render file="_disable-cf-bm-cookie.md" productFolder="bots" >}}
+
 ### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
 The `cf_ob_info` cookie provides information on:
@@ -79,6 +81,6 @@ The table below shows additional cookies used by the Challenge Platform.
 
 {{<Aside type="warning">}}
 
-If your website is not [using HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/), you may experience issues with the [`cf_clearance` cookie](/support/account-management-billing/account-privacy-and-security/understanding-samesite-cookie-interaction-with-cloudflare/).
+If your website is not [using HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/), you may experience issues with the [`cf_clearance` cookie](/waf/troubleshooting/samesite-cookie-interaction/#known-issues-with-samesite-and-cf_clearance-cookies).
 
 {{</Aside>}}

@@ -4,7 +4,6 @@ pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Intermediate
 title: Build an API for your front end using Pages Functions
-layout: single
 ---
 
 # Build an API for your front end using Pages Functions
@@ -13,7 +12,7 @@ layout: single
 In this tutorial, you will build a full stack Pages application. Your application will contain:
 
 * A front end, built using Cloudflare Pages and the [React framework](/pages/framework-guides/deploy-a-react-site/).
-* A JSON API, built with [Pages Functions](/pages/platform/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
+* A JSON API, built with [Pages Functions](/pages/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
 
 If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/).
 
@@ -165,9 +164,9 @@ You will now create a Pages Functions that stores your blog content and retrieve
 
 To create the Pages Function that will act as your JSON API:
 
-1. Create a `functions` directory in your `blog-frontend` directory. 
-2. In `functions`, create a directory named `api`. 
-3. In `api`, create a `posts.js` file in the `api` directory. 
+1. Create a `functions` directory in your `blog-frontend` directory.
+2. In `functions`, create a directory named `api`.
+3. In `api`, create a `posts.js` file in the `api` directory.
 4. Populate `posts.js` with the following code:
 
 ```js
@@ -208,7 +207,7 @@ const posts = [
 
 export default posts
 ```
-8. In the `post` directory, create an `[[id]].js` file. 
+8. In the `post` directory, create an `[[id]].js` file.
 9. Populate `[[id]].js` with the following code:
 
 ```js
@@ -234,7 +233,7 @@ export function onRequestGet(context) {
 }
 ```
 
-`[[id]].js` is a [dynamic route](/pages/platform/functions/routing#dynamic-routes) which is used to accept a blog post `id`.
+`[[id]].js` is a [dynamic route](/pages/functions/routing#dynamic-routes) which is used to accept a blog post `id`.
 
 ## Deploy
 
@@ -289,4 +288,4 @@ By completing this tutorial, you have created a full stack Pages application.
 
 ## Related resources
 
-* Learn about [Pages Functions routing](/pages/platform/functions/routing)
+* Learn about [Pages Functions routing](/pages/functions/routing)

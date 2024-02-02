@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Expression validation
 weight: 8
-layout: list
+layout: wide
 ---
 
 # Expression validation

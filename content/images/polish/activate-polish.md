@@ -10,7 +10,7 @@ Images in the [cache must be purged](/cache/how-to/purge-cache/) or expired befo
 
 {{<Aside type="warning">}}
 
-Do not activate Polish and [Image Resizing](/images/image-resizing/) simultaneously. Image Resizing already applies lossy compression, which makes Polish redundant.
+Do not activate Polish and [image transformations](/images/transform-images/) simultaneously. Image transformations already apply lossy compression, which makes Polish redundant.
 
 {{</Aside>}}
 

@@ -2,7 +2,6 @@
 title: Guide
 pcx_content_type: get-started
 weight: 1
-layout: single
 meta:
   title: Get started guide
 ---
@@ -27,7 +26,7 @@ Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitl
 2. In Account Home, select **Workers & Pages**.
 3. Select **Create application** > **Pages** > **Connect to Git**.
 
-You will be prompted to sign in with your preferred Git provider. This allows Cloudflare Pages to deploy your projects, and update your PRs with [preview deployments](/pages/platform/preview-deployments/).
+You will be prompted to sign in with your preferred Git provider. This allows Cloudflare Pages to deploy your projects, and update your PRs with [preview deployments](/pages/configuration/preview-deployments/).
 
 {{<Aside type="note">}}
 
@@ -51,7 +50,7 @@ Once you have selected a Git repository, select **Install & Authorize** and **Be
 
 Your **project name** will be used to generate your project's hostname. By default, this matches your Git project name.
 
-**Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/pages/platform/preview-deployments/).
+**Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/pages/configuration/preview-deployments/).
 
 {{<Aside type="note">}}
 
@@ -71,7 +70,7 @@ You do not need a framework to deploy with Cloudflare Pages. You can continue wi
 
 {{</Aside>}}
 
-The dashboard provides a number of framework-specific presets. These presets provide the default build command and build output directory values for the selected framework. If you are unsure what the correct values are for this section, refer to [Build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
+The dashboard provides a number of framework-specific presets. These presets provide the default build command and build output directory values for the selected framework. If you are unsure what the correct values are for this section, refer to [Build configuration](/pages/configuration/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
 ![Build setting fields that need to be filled in](/images/pages/get-started/build-settings.png)
 
@@ -87,7 +86,7 @@ The build directory is generated from the build command. Each framework has its 
 
 The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
-Refer to [Build configuration](/pages/platform/build-configuration/) for more information.
+Refer to [Build configuration](/pages/configuration/build-configuration/) for more information.
 
 {{</details>}}
 
@@ -129,7 +128,7 @@ To delete your Pages project:
 
 {{<Aside type="warning">}}
 
-For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](/pages/platform/custom-domains/#delete-a-custom-domain) for instructions.
+For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](/pages/configuration/custom-domains/#delete-a-custom-domain) for instructions.
 
 For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
 
@@ -141,6 +140,6 @@ In the **Settings** section, you can configure advanced settings, such as changi
 
 ## Related resources
 
-- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/).
+- Set up a [custom domain for your Pages project](/pages/configuration/custom-domains/).
 - Enable [Cloudflare Web Analytics](/pages/how-to/web-analytics/).
-- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customize-preview-deployments-access).
+- Set up Access policies to [manage who can view your deployment previews](/pages/configuration/preview-deployments/#customize-preview-deployments-access).

@@ -39,24 +39,24 @@ Next, create a device enrollment rule that allows the WARP connector to authenti
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Device enrollment** card, select **Manage**.
 3. Select **Add a rule**.
-4. Name the rule and configure the following fields:
+4. Name the rule.
+6. For **Rule action**, select _Service Auth_.
+7. Configure the following fields:
 
-    | Rule Action  | Rule type | Selector      | Value          |
-    | ------------ | --------- | ------------- | -------------- |
-    | Service Auth | Include   | Service Token | `<SERVICE-TOKEN-NAME>` |
+    | Selector      | Value          |
+    | ------------- | -------------- |
+    | Service Token | `<SERVICE-TOKEN-NAME>` |
 
-5. Select **Save**.
+8. Select **Save**.
 
-## 3. Turn on CGNAT IP assignment
+## 3. Enable CGNAT routing
 
-All WARP connector and WARP client devices in your Zero Trust organization have the same IP address by default. To route traffic between various WARP devices, you must allow Cloudflare to assign a unique IP to each device.
+All WARP connector and WARP client devices in your Zero Trust organization have the same local IP address by default. To route traffic between various WARP devices, you must allow Cloudflare to assign a unique {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}} to each device.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. Enable **Warp-to-Warp**.
+2. Enable **Warp-to-Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
 3. Next, go to **Settings** > **WARP Client**.
-4. Enable **Override local interface IP**.
-
-Each device is randomly assigned an IP address from the `100.96.0.0/12` range. You can view the CGNAT IP address for a device on its **My Team** > **Devices** page.
+4. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
 
 ## 4. Install a WARP connector
 
@@ -165,7 +165,7 @@ If you do not already have a private network range, you can choose a subnet from
     ```mermaid
         flowchart LR
           subgraph subnet1[Subnet 10.0.0.0/24]
-          router1["Device running 
+          router1["Device running
             WARP connector
             10.0.0.1"]
           end
@@ -177,12 +177,12 @@ If you do not already have a private network range, you can choose a subnet from
     ```mermaid
         flowchart LR
           subgraph subnet1[Subnet 10.0.0.0/24]
-          router1["Device running 
+          router1["Device running
             WARP connector #1
             10.0.0.1"]
           end
           subgraph subnet2[Subnet 192.168.1.0/24]
-            router2["Device running 
+            router2["Device running
             WARP connector #2
             192.168.1.97"]
           end
@@ -202,7 +202,7 @@ Run the following commands on the machine where you installed WARP connector. Yo
     <details>
     <summary>Save configuration to persist after reboot</summary>
     <div>
-    
+
     ```sh
     $ echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-warp-svc.conf
     $ sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf
@@ -225,7 +225,7 @@ If you are setting up WARP connector on a [virtual private cloud (VPC)](https://
     <details>
     <summary>Save configuration to persist after reboot</summary>
     <div>
-    
+
     1. Create a bash script containing the `iptable` commands:
 
       ```bash
@@ -366,13 +366,13 @@ You can now test the connection between the two subnets. For example, on the `10
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
         device1["Device
-        10.0.0.2"]--"ping 
-        192.168.1.100"-->router1["Device running 
+        10.0.0.2"]--"ping
+        192.168.1.100"-->router1["Device running
         WARP connector
         10.0.0.1"]
       end
       subgraph subnet2[Subnet 192.168.1.0/24]
-        router2["Device running 
+        router2["Device running
         WARP connector
         192.168.1.97"]-->device2["Device
         192.168.1.100"]

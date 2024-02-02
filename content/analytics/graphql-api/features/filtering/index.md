@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Filtering
 weight: 11
-layout: single
 ---
 
 # Filtering
@@ -110,6 +109,10 @@ The following operators are supported for all scalar types:
 The `like` operator is available for string comparisons and supports the `%` character as a wildcard.
 
 ## Examples
+
+{{<Aside type="note">}}
+Filtering times are based on event start timestamps, which means requests that end after the filter may be included in queries (as long as they start within the given time).
+{{</Aside>}}
 
 ### General example
 
@@ -223,7 +226,7 @@ WHERE has(ruleIDs, 'rule-id-1') AND has(ruleIDs, 'rule-id-2')
 
 ### Filter end users
 
-Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.  
+Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.
 
 ## Subqueries (advanced filters)
 

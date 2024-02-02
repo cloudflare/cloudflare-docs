@@ -3,7 +3,6 @@ type: overview
 pcx_content_type: reference
 title: Bot Tags
 weight: 3
-layout: list
 ---
 
 # Bot Tags

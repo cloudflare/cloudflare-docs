@@ -12,7 +12,7 @@ This feature is only available to Enterprise customers.
 
 {{</Aside>}}
 
-You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
+You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
 
 {{<glossary-definition term_id="PAC file" prepend="A PAC file is ">}}
 
@@ -30,7 +30,9 @@ You can generate a proxy endpoint on the Zero Trust dashboard or through the Clo
 All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
 {{</Aside>}}
 
-{{<details header="Create a proxy endpoint (dashboard)">}}
+{{<tabs labels="Dashboard | API">}}
+
+{{<tab label="dashboard" no-code="true">}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy Endpoints**.
 2. Select **Create endpoint**.
@@ -46,9 +48,9 @@ Your Cloudflare proxy server domain is of the form:
 https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ```
 
-{{</details>}}
+{{</tab>}}
 
-{{<details header="Create a proxy endpoint (API)">}}
+{{<tab label="api" no-code="true">}}
 
 1. Run the following command:
 
@@ -93,7 +95,9 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
    In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
 
-{{</details>}}
+{{</tab>}}
+
+{{</tabs>}}
 
 ## 2. Test your proxy server
 
@@ -170,10 +174,6 @@ The following example demonstrates the setup procedure for Firefox.
 ## 5. Test your HTTP policy
 
 You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
-
-{{<Aside type="note">}}
-When a browser is connected to Gateway by a proxy endpoint, the browser does not perform DNS lookups. Only HTTP policies will apply.
-{{</Aside>}}
 
 ## Limitations
 

@@ -126,7 +126,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `zone_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
+  - This is the ID of the zone or domain you want to run your Worker on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
 
 - `workers_dev` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -186,7 +186,7 @@ FOO = "some value"
 BAR = "some other string"
 ```
 
-The table keys are available to your script as global variables, which will contain their associated values.
+The table keys are available to your Worker as global variables, which will contain their associated values.
 
 ```js
 // Worker code:
@@ -462,7 +462,7 @@ format = "service-worker"
 
 {{<Aside type="note">}}
 
-Ensure the `main` field in your `package.json` references the Worker script you want to publish.
+Ensure the `main` field in your `package.json` references the Worker you want to publish.
 
 {{</Aside>}}
 
@@ -476,7 +476,7 @@ Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets)
 
 {{<Aside type="note">}}
 
-Refer to the [`FetchEvent` documentation](/workers/runtime-apis/handlers/fetch) to learn more about the differences between the Service Worker and Module worker formats.
+Refer to the [`fetch()` handler documentation](/workers/runtime-apis/handlers/fetch) to learn more about the differences between the Service Worker and Module worker formats.
 
 {{</Aside>}}
 

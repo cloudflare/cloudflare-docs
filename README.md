@@ -39,12 +39,6 @@ Additionally, this project includes a CI step for ensuring consistent code style
 $ npm run lint
 ```
 
-Finally, some of these code-style errors may be fixed automatically. To do so, you may run:
-
-```sh
-$ npm run format
-```
-
 ## Deployment
 
 Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.

@@ -10,19 +10,18 @@ weight: 2
 layout: example
 ---
 
-Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) easily from Remix with Remix's [data loading](https://remix.run/docs/en/1.18.1/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/1.18.1/hooks/use-loader-data) hook.
+Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) from Remix using Remix's [data loading](https://remix.run/docs/en/main/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data) hook.
 
 To set up a new Remix site on Cloudflare Pages that can query D1:
 
 1. Refer to [the Remix guide](/pages/framework-guides/deploy-a-remix-site/).
-2. Install the Cloudflare adapter within your Remix project: `npm i @remix-run/cloudflare`.
-3. Bind a D1 database to your [Pages Function](/pages/platform/functions/bindings/#d1-databases).
-4. Pass the `--d1=BINDING_NAME` flag when developing locally. `BINDING_NAME` should match what call in your code: for example, `--d1=DB`.
+2. Bind a D1 database to your [Pages Function](/pages/functions/bindings/#d1-databases).
+3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your `wrangler.toml`: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 
-The following example shows you how to define a Remix [`loader`](https://remix.run/docs/en/1.18.1/route/loader) that has a binding to a D1 database.
+The following example shows you how to define a Remix [`loader`](https://remix.run/docs/en/main/route/loader) that has a binding to a D1 database.
 
 * Bindings are passed through on the `context.env` parameter passed to a `LoaderFunction`.
-* If you configured a [binding](/pages/platform/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/platform/client-api/#query-statement-methods) methods via `context.env.DB`.
+* If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/how-to/query-databases/#query-statement-methods) methods via `context.env.DB`.
 
 {{<tabs labels="ts">}}
 {{<tab label="ts" default="true">}}

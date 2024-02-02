@@ -2,6 +2,10 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2023-12-04'
+  description: |-
+    - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
+    - V8 updated to 12.0.
 - publish_date: '2023-10-30'
   description: |-
     - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
@@ -61,9 +65,9 @@ entries:
     that hibernates will not incur billable Duration (GB-sec) charges.
 - publish_date: '2023-05-16'
   description: |-
-    - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/learning/protocols/).
+    - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/reference/protocols/).
     - We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
-    - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/hyperdrive/learning/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+    - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/hyperdrive/configuration/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
     - The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
 - publish_date: '2023-05-15'
   description: |-
@@ -77,7 +81,7 @@ entries:
     - The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now)
     and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin)
     APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security
-    reasons](/workers/learning/security-model/) time only advances after I/O.
+    reasons](/workers/reference/security-model/) time only advances after I/O.
 - publish_date: '2023-05-05'
   description: |-
     - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.

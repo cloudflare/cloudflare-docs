@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Add rule to ruleset
 weight: 7
-layout: list
+layout: wide
 ---
 
 # Add rule to ruleset

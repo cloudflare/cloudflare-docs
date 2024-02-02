@@ -3,7 +3,7 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: wide
 meta:
   title: Cloudflare Zero Trust
 ---
@@ -37,7 +37,7 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global networ
 **A Cloud Access Security Broker to safeguard data in the cloud.**
 
 * Protect users and sensitive data at rest in SaaS applications
-* Detect insider threats and unsanctioned application usage, or Shadow IT
+* Detect insider threats and unsanctioned application usage, or {{<glossary-tooltip term_id="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">}}shadow IT{{</glossary-tooltip>}}
 * Ensure best practices to prevent data leaks and compliance violations
 
 **A Data Loss Prevention solution to safeguard data in transit.**

@@ -135,4 +135,4 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 
 End users can connect to the SSH server without any configuration by using Cloudflare’s browser-based terminal. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser.
 
-To enable, follow the instructions [here](/cloudflare-one/applications/non-http/#rendering-in-the-browser).
+To enable, follow the instructions for [Browser-rendered terminal](/cloudflare-one/applications/non-http/#rendering-in-the-browser).

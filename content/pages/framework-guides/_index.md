@@ -2,10 +2,12 @@
 type: overview
 pcx_content_type: navigation
 title: Framework guides
-weight: 4
+weight: 3
 ---
 
 # Framework guides
+
+{{<render file="_pages_survey.md">}}
 
 * [Deploy a Blazor site](/pages/framework-guides/deploy-a-blazor-site/)
 * [Deploy a Brunch site](/pages/framework-guides/deploy-a-brunch-site/)

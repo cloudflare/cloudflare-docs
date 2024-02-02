@@ -66,6 +66,7 @@ The descriptions below detail the fields available for `http_requests`.
 | EdgeStartTimestamp | Timestamp at which the edge received request from the client. | int or string |
 | EdgeTimeToFirstByteMs | Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time. Available in Logpush v2 only. | int |
 | JA3Hash | The MD5 hash of the JA3 fingerprint used to profile SSL/TLS clients. Available in Logpush v2 only. Available only for Bot Management customers. To enable this feature, contact your account team. | string |
+| LeakedCredentialCheckResult | Result of the check for leaked credentials. | string |
 | OriginDNSResponseTimeMs | Time taken to receive a DNS response for an origin name. Usually takes a few milliseconds, but may be longer if a CNAME record is used. Available in Logpush v2 only. | int |
 | OriginIP | IP of the origin server. | string |
 | OriginRequestHeaderSendDurationMs | Time taken to send request headers to origin after establishing a connection. Note that this value is usually 0. Available in Logpush v2 only. | int |

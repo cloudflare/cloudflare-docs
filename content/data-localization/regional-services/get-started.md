@@ -2,7 +2,7 @@
 title: Get started
 pcx_content_type: get-started
 weight: 1
-layout: list
+layout: wide
 meta:
     title: Get Started — Regional Services
 ---

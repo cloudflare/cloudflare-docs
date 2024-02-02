@@ -1,23 +1,20 @@
 ---
-updated: 2020-06-29
+updated: 2023-12-21
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Hello World in Rust
-layout: single
 ---
 
 # Hello World in Rust
-
-{{<render file="_tutorials-wrangler-v1-warning.md">}}
 
 In this tutorial, you will learn how to generate, build, preview, configure, and deploy a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Init
+## 1. Clone the `rustwasm-worker` template
 
-Cloudflare's command-line tool for managing Workers projects, [Wrangler](https://github.com/cloudflare/wrangler-legacy), supports various templates — pre-built collections of code to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
+Cloudflare's command-line tool for managing Workers projects, [Wrangler](/workers/wrangler/install-and-update/), supports various templates — pre-built collections of code to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
 
 In the command line, create your Workers project, cloning the [rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template) URL and passing in a project name (for example, `rustwasm-markdown-parser`):
 
@@ -29,20 +26,19 @@ This command creates a directory called `rustwasm-markdown-parser` which you can
 
 Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
 
-## Workers Playground
+## 2. Developer your Worker
 
 You can test how your Workers function will execute when it is deployed by using the [`dev` command](/workers/wrangler/commands/#dev):
 
 ```sh
-rustwasm-markdown-parser $ wrangler dev
+rustwasm-markdown-parser $ npx wrangler dev
 ```
 
 Using the `dev` command will establish a connection between `localhost` and an global network server that operates your Worker in development.
 
-## Building
+## 3. Build
 
-Begin building your project by pulling in a dependency from the `crates.io` ecosystem called `pulldown-cmark`.
-Add the following content to your `Cargo.toml` file:
+Begin building your project by pulling in a dependency from the `crates.io` ecosystem called `pulldown-cmark`. Add the following content to your `Cargo.toml` file:
 
 ```toml
 ## Cargo.toml
@@ -121,11 +117,11 @@ async function handleRequest(request) {
 
 If `wrangler dev` is running, you will see the output of your Rust program in your browser a few seconds after you save it in your editor. Wrangler watches your project for changes then compiles your Rust to WebAssembly and outputs compiler errors.
 
-## Deploy
+## 4. Deploy
 
 You have completed writing a Cloudflare Workers function with Rust-generated Wasm.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `npx wrangler deploy`, which will build and deploy your code.
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy), which will build and deploy your code.
 
 ## Related resources
 

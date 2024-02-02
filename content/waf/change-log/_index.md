@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 20
 meta:
   title: Changelog for managed rulesets
+sidebar_toc: true
 layout: changelog
 changelog_file_name: [waf]
 outputs:
