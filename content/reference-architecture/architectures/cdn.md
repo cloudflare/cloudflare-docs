@@ -8,8 +8,6 @@ meta:
 
 # Cloudflare CDN Reference Architecture
 
-![Cloudflare Content Delivery Network (CDN)](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure-hero.png)
-
 ## Introduction
 
 Every day, users of the Internet enjoy the benefits of performance and reliability provided by [content delivery networks](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (CDNs). CDNs have become a must-have to combat latency and a requirement for any major company delivering content to users on the Internet. While providing performance and reliability for customers, CDNs also enable companies to further secure their applications and cut costs. This document discusses the traditional challenges customers face with web applications, how the Cloudflare CDN resolves these challenges, and CDN architecture and design.
@@ -249,7 +247,7 @@ Using [Image Resizing](/images/transform-images/) with Cache Reserve will not re
 Figure 8 illustrates how Cache Reserve can help reduce load on an origin server while also helping repopulate cache stores in both upper and lower tier data centers.
 
 ![Figure 8: Traffic between end users and an origin server showing Cache Reserve as the final step in the architecture of the Cloudflare CDN solution.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure8.svg)
-_Figure 8: Cloudflare CDN with Tiered Cache, Argo Smart Routing, and Cache Reserve_
+_Figure 8: Cloudflare CDN with Tiered Cache and Cache Reserve_
 
 ## Summary
 
