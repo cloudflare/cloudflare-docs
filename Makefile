@@ -8,7 +8,7 @@ hugo:
 
 build: download hugo
 	npm run build:local
-	./minify --html-keep-quotes --html-keep-end-tags --html-keep-document-tags -q -r public -o .
+	./minify --html-keep-document-tags -q -r public -o .
 
 tools:
 	@echo "==> Installing development tooling..."
