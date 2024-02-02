@@ -6,7 +6,7 @@ weight: 3
 
 # Gateway activity logs
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
 
@@ -124,6 +124,12 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 {{</table-wrap>}}
 
 ## Network logs
+
+{{<Aside type="warning" header="Failed connection logs">}}
+
+Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
+
+{{</Aside>}}
 
 ### Explanation of the fields
 
