@@ -67,6 +67,6 @@ Below you can find a breakdown of the different ways that you might configure Cl
 
 ## Customer Metadata Boundary
 
-[Analytics based](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/) on [HTTP requests](/logs/reference/log-fields/zone/http_requests/) are fully supported.
+Cloudflare for SaaS [Analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/) based on [HTTP requests](/logs/reference/log-fields/zone/http_requests/) are fully supported by Customer Metadata Boundary.
 
 Refer to [Cloudflare for SaaS documentation](/cloudflare-for-platforms/cloudflare-for-saas/) for more information.
