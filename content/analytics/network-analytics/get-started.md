@@ -26,3 +26,5 @@ Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the
 ## Send Network Analytics logs to a third-party service
 
 [Create a Logpush job](/logs/get-started/enable-destinations/) that sends Network analytics logs to your storage service, {{<glossary-tooltip term_id="SIEM">}}SIEM solution{{</glossary-tooltip>}}, or log management provider.
+
+For a video tutorial, refer to [Send Network Analytics Logs to Splunk](/analytics/analytics-integrations/splunk/#video-tutorial-send-network-analytics-logs-to-splunk).
