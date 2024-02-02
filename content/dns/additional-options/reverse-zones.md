@@ -25,7 +25,7 @@ The following Cloudflare customers can create reverse zones.
 - Customers with an IPv4 or IPv6 address space can add the IPv4 or IPv6 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
 - DNS Firewall customers need to contact their account team to add PTR records for the IPs used for their DNS Firewall clusters.
 
-If your account does not meet these qualifications and you do not own the IP prefix you want to add PTR records on, contact the owner of the IP address based on a [whois lookup](https://whois.icann.org/en).
+If your account does not meet these qualifications and you do not own the IP prefix you want to add PTR records on, contact the owner of the IP address based on a [whois lookup](https://lookup.icann.org/).
 
 ## Set up a reverse zone
 

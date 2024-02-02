@@ -253,7 +253,7 @@ Configure the third-party application to exempt the [WARP DoH IPs](/cloudflare-o
 
 ### Cause
 
-A third-party security product on the device or network is performing TLS decryption on HTTPS traffic. For more information, refer to [this page](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#a-third-party-security-product-is-interfering-with-gateway).
+A third-party security product on the device or network is performing TLS decryption on HTTPS traffic. For more information, refer to the [Troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#a-third-party-security-product-is-interfering-with-gateway).
 
 ### Resolution
 

@@ -238,12 +238,9 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
-
-When using [Railgun](/railgun/) (deprecated) or other reverse proxy software such as Varnish, user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
-
-1.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
-2.  At the very end add:`CloudflareRemoteIPTrustedProxy railgun_address`So, if your Railgun server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
-3.  If you have more than one server to add to the trusted proxy list, you can add them at the end:CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
+3.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
+4.  At the very end add:`CloudflareRemoteIPTrustedProxy {LOOPBACK_ADDRESS}` So, if your server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
+5.  If you have more than one server to add to the trusted proxy list, you can add them at the end: CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
 
 To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.
 
@@ -275,7 +272,7 @@ lighttpd.conf as an alternative solution:
 
 ##### For IIS 7 - 8:
 
-Follow the directions [here](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
+Follow the directions in the [Microsoft Community](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
 
 ##### For IIS 8.5 - 10:
 

@@ -9,10 +9,6 @@ meta:
 
 # Configure Schema Validation 2.0
 
-{{<Aside type="note">}}
-Schema Validation 2.0 API is currently in an experimental functionality and may change in future updates.
-{{</Aside>}}
-
 Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints.
 
 {{<Aside type="note">}}

@@ -6,7 +6,7 @@ weight: 2
 
 # Available Notifications
 
-Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/fundamentals/account-and-billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
+Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/fundamentals/subscriptions-and-billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
 
 Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.
 
@@ -1098,7 +1098,9 @@ For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
-- Customers can search for and add domains from their list of enterprise zones.
+A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
+
+- Customers can search for and add domains from their list of Enterprise zones.
 - Customers can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
 - Customers can filter events by a targeted action.
 
@@ -1126,7 +1128,9 @@ For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
-- Customers can search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
+A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on. 
+
+- Customers can also search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
 - Customers can filter events by a targeted action.
 
 **Included with**

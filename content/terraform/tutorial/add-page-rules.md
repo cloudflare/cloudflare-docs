@@ -77,7 +77,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
           + security_level      = "under_attack"
@@ -96,7 +95,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
 
@@ -168,7 +166,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
           + security_level      = "under_attack"
@@ -187,7 +184,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
 

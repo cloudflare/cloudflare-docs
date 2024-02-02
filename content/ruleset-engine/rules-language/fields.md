@@ -31,7 +31,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 {{<Aside type="note" header="Availability notes">}}
 
-- Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+- Geolocation information is provided and maintained by MaxMind. Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 - Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -551,7 +551,7 @@ The Cloudflare Rules language supports these standard fields:
               <td>Mayotte</td>
             </tr>
           </table>
-          <p>{{<markdown>}}This list was obtained from MaxMind's GeoIP2 database on 2023-12-05. This information is maintained by MaxMind. For details on obtaining up-to-date country information, refer to [MaxMind GeoLite2 Free Geolocation Data](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).{{</markdown>}}</p>
+          <p>{{<markdown>}}The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).{{</markdown>}}</p>
          </div>
          </details>
          <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is deprecated. The <code>ip.geoip.is_in_european_union</code> field is still available for new and existing rules, but you should use the <code>ip.src.is_in_european_union</code> field instead.</p>

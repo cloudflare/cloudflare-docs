@@ -6,7 +6,8 @@ weight: 3
 
 # System requirements
 
-Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center. Unlike legacy VPNs where throughput is determined by the server's memory, CPU and other hardware specifications, Cloudflare Tunnel throughput is primarily limited by the number of ports configured in system software. Therefore, when sizing your `cloudflared` servers, the most important element is sizing the available ports on the machine to reflect the expected throughput of TCP and UDP traffic.
+Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center.
+{{<render file="tunnel/_tunnel-capacity-intro.md" productFolder="cloudflare-one">}}
 
 ## Recommendations
 
