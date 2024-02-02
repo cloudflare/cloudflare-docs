@@ -78,8 +78,6 @@
 
   <meta charset="utf-8">
   <title>{{ $title }}</title>
-  <meta name="title" content="{{ $title }}" />
-
   <meta http-equiv="cleartype" content="on" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -96,7 +94,7 @@
 
   <meta property="og:site_name" content="Cloudflare Developer Docs" />
   <meta property="og:image" content="{{ $imagePlaceholder }}" name="image" />
-  <meta property="og:title" content="{{ $title }}" />
+  <meta property="og:title" content="{{ $title }}" name="title" />
   <meta property="og:description" content="{{ $description }}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ .Context.Permalink }}" />
