@@ -779,7 +779,6 @@
 /railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
 /railgun/user-guide/optimized-partner-api/ /railgun/partners/ 301
 /support/speed/optimization-delivery-railgun/railgun-faq/ /railgun/ 301
-/railgun/* / 301
 
 # registrar
 /registrar/cloudflare-registrar/domain-management/ /registrar/account-options/domain-management/ 301
@@ -1380,7 +1379,8 @@
 /cloudflare-one/connections/connect-networks/use_cases/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
-/cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/identity/devices/access-integrations/azure-ad/ 301
+/cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/tutorials/azuread-conditional-access/ 301
+/cloudflare-one/identity/devices/access-integrations/azure-ad/ /cloudflare-one/tutorials/azuread-conditional-access/ 301
 /cloudflare-one/identity/devices/mutual-tls-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /cloudflare-one/identity/devices/tanium/ /cloudflare-one/identity/devices/access-integrations/tanium/ 301
 /cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/identity/devices/service-providers/crowdstrike/ 301
@@ -1503,6 +1503,7 @@
 /learning-paths/modules/security/dns-filtering-connect-devices/* /learning-paths/dns-filtering/connect-devices/:splat 301
 /learning-paths/modules/security/dns-filtering-create-policy/* /learning-paths/dns-filtering/create-policy/:splat 301
 /learning-paths/modules/security/dns-filtering-deploy/* /learning-paths/dns-filtering/deploy/:splat 301
+/railgun/* / 301
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301

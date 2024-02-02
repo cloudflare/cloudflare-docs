@@ -28,7 +28,7 @@ ___
 
 If your domain was using a [full setup](/dns/zone-setups/full-setup/), your registrar needs to use Cloudflare nameservers as the authoritative nameservers for your domain.
 
-11. Use either the command-line based “whois” application provided with your Operating System or a website such as [whois.icann.org](https://whois.icann.org/en) or [www.whois.net](https://www.whois.net/).
+11. Use either the command-line based "whois" application provided with your Operating System or a website such as [ICANN Lookup](https://lookup.icann.org/).
 
     -   If you are unable to find the nameserver details for your domain, reach out to your domain registrar or domain provider to provide the domain registration information.
     -   Ensure Cloudflare’s nameservers are the only two nameservers listed in the domain registration details.

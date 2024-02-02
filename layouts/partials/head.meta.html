@@ -9,7 +9,7 @@
 
   {{- $availableContentTypes := slice
     "changelog" "concept" "configuration" "faq" "get-started" "glossary"
-    "how-to" "integration-guide" "learning-path" "learning-unit" "migration" 
+    "how-to" "integration-guide" "learning-path" "learning-unit" "migration"
     "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
     "tutorial"
     -}}
@@ -44,8 +44,8 @@
   "Cloudflare One" "/zt-preview.png"
   "Developer platform" "/dev-products-preview.png"
   "Network security" "/core-services-preview.png"
-  "Performance" "/core-services-preview.png"
-  "Security" "/core-services-preview.png"
+  "Application performance" "/core-services-preview.png"
+  "Application security" "/core-services-preview.png"
   -}}
 
   {{- range $key, $value := $imageDict -}}
@@ -62,7 +62,7 @@
   {{- else -}}
     {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
   {{- end -}}
-  
+
   {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
@@ -78,6 +78,9 @@
 
   <meta charset="utf-8">
   <title>{{ $title }}</title>
+  <meta name="title" content="{{ $title }}" />
+  <meta name="image" content="{{ $imagePlaceholder }}" />
+
   <meta http-equiv="cleartype" content="on" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -92,10 +95,12 @@
 
   <meta name="description" content="{{ $description }}" />
 
+  <meta property="og:site_name" content="{{ .Context.Site.Title }}" />
   <meta property="og:image" content="{{ $imagePlaceholder }}" />
   <meta property="og:title" content="{{ $title }}" />
   <meta property="og:description" content="{{ $description }}" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ .Context.Permalink }}" />
 
   <meta name="twitter:title" content="{{ $title }}" />
   <meta name="twitter:image" content="{{ $imagePlaceholder }}" />
@@ -118,7 +123,7 @@
   {{- $diffMod := now.Sub $lastMod -}}
   {{- $lastModifiedDays := math.Round (div $diffMod.Hours 24) -}}
   <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
-  
+
   {{- with .Context.Params.updated -}}
   {{- $lastReview := . | time -}}
   {{- $diffReview := now.Sub $lastReview -}}
@@ -142,7 +147,7 @@
 
   <!--Add rss feed if specified via output -->
   {{ with $.Context.OutputFormats.Get "rss" }}
-  
+
   {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
 
   {{- if ne $product "" -}}

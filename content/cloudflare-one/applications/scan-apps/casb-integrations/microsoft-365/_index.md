@@ -61,6 +61,8 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 Get alerted when files in your Microsoft 365 account have their permissions changed to a less secure setting.
 
+{{<render file="casb/_shared-links.md">}}
+
 | Finding                                             | Severity |
 | --------------------------------------------------- | -------- |
 | Microsoft File Publicly Accessible Read and Write   | Critical |
