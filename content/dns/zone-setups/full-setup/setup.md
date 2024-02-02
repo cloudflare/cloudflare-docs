@@ -26,7 +26,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{</Aside>}}
 
-- Have previously created a [Cloudflare account](/fundamentals/setup/account-setup/create-account/).
+- Have previously created a [Cloudflare account](/fundamentals/setup/account/create-account/).
 - Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
 
 {{<render file="_dnssec-providers.md">}}
@@ -37,7 +37,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{<tutorial-step title="Add site to Cloudflare">}}
 
-In the Cloudflare dashboard, [add your domain](/fundamentals/setup/account-setup/add-site/).
+In the Cloudflare dashboard, [add your domain](/fundamentals/setup/manage-domains/add-site/).
 
 {{</tutorial-step>}}
 
@@ -77,7 +77,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 ### Update your registrar
 
-1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
+1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
 
 2. Remove your existing authoritative nameservers.
 

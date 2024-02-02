@@ -1,7 +1,7 @@
 ---
 title: Client-side rendering
 pcx_content_type: get-started
-weight: 4
+weight: 1
 ---
 
 # Client-side render

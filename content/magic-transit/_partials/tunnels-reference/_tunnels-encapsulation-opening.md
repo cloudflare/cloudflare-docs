@@ -98,9 +98,11 @@ In summary, an IKE SA is created that uses certain cryptographic transforms. Tha
 
 ### Supported configuration parameters
 
+Below is a list of the configuration parameters supported by Magic WAN. Choose which ones to use based on what your appliance supports.
+
 #### IKE SA
 
-This is sometimes referred to as Phase 1 as per IKEv1 language.
+IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 
 - **Encryption**
   - AES-GCM-16 with 128-bit or 256-bit key length

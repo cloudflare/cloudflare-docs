@@ -10,7 +10,7 @@ Global API key is the previous authorization scheme for interacting with the Clo
 
 {{<Aside type="note">}}
 
-Global API key is only available after the [account email address is verified](/fundamentals/setup/account-setup/verify-email-address/).
+Global API key is only available after the [account email address is verified](/fundamentals/setup/account/verify-email-address/).
 
 {{</Aside>}}
 
