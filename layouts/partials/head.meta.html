@@ -79,8 +79,6 @@
   <meta charset="utf-8">
   <title>{{ $title }}</title>
   <meta name="title" content="{{ $title }}" />
-  <link rel="canonical" href="{{ .Context.Permalink }}" />
-  <meta name="description" content="{{ $description }}" />
 
   <meta http-equiv="cleartype" content="on" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -94,8 +92,10 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#f38020" />
 
+  <meta name="description" content="{{ $description }}" />
+
   <meta property="og:site_name" content="Cloudflare Developer Docs" />
-  <meta name="image" property="og:image" content="{{ $imagePlaceholder }}" />
+  <meta property="og:image" content="{{ $imagePlaceholder }}" name="image" />
   <meta property="og:title" content="{{ $title }}" />
   <meta property="og:description" content="{{ $description }}" />
   <meta property="og:type" content="{{- if not .IsHome -}}article{{- else -}}website{{- end -}}" />
@@ -186,6 +186,7 @@
 
   {{ end }}
   <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="{{ .Context.Permalink }}" />
   <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
   <link rel="manifest" href="/manifest.webmanifest" />
 
