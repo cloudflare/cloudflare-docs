@@ -9,9 +9,11 @@ updated: 2023-01-12
 
 # Deliver emails to the junk email folder and administrative quarantine
 
-In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to the user’s junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the Administrative Quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to the user's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the Administrative Quarantine (this requires an administrator to release the emails).
 
 ```mermaid
+accTitle: Deliver email to the junk email folder and administrative quarantine
+accDescr: This graphic shows the flow of suspicious and bulk emails delivered to the user's junk folder, and malicious spam and spoof messages delivered to the administrative quarantine.
 graph TB
 Incoming[Incoming Email] --> MALICIOUS & SUSPICIOUS & BENIGN
 subgraph Cloudflare Area 1 Email Security
@@ -38,7 +40,7 @@ end
 Spam ---> |Move messages to Junk Email folder|Junk
 Hcspam --> |"Quarantine Policy"|Defender
 MailFlow2 --> |"Redirect the message<br>to hosted quarantine"|Defender
-Defender -.-> |NO User Notification<br>+<br>Admin Release|Inbox
+Defender -.-> |No User Notification<br>+<br>Admin Release|Inbox
 BENIGN --> Spam & Hcspam & Inbox
 ```
 
