@@ -39,6 +39,10 @@ Resolver policies can route queries for resolution from the following DNS endpoi
 
 Gateway will filter, resolve, and log your queries regardless of endpoint.
 
+### Upstream logic
+
+In traffic matched by a resolver policy, Gateway tests all publicly routable resolvers first, then any private resolvers. Private resolvers not behind a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) take precedence. Gateway caches the fastest IP and automatically uses that for subsequent queries.
+
 ## Create a resolver policy
 
 {{<render file="gateway/_create-resolver-policy.md">}}
