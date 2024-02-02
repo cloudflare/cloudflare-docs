@@ -8,22 +8,22 @@ meta:
 
 # Domain Connect service providers
 
-If you are a service provider, consider this page for information on Cloudflare as a Domain Connect DNS provider and how you can onboard your template.
+If you are a service provider, consider this page for information on Cloudflare as a [Domain Connect](https://www.domainconnect.org/) DNS provider and how you can onboard your template.
 
 ## What is Domain Connect
 
-Domain Connect is an open standard that allows service providers, such as X and Y, to make it easier for their end users to configure the functionality without having to manually edit DNS records.
+Domain Connect is an open standard that allows service providers - such as email or web hosting platforms - to make it easier for their end users to configure functionality, without having to manually edit DNS records.
 
-This is achieved with templates that close the gap between necessary configurations (required by the service provider) and necessary DNS records changes (that must happen at the authoritative DNS provider for a given domain).
+This is achieved with templates that close the gap between necessary configurations (required by the service provider) and necessary DNS records changes (that must happen at the authoritative DNS provider).
 
-For example,
+In practice, this means that when a user that owns `example.com` and has Cloudflare as their authoritative DNS provider wants to use your service, instead of having to manually update their DNS records, they will only have authenticate themselves and the necessary changes will be applied automatically.
 
-## Onboard your templates
+## Setup
 
 ### Before you begin
 
-* Although Domain Connect offers two different flows (synchronous and asynchronous), as most DNS providers, Cloudflare only supports synchronous calls. Refer to the Domain Connect [Getting Started](https://www.domainconnect.org/getting-started/) for more details.
-* Domain Connect templates and tools are published on GitHub, so you must have a GitHub account to follow the steps below.
+* Note that Cloudflare only supports the Domain Connnect synchronous flow. Refer to the Domain Connect [Getting Started](https://www.domainconnect.org/getting-started/) for details.
+* Domain Connect templates and tools are published on GitHub, so you must have a GitHub account and be familiar with [GitHub workflows](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks) to follow the steps below.
 
 ### 1 - Add templates to the repository
 
@@ -52,7 +52,7 @@ To enable that, send an email to `domain-connect@cloudflare.com`, including the 
 
 1. List of template(s) that you want to onboard, with their corresponding GitHub hyperlinks.
 2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
-3. Information on the default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s).
+3. The default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s).
 4. (Optional) A Cloudflare account ID for you to test the flow.
 
     If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not onboard new DNS providers manually, you can provide a Cloudflare account ID where you will be able to test the flow. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint.
