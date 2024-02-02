@@ -41,7 +41,13 @@ Gateway will filter, resolve, and log your queries regardless of endpoint.
 
 ### Upstream logic
 
-In traffic matched by a resolver policy, Gateway tests all publicly routable resolvers first, then any private resolvers. Private resolvers not behind a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) take precedence. Gateway caches the fastest IP and automatically uses that for subsequent queries.
+When resolver policies match a query, Gateway tests your custom resolvers in the following order:
+
+  1. Publicly routable resolvers
+  2. Private resolvers not behind a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
+  3. Private resolvers behind a virtual network
+
+Gateway will cache the fastest resolver and automatically use it for subsequent queries.
 
 ## Create a resolver policy
 
