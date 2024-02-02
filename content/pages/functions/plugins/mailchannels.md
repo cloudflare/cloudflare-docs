@@ -36,7 +36,7 @@ export const onRequest: PagesFunction = mailChannelsPlugin({
   ],
   from: {
     name: "ACME Support",
-    // The domain of your `from` address must be the same as the domain you setup MailChannels Domain Lockdown for (detailed below)
+    // The domain of your `from` address must be the same as the domain you set up MailChannels Domain Lockdown for (detailed below)
     email: "support@mydomain.com",
   },
   respondWith: () => {
@@ -183,7 +183,7 @@ Next, look in your generated `dkim_record.txt` file for your DKIM credentials, a
 {{</example>}}
 
 {{<Aside type= "note" header="Use a different selector">}}
-You can substitute `mailchannels.domainkey` for any name with the format `<selector_key>._domainkey`. You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers and hyphens).
+You can substitute `mailchannels._domainkey` for any name with the format `<selector_key>._domainkey`. You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers, and hyphens).
 {{</Aside>}}
 
 Your record should look like:
@@ -209,17 +209,17 @@ export const onRequest: PagesFunction = (context) => mailChannelsPlugin({
   personalizations: [
     {
       to: [{ name: "Some User", email: "someuser@example.com" }],
-      // This value has to be the domain you added DKIM records to and where you're sending your email from
+      // This value has to be the domain you added DKIM records to and where you are sending your email from
       "dkim_domain": "mydomain.com", 
       // This value has be the same as the selector you chose for your DKIM record name
-      // For example, use "mailchannels" if you used mailchannels._domainkey as your record name
+      // For example, use "mailchannels" if you used "mailchannels._domainkey" as your record name
       "dkim_selector": "mailchannels", 
       "dkim_private_key": context.env.DKIM_PRIVATE_KEY
     },
   ],
   from: {
     name: "ACME Support",
-    // The domain of your `from` address must be the same as the domain you setup MailChannels Domain Lockdown for
+    // The domain of your `from` address must be the same as the domain you set up MailChannels Domain Lockdown for
     email: "support@mydomain.com",
   },
   respondWith: () => {
