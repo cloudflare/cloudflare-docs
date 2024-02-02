@@ -19,7 +19,7 @@ _build:
 7. (Optional) Enter a custom port for each IP address.
 8. Select **Create policy**.
 
-Custom resolvers are saved to your account for future use.
+Custom resolvers are saved to your account for future use. You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
 
 When users first connect to Zero Trust, Gateway will send a query to your listed resolvers in the following order:
 
