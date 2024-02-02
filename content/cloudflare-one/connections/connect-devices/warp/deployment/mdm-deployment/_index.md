@@ -87,7 +87,7 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
 
 ### Create `plist` file
 
-1. [Download](/cloudflare-one/static/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
+1. [Download](/cloudflare-one/static/mdm/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
 
 2. Modify the file with your desired [deployment arguments](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
@@ -101,7 +101,7 @@ The plist must be pushed by an MDM tool in order to persist after reboot. Manual
 
 ### Create `mobileconfig` file
 
-1. [Download](/cloudflare-one/static/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
+1. [Download](/cloudflare-one/static/mdm/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
 
 2. Run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID`.
 
