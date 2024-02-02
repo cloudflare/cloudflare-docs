@@ -15,4 +15,5 @@ By the end of this module, you will be able to:
 
 - Create Zero Trust policies to secure access to your private network.
 - Enforce WARP client session timeouts.
+- Display custom block messages.
 - Discover Shadow IT within your private network.
