@@ -19,4 +19,4 @@ The custom response has three settings:
     | Custom XML | `"text/xml"` |
 
 * **With response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
-* **Response body**: The body of the response. Configure a valid body according to the response type you selected.
+* **Response body**: The body of the response. Configure a valid body according to the response type you selected. The maximum field size is 2 KB.
