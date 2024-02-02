@@ -127,7 +127,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<Aside type="warning" header="Failed connection logs">}}
 
-Gateway will only log failed connection information in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries). For more information, contact your account team.
+Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
 
 {{</Aside>}}
 
