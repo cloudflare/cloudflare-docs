@@ -50,7 +50,7 @@
 
   {{- range $key, $value := $imageDict -}}
   {{- if eq $key $productGroup -}}
-  {{- $imagePlaceholder = (printf "%s%s" "https://pedro-2024-02-01-docs-fix-im.cloudflare-docs-7ou.pages.dev" $value) -}}
+  {{- $imagePlaceholder = $value | absURL -}}
   {{- end -}}
   {{- end -}}
 
