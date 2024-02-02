@@ -12,8 +12,8 @@ updated: 2023-01-12
 In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to the user’s junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the Administrative Quarantine (this requires an administrator to release the emails).
 
 ```mermaid
-graph LR
-Incoming[Incoming<br>Email] --> MALICIOUS & SUSPICIOUS & BENIGN
+graph TB
+Incoming[Incoming Email] --> MALICIOUS & SUSPICIOUS & BENIGN
 subgraph Cloudflare Area 1 Email Security
 subgraph Dispositions
 MALICIOUS["MALICIOUS<br>---------------<br>SPAM<br>---------------<br>SPOOF"]
@@ -26,18 +26,18 @@ subgraph Office 365
 MailFlow1["Mail flow rule #1<br>(Transport rule)"]
 SUSPICIOUS --> |X-Area1Security-Disposition<br>message header|MailFlow1
 MailFlow2["Mail flow rule #2<br>(Transport rule)"]
-Junk[Junk<br>Email<br>Folder]
-subgraph Anti-spam<br>policy
+Junk[Junk Email]
+subgraph Anti-spam policy
 Spam["Spam<br>(SCL = 5, 6)"]
-Hcspam["High<br>confidence<br>spam<br>(SCL = 7, 8, 9)<br>---------------<br>Phishing<br>---------------<br>High<br>confidence<br>phishing"]
+Hcspam["High confidence spam<br>(SCL = 7, 8, 9)<br>------------------------------<br>Phishing<br>------------------------------<br>High confidence phishing"]
 end
-Defender[Administrative<br>Quarantine]
+Defender[Administrative Quarantine]
 MailFlow1 --> |"Set SCL to 5<br>(Spam Confidence Level)"|Spam
 Inbox
 end
 Spam ---> |Move messages to Junk Email folder|Junk
-Hcspam --> |"Quarantine<br>Policy"|Defender
-MailFlow2 --> |"Redirect the message to hosted quarantine"|Defender
+Hcspam --> |"Quarantine Policy"|Defender
+MailFlow2 --> |"Redirect the message<br>to hosted quarantine"|Defender
 Defender -.-> |NO User Notification<br>+<br>Admin Release|Inbox
 BENIGN --> Spam & Hcspam & Inbox
 ```
