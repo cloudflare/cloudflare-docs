@@ -10,7 +10,7 @@ In the following sections, we will give you some details about how to configure 
 
 ## Regional Services
 
-You can load balance traffic at different levels of the networking stack depending on the [proxy mode](/load-balancing/understand-basics/proxy-modes/): Layer 7 (HTTP/S) and Layer 4 (TCP) are supported; however, DNS-only is not supported, as it is not [orange-clouded/proxied](/dns/manage-dns-records/reference/proxied-dns-records/).
+You can load balance traffic at different levels of the networking stack depending on the [proxy mode](/load-balancing/understand-basics/proxy-modes/): Layer 7 (`HTTP/S`) and Layer 4 (`TCP`) are supported; however, `DNS-only` is not supported, as it is not [proxied](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and ensure that the Load Balancer is available only in-region, follow these steps for the dashboard or API configuration:
 
@@ -38,6 +38,6 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 
 [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) are not available outside the US region when using Customer Metadata Boundary. 
 
-With Customer Metadata Boundary set to EU, **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard will not be populated.
+With the Customer Metadata Boundary set to `EU`, **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard will not be populated.
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more information.
