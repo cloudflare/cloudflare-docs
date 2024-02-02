@@ -12,9 +12,9 @@ updated: 2023-01-12
 In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages to the user's junk folder, and `SPAM` and `SPOOF` messages to the user managed quarantine.
 
 ```mermaid
+graph TB
 accTitle: Deliver email to the junk email folder and user managed quarantine
 accDescr: This graphic shows the flow of suspicious and bulk emails delivered to the user's junk folder, and spam and spoof messages delivered to the user managed quarantine.
-graph TB
 Incoming[Incoming Email] --> MALICIOUS & SPAM & SUSPICIOUS & BENIGN
 subgraph Cloudflare Area 1 Email Security
 subgraph Dispositions
