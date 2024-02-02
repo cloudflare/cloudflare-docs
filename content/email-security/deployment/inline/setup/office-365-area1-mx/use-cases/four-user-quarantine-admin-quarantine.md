@@ -12,7 +12,7 @@ updated: 2023-01-12
 In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the user managed quarantine, and `MALICIOUS` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ```mermaid
-graph TB
+flowchart TB
 accTitle: Deliver email to the user managed quarantine and administrative quarantine
 accDescr: This graphic shows the flow of spam and spoof messages to the user managed quarantine, and malicious messages to the administrative quarantine.
 Incoming[Incoming Email] --> MALICIOUS & SPAM & BENIGN

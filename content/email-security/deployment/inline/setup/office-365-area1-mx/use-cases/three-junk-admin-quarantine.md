@@ -12,7 +12,7 @@ updated: 2023-01-12
 In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages to the users's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ```mermaid
-graph TB
+flowchart TB
 accTitle: Deliver email to the junk email folder and administrative quarantine
 accDescr: This graphic shows the flow of suspicious and bulk emails delivered to the user's junk folder, and malicious, spam and spoof messages delivered to the administrative quarantine.
 Incoming[Incoming Email] --> MALICIOUS & SUSPICIOUS & BENIGN

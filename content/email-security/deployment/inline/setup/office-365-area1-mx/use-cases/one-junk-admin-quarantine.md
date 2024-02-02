@@ -12,7 +12,7 @@ updated: 2023-01-12
 In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Area 1.
 
 ```mermaid
-graph TB
+flowchart TB
 accTitle: Deliver email to the O365 junk email folder
 accDescr: This graphic shows the flow of emails that are delivered to Office 365 junk email folder, and to the Admin Quarantine in Area 1.
 Incoming[Incoming Email] --> MALICIOUS & SUSPICIOUS & BENIGN
