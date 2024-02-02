@@ -44,5 +44,15 @@ You can use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-
 
 Once Domain Connect has reviewed your template(s) and merged your pull request, contact Cloudflare as specified below.
 
-### 2 - Email Cloudflare with details
+### 2 - Contact Cloudflare to onboard your template
 
+When your template is onboarded, a graphical user interface flow will be available to your end users.
+
+To enable that, send an email to `domain-connect@cloudflare.com`, including the following information:
+
+1. List of template(s) that you want to onboard, with their corresponding GitHub hyperlinks.
+2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
+3. Information on the default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s).
+4. (Optional) A Cloudflare account ID for you to test the flow.
+
+    If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not onboard new DNS providers manually, you can provide a Cloudflare account ID where you will be able to test the flow. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint.
