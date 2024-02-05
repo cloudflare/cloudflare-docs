@@ -496,8 +496,6 @@
 /fundamentals/setup/account-setup/verify-email-address/ /fundamentals/setup/account/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
-/fundamentals/account-and-billing/account-security/scim-setup/ /fundamentals/setup/account/account-security/scim-setup/ 301
-
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
