@@ -13,16 +13,18 @@ This guide reviews the concepts behind connecting your domain using Cloudflare a
 
 To get started with Cloudflare as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/), you must first create an account and connect your domain. 
 
+At a minimum, the following are necessary steps to get started: 
+
+- Select a plan type, free or paid. This determines which Cloudflare services are applicable to your [proxied](#proxy-eligibility) traffic once your domain is active.
+
+- Set up [DNS](/dns/). This process varies depending on the [DNS setup](/dns/zone-setups) you choose.
+
+- Activate your domain to start proxying HTTP/S traffic.
+   - [Full setup](/dns/zone-setups/full-setup/setup/) (All plans)
+   - [Secondary DNS setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) (Enterprise only)
+   - [Partial (CNAME) setup](/dns/zone-setups/partial-setup/setup/) (Business and Enterprise only)
+
 After creating your account, select **Add site** and follow the [step-by-step tutorial](/fundamentals/setup/account-setup/add-site/) to:
-
-1. Select a plan type, free or paid. This determines which Cloudflare services are applicable to your [proxied](#proxy-eligibility) traffic once your domain is active.
-
-2. Set up [DNS](/dns/). This process varies depending on the [DNS setup](/dns/zone-setups) you choose.
-
-3. Activate your domain to start proxying HTTP/S traffic.
-   1. [Full setup](#activating-your-domain) (All plans)
-   2. [Secondary DNS setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) (Enterprise only)
-   3. [Partial (CNAME) setup](/dns/zone-setups/partial-setup/) (Business and Enterprise only)
 
 For a domain purchased through [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), we take care of the connection process on your behalf.
 
@@ -31,7 +33,7 @@ Your domain is always in your control - completing these steps does not mean you
 {{</Aside>}}
 
 
-## Default configurations
+## Domain configurations
 
 When you connect your domain to Cloudflare, it is assigned a set of default configurations for our [application services](/products/?product-group=Application+performance%2CApplication+security%2CCloudflare+essentials), based on the domain [plan](https://www.cloudflare.com/plans/). These services determine how Cloudflare treats traffic for your domain.
 
@@ -44,6 +46,16 @@ Use the Cloudflare dashboard or [API](/api/) to modify, test, or [version](/vers
 {{<Aside>}}
 Account-level configurations are processed before domain-level services. Refer to [Traffic sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first) to learn more. 
 {{</Aside>}}
+
+## Activating your domain
+
+In a full setup, your domain will be pending until you update the its nameservers to the assigned Cloudflare nameservers. This step is essential for two reasons. First, to inform DNS resolvers where they can get a response for DNS queries to your domain so that all traffic will route through Cloudflare and second, to verify that you own the domain since only an owner or administrator of a domain has access to its Registrar, where nameserver changes are made.
+
+{{<Aside>}}
+Note: The activation process involves different steps if you are using a [secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) or [partial (CNAME) setup](/dns/zone-setups/partial-setup/).
+{{</Aside>}}
+
+Registrars take up to 24 hours to process nameserver changes (quicker in most cases). You will receive an email when your domain becomes active. While your domain is pending, the proxy function is not yet activated but Cloudflare will respond to any DNS query on your assigned nameservers.
 
 ## How Cloudflare handles DNS queries
 
@@ -96,16 +108,6 @@ When the browser initiates a `HTTP/S` request to `blog.example.com`, a DNS resol
 ### DNS-only example
 
 When the browser initiates a `HTTP/S` request to `shop.example.com`, a DNS resolver will convert the hostname into an IP address. Since the record's proxy status is `DNS only`, Cloudflare will simply return `192.0.2.2`. Then the browser initiates a `HTTP/S` request to the server hosted at `192.0.2.2`.
-
-## Activating your domain
-
-In a full setup, your domain will be pending until you update the its nameservers to the assigned Cloudflare nameservers. This step is essential for two reasons. First, to inform DNS resolvers where they can get a response for DNS queries to your domain so that all traffic will route through Cloudflare and second, to verify that you own the domain since only an owner or administrator of a domain has access to its Registrar, where nameserver changes are made.
-
-{{<Aside>}}
-Note: The activation process involves different steps if you are using a [secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) or [partial (CNAME) setup](/dns/zone-setups/partial-setup/).
-{{</Aside>}}
-
-Registrars take up to 24 hours to process nameserver changes (quicker in most cases). You will receive an email when your domain becomes active. While your domain is pending, the proxy function is not yet activated but Cloudflare will respond to any DNS query on your assigned nameservers.
 
 ## Avoiding downtime
 
