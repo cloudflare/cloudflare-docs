@@ -112,6 +112,8 @@ IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
   - SHA2-256
 
 - **Diffie-Hellman group**:
+<br>
+Below is a list of all DH groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH grup 14.
   - DH group 20 (384-bit random)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
