@@ -12,7 +12,7 @@ meta:
 
 New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today.
 
-You have until March 1, 2024 to switch to new pricing on your own, after which all of your Workers and Pages Functions currently under the [Bundled and Unbound pricing models](/workers/platform/pricing/#deprecated-usage-models) will be automatically migrated to the [Standard model](/workers/platform/pricing/#example-pricing-standard-usage-model) for users on the Workers Paid plan. 
+For users on the Workers Paid plan: You **have until March 1, 2024 to switch to new pricing on your own**, after which all of your Workers and Pages Functions currently under the [Bundled and Unbound pricing models](/workers/platform/pricing/#deprecated-usage-models) will be **automatically migrated** to the [Standard model](/workers/platform/pricing/#example-pricing-standard-usage-model). 
 
 {{</Aside>}}
 
