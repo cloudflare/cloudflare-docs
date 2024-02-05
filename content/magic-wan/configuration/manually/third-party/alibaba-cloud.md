@@ -5,7 +5,7 @@ pcx_content_type: integration-guide
 
 # Alibaba Cloud VPN Gateway
 
-This tutorial provides information on how to connect Alibaba Cloud infrastructure to Magic WAN through IPsec tunnels. For more information regarding Alibaba Cloud technology, refer to [Alibaba’s documentation](https://www.alibabacloud.com/help/en/vpn-gateway).
+This tutorial provides information on how to connect Alibaba Cloud infrastructure to Magic WAN through IPsec tunnels. For more information regarding Alibaba Cloud technology, refer to [Alibaba's documentation](https://www.alibabacloud.com/help/en/vpn-gateway).
 
 ## Alibaba Cloud
 
