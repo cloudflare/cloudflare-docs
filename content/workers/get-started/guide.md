@@ -125,7 +125,7 @@ This [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) will be called w
 
 The `fetch` handler will always be passed three parameters: [`request`, `env` and `context`](/workers/runtime-apis/handlers/fetch/).
 
-1. The `Response` object: `return new Response("Hello World!");`
+4. The `Response` object: `return new Response("Hello World!");`
 
 The Workers runtime expects `fetch` handlers to return a `Response` object or a Promise which resolves with a `Response` object. In this example, you will return a new `Response` with the string `"Hello World!"`.
 
