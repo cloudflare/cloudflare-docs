@@ -114,7 +114,7 @@ Note that breakpoint debugging in `wrangler dev` using `--remote` could extend W
 
 {{<Aside type="note" header="Tip">}}
 
-The `.vscode/launch.json` file only applies to a single project, if you prefer you can also add the above launch configuration to your user's settings (as per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) in order to have it available for all your projects.
+The `.vscode/launch.json` file only applies to a single project. If you prefer, you can add the above launch configuration to your User Settings (per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) to have it available for all your projects.
 
 {{</Aside>}}
 
