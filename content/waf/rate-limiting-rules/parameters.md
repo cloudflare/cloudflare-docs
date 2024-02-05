@@ -252,7 +252,11 @@ In the dashboard, select one of the available values, which [vary according to y
 
 Enterprise customers with a paid add-on can always select a duration, even when using one of the [challenge actions](/waf/reference/cloudflare-challenges/#available-challenges).
 
-Customers on Free, Pro, and Business plans cannot select a duration when using a challenge action — their rate limiting rule will always perform request throttling for these actions. With request throttling, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge. Via API, customers on Free, Pro, and Business plans must set the `mitigation_timeout` value to `0` (zero) when the action is `managed_challenge`, `js_challenge`, or `challenge`, which enables request throttling.
+Customers on Free, Pro, and Business plans cannot select a duration when using a challenge action — their rate limiting rule will always perform request throttling for these actions. With request throttling, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+
+{{<Aside type="note" header="Note for API users">}}
+If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
+{{</Aside>}}
 
 ### With the following behavior
 
