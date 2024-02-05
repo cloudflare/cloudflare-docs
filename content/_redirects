@@ -1545,4 +1545,5 @@
 /fundamentals/notifications/* /notifications/:splat 301
 /support/other-languages/* /support/ 301
 /support/speed/* /speed/ 301
+/support/troubleshooting/planned-maintenance/* /support/troubleshooting/disruptive-maintenance/ 301
 /support/cloudflare-client-api/* /fundamentals/api/ 301
