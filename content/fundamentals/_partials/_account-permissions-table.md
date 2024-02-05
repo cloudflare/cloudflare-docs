@@ -45,6 +45,8 @@ inputParameters: editWord
 | Allow Request Tracer Read                                    | Grants read access to Request Tracer.                                                                                                                    |
 | API Gateway Read                                             | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                  |
 | API Gateway $1                                             | Grants write access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                 |
+| Argo Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
+| Argo Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
 | Billing Read                                                 | Grants read access to [billing profile, subscriptions, and access to fetch invoices](/fundamentals/subscriptions-and-billing/) and entitlements.               |
 | Billing $1                                                 | Grants write access to [billing profile, subscriptions, and access to fetch invoices and entitlements](/fundamentals/subscriptions-and-billing/).              |
 | Bulk URL Redirects Read                                      | Grants read access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                       |
@@ -69,8 +71,6 @@ inputParameters: editWord
 | Cloudflare One Networks $1 | Grants write access to Cloudflare One Networks |
 | Cloudflare Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
 | Cloudflare Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
-| Argo Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
-| Argo Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
 | Constellation Read                                           | Grants read access to [Constellation](/constellation/).                                                                                                  |
 | Constellation $1                                           | Grants write access to [Constellation](/constellation/).                                                                                                 |
 | D1 Read                                                      | Grants read access to [D1](/d1/).                                                                                                                        |
