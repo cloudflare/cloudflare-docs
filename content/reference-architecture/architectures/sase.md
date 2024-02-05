@@ -1,9 +1,9 @@
 ---
-title: Cloudflare One (SASE)
+title: Secure Access Service Edge (SASE)
 pcx_content_type: reference-architecture
 weight: 1
 meta:
-    title: Evolving to a SASE architecture with Cloudflare
+    title: "Reference Architecture: Evolving to a SASE architecture with Cloudflare"
 ---
 
 # Evolving to a SASE architecture with Cloudflare

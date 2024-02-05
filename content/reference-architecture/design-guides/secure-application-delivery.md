@@ -1,12 +1,12 @@
 ---
-title: "Design guide: secure application delivery"
+title: "Secure application delivery"
 pcx_content_type: reference-architecture
 weight:
 meta:
-  title: "Design guide: securely deliver applications with Cloudflare"
+  title: "Design guide: Securely deliver applications with Cloudflare"
 ---
 
-# Design guide: securely deliver applications with Cloudflare
+# Securely deliver applications with Cloudflare
 
 ## Overview and the Cloudflare advantage
 
@@ -229,7 +229,7 @@ Cloudflare CDN leverages Cloudflare’s global Anycast edge network. In addition
 ![Cloudflare provides analytics for visibility into caching data and performance.](/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-25.png)
 *Figure 25 : Cloudflare Caching Analytics.*
 
-There are [different caching topologies and configurations available](/reference-architecture/cdn-reference-architecture/). Below, you can see a Cache Rule has been configured to cache requests to the domain and override the origin TTL.
+There are [different caching topologies and configurations available](/reference-architecture/architectures/cdn/). Below, you can see a Cache Rule has been configured to cache requests to the domain and override the origin TTL.
 
 ![Cloudflare Cache Rules allow for granular control of caching.](/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-26.png)
 *Figure 26 : Cloudflare rule configuration.*

@@ -771,6 +771,15 @@
 /queues/learning/local-development/ /queues/reference/local-development/ 301
 /queues/learning/ /queues/reference/ 301
 
+# reference architectures & design guides
+/reference-architecture/sase-reference-architecture/ /reference-architecture/architectures/sase/ 301
+/reference-architecture/cdn-reference-architecture/ /reference-architecture/architectures/cdn/ 301
+/reference-architecture/load-balancing-reference-architecture/ /reference-architecture/architectures/load-balancing/ 301
+/reference-architecture/magic-transit-reference-architecture/ /reference-architecture/architectures/magic-transit/ 301
+/reference-architecture/multi-vendor-architecture/ /reference-architecture/architectures/multi-vendor/ 301
+
+/reference-architecture/secure-application-delivery-design-guide/ /reference-architecture/design-guides/secure-application-delivery/ 301
+
 # radar
 /fundamentals/radar/ /radar/ 301
 /fundamentals/radar/glossary/ /radar/glossary/ 301
