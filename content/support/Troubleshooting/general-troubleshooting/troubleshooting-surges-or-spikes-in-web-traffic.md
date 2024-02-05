@@ -41,7 +41,7 @@ See the available [cache eligibility settings here](/cache/how-to/cache-rules/se
 Also see our [Cache Performance article here](/cache/performance-review/cache-performance/)
 
 
-Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such credentialed information), see our [Cache HTML selectively article here](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains)
+Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information), see our [Cache HTML selectively article here](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains)
 
 
 ### Optimize caching further
