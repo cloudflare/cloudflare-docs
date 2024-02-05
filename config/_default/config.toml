@@ -28,7 +28,7 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
   section = ['html']
 
 [sitemap]
-  changefreq = "daily"
+  changefreq = "weekly"
   filename = "sitemap.xml"
 
 [markup]
@@ -55,4 +55,4 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 
 [caches]
   [caches.getjson]
-    maxAge = "120h"
+    maxAge = "24h"
