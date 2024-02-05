@@ -83,7 +83,7 @@ export function createDropdown(
         return `
           <button type="button" class="${cx(...classNames)}">
             ${text}
-            <img src="/icons/caret-down.svg" alt="expand" loading="lazy">
+            <img class="caretDownFilter" src="/icons/caret-down.svg" alt="expand" loading="lazy">
           </button>
         `;
       },
@@ -127,9 +127,9 @@ export function createDropdown(
       }
     };
 
-    // Add a click listener to the header (button)
+    // Add a click listener to the header (button) and the caret symbol
     const buttonListener = (event) => {
-      if (!event.target.matches("." + CLASS_BUTTON)) {
+      if (!event.target.matches("." + CLASS_BUTTON) && !event.target.matches(".caretDownFilter")) {
         return;
       }
       toggle();
