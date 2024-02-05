@@ -11,6 +11,7 @@ Diagrams, design patterns and detailed best practices to help you generate solut
 {{</description>}}
  
 {{<render file="_description-of-ref-architectures.md" productFolder="reference-architecture">}}
+<br/>
 
 {{<directory-listing>}}
  

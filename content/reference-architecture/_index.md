@@ -16,6 +16,7 @@ All the documents in this section are design to help you understand how Cloudfla
 We start with high level overviews of the Cloudflare network and platform, and further reference architectures focus on specific technology areas such as Secure Access Service Edge (SASE) or Content Delivery Networks (CDN).
 
 {{<render file="_description-of-design-guides.md" productFolder="reference-architecture">}}
+<br/>
  
 ---
  
