@@ -55,7 +55,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
     2. **Negotiation Mode**: _main_
     3. **Encryption Algorithm**: _aes256_
     4. **Authentication Algorithm**: _sha256_
-    5. **DH Group**: _group5_
+    5. **DH Group**: _group14_
     6. **Localid**: This is the customer endpoint. These are generally IP addresses provided by your ISP. For example, `47.xxx.xxx.xxx`.
 
 
