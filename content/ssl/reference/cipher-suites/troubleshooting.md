@@ -16,11 +16,11 @@ When you adjust the setting used for your domain's [Minimum TLS Version](/ssl/ed
 
 This setting can cause issues if you are not supporting TLS 1.2 ciphers on your domain. If you experience issues, review your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) setting and Cloudflare's [supported ciphers list](/ssl/reference/cipher-suites/supported-cipher-suites/).
 
-## Compatibility with certificate type
+## Compatibility with certificate encryption
 
-If you [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/), make sure the certificate matches your chosen cipher suites.
+If you [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/), make sure the certificate is compatible with the chosen cipher suites for your zone or hostname.
 
-For example, if you have uploaded an RSA certificate, your cipher suite selection cannot only support ECDSA certificates.
+For example, if you upload an RSA certificate, your cipher suite selection cannot only support ECDSA certificates.
 
 ## TLS 1.3 settings
 
