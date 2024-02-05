@@ -67,5 +67,5 @@ JWT Validation is available for all API Shield customers. Enterprise customers w
 
 Currently, the following known limitations exist:
 
-1. JWT Validation only operates on JWTs sent in client request headers or cookies. If your clients send in JWTs in a POST body, direct that feedback to your account team.
+1. JWT Validation only operates on JWTs sent in client request headers or cookies. If your clients send in JWTs in a `POST` body, direct that feedback to your account team.
 2. JWT Validation only operates for {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (host, method, and path) added to Endpoint Management. You can add all of your endpoints to endpoint management through [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema Validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), [manually via the Cloudflare dashboard](/api-shield/management-and-monitoring/#add-endpoints-manually), or via the [API](/api/operations/api-shield-endpoint-management-add-operations-to-a-zone).
