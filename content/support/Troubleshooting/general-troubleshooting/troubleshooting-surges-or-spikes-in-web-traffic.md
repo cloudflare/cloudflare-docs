@@ -46,7 +46,7 @@ Customers with Business and Enterprise domains have additional Page Rules settin
 
 ### Optimize caching further
 
-Using [Custom Cache Keys](/cache/how-to/cache-keys/) allows to precisely set the cacheability setting for any resource.
+Using [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set the cacheability setting for any resource.
 
 [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the `Cache-Control` headers tell Cloudflare how to handle content from the origin. 
 
