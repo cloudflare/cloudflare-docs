@@ -26,7 +26,7 @@ Rules with `skip` action only apply to rules with `execute` action listed **afte
 
 ## Skip all remaining rules
 
-To skip all the remaining rules in the entry point ruleset, create a rule with `skip` action and include `"ruleset": "current"` in the `action_parameters` object.
+To skip all the remaining rules in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset), create a rule with `skip` action and include `"ruleset": "current"` in the `action_parameters` object.
 
 Example of rule definition:
 
@@ -42,9 +42,74 @@ Example of rule definition:
 
 Skipping all remaining rules only affects the rules in the current context (account or zone). For example, adding a rule with `skip` action to the account-level phase entry point ruleset has no impact on the rules defined in the zone-level phase entry point ruleset — these zone-level rules will still be evaluated.
 
+### Example
+
+The following example adds a rule that skips all remaining rules in the entry point ruleset for requests matching the hostname `dev.example.com`.
+
+1. Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the current configuration of the entry point ruleset of the `http_request_firewall_managed` phase.
+
+    ```bash
+    ---
+    header: Request
+    ---
+    curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+    --header "Authorization: Bearer <API_TOKEN>"
+    ```
+
+    ```json
+    ---
+    header: Example response
+    highlight: 3
+    ---
+    {
+      "result": {
+        "id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
+        "name": "default",
+        "description": "",
+        "source": "firewall_managed",
+        "kind": "zone",
+        "version": "3",
+        "rules": [
+          // (...)
+        ],
+        "last_updated": "2024-01-20T14:29:00.190643Z",
+        "phase": "http_request_firewall_managed"
+      },
+      "success": true,
+      "errors": [],
+      "messages": []
+    }
+    ```
+
+    Save the ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c`) for the next step.
+
+2. Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add a an exception (or skip rule) at the beginning of the rules list, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
+
+    ```bash
+    ---
+    header: Request
+    highlight: 5-12
+    ---
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/060013b1eeb14c93b0dcd896537e0d2c/rules" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "expression": "http.host eq \"dev.example.com\"",
+      "action": "skip",
+      "action_parameters": {
+        "ruleset": "current"
+      },
+      "position": {
+        "before": ""
+      }
+    }'
+    ```
+
+For more information on adding a rule to a ruleset, refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) in the Ruleset Engine documentation.
+
 ## Skip one or more WAF managed rulesets
 
-To skip one or more WAF managed rulesets, create a rule with `skip` action containing a `rulesets` field in the `action_parameters` object. The `rulesets` field must contain a list of managed ruleset IDs you wish to skip.
+To skip one or more WAF managed rulesets, create a rule with `skip` action containing a `rulesets` field in the `action_parameters` object. The `rulesets` field must contain a list of managed ruleset IDs you want to skip.
 
 Example of rule definition:
 
@@ -53,12 +118,97 @@ Example of rule definition:
   "expression": "<RULE_EXPRESSION>",
   "action": "skip",
   "action_parameters": {
-    "rulesets": ["{waf-managed-ruleset-id-1}", "{waf-managed-ruleset-id-2}"]
+    "rulesets": ["<WAF_MANAGED_RULESET_1_ID>", "<WAF_MANAGED_RULESET_2_ID>"]
   }
 }
 ```
 
 The managed rulesets to skip must belong to the `http_request_firewall_managed` phase.
+
+### Example
+
+The following example adds a rule that skips the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) for requests matching the hostname `dev.example.com`.
+
+1. Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the current configuration of the entry point ruleset of the `http_request_firewall_managed` phase.
+
+    ```bash
+    ---
+    header: Request
+    ---
+    curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+    --header "Authorization: Bearer <API_TOKEN>"
+    ```
+
+    ```json
+    ---
+    header: Example response
+    highlight: 3,12,20
+    ---
+    {
+      "result": {
+        "id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
+        "name": "default",
+        "description": "",
+        "source": "firewall_managed",
+        "kind": "zone",
+        "version": "3",
+        "rules": [
+          // (...)
+          {
+            "id": "1bdb49371c1f46958fc8b985efcb79e7", // `execute` rule ID
+            "version": "1",
+            "action": "execute",
+            "expression": "true",
+            "last_updated": "2024-01-20T14:21:28.643979Z",
+            "ref": "1bdb49371c1f46958fc8b985efcb79e7",
+            "enabled": true,
+            "action_parameters": {
+              "id": "efb7b8c949ac4650a09736fc376e9aee", // "Cloudflare Managed Ruleset" ID
+              "version": "latest"
+            }
+          },
+          // (...)
+        ],
+        "last_updated": "2024-01-20T14:29:00.190643Z",
+        "phase": "http_request_firewall_managed"
+      },
+      "success": true,
+      "errors": [],
+      "messages": []
+    }
+    ```
+
+    Save the following IDs for the next step:
+
+    - The ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c` in this example)
+    - The ID of the `execute` rule deployment the managed ruleset (`1bdb49371c1f46958fc8b985efcb79e7` in this example)
+    - The ID of the Cloudflare Managed Ruleset (`efb7b8c949ac4650a09736fc376e9aee`)
+
+2. Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
+
+    ```bash
+    ---
+    header: Request
+    highlight: 5-12
+    ---
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/060013b1eeb14c93b0dcd896537e0d2c/rules" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "expression": "http.host eq \"dev.example.com\"",
+      "action": "skip",
+      "action_parameters": {
+        "rulesets": [
+          "efb7b8c949ac4650a09736fc376e9aee"
+        ]
+      },
+      "position": {
+        "before": "1bdb49371c1f46958fc8b985efcb79e7"
+      }
+    }'
+    ```
+
+For more information on adding a rule to a ruleset, refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) in the Ruleset Engine documentation.
 
 ## Skip one or more rules of WAF managed rulesets
 
@@ -72,11 +222,149 @@ The following example defines a rule with `skip` action that will skip rules `A`
   "action": "skip",
   "action_parameters": {
     "rules": {
-      "{waf-managed-ruleset-id-1}": ["{rule-id-A}", "{rule-id-B}"],
-      "{waf-managed-ruleset-id-2}": ["{rule-id-X}"]
+      "<WAF_MANAGED_RULESET_1_ID>": ["<RULE_A_ID>", "<RULE_B_ID>"],
+      "<WAF_MANAGED_RULESET_2_ID>": ["<RULE_X_ID>"]
     }
   }
 }
 ```
 
 The rules in the `rules` object must belong to the specified managed rulesets, otherwise you will get an error.
+
+### Example
+
+The following example adds a rule that skips a particular rule of the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) for requests matching the hostname `dev.example.com`.
+
+1. Invoke the [Get a zone ruleset](/api/operations/getZoneRuleset) operation to obtain a list of rules in the Cloudflare Managed Ruleset (ruleset ID `efb7b8c949ac4650a09736fc376e9aee`).<br>
+    You can get the managed ruleset details using the account-level endpoint ([Get an account ruleset](/api/operations/getAccountRuleset)) or the zone-level endpoint ([Get a zone ruleset](/api/operations/getZoneRuleset)).
+
+    ```bash
+    ---
+    header: Request
+    ---
+    curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/efb7b8c949ac4650a09736fc376e9aee \
+    --header "Authorization: Bearer <API_TOKEN>"
+    ```
+
+    ```json
+    ---
+    header: Example response
+    highlight: 12
+    ---
+    {
+      "result": {
+        "id": "efb7b8c949ac4650a09736fc376e9aee",
+        "name": "Cloudflare Managed Ruleset",
+        "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives.",
+        "source": "firewall_managed",
+        "kind": "managed",
+        "version": "180",
+        "rules": [
+          // (...)
+          {
+            "id": "d9e350f1b72d4730899c8a420e48a85d", // ID of rule to skip
+            "version": "180",
+            "action": "block",
+            "categories": [
+              "file-inclusion",
+              "october-cms"
+            ],
+            "description": "October CMS - File Inclusion",
+            "last_updated": "2024-02-05T07:12:54.565276Z",
+            "ref": "adb550873eb92d32372ed08514d33241",
+            "enabled": true
+          },
+          // (...)
+        ],
+        "last_updated": "2024-02-05T07:12:54.565276Z",
+        "phase": "http_request_firewall_managed"
+      },
+      "success": true,
+      "errors": [],
+      "messages": []
+    }
+    ```
+
+    Take note of the ID of the rule you want to skip (`d9e350f1b72d4730899c8a420e48a85d` in this example).
+
+2. Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the current configuration of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` phase.
+
+    ```bash
+    ---
+    header: Request
+    ---
+    curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+    --header "Authorization: Bearer <API_TOKEN>"
+    ```
+
+    ```json
+    ---
+    header: Example response
+    highlight: 3,12,20
+    ---
+    {
+      "result": {
+        "id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
+        "name": "default",
+        "description": "",
+        "source": "firewall_managed",
+        "kind": "zone",
+        "version": "3",
+        "rules": [
+          // (...)
+          {
+            "id": "1bdb49371c1f46958fc8b985efcb79e7", // `execute` rule ID
+            "version": "1",
+            "action": "execute",
+            "expression": "true",
+            "last_updated": "2024-01-20T14:21:28.643979Z",
+            "ref": "1bdb49371c1f46958fc8b985efcb79e7",
+            "enabled": true,
+            "action_parameters": {
+              "id": "efb7b8c949ac4650a09736fc376e9aee", // "Cloudflare Managed Ruleset" ID
+              "version": "latest"
+            }
+          },
+          // (...)
+        ],
+        "last_updated": "2024-01-20T14:29:00.190643Z",
+        "phase": "http_request_firewall_managed"
+      },
+      "success": true,
+      "errors": [],
+      "messages": []
+    }
+    ```
+
+    Save the following IDs for the next step:
+
+    - The ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c` in this example)
+    - The ID of the `execute` rule deploying the Cloudflare Managed Ruleset (`1bdb49371c1f46958fc8b985efcb79e7` in this example)
+
+3. Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
+
+    ```bash
+    ---
+    header: Request
+    highlight: 5-12
+    ---
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/060013b1eeb14c93b0dcd896537e0d2c/rules" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "expression": "http.host eq \"dev.example.com\"",
+      "action": "skip",
+      "action_parameters": {
+        "rules": {
+          "efb7b8c949ac4650a09736fc376e9aee": [
+            "d9e350f1b72d4730899c8a420e48a85d"
+          ]
+        }
+      },
+      "position": {
+        "before": "1bdb49371c1f46958fc8b985efcb79e7"
+      }
+    }'
+    ```
+
+For more information on adding a rule to a ruleset, refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) in the Ruleset Engine documentation.
