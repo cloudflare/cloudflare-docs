@@ -3,16 +3,20 @@ pcx_content_type: configuration
 title: Add an exception via API
 weight: 3
 meta:
-    title: Add a WAF exception via API
+    title: Add an exception via API
 ---
 
-# Add a WAF exception via API
+# Add an exception via API
 
-To add a WAF exception via API, create a rule with `skip` action in a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
+To add a managed rules exception via API, create a rule with `skip` action in a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` phase. You can define exceptions at the account level and at the zone level. Exceptions are also called skip rules.
 
-To configure the WAF exception, define the `action_parameters` object according to the [exception type](/waf/managed-rules/waf-exceptions/#types-of-waf-exceptions).
+To configure the exception, define the `action_parameters` object according to the [exception type](/waf/managed-rules/waf-exceptions/#types-of-exceptions). Refer to these sections for details:
 
-Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information on adding rules using the [Rulesets API](/ruleset-engine/rulesets-api/).
+- [Skip all remaining rules](#skip-all-remaining-rules)
+- [Skip one or more WAF managed rulesets](#skip-one-or-more-waf-managed-rulesets)
+- [Skip one or more rules of WAF managed rulesets](#skip-one-or-more-rules-of-waf-managed-rulesets)
+
+For more information on adding rules using the [Rulesets API](/ruleset-engine/rulesets-api/), refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/).
 
 {{<Aside type="note" header="Rule execution order">}}
 
