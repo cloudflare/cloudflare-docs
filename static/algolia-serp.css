@@ -148,7 +148,9 @@
 }
 
 .ais-Hits-item {
-  padding-top: .5em;
+  padding-top: 0em;
+  padding-bottom: 2em !important;
+  border-radius: .25rem !important;
 }
 
 .DocsMarkdown ul>:last-child {
