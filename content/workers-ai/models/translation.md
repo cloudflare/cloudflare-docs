@@ -13,15 +13,16 @@ Translation models convert a sequence of text from one language to another.
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Translation models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
 | `@cf/meta/m2m100-1.2b`                   | Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation<br/><strong>languages</strong>: english, chinese, french, spanish, arabic, russian, german, japanese, portuguese, hindi<br/>[More information](https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100)<br/>[Terms and license](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)<br/>  |
 
 ## Examples
+
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
@@ -114,11 +115,7 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
 
 ```json
 {
-  "result": {
-    "translated_text": "Je vais commander des moules frites",
-  "success": true,
-  "errors":[],
-  "messages":[]
+  "translated_text": "Je vais commander des moules frites"
 }
 ```
 
