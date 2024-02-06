@@ -1,11 +1,11 @@
 ---
-title: What is Defense In-Depth?
+title: What is Defense-in-Depth?
 pcx_content_type: overview
 weight: 2
 layout: learning-unit
 ---
 
-Learn concepts related to defense in-depth.
+Learn concepts related to defense-in-depth.
 
 ## What is recursive DNS?
 

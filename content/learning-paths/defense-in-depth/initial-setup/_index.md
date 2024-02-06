@@ -5,7 +5,7 @@ weight: 2
 layout: learning-module
 ---
 
-# Get started with defense in-depth
+# Get started with defense-in-depth
 
 To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
 
