@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
-title: Domain Connect service providers
+title: Domain Connect
 weight: 5
 meta:
     description: Learn how to onboard your templates to use Domain Connect with Cloudflare as DNS provider.
 ---
 
-# Domain Connect service providers
+# Domain Connect
 
-If you are a service provider, consider this page for information on Cloudflare as a [Domain Connect](https://www.domainconnect.org/) DNS provider and how you can onboard your template.
+If you are a service provider, consider this page for information on how Cloudflare supports [Domain Connect](https://www.domainconnect.org/) and how you can onboard your template.
 
 ## What is Domain Connect
 
@@ -16,13 +16,13 @@ Domain Connect is an open standard that allows service providers - such as email
 
 This is achieved with templates that close the gap between necessary configurations (required by the service provider) and necessary DNS records changes (that must happen at the authoritative DNS provider).
 
-In practice, this means that when a user that owns `example.com` and has Cloudflare as their authoritative DNS provider wants to use your service, instead of having to manually update their DNS records, they will only have authenticate themselves and the necessary changes will be applied automatically.
+In practice, this means that when a user that owns `example.com` and has Cloudflare as their authoritative DNS provider wants to use your service, instead of having to manually update their DNS records, they will only have to authenticate themselves and the necessary changes will be applied automatically.
 
 ## Setup
 
 ### Before you begin
 
-* Note that Cloudflare only supports the [Domain Connnect synchronous flow](https://www.domainconnect.org/getting-started/).
+* Note that Cloudflare only supports the [Domain Connect synchronous flow](https://www.domainconnect.org/getting-started/).
 * Domain Connect templates and tools are published on GitHub, so you must have a GitHub account and be familiar with [GitHub forks and pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks).
 
 ### 1 - Add templates to the repository
@@ -42,7 +42,7 @@ You can use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-
 
 4. Submit a pull request to have your template(s) added to the repository.
 
-Once Domain Connect has reviewed your template(s) and merged your pull request, contact Cloudflare as specified below.
+Once your pull request has been reviewed and merged, contact Cloudflare as specified below.
 
 ### 2 - Contact Cloudflare to onboard your template
 
@@ -52,7 +52,10 @@ Send an email to `domain-connect@cloudflare.com`, including the following inform
 
 1. List of template(s) that you want to onboard, with their corresponding GitHub hyperlinks.
 2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
-3. The default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s).
+3. The default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
+    {{<Aside type="note">}}
+Proxy status is applied per template. If needed, organize the records in different templates to specify different proxy statuses.
+    {{</Aside>}}
 4. (Optional) A Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) for you to test the flow.
 
     If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only and, once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
