@@ -6,7 +6,7 @@ weight: 3
 
 # Network Time Security
 
-Network Time Security (NTS) provides cryptographic security for the client-server mode of the Network Time Protocol (NTP). This allows users to obtain time in an authenticated manner.
+[Network Time Security](https://datatracker.ietf.org/doc/html/rfc8915) (NTS) provides cryptographic security for the client-server mode of the Network Time Protocol (NTP). This allows users to obtain time in an authenticated manner.
 
 ## Background
 

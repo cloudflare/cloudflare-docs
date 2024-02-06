@@ -12,7 +12,7 @@ meta:
 
 {{<content-column>}}
 
-Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world. Refer to our [reference architecture](/reference-architecture/sase-reference-architecture/) to learn how to evolve your network and security architecture to our SASE platform.
+Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world. Refer to our [reference architecture](/reference-architecture/architectures/sase/) to learn how to evolve your network and security architecture to our SASE platform.
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 

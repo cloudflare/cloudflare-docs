@@ -1,5 +1,5 @@
 ---
-updated: 2023-09-25
+updated: 2024-02-02
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -13,6 +13,7 @@ A handy way to explore all of the models available on [Workers AI](/workers-ai) 
 
 You can [download the Workers AI notebook](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai.ipynb) or view the embedded notebook below.
 
+{{<youtube id="1AnBEBhfnic">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
 

@@ -43,7 +43,7 @@ There are two ways to add API endpoints from Discovery.
 
 ## Add endpoints from Schema Validation
 
-1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/configure/).
+1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/).
 2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
 3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published.
 

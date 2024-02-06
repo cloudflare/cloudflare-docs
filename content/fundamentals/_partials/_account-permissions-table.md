@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: editWord
+inputParameters: editWord;;editProduct
 ---
 
 | Name                                                         | Description                                                                                                                                              |
@@ -69,8 +69,8 @@ inputParameters: editWord
 | Cloudflare One Networks $1 | Grants write access to Cloudflare One Networks |
 | Cloudflare Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
 | Cloudflare Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
-| Cloudflare Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
-| Cloudflare Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
+| $2 Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
+| $2 Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
 | Constellation Read                                           | Grants read access to [Constellation](/constellation/).                                                                                                  |
 | Constellation $1                                           | Grants write access to [Constellation](/constellation/).                                                                                                 |
 | D1 Read                                                      | Grants read access to [D1](/d1/).                                                                                                                        |

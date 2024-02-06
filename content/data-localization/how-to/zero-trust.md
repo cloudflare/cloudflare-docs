@@ -1,10 +1,10 @@
 ---
-title: Use Zero Trust with DLS
+title: Zero Trust
 pcx_content_type: how-to
 weight: 1
 ---
 
-# Use Zero Trust with Data Localization Suite
+# Zero Trust
 
 In the following sections, we will give you some details about how different Zero Trust products can be used with the Data Localization Suite.
 
