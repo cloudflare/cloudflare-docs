@@ -184,7 +184,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logging/tail-workers/).
 
 {{</definitions>}}
 
