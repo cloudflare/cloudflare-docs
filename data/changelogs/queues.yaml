@@ -26,6 +26,12 @@ entries:
     Calling `retry()` or `retryAll()` on a message or message batch will no longer have an impact on how Queues scales [consumer concurrency](/queues/reference/consumer-concurrency/).
 
     Previously, using [explicit retries](/queues/reference/batching-retries/#retries) via `retry()` or `retryAll()` would count as an error and could result in Queues scaling down the number of concurrent consumers.
+- publish_date: '2024-02-21'
+  title: Support for pull-based consumers
+  description: |-
+    Queues now supports pull-based consumers. A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
+  
+    Review the [documentation on pull-based consumers](/queues/reference/pull-consumers/) to configure HTTP-based pull.
 - publish_date: '2023-10-07'
   title: More queues per account - up to 10,000
   description: |-
