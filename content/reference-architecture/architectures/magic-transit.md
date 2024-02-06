@@ -30,7 +30,7 @@ Protecting network infrastructure from DDoS attacks demands a unique combination
 Cloudflare Magic Transit provides DDoS protection and traffic acceleration for on-premise, cloud, and hybrid networks. With data centers spanning [hundreds of cities](https://www.cloudflare.com/network/) and  offering hundreds of Tbps in mitigation capacity, Magic Transit can detect and mitigate attacks close to their source of origin in under three seconds globally on average — all while routing traffic faster than the public Internet.
 
 ![Figure 1: Magic transit overview](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-1.png)
-*Figure 1: Magic transit overview*
+_Figure 1: Magic transit overview_
 
 At a high level, Magic Transit works as follows:
 * **Connect:** Using Border Gateway Protocol (BGP) route announcements to the Internet, and the Cloudflare Anycast network, customer traffic is ingested at a Cloudflare data center closest to the source.
