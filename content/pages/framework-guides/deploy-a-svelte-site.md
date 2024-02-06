@@ -158,7 +158,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{<Aside type="note">}}
 
-It is currently not possible to access [bindings](/pages/functions/bindings/) in dev mode. This feature is being worked on and will be released soon. For now, this limitation is documented in the SvelteKit documentation for both for [Workers](https://kit.svelte.dev/docs/adapter-cloudflare-workers#bindings-testing-locally) and [Pages](https://kit.svelte.dev/docs/adapter-cloudflare#bindings-testing-locally). You can track possible workarounds in this [GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/11025).
+It is currently not possible to access [bindings](/pages/functions/bindings/) in dev mode. This feature is being worked on and will be released soon. For now, this limitation is documented in the SvelteKit documentation for both [Workers](https://kit.svelte.dev/docs/adapter-cloudflare-workers#bindings-testing-locally) and [Pages](https://kit.svelte.dev/docs/adapter-cloudflare#bindings-testing-locally). You can track possible workarounds in this [GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/11025).
 
 {{</Aside>}}
 
