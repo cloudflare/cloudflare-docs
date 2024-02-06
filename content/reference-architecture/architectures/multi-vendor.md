@@ -34,15 +34,13 @@ Before discussing multi-vendor security and performance solutions, it’s import
 
 Cloud-based security and performance providers like Cloudflare work as a reverse proxy. A reverse proxy is a server that sits in front of web servers and forwards client requests to those web servers. Reverse proxies are typically implemented to help increase security, performance, and reliability.
 
-![Figure 1: Client request to origin server](images/reference-architecture/multi-vendor-architecture-images/Figure_1.png)
-_Figure 1_
+{{<figure img="images/reference-architecture/multi-vendor-architecture-images/Figure_1.png" alt="Figure 1: Client request to origin server" caption="Figure 1">}}
 
 Normal traffic flow without a reverse proxy would involve a client sending a DNS lookup request, receiving the origin IP address, and communicating directly to the origin server(s). This is visualized in Figure 1.
 
 When a reverse proxy is introduced, the client still sends a DNS lookup request to its resolver, which is the first stop in the DNS lookup. In this case, the DNS resolver returns a vendor’s reverse proxy IP address to the client and the client then makes a request to the vendor’s reverse proxy. The cloud-based proxy solution can now provide additional security,  performance, and reliability services like [CDN](https://www.cloudflare.com/cdn/), [WAF](https://www.cloudflare.com/waf/), [DDoS](https://www.cloudflare.com/ddos/), [API Gateway](https://www.cloudflare.com/products/api-gateway/), [Bot Management](https://www.cloudflare.com/products/bot-management/) capabilities, etc, before deciding, based on security policy, whether to route the client request to the respective origin server(s). This is visualized in Figure 2.
 
-![Figure 2: Client request routed through reverse proxy for additional security and performance services](/images/reference-architecture/multi-vendor-architecture-images/Figure_2.png)
-_Figure 2_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_2.png" alt="Figure 2: Client request routed through reverse proxy for additional security and performance services" caption="Figure 2">}}
 
 In some cases, the vendor providing the reverse proxy also provides DNS services; this is visualized in Figure 3 below. This can be beneficial for managing all services from a single dashboard and for operational simplicity.
 
@@ -72,8 +70,7 @@ Cloudflare provides multiple options to easily onboard and consume security, per
 
 The core requirement is, traffic must be proxied through Cloudflare; this is also referred to as ‘orange-clouded,’ because the traffic to the site is being proxied through Cloudflare. Within the dashboard, you will see the status for a specific DNS entry as ‘Proxied’ and the orange cloud icon as shown in Figure 5 below.
 
-![Figure 5: Cloudflare configured to proxy traffic for site https://api2.cf-tme.com](/images/reference-architecture/multi-vendor-architecture-images/Figure_5.png)
-_Figure 5_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_5.png" alt="Figure 5: Cloudflare configured to proxy traffic for site https://api2.cf-tme.com" caption="Figure 5">}}
 
 There are several methods to proxy traffic through Cloudflare and the method used will depend on customer requirements.
 
@@ -135,8 +132,7 @@ While the specifics may vary widely depending on the vendor and business case, t
 
 The first and likely most important decision that must be made when looking at a multi-vendor strategy is how to route traffic to each provider. This depends on both the business logic driving the multi-vendor strategy and the technical capabilities of each vendor in question. Traffic to each provider will be routed using DNS and shift depending on the current conditions and needs of the business. Cloudflare can support configurations as an authoritative DNS provider, secondary DNS provider, or non-Cloudflare DNS (CNAME) setups for a zone.
 
-![Figure 6: Client request being routed to origin server(s) in a multi-vendor setup](/images/reference-architecture/multi-vendor-architecture-images/Figure_6.png)
-_Figure 6_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_6.png" alt="Figure 6: Client request being routed to origin server(s) in a multi-vendor setup" caption="Figure 6">}}
 
 DNS based load balancing and health checks can be leveraged here so that client requests to the domain/site are distributed across healthy origin server(s). The DNS provider monitors the health of the servers and DNS responds to the client request using a round-robin approach with the respective IPs.
 
@@ -168,8 +164,7 @@ Additionally, Cloudflare offers logging, analytics and security analytics dashbo
 
 Figure 7  below shows a view of Cloudflare Security Analytics which brings together all of Cloudflare’s detection capabilities in one place. This provides security engineers and admins with a quick view of current traffic and security insights in regards to their site.
 
-![Figure 7: Cloudflare Security Analytics](/images/reference-architecture/multi-vendor-architecture-images/Figure_7.png)
-_Figure 7_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_7.png" alt="Figure 7: Cloudflare Security Analytics" caption="Figure 7">}}
 
 In addition to analytics for each product and security analytics shown above, you can also view logs within the UI and export logs to Cloudflare or third party clouds or products for additional analysis.
 
@@ -193,8 +188,7 @@ The below diagram describes a typical multi-vendor setup in which both vendors a
 
 On the routing front, this example shows the authoritative DNS living outside of the two providers and load balancing between them. This DNS provider could be self hosted or live on another third party provider. Traffic is directed to each provider by responding to queries for `www.example.com` with a provider specific CNAME record or static IP for apex domain traffic. To achieve this traffic split, the third party DNS provider does need to have some ability to load balance the traffic. Most major DNS providers will have some mechanism to perform DNS based load balancing with varying degrees of complexity and configurability. This could mean round robining between records in the simplest case, or varying the response based on client location, health check data and more.
 
-![Figure 9: Multi-vendor setup with Cloudflare and another vendor and different provider for DNS](/images/reference-architecture/multi-vendor-architecture-images/Figure_9.png)
-_Figure 9_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_9.png" alt="Figure 9: Multi-vendor setup with Cloudflare and another vendor and different provider for DNS" caption="Figure 9">}}
 
 Depending on the authoritative DNS provider, traffic can be evenly split between the two or adjusted dynamically. Oftentimes customers will choose to inform the DNS routing with performance/availability data sourced from a third party monitoring service such as Thousandeyes or Catchpoint and adjust DNS responses based on that data. Third party monitoring services are often used to capture full HTTP request/response metrics to route based on real-time performance. Traffic can easily be shifted away from a provider by updating the authoritative DNS and waiting for the record TTL to expire.
 
@@ -221,8 +215,7 @@ In order to point requests to both providers (for the same hosts) in this model,
 
 While DNS based load balancing isn’t required here, it’s helpful to have at each provider so requests can be predictably split across multiple vendors, otherwise the traffic split is largely dictated by the client resolver nameserver selection.
 
-![Figure 10: Multi-vendor setup with Cloudflare and another vendor with multi-vendor DNS from same providers.](/images/reference-architecture/multi-vendor-architecture-images/Figure_10.png)
-_Figure 10_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_10.png" alt="Figure 10: Multi-vendor setup with Cloudflare and another vendor with multi-vendor DNS from same providers." caption="Figure 10">}}
 
 At the authoritative DNS provider, each vendor has their NS records listed and the client will select a nameserver based on their resolver. The resolver will receive the full set of authoritative nameservers upon request. The logic used by most resolvers typically takes into account resolution time as well as availability. In this scenario, the resolvers are used to make the decision on which name server to use based on performance/availability data they already have.
 
@@ -299,8 +292,7 @@ Cons:
 
 ## Configuration and management best practices
 
-![Figure 11: Configuration via Terraform for multi-vendor setup with Cloudflare and other vendor](/images/reference-architecture/multi-vendor-architecture-images/Figure_11.png)
-_Figure 11_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_11.png" alt="Figure 11: Configuration via Terraform for multi-vendor setup with Cloudflare and other vendor" caption="Figure 11">}}
 
 Figure 11 depicts a typical pattern seen when managing configurations across both Cloudflare and other providers in parallel. In this example, we are assuming that the same workloads are being split through both providers and the admin team is updating both configurations via API through Terraform. This can also be tied into an internal CI/CD pipeline to match your typical developer workflow. All Cloudflare functions can be configured via API and are delivered first via API. This diagram also depicts logs being sent to a common SIEM and native alerting functions that can be delivered via e-mail, webhook, or PagerDuty for alerts based on performance, security or administrative criteria.
 
@@ -316,8 +308,7 @@ In the most basic scenario, the proxy will simply route the traffic over the Int
 
 The below diagram describes the default connectivity to origins as requests flow through the Cloudflare network. When a request hits a proxied DNS record and needs to reach the origin, Cloudflare will send traffic from the network over the Internet from a set of Cloudflare owned addresses.
 
-![Figure 12: Connectivity from Cloudflare to origin server(s) via Internet](/images/reference-architecture/multi-vendor-architecture-images/Figure_12.png)
-_Figure 12_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_12.png" alt="Figure 12: Connectivity from Cloudflare to origin server(s) via Internet" caption="Figure 12">}}
 
 Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend whitelisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
 
@@ -335,8 +326,7 @@ Cloudflared creates an encrypted tunnel between your origin web server(s) and Cl
 
 The firewall and security posture is hardened by locking down all origin server ports and protocols via your firewall. Once Cloudflare Tunnel is in place and respective security applied, all requests on HTTP/S ports are dropped, including volumetric DDoS attacks. Data breach attempts, such as snooping of data in transit or brute force login attacks, are blocked entirely.
 
-![Figure 13: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel](/images/reference-architecture/multi-vendor-architecture-images/Figure_13.png)
-_Figure 13_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_13.png" alt="Figure 13: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel" caption="Figure 13">}}
 
 The above diagram describes the connectivity model through Cloudflare Tunnel. Note, this option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.
 
@@ -344,8 +334,7 @@ The above diagram describes the connectivity model through Cloudflare Tunnel. No
 
 Most vendors also provide an option of directly connecting to their network. Direct connections provide security, reliability, and performance benefits over using the public Internet. These direct connections are done at peering facilities, Internet Exchanges (IXs) where Internet Service Providers (ISPs) and Internet networks can interconnect with each other, or through vendor partners.
 
-![Figure 14: Connectivity from Cloudflare to origin server(s) via Cloudflare Network Interconnect (CNI)](/images/reference-architecture/multi-vendor-architecture-images/Figure_14.png)
-_Figure 14_
+{{<figure img="/images/reference-architecture/multi-vendor-architecture-images/Figure_14.png" alt="Figure 14: Connectivity from Cloudflare to origin server(s) via Cloudflare Network Interconnect (CNI)" caption="Figure 14">}}
 
 The above diagram describes origin connectivity through [Cloudflare Network Interconnect (CNI)](https://blog.cloudflare.com/cloudflare-network-interconnect/) which allows you to connect your network infrastructure directly with Cloudflare and communicate only over those direct links. CNI allows customers to interconnect branch and headquarter locations directly with Cloudflare. Customers can interconnect with Cloudflare in one of three ways: over a private network interconnect (PNI) available at [Cloudflare peering facilities](https://www.peeringdb.com/net/4224), via an IX at any of the [many global exchanges Cloudflare participates in](https://bgp.he.net/AS13335#_ix), or through one of our [interconnection platform partners](https://blog.cloudflare.com/cloudflare-network-interconnect-partner-program).
 

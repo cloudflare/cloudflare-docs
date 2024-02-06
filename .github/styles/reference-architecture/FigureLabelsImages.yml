@@ -1,0 +1,13 @@
+---
+# Error: reference-architecture.FigureLabelsImages.yml
+#
+# Checks for the existinence of standard images and instructs to use a specific shortcode.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: existence
+message: "**Error**: Regular image format found. Use the {{<figure img='url' alt='alt_text' caption='caption'>}} format instead."
+level: error
+scope: raw
+raw:
+  - '!\[.*?\]\(.*?\)'

@@ -1,0 +1,8 @@
+{{- $img := .Get "img" -}} 
+{{- $alt := .Get "alt" -}} 
+{{- $caption := .Get "caption" -}}
+
+<figure class="figureShortcode">
+<img loading="lazy" src="{{ $img }}" alt="{{ $alt }}" />
+<figcaption>{{$caption}}</figcaption>
+</figure>
