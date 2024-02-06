@@ -85,8 +85,7 @@ Additional directives that influence cache behavior are listed below.
 
 ## Enable Origin Cache Control
 
-If you enable Origin Cache Control, Cloudflare will aim to strictly adhere to [RFC 7234](https://datatracker.ietf.org/doc/html/rfc7234).
-Enterprise customers have the ability to select if Cloudflare will adhere to this behavior, enabling or disabling Origin Cache Control for their websites through cache rules in the [dashboard](/cache/how-to/cache-rules/settings/#origin-cache-control-enterprise-only) or via [API](/cache/how-to/cache-rules/settings/#origin-cache-control-enterprise-only). Free, Pro, and Business customers have this option enabled by default and cannot disable it.
+If you enable Origin Cache Control, Cloudflare will aim to strictly adhere to [RFC 7234](https://datatracker.ietf.org/doc/html/rfc7234). Enterprise customers have the ability to select if Cloudflare will adhere to this behavior, enabling or disabling Origin Cache Control for their websites through cache rules in the [dashboard](/cache/how-to/cache-rules/settings/#origin-cache-control-enterprise-only) or via [API](/cache/how-to/cache-rules/settings/#origin-cache-control-enterprise-only). Free, Pro, and Business customers have this option enabled by default and cannot disable it.
 
 ## Origin Cache Control behavior
 
