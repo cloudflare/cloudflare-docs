@@ -1,11 +1,11 @@
 ---
-title: Initial setup
+title: Get started with Zero Trust
 pcx_content_type: overview
 weight: 2
 layout: learning-module
 ---
 
-# Get started with defense-in-depth
+# Get started with Zero Trust
 
 To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
 
