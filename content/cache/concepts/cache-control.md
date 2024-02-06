@@ -11,9 +11,9 @@ Origin Cache Control is a Cloudflare feature. When enabled on an Enterprise cust
 
 `Cache-Control` directives in the HTTP response from your origin server provide specific [caching instructions](https://datatracker.ietf.org/doc/html/rfc7234) to intermediary services like Cloudflare.
 
-With the Origin Cache Control feature enabled, `Cache-Control` directives present in the origin server's response will be followed as specified. For example, if the response includes a `max-age` directive of 3600 seconds, Cloudflare will cache the resource for that duration before checking the origin server again for updates.
+With the Origin Cache Control feature enabled, `Cache-Control` directives present in the origin server's response will be followed as specified. For example, if the response includes a `max-age` directive of 3,600 seconds, Cloudflare will cache the resource for that duration before checking the origin server again for updates.
 
-Using Cloudflare's [Cache Rules](/cache/how-to/cache-rules/) allows users to either augment or override an origin server's `Cache-Control` headers or [default policies](/cache/concepts/default-cache-behavior/) set by Cloudflare.
+Cloudflare's [Cache Rules](/cache/how-to/cache-rules/) allows users to either augment or override an origin server's `Cache-Control` headers or [default policies](/cache/concepts/default-cache-behavior/) set by Cloudflare.
 
 In the following sections, we will provide more details regarding:
 
@@ -38,7 +38,7 @@ Directives can be broken down into four groups: [cacheability](/cache/concepts/c
 
 ### Cacheability
 
-Cacheability refers to whether or not a resource should enter a cache, and the directives below indicate a resource’s cacheability.
+Cacheability refers to whether or not a resource should enter a cache, and the directives below indicate a resource's cacheability.
 
 - `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
 - `private` — Indicates the response message is intended for a single user, such as a browser cache, and must not be stored by a shared cache like Cloudflare or a corporate proxy.
@@ -50,7 +50,7 @@ Expiration refers to how long a resource should remain in the cache, and the dir
 
 {{<Aside type="note" header="Note">}}
 
-Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser’s Cache TTL respectively via the `s-maxage` and `max-age` `Cache-Control` headers.
+Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser's Cache TTL respectively via the `s-maxage` and `max-age` `Cache-Control` headers.
 
 When using Origin Cache Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache Control off and `max-age=0`, Cloudflare will bypass cache.
 
