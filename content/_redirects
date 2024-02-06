@@ -1505,6 +1505,9 @@
 /workers/recipes/vcl-conversion/* /workers/ 301
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
+/workers/observability/tail-workers/*  /workers/observability/logging/tail-workers/*  301
+/workers/observability/logpush/*  /workers/observability/logging/logpush/*  301
+/workers/observability/log-from-workers/*  /workers/observability/logging/*  301
 
 # Others
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
