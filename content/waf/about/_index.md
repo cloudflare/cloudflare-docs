@@ -31,10 +31,10 @@ When you enable these managed rulesets, you get immediate protection from a broa
 
 Rules of managed rulesets have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
 
-To customize the behavior of managed rulesets, you can do one of the following:
+To customize the behavior of managed rulesets, do one of the following:
 
-* Create **exceptions** to skip the execution of WAF managed rulesets or some of their rules under certain conditions (also called a skip rule).
-* Configure **overrides** to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
+- [Create exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of WAF managed rulesets or some of their rules under certain conditions.
+- [Configure overrides](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
 
 Exceptions have priority over overrides.
 
