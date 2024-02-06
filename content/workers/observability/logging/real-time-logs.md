@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Real-time logs
 meta:
-  description: Debug your Worker application by accessing logs and exceptions through the Cloudflare dashboard or wrangler tail.
+  description: Debug your Worker application by accessing logs and exceptions through the Cloudflare dashboard or `wrangler tail`.
 ---
 
 # Log from Workers
@@ -20,7 +20,7 @@ This feature is not available for zones on the [Cloudflare China Network](/china
 
 ## Add custom logs
 
-Any `console.log` statements within your Worker will appear within the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
+Any `console.log` statements within your Worker will be visible in the dashboard or wrangler tail. The following example demonstrates a custom `console.log` within a Worker request handler.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -64,7 +64,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-After you deploy the above code you can see the real-time logs in the dashboard.
+After you deploy the above code you can see the real-time logs in the dashboard or `wrangler tail`.
 
 ## View logs from the dashboard
 
