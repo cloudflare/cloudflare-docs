@@ -148,6 +148,10 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
     - The ID of the `execute` rule deployment the managed ruleset (`1bdb49371c1f46958fc8b985efcb79e7` in this example)
     - The ID of the Cloudflare Managed Ruleset (`efb7b8c949ac4650a09736fc376e9aee`)
 
+    {{<Aside type="note">}}
+To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
+    {{</Aside>}}
+
 2. Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
 
     ```bash
@@ -180,6 +184,10 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
 
 1. Invoke the [Get a zone ruleset](/api/operations/getZoneRuleset) operation to obtain a list of rules in the Cloudflare Managed Ruleset (ruleset ID `efb7b8c949ac4650a09736fc376e9aee`).<br>
     You can get the managed ruleset details using the account-level endpoint ([Get an account ruleset](/api/operations/getAccountRuleset)) or the zone-level endpoint ([Get a zone ruleset](/api/operations/getZoneRuleset)).
+
+    {{<Aside type="note">}}
+To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
+    {{</Aside>}}
 
     ```bash
     ---
