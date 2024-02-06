@@ -269,8 +269,7 @@ const bindingsProxy = await getBindingsProxy(options);
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
           Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location
-          used by Wrangler, so data can be shared between the caller and `wrangler dev`.
-          If `false`, no data is persisted to or read from the filesystem.
+          used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
 
 {{</definitions>}}
 
