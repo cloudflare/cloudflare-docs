@@ -1,15 +1,13 @@
 ---
 pcx_content_type: concept
-title: Real-time logs with wrangler tail
+title: Real-time logs
 meta:
-  description: Debug your Worker application by accessing logs and exceptions through `wrangler tail`.
+  description: Debug your Worker application by accessing logs and exceptions through the Cloudflare dashboard or wrangler tail.
 ---
 
 # Log from Workers
 
 Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production.
-
-You can access logs and exceptions for your Workers using [`wrangler tail`](/workers/observability/log-from-workers/#use-wrangler-tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 
@@ -22,7 +20,7 @@ This feature is not available for zones on the [Cloudflare China Network](/china
 
 ## Add custom logs
 
-Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
+Any `console.log` statements within your Worker will appear within the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -66,17 +64,26 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. Your terminal will display:
+After you deploy the above code you can see the real-time logs in the dashboard.
 
-```sh
-$ npx wrangler tail --format=pretty
-[2021-08-18 17:06:55] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/
- | [Info] Request came from city: Pacifica in country: US
-[2021-08-18 17:06:56] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/favicon.ico
- | [Info] Request came from city: Pacifica in country: US
-```
+## View logs from the dashboard
 
-## Use `wrangler tail`
+To review real-time logs associated with any deployed Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, go to **Workers & Pages**.
+3. In **Overview**, select your **Worker** > and select **Logs**. 
+
+Logging is available for all customers, including those on the Free plan.
+
+Note that:
+
+- Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
+- Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
+- Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
+- A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
+
+## View logs using `wrangler tail`
 
 With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
@@ -112,7 +119,6 @@ $ npx wrangler tail | jq .event.request.url
 ```
 
 You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
-
 
 ## Persisting logs
 
