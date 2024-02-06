@@ -4,13 +4,13 @@ title: Configure virtual Connector
 weight: 4
 ---
 
-## Configure Virtual Magic WAN Connector
+## Configure Virtual Connector
 
 Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternative to the hardware based Magic WAN Connector appliance. These two versions of Connector are identical otherwise.
 
 ## Prerequisites
 
-Before you can install Virtual Magic WAN Connector, you need an Enterprise account with Magic WAN enabled. Additionally,  you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Magic WAN Connector. This includes:
+Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally,  you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
 
 - Intel x86 CPU architecture
 - ESXi hypervisor 7.0U1 or higher (free edition is supported)
@@ -25,7 +25,7 @@ Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/
 
 ## 1. Obtain the Virtual Connector image
 
-1. Contact your account team at Cloudflare to obtain the Virtual Magic WAN Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys.
+1. Contact your account team at Cloudflare to obtain the Virtual Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys.
     - This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.
     - You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys and your account team will create 10 Connector instances in your Cloudflare dashboard.
 2. Follow the instructions in [Create a site](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) to create a site for each instance of the Virtual Connector.
@@ -39,7 +39,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 1. Prepare your [vSwitch port groups](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.networking.doc/GUID-0BBDC715-2F93-4460-BF07-5778658C66D1.html) and/or VLANs for your desired network topology. For example, a simple deployment typically has:
     - A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.
     - A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.
-    - A `null` port group, for allocating unused virtual interfaces in the Virtual Magic WAN ConnectorMagic WAN Virtual Connector.
+    - A `null` port group, for allocating unused virtual interfaces in the Virtual Connector.
 2. Extract the files in the OVA image provided by your account team.
 3. Use the **Create/Register VM wizard** to start deploying the Virtual Connector.
 4. Choose a descriptive name for your virtual machine.
