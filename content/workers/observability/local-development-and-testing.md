@@ -128,4 +128,4 @@ Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/real-time-logs) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
+* [Log from Workers](/workers/observability/logging/real-time-logs) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
