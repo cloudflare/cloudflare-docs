@@ -12,6 +12,6 @@ Zero Trust Web Access (ZTWA), also known as Zero Trust Application Access (ZTAA)
 
 Zero Trust Network Access (ZTNA) and Zero Trust Web Access (ZTWA) are complementary solutions for providing secure remote access to internal resources.
 
-ZTNA focuses on granting access to private networks. ZTNA implementations usually involve installing a device client in order to provide access to non-HTTP resources and apply network level policies to all traffic on the device.
+ZTNA focuses on granting access to private networks. ZTNA implementations usually involve installing device client software in order to provide access to non-HTTP resources and filter all user traffic.
 
-ZTWA, on the other hand, focuses on granting access to specific applications on the network. ZTWA can be delivered without a device client for internal web applications that are accessed in a browser. Clientless deployments allow organizations to quickly onboard users to their applications, especially users who bring their own device such as third-party contractors or vendors.
+ZTWA, on the other hand, focuses on granting access to specific applications on the network. ZTWA can be delivered without a device client for internal web applications that are accessed in a browser. Clientless deployments allow organizations to quickly onboard users to their applications, especially users on unmanaged devices such as third-party contractors or vendors.
