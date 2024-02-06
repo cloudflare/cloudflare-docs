@@ -1,5 +1,5 @@
 ---
-title: What is a reverse proxy server?
+title: What is a reverse proxy?
 pcx_content_type: overview
 weight: 1
 layout: learning-unit

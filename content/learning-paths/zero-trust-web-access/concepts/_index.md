@@ -7,7 +7,7 @@ layout: learning-module
 
 # Concepts
 
-Concepts explain the basic ideas behind how Cloudflare Zero Trust Web Access works.
+Learn the concepts behind Zero Trust Web Access, whether you are using Cloudflare or another provider.
 
 ## Objectives
 
