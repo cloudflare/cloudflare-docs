@@ -338,7 +338,7 @@
 /fundamentals/get-started/basic-tasks/account-setup/ /fundamentals/setup/account/ 301
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/concepts/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
-/fundamentals/get-started/origin-health/ /fundamentals/get-started/task-guides/origin-health/ 301
+/fundamentals/get-started/origin-health/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
 /fundamentals/get-started/reference/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
