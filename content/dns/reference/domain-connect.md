@@ -54,7 +54,7 @@ Send an email to `domain-connect@cloudflare.com`, including the following inform
 2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
 3. The default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
     {{<Aside type="note">}}
-Proxy status is applied per template. If needed, organize the records in different templates to specify different proxy statuses.
+Proxy status is applied per template. If needed, organize the records in different templates to specify a different default proxy status per template. Once the records have been created, the domain owner can always change the proxy status for `A`, `AAAA`, and `CNAME` records later.
     {{</Aside>}}
 4. (Optional) A Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) for you to test the flow.
 
