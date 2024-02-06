@@ -28,7 +28,7 @@ Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/
 1. Contact your account team at Cloudflare to obtain the Virtual Magic WAN Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys.
     - This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.
     - You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys and your account team will create 10 Connector instances in your Cloudflare dashboard.
-2. Follow the instructions in [Create a site](/magic-wan/configuration/connector/configure-connector/#create-a-site) to create a site for each instance of the Virtual Connector.
+2. Follow the instructions in [Create a site](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) to create a site for each instance of the Virtual Connector.
     - The **Physical port** in the WAN and LAN will correspond to the virtual network interface on the Virtual Connector instance. For example, port `1` in the Cloudflare dashboard will correspond to `Network Adapter 1` and network interface `eno1` in the VMware GUI
     - Add the Connector that corresponds to the license key used in that Site.
 
@@ -46,7 +46,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 5. Upload the files you have extracted from the OVA image. These include `virtual-mconn.ovf`, `virtual-mconn.nvram`, and `virtual-mconn.vmdk`.
 6. Virtual Connector needs 8 GB of storage space. This can be thinly provisioned, that is, the virtual disk can grow as there is a need for space. You do not need to allocate 8 GB of fixed disk space.
 7. For networking mappings, you can select assignments for your desired topology according to the Vmware port groups and Cloudflare site configuration set-up above:
-    - Each virtual network interface (vNIC) is named `enoX`. The number `X` maps to the port number for the WANs and LANs you have created for the [site configured](/magic-wan/configuration/connector/configure-connector/#create-a-site) in the Cloudflare dashboard.
+    - Each virtual network interface (vNIC) is named `enoX`. The number `X` maps to the port number for the WANs and LANs you have created for the [site configured](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) in the Cloudflare dashboard.
     - Cloudflare recommends that you make a note of your configuration. You will need this information to configure these networks on the site in the Cloudflare dashboard. For example, you configure `eno1` as WAN port group, `eno2` as LAN port group, and all other interfaces (`eno3` — `eno8`) are allocated to the `null` port group.
 8. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
 9. Configure the virtual machine with the license key your account team provided you:
@@ -59,6 +59,6 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.
 {{</Aside>}}
 
-10. After you complete the deployment wizard, the Virtual Connector will boot up and make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](/magic-wan/configuration/connector/configure-connector/#create-a-site) for its connected site.
+10. After you complete the deployment wizard, the Virtual Connector will boot up and make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) for its connected site.
 11. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
 12. If successful, the [tunnel health checks](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) will show as healthy.
