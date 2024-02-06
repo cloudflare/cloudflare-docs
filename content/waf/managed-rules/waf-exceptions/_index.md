@@ -8,7 +8,7 @@ meta:
 
 # Create exceptions
 
-Create an exception to skip the execution of a WAF managed ruleset or some of its rules. The exception configuration includes an expression that defines the skip conditions, and the rules or rulesets to skip under those conditions.
+Create an exception to skip the execution of WAF managed rulesets or some of their rules. The exception configuration includes an expression that defines the skip conditions, and the rules or rulesets to skip under those conditions.
 
 ## Types of exceptions
 
