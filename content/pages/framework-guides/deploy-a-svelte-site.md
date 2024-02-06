@@ -156,6 +156,12 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ## Functions setup
 
+{{<Aside type="note">}}
+
+It is currently not possible to access [bindings](/pages/functions/bindings/) in dev mode. This feature is being worked on and will be released soon. For now, this limitation is documented in the SvelteKit documentation for both for [Workers](https://kit.svelte.dev/docs/adapter-cloudflare-workers#bindings-testing-locally) and [Pages](https://kit.svelte.dev/docs/adapter-cloudflare#bindings-testing-locally). You can track possible workarounds in this [GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/11025).
+
+{{</Aside>}}
+
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file.
 
 To have the functionality equivalent to Pages Functions [`onRequests`](/pages/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
