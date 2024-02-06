@@ -14,7 +14,7 @@ Only available on Enterprise plans.
 
 {{</Aside>}}
 
-This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
+Virtual networks This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
 
 {{<tutorial>}}
 
@@ -22,7 +22,8 @@ This tutorial gives administrators an easy way to allow their end-users to chang
 
 Make sure you have:
 
-- lorem ipsum
+- The WARP client deployed on user devices
+- Multiple [dedicated egress IP address](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) assigned to your Zero Trust account
 
 {{</tutorial-prereqs>}}
 
