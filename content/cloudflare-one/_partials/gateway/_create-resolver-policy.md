@@ -24,7 +24,7 @@ Custom resolvers are saved to your account for future use. You can add up to 10 
 When a user's query matches a resolver policy, Gateway will send the query to your listed resolvers in the following order:
 
 1. Public resolvers
-2. Private resolvers behind the default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
+2. Private resolvers behind the default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) for your account
 3. Private resolvers behind a custom virtual network
 
 Gateway will cache the fastest resolver for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.
