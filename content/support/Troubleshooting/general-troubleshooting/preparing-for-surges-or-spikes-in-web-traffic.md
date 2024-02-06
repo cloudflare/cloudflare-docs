@@ -6,19 +6,6 @@ title: Troubleshooting surges or spikes in web traffic
 
 # Preparing for surges or spikes in web traffic
 
-
-## Overview
-
-There are many ways to protect and prepare your domain to handle spikes in traffic. We recommend the following strategies detailed below:
-
--   Use Cloudflare Cache features to optimize caching
--   Contact your hosting provider to understand the limits of your hosting plan
--   Consider using Waiting Room
--   Use Cloudflare IP addresses to your advantage
--   Monitor traffic in your Cloudflare Dashboard
-
-___
-
 ## Use Cloudflare Cache features to optimize caching
 
 By default Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) like images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
