@@ -10,39 +10,21 @@ meta:
 
 To add a managed rules exception via API, create a rule with `skip` action in a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` phase. You can define exceptions at the account level and at the zone level. Exceptions are also called skip rules.
 
-To configure the exception, define the `action_parameters` object according to the [exception type](/waf/managed-rules/waf-exceptions/#types-of-exceptions). Refer to these sections for details:
+To configure the exception, define the `action_parameters` object according to the exception type. Refer to the following examples:
 
 - [Skip all remaining rules](#skip-all-remaining-rules)
 - [Skip one or more WAF managed rulesets](#skip-one-or-more-waf-managed-rulesets)
 - [Skip one or more rules of WAF managed rulesets](#skip-one-or-more-rules-of-waf-managed-rulesets)
 
-For more information on adding rules using the [Rulesets API](/ruleset-engine/rulesets-api/), refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/).
+For more information on creating exceptions via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/) in the Ruleset Engine documentation.
 
 {{<Aside type="note" header="Rule execution order">}}
-
-Rules with `skip` action only apply to rules with `execute` action listed **after** them. If you add a rule with `skip` action at the end of the rules list of a phase entry point ruleset, nothing will be skipped.
-
+Rules with `skip` action only apply to rules with `execute` action listed **after** them. If you add a rule with `skip` action at the end of the rules list, nothing will be skipped.
 {{</Aside>}}
 
-## Skip all remaining rules
+## Examples
 
-To skip all the remaining rules in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset), create a rule with `skip` action and include `"ruleset": "current"` in the `action_parameters` object.
-
-Example of rule definition:
-
-```json
-{
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "ruleset": "current"
-  }
-}
-```
-
-Skipping all remaining rules only affects the rules in the current context (account or zone). For example, adding a rule with `skip` action to the account-level phase entry point ruleset has no impact on the rules defined in the zone-level phase entry point ruleset — these zone-level rules will still be evaluated.
-
-### Example
+### Skip all remaining rules
 
 The following example adds a rule that skips all remaining rules in the entry point ruleset for requests matching the hostname `dev.example.com`.
 
@@ -83,7 +65,7 @@ The following example adds a rule that skips all remaining rules in the entry po
 
     Save the ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c`) for the next step.
 
-2. Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add a an exception (or skip rule) at the beginning of the rules list, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
+2. Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) at the beginning of the rules list, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
 
     ```bash
     ---
@@ -105,27 +87,9 @@ The following example adds a rule that skips all remaining rules in the entry po
     }'
     ```
 
-For more information on adding a rule to a ruleset, refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) in the Ruleset Engine documentation.
+For more information on skipping all remaining rules via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/#skip-all-remaining-rules) in the Ruleset Engine documentation.
 
-## Skip one or more WAF managed rulesets
-
-To skip one or more WAF managed rulesets, create a rule with `skip` action containing a `rulesets` field in the `action_parameters` object. The `rulesets` field must contain a list of managed ruleset IDs you want to skip.
-
-Example of rule definition:
-
-```json
-{
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "rulesets": ["<WAF_MANAGED_RULESET_1_ID>", "<WAF_MANAGED_RULESET_2_ID>"]
-  }
-}
-```
-
-The managed rulesets to skip must belong to the `http_request_firewall_managed` phase.
-
-### Example
+### Skip the Cloudflare Managed Ruleset
 
 The following example adds a rule that skips the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) for requests matching the hostname `dev.example.com`.
 
@@ -208,30 +172,9 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
     }'
     ```
 
-For more information on adding a rule to a ruleset, refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) in the Ruleset Engine documentation.
+For more information on skipping one or more managed rulesets via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/#skip-one-or-more-managed-rulesets) in the Ruleset Engine documentation.
 
-## Skip one or more rules of WAF managed rulesets
-
-To skip one or more rules of WAF managed rulesets, create a rule with `skip` action containing a `rules` object in the `action_parameters` object. The `rules` object must contain one or more managed ruleset IDs as keys, and a list of rules to skip in those managed rulesets as the value of each key.
-
-The following example defines a rule with `skip` action that will skip rules `A` and `B` of managed ruleset `1`, and rule `X` of managed ruleset `2`:
-
-```json
-{
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "rules": {
-      "<WAF_MANAGED_RULESET_1_ID>": ["<RULE_A_ID>", "<RULE_B_ID>"],
-      "<WAF_MANAGED_RULESET_2_ID>": ["<RULE_X_ID>"]
-    }
-  }
-}
-```
-
-The rules in the `rules` object must belong to the specified managed rulesets, otherwise you will get an error.
-
-### Example
+### Skip one or more rules of WAF managed rulesets
 
 The following example adds a rule that skips a particular rule of the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) for requests matching the hostname `dev.example.com`.
 
@@ -367,4 +310,4 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     }'
     ```
 
-For more information on adding a rule to a ruleset, refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) in the Ruleset Engine documentation.
+For more information on skipping one or more rules of managed rulesets via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/#skip-one-or-more-rules-of-managed-rulesets) in the Ruleset Engine documentation.
