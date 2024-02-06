@@ -3302,8 +3302,8 @@ a > code {
   margin-top: 2em;
 }
 
-.DocsMarkdown figure + em {
-  margin-bottom: .5em;
+.DocsMarkdown figure + em + p {
+  margin-top: .5em;
 }
 
 .DocsMarkdown li figure,
