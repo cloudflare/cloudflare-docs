@@ -25,10 +25,10 @@ In practice, this means that when a user that owns `example.com` and has Cloudfl
 * Note that Cloudflare only supports the [Domain Connect synchronous flow](https://www.domainconnect.org/getting-started/).
 * Domain Connect templates and tools are published on GitHub, so you must have a GitHub account and be familiar with [GitHub forks and pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks).
 
-### 1 - Add templates to the repository
+### 1. Add templates to the repository
 
 Domain Connect templates are published and maintained on a GitHub repository.
-
+To add a template to the repository:
 1. Create a fork of the [templates repository](https://github.com/Domain-Connect/Templates).
 2. Add your template. You can create a copy of one of the existing templates and edit it according to your needs.
     * Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#52-template-definition) for details on the different available fields.
@@ -44,15 +44,15 @@ You can use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-
 
 Once your pull request has been reviewed and merged, contact Cloudflare as specified below.
 
-### 2 - Contact Cloudflare to onboard your template
+### 2. Contact Cloudflare to onboard your template
 
 When your template is onboarded, a graphical user interface flow will be available to your end users.
 
 Send an email to `domain-connect@cloudflare.com`, including the following information:
 
-1. List of template(s) that you want to onboard, with their corresponding GitHub hyperlinks.
+1. List of template(s) you want to onboard, with their corresponding GitHub hyperlinks.
 2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
-3. The default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) that you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
+3. The default [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
     {{<Aside type="note">}}
 Proxy status is applied per template. If needed, organize the records in different templates to specify a different default proxy status per template. Once the records have been created, the domain owner can always change the proxy status for `A`, `AAAA`, and `CNAME` records later.
     {{</Aside>}}
