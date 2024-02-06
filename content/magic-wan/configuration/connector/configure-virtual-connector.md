@@ -4,7 +4,7 @@ title: Configure virtual Connector
 weight: 4
 ---
 
-## Configure Virtual Connector
+# Configure Virtual Connector
 
 Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternative to the hardware based Magic WAN Connector appliance. These two versions of Connector are identical otherwise.
 
