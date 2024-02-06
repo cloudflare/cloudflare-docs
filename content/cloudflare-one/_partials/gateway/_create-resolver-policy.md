@@ -24,7 +24,7 @@ Custom resolvers are saved to your account for future use. You can add up to 10 
 When users first connect to Zero Trust, Gateway will send a query to your listed resolvers in the following order:
 
 1. Public resolvers
-2. Private resolvers not behind a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
-3. Private resolvers behind a virtual network
+2. Private resolvers behind the default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
+3. Private resolvers behind a custom virtual network
 
 Gateway will cache the fastest resolver for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.
