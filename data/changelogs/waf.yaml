@@ -2,7 +2,7 @@
 link: "/waf/change-log/"
 productName: WAF
 entries:
-- publish_date: '2024-02-05'
+- publish_date: '2024-02-06'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
@@ -10,10 +10,6 @@ entries:
   individual_page: true
   scheduled: true
   link: '/waf/change-log/2024-02-05/'
-- publish_date: '2024-01-29'
-  individual_page: true
-  scheduled: true
-  link: '/waf/change-log/scheduled-changes/'
 - publish_date: '2024-01-22'
   individual_page: true
   link: '/waf/change-log/2024-01-22---emergency-release/'
