@@ -21,7 +21,7 @@ _build:
 
 Custom resolvers are saved to your account for future use. You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
 
-When users first connect to Zero Trust, Gateway will send a query to your listed resolvers in the following order:
+When a user's query matches a resolver policy, Gateway will send the query to your listed resolvers in the following order:
 
 1. Public resolvers
 2. Private resolvers behind the default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
