@@ -7,12 +7,13 @@ layout: learning-module
 
 # Initial setup
 
-To begin using Zero Trust Web Access, you need to add a site and configure a Cloudflare Zero Trust organization.
+Start protecting your web applications with Cloudflare Zero Trust.
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Add a site to Cloudflare
-- Configure a Zero Trust organization and create a team name
-- (Optional) Configure an identity provider (IdP)
+- Set up a Cloudflare account.
+- Add your domain to Cloudflare.
+- Create a Zero Trust organization to manage applications and policies.
+- Configure an identity provider (IdP) for user authentication.

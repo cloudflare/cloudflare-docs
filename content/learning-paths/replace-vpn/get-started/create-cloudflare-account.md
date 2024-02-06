@@ -14,7 +14,7 @@ To create a new Cloudflare account:
 3. If you have a Cloudflare contact (Enterprise only), ask them to set up your account as a multi-user organization. Account members will need:
     - [**Access** permissions](/cloudflare-one/roles-permissions/) to view or edit applications for your private network.
     - [**Gateway** permissions](/cloudflare-one/roles-permissions/) to view or edit policies for your applications.
-    - [**PII** permissions](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) to view user information in network activity logs.
+    - [**PII** permissions](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) to view user information in activity logs.
 
 ## Best practices
 
