@@ -7,28 +7,28 @@ meta:
 
 # Origin Cache Control
 
-Origin Cache Control is a Cloudflare feature. When enabled on an Enterprise website, it indicates that Cloudflare should strictly respect Cache-Control directives received from the origin server. Free, Pro and Business websites have this feature enabled by default.
+Origin Cache Control is a Cloudflare feature. When enabled on an Enterprise customer's website, it indicates that Cloudflare should strictly respect `Cache-Control` directives received from the origin server. Free, Pro and Business customers have this feature enabled by default.
 
-Cache-Control directives in the HTTP response from your origin server provide specific caching instructions to intermediary services like Cloudflare (link).
+`Cache-Control` directives in the HTTP response from your origin server provide specific [caching instructions](https://datatracker.ietf.org/doc/html/rfc7234) to intermediary services like Cloudflare.
 
-With the Origin Cache Control feature enabled, Cache-Control directives present in the origin server's response will be followed as specified. For example, if the response includes a `max-age` directive of 3600 seconds, Cloudflare will cache the resource for that duration before checking the origin server again for updates.
+With the Origin Cache Control feature enabled, `Cache-Control` directives present in the origin server's response will be followed as specified. For example, if the response includes a `max-age` directive of 3600 seconds, Cloudflare will cache the resource for that duration before checking the origin server again for updates.
 
-Using Cloudflare's [Cache Rules](/cache/how-to/cache-rules/) allows users to either augment or override an origin server's Cache-Control headers or default policies set by Cloudflare (link).
+Using Cloudflare's [Cache Rules](/cache/how-to/cache-rules/) allows users to either augment or override an origin server's `Cache-Control` headers or [default policies](/cache/concepts/default-cache-behavior/) set by Cloudflare.
 
 In the following sections, we will provide more details regarding:
 
-- The most common Cache-Control directives.
+- The most common `Cache-Control` directives.
 - How to enable Origin Cache Control.
-- How Origin Cache Control behaves with Cache-Control directives.
-- How other Cloudflare products interact with Cache-Control directives.
+- How Origin Cache Control behaves with `Cache-Control` directives.
+- How other Cloudflare products interact with `Cache-Control` directives.
 
-## Cache-control directives
+## `Cache-control` directives
 
-A Cache-Control header can include a number of directives, and the directive dictates who can cache a resource along with how long those resources can be cached before they must be updated.
+A `Cache-Control` header can include a number of directives, and the directive dictates who can cache a resource along with how long those resources can be cached before they must be updated.
 
 {{<Aside type="note" header="Note">}}
 
-For more information about Cache-Control directives at origin servers, refer to the [Mozilla Cache-Control documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control).
+For more information about `Cache-Control` directives at origin servers, refer to the [Mozilla Cache-Control documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control).
 
 {{</Aside>}}
 
@@ -50,11 +50,11 @@ Expiration refers to how long a resource should remain in the cache, and the dir
 
 {{<Aside type="note" header="Note">}}
 
-Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser’s Cache TTL respectively via the `s-maxage` and `max-age` Cache-Control headers.
+Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser’s Cache TTL respectively via the `s-maxage` and `max-age` `Cache-Control` headers.
 
-When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache-Control off and `max-age=0`, Cloudflare will bypass cache.
+When using Origin Cache Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache Control off and `max-age=0`, Cloudflare will bypass cache.
 
-When setting `no-cache` with Origin Cache-Control off, Cloudflare does not cache. When setting `no-cache` with Origin Cache-Control on, Cloudflare caches and always revalidates.
+When setting `no-cache` with Origin Cache Control off, Cloudflare does not cache. When setting `no-cache` with Origin Cache Control on, Cloudflare caches and always revalidates.
 
 {{</Aside>}}
 
@@ -94,7 +94,7 @@ The following section covers the directives and behavioral conditions associated
 
 ### Directives
 
-The table below lists directives and their behaviors when Origin Cache-Control is disabled and when it is enabled.
+The table below lists directives and their behaviors when Origin Cache Control is disabled and when it is enabled.
 
 <table>
   <tbody>
@@ -274,10 +274,10 @@ Certain scenarios also affect Origin Cache Control behavior when it is enabled o
         Browser Cache TTL is set.
       </td>
       <td colspan="5" rowspan="1">
-        Cache-Control returned to eyeball does not include <code>private</code>.
+        `Cache-Control` returned to eyeball does not include <code>private</code>.
       </td>
       <td colspan="5" rowspan="1">
-        If origin returns <code>private</code> in Cache-Control then preserve it.
+        If origin returns <code>private</code> in `Cache-Control` then preserve it.
       </td>
     </tr>
   </tbody>
@@ -285,7 +285,7 @@ Certain scenarios also affect Origin Cache Control behavior when it is enabled o
 
 ## Examples
 
-Review the examples below to learn which directives to use with the Cache-Control header to control specific caching behavior.
+Review the examples below to learn which directives to use with the `Cache-Control` header to control specific caching behavior.
 
 {{<details header="Cache a static asset.">}}
 
@@ -355,11 +355,11 @@ This configuration indicates the asset is fresh for 600 seconds. The asset can b
 
 ## Interaction with other Cloudflare features
 
-In this section, we provide details regarding how other Cloudflare features interact with Cache-Control directives.
+In this section, we provide details regarding how other Cloudflare features interact with `Cache-Control` directives.
 
 ### Edge Cache TTL
 
-[Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) Cache Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache Control is disabled at Cloudflare, Cloudflare overrides the Origin Cache Control.
+[Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) Cache Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache Control is enabled at Cloudflare, the original `Cache-Control` header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache Control is disabled at Cloudflare, Cloudflare overrides the Origin Cache Control.
 
 ### Browser Cache TTL
 
