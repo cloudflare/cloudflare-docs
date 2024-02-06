@@ -237,11 +237,11 @@ describe("multi-worker testing", () => {
 
 The `getBindingsProxy` function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
 
-This can be useful for emulating bindings access for applications that would otherwise not have it during local development (such as full stack applications running in a Node.js dev server) or for testing purposes (such as for making sure that a certain function properly interacts with a certain type of binding).
+This is useful for emulating bindings in applications targeting Workers, but running outside the Workers runtime (e.g. framework local development servers running in Node.js), or for testing purposes (e.g. ensuring a function properly interacts with a binding).
 
 {{<Aside type="note">}}
 
-Please keep in mind that the binding proxies provided by the function are a best effort emulation of the real production bindings, although they are made to be as close as possible to the real thing there might be slight differences and inconsistencies between the two.
+Binding proxies provided by this function are a best effort emulation of the real production bindings. Although they are designed to be as close as possible to the real thing, there might be slight differences and inconsistencies between the two.
 
 {{</Aside>}}
 
@@ -257,14 +257,14 @@ const bindingsProxy = await getBindingsProxy(options);
 
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Optional options object containing preferences for the bindings, such are:
+    *   Optional options object containing preferences for the bindings:
         * `configPath` {{<type>}}string{{</type>}}
 
           The path to the config object to use (default `wrangler.toml`)
 
         * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
 
-          Flag requiring the utility to read a json config file (`wrangler.json`), if present, instead of the toml one (`wrangler.toml`)
+          If `true`, allows the utility to read a JSON config file (e.g. `wrangler.json`).
 
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
@@ -276,24 +276,24 @@ const bindingsProxy = await getBindingsProxy(options);
 
 ### Return Type
 
-`getBindingsProxy()` returns a promise to an object containing the following fields:
+`getBindingsProxy()` returns a `Promise` resolving to an object containing the following fields:
 
 {{<definitions>}}
 
 *   `bindings` {{<type>}}Record<string, unknown>{{</type>}}
 
-    *   The actual bindings proxies, such can be used exactly in the same manner production bindings would. They proxy to binding implementations run inside a `workerd` instance (run by Miniflare).
-    *   Typescript Tip: `getBindingsProxy` is a generic function, you can specify to it the shape of the bindings record in order to have a more proper type without `unknown` values.
+    *   Bindings proxies that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the 2nd argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
+    *   Typescript Tip: `getBindingsProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
 
 *   `caches` {{<type>}}object{{</type>}}
 
-    *   Emulation of the [workers `caches` runtime API](https://developers.cloudflare.com/workers/runtime-apis/cache/).
-    *   For the time being such emulation is a no-operation one, a more accurate emulation will be made available soon.
+    *   Emulation of the [Workers `caches` runtime API](/workers/runtime-apis/cache/).
+    *   For the time being, all cache operations do nothing. A more accurate emulation will be made available soon.
 
 *   `dispose()` {{<type>}}() => Promise\<void>{{</type>}}
 
-    *   Function to be called to terminate the underlying workerd process.
-    *   Only needed after the bindings proxy is no longer required the the program, if you are running a long running process (such as a dev server) that can indefinitely make sure of the bindings you don't need to use this function.
+    *   Terminates the underlying `workerd` process.
+    *   Call this after the bindings proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of bindings, you don't need to call this function.
 
 {{</definitions>}}
 
@@ -345,11 +345,8 @@ The bindings supported by `getBindingsProxy` are:
 
  * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
 
-    * __Important__: When using the AI binding locally, computation still happens on the Cloudflare servers in
-      the exact same way it would happen for an actual deployment, thus usage of this particular binding
-      incurs usage charges even in local development
+    * __Important__: When using the AI binding locally, computation still happens on the Cloudflare network. Usage of this binding incurs usage charges even when running locally.
 
-    * In order to use the `AI` binding you will need to set up two environment variables:
-      `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, which values are, respectively,
-      your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a Workers AI enabled API token (which you can generate as presented in the [Workers AI documentation](/workers-ai/get-started/rest-api/#1-get-an-api-token))
+    * To use the `AI` binding, you'll need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your
+     Cloudflare [Account ID](/fundamentals/setup/find-account-and-zone-ids/) and a Workers AI enabled API token (refer to [Workers AI documentation](/workers-ai/get-started/rest-api/#1-get-an-api-token)) respectively.
 
