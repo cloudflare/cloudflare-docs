@@ -22,6 +22,12 @@ If you [upload a custom certificate](/ssl/edge-certificates/custom-certificates/
 
 For example, if you upload an RSA certificate, your cipher suite selection cannot only support ECDSA certificates.
 
+## API requirements for custom hostname certificate
+
+{{<render file="_edit-custom-hostname-api.md" productFolder="cloudflare-for-platforms" withParameters="When using the [Edit Custom Hostname endpoint](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname)," >}} <br />
+
+Including the `settings` only will result in the error message `The SSL attribute is invalid. Please refer to the API documentation, check your input and try again`.
+
 ## TLS 1.3 settings
 
 {{<render file="_tls-1.3-cipher-limitations.md">}}
