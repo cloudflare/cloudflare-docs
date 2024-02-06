@@ -1,5 +1,5 @@
 ---
-updated: 2024-02-06
+updated: 2024-02-07
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
@@ -10,11 +10,11 @@ title: Allow your users to change their egress IP address using Virtual Networks
 
 {{<Aside type="note">}}
 
-Only available on Zero Trust Enterprise plans.
+Only available on Enterprise plans.
 
 {{</Aside>}}
 
-This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations. This uses an Enterprise-only feature, so please reach out to your Cloudflare Account Team if you are interested in learning more about Dedicated Egress IPs.
+This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
 
 {{<tutorial>}}
 
