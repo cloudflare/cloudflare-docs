@@ -6,7 +6,7 @@ weight: 18
 
 # Adaptive routing
 
-Adaptive routing controls features that modify the routing of requests to pools and origins in response to dynamic conditions, such as during the interval between active health monitoring requests. If there is another healthy origin in the same pool, the request is retried once against this origin when receiving HTTP 521, 522, and 523 response codes.
+Adaptive routing controls features that modify the routing of requests to pools and origins in response to dynamic conditions, such as during the interval between active health monitoring requests. Zero-downtime failover will trigger a single retry only if there is another healthy origin in the origin pool and a [521, 522, or 523 error code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-521-web-server-is-down) is occuring. No other error codes will trigger a zero-downtime failover operation.
 
 ## Failover across pools
 

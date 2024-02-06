@@ -770,7 +770,7 @@ Origin draining is only applicable for session affinity because without session 
 
 ##### Zero-downtime failover
 
-Zero-downtime failover automatically sends traffic to origin servers within an origin pool during transient network issues. The decision to retry another origin in the pool is driven by Cloudflare returning a [521, 522, or 523 response code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-521-web-server-is-down). Any other response code will not result in a zero-downtime failover operation. These response codes are not returned from the origin, but from requests made by upstream Cloudflare services to an organization's origins.
+Zero-downtime failover automatically sends traffic to origin servers within an origin pool during transient network issues. Zero-downtime failover will trigger a single retry only if there is another healthy origin in the origin pool and a [521, 522, or 523 error code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-521-web-server-is-down) is occuring. No other error codes will trigger a zero-downtime failover operation. These response codes are not returned from the origin, but from requests made by upstream Cloudflare services to an organization's origins.
 
 Zero-downtime failover has three modes of operation:
 1. **None (Off):** No failover will take place and users may receive error messages or a poor user experience.
