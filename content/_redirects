@@ -662,6 +662,7 @@
 /magic-wan/get-started/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnels/ 301
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
+/magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
