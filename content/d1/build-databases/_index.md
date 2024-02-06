@@ -1,9 +1,9 @@
 ---
-title: How to
+title: Build databases
 pcx_content_type: navigation
-weight: 1
+weight: 2
 ---
 
-# How to
+# Build databases
 
 {{<directory-listing>}}

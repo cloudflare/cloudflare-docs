@@ -129,7 +129,7 @@ CREATE INDEX idx_order_status_not_complete ON orders(order_status) WHERE order_s
 
 Partial indexes can be faster at read time (less rows in the index) and at write time (fewer writes to the index) than full indexes. You can also combine a partial index with a [multi-column index](#multi-column-indexes).
 
-## Removing indexes
+## Remove indexes
 
 Use `DROP INDEX` to remove an index. Dropped indexes cannot be restored.
 
