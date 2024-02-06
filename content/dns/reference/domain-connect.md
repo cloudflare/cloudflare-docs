@@ -28,7 +28,7 @@ In practice, this means that when a user that owns `example.com` and has Cloudfl
 ### 1. Add templates to the repository
 
 Domain Connect templates are published and maintained on a GitHub repository.
-To add a template to the repository:
+
 1. Create a fork of the [templates repository](https://github.com/Domain-Connect/Templates).
 2. Add your template. You can create a copy of one of the existing templates and edit it according to your needs.
     * Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#52-template-definition) for details on the different available fields.
@@ -58,6 +58,6 @@ Proxy status is applied per template. If needed, organize the records in differe
     {{</Aside>}}
 4. (Optional) A Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) for you to test the flow.
 
-    If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only and, once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
+    If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
 
 [^1]:  A domain that can be queried for `TXT` records containing a public key to verify your digital signature.
