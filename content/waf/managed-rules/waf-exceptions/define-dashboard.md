@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Add an exception in the dashboard
 weight: 2
 meta:
-    title: Add a managed rules exception in the dashboard
+    title: Add a WAF exception in the dashboard
     description: Use the Cloudflare dashboard to create exceptions that skip the execution of WAF managed rulesets or specific ruleset rules.
 ---
 
@@ -11,7 +11,7 @@ meta:
 
 ## 1. Go to the zone or account dashboard page
 
-To add a managed rules exception at the zone level:
+To add an exception at the zone level:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules**.
