@@ -40,6 +40,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 | ISO 27001 Certified European Union | Cloudflare will only use data centers that are physically located within the [European Union](https://european-union.europa.eu/principles-countries-history/country-profiles_en) and that adhere to the ISO 27001 certification. |
 | Germany | Cloudflare will only use data centers that are physically located within Germany to decrypt and service HTTPS traffic. |
 | Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
+| South Korea | Cloudflare will only use data centers that are physically located within South Korea to decrypt and service HTTPS traffic. |
 
 {{</table-wrap>}}
 
