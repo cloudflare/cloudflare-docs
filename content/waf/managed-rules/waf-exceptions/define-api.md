@@ -289,7 +289,6 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     ```bash
     ---
     header: Request
-    highlight: 5-12
     ---
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/060013b1eeb14c93b0dcd896537e0d2c/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
