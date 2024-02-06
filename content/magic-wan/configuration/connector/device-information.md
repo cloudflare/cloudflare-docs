@@ -10,7 +10,7 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## Security and other information
 
-- Cloudflare ensures the Magic WAN Connector device is secure and is not altered via TPM/Secure boot.
+- Cloudflare ensures the Magic WAN Connector device is secure and is not altered via TPM/Secure boot (does not apply to Virtual Connector).
 - Connectivity to the Cloudflare global network is secure and all traffic is encrypted through {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunneling.
 - The Magic WAN Connector does not support fail open.
 - Customers have the ability to layer on additional security features/policies that are enforced at the Cloudflare network.
@@ -38,7 +38,7 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. The Magic WAN Connector device metrics measured by Cloudflare include:
 
 - Average CPU load
-- Average temperature
+- Average temperature (this is always zero for Virtual Connector)
 - Average disk utilization
 - Average memory utilization
 
