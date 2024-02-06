@@ -75,7 +75,7 @@ For more information on breakpoint debugging via Chrome's DevTools, refer to [Ch
 
 ### Setup VS Code to use breakpoints
 
-To setup VS Code for breakpoint debugging Workers:
+To setup VS Code for breakpoint debugging in your Worker project:
 
 1. Create a `.vscode` folder in your project's root folder if one does not exist.
 2. Within that folder, create a `launch.json` file with the following content:
