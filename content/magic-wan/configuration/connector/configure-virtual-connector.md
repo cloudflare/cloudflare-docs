@@ -35,7 +35,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 1. When setting up your VMware ESXi, you need to create port groups for Virtual Connector. Go to **Networking** > **Port groups**, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
     - A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.
     - A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.
-    - A `null` port group, for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a `null` port group with the name of `null`, and a **VLAN ID** of `99`.
+    - A null port group, for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `null`, and a **VLAN ID** of `999`.
 2. Extract the files in the OVA image provided by your account team. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings. Take note of the folder where you have extracted these files as you will need to refer to it when creating the VM.
 3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the Virtual Connector.
 4. Choose a descriptive name for your virtual machine.
