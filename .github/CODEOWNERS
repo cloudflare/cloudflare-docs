@@ -89,6 +89,7 @@
 
 # Reference architecture 
 /content/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
+/assets/images/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
