@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Authenticated Origin Pulls (mTLS)
 weight: 4
-layout: single
 meta:
     description: Authenticated Origin Pulls helps ensure requests to your origin server come from the Cloudflare network.
 ---
@@ -25,7 +24,7 @@ Using a custom certificate is possible with both [zone-level](/ssl/origin-config
 
 ## Limitations
 
-Authenticated Origin Pulls is not compatible with [Railgun](/railgun/) (deprecated) and does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
+Authenticated Origin Pulls does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
 
 ## Related topics
 

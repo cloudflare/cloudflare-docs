@@ -1,9 +1,9 @@
 ---
 title: Tooltips
 pcx_content_type: reference
-weight: 12
-layout: single
+weight: 5
 ---
+
 # Tooltips
 
 ## Visitor Solve Rate

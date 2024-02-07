@@ -40,12 +40,12 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
-{{<render file="_account-permissions-table.md" withParameters="Edit">}}
+{{<render file="_account-permissions-table.md" withParameters="Edit;;Cloudflare">}}
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-{{<render file="_account-permissions-table.md" withParameters="Write">}}
+{{<render file="_account-permissions-table.md" withParameters="Write;;Argo">}}
  
 {{</tab>}}
 {{</tabs>}}

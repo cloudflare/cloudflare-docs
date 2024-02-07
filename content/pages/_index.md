@@ -16,8 +16,9 @@ Deploy dynamic front-end applications in record time.
 
 {{<plan type="all">}}
 
-Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+{{<render file="_pages_survey.md">}}
 
+Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
@@ -25,19 +26,19 @@ Cloudflare Pages is super fast, always up to date. Deploy your project by connec
 
 ## Features
 
-{{<feature header="Pages Functions" href="/pages/platform/functions/">}}
+{{<feature header="Pages Functions" href="/pages/functions/">}}
 
 Use Pages Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
 
 {{</feature>}}
 
-{{<feature header="Rollbacks" href="/pages/platform/rollbacks/">}}
+{{<feature header="Rollbacks" href="/pages/configuration/rollbacks/">}}
 
 Rollbacks allow you to instantly revert your project to a previous production deployment.
 
 {{</feature>}}
 
-{{<feature header="Redirects" href="/pages/platform/redirects/">}}
+{{<feature header="Redirects" href="/pages/configuration/redirects/">}}
 
 Set up redirects for your Cloudflare Pages project.
 
@@ -62,6 +63,12 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 {{<related header="D1" href="/d1/" product="d1">}}
 
 D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+
+{{</related>}}
+
+{{<related header="Zaraz" href="/zaraz/" product="zaraz">}}
+
+Offload third-party tools and services to the cloud and improve the speed and security of your website.
 
 {{</related>}}
 

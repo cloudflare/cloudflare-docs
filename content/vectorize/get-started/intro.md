@@ -28,7 +28,7 @@ To continue:
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 
@@ -83,7 +83,7 @@ To create an index, you will need to use the `wrangler vectorize create` command
 - Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
 - Only used for describing the index, and is not directly referenced in code.
 
-In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
+In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be Euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
 {{<render file="_vectorize-wrangler-version.md">}}
 
@@ -121,7 +121,7 @@ Specifically:
 
 - The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/platform/client-api/) is exposed on this binding for use within your Workers application.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
 
 ## 4. Insert vectors
 
@@ -236,7 +236,7 @@ export default {
 		// return Response.json({text: "nothing to do... yet"}, { status: 404 })
 
 		// In a real application, you would take a user query. For example, "what is a
-		// vector database" - and transform it into a vector emebedding first.
+		// vector database" - and transform it into a vector embedding first.
 		//
 		// In this example, you will construct a vector that should
 		// match vector id #5
@@ -246,7 +246,7 @@ export default {
 		// IDs with their similarity score.
 		//
 		// By default, vector values are not returned, as in many cases the
-		// vectorId and scores are sufficient to map the vector back to the
+		// vector id and scores are sufficient to map the vector back to the
 		// original content it represents.
 		const matches = await env.VECTORIZE_INDEX.query(queryVector, { topK: 3, returnValues: true, returnMetadata: true });
 
@@ -266,7 +266,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -293,7 +293,7 @@ Subsequent visits will return `count:0` as you cannot `insert()` the same vector
 
 2. Query your index - expect your query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` by visiting the root path of `/` . This query will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
 
-You will notice that `vectorId: 5` has a `score` of `0.999909486`. Because you are using `cosine` as our distance metric, the closer the score to `1.0`, the closer your vectors are.
+You will notice that `id: 5` has a `score` of `0.999909486`. Because you are using `cosine` as our distance metric, the closer the score to `1.0`, the closer your vectors are.
 
 ```json
 // https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/
@@ -335,8 +335,10 @@ From here, experiment by passing a different `queryVector` and observe the resul
 
 In a real-world application, the `queryVector` would be the vector embedding representation of a query from a user or system, and our `sampleVectors` would be generated from real content. To build on this example, read the [vector search tutorial](/vectorize/get-started/embeddings/) that combines Workers AI and Vectorize to build an end-to-end application with Workers.
 
-## Next steps
+## Related resources
 
 - [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
-- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
-- Read [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+- Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- [Euclidean Distance vs Cosine Similarity](https://www.baeldung.com/cs/euclidean-distance-vs-cosine-similarity).
+- [Dot product](https://en.wikipedia.org/wiki/Dot_product).

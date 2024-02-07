@@ -5,7 +5,7 @@ title: Examples
 weight: 3
 meta:
   title: Cloudflare Queues - Examples
-layout: list
+layout: wide
 ---
 
 # Examples

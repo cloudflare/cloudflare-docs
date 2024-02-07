@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Egress policies
-layout: single
 weight: 5
 ---
 
@@ -27,11 +26,13 @@ The following egress policy configures all traffic destined for a third-party ne
 | --------------------------- | -------------- | -------- | ---------------- | ------------------------------- |
 | Access third-party provider | Destination IP | is       | `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
 
+### Catch-all policy
+
 For the best performance, we recommend creating a catch-all policy to route all other users through the default Zero Trust IP range:
 
-| Policy name           | Selector       | Operator | Value     | Egress method                    |
-| --------------------- | -------------- | -------- | --------- | -------------------------------- |
-| Default egress policy | Destination IP | is not   | `0.0.0.0` | Cloudflare default egress method |
+| Policy name           | Selector | Operator | Value                    | Egress method                    |
+| --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
+| Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
 Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will use the closest dedicated egress IP location.
 
@@ -49,57 +50,57 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Destination Continent
 
-{{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-continent.md" withParameters="net.dst">}}
 
 ### Destination Country
 
-{{<render file="gateway/_destination-country.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-country.md" withParameters="net.dst">}}
 
 ### Destination IP
 
-{{<render file="gateway/_destination-ip.md">}}
+{{<render file="gateway/selectors/_destination-ip.md">}}
 
 ### Destination Port
 
-{{<render file="gateway/_destination-port.md">}}
+{{<render file="gateway/selectors/_destination-port.md">}}
 
 ### Device Posture
 
-{{<render file="gateway/_device-posture.md">}}
+{{<render file="gateway/selectors/_device-posture.md">}}
 
 ### Protocol
 
-{{<render file="gateway/_protocol.md">}}
+{{<render file="gateway/selectors/_protocol.md">}}
 
 ### Proxy Endpoint
 
-{{<render file="gateway/_proxy-endpoint.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### Source Continent
 
 The continent of the user making the request.
-{{<render file="gateway/_source-continent.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="net.src">}}
 
 ### Source Country
 
 The country of the user making the request.
-{{<render file="gateway/_source-country.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="net.src">}}
 
 ### Source IP
 
-{{<render file="gateway/_source-ip-net.md">}}
+{{<render file="gateway/selectors/_source-ip-net.md">}}
 
 ### Source Port
 
-{{<render file="gateway/_source-port.md">}}
+{{<render file="gateway/selectors/_source-port.md">}}
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ### Virtual Network
 
-{{<render file="gateway/_virtual-network.md">}}
+{{<render file="gateway/selectors/_virtual-network.md">}}
 
 ## Comparison operators
 

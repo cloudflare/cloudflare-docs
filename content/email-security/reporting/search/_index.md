@@ -1,7 +1,6 @@
 ---
 title: Search
 pcx_content_type: concept
-layout: single
 weight: 1
 meta:
     description: Search for messages with a detection disposition or that have been processeded by Area 1.
@@ -15,6 +14,8 @@ There are two ways for searching emails:
 
 - **Fielded Search**: Presents you with fields where you can enter search terms.
 - **Freeform Search**: Has one search field where you can construct your own search query, like `My great products`.
+
+{{<Aside type="note">}} {{<render file="_timestamp.md">}} {{</Aside>}}
 
 ## Search terms
 

@@ -2,7 +2,6 @@
 title: Cisco - Cisco as MX record
 pcx_content_type: integration-guide
 weight: 4
-layout: single
 meta:
    title: Deploy and configure Area 1 with with Cisco as MX record
 updated: 2022-09-30
@@ -86,7 +85,7 @@ To create a new Content Filter:
     * **Name**: `A1S_to_ESA`
     * **Description**: `Area 1 inspected messages for final delivery`
     * **Order**: This filter must come before the previously created filter.
-    * **Conditions**: Add conditions of type **Remote IP/Hostname** with all the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). For example: 
+    * **Conditions**: Add conditions of type **Remote IP/Hostname** with all the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). For example:
     Order | Condition            | Rule
     ----- | -------------------- | ---
     `1`   | `Remote IP/Hostname` | `52.11.209.211`
@@ -110,4 +109,4 @@ Assign the Incoming Content Filters created in [step 3](#3-create-incoming-conte
 
 ## 5. Geographic locations
 
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}

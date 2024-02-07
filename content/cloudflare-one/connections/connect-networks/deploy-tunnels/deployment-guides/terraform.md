@@ -22,7 +22,7 @@ In this guide, you will use Terraform to deploy:
 To complete the following procedure, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
-- [A zone on Cloudflare](/fundamentals/setup/account-setup/add-site/)
+- [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 
 ## 1. Install Terraform
 

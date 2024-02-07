@@ -14,6 +14,10 @@ weight: 0
 
 {{<render file="_workers-cf-request.md">}}
 
+## Corporate Proxy
+
+{{<render file="_corporate_proxy.md">}}
+
 ## Log fields
 
 {{<render file="_bot-log-fields.md">}}

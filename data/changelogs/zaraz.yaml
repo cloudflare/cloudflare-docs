@@ -2,6 +2,19 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2024-02-05'
+  title:
+  description: |-
+    * **Dashboard** rename "tracks" to "events" for consistency
+    * **Click listeners** fix bug where anchor link click events were not bubbling
+    * **Pinterest Conversion API MC** fix installation
+    * **http MC** update _settings prefix usage handling
+    * better minification of client-side js
+    * begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration
+- publish_date: '2023-12-19'
+  title:
+  description: |-
+    * **Google Analytics 4 Managed Component**: Fix Google Analytics 4 average engagement time metric.
 - publish_date: '2023-11-13'
   title:
   description: |-
@@ -9,7 +22,7 @@ entries:
 - publish_date: '2023-10-31'
   title:
   description: |-
-    * **Google Analytics 4 Managed component**: Remove `debug_mode` key if falsy or `false`.
+    * **Google Analytics 4 Managed Component**: Remove `debug_mode` key if falsy or `false`.
 - publish_date: '2023-10-26'
   title:
   description: |-

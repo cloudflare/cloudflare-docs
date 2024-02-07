@@ -6,12 +6,12 @@ weight: 6
 
 # Pricing
 
-For more information on how you can save costs by increasing caching in browsers, refer to [Browser TTL](/images/cloudflare-images/serve-images/browser-ttl/).
+For more information on how you can save costs by increasing caching in browsers, refer to [Browser TTL](/images/manage-images/browser-ttl/).
 
-| <div style="width:150px">Plan</div>| Description | Pricing |
-|-----------|-------------|---------|
-| Basic     | For Images or Images and Stream users on a Free, Pro, or Business plan. | - $5 per month per 100k images stored<br> - $1 per month per 100k images delivered|
-| Enterprise      | For Enterprise users that have Images or Images and Stream. | - First 500K storage free<br> - Free image delivery for 5 million images |
+|<div style="width:150px">Plan</div>| Images stored | Images delivered | Images transformed |
+|-----------------------------------|---------------|------------------|--------------------|
+| Free, Pro, Basic                  | $5.00 per 100K images stored per month | $1.00 per 100K images delivered per month | - $0.50 per 1K unique transformations per month<br> - 5K transformations included
+| Enterprise      | - $5.00 per 100K images stored per month<br> - 500K images included per month | - $1.00 per 100K images delivered per month<br> - 5M images included per month | $0.50 per 1K unique transformations per month<br> 1M transformations included |
 
 {{<Aside type="note" header="Note">}}
 

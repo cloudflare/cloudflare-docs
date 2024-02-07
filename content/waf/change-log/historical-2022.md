@@ -4,7 +4,7 @@ title: Historical (2022)
 weight: 10046
 meta:
   description: Changes to WAF managed rulesets done in 2022.
-layout: list
+layout: wide
 ---
 
 # Historical - 2022

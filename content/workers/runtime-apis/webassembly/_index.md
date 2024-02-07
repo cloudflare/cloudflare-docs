@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: WebAssembly (Wasm)
-layout: single
 meta:
   description: Execute code written in a language other than JavaScript or write an entire Cloudflare Worker in Rust.
 ---

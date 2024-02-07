@@ -103,7 +103,7 @@ You can also use this URL with any client that supports the [WebRTC-HTTP egress 
 
 ## Using WebRTC in native apps
 
-If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native implementations of WebRTC APIs, available [here](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
+If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
 
 ## Debugging WebRTC
 

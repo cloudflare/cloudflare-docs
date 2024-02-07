@@ -3,7 +3,7 @@ pcx_content_type: concept
 type: overview
 title: Volumetric Abuse Detection
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Volumetric Abuse Detection
@@ -12,7 +12,7 @@ Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate
 
 ## About
 
-After [API Discovery](/api-shield/security/api-discovery/), Cloudflare looks for endpoint abuse based on common user traffic.
+After [API Discovery](/api-shield/security/api-discovery/), Cloudflare looks for {{<glossary-tooltip term_id="API endpoint">}}endpoint{{</glossary-tooltip>}} abuse based on common user traffic.
 
 For example, your API might see different levels of traffic to a `/reset-password` endpoint than a `/login` endpoint. Additionally, your `/login` endpoint might see higher than average traffic after a successful marketing campaign.
 
@@ -26,7 +26,7 @@ Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric a
 
 Volumetric Abuse Detection analyzes your API’s individual session traffic statistics to recommend per-endpoint, per-session rate limits.
 
-Volumetric Abuse Detection currently requires a [session identifier](/api-shield/get-started/#set-up-session-identifiers), like an authorization token available as a request header or cookie.
+Volumetric Abuse Detection currently requires a {{<glossary-tooltip term_id="session identifier" link="/api-shield/get-started/#set-up-session-identifiers">}}session identifier{{</glossary-tooltip>}}, like an authorization token available as a request header or cookie.
 
 After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in **Security** > **API Shield** > **Endpoint Management** on the Cloudflare dashboard. Recommendations will continue to update if your traffic pattern changes
 
@@ -57,7 +57,7 @@ To create rate limits:
 {{<Aside type="note">}}
 Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule.
 {{</Aside>}}
-5. Give your rule a name, action, and duration. 
+5. Give your rule a name, action, and duration.
 6. Select **Deploy** to activate your rule.
 
 ## API

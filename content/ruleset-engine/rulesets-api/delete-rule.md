@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Delete a rule in a ruleset
 weight: 9
-layout: list
+layout: wide
 ---
 
 # Delete a rule in a ruleset

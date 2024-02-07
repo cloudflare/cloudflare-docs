@@ -4,6 +4,7 @@ title: Managed rules
 weight: 7
 meta:
   title: WAF Managed Rules
+layout: wide
 ---
 
 # WAF Managed Rules
@@ -16,6 +17,8 @@ WAF Managed Rules allow you to deploy pre-configured managed rulesets that provi
 * Extraction of sensitive data
 
 These managed rulesets are regularly updated. You can adjust the behavior of specific rules in these rulesets, choosing from several possible actions.
+
+## Managed rulesets
 
 Cloudflare provides the following managed rulesets in the WAF:
 

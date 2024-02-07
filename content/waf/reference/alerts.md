@@ -2,7 +2,6 @@
 title: Alerts
 pcx_content_type: reference
 weight: 1
-layout: single
 ---
 
 # WAF alerts
@@ -18,7 +17,7 @@ To receive WAF alerts, you must configure a [notification](/notifications/). Not
 
 ## Set up a notification for WAF alerts
 
-For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/notifications/create-notifications/).
+For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/notifications/get-started/#create-a-notification).
 
 ---
 

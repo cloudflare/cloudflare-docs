@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Single Redirects
-layout: single
 weight: 2
 meta:
   title: Single Redirects

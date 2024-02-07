@@ -31,6 +31,12 @@ $ npx wrangler dev
 
 `wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
 
+### Clear Wrangler's local storage
+
+Wrangler will store all locally created resources and storage in a `.wrangler` folder inside your Worker directory. This folder should be added to your `.gitignore` file.
+
+If you need to clear local storage, delete the `.wrangler/state` folder. It will be recreated the next time you run `wrangler dev`.
+
 ### Develop locally using remote resources and bindings
 
 {{<Aside type="note">}}
@@ -116,7 +122,7 @@ For more information and examples, refer to the [`unstable_dev` guide](/workers/
 
 ### Advanced local testing via Miniflare
 
-[Miniflare](https://github.com/cloudflare/miniflare/blob/v3.20231016.0/packages/miniflare/README.md) is a simulator for developing and testing Workers. It supports simulating and mocking resources like: KV, Durable Objects, R2, D1, and Queues.
+[Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#readme) is a simulator for developing and testing Workers. It supports simulating and mocking resources like: KV, Durable Objects, R2, D1, and Queues.
 
 Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`](https://github.com/cloudflare/workerd) to ensure that local behavior accurately reflects production. All of this makes it a great tool for writing tests or advanced use cases.
 

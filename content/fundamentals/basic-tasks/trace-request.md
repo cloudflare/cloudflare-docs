@@ -83,14 +83,11 @@ The following steps are planned for future additions:
 
 ## Limitations
 
-Currently, you cannot perform traces for:
-
-* Domains or subdomains associated with [BYOIP](/byoip/) addresses
-* [Custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
-* [Spectrum](/spectrum/) applications
+Currently, you cannot perform traces for [Spectrum](/spectrum/) applications.
 
 Also, the following products will not appear in trace results:
 
 * [Firewall rules](/firewall/)
 * [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
 * [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
+* [Data Localization Suite](/data-localization/)
