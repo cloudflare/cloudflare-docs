@@ -54,9 +54,10 @@ Next, create a device enrollment rule that allows the WARP connector to authenti
 All WARP connector and WARP client devices in your Zero Trust organization have the same local IP address by default. To route traffic between various WARP devices, you must allow Cloudflare to assign a unique {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}} to each device.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. Enable **Warp-to-Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
-3. Next, go to **Settings** > **WARP Client**.
-4. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
+2. Enable **Proxy**.
+3. Enable **Warp-to-Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
+4. Next, go to **Settings** > **WARP Client**.
+5. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
 
 ## 4. Install a WARP connector
 
