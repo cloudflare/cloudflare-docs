@@ -55,7 +55,7 @@ All WARP connector and WARP client devices in your Zero Trust organization have 
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy**.
-3. Enable **Warp-to-Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
+3. Enable **Warp to Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
 4. Next, go to **Settings** > **WARP Client**.
 5. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
 
