@@ -20,9 +20,9 @@ Note that this process only refers to connections [between clients and the Cloud
 
 ## Setup
 
-Custom cipher suites is a hostname level setting, which implies that:
+Custom cipher suites is a hostname-level setting, which implies that:
 
-- When you customize cipher suites for a [zone](/fundamentals/setup/accounts-and-zones/#zones), this means a restriction that will affect all hostnames within that zone.
+- When you customize cipher suites for a [zone](/fundamentals/setup/accounts-and-zones/#zones), this will affect all hostnames within that zone.
 - The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of certificate type (universal, advanced, or custom).
 - If you need to use a per-hostname cipher suite customization, you must ensure that the hostname is specified on the certificate.
 

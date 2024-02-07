@@ -8,7 +8,7 @@ weight: 2
 
 {{<render file="_acm-definition.md">}}<br/>
 
-To be able to order advanced certificates, you must purchase the Advanced Certificate Manager add-on, which also includes other features.
+To order advanced certificates you must purchase the Advanced Certificate Manager add-on, which also includes other features.
 
 ## Advanced Certificate Manager
 
