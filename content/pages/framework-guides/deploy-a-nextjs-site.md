@@ -21,7 +21,7 @@ C3 will guide you through the project setup process allowing you to create an in
 
 {{<Aside type="note">}}
 
-The C3 deployment is what we refer to as a direct upload or manual deployment, which is different from a deployment performed via the [Pages git integration](/pages/configuration/git-integration), if you want to enable the latter see the [Git Integration](#git-integration) section below.
+The initial deployment created via C3 is what we refer to as a [direct upload](https://developers.cloudflare.com/pages/get-started/direct-upload/). If you'd like to set up a deployment via the Pages git integration see the [Git Integration](#git-integration) section below.
 
 {{</Aside>}}
 
@@ -202,7 +202,7 @@ Both cases can be improved by setting up proper [loaders](https://nextjs.org/doc
 
 ## Git Integration
 
-Besides manual deployments, you can make use of the Pages [git integration](/pages/configuration/git-integration), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+In addition to direct upload deployments, you can make use of the Pages [git integration](/pages/configuration/git-integration), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
 
 This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to this [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
 
