@@ -28,6 +28,10 @@ If there is a match for the expressions of several exceptions, Cloudflare will c
 
 Exceptions only apply to rules executing a managed ruleset listed after them. If you add an exception at the end of the list of rules of an entry point ruleset, nothing will be skipped.
 
+{{<Aside type="warning" header="Additional requirement for account-level exceptions">}}
+Rules in entry point rulesets at the account level only apply to Enterprise zones. This also includes exceptions (or skip rules). When adding an exception at the account level, you must use parentheses to enclose any custom conditions in the rule expression and end the expression with `and cf.zone.plan eq "ENT"`, or else the API operation will fail.
+{{</Aside>}}
+
 ### Skip all remaining rules
 
 To skip all the remaining rules in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset), create a rule with `skip` action and include `"ruleset": "current"` in the `action_parameters` object.
