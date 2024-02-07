@@ -6,12 +6,10 @@ weight: 4
 
 # Edge certificates
 
-Learn more about SSL/TLS protection options for your edge certificates:
+Edge certificates are the ones that Cloudflare presents to clients visiting your website or application.
+Content in this section will guide you through SSL/TLS protection options for your edge certificates and how you can meet requirements such as:
 
+
+
+## Other options
 {{<directory-listing>}}
-
-{{<Aside type="note">}}
-
-For more details about the different types of edge certificates and when you should use them, refer to [Get started](/ssl/get-started/).
-
-{{</Aside>}}
