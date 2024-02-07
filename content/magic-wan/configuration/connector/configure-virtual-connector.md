@@ -24,7 +24,9 @@ Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/
 
 ## 1. Obtain the Virtual Connector image
 
-Contact your account team at Cloudflare to obtain the Virtual Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys. This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.
+Contact your account team at Cloudflare to obtain the Virtual Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings.
+
+This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.
 
 You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys, and your account team will create 10 Connector instances in your Cloudflare dashboard.
 
@@ -36,11 +38,13 @@ The following instructions assume you already have VMware ESXi hypervisor instal
     - A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.
     - A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.
     - A "null", or "unused", port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `Null port group`, and a **VLAN ID** of `999`.
-2. Extract the files in the OVA image provided by your account team. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings. Take note of the folder where you have extracted these files as you will need to refer to it when creating the VM. For example:
+2. Extract the files in the OVA image provided by your account team. For example:
 
     ```txt
     tar -xvf mconn-2024-1-3.ova
     ```
+
+    Take note of the folder where you are extracting the files to, as you will need to refer to that folder when creating the VM.
 
 3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the Virtual Connector.
 4. Choose a descriptive name for your virtual machine.
