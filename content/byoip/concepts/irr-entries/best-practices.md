@@ -6,13 +6,17 @@ meta:
   title: IRR entry updates best practices
 ---
 
-# Best practices for IRR entry updates
+# Best practices for IRR entries
 
-To add or update an IRR entry, use one of the routing registries listed in the [Internet Routing Registry](http://www.irr.net/index.html).
+An IRR (Internet Routing Registry) record is what notifies ISPs (internet service providers) how you are allowing your resources to be used. It is necessary to keep your IRR entries up to date so that it is public information that Cloudflare has permission to advertise your prefix or prefixes. 
 
-Suggested registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
+ARIN, a registry also known as the American Registry for Internet Numbers, maintains an IRR that allows registrants of AS numbers and IP addresses to publish that information so that ISPs can make appropriate routing decisions. This helps ensure ISPs will recognize your routes as legitimate and enables them to ignore unauthorized routes published by someone else.
 
-## Updating IRR entries
+You will need to set up an IRR entry so that Cloudflare has permission to advertise your prefix or prefixes and ensure that your traffic can be properly routed on the internet.
+
+## Configure an IRR entry
+
+You can add or update an IRR entry by following the directions within any of the recommended internet registries listed in the [Internet Routing Registry](https://www.irr.net/index.html). 
 
 If you own your own subnet, use the RIPE and APNIC routing registries. These registries allow you to verify subnet ownership.
 
@@ -20,9 +24,9 @@ If you lease your subnet, follow these guidelines:
   - When you do not need ownership verification, use the AFRINIC or NTT routing registry.
   - When you submit a route object via email, use the ARIN registry. Address blocks owned by others do not appear in the ARIN interface.
 
-### IRR Entry instructions
+The recommended registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
 
-Each routing registry has its own set of IRR entry instructions. This table provides links to those instructions.
+Each routing registry has its own set of instructions to configure an IRR entry. Refer to the table below for more information.
 
 {{<table-wrap>}}<table>
 
