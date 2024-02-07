@@ -10,6 +10,8 @@ const { hits } = instantsearch.widgets;
 const { configure } = instantsearch.widgets;
 const { pagination } = instantsearch.widgets;
 const { refinementList } = instantsearch.widgets;
+const { clearRefinements } = instantsearch.widgets;
+const { currentRefinements } = instantsearch.widgets;
 
 const search = instantsearch({
   indexName: indexName,
@@ -139,6 +141,15 @@ search.addWidgets([
   pagination({
     container: "#pagination",
   }),
+  currentRefinements({
+    container: '#current_refinements',
+    transformItems(items) {
+      return items.map(item => {
+        item.label = item.label.replace("_", " "); 
+        return item; 
+      });
+    }
+  })
 ]);
 
 search.start();
