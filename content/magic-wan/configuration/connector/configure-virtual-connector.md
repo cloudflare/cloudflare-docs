@@ -37,8 +37,8 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 1. When setting up your VMware ESXi, you need to create port groups for Virtual Connector. Go to **Networking** > **Port groups**, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
     - A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.
     - A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.
-    - A "null", or "unused", port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `Null port group`, and a **VLAN ID** of `999`.
-2. Extract the files in the OVA image provided by your account team. For example:
+    - A null, or unused, port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `Null port group`, and a **VLAN ID** of `999`.
+2. Extract the files in the OVA image provided by your Cloudflare account team. For example:
 
     ```txt
     tar -xvf mconn-2024-1-3.ova
@@ -65,7 +65,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
   {{<Aside type="note">}} You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.{{</Aside>}}
 
 10. Select **Save** to finish configuring your Virtual Connector.
-11. Continue set up in your Cloudflare dashboard in the [next section]().
+11. Continue set up in your [Cloudflare dashboard](#3-set-up-cloudflare-dashboard).
 
 ## 3. Set up Cloudflare dashboard
 
