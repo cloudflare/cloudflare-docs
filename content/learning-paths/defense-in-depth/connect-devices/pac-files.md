@@ -1,7 +1,7 @@
 ---
 title: Use PAC files
 pcx_content_type: overview
-weight: 1
+weight: 4
 layout: learning-unit
 ---
 
