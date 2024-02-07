@@ -5,8 +5,4 @@ weight: 2
 layout: learning-unit
 ---
 
-{{<render file="warp/_mdm-intro.md" productFolder="cloudflare-one">}}
-
-## MDM policy file
-
-{{<render file="warp/_mdm-policy-file.md" productFolder="cloudflare-one">}}
+{{<render file="zero-trust/_mdm.md">}}

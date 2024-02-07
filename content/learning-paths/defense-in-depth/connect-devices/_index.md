@@ -1,11 +1,11 @@
 ---
-title: Connect user devices to Cloudflare
+title: Connect user devices
 pcx_content_type: overview
 weight: 3
 layout: learning-module
 ---
 
-# Connect user devices to Cloudflare
+# Connect user devices
 
 To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
 
