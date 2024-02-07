@@ -231,10 +231,10 @@
 
 [theme="dark"] .ais-Highlight-highlighted {
   color: #fff;
-  background-color: var(--code-orange);
+  background-color: #0051c3;
 }
 
 [theme="dark"] .ais-Snippet-highlighted {
   color: #fff;
-  background-color: var(--code-orange);
+  background-color: #0051c3;
 }
