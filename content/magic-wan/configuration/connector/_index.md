@@ -6,11 +6,9 @@ weight: 2
 
 # Magic WAN Connector
 
-The Magic WAN Connector is a lightweight virtual appliance you can install in corporate network locations to automatically connect, {{<glossary-tooltip term_id="traffic steering">}}steer{{</glossary-tooltip>}}, and shape any IP traffic.
+The Magic WAN Connector is a lightweight virtual appliance you can install in corporate network locations to automatically connect, {{<glossary-tooltip term_id="traffic steering">}}steer{{</glossary-tooltip>}}, and shape any IP traffic. Magic WAN Connector is the easiest way to onboard your network locations to Cloudflare One.
 
-You can [purchase Magic WAN Connector](/magic-wan/configuration/connector/configure-hardware-connector/) software pre-installed on a Cloudflare-certified device, which is the easiest way to onboard your network locations to Cloudflare One.
-
-You can also download and deploy [Virtual Magic WAN Connector (Virtual Connector)](/magic-wan/configuration/connector/configure-virtual-connector/) in your own infrastructure as an alternative to the Cloudflare-certified device.
+You can [purchase Magic WAN Connector](/magic-wan/configuration/connector/configure-hardware-connector/) software pre-installed on a Cloudflare-certified device, or download and deploy [Virtual Magic WAN Connector (Virtual Connector)](/magic-wan/configuration/connector/configure-virtual-connector/) in your own infrastructure.
 
 Either option ensures the best possible connectivity to the closest Cloudflare network location, where we will apply security controls and send traffic on an optimized route to its destination.
 
