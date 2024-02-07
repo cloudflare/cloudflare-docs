@@ -260,28 +260,27 @@ const bindingsProxy = await getBindingsProxy(options);
     *   Optional options object containing preferences for the bindings:
         * `configPath` {{<type>}}string{{</type>}}
 
-          The path to the config object to use (default `wrangler.toml`)
+          The path to the configuration object to use (default `wrangler.toml`).
 
         * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
 
-          If `true`, allows the utility to read a JSON config file (e.g. `wrangler.json`).
+          If `true`, allows the utility to read a JSON config file (for example, `wrangler.json`).
 
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
-          Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location
-          used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
+          Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
 
 {{</definitions>}}
 
 ### Return Type
 
-`getBindingsProxy()` returns a `Promise` resolving to an object containing the following fields:
+`getBindingsProxy()` returns a `Promise` resolving to an object containing the following fields.
 
 {{<definitions>}}
 
 *   `bindings` {{<type>}}Record<string, unknown>{{</type>}}
 
-    *   Bindings proxies that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the 2nd argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
+    *   Bindings proxies that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
     *   Typescript Tip: `getBindingsProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
 
 *   `caches` {{<type>}}object{{</type>}}
@@ -320,7 +319,7 @@ To access the value of the `MY_VARIABLE` binding add the following to your code:
 console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 ```
 
-which would print the following output: `MY_VARIABLE = test`
+This will print the following output: `MY_VARIABLE = test`.
 
 ### Supported bindings
 
