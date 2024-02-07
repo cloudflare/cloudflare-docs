@@ -24,13 +24,13 @@ Here's a quick rundown:
 
 PAC files are usually hosted in a centralized location where all the devices can reach and download the file, the browsers are configured with PAC URL and the browsers retrieves the PAC file from the address usually when the browser is opened.
 
-## Best practices for PAC files
+## Best practices
 
 - Avoid complex logic and nested condition that might slow down processing
 - Place frequently accessed URLs/ conditions to the top for faster processing
 - Test the PAC file logic on few machine before deployment, test it using tools like an [online proxy PAC file tester](https://thorsen.pm/proxyforurl)
 - When downloading a PAC file from a central location it must complete within 30 seconds.
-- Must complete with an HTTP response code of exactly 200.
+- Must complete with an HTTP response code `200`.
 - Must have an uncompressed body smaller than 1 MB.
 - Do not follow ordinary HTTP caching semantics.
 - Are never fetched through a proxy
