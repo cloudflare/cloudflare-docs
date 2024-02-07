@@ -54,7 +54,7 @@ This allows you to execute code that performs I/O (such as a `fetch()`) with the
 
 Events that will be blocked include new incoming requests and responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
 
-`state.blockConcurrencyWhile()` is useful within the constructor of your object to perform initialization that must occur before any requests are delivered. `state.blockConcurrencyWhile()` may also be useful anywhere else other than within the constructor. For example, if you want to run a sequence of storage operations and want to avoid concurrent actions changing the status of the storage, run your sequence of operations inside the `state.blockConcurrencyWhile()` callback.
+`state.blockConcurrencyWhile()` is useful within the constructor of your object to perform initialization that must occur before any requests are delivered. `state.blockConcurrencyWhile()` may also be useful outside of the constructor. For example, if you want to run a sequence of storage operations and want to avoid concurrent actions changing the status of the storage, run your sequence of operations inside the `state.blockConcurrencyWhile()` callback.
 
 If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
 
