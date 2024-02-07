@@ -67,4 +67,4 @@ With a static version of your site being served, you can:
 - Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](/pages/configuration/preview-deployments/#customize-preview-deployments-access) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
 - Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting.
 
-Connect with the [Cloudflare Developer community on Discord](https://discord.gg/cloudflaredev) to ask questions and discuss the platform with other developers.
+Connect with the [Cloudflare Developer community on Discord](https://discord.cloudflare.com) to ask questions and discuss the platform with other developers.

@@ -60,4 +60,4 @@ If your learning journey was hindered by inaccurate or missing documentation, [f
 
 ### Community
 
-Connect with the [Cloudflare Developer Platform community on Discord](https://discord.gg/cloudflaredev) to ask questions, share what you are building, and discuss the platform with other developers.
+Connect with the [Cloudflare Developer Platform community on Discord](https://discord.cloudflare.com) to ask questions, share what you are building, and discuss the platform with other developers.

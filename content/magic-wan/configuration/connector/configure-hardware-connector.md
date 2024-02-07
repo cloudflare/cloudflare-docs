@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Configuration
+title: Configure hardware Connector
 weight: 3
 ---
 
@@ -37,7 +37,7 @@ To add a site:
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Network name**, enter a descriptive name for your WAN.
-3. In **VLAN ID**, specify a [VLAN ID](#vlan-id) to create virtual LANs.
+3. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
 4. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
@@ -62,7 +62,7 @@ To create a LAN:
 
 1. In **LAN configuration**, select **Create**.
 2. Enter a descriptive name for your LAN in **Network name**.
-3. In **VLAN ID**, specify a [VLAN ID](#vlan-id) to create virtual LANs.
+3. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
 4. **Physical port** refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.
 5. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 6. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
@@ -185,7 +185,7 @@ To check the IPsec tunnels and static routes created by your Magic Wan Connector
 
 ## Maintenance
 
-After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/configuration/connector/device-information/#heartbeat).
+After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/configuration/connector/reference/#heartbeat).
 
 {{<Aside type="note">}}[ICMP traffic](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) is routed through the Internet and bypasses [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This enables you to ping resources on the Internet from the Magic WAN connector directly, which can be useful for debugging.{{</Aside>}}
 
@@ -208,15 +208,9 @@ The interrupt service window defines when Magic WAN Connector can update its sys
 
 ---
 
-## VLAN ID
-
-This feature allows you to have multiple [VLANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
-
-A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN / LAN.
-
 ## Next steps
 
-Refer to [Device information](/magic-wan/configuration/connector/device-information/) to learn more about:
-- [Magic WAN Connector security](/magic-wan/configuration/connector/device-information/#security-and-other-information)
-- [How to interpret heartbeat information](/magic-wan/configuration/connector/device-information/#heartbeat)
-- [Device metrics](/magic-wan/configuration/connector/device-information/#device-metrics)
+Refer to [Device information](/magic-wan/configuration/connector/reference/) to learn more about:
+- [Magic WAN Connector security](/magic-wan/configuration/connector/reference/#security-and-other-information)
+- [How to interpret heartbeat information](/magic-wan/configuration/connector/reference/#heartbeat)
+- [Device metrics](/magic-wan/configuration/connector/reference/#device-metrics)

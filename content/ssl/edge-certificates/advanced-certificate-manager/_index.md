@@ -6,26 +6,24 @@ weight: 2
 
 # Advanced certificates
 
-Advanced certificates offers a flexible and customizable way to issue and manage certificates.
+{{<render file="_acm-definition.md">}}<br/>
 
-{{<render file="_acm-definition.md">}}
-<br/>
+To order advanced certificates you must purchase the Advanced Certificate Manager add-on, which also includes other features.
 
-## Features
+## Advanced Certificate Manager
 
-Advanced certificates allow you multiple customization options:
+Advanced Certificate Manager allows you to:
 
-*   Include the zone apex and up to 50 hosts as covered hostnames.
-*   Cover more than one level of subdomain.
-*   Access to [Total TLS](/ssl/edge-certificates/additional-options/total-tls/).
-*   Choose the certificate authority (CA) to issue the certificate.
-*   Select the preferred validation method and includes access to [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
-*   Choose the certificate validity period.
-*   Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
-*   Control [cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
-
-
-{{<feature-table id="ssl.advanced_certificates">}}
+* Order advanced certificates that can:
+  * Include the zone apex and up to 50 hosts as covered hostnames.
+  * Cover more than one level of subdomain.
+  * Be issued by the certificate authority (CA) you choose.
+  * Use your preferred validation method.
+  * Have the validity period you choose.
+* Use [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to delegate the DCV process of your [partial zones](/dns/zone-setups/partial-setup/) to Cloudflare.
+* Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically protect proxied hostnames.
+* Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
+* Control [cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
 
 {{<Aside type="note">}}
 
@@ -34,6 +32,8 @@ Enterprise customers can also purchase a subscription for Advanced Certificate M
 {{</Aside>}}
 
 ## Availability
+
+{{<feature-table id="ssl.advanced_certificates">}}
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 

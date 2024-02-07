@@ -75,7 +75,7 @@ For more information on breakpoint debugging via Chrome's DevTools, refer to [Ch
 
 ### Setup VS Code to use breakpoints
 
-To setup VS Code for breakpoint debugging Workers:
+To setup VS Code for breakpoint debugging in your Worker project:
 
 1. Create a `.vscode` folder in your project's root folder if one does not exist.
 2. Within that folder, create a `launch.json` file with the following content:
@@ -109,6 +109,12 @@ To setup VS Code for breakpoint debugging Workers:
 {{<Aside type="warning">}}
 
 Note that breakpoint debugging in `wrangler dev` using `--remote` could extend Worker CPU time and incur additional costs. It is recommended to use `wrangler dev` in local mode by specifying no `--remote` option or with `--local`.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
+The `.vscode/launch.json` file only applies to a single workspace. If you prefer, you can add the above launch configuration to your User Settings (per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) to have it available for all your workspaces.
 
 {{</Aside>}}
 

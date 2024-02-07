@@ -235,4 +235,4 @@ openai.chat.completions.create({
 
 To build more with Workers, refer to [Tutorials](/workers/tutorials).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with other developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.
