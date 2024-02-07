@@ -27,7 +27,7 @@ This integration supports the following Sentry features:
 - **[Breadcrumbs](https://docs.sentry.io/product/issues/issue-details/breadcrumbs/)**: Breadcrumbs create a trail of events that happened prior to an issue. Breadcrumbs are automatically forwarded to Sentry in the case of an error or exception. These events consist of the `console.log()` from the Worker before the error or exception occurred. 
 
 {{<Aside type="note">}}
-If there are more configuration options that you would like to see, leave us feedback on the [Cloudflare Developer Discord](https://discord.gg/wCzAmkNF) (channel name: integrations). 
+If there are more configuration options that you would like to see, leave us feedback on the [Cloudflare Developer Discord](https://discord.cloudflare.com) (channel name: integrations). 
 {{</Aside>}}
 
 ## Set up an integration with Sentry

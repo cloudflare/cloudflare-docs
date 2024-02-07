@@ -168,4 +168,4 @@ You have successfully created a Cloudflare Worker that allows you to interact wi
 
 To build more with R2 and Workers, refer to [Tutorials](/workers/tutorials/) and the [R2 documentation](/r2/).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.
