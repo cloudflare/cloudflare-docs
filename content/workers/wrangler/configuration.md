@@ -862,8 +862,8 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 [Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
 whether that be from Workers, Pages, or anywhere via REST API.
 
-Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
-even in local development.
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
+<br>
 
 Unlike other bindings, this binding is limited to one AI binding per Worker project.
 

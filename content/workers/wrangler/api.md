@@ -343,8 +343,8 @@ The bindings supported by `getBindingsProxy` are:
 
  * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
 
-    * __Important__: When using the AI binding locally, computation still happens on the Cloudflare network. Usage of this binding incurs usage charges even when running locally.
+    * {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
-    * To use the `AI` binding, you'll need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your
-     Cloudflare [Account ID](/fundamentals/setup/find-account-and-zone-ids/) and a Workers AI enabled API token (refer to [Workers AI documentation](/workers-ai/get-started/rest-api/#1-get-an-api-token)) respectively.
+    * To use the `AI` binding, you'll need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [Account ID](/fundamentals/setup/find-account-and-zone-ids/) and a Workers AI enabled API token (refer to [Workers AI documentation](/workers-ai/get-started/rest-api/#1-get-an-api-token)) respectively.
+
 
