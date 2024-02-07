@@ -17,7 +17,7 @@ The simplest way to create a new Next.js site configured for Cloudflare Pages is
 $ npm create cloudflare@latest my-next-app -- --framework=next
 ```
 
-C3 will guide you through the project setup process allowing you to create an initial project tailored to your needs and preferences. As part of it C3 will also install all the necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) adapter, and even allowing you to deploy your application straight away, giving you a real deployment URL that you can immediately share with the world.
+C3 will guide you through the project setup process allowing you to create an initial project tailored to your needs and preferences. As part of it C3 will also install all the necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) adapter, and allows you to deploy your application straight away, giving you a real deployment URL that you can immediately share with the world.
 
 {{<Aside type="note">}}
 
