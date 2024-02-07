@@ -152,7 +152,7 @@ The following is an example of adding a `KVNamespace` binding:
 ```ts
 ---
 filename: env.d.ts
-highlight: [5-11]
+highlight: [4-10]
 ---
 declare global {
   namespace NodeJS {
