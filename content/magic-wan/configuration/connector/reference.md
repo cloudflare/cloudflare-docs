@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Device information
+title: Reference
 weight: 4
 ---
 
@@ -10,10 +10,20 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## Security and other information
 
-- Cloudflare ensures the Magic WAN Connector device is secure and is not altered via TPM/Secure boot.
+- Cloudflare ensures the Magic WAN Connector device is secure and is not altered via TPM/Secure boot (does not apply to Virtual Connector).
 - Connectivity to the Cloudflare global network is secure and all traffic is encrypted through {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunneling.
 - The Magic WAN Connector does not support fail open.
 - Customers have the ability to layer on additional security features/policies that are enforced at the Cloudflare network.
+
+---
+
+## VLAN ID
+
+This feature allows you to have multiple [VLANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
+
+A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN / LAN.
+
+---
 
 ## Heartbeat
 
@@ -33,12 +43,14 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
 3. Find your Connector. Move your mouse over the icons right after the **Status** column to check the timestamp with the last time Connector successfully contacted Cloudflare.
 
+---
+
 ## Device metrics
 
 Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. The Magic WAN Connector device metrics measured by Cloudflare include:
 
 - Average CPU load
-- Average temperature
+- Average temperature (this is always zero for Virtual Connector)
 - Average disk utilization
 - Average memory utilization
 
