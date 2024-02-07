@@ -11,7 +11,7 @@ This guide will instruct you how to deploy a full-stack Next.js project which us
 
 ## Create a new project using C3
 
-The simplest way to create a new Next.js site configured for Cloudflare Pages is to use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) also known as C3, you can do so by opening a terminal and run:
+The simplest way to create a new Next.js site configured for Cloudflare Pages is to use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) also known as C3, you can do so by opening a terminal and running:
 
 ```sh
 $ npm create cloudflare@latest my-next-app -- --framework=next
