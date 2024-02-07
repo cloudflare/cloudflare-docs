@@ -126,7 +126,7 @@ Note that:
 
 {{<Aside type="note">}}
 
-You can filter real-time logs both in the dashboard and using [wrangler tail]((/workers/wrangler/commands/#tail)). This can help mitgate messages from being dropped, if your Worker has a high volume of messages.
+You can filter real-time logs both in the dashboard and using [wrangler tail](/workers/wrangler/commands/#tail). This can help mitgate messages from being dropped, if your Worker has a high volume of messages.
 
 {{</Aside>}}
 
