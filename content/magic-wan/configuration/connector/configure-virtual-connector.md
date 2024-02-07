@@ -36,13 +36,12 @@ The following instructions assume you already have VMware ESXi hypervisor instal
     - A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.
     - A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.
     - A "null", or "unused", port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `Null port group`, and a **VLAN ID** of `999`.
-2. Extract the files in the OVA image provided by your account team. For example:
+2. Extract the files in the OVA image provided by your account team. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings. Take note of the folder where you have extracted these files as you will need to refer to it when creating the VM. For example:
 
-```txt
-tar -xvf mconn-2024-1-3.ova
-```
+    ```txt
+    tar -xvf mconn-2024-1-3.ova
+    ```
 
-The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings. Take note of the folder where you have extracted these files as you will need to refer to it when creating the VM.
 3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the Virtual Connector.
 4. Choose a descriptive name for your virtual machine.
 5. Upload the files you have extracted from the OVA image. These include `mconn.ovf`, `mconn.nvram`, and `mconn.vmdk`.
