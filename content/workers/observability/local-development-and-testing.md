@@ -1,6 +1,5 @@
 ---
 title: Local development and testing
-weight: 6
 pcx_content_type: concept
 meta:
   description: Test your Worker in local development.

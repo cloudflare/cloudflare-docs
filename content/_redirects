@@ -1182,8 +1182,11 @@
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
-/workers/platform/logpush/ /workers/observability/logpush/ 301
-/workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
+/workers/observability/log-from-workers/ /workers/observability/logging/ 301
+/workers/platform/logpush/ /workers/observability/logging/logpush/ 301
+/workers/observability/logpush/ /workers/observability/logging/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/logging/tail-workers/ 301
+/workers/observability/tail-workers/  /workers/observability/logging/tail-workers/ 301
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
@@ -1505,9 +1508,6 @@
 /workers/recipes/vcl-conversion/* /workers/ 301
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
-/workers/observability/tail-workers/*  /workers/observability/logging/tail-workers/*  301
-/workers/observability/logpush/*  /workers/observability/logging/logpush/*  301
-/workers/observability/log-from-workers/*  /workers/observability/logging/*  301
 
 # Others
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
