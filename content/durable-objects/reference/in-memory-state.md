@@ -48,7 +48,7 @@ However, in applications with more complex state, explicitly storing state in yo
 
 `state.blockConcurrencyWhile()` is a method that guarantees ordering, blocking concurrency within an object while the critical section is running.
 
-`state.blockConcurrencyWhile(callback)` has a return type of `Promise<T>`, where `T` is the return type of callback. `state.blockConcurrencyWhile()` executes a callback (which may be `async`) with return type T, while blocking any other events from being delivered to the object until the callback completes
+`state.blockConcurrencyWhile(callback)` has a return type of `Promise<T>`, where `T` is the return type of `callback`. `state.blockConcurrencyWhile()` executes a callback (which may be `async`) while blocking any other events from being delivered to the object until the callback completes
 
 This allows you to execute code that performs I/O (such as a `fetch()`) with the guarantee that the object's state will not unexpectedly change as a result of concurrent events. All events that were not explicitly initiated as part of the callback itself will be blocked. 
 
