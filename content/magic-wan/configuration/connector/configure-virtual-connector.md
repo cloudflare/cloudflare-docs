@@ -47,14 +47,15 @@ The following instructions assume you already have VMware ESXi hypervisor instal
     Take note of the folder where you are extracting the files to, as you will need to refer to that folder when creating the VM.
 
 3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the Virtual Connector.
-4. Choose a descriptive name for your virtual machine.
-5. Upload the files you have extracted from the OVA image. These include `mconn.ovf`, `mconn.nvram`, and `mconn.vmdk`.
-6. In **Networking mappings**, select assignments for your desired topology according to the port groups you set up previously:
+4. Select **Deploy a virtual machine from an OVF or OVA file** > **Next**.
+5. Choose a descriptive name for your virtual machine.
+6. Upload the files you have extracted from the OVA image. These include `mconn.ovf`, `mconn.nvram`, and `mconn.vmdk`.
+7. In **Networking mappings**, select assignments for your desired topology according to the port groups you set up previously:
     1. For example, map `eno1` port to `VM Network` to create your WAN, and `eno2` to `LAN0` to act as your LAN port.
     2. Allocate any unused ports to the `null` port group.
     3. Take note of your configuration. You will need this information to configure your network in the Cloudflare dashboard.
-7. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
-8. Configure the virtual machine with the license key your account team provided you:
+8. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
+9. Configure the virtual machine with the license key your account team provided you:
     1. Select the Virtual Connector's VM > **Settings**.
     2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
     3. Select **Add parameter** to add your lincence key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
@@ -63,8 +64,8 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
   {{<Aside type="note">}} You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.{{</Aside>}}
 
-9. Select **Save** to finish configuring your Virtual Connector.
-10. Now, you need to continue set up in your Cloudflare dashboard.
+10. Select **Save** to finish configuring your Virtual Connector.
+11. Now, you need to continue set up in your Cloudflare dashboard.
 
 ## 3. Set up Cloudflare dashboard
 
