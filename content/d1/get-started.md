@@ -268,7 +268,7 @@ By finishing this tutorial, you have created a D1 database, a Worker to access t
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1).
 - Learn how to use the [D1 client API](/d1/build-databases/query-databases/) within your Worker.

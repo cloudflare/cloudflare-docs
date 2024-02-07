@@ -12,7 +12,7 @@ Sippy is a data migration service that allows you to copy data from other cloud 
 
 This feature is currently in beta. We do not recommend using Sippy for production traffic while in beta. 
 
-To report bugs or request features, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or fill out our [feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+To report bugs or request features, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or fill out our [feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
 
 {{</Aside>}}
 
