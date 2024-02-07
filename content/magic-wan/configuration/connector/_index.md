@@ -10,7 +10,7 @@ The Magic WAN Connector is a lightweight virtual appliance you can install in co
 
 You can [purchase Magic WAN Connector](/magic-wan/configuration/connector/configure-hardware-connector/) software pre-installed on a Cloudflare-certified device, or download and deploy [Virtual Magic WAN Connector (Virtual Connector)](/magic-wan/configuration/connector/configure-virtual-connector/) in your own infrastructure.
 
-Either option ensures the best possible connectivity to the closest Cloudflare network location, where we will apply security controls and send traffic on an optimized route to its destination.
+Either option ensures the best possible connectivity to the closest Cloudflare network location, where Cloudflare will apply security controls and send traffic on an optimized route to its destination.
 
 Magic WAN Connector has the same type of support process as other Cloudflare Enterprise products. Contact your team account manager to learn more.
 
