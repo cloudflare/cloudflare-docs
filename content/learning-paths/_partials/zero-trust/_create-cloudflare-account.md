@@ -12,9 +12,9 @@ To create a new Cloudflare account:
 2. To secure your account, enable [two-factor authentication](/fundamentals/setup/account/account-security/2fa/).
 
 3. If you have a Cloudflare contact (Enterprise only), ask them to set up your account as a multi-user organization. Account members will need:
-    - [**Access** permissions](/cloudflare-one/roles-permissions/) to view or edit applications for your private network.
-    - [**Gateway** permissions](/cloudflare-one/roles-permissions/) to view or edit policies for your applications.
-    - [**PII** permissions](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) to view user information in network activity logs.
+    - [**Access** permissions](/cloudflare-one/roles-permissions/) to read or edit applications and Access policies.
+    - [**Gateway** permissions](/cloudflare-one/roles-permissions/) to read or edit Gateway policies.
+    - [**PII** permissions](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) to view user information in Gateway activity logs.
 
 ## Best practices
 
