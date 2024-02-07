@@ -16,8 +16,14 @@ This means that, if visitors to your website or application are using older devi
 
 ## Important dates
 
-- **May 15, 2024**: Cloudflare will stop issuing certificates with the cross-signed chain.
+- **May 15, 2024**: Cloudflare will stop using the cross-signed chain, both in certificate issuance and in [certificate bundling](#changes-to-custom-certificates).
 - **September 30, 2024**: The cross-signed chain will expire.
+
+### Changes to custom certificates
+
+[Custom certificates](/ssl/edge-certificates/custom-certificates/) uploaded to Cloudflare are [bundled](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) with the certificate chain that Cloudflare finds to be the most compatible and efficient.
+
+After May 15, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain. Certificates uploaded before May 15 will continue to use the cross-signed chain until their renewal.
 
 ## Background
 
