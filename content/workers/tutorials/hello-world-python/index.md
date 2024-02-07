@@ -1,5 +1,5 @@
 ---
-updated: TODO
+updated: 2024-02-07
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -28,8 +28,8 @@ def fetch(request):
 
 Now, we can run the worker locally using Wrangler.
 
-```sh
-wrangler dev entry.py
+```bash
+$ wrangler dev entry.py
 ```
 
 Similar to JavaScript workers, the main entry point for a Python worker is the
@@ -84,7 +84,7 @@ Once we edit the `entry.py`, Wrangler should automatically restart the local
 development server. Now, if we send a POST request with the appropriate body,
 we should get a personalized message.
 
-```sh
+```bash
 $ curl --header "Content-Type: application/json" \
     --request POST \
     --data '{"name": "Python"}' http://localhost:8787
@@ -99,7 +99,7 @@ the Python `fetch` handler and can be used to access
 [secrets](/workers/configuration/secrets),and
 [bindings](/workers/configuration/bindings).
 
-For instance, let's try setting an using an environment variable in a Python
+For instance, let's try setting and using an environment variable in a Python
 worker. First, let's create a `wrangler.toml` file for our worker.
 
 ```toml
@@ -111,7 +111,7 @@ compatibility_date = "2024-01-29"
 API_HOST = "example.com"
 ```
 
-Now, let's update our `fetch` handler to make use of the new `API_HOSt`
+Now, let's update our `fetch` handler to make use of the new `API_HOST`
 environment variable.
 
 ```python
@@ -124,8 +124,15 @@ async def fetch(request, env):
 Now, to make use of our `wrangler.toml` file, we can launch the worker using
 simply:
 
-```sh
-wrangler dev
+```bash
+$ wrangler dev
+```
+
+And in another terminal window:
+
+```bash
+$ curl http://localhost:8787
+# example.com
 ```
 
 ## Using Python Packages
@@ -157,4 +164,4 @@ We hope that this small guide demonstrates the full-featured support for Python
 within Cloudflare workers.
 
 If you want to get started building your own projects, review the existing list
-of [Quickstart templates](https://developers.cloudflare.com/workers/get-started/quickstarts/). 
+of [Quickstart templates](/workers/get-started/quickstarts).
