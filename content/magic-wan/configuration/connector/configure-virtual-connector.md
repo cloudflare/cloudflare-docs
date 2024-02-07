@@ -65,7 +65,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
   {{<Aside type="note">}} You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.{{</Aside>}}
 
 10. Select **Save** to finish configuring your Virtual Connector.
-11. Now, you need to continue set up in your Cloudflare dashboard.
+11. Continue set up in your Cloudflare dashboard in the [next section]().
 
 ## 3. Set up Cloudflare dashboard
 
