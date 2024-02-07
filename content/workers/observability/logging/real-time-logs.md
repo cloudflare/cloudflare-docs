@@ -120,9 +120,15 @@ You can customize how `wrangler tail` works to fit your needs. Refer to [the `wr
 Note that:
 
 - Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
-- Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
+- If your Worker has a high volume of traffic, the real-time logs might enter sampling mode. This will cause some of your messages to be dropped and a warning to appear in your logs. 
 - Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
+
+{{<Aside type="note">}}
+
+You can filter real-time logs both in the dashboard and using [wrangler tail]((/workers/wrangler/commands/#tail)). This can help mitgate messages from being dropped, if your Worker has a high volume of messages.
+
+{{</Aside>}}
 
 ## Persisting logs
 
