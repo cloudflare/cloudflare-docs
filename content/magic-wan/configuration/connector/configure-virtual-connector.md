@@ -50,7 +50,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
     2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
     3. Select **Add parameter** to add your lincence key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
         - **Key**: `guestinfo.cloudflare.identity`
-        - **Value**: <YOUR_LICENCE_KEY>
+        - **Value**: `<YOUR_LICENCE_KEY>`
 
   {{<Aside type="note">}} You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.{{</Aside>}}
 
