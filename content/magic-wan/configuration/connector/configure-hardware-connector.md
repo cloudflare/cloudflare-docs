@@ -60,34 +60,13 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 ---
 
-## Maintenance
-
-After setting up your Magic WAN Connector, there are a few settings you can change in the Cloudflare dashboard. You can also check your Magic WAN [Connector's heartbeat](/magic-wan/configuration/connector/reference/#heartbeat).
-
-{{<Aside type="note">}}[ICMP traffic](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) is routed through the Internet and bypasses [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This enables you to ping resources on the Internet from the Magic WAN connector directly, which can be useful for debugging.{{</Aside>}}
-
-### Deactivate Magic WAN Connector
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Find the Connector you want to deactivate, select the three dots next to it > **Edit**.
-4. In Status, select _Deactivated_ from the dropdown.
-5. Select **Update**.
-
-### Change the Interrupt service Window
-
-The interrupt service window defines when Magic WAN Connector can update its systems. When Magic WAN Connector is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Find the Connector you want to deactivate, select the three dots next to it > **Edit**.
-4. In **Interrupt service window**, select the most appropriate time for the Connector to update its systems.
-
----
-
 ## Next steps
 
-Refer to [Device information](/magic-wan/configuration/connector/reference/) to learn more about:
+Refer to Maintenance to learn about:
+  - Changing when your Connector should update its settings
+  - Deactivating your Connector
+
+Refer to [Reference](/magic-wan/configuration/connector/reference/) to learn more about:
 - [Magic WAN Connector security](/magic-wan/configuration/connector/reference/#security-and-other-information)
 - [How to interpret heartbeat information](/magic-wan/configuration/connector/reference/#heartbeat)
 - [Device metrics](/magic-wan/configuration/connector/reference/#device-metrics)
