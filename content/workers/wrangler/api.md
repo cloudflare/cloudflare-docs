@@ -343,8 +343,8 @@ The bindings supported by `getBindingsProxy` are:
 
  * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
 
-    * {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
-    * To use the `AI` binding, you'll need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [Account ID](/fundamentals/setup/find-account-and-zone-ids/) and a Workers AI enabled API token (refer to [Workers AI documentation](/workers-ai/get-started/rest-api/#1-get-an-api-token)) respectively.
+    * To use the `AI` binding, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
 
 
