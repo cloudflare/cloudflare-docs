@@ -22,6 +22,14 @@ For guidance on which TLS version to use, refer to [TLS protocols](/ssl/referenc
 
 {{<feature-table id="ssl.minimum_tls">}}
 
+## How to disable TLS 1.0
+
+You can disable TLS 1.0 by choosing a higher minimum TLS version.
+
+All users can apply this configuration to all hostnames in their zones following the steps under [zone-level](#zone-level).
+
+If you have an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager//#advanced-certificate-manager) subscription, you also have the option to disable TLS 1.0 (or other versions) with a [per-hostname](#per-hostname) setup.
+
 ## Setup
 
 ### Zone-level
@@ -35,10 +43,10 @@ To manage the TLS version applied to your whole zone when proxied through Cloudf
 2.  Select your website.
 3.  Go to **SSL/TLS** > **Edge Certificates**.
 4.  For **Minimum TLS Version**, select an option.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 Use the [Change Minimum TLS Version setting](/api/operations/zone-settings-change-minimum-tls-version-setting) endpoint, specifying your preferred minimum version in the `value` parameter.
 
 {{</tab>}}
