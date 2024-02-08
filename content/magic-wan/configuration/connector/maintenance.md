@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
-title: Configure hardware Connector
+title: Maintenance
+weight: 5
 ---
 
 # Maintenance
