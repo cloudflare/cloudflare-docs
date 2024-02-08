@@ -71,7 +71,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
 ### Create a site
 
-{{<render file="connector/_create-site.md" withParameters="needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.;;needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware." >}}
+{{<render file="connector/_create-site.md" withParameters="needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.;;needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.;;For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#1-obtain-the-virtual-connector-image)." >}}
 
 ## 4. Activate Connector
 
@@ -80,7 +80,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 ## 5. Boot your Virtual Connector
 
 1. Go to **Virtual Machines** in VMware, and boot up Virtual Connector's VM.
-2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) for its connected site.
+2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](#create-a-site) for its connected site.
 3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
 4. If successful, the [tunnel health checks](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) will show as healthy.
 5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/reference/#heartbeat) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.

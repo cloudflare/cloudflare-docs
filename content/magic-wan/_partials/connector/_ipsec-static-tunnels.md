@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) and [static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) for you. You cannot configure these manually.
+Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/reference/tunnels/#ipsec-tunnels) and [static routes](/magic-wan/reference/traffic-steering/) for you. You cannot configure these manually.
 
 To check the IPsec tunnels and static routes created by your Magic Wan Connector:
 

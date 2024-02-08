@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: wan;;lan
+inputParameters: wan;;lan;;noConnectorShows
 ---
 
 Sites represent the local network where you have installed your Magic WAN Connector — for example, a branch office location.
@@ -16,7 +16,7 @@ To add a site:
 2. Go to **Magic WAN** > **Sites**.
 3. Select **Create** to create a new site and start the configuration wizard.
 4. Add a name and description for your new site.
-5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows in this list.
+5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. $3
 6. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt Service Window](/magic-wan/configuration/connector/maintenance/#interrupt-service-window) for more details.
 8. Select **Next** to proceed to creating your WAN and LAN networks.

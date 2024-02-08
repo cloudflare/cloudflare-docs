@@ -18,7 +18,7 @@ weight: 3
 
 ### Create a site
 
-{{<render file="connector/_create-site.md" withParameters="refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.;;refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector." >}}
+{{<render file="connector/_create-site.md" withParameters="refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.;;refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.;;You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows in this list." >}}
 
 ## 2. Set up your Magic WAN Connector
 
@@ -47,7 +47,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 1. Wait 60 seconds.
 2. Unplug the physical connection to the Internet-connected device which provides DHCP.
-3. Adjust your physical connections as required to match the configuration specified in the [Site configuration](#create-a-site) step (for example, static IP WAN plugged into physical port with no DHCP connection).
+3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#create-a-site) step (for example, static IP WAN plugged into physical port with no DHCP connection).
 4. Power cycle the Connector.
 
 {{</Aside>}}
