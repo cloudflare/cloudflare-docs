@@ -40,4 +40,4 @@ Once an account is granted access to a feed, it will be available as a selectabl
 
 If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in the **Value** dropdown.
 
-![Example of creating a Gateway DNS policy rule with custom indiciator feeds](/images/security-center/gateway-indicator-feed.png)
+![Example of creating a Gateway DNS policy rule with Custom Indicator Feeds](/images/security-center/gateway-indicator-feed.png)
