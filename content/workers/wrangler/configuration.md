@@ -863,7 +863,6 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 whether that be from Workers, Pages, or anywhere via REST API.
 
 {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
-<br>
 
 Unlike other bindings, this binding is limited to one AI binding per Worker project.
 
