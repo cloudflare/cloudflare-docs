@@ -1,6 +1,5 @@
 ---
 title: Local development and testing
-weight: 6
 pcx_content_type: concept
 meta:
   description: Test your Worker in local development.
@@ -134,4 +133,4 @@ Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/log-from-workers/) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
+* [Log from Workers](/workers/observability/logging/real-time-logs) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
