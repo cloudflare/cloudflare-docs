@@ -1,11 +1,11 @@
 ---
 title: Recommended DNS policies
 pcx_content_type: overview
-weight: 1
+weight: 4
 layout: learning-unit
 ---
 
-Add the following recommended DNS policies.
+We recommend you add the following DNS policies.
 
 ## 1. All-DNS-Domain-Allowlist
 
@@ -20,9 +20,9 @@ Allowlist the Corporate and Trusted Domains or Hostnames. With this policy you e
 
 Block security categories such as _Command & Control_, _Botnet_ and _Malware_ based on Cloudflare's threat intelligence.
 
-| Selector            | Operator | Value             | Action |
-| ------------------- | -------- | ----------------- | ------ |
-| Security Categories | in       | All Scurity Risks | Block  |
+| Selector            | Operator | Value               | Action |
+| ------------------- | -------- | ------------------- | ------ |
+| Security Categories | in       | _All Scurity Risks_ | Block  |
 
 ## 3. All-DNS-ContentCategories-Blocklist
 
@@ -32,23 +32,23 @@ Initially, Allow action will help to track the policy matching, and identify pot
 
 | Selector           | Operator | Value            | Action       |
 | ------------------ | -------- | ---------------- | ------------ |
-| Content Categories | in       | <Security Risks> | Allow\|Block |
+| Content Categories | in       | _Security Risks_ | Allow\|Block |
 
 ## 4. All-DNS-Application-Blocklist
 
 Block unauthorized applications to limit their users' access to certain web-based tools and minimize the risk of Shadow IT. For example, the following policy blocks AI assistants.
 
-| Selector    | Operator | Value         | Action |
-| ----------- | -------- | ------------- | ------ |
-| Application | in       | ChatGPT\|Bard | Block  |
+| Selector    | Operator | Value             | Action |
+| ----------- | -------- | ----------------- | ------ |
+| Application | in       | _ChatGPT_, _Bard_ | Block  |
 
 ## 5. All-DNS-GeoCountryIP-Blocklist
 
 Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
-| Selector                        | Operator | Value                                                                                                                                  | Action |
-| ------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| Resolved Country IP Geolocation | in       | Afghanistan, Belarus, Congo (Kinshasa), Cuba, Iran, Iraq, Korea (North), Myanmar, Russian Federation, Sudan, Syria, Uktraine, Zimbabwe | Block  |
+| Selector                        | Operator | Value                                                                                                                                                           | Action |
+| ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Resolved Country IP Geolocation | in       | _Afghanistan_, _Belarus_, _Congo (Kinshasa)_, _Cuba_, _Iran_, _Iraq_, _Korea (North)_, _Myanmar_, _Russian Federation_, _Sudan_, _Syria_, _Ukraine_, _Zimbabwe_ | Block  |
 
 ## 6. All-DNS-DomainTopLevel-Blocklist
 

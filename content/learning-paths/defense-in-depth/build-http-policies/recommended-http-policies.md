@@ -19,10 +19,10 @@ Bypass HTTP inspection for applications which use embedded certificates. This wi
 
 Bypass HTTPs inspection for the Android applications (such as Google Drive) use certificate pinning, which is incompatible with Gateway inspection.
 
-| Selector                     | Operator    | Value                                          | Logic | Action         |
-| ---------------------------- | ----------- | ---------------------------------------------- | ----- | -------------- |
-| Application                  | in          | Google Drive                                   | And   | Do Not Inspect |
-| Passed Device Posture Checks | in          | OS Version Android                             |       |                |
+| Selector                     | Operator | Value                | Logic | Action         |
+| ---------------------------- | -------- | -------------------- | ----- | -------------- |
+| Application                  | in       | _Google Drive_       | And   | Do Not Inspect |
+| Passed Device Posture Checks | in       | _OS Version Android_ |       |                |
 
 ## 3. All-HTTP-Domain-Inspection-Bypass
 
@@ -37,9 +37,9 @@ Bypass HTTP inspection for a custom list of domains that were identified to have
 
 Block known threats such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 
-| Selector       | Operator | Value              | Action |
-| -------------- | -------- | ------------------ | ------ |
-| Security Risks | in       | All Security Risks | Block  |
+| Selector       | Operator | Value                | Action |
+| -------------- | -------- | -------------------- | ------ |
+| Security Risks | in       | _All Security Risks_ | Block  |
 
 ## 5. All-HTTP-ContentCategories-Blocklist
 
@@ -47,9 +47,9 @@ Although these categories are not always a security threat it's convenient to Bl
 
 Initially, Allow action will help to track the policy matching, and identify potential false positives. Finally blocking these categories, allowlisting the Trusted Domains on the 'Trusted Domain' List used on the Rule 1.
 
-| Selector           | Operator | Value                                                                         | Action                      |
-| ------------------ | -------- | ----------------------------------------------------------------------------- | --------------------------- |
-| Content Categories | in       | <Questionable Content, Security Risks, Miscellaneous, Adult Themes, Gambling> | <Allow \| Inspect \| Block> |
+| Selector           | Operator | Value                                                                                 | Action                      |
+| ------------------ | -------- | ------------------------------------------------------------------------------------- | --------------------------- |
+| Content Categories | in       | _Questionable Content_, _Security Risks_, _Miscellaneous_, _Adult Themes_, _Gambling_ | <Allow \| Inspect \| Block> |
 
 ## 6. All-HTTP-DomainHost-Blocklist
 
@@ -65,9 +65,9 @@ Block specific Domains or Hosts that are known to be malicious or pose a threat 
 
 Block unauthorized applications to limit their users' access to certain web-based tools and minimize the risk of Shadow IT. For example, the following policy blocks AI assistants
 
-| Selector    | Operator | Value              | Action |
-| ----------- | -------- | ------------------ | ------ |
-| Application | in       | <Chat GPT \| Bard> | Block  |
+| Selector    | Operator | Value             | Action |
+| ----------- | -------- | ----------------- | ------ |
+| Application | in       | _ChatGPT_, _Bard_ | Block  |
 
 ## 8. PrivilegedUsers-HTTP-Any-Isolate
 
@@ -85,7 +85,7 @@ Likewise for Privileged users that could be target of an attacker to gain access
 
 Isolate High Risk or a Custom List of Domains to avoid data exfiltration or malware infection. Ideally Incident Response Teams can feed this List with API automation.
 
-| Selector           | Operator | Value                            | Logic | Action  |
-| ------------------ | -------- | -------------------------------- | ----- | ------- |
-| Content Categories | in       | <New Domain, Newly Seen Domains> | Or    | Isolate |
-| Domain             | in list  | DomainIsolation                  |       |         |
+| Selector           | Operator | Value                              | Logic | Action  |
+| ------------------ | -------- | ---------------------------------- | ----- | ------- |
+| Content Categories | in       | _New Domain_, _Newly Seen Domains_ | Or    | Isolate |
+| Domain             | in list  | DomainIsolation                    |       |         |

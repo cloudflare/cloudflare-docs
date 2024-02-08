@@ -68,7 +68,7 @@ Block Policy to block all Non-Web Traffic towards Internet. By using Detected Pr
 | Selector          | Operator    | Value             | Logic | Action |
 | ----------------- | ----------- | ----------------- | ----- | ------ |
 | Destination IP    | not in list | <InternalNetwork> | And   | Block  |
-| Detected Protocol | is not in   | <HTTP \| HTTPS>   |       |        |
+| Detected Protocol | is not in   | _HTTP_, _HTTPS_   |       |        |
 
 ## 7. All-NET-InternalNetwork-ImplicitDeny
 
