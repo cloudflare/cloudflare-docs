@@ -82,4 +82,4 @@ The **Deployed custom rate limiting rulesets** list will show a rule for each de
 
 ## Configuring a custom response for blocked requests
 
-{{<render file="_custom-response-blocked-requests.md">}}
+{{<render file="_custom-response-blocked-requests.md" withParameters="rate limiting;;429">}}

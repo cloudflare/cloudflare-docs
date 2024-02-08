@@ -28,7 +28,9 @@ ___
 
 ## Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOis search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
+
+Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
 
 ___
 
@@ -180,7 +182,7 @@ This can happen when you had a wildcard \* record configured at your previous au
 You can also:
 1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/manage-domains/add-site/) the domain.
 
 ___
 
