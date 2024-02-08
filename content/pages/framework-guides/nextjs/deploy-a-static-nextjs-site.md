@@ -9,7 +9,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends starting with the [Deploy a Next.js site](/pages/framework-guides/nextjs/deploy-a-nextjs-site/) guide.
+Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends using the [Deploy a Next.js site](/pages/framework-guides/nextjs/deploy-a-nextjs-site/) guide.
 
 {{</Aside>}}
 
