@@ -16,7 +16,7 @@ meta:
 resources:
   community: https://community.cloudflare.com/c/developers/zaraz/67
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/zaraz
-  discord: https://discord.gg/2TRr6nSxdd
+  discord: https://discord.cloudflare.com
 
 
 externals:

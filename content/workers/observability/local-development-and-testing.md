@@ -1,6 +1,5 @@
 ---
 title: Local development and testing
-weight: 6
 pcx_content_type: concept
 meta:
   description: Test your Worker in local development.
@@ -75,7 +74,7 @@ For more information on breakpoint debugging via Chrome's DevTools, refer to [Ch
 
 ### Setup VS Code to use breakpoints
 
-To setup VS Code for breakpoint debugging Workers:
+To setup VS Code for breakpoint debugging in your Worker project:
 
 1. Create a `.vscode` folder in your project's root folder if one does not exist.
 2. Within that folder, create a `launch.json` file with the following content:
@@ -112,6 +111,12 @@ Note that breakpoint debugging in `wrangler dev` using `--remote` could extend W
 
 {{</Aside>}}
 
+{{<Aside type="note">}}
+
+The `.vscode/launch.json` file only applies to a single workspace. If you prefer, you can add the above launch configuration to your User Settings (per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) to have it available for all your workspaces.
+
+{{</Aside>}}
+
 ## Test Workers
 
 ### Integration testing
@@ -128,4 +133,4 @@ Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/log-from-workers/) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
+* [Log from Workers](/workers/observability/logging/real-time-logs) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).

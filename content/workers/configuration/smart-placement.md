@@ -130,4 +130,4 @@ Enabling Smart Placement on your back-end Worker will invoke it close to your ba
 
 ## Give feedback on Smart Placement
 
-Smart Placement is in beta. To share your thoughts and experience with Smart Placement, join the [Cloudflare Developer Discord](https://discord.gg/cloudflaredev).
+Smart Placement is in beta. To share your thoughts and experience with Smart Placement, join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
