@@ -75,7 +75,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
 ## 4. Activate Connector
 
-{{<render file="connector/_activate-connector.md" >}}
+{{<render file="connector/_activate-connector.md" withParameters="Virtual Magic WAN Connector is deactivated after you install it" >}}
 
 ## 5. Boot your Virtual Connector
 

@@ -38,9 +38,9 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 - **UDP/4500 (destination IP - Cloudflare Anycast IPs)**: Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}Anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
 - **TCP/7844, UDP/7844 Outbound connections**: This is for debugging facilities in the connector.
 
-### Activate connector
+## 3. Activate connector
 
-{{<render file="connector/_activate-connector.md" >}}
+{{<render file="connector/_activate-connector.md" withParameters="The Magic WAN Connector is shipped to you deactivated" >}}
 
 {{<Aside type="note">}}
  If your final network configuration is based on a static IP address without a route to the Internet that has DHCP enabled:
