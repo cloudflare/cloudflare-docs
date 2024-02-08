@@ -235,7 +235,7 @@ async function task(file: string) {
         return;
       }
 
-      if (target && (target.includes("discord.gg/cloudflaredev"))) {
+      if (target && target.includes("discord.gg/cloudflaredev")) {
         return messages.push({
           type: "error",
           html: content,
