@@ -75,4 +75,4 @@ $ curl https://www.example.com -svo /dev/null --tls-max 1.1
 
 If the TLS version you are testing is blocked by Cloudflare, the TLS handshake is not completed and returns an error:
 
-**`* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert`**
+`* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert`
