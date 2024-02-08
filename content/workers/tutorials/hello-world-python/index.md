@@ -95,7 +95,7 @@ $ curl --header "Content-Type: application/json" \
 
 In addition to the `request` parameter, the `env` parameter is also passed to
 the Python `fetch` handler and can be used to access
-[environment variables] (/workers/configuration/environment-variables),
+[environment variables](/workers/configuration/environment-variables),
 [secrets](/workers/configuration/secrets),and
 [bindings](/workers/configuration/bindings).
 
