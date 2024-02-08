@@ -62,13 +62,4 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 ## Next steps
 
-Refer to [Maintenance](/magic-wan/configuration/connector/maintenance/) to learn more about:
-- [Heartbeat](/magic-wan/configuration/connector/maintenance/#heartbeat)
-- [Deactivate your Connector](/magic-wan/configuration/connector/maintenance/#deactivate-magic-wan-connector)
-- [Change when your Connector should update its settings](/magic-wan/configuration/connector/maintenance/#change-when-connector-should-update-its-settings)
-
-Refer to [Reference](/magic-wan/configuration/connector/reference/) to learn more about:
-- [Security](/magic-wan/configuration/connector/reference/#security-and-other-information)
-- [ICMP traffic](/magic-wan/configuration/connector/reference/#icmp-traffic)
-- [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id)
-- [Device metrics](/magic-wan/configuration/connector/reference/#device-metrics)
+{{<render file="connector/_next-steps.md" >}}

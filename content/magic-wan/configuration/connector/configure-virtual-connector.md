@@ -87,5 +87,4 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
 ## Next steps
 
-- Learn more about Magic WAN Connector, such as security, heartbeat, and device metrics in [Device information](/magic-wan/configuration/connector/reference/).
-- Refer to [Troubleshooting](/magic-wan/configuration/connector/troubleshooting/) to learn what to do if you are experiencing difficulties.
+{{<render file="connector/_next-steps.md" >}}
