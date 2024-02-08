@@ -10,7 +10,6 @@ const { hits } = instantsearch.widgets;
 const { configure } = instantsearch.widgets;
 const { pagination } = instantsearch.widgets;
 const { refinementList } = instantsearch.widgets;
-const { clearRefinements } = instantsearch.widgets;
 const { currentRefinements } = instantsearch.widgets;
 
 const search = instantsearch({
@@ -82,13 +81,16 @@ search.addWidgets([
               <p>${components.Snippet({ attribute: "content", hit })}</p>
               <div class="additionalSearchContent">
                 <p>
-                  <strong>Operation</strong>: ${components.Highlight({ attribute: "operation", hit })}
+                  <strong>Operation</strong>:
+                  ${components.Highlight({ attribute: "operation", hit })}
                 </p>
                 <p>
-                  <strong>Endpoint group</strong>: ${components.Highlight({ attribute: "parent_tag", hit })}
+                  <strong>Endpoint group</strong>:
+                  ${components.Highlight({ attribute: "parent_tag", hit })}
                 </p>
                 <p>
-                  <strong>Content type</strong>: ${components.Highlight({ attribute: "content_type", hit })}
+                  <strong>Content type</strong>:
+                  ${components.Highlight({ attribute: "content_type", hit })}
                 </p>
               </div>
               <a href=${hit.url}>${hit.url}</a>
@@ -103,13 +105,16 @@ search.addWidgets([
               <p>${components.Snippet({ attribute: "content", hit })}</p>
               <div class="additionalSearchContent">
                 <p>
-                  <strong>Product</strong>: ${components.Highlight({ attribute: "product", hit })}
+                  <strong>Product</strong>:
+                  ${components.Highlight({ attribute: "product", hit })}
                 </p>
                 <p>
-                  <strong>Product group</strong>: ${components.Highlight({ attribute: "product_group", hit })}
+                  <strong>Product group</strong>:
+                  ${components.Highlight({ attribute: "product_group", hit })}
                 </p>
                 <p>
-                  <strong>Content type</strong>: ${components.Highlight({ attribute: "content_type", hit })}
+                  <strong>Content type</strong>:
+                  ${components.Highlight({ attribute: "content_type", hit })}
                 </p>
               </div>
               <a href=${hit.url}>${hit.url}</a>
@@ -142,14 +147,14 @@ search.addWidgets([
     container: "#pagination",
   }),
   currentRefinements({
-    container: '#current_refinements',
+    container: "#current_refinements",
     transformItems(items) {
-      return items.map(item => {
-        item.label = item.label.replace("_", " "); 
-        return item; 
+      return items.map((item) => {
+        item.label = item.label.replace("_", " ");
+        return item;
       });
-    }
-  })
+    },
+  }),
 ]);
 
 search.start();

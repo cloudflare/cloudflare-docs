@@ -68,8 +68,7 @@ export function createDropdown(
           (item) => item.isRefined
         ).length;
         // Format the button text
-        text =
-          nbRefinements > 0 ? `${text} (${nbRefinements})` : text;
+        text = nbRefinements > 0 ? `${text} (${nbRefinements})` : text;
 
         const classNames = [cssClasses.button];
         if (typeof buttonClassName === "string") {
@@ -129,7 +128,10 @@ export function createDropdown(
 
     // Add a click listener to the header (button) and the caret symbol
     const buttonListener = (event) => {
-      if (!event.target.matches("." + CLASS_BUTTON) && !event.target.matches(".caretDownFilter")) {
+      if (
+        !event.target.matches("." + CLASS_BUTTON) &&
+        !event.target.matches(".caretDownFilter")
+      ) {
         return;
       }
       toggle();
