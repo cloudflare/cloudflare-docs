@@ -5,7 +5,7 @@ weight: 4
 layout: learning-unit
 ---
 
-Browser isolation (also known as remote browsing) executes active webpage content in a secure isolated browser to protect users from zero-day attacks, malware, and phishing. Browser isolation is an important component of the Zero Trust security model, in which no connection request is inherently trusted by default. In this case, applying that Zero Trust principle to browsing means no website code should be trusted to run on devices by default.
+Browser isolation (also known as remote browsing) executes active webpage content in a secure isolated browser to protect users from zero-day attacks, malware, and phishing. Browser isolation is an important component of Zero Trust Web Access, in which no connection request is inherently trusted by default. In this case, applying Zero Trust principles to browsing means no website code should be trusted to run on devices by default.
 
 ## How browser isolation works
 
