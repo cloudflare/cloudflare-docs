@@ -22,6 +22,8 @@ Issuing and renewing certificates can take up a lot of time from your technical 
 
 The different algorithms used in SSL/TLS encryption can vary in terms of how secure they are. Through [cipher suite customization](/ssl/reference/cipher-suites/customize-cipher-suites/) you can have more control over which ciphers are used for your domain and/or specific hostnames.
 
+This can help you achieve balance between highly available marketing websites (`www.example.com`) - that even legacy devices can access - and highly secure services or applications (`shop.example.com`) - that require modern devices, stronger encryption, and [standards compliance](/ssl/reference/cipher-suites/compliance-status/).
+
 Cipher suites customization is set at the hostname level and applies to any edge certificate used in connections to a given hostname. However, to enable [this and other features](/ssl/edge-certificates/advanced-certificate-manager/#advanced-certificate-manager), you must (purchase the Advanced Certificate Manager add-on).
 
 If you already have Advanced Certificate Manager, refer to [Change ciphers setting](/api/operations/zone-settings-change-ciphers-setting) to apply custom cipher suites to your zone, or to [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) to specify your chosen ciphers per hostname.
