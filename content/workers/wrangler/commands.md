@@ -2227,7 +2227,7 @@ wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 
 Manage client certificates used for mTLS connections in subrequests.
 
-These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
 ### `upload`
 

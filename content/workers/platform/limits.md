@@ -199,7 +199,7 @@ If the system detects that a Worker is deadlocked on open connections — for ex
 
 {{<Aside type="note">}}
 
-Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
+Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/bindings/service-bindings/)) will share the simultaneous open connection limit.
 
 {{</Aside>}}
 

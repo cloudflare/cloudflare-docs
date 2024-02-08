@@ -23,6 +23,6 @@ const secretValue = env.SECRET_NAME;
 
 Then use the secret value to authenticate with the external service. For example, if the external service requires an API key for authentication, include the secret in your library's configuration.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/bindings/mtls) to present a client certificate.
 
 Use [Custom Domains](/workers/configuration/routing/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.

@@ -32,5 +32,5 @@ If you need to use certificates issued by another CA, use the API to [bring your
 
 You can now use the client certificate for multiple things, including:
 
-- Adding an mTLS certificate binding to your [Worker](/workers/runtime-apis/mtls/).
+- Adding an mTLS certificate binding to your [Worker](/workers/runtime-apis/bindings/mtls/).
 - Embedding a certificate in your [mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/).

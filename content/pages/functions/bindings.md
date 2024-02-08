@@ -269,7 +269,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ## Service bindings
 
-[Service bindings](/workers/runtime-apis/service-bindings/) enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
