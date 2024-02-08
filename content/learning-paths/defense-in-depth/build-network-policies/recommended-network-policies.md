@@ -1,6 +1,6 @@
 ---
 title: Recommended network policies
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
 ---

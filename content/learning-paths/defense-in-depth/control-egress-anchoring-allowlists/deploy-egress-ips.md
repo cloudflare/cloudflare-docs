@@ -1,6 +1,6 @@
 ---
 title: Deploy egress IPs in the right way
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 3
 layout: learning-unit
 ---

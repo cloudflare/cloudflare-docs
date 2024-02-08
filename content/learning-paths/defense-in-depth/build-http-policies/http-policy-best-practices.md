@@ -1,6 +1,6 @@
 ---
 title: HTTP policy best practices
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
 ---

@@ -1,6 +1,6 @@
 ---
 title: QA, testing, and needs for changing egress location
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 5
 layout: learning-unit
 ---

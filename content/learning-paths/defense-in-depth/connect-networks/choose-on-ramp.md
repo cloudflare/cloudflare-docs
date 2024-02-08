@@ -1,6 +1,6 @@
 ---
 title: Choose an on-ramp
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 2
 layout: learning-unit
 ---

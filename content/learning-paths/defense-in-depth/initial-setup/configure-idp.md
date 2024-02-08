@@ -1,6 +1,6 @@
 ---
 title: Configure an identity provider
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 4
 layout: learning-unit
 ---

@@ -1,6 +1,6 @@
 ---
 title: Use intel feeds to improve security policies
-pcx_content_type: overview
+pcx_content_type: learning-unit
 weight: 2
 layout: learning-unit
 ---
