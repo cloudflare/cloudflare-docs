@@ -67,4 +67,4 @@ entries:
 
 - term: cache lock
   general_definition: |-
-    CDN data centers, comprising numerous servers, employ a mechanism known as a "cache lock" (mutex) to prevent overloading of origin servers. This mechanism ensures that only one server can request a specific file from the origin at any given time, facilitating efficient coordination among the servers.
+    cache lock (or mutex) is a mechanism employed by CDN data centers, comprising numerous servers, to prevent the overloading of origin servers. This mechanism ensures that only one server can request a specific file from the origin at any given time, facilitating efficient coordination among the servers.
