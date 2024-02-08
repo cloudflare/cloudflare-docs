@@ -7,7 +7,7 @@ layout: learning-module
 
 # Build DNS security policies
 
-To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
+DNS security is an important, wide-reaching, and very 'early' action in the lifecycle of a request. Cloudflare operates one of the world's largest and fastest DNS resolvers, your users will be having their public DNS requests resolved by that same resolution engine whether they're connecting from a network pointing its resolvers to Cloudflare, or an endpoint running the WARP client.
 
 ## Objectives
 
