@@ -20,7 +20,7 @@ This feature is not available for zones on the [Cloudflare China Network](/china
 
 ## Add custom logs
 
-Any `console.log` statements within your Worker will be visible in the dashboard or wrangler tail. The following example demonstrates a custom `console.log` within a Worker request handler.
+Any `console.log` statements within your Worker will be visible in the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail). The following example demonstrates a custom `console.log` within a Worker request handler.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -64,7 +64,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-After you deploy the above code you can see the real-time logs in the dashboard or `wrangler tail`.
+After you deploy the [above code](/workers/observability/logging/real-time-logs/#add-custom-logs), view the real-time logs in the dashboard or `wrangler tail`.
 
 ## View logs from the dashboard
 
@@ -77,10 +77,10 @@ To view real-time logs associated with any deployed Worker using the Cloudflare 
 
 ## View logs using `wrangler tail`
 
-To view real-time logs associated with any deployed Worker using wrangler:
+To view real-time logs associated with any deployed Worker using Wrangler:
 
-1. Navigate to your Worker project directory
-2. Run `npx wrangler tail`
+1. Go to your Worker project directory.
+2. Run `npx wrangler tail`.
 
 This will log any incoming requests to your application available in your local terminal.
 
@@ -120,19 +120,22 @@ You can customize how `wrangler tail` works to fit your needs. Refer to [the `wr
 Note that:
 
 - Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
-- If your Worker has a high volume of traffic, the real-time logs might enter sampling mode. This will cause some of your messages to be dropped and a warning to appear in your logs. 
+- If your Worker has a high volume of traffic, the real-time logs might enter sampling mode. This will cause some of your messages to be dropped and a warning to appear in your logs.
 - Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
 {{<Aside type="note">}}
 
-You can filter real-time logs both in the dashboard and using [wrangler tail](/workers/wrangler/commands/#tail). This can help mitgate messages from being dropped, if your Worker has a high volume of messages.
+You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitgate messages from being dropped.
 
 {{</Aside>}}
 
-## Persisting logs
+## Persist logs
 
-Logs can be persited in two ways: using [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
+Logs can be persited in two ways:
+
+1. [Workers Logpush](/workers/observability/logging/logpush/).
+2. [Tail Workers](/workers/observability/logging/tail-workers/).
 
 [Workers Logpush](/workers/observability/logging/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker's Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
 
