@@ -7,20 +7,22 @@ meta:
 
 # Log from Workers
 
-Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production.
+Logging is a fundamental building block supporting application development — it can provide insights during the initial stages of development and is often times crucial to understanding an issue occurring in production.
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
 
 {{<Aside type="warning">}}
 
-This feature is not available for zones on the [Cloudflare China Network](/china-network/).
+Real-time logs are not available for zones on the [Cloudflare China Network](/china-network/).
 
 {{</Aside>}}
 
 
 ## Add custom logs
 
-Any `console.log` statements within your Worker will be visible in the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail). The following example demonstrates a custom `console.log` within a Worker request handler.
+By default a Worker will emit execution logs containing details about the Request, Response and related metadata.
+
+In addition, you can add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail). The following example demonstrates a custom `console.log` within a Worker request handler.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
