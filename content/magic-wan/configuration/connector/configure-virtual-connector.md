@@ -58,7 +58,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 9. Configure the virtual machine with the license key your account team provided you:
     1. Select the Virtual Connector's VM > **Settings**.
     2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
-    3. Select **Add parameter** to add your lincence key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
+    3. Select **Add parameter** to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
         - **Key**: `guestinfo.cloudflare.identity`
         - **Value**: `<YOUR_LICENCE_KEY>`
 
