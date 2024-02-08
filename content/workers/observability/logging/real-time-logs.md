@@ -66,7 +66,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-After you deploy the [above code](/workers/observability/logging/real-time-logs/#add-custom-logs), view the real-time logs in the dashboard or `wrangler tail`.
+After you deploy the [above code](/workers/observability/logging/real-time-logs/#add-custom-logs), view the real-time logs in [the dashboard](/workers/observability/logging/real-time-logs/#view-logs-from-the-dashboard) or [`wrangler tail`](/workers/observability/logging/real-time-logs/#view-logs-using-wrangler-tail).
 
 ## View logs from the dashboard
 
@@ -82,7 +82,7 @@ To view real-time logs associated with any deployed Worker using the Cloudflare 
 To view real-time logs associated with any deployed Worker using Wrangler:
 
 1. Go to your Worker project directory.
-2. Run `npx wrangler tail`.
+2. Run [`npx wrangler tail`](/workers/wrangler/commands/#tail).
 
 This will log any incoming requests to your application available in your local terminal.
 
