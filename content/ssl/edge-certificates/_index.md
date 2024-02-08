@@ -30,6 +30,6 @@ If you already have Advanced Certificate Manager, consider [Customize cipher sui
 
 ### Automate domain control validation (DCV)
 
-If you want to use Cloudflare but manage DNS externally ([partial (CNAME) setup](/dns/zone-setups/partial-setup/)), you may need to perform domain control validation (DCV) to prove that you have control over your domain before your SSL/TLS certificate can be issued.
+If you want to use Cloudflare but manage DNS externally ([partial setup](/dns/zone-setups/partial-setup/)), you may need to perform domain control validation (DCV) to prove that you have control over your domain before your SSL/TLS certificate can be issued.
 
-To make this process easier, and automate DCV at certificate renewal, you can use [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and set up [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+To make this process easier and automate DCV at certificate renewal, you can use [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and set up [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
