@@ -69,10 +69,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
 ## 3. Set up Cloudflare dashboard
 
-1. Follow the instructions in [Create a site](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) to create a site for each instance of the Virtual Connector.
-2. The **Physical port** in WAN and LAN needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, for the **WAN** configuration we need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.
-3. Do not forget to [activate your Connector](/magic-wan/configuration/connector/configure-hardware-connector/#device-activation).
-4. After setting up your site in the Cloudflare dashboard, you will need to return to the VMware interface to boot up Virtual Connector.
+{{<render file="connector/_create-site.md" withParameters="needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.;;needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware." >}}
 
 ## 4. Boot your Virtual Connector
 
