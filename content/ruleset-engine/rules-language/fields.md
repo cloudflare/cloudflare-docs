@@ -973,6 +973,10 @@ The Cloudflare Rules language supports these dynamic fields:
   </tbody>
 </table>
 
+### Corporate Proxy
+
+{{<render file="_corporate_proxy.md" productFolder="/bots/">}}
+
 ## Magic Firewall fields
 
 {{<Aside type="note">}}Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.{{</Aside>}}

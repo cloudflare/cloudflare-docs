@@ -7,7 +7,7 @@ disableHugoGeneratorInject = true
 enableRobotsTXT = false
 summaryLength = 30
 disableAliases = true
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy", "term"]
 timeout = "120s"
 
 enableEmoji = true

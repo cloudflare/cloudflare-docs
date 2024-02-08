@@ -10,7 +10,7 @@ If domains on Free zones remain in the [Pending](/dns/zone-setups/reference/doma
 
 You can also [manually remove a domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 
-If you need to re-add a domain to your account, follow the [regular onboarding flow](/fundamentals/setup/account-setup/add-site/).
+If you need to re-add a domain to your account, follow the [regular onboarding flow](/fundamentals/setup/manage-domains/add-site/).
 
 {{<Aside type="warning" header="Purged zones">}}
 

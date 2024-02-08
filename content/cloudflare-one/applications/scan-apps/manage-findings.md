@@ -29,6 +29,15 @@ Findings are security issues detected within SaaS applications that involve user
 
 Other actions you can take include [creating an HTTP block policy](#resolve-finding-with-a-gateway-policy), updating the finding's [severity level](#severity-levels), or [hiding irrelevant findings](#hide-findings) from view.
 
+### View shared files
+
+File findings for some integrations (such as [Microsoft 365](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/#file-sharing) and [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#file-sharing)) may link to an inaccessible file. To access the actual shared file:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+2. Locate the individual finding, then select **View**.
+3. In **Active Instances**, select the file name.
+4. In **Shared Links**, select the linked file instance.
+
 ## Severity levels
 
 Cloudflare CASB labels each finding with one of the following severity levels:

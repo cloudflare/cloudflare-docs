@@ -11,11 +11,11 @@ meta:
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
-- [`getBindingsProxy`](#getBindingsProxy) - Get [bindings](/workers/configuration/bindings/) via Wrangler and use them in your code.
+- [`getBindingsProxy`](#getbindingsproxy) - Get [bindings](/workers/configuration/bindings/) via Wrangler and use them in your code.
 
 ## `unstable_dev`
 
-Start an HTTP server for testing your Worker. 
+Start an HTTP server for testing your Worker.
 
 Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
 
@@ -23,7 +23,7 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 {{<Aside type="note">}}
 
-The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future. 
+The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future.
 
 There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) and we will review the issue.
 
@@ -47,7 +47,7 @@ const worker = await unstable_dev(script, options)
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object containing `wrangler dev` configuration settings.
-    *   Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`. 
+    *   Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`.
         *   Set `disableExperimentalWarning` to `true` to disable Wrangler's warning about using `unstable_` prefixed APIs.
 
 {{</definitions>}}
@@ -60,13 +60,13 @@ const worker = await unstable_dev(script, options)
 
 *   `fetch()` {{<type>}}Promise\<Response>{{</type>}}
 
-    *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.  
+    *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
     *   Refer to [`Fetch`](/workers/runtime-apis/fetch/).
 
 
 *   `stop()` {{<type>}}Promise\<void>{{</type>}}
 
-    *   Shuts down the dev server. 
+    *   Shuts down the dev server.
 
 {{</definitions>}}
 
@@ -74,7 +74,7 @@ const worker = await unstable_dev(script, options)
 
 When initiating each test suite, use a `beforeAll()` function to start `unstable_dev()`. The `beforeAll()` function is used to minimize overhead: starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
 
-In each test case, call `await worker.fetch()`, and check that the response is what you expect. 
+In each test case, call `await worker.fetch()`, and check that the response is what you expect.
 
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
@@ -237,13 +237,71 @@ describe("multi-worker testing", () => {
 
 The `getBindingsProxy` function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
 
+Getting a proxy is useful for emulating bindings in applications targeting Workers, but running outside the Workers runtime (for example, framework local development servers running in Node.js), or for testing purposes (for example, ensuring code properly interacts with a binding).
+
+{{<Aside type="note">}}
+
+Binding proxies provided by this function are a best effort emulation of the real production bindings. Although they are designed to be as close as possible to the real thing, there might be slight differences and inconsistencies between the two.
+
+{{</Aside>}}
+
+### Syntax
+
+```js
+const bindingsProxy = await getBindingsProxy(options);
+```
+
+### Parameters
+
+{{<definitions>}}
+
+*   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+    *   Optional options object containing preferences for the bindings:
+        * `configPath` {{<type>}}string{{</type>}}
+
+          The path to the configuration object to use (default `wrangler.toml`).
+
+        * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
+
+          If `true`, allows the utility to read a JSON config file (for example, `wrangler.json`).
+
+        * `persist` {{<type>}}boolean | { path: string }{{</type>}}
+
+          Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
+
+{{</definitions>}}
+
+### Return Type
+
+`getBindingsProxy()` returns a `Promise` resolving to an object containing the following fields.
+
+{{<definitions>}}
+
+*   `bindings` {{<type>}}Record<string, unknown>{{</type>}}
+
+    *   Bindings proxies that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
+    *   Typescript Tip: `getBindingsProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
+
+*   `caches` {{<type>}}object{{</type>}}
+
+    *   Emulation of the [Workers `caches` runtime API](/workers/runtime-apis/cache/).
+    *   For the time being, all cache operations do nothing. A more accurate emulation will be made available soon.
+
+*   `dispose()` {{<type>}}() => Promise\<void>{{</type>}}
+
+    *   Terminates the underlying `workerd` process.
+    *   Call this after the bindings proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of bindings, you don't need to call this function.
+
+{{</definitions>}}
+
+
 ### Usage
 
 The `getBindingsProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
 
 ```js
 [vars]
-
 MY_VARIABLE = "test"
 ```
 
@@ -261,17 +319,31 @@ To access the value of the `MY_VARIABLE` binding add the following to your code:
 console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
 ```
 
-In your terminal you should see: `MY_VARIABLE = test`
+This will print the following output: `MY_VARIABLE = test`.
 
 ### Supported bindings
 
 All supported bindings found in your `wrangler.toml` are available to you via `bindings`.
 
 The bindings supported by `getBindingsProxy` are:
- - [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
- - [Service bindings](/workers/configuration/bindings/#service-bindings)
- - [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
- - [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
- - [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
- - [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
+
+ * [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
+
+ * [Service bindings](/workers/configuration/bindings/#service-bindings)
+
+ * [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
+
+ * [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
+
+ * [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+
+ * [Queue bindings](/workers/configuration/bindings/#queue-bindings)
+
+ * [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
+
+ * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
+
+    * To use the `AI` binding with `getBindingsProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
+
+    {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 

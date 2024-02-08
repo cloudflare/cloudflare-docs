@@ -16,10 +16,12 @@ For a technical deep-dive into Network Analytics, refer to our [blog post](https
 
 ## Remarks
 
-The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/concepts/accounts-and-zones/#zones) in your Cloudflare account.
+The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/setup/accounts-and-zones/#zones) in your Cloudflare account.
 
 ## Related resources
 
 * [Cloudflare GraphQL API](/analytics/graphql-api/)
+* [Cloudflare Logpush](/logs/about/)
+* [Video tutorial: Send Network Analytics Logs to Splunk via Logpush](/analytics/analytics-integrations/splunk/#video-tutorial-send-network-analytics-logs-to-splunk)
 * [Migrating from Network Analytics v1 to Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2/)
 * [Cloudflare Network Analytics v1](/analytics/network-analytics/reference/network-analytics-v1/) {{<inline-pill style="deprecated">}}

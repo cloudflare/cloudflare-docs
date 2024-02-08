@@ -8,11 +8,11 @@ meta:
 
 # DNSSEC for incoming zone transfers
 
-[DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
+[DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
 
 - **[Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/setup/)**: Both Cloudflare and your primary DNS provider know the signing keys of each other and perform their own live-signing of DNS records, in accordance with [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 - **[Live signing](#set-up-live-signing-dnssec)**: If your domain is not delegated to your primary provider's nameservers and Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can choose this option to allow Cloudflare to perform live-signing of your DNS records.
-- **[Pre-signed](#set-up-pre-signed-dnssec)**: Your primary DNS provider signs records and transfers out the signatures. Cloudflare then serves these records and signatures as is, without doing any signing. Cloudflare only supports [NSEC records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) (and not NSEC3 records) and this setup does not support [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) nor [Load Balancing](/load-balancing/).
+- **[Pre-signed](#set-up-pre-signed-dnssec)**: Your primary DNS provider signs records and transfers out the signatures. Cloudflare then serves these records and signatures as is, without doing any signing. Cloudflare only supports [NSEC records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/)(and not NSEC3 records) and this setup does not support [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) nor [Load Balancing](/load-balancing/).
 
 ---
 
@@ -39,7 +39,7 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
 
 ```bash
@@ -95,7 +95,7 @@ b. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set the `dnssec_presigned` value to `true`.
 
 ```bash
@@ -107,7 +107,7 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
    "dnssec_presigned": true
   }'
 ```
- 
+
 {{</tab>}}
 {{</tabs>}}
 
