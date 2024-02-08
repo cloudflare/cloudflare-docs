@@ -8,7 +8,7 @@ inputParameters: shippedLanguage
 
 $1, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#create-a-site).
 
-When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [Site configuration](#create-a-site) step.
+When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [site configuration](#create-a-site) step.
 
 {{<Aside type="warning">}}Remember to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, Connector will not work.{{</Aside>}}
 

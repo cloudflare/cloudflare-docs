@@ -36,7 +36,7 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 
 ---
 
-## Change when Connector should update its settings
+## Interrupt Service Window
 
 The Interrupt Service Window defines when Magic WAN Connector can update its systems. When Magic WAN Connector is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
 
