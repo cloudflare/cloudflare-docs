@@ -36,9 +36,9 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 
 ---
 
-## Change the Interrupt service Window
+## Change when Connector should update its settings
 
-The interrupt service window defines when Magic WAN Connector can update its systems. When Magic WAN Connector is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
+The Interrupt Service Window defines when Magic WAN Connector can update its systems. When Magic WAN Connector is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.

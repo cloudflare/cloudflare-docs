@@ -65,7 +65,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 Refer to [Maintenance](/magic-wan/configuration/connector/maintenance/) to learn more about:
 - [Heartbeat](/magic-wan/configuration/connector/maintenance/#heartbeat)
 - [Deactivate your Connector](/magic-wan/configuration/connector/maintenance/#deactivate-magic-wan-connector)
-- [Change when your Connector should update its settings](/magic-wan/configuration/connector/maintenance/#change-the-interrupt-service-window)
+- [Change when your Connector should update its settings](/magic-wan/configuration/connector/maintenance/#change-when-connector-should-update-its-settings)
 
 Refer to [Reference](/magic-wan/configuration/connector/reference/) to learn more about:
 - [Security](/magic-wan/configuration/connector/reference/#security-and-other-information)
