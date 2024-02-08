@@ -85,6 +85,14 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 4. If successful, the [tunnel health checks](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) will show as healthy.
 5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/reference/#heartbeat) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
 
+---
+
+## IP sec tunnels and static routes
+
+{{<render file="connector/_ipsec-static-tunnels.md" >}}
+
+---
+
 ## Next steps
 
 {{<render file="connector/_next-steps.md" >}}
