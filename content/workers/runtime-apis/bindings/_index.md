@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Bindinds
+title: Bindings
 meta:
   description: Worker Bindings that allow for interaction with other Cloudflare Resources.
 ---
