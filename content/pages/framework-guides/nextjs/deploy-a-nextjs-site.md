@@ -63,9 +63,10 @@ Projects created with C3 have bindings for local development set up by default.
 
 To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
-For example to work with a KV binding locally, you need to open the Next.js config file and add:
+For example to work with a KV binding locally, you need to open the Next.js configuration file and add:
+
 {{<tabs labels="next.config.mjs | next.config.(js|cjs)">}}
-{{<tab label="next.config.mjs" default="true">}}
+{{<tab label="next.config.mjs">}}
 
 ```js
 ---
