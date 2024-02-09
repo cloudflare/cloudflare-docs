@@ -12,4 +12,4 @@ Bindings allow your Workers to interact with resources on the Cloudflare Develop
 There are multiple types of bindings available today:
 
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true">}}
