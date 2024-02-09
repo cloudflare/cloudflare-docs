@@ -7,6 +7,7 @@ meta:
 ---
 
 # Evolving to a SASE architecture with Cloudflare
+Download a [PDF version](/reference-architecture/static/cloudflare-evolving-to-a-sase-architecture.pdf) of this reference architecture.
 
 ## Introduction
 Cloudflare One is a secure access service edge (SASE) platform that protects enterprise applications, users, devices, and networks. By progressively adopting Cloudflare One, organizations can move away from their patchwork of hardware appliances and other point solutions and instead consolidate security and networking capabilities on one unified control plane. Such network and security transformation helps address key challenges modern businesses face, including:
