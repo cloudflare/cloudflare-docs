@@ -42,11 +42,12 @@ To add a site:
 
 ### 3. Create a LAN
 
-Magic WAN Connector supports different types of DHCP configurations. You can define that Magic WAN Connector should:
-- Connect to a DHCP server.
-- Use a static IP address instead of connecting to a DHCP server.
-- Act as a DHCP server.
-- Use DHCP relay to connect to a DHCP server outside the location your Magic WAN Connector is in.
+Magic WAN Connector supports different types of [DHCP configurations](/magic-wan/configuration/connector/dhcp/). Connector can:
+
+- Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
+- Act as a [DHCP server](/magic-wan/configuration/connector/dhcp/dhcp-server/).
+- Use [DHCP relay](/magic-wan/configuration/connector/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- [Reserve IP addresses](/magic-wan/configuration/connector/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
 
 To create a LAN:
 
@@ -57,58 +58,6 @@ To create a LAN:
 5. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 6. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
     1. **DHCP**: Choose this option if the IP address for your Connector is fetched from a DHCP server.
-    2. **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](#dhcp-server).
+    2. **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](/magic-wan/configuration/connector/dhcp/dhcp-server/).
 7. Select **Save**.
 8. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
-
-
-#### DHCP server
-
-When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select your site > **Edit**.
-4. Select **Network**.
-5. In **LAN configuration**, select the LAN where you want to enable DHCP server.
-6. Select **Edit**.
-7. Under **Addressing**, select **Static**, and enter the static IP address for your Connector.
-8. Select **This is a DHCP Server**. You also have to specify:
-    1. The DNS server address
-    2. The DHCP pool start
-    3. The DHCP pool end
-
-    For example:
-
-    <div class="medium-img">
-
-    ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-static.png)
-
-    </div>
-
-#### DHCP static address reservation
-
-If you configure your Connector to be a DHCP server, you can also assign IP addresses to specific devices on your network. To reserve IP addresses:
-
-1. Configure your Connector to be a [DHCP server](#dhcp-server).
-2. Select **Add DHCP Reservation**.
-3. In **Hardware Address** enter the [MAC address](https://en.wikipedia.org/wiki/MAC_address) for the device you want a specific IP address for.
-4. In **IP Address**, enter the IP address for that device.
-5. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
-
-#### DHCP relay
-
-DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
-
-To configure DHCP relay:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select your site > **Edit**.
-4. Select **Network**.
-5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
-6. Select **Edit**.
-7. In **Addressing**, make sure you choose **Static** and enter a static IP address for your Connector.
-8. Select **This is a DHCP Relay**.
-9. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
-10. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
