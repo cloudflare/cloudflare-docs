@@ -3302,8 +3302,9 @@ a > code {
   margin-top: 2em;
 }
 
-.DocsMarkdown figure + em + p {
-  margin-top: .5em;
+figcaption {
+  font-style: italic;
+  font-size: .9em;
 }
 
 .DocsMarkdown li figure,
