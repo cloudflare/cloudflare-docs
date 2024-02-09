@@ -133,6 +133,7 @@
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
 /byoip/best-practices/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
+/byoip/irr-records/verify-irr-entries/ /byoip/concepts/irr-entries/best-practices/#verify-an-irr-entry 301
 /byoip/how-to/verify-irr-entries/ /byoip/concepts/irr-entries/best-practices/#verify-an-irr-entry 301
 /byoip/about/irr/ /byoip/concepts/irr-entries/ 301
 /byoip/best-practices/irr-entries/ /byoip/concepts/irr-entries/best-practices/ 301
