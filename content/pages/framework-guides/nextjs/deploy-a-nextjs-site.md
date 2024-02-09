@@ -253,7 +253,7 @@ $ npm run pages:build && npm run pages:dev
 If you have created your project without C3, run:
 
 ```sh
-$ npx @cloudflare/next-on-pages --watch
+$ npx @cloudflare/next-on-pages
 ```
 
 And preview your project by running:
@@ -266,6 +266,6 @@ By doing this, you can run your application locally to make sure everything is w
 
 ### Deploy your application and iterate
 
-After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or Git integration) and iterate over the process to make new changes.
+After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
 {{<render file="_learn-more.md" withParameters="Next.js">}}
