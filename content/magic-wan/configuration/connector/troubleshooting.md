@@ -28,4 +28,4 @@ If you have other routing appliances behind Magic WAN Connector, make sure you c
 
 ## How do I know if my device is contacting Cloudflare?
 
-Magic WAN Connector sends a heartbeat periodically to Cloudflare. You can [access the Magic WAN dashboard](/magic-wan/configuration/connector/reference/#heartbeat), and check for the heartbeat status of your Connector device.
+Magic WAN Connector sends a heartbeat periodically to Cloudflare. You can [access the Magic WAN dashboard](/magic-wan/configuration/connector/maintenance/#heartbeat), and check for the heartbeat status of your Connector device.
