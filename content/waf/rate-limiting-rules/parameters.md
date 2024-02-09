@@ -250,9 +250,9 @@ Once the rate is reached, the rate limiting rule applies the rule action to furt
 
 In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `0`, `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
 
-Customers on Free, Pro, and Business plans cannot select a duration when using a challenge action — their rate limiting rule will always perform request throttling for these actions. With request throttling, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+Customers on Free, Pro, and Business plans cannot select a duration when using a [challenge action](/waf/reference/cloudflare-challenges/#available-challenges) — their rate limiting rule will always perform request throttling for these actions. With request throttling, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
 
-Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the [challenge actions](/waf/reference/cloudflare-challenges/#available-challenges).
+Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the challenge actions.
 
 {{<Aside type="note" header="Notes for API users">}}
 * If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
