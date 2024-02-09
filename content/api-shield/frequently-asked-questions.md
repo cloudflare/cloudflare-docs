@@ -97,7 +97,7 @@ ___
 
 {{<faq-answer>}}
 
-The importing [(Schema Validation)](/api-shield/security/schema-validation/) and exporting [(API Discovery)](/api-shield/security/api-discovery/) of OpenAPI schemas from our product to customers is done using **OpenAPI v3.0**. Any specifications using patched versions (3.0.x) are compatible as well. 
+The importing ([Schema Validation](/api-shield/security/schema-validation/)) and exporting ([Schema Learning](/api-shield/management-and-monitoring/#endpoint-schema-learning)) of OpenAPI schemas from our product to customers is done using **OpenAPI v3.0**. Any specifications using patched versions (3.0.x) are compatible as well. 
 
 {{</faq-answer>}}
 {{</faq-item>}}
