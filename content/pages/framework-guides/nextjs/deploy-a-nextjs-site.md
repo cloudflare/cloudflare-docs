@@ -41,6 +41,8 @@ $ npm run pages:deploy
 
 The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
 
+Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3, for example), you need to create a new Pages application in order to add Git integration to it.
+
 {{</Aside>}}
 
 ## Configure and deploy a project without C3
