@@ -1,8 +1,8 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Next.js site
+title: Full-stack deployment
 meta:
-  description: Deploy a full-stack Next.js project.
+  description: Deploy a full-stack Next.js site.
 ---
 
 # Deploy a Next.js site

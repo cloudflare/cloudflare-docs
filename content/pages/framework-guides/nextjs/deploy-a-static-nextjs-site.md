@@ -1,11 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Deploy a static site Next.js project
+title: Static deployment
 meta:
-  description: Deploy a static site Next.js project with static exports.
+  description: Deploy a static Next.js site with static exports.
 ---
 
-# Deploy a static site Next.js project
+# Deploy a static Next.js site
 
 {{<Aside type="note">}}
 
