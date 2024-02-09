@@ -13,7 +13,7 @@ Bypass HTTP inspection for applications which use embedded certificates. This wi
 
 | Selector    | Operator | Value            | Action         |
 | ----------- | -------- | ---------------- | -------------- |
-| Application | in       | <Do Not Inspect> | Do Not Inspect |
+| Application | in       | _Do Not Inspect_ | Do Not Inspect |
 
 ## 2. Android-HTTP-Application-InspectionBypass
 
