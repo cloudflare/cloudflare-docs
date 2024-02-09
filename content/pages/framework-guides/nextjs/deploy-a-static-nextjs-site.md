@@ -38,9 +38,9 @@ $ cd my-app
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
-git remote add origin https://github.com/<GH_USERNAME>/<REPOSITORY_NAME>
-git branch -M main
-git push -u origin main
+$ git remote add origin https://github.com/<GH_USERNAME>/<REPOSITORY_NAME>.git
+$ git branch -M main
+$ git push -u origin main
 ```
 
 ### Deploy your application to Cloudflare Pages
@@ -53,11 +53,12 @@ To deploy your site to Pages:
 
 {{<pages-build-preset framework="next-js-static">}}
 
-After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
+After configuring your site, you can begin your first deploy. Cloudflare Pages will install `next`, your project dependencies, and build your site before deploying it.
 
 ## Preview your site
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
+
 Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).

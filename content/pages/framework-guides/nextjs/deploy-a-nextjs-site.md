@@ -51,7 +51,7 @@ If you already have a Next.js project or wish to manually create and deploy one 
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](/d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
 
 If you intend to use bindings in your project, you must set them up for local and remote development.
 
@@ -65,7 +65,7 @@ Projects created with C3 have bindings for local development set up by default.
 
 To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
-For example to work with a KV binding locally, you need to open the Next.js configuration file and add:
+For example, to work with a KV binding locally, open the Next.js configuration file and add:
 
 {{<tabs labels="next.config.mjs | next.config.(js|cjs)">}}
 {{<tab label="next.config.mjs">}}
@@ -132,11 +132,11 @@ module.exports = nextConfig
 
 ### Set up bindings for a deployed application
 
-In order to access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare dashboard.
+To access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare dashboard.
 
 ### Access bindings in the application
 
-Local and remote bindings can be accessed directly from `process.env`. The following code example shows how to access them in a `hello` api route of an App Router application.
+Local and remote bindings can be accessed directly from `process.env`. The following code example shows how to access them in a `hello` API route of an App Router application.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -187,7 +187,7 @@ Projects created with C3 have a default `env.d.ts` file.
 
 {{</Aside>}}
 
-In order to get proper type support, you need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
+To get proper type support, you need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
 
 The following is an example of adding a `KVNamespace` binding:
 
@@ -200,7 +200,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       // The KV Namespace binding type used here comes
-      // from `@cloudflare/workers-types`, in order to
+      // from `@cloudflare/workers-types`. To
       // use it like so, make sure that you have installed
       // the package as a dev dependency and you have added
       // it to your `tsconfig.json` file under
@@ -215,7 +215,7 @@ export {};
 
 ## `Image` component
 
-The Cloudflare network does not provide the same image optimization support as the Vercel network does, because of this the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
+The Cloudflare network does not provide the same image optimization support as the Vercel network does. Because of this, the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
 
 - If you build your application as a static site, the `<Image />` component will not serve any images.
 
@@ -225,9 +225,9 @@ Both cases can be improved by setting up proper [loaders](https://nextjs.org/doc
 
 ## Git integration
 
-In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration/), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
 
-This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to this [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
 
 ### Create a new GitHub repository
 
@@ -251,7 +251,7 @@ $ git push -u origin main
 
 {{<Aside type="note">}}
 
-Note that the Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
+The Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
 
 {{</Aside>}}
 
@@ -265,7 +265,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 4. After completing configuration, click the **Save and Deploy** button.
 
-You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
+You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
@@ -276,11 +276,11 @@ When developing a `next-on-pages` application, this is the development workflow 
 
 ### Develop using the standard Next.js dev server
 
-The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings section](#set-up-bindings-for-local-development) above makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
+The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings](#set-up-bindings-for-local-development) section) makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
 
 ### Build and preview your application locally
 
-In order to make sure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you are comfortable checking the correctness of the application during your development process you will want to build and preview it locally using Cloudflare's `workerd` JavaScript runtime.
+To ensure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you are comfortable checking the correctness of the application during your development process, you will want to build and preview it locally using Cloudflare's `workerd` JavaScript runtime.
 
 If you have created your project with C3, do this by running:
 
