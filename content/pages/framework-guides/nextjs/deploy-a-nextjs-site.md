@@ -291,7 +291,7 @@ $ npm run pages:build && npm run pages:dev
 If you have created your project without C3, run:
 
 ```sh
-$ npx @cloudflare/next-on-pages
+$ npx @cloudflare/next-on-pages@1
 ```
 
 And preview your project by running:
@@ -300,7 +300,6 @@ And preview your project by running:
 $ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat
 ```
 
-By doing this, you can run your application locally to make sure everything is working as you expect it to.
 
 ### Deploy your application and iterate
 
