@@ -218,14 +218,14 @@ For example, you might want to perform rate limiting for clients sending more th
 
 ### When rate exceeds > Requests
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `requests_per_period`.
 
 The number of requests over the period of time that will trigger the rule.
 
 ### When rate exceeds > Period
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `period`.
 
 The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
@@ -243,7 +243,7 @@ Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_
 
 ### For duration
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `mitigation_timeout`.
 
 Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
