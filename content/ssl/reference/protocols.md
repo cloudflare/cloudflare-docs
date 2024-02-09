@@ -33,7 +33,7 @@ However, not all browser versions support TLS 1.2 and above. Depending on your p
 
 - Consider using TLS 1.0 or 1.1 for sites with a broad user base, particularly non-transactional sites. In this way, you minimize the possibility that some clients cannot connect to your site securely.
 
-- For a narrow user base and sites that run internal applications or business and productivity applications, Cloudflare recommends TLS 1.2. These sites might already have more stringent security requirements or might be subject to PCI compliance. However, you also need to ensure that your users upgrade to a TLS 1.2 compliant browser.
+- For a narrow user base and sites that run internal applications or business and productivity applications, Cloudflare recommends TLS 1.2. These sites might already have more stringent security requirements or might be subject to PCI compliance. You also need to ensure that your users upgrade to a TLS 1.2 compliant browser.
 
 ## Related resources
 
