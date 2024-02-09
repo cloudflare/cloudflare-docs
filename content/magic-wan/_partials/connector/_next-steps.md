@@ -8,7 +8,7 @@ _build:
 Refer to [Maintenance](/magic-wan/configuration/connector/maintenance/) to learn more about:
 - [Heartbeat](/magic-wan/configuration/connector/maintenance/#heartbeat)
 - [Deactivating your Connector](/magic-wan/configuration/connector/maintenance/#deactivate-magic-wan-connector)
-- [Interrupt Service Window](/magic-wan/configuration/connector/maintenance/#interrupt-service-window)
+- [Interrupt Service Window](/configuration/connector/maintenance/interrupt-service-window/)
 
 Refer to [Reference](/magic-wan/configuration/connector/reference/) to learn more about:
 - [Security](/magic-wan/configuration/connector/reference/#security-and-other-information)
