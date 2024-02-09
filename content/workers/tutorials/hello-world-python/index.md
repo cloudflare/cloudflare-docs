@@ -29,7 +29,7 @@ def fetch(request):
 Now, we can run the worker locally using Wrangler.
 
 ```bash
-$ wrangler dev entry.py
+$ wrangler dev entry.py --compatibility-flag experimental
 ```
 
 Similar to JavaScript workers, the main entry point for a Python worker is the
@@ -105,6 +105,7 @@ worker. First, let's create a `wrangler.toml` file for our worker.
 ```toml
 name = "hello-python-worker"
 main = "entry.py"
+compatibility_flags = ["experimental"]
 compatibility_date = "2024-01-29"
 
 [vars]
@@ -128,7 +129,7 @@ simply:
 $ wrangler dev
 ```
 
-And in another terminal window:
+In another terminal window:
 
 ```bash
 $ curl http://localhost:8787
