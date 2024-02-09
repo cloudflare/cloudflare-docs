@@ -235,6 +235,14 @@ async function task(file: string) {
         return;
       }
 
+      if (target && target.includes("discord.gg/cloudflaredev")) {
+        return messages.push({
+          type: "error",
+          html: content,
+          text: "Use 'https://discord.cloudflare.com' instead of 'https://discord.gg/cloudflaredev'.",
+        });
+      }
+
       let exists: boolean;
       let external = false;
       let resolved = new URL(target, url);

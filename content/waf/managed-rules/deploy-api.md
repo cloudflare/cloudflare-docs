@@ -20,6 +20,6 @@ Refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-mana
 
 To customize the behavior of the rules included in a managed ruleset, [create an override](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
-To skip the execution of WAF managed rulesets or some of their rules, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-api/) (also called a skip rule).
+To skip the execution of WAF managed rulesets or some of their rules, [create an exception](/waf/managed-rules/waf-exceptions/define-api/) (also called a skip rule).
 
-WAF exceptions have priority over overrides.
+Exceptions have priority over overrides.

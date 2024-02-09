@@ -46,4 +46,4 @@ export default {
 ## Related resources
 
 - Learn [how to debug D1](/d1/observability/debug-d1/).
-- Understand how to [access logs](/workers/observability/log-from-workers/) generated from your Worker and D1.
+- Understand how to [access logs](/workers/observability/logging/) generated from your Worker and D1.

@@ -38,12 +38,10 @@ Configure a managed ruleset to:
 - Disable one or more rules.
 - Specify a custom filter expression to apply the rules in the ruleset to a subset of incoming requests.
 
-To skip one or more rules, or entire WAF managed rulesets, [add a WAF exception](/waf/managed-rules/waf-exceptions/).
+To skip one or more rules, or entire WAF managed rulesets, [add an exception](/waf/managed-rules/waf-exceptions/).
 
 {{<Aside type="note">}}
-
 Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan.
-
 {{</Aside>}}
 
 ### Configure field values for all the rules

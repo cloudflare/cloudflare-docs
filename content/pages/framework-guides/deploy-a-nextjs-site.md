@@ -90,7 +90,7 @@ export default nextConfig;
 
 ### Set up bindings for a deployed application
 
-In orer to access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
+In order to access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare Dashboard.
 
 ### Access bindings in the application
 
