@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-To enable clientless access to your applications, you will need to create a Cloudflare Tunnel that contains public hostname routes. A public hostname route creates a DNS record that routes traffic to a specific address, protocol, and port associated with a private application. For example, you can define a public hostname (`mywebapp.example.com`) to provide access to a web server running on `https://localhost:8080`. When a user goes to `mywebapp.example.com` in their browser, their request will first route to a Cloudflare data center where it is inspected against your configured security policies. Cloudflare will then forward validated requests down your tunnel to the web server.
+To enable clientless access to your applications, you will need to create a Cloudflare Tunnel that contains public hostname routes. A public hostname route creates a public DNS record that routes traffic to a specific address, protocol, and port associated with a private application. For example, you can define a public hostname (`mywebapp.example.com`) to provide access to a web server running on `https://localhost:8080`. When a user goes to `mywebapp.example.com` in their browser, their request will first route to a Cloudflare data center where it is inspected against your configured security policies. Cloudflare will then forward validated requests down your tunnel to the web server.
 
 ![How an HTTP request reaches a private application connected with Cloudflare Tunnel](/images/cloudflare-one/connections/connect-apps/handshake.jpg)
 
