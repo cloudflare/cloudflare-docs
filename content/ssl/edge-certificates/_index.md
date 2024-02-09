@@ -16,7 +16,9 @@ Consider the information below for guidance on how to choose different edge cert
 
 Issuing and renewing certificates can take up a lot of time from your technical teams. Leverage Cloudflare [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) to simplify this process.
 
-[Custom certificates](/ssl/edge-certificates/custom-certificates/) offer more flexibility in terms of certificate authority (CA) or certificate validation level, but require you to handle issuance and renewal independently.
+Advanced certificates offer more customization than Universal SSL.
+
+With [custom certificates](/ssl/edge-certificates/custom-certificates/), you have full control in terms of certificate authority (CA) or certificate [validation level](/ssl/concepts/#validation-level), for example, but you need to handle issuance and renewal on your own.
 
 ### Meet cipher suites requirements
 
