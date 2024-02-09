@@ -254,7 +254,7 @@ Customers on Free, Pro, and Business plans cannot select a duration when using a
 
 Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the [challenge actions](/waf/reference/cloudflare-challenges/#available-challenges).
 
-{{<Aside type="note" header="Note for API users">}}
+{{<Aside type="note" header="Notes for API users">}}
 * If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
 * Enterprise customers can use a `mitigation_timeout` value greater than or equal to `0` (zero), regardless of the rate limiting action they select.
 {{</Aside>}}
@@ -267,7 +267,7 @@ Enterprise customers can always configure a duration (or mitigation timeout), ev
 Defines the exact behavior of the selected action.
 
 {{<Aside type="note">}}
-Only Enterprise customers with a paid add-on can throttle requests using the _Block_ action.
+Only Enterprise customers can throttle requests using the _Block_ action.
 
 Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details.
 {{</Aside>}}
