@@ -6,6 +6,8 @@ _build:
 inputParameters: wan;;lan;;noConnectorShows
 ---
 
+### 1. Create a site
+
 Sites represent the local network where you have installed your Magic WAN Connector — for example, a branch office location.
 
 You need to create a site and set up all the settings associated with it before you can connect your Magic WAN Connector to the Internet.
@@ -21,7 +23,7 @@ To add a site:
 7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt Service Window](/magic-wan/configuration/connector/maintenance/#interrupt-service-window) for more details.
 8. Select **Next** to proceed to creating your WAN and LAN networks.
 
-### Create a WAN
+### 2. Create a WAN
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area network (WAN)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Network name**, enter a descriptive name for your WAN.
@@ -38,7 +40,7 @@ To add a site:
 
 6. Select **Save** when you are finished.
 
-### Create a LAN
+### 3. Create a LAN
 
 Magic WAN Connector supports different types of DHCP configurations. You can define that Magic WAN Connector should:
 - Connect to a DHCP server.

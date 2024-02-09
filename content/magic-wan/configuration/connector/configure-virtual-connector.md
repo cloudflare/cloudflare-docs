@@ -69,8 +69,6 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
 ## 3. Set up Cloudflare dashboard
 
-### Create a site
-
 {{<render file="connector/_create-site.md" withParameters="needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.;;needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.;;For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#1-obtain-the-virtual-connector-image)." >}}
 
 ## 4. Activate Connector
