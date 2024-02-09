@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="warning" header="Cloudflare Pages">}}
-Use [Cloudflare Pages](/pages/) for hosting fullstack applications instead of Workers Sites. Do not use Workers Sites for new projects.
+Use [Cloudflare Pages](/pages/) for hosting full-stack applications instead of Workers Sites. Do not use Workers Sites for new projects.
 {{</Aside>}}

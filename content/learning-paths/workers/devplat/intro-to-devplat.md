@@ -7,7 +7,7 @@ layout: learning-unit
 
 ## Cloudflare Developer Platform
 
-The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) consists of compute, storage and application development products that allow you to build fullstack applications on Cloudflare's global network.
+The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) consists of compute, storage and application development products that allow you to build full-stack applications on Cloudflare's global network.
 
 It is important to note that the developer platform product offering is growing with new releases and features updates. To review a list of product documentation related to Cloudflare Developer Platform:
 
