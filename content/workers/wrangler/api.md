@@ -285,12 +285,11 @@ const bindingsProxy = await getBindingsProxy(options);
 
 *   `cf` {{<type-link href="/workers/runtime-apis/request/#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-    * Mock of the Request's `cf` property. It containing data emulating what the real
-      production value could have.
+    * Mock of the `Request`'s `cf` property, containing data similar to what you would see in production.
 
 *   `ctx` {{<type>}}object{{</type>}}
 
-    * Mock object containing no-operation implementations of the [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) functions.
+    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) functions that do nothing.
 
 *   `caches` {{<type>}}object{{</type>}}
 
