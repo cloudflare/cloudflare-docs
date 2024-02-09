@@ -134,7 +134,7 @@ In order to access bindings in a deployed application, you will need to [configu
 
 ### Access bindings in the application
 
-Local and remote bindings can be accessed directly from `process.env`. The following code example requires you to indicate `Yes` to C3's `Would you like to use App Router? (recommended)` setup question.
+Local and remote bindings can be accessed directly from `process.env`. The following code example shows how to access them in a `hello` api route of an App Router application.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
