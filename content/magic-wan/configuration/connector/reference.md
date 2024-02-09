@@ -19,7 +19,7 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## ICMP traffic
 
-[ICMP traffic](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) is routed through the Internet and bypasses [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This enables you to ping resources on the Internet from the Magic WAN connector directly, which can be useful for debugging.
+{{<glossary-tooltip term_id="ICMP">}}ICMP traffic{{</glossary-tooltip>}} is routed through the Internet and bypasses [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This enables you to ping resources on the Internet from the Magic WAN connector directly, which can be useful for debugging.
 
 ---
 
