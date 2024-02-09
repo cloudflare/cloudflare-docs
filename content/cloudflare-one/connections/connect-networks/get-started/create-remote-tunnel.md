@@ -25,13 +25,7 @@ The next steps depend on whether you want to [connect an application](#2-connect
 
 Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#3-connect-a-network).
 
-1. In the **Public Hostnames** tab, choose an application from the drop-down menu and specify any subdomain or path information.
-
-2. Specify a service, for example `https://localhost:8000`.
-
-3. Under **Additional application settings**, specify any [parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/) you would like to add to your tunnel configuration.
-
-4. Select **Save tunnel**.
+{{<render file="tunnel/_add-public-hostname.md" productFolder="cloudflare-one">}}
 
 ## 3. Connect a network
 
