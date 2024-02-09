@@ -45,7 +45,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 1. Wait 60 seconds.
 2. Unplug the physical connection to the Internet-connected device which provides DHCP.
-3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#create-a-site) step (for example, static IP WAN plugged into physical port with no DHCP connection).
+3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#1-create-a-site) step (for example, static IP WAN plugged into physical port with no DHCP connection).
 4. Power cycle the Connector.
 
 {{</Aside>}}

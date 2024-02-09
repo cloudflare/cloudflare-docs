@@ -15,9 +15,9 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 6. Select **Edit**.
 7. Under **Addressing**, select **Static**, and enter the static IP address for your Connector.
 8. Select **This is a DHCP Server**. You also have to specify:
-    1. The DNS server address
-    2. The DHCP pool start
-    3. The DHCP pool end
+    - The DNS server address
+    - The DHCP pool start
+    - The DHCP pool end
 
     For example:
 
