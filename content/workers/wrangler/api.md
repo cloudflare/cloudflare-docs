@@ -283,6 +283,14 @@ const bindingsProxy = await getBindingsProxy(options);
     *   Bindings proxies that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
     *   Typescript Tip: `getBindingsProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
 
+*   `cf` {{<type-link href="/workers/runtime-apis/request/#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+
+    * Mock of the `Request`'s `cf` property, containing data similar to what you would see in production.
+
+*   `ctx` {{<type>}}object{{</type>}}
+
+    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) functions that do nothing.
+
 *   `caches` {{<type>}}object{{</type>}}
 
     *   Emulation of the [Workers `caches` runtime API](/workers/runtime-apis/cache/).
