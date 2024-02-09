@@ -13,13 +13,13 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 - Assign appropriate user roles. Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](/fundamentals/setup/manage-members/).
 
-- Get a list of the prefix IDs that you want to manage. Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. To obtain prefix IDs, review [obtain prefix IDs](#obtain-prefix-ids) from the dashboard or use the [list prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
+- Get a list of the prefix IDs that you want to manage. Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. You can [obtain prefix IDs](#obtain-prefix-ids) via the Cloudflare dashboard or use the [list prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these prefix IDs when managing prefix advertisement.
 
 ## Enable prefix advertisement
 
 You can avoid latency and the possibility of dropped routes by enabling prefix advertisement from Cloudflare before you withdraw the advertisement from your data center.
 
-1. Refer to [configure dynamic advertisement](#configure-dynamic-advertisement). This operation requires your Account ID, prefix IDs, and API key.
+1. Refer to [configure dynamic advertisement](#configure-dynamic-advertisement). This operation requires your account ID, prefix IDs, and API key.
 2. Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/). Use the Cloudflare ASN (`13335`) to track the advertisement route.
 3. Remove the prefix advertisement that originates from your data center.
 
@@ -35,7 +35,7 @@ Enablement takes approximately five to seven minutes.
 
 1. Add the prefix advertisement to your data center.
 2. (Optional) Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/).
-3. To disable prefix advertisement at Cloudflare’s edge, refer to [configure dynamic advertisement](#configure-dynamic-advertisement). This operation requires your Account ID, prefix IDs, and API key.
+3. Refer to [configure dynamic advertisement](#configure-dynamic-advertisement). This operation requires your account ID, prefix IDs, and API key.
 
 Disablement takes approximately 15 minutes.
 
@@ -49,13 +49,13 @@ Disablement takes approximately 15 minutes.
 4.  From **Edit IP Prefixes**, select **Advertised** or **Withdrawn** under **Status**.
 5.  Select **Save** to commit your changes.
 
-After saving your changes, it takes between two to seven minutes to enable advertisement and approximately 15 minutes to disable (withdraw) advertisement.
+After saving your changes, it takes between two to seven minutes to enable advertisement and approximately 15 minutes to disable or withdraw advertisement.
 
 ### Via the API
 
 To configure prefix advertisement with the Cloudflare API, use the [IP Address Management and Dynamic Advertisement](/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status) API.
 
-Most dynamic advertisement operations require that you supply the Cloudflare ID for any prefix you want to access with the Cloudflare API. The following section outlines how to obtain prefix IDs.
+Most dynamic advertisement operations require that you supply the Cloudflare ID for any prefix that you want to access with the Cloudflare API. The following section outlines how to obtain prefix IDs.
 
 ## Obtain prefix IDs
 
@@ -70,7 +70,7 @@ Most dynamic advertisement operations require that you supply the Cloudflare ID 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To obtain Prefix IDs using the API, refer to the [List Prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.
+To obtain prefix IDs using the API, refer to the [list prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.
 
 {{</tab>}}
 {{</tabs>}}
