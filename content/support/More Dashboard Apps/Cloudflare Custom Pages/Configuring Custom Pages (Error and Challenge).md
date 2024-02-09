@@ -119,11 +119,11 @@ To publish an account level custom error page:
 
 1.  Log into your Cloudflare account.
 2.  Click the **Configurations** tab.
-3.  In the left navigation, click **Custom Pages.**
+3.  In the left navigation, click **Custom Pages**.
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
-5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview.**
+5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.
 6.  Ensure all your styles and images are showing up as desired in the preview.
-7.  Once you are happy with the page preview, return to the the **Custom Page** dialog, and click **Publish.**
+7.  Once you are happy with the page preview, return to the the **Custom Page** dialog, and click **Publish**.
 
 ### Domain level custom error page
 
@@ -133,9 +133,9 @@ To publish a domain level custom error page:
 2.  Choose the domain for which you would like to publish a custom error page.
 3.  Click the **Custom Pages** app.
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
-5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview.**
+5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.
 6.  Ensure all your styles and images are showing up as desired in the preview.
-7.  Once you are happy with the page preview, return to the the **Custom Page** dialog, and click **Publish.**
+7.  Once you are happy with the page preview, return to the the **Custom Page** dialog, and click **Publish**.
 
 ### Update custom error page after publishing
 
