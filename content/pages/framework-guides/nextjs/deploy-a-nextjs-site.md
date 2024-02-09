@@ -63,17 +63,19 @@ Projects created with C3 have bindings for local development set up by default.
 
 To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
 
-For example to work with a KV binding locally, you need to open `next.config.mjs` and add:
+For example to work with a KV binding locally, you need to open the Next.js config file and add:
+{{<tabs labels="next.config.mjs | next.config.(js|cjs)">}}
+{{<tab label="next.config.mjs" default="true">}}
 
 ```js
 ---
 filename: next.config.mjs
 highlight: [1, 6-18]
 ---
-import { setupDevBindings } from '@cloudflare/next-on-pages/next-dev';
+import { setupDevBindings } from '@cloudflare/next-on-pages/next-dev'
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {}
 
 // we only need to use the function during development so Cloudflare can check `NODE_ENV`
 // (note: this check is recommended but completely optional)
@@ -86,11 +88,44 @@ if (process.env.NODE_ENV === 'development') {
         id: "MY_KV",
       },
     },
-  });
+  })
 }
 
-export default nextConfig;
+export default nextConfig
 ```
+
+{{</tab>}}
+{{<tab label="next.config.(js|cjs)">}}
+
+```js
+---
+filename: next.config.js / next.config.cjs
+highlight: [4-18]
+---
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
+
+// we only need to use the function during development so we can check NODE_ENV
+// (note: this check is recommended but completely optional)
+if (process.env.NODE_ENV === "development") {
+  const { setupDevBindings } = require("@cloudflare/next-on-pages/next-dev")
+
+  // call the function with the bindings you want to have access to
+  setupDevBindings({
+    bindings: {
+      MY_KV: {
+        type: "kv",
+        id: "MY_KV",
+      },
+    },
+  })
+}
+
+module.exports = nextConfig
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ### Set up bindings for a deployed application
 
@@ -109,7 +144,7 @@ filename: app/api/hello/route.js
 highlight: [3]
 ---
 export async function GET(request) {
-  // this is the KV binding you defined in next.config.mjs
+  // this is the KV binding you defined in the config file
   const myKv = process.env.MY_KV;
 
   // get a value from the namespace
@@ -128,7 +163,7 @@ filename: app/api/hello/route.ts
 highlight: [3]
 ---
 export async function GET(request: NextRequest) {
-  // this is the KV binding you defined in next.config.mjs
+  // this is the KV binding you defined in the config file
   const myKv = process.env.MY_KV;
 
   // get a value from the namespace
