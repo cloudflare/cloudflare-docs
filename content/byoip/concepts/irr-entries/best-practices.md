@@ -8,11 +8,9 @@ meta:
 
 # Best practices for IRR entries
 
-An IRR (Internet Routing Registry) record is what notifies ISPs (internet service providers) how you are allowing your resources to be used. It is necessary to keep your IRR entries up to date so that it is public information that Cloudflare has permission to advertise your prefix or prefixes. 
+An Internet Routing Registry (IRR) record is what notifies internet service providers (ISPs) of how you are allowing your resources to be used. It is necessary to keep your IRR entries up to date so that it is public information that Cloudflare has permission to advertise your prefix or prefixes and to ensure that your traffic can be properly routed on the internet.
 
-ARIN, a registry also known as the American Registry for Internet Numbers, maintains an IRR that allows registrants of AS numbers and IP addresses to publish that information so that ISPs can make appropriate routing decisions. This helps ensure ISPs will recognize your routes as legitimate and enables them to ignore unauthorized routes published by someone else.
-
-You will need to set up an IRR entry so that Cloudflare has permission to advertise your prefix or prefixes and ensure that your traffic can be properly routed on the internet.
+The American Registry for Internet Numbers (ARIN) maintains an IRR that allows registrants of AS numbers and IP addresses to publish that information so that ISPs can make appropriate routing decisions. This helps ensure ISPs will recognize your routes as legitimate and enables them to ignore unauthorized routes published by someone else.
 
 ## Configure an IRR entry
 
@@ -71,16 +69,18 @@ Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefix
 Each IRR entry record must include the following information:
 
 - **Route**: Each IP prefix Cloudflare advertises for you.
-- **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
+- **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (`AS209242`).
 - **Source**: The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
 
-[Add or update IRR entries](/byoip/concepts/irr-entries/best-practices/) when they meet any of these criteria:
+Add or update IRR entries when they meet any of these criteria:
 
 - The entry is missing.
 - The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
 - The entry is complete but requires updating — for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
 
-You are strongly encouraged to verify IRR entries for the exact prefixes you will use to onboard with Cloudflare. However, IRR entries for less specific prefixes are acceptable as long as you understand and accept the following risk: if you modify your IRR entries in the future (for example, by changing your ASN) and the IRR entry for the supernet no longer matches the prefix or origin mapping in your Magic Transit configuration, the prefix will have reduced reachability due to networks Cloudflare peers with automatically filtering the prefix. Having specific IRR entries helps minimize (but not entirely remove) this risk.
+You are strongly encouraged to verify IRR entries for the exact prefixes you will use to onboard with Cloudflare. 
+
+IRR entries for less specific prefixes are acceptable as long as you understand and accept the following risk: if you modify your IRR entries in the future (for example, by changing your ASN) and the IRR entry for the supernet no longer matches the prefix or origin mapping in your Magic Transit configuration, the prefix will have reduced reachability due to networks Cloudflare peers with automatically filtering the prefix. Having specific IRR entries helps minimize (but not entirely remove) this risk.
 
 ### IRR entry verification methods
 
@@ -99,14 +99,14 @@ To verify your prefix and ASN route, use the tools and methods outlined on the t
   <tbody>
     <tr>
       <td>Subnet prefix IP<br/>for the ASN</td>
-      <td><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></td>
-      <td>Search for the subnet prefix IP, for example, 162.211.156.0/24.</td>
+      <td><a href=" https://irrexplorer.nlnog.net">IRR Explorer</a></td>
+      <td>Search for the subnet prefix IP, for example, <code>162.211.156.0/24</code>.</td>
       <td>List of ASN numbers, source (route registry), and any associated errors.</td>
     </tr>
     <tr>
       <td>ASN for the<br/>subnet prefix</td>
-      <td><span style="white-space: nowrap"><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
-      <td><span style="white-space: nowrap">Search for the ASN, for example AS209242.</span></td>
+      <td><span style="white-space: nowrap"><a href=" https://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
+      <td><span style="white-space: nowrap">Search for the ASN, for example <code>AS209242</code>.</span></td>
       <td><span style="white-space: nowrap">List of prefixes, source, and any associated errors.</span></td>
     </tr>
     <tr>
@@ -124,7 +124,7 @@ To verify your prefix and ASN route, use the tools and methods outlined on the t
 
 #### WHOIS output
 
-The `<IRR entry section>` in the WHOIS output shows the correct IRR entry information for the specified network. In this example, the network prefix is 1.1.1.0/24, and the output includes the route, origin ASN, and route registry, which in this example is APNIC:
+The `<IRR entry section>` in the WHOIS output shows the correct IRR entry information for the specified network. In this example, the network prefix is `1.1.1.0/24`, and the output includes the route, origin ASN, and route registry, which in this example is APNIC:
 
 ```txt
 ---
@@ -155,6 +155,4 @@ source:         APNIC
 
 {{<Aside type="note">}}
 WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
-
-For more information, see [best practices for IRR entry updates](/byoip/concepts/irr-entries/best-practices/).
 {{</Aside>}}
