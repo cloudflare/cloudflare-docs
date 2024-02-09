@@ -123,7 +123,7 @@ To publish an account level custom error page:
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
 5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.
 6.  Ensure all your styles and images are showing up as desired in the preview.
-7.  Once you are happy with the page preview, return to the the **Custom Page** dialog, and click **Publish**.
+7.  Once you are happy with the page preview, return to the **Custom Page** dialog, and click **Publish**.
 
 ### Domain level custom error page
 
@@ -135,7 +135,7 @@ To publish a domain level custom error page:
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
 5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.
 6.  Ensure all your styles and images are showing up as desired in the preview.
-7.  Once you are happy with the page preview, return to the the **Custom Page** dialog, and click **Publish**.
+7.  Once you are happy with the page preview, return to the **Custom Page** dialog, and click **Publish**.
 
 ### Update custom error page after publishing
 
