@@ -3302,6 +3302,11 @@ a > code {
   margin-top: 2em;
 }
 
+figcaption {
+  font-style: italic;
+  font-size: .9em;
+}
+
 .DocsMarkdown li figure,
 .DocsMarkdown li pre,
 .DocsMarkdown li table {

@@ -22,7 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and structure as JSON
-          files=$(gh api /repos/cloudflare/cloudflare-docs/pulls/${{ github.event.pull_request.number }}/files -q '.[] | select(.status != "removed" and (.filename | endswith(".md"))) | .filename')
+          files=$(gh api /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files -q '.[] | select(.status != "removed") | .filename | select(test("(.yaml|yml|md)$"))')
           filesArray="[$(echo "$files" | sed -e 's/^/"/' -e 's/$/"/' -e 's/ /", "/g' | tr '\n' , | sed 's/,$//')]"
           echo "CHANGED_FILES=$filesArray" >> "$GITHUB_ENV"
 
