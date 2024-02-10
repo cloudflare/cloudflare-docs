@@ -21,7 +21,7 @@ You can [download the Workers AI notebook](/workers-ai/static/documentation/note
 
 ## Explore the Workers AI API using Python
 
-[Workers AI](https://developers.cloudflare.com/workers-ai) allows you to run machine learning models, on the Cloudflare network, from your own code – whether that be from Workers, Pages, or anywhere via REST API.
+[Workers AI](/workers-ai) allows you to run machine learning models, on the Cloudflare network, from your own code – whether that be from Workers, Pages, or anywhere via REST API.
 
 This notebook will explore the Workers AI REST API using Python and the [requests](https://requests.readthedocs.io/en/latest/) library.
 
@@ -86,7 +86,7 @@ else:
 
 ### Text Generation
 
-Explore all [Text Generation Models](https://developers.cloudflare.com/workers-ai/models/text-generation/)
+Explore all [Text Generation Models](/workers-ai/models/text-generation/)
 
 
 ```python
@@ -136,7 +136,7 @@ Tips:
 
 ### Text to Image
 
-Explore all [Text to Image models](https://developers.cloudflare.com/workers-ai/models/text-to-image/)
+Explore all [Text to Image models](/workers-ai/models/text-to-image/)
 
 
 ```python
@@ -159,7 +159,7 @@ display(Image(response.content))
 
 ### Translations
 
-Explore all [Translation models](https://developers.cloudflare.com/workers-ai/models/translation/)
+Explore all [Translation models](/workers-ai/models/translation/)
 
 
 ```python
@@ -184,7 +184,7 @@ print(inference["result"]["translated_text"])
 
 ### Text Classification
 
-Explore all [Text Classification models](https://developers.cloudflare.com/workers-ai/models/text-classification/)
+Explore all [Text Classification models](/workers-ai/models/text-classification/)
 
 
 ```python
@@ -210,7 +210,7 @@ inference["result"]
 
 ### Automatic Speech Recognition
 
-Explore all [Speech Recognition models](https://developers.cloudflare.com/workers-ai/models/speech-recognition/)
+Explore all [Speech Recognition models](/workers-ai/models/speech-recognition/)
 
 
 ```python
@@ -354,7 +354,7 @@ inference
 
 ### Image Classification
 
-Explore all [Image Classification models](https://developers.cloudflare.com/workers-ai/models/image-classification/)
+Explore all [Image Classification models](/workers-ai/models/image-classification/)
 
 
 ```python
