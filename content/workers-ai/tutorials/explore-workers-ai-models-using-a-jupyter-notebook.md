@@ -12,7 +12,6 @@ A handy way to explore all of the models available on [Workers AI](/workers-ai) 
 
 
 You can [download the Workers AI notebook](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai.ipynb) or view the embedded notebook below.
-/Users/craig/Code/docs/cloudflare-docs/content/workers-ai/static/documentation/notebooks/cloudflare-workers-ai/assets/output_11_0.png
 
 {{<youtube id="uv1Cz_BDFmo">}}
 
