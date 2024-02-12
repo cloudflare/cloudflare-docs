@@ -42,13 +42,15 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 | Social Networking                              | Applications used for social networking.                                                                                                                                                                                                                                                                                      |
 | Sports                                         | Applications used to view sports.                                                                                                                                                                                                                                                                                             |
 | Video Streaming                                | Applications used for streaming video.                                                                                                                                                                                                                                                                                        |
-| [Do Not Inspect](#do-not-inspect-applications) | Applications that are incompatible with the TLS man-in the middle certificate that is required for Cloudflare Gateway's proxy to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
+| [Do Not Inspect](#do-not-inspect-applications) | Applications that are incompatible with the TLS man-in-the-middle certificate that is required for the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
 
 {{</table-wrap>}}
 
 ### Do Not Inspect applications
 
-Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for a variety of reasons, one of which is certificate pinning. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
+Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for a variety of reasons, such as {{<glossary-tooltip term_id="certificate pinning">}}certificate pinning{{</glossary-tooltip>}} and non-web traffic.
+
+This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
 
 This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
 
@@ -60,6 +62,12 @@ Gateway periodically updates the _Do Not Inspect_ app type to include new applic
 Instead of setting up a _Do Not Inspect_ policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 {{</Aside>}}
 
-## Microsoft 365 integration
+#### Microsoft 365 integration
 
-You can perform a simple action to bypass TLS decryption for all Microsoft 365 traffic. To turn on this integration, go to **Settings** > **Network** > **Bypass decryption of Office 365 traffic** and select **Create policy**. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). This policy uses Cloudflare intelligence to identify Microsoft 365 traffic.
+To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic.
+
+To turn on the integration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
+2. In **Bypass decryption of Office 365 traffic**, select **Create policy**.
+3. To verify the policy was created, go to **Gateway** > **Firewall Policies**, then select **HTTP**. A policy named Office 365 Auto Generated should be enabled in your list.
