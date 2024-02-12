@@ -12,7 +12,7 @@ weight: 11
 
 {{<faq-answer>}}
 
-Once Auto-Advertisement is activated for an IP prefix that is under attack, the IP prefix will continue to be advertised by Cloudflare even if the attack ends. You will then need to manually disable advertisement for that IP prefix. Refer to [Configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/) to learn how to withdraw your prefixes, and stop using Magic Transit.
+Once Auto-Advertisement is activated for an IP prefix that is under attack, the IP prefix will continue to be advertised by Cloudflare even if the attack ends. You will then need to manually disable advertisement for that IP prefix. Refer to [Configure dynamic advertisement](/byoip/concepts/dynamic-advertisement/best-practices/#configure-dynamic-advertisement) to learn how to withdraw your prefixes, and stop using Magic Transit.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -22,7 +22,7 @@ Once Auto-Advertisement is activated for an IP prefix that is under attack, the 
 
 {{<faq-answer>}}
 
-Yes, the IP prefix will show as advertised under the [IP Prefixes tab](/byoip/how-to/configure-dynamic-advertisement/).
+Yes, the IP prefix will show as advertised under the [IP Prefixes tab](/byoip/concepts/dynamic-advertisement/best-practices/#configure-dynamic-advertisement).
 
 {{</faq-answer>}}
 {{</faq-item>}}
