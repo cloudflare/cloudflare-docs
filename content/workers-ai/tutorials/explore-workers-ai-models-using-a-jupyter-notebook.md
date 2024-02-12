@@ -15,7 +15,7 @@ You can [download the Workers AI notebook](/workers-ai/static/documentation/note
 
 {{<youtube id="uv1Cz_BDFmo">}}
 
-[comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai) the <audio> tag is hard coded
+[comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai the <audio> tag is hard coded)
 
 ---
 
