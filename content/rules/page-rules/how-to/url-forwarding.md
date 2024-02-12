@@ -9,7 +9,7 @@ weight: 1
 
 # URL forwarding or redirects
 
-Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/concepts/redirects/).
+Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/reference/redirects/).
 
 {{<render file="_page-rule-proxied-dns-warning.md">}}
 
