@@ -55,7 +55,7 @@ After saving your changes, it takes between two to seven minutes to enable adver
 
 To configure prefix advertisement with the Cloudflare API, use the [IP Address Management and Dynamic Advertisement](/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status) API.
 
-Most dynamic advertisement operations require that you supply the Cloudflare ID for any prefix that you want to access with the Cloudflare API. The following section outlines how to obtain prefix IDs.
+Most dynamic advertisement operations require that you supply the Cloudflare ID for any prefix you want to access with the Cloudflare API. The following section outlines how to obtain prefix IDs.
 
 ## Obtain prefix IDs
 
