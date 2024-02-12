@@ -7,7 +7,7 @@ layout: learning-module
 
 ## Build applications with Cloudflare's Developer Platform
 
-The Cloudflare Developer Platform allows you to build fullstack applications with Workers.
+The Cloudflare Developer Platform allows you to build full-stack applications with Workers.
 
 ## Objectives
 

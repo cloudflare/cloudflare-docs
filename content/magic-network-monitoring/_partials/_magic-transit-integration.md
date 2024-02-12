@@ -18,7 +18,7 @@ You need to enable IP auto-advertisement in order to use Magic Network Monitorin
 
 ### Dashboard
 
-To activate IP advertisement via the Cloudflare dashboard, refer to [Configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-dashboard).
+To activate IP advertisement via the Cloudflare dashboard, refer to [Configure dynamic advertisement](/byoip/concepts/dynamic-advertisement/best-practices/#configure-dynamic-advertisement).
 
 ### API
 

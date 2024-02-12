@@ -58,7 +58,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 9. Configure the virtual machine with the license key your account team provided you:
     1. Select the Virtual Connector's VM > **Settings**.
     2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
-    3. Select **Add parameter** to add your lincence key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
+    3. Select **Add parameter** to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
         - **Key**: `guestinfo.cloudflare.identity`
         - **Value**: `<YOUR_LICENCE_KEY>`
 
@@ -69,20 +69,28 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
 ## 3. Set up Cloudflare dashboard
 
-1. Follow the instructions in [Create a site](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) to create a site for each instance of the Virtual Connector.
-2. The **Physical port** in WAN and LAN needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, for the **WAN** configuration we need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.
-3. Do not forget to [activate your Connector](/magic-wan/configuration/connector/configure-hardware-connector/#device-activation).
-4. After setting up your site in the Cloudflare dashboard, you will need to return to the VMware interface to boot up Virtual Connector.
+{{<render file="connector/_create-site.md" withParameters="needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.;;needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.;;For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#1-obtain-the-virtual-connector-image)." >}}
 
-## 4. Boot your Virtual Connector
+## 4. Activate Connector
+
+{{<render file="connector/_activate-connector.md" withParameters="Virtual Magic WAN Connector is deactivated after you install it" >}}
+
+## 5. Boot your Virtual Connector
 
 1. Go to **Virtual Machines** in VMware, and boot up Virtual Connector's VM.
-2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-site) for its connected site.
+2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](#1-create-a-site) for its connected site.
 3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
 4. If successful, the [tunnel health checks](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) will show as healthy.
-5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/reference/#heartbeat) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
+5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
+
+---
+
+## IP sec tunnels and static routes
+
+{{<render file="connector/_ipsec-static-tunnels.md" >}}
+
+---
 
 ## Next steps
 
-- Learn more about Magic WAN Connector, such as security, heartbeat, and device metrics in [Device information](/magic-wan/configuration/connector/reference/).
-- Refer to [Troubleshooting](/magic-wan/configuration/connector/troubleshooting/) to learn what to do if you are experiencing difficulties.
+{{<render file="connector/_next-steps.md" >}}

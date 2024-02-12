@@ -19,7 +19,7 @@ Sentry integration is available to all Enterprise customers and Free, Pro, and B
 
 ## How it works
 
-This integration adds a [Tail Worker](/workers/observability/tail-workers) to your application Worker. The Tail Worker automatically sends errors and uncaught exceptions to the Sentry project you have configured.
+This integration adds a [Tail Worker](/workers/observability/logging/tail-workers) to your application Worker. The Tail Worker automatically sends errors and uncaught exceptions to the Sentry project you have configured.
 
 This integration supports the following Sentry features:
 - **[Data Handling](https://develop.sentry.dev/sdk/data-handling/)**: As a best practice, do not include PII or other sensitive data in the payload sent to Sentry. HTTP headers (for example, `Authorization` or `Cookie`) can be removed before events are forwarded to Sentry.

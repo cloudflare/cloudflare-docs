@@ -46,7 +46,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 {{<Aside type="warning" header="Support for local development">}}
 
-Prior to wrangler@3.13.2, and Miniflare `v3.20231016.0` WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
+Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
 
 If you are using older versions, note that while hibernatable WebSocket events such as `webSocketMessage()` will still be delivered, the Durable Object will never be evicted from memory.
 

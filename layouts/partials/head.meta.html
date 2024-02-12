@@ -199,37 +199,24 @@
   <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
   <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
   <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
-
+  {{- if (and ($DATA.algolia) (ne $.Context.RelPermalink "/search/")) -}}
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
   <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
-
-  {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
   <meta name="docsearch:product" content="{{ $DATA.algolia.product }}" />
   {{- end -}}
 
-  {{- $coveo := index $.Context.Site.Params "coveo" -}}
-  {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
-  <link rel="stylesheet preconnect" href="/search-coveo.css" />
-  <link rel="stylesheet preconnect"
-    href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
-    integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA=="
-    crossorigin="anonymous" />
-  <script defer async class="coveo-script"
-    src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js"
-    integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw=="
-    crossorigin="anonymous"></script>
-
-  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $script := (resources.Get "search-coveo.ts") | js.Build $opts -}}
-
-  {{- if hugo.IsProduction -}}
-  {{- $script = $script | minify | fingerprint "md5" -}}
+  {{- if eq $.Context.RelPermalink "/search/" -}}
+  <link rel="stylesheet preconnect" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.1.0/themes/satellite-min.css" integrity="sha256-p/rGN4RGy6EDumyxF9t7LKxWGg6/MZfGhJM/asKkqvA=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.js" integrity="sha256-pxkGFjfnFWYGOtV9uhCWK/spKiGS0Z7gVDKYm39LyfM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.64.0/dist/instantsearch.production.min.js" integrity="sha256-OtorR+6G6evpfgqzuOJjl5iH4JW+87ETzSpLZiVPTDg=" crossorigin="anonymous"></script>
+  {{- partial "script" (dict "src" "instantsearch.js" "defer" true) -}}
+  <link rel="stylesheet preconnect" href="/algolia-serp.css" />
   {{- end -}}
 
-  <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.token }}" data-org="{{ $coveo.org }}"></script>
-  {{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
+  {{- $coveo := index $.Context.Site.Params "coveo" -}}
+  {{- if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
   <link rel="stylesheet preconnect" href="/tutorial-coveo.css" />
   <link rel="stylesheet preconnect"
     href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
@@ -241,13 +228,11 @@
     crossorigin="anonymous"></script>
 
   {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $search_script := (resources.Get "search.ts") | js.Build $opts -}}
   {{- $script := (resources.Get "tutorial-coveo.ts") | js.Build $opts -}}
 
   {{- if hugo.IsProduction -}}
   {{- $script = $script | minify | fingerprint "md5" -}}
   {{- end -}}
-
   <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.tutorial_token }}"
     data-org="{{ $coveo.org }}"></script>
   {{- end -}}
