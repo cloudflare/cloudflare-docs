@@ -10,7 +10,7 @@ You can customize the pages your end users will see when trying to reach applica
 
 ## Login page
 
-To change the appearance of your Access login page:
+To change the appearance of your login page:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
 2. Find the **Login page** setting and select **Customize**.
