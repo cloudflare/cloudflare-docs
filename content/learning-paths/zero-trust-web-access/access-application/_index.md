@@ -7,11 +7,13 @@ layout: learning-module
 
 # Secure your applications
 
-Build scalable applications and policies with Cloudflare Access.
+Secure your applications behind Cloudflare Access.
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Create an Access application
--
+- Add your application to Cloudflare Access
+- Create an Access policy
+- Define an Access group
+- Design a domain structure for your applications
