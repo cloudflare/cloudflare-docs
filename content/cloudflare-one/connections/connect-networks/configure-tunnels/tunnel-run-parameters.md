@@ -86,11 +86,11 @@ Exposes a Prometheus endpoint on the specified IP address/port, which you can th
 
 | Syntax          | Default | Environment Variable |
 | --------------- | ------- | -------------------- |
-| `cloudflared tunnel --no-autoupdate <BOOLEAN> run <UUID or NAME>`  | `false` | `NO_AUTOUPDATE`      |
+| `cloudflared tunnel --no-autoupdate run <UUID or NAME>`  | `false` | `NO_AUTOUPDATE`      |
 
-When `false`, `cloudflared` will periodically check for updates and restart with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
+When the parameter `--no-autoupdate` is not present, `cloudflared` will periodically check for updates and restart with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
-When `true`, automatic updates are disabled.
+When `--no-autoupdate` is provided as an argument, automatic updates are disabled.
 
 ## `origincert`
 
