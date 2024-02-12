@@ -8,4 +8,4 @@ layout: wide
 
 Review the definitions for terms used across Cloudflare's documentation.
 
-{{<glossary product="Fundamentals">}}
+{{<glossary>}}
