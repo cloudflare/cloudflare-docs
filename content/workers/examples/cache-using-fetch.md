@@ -168,7 +168,7 @@ fetch(request, {
 });
 ```
 
-This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#requestinitcfproperties).
+This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties).
 
 {{</content-column>}}
 
