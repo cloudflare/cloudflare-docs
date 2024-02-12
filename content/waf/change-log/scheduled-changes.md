@@ -36,18 +36,18 @@ layout: wide
       <td>2024-02-12</td>
       <td>Block</td>
       <td>100514_BETA</td>
-      <td>...d5e015dd</td>
+      <td>...97251d2c</td>
       <td>Log4j Headers Beta</td>
-      <td>This rule will be replacing ...74430f12 on New WAF and 100514 on Legacy WAF</td>
+      <td>This rule will be replacing ...d5e015dd on New WAF and 100514 on Legacy WAF</td>
     </tr>
     <tr>
       <td>2024-02-06</td>
       <td>2024-02-12</td>
       <td>Block</td>
       <td>100515B_BETA</td>
-      <td>...5ea3d579</td>
+      <td>...504408ca</td>
       <td>Log4j Body Obfuscation Beta</td>
-      <td>This rule will be replacing ...504408ca on New WAF and 100515B on Legacy WAF</td>
+      <td>This rule will be replacing ...dc29b753 on New WAF and 100515B on Legacy WAF</td>
     </tr>
   </tbody>
 </table>
