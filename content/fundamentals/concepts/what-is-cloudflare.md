@@ -21,7 +21,7 @@ Cloudflare is a connectivity cloud company. We empower organizations to make the
 
 ### Simplicity 
 
-In the past, Cloudflare has been referred to as a [Content Delivery Network](https://developers.cloudflare.com/cache/) (CDN), but we are much more than that. At our core, Cloudflare is globally connected homogenous network of servers. Each server runs the same set of services, which allows us to scale new features and products instantaneously to our customers. 
+In the past, Cloudflare has been referred to as a [Content Delivery Network](/cache/) (CDN), but we are much more than that. At our core, Cloudflare is globally connected homogenous network of servers. Each server runs the same set of services, which allows us to scale new features and products instantaneously to our customers. 
 
 When you start to use Cloudflare, one constant you can rely upon is knowing that your configurations are automatically synced to every server across the globe.
 
