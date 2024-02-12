@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-There are [multiple ways](/reference-architecture/sase-reference-architecture/#connecting-networks) to onramp traffic from your private networks to Cloudflare. This page will focus on the two software-based methods that are commonly used for a VPN replacement use case: Cloudflare Tunnel via cloudflared and Cloudflare Tunnel via WARP connector. Both of these methods involve installing lightweight software — either `cloudflared` or Cloudflare WARP — on a host machine in your network. The software creates a secure tunnel, called a Cloudflare Tunnel, to connect services and applications to Cloudflare’s global network.
+There are [multiple ways](/reference-architecture/architectures/sase/#connecting-networks) to onramp traffic from your private networks to Cloudflare. This page will focus on the two software-based methods that are commonly used for a VPN replacement use case: Cloudflare Tunnel via cloudflared and Cloudflare Tunnel via WARP connector. Both of these methods involve installing lightweight software — either `cloudflared` or Cloudflare WARP — on a host machine in your network. The software creates a secure tunnel, called a Cloudflare Tunnel, to connect services and applications to Cloudflare’s global network.
 
 ## Cloudflare Tunnel via cloudflared
 

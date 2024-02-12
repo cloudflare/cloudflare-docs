@@ -91,6 +91,7 @@ export const REVIEWERS: Record<string, string[]> = {
   "data-localization": ["soheiokamoto", "tlozoot"],
   "hyperdrive": ["elithrar", "a-robinson", "rts-rob"],
   radar: ["meddulla", "G4brym"],
+  "reference-architecture": ["securitypedant"],
   kv: ["CharlieBurnett", "elithrar", "rts-rob"],
   logs: ["jherre", "bharatnc", "victor-perov", "soheiokamoto", "tlozoot"],
   pages: ["WalshyDev"],

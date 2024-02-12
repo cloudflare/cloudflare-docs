@@ -151,5 +151,5 @@ async function handleRequest(request) {
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/log-from-workers/) - Learn how to log your Workers.
-* [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
+* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.

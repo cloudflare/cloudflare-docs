@@ -310,4 +310,4 @@ You have successfully created a Cloudflare Worker that connects to a PostgreSQL 
 
 To build more with databases and Workers, refer to [Tutorials](/workers/tutorials) and explore the [Databases documentation](/workers/databases).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.
