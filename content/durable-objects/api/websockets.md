@@ -114,7 +114,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
   - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
-  - Retrieves the most recent value passed to `state.serializeAttachment()`, or `null` if none exists.
+  - Retrieves the most recent value passed to `ws.serializeAttachment()`, or `null` if none exists.
 
 {{</definitions>}}
 
