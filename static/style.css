@@ -4000,6 +4000,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   word-break: normal;
 }
 
+.DocsMarkdown--table-wrap tr {
+  font-size: 1.2vw;
+}
+
 /* @media (hover: hover) {
   .DocsMarkdown--table-wrap:hover {
     width: calc(100% + var(--docs-body-sidebar-width));
