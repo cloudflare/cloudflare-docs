@@ -24,6 +24,8 @@ Cloudflare recommends turning off plugins such as WP Rocket Cache Plugin, W3 Tot
 
 We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 Total Cache, or similar plugins after APO activation.
 
+For more details, refer to [Plugin compatibility](/automatic-platform-optimization/about/plugin-compatibility/).
+
 ### Limitations
 
 The Cloudflare APO WordPress plugin does not support multisite WordPress installation.
