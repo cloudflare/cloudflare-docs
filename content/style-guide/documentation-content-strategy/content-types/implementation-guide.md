@@ -44,6 +44,7 @@ instructional, straightforward
 
 ## Template
 
+```
 ---
 title: "Example implementation guide"
 pcx_content_type: implementation-guide
