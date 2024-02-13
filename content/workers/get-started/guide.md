@@ -33,20 +33,26 @@ C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<tabs labels="npm | yarn">}}
+{{<tabs labels="npm | yarn | pnpm | bun">}}
 {{<tab label="npm" default="true">}}
-
 ```sh
 $ npm create cloudflare@latest
 ```
-
 {{</tab>}}
 {{<tab label="yarn">}}
-
 ```sh
 $ yarn create cloudflare
 ```
-
+{{</tab>}}
+{{<tab label="pnpm">}}
+```sh
+$ pnpm create cloudflare@latest
+```
+{{</tab>}}
+{{<tab label="bun">}}
+```sh
+$ bun create cloudflare@latest
+```
 {{</tab>}}
 {{</tabs>}}
 
@@ -76,6 +82,50 @@ In your project directory, C3 has generated the following:
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
+
+### Create a new Worker Project from an external source
+
+In addition to creating new projects from its own templates, C3 also supports creating new projects from git repositories. In order to do that, you can open your terminal window and run:
+
+{{<tabs labels="npx | yarn | pnpm | bun">}}
+{{<tab label="npm" default="true">}}
+```sh
+$ npx create-cloudflare@latest --template [<SOURCE>]
+```
+{{</tab>}}
+{{<tab label="yarn">}}
+```sh
+$ yarn create cloudflare --template [<SOURCE>]
+```
+{{</tab>}}
+{{<tab label="pnpm">}}
+```sh
+$ pnpm create cloudflare@latest --template [<SOURCE>]
+```
+{{</tab>}}
+{{<tab label="bun">}}
+```sh
+$ bun create cloudflare@latest --template [<SOURCE>]
+```
+{{</tab>}}
+{{</tabs>}}
+
+`[<SOURCE>]` may be any of the following:
+
+- user/repo
+- git@github.com:user/repo
+- https://github.com/user/repo
+- user/repo/some-template (subdirectories)
+- user/repo#canary (branches)
+- user/repo#1234abcd (commit hash)
+- bitbucket:user/repo (BitBucket)
+- gitlab:user/repo (GitLab)
+
+At a minimum, template folders must contain the following:
+
+- `package.json`
+- `wrangler.toml`
+- `src/` containing a worker script referenced from `wrangler.toml`
 
 ## 2. Develop with Wrangler CLI
 

@@ -14,9 +14,28 @@ meta:
 
 Quickstarts are GitHub repositories that are designed to be a starting point for building a new Cloudflare Workers project. To start any of the projects below, run:
 
+{{<tabs labels="npx | yarn | pnpm | bun">}}
+{{<tab label="npm" default="true">}}
 ```sh
-$ npx wrangler generate <NEW_PROJECT_NAME> <GITHUB_REPO_URL>
+$ npx create-cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
 ```
+{{</tab>}}
+{{<tab label="yarn">}}
+```sh
+$ yarn create cloudflare <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
+```
+{{</tab>}}
+{{<tab label="pnpm">}}
+```sh
+$ pnpm create cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
+```
+{{</tab>}}
+{{<tab label="bun">}}
+```sh
+$ bun create cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
+```
+{{</tab>}}
+{{</tabs>}}
 
 {{<definitions>}}
 
@@ -30,7 +49,6 @@ $ npx wrangler generate <NEW_PROJECT_NAME> <GITHUB_REPO_URL>
 {{</definitions>}}
 
 {{</content-column>}}
-
 
 <style>
   .WorkerStarter--command pre {
