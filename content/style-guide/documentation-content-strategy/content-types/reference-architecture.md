@@ -8,13 +8,13 @@ title: Reference architecture
 
 ## Purpose
 
-A reference architecture contains a visual representation of a specific solution along with conceptual details that provides a foundational knowledge of the Cloudflare platform and products. It also describes how this architecture aligns with existing infrastructure and what use cases it applies to. Note while these are technical in nature, they should always tell a story and lead the reader from an initial concept through to a fully realized solution.
+The purpose of a reference architecture is to provide a high-level view, including visual representation of, how all or part of the Cloudflare platform is built and how Cloudflare products would fit into a customer's existing infrastructure. Reference architectures are designed to show where our platform fits in with a customer's current environment and describe key aspects of a Cloudflare feature/service. Reference architectures should also map to customer use cases to Cloudflare solutions.
 
 They are typically long documents, if you need to describe a single architecture without a great deal of content, please use a [Reference architecture diagram](/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/)
 
 ## Tone
 
-Guiding, educational, authoritative
+guiding, straightforward
 
 ## content_type
 
@@ -36,9 +36,9 @@ Guiding, educational, authoritative
 
 [**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the document subject matter.
 
-[**Who is this for?**](/style-guide/documentation-content-strategy/component-attributes/who-is-this-for/): Numbered steps that complete a task.
+[**Intended audience**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/): Description of who the document is written for and what they will learn.
 
-[**Reference architecture diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-architecture-diagram/): What users should see as the end result of the steps and/or actionable next steps.
+[**Reference diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-diagram/): A single diagram that reflects the overall reference architecture.
 
 ### Optional components
 

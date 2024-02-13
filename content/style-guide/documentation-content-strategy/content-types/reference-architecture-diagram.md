@@ -24,7 +24,7 @@ instructional, straightforward
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases. 
 
-[**Reference architecture diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-architecture-diagram/): What users should see as the end result of the steps and/or actionable next steps.
+[**Reference diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-architecture-diagram/): A single diagram that reflects the overall reference architecture.
 
 ### Optional components
 
