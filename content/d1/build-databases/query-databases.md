@@ -70,7 +70,7 @@ D1 automatically converts supported JavaScript (including TypeScript) types pass
 
 ## Return object
 
-The methods `stmt.raw()`, `stmt.all()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
+The methods `stmt.all()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
 {
@@ -113,7 +113,7 @@ The D1 API supports the following query statement methods for querying against a
 
 ### await stmt.all()
 
-Returns all rows as an array of objects, with each result row represented as an object.
+Returns all rows as an array of objects, with each result row represented as an object on the `results` property of the `D1Result` type.
 
 When joining tables with identical column names, only the leftmost column will be included in the row object. Use [`stmt.raw()`](#await-stmtraw) to return all rows as an array of arrays.
 
@@ -141,7 +141,7 @@ console.log(results);
 
 ### await stmt.raw()
 
-Returns results as an array of arrays, with each row represented by an array.
+Returns results as an array of arrays, with each row represented by an array. The return type is an array of arrays, and does not include query metadata.
 
 Column names are not included in the result set by default. To include column names as the first row of the result array, set `.raw({columnNames: true})`.
 
