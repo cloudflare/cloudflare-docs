@@ -61,7 +61,7 @@ layout: wide
     <tr>
       <td>2024-02-12</td>
       <td>2024-02-19</td>
-      <td>Block</td>
+      <td>Disabled</td>
       <td>N/A</td>
       <td>...2a1f3a04</td>
       <td>PHP - Code Injection - Beta</td>
