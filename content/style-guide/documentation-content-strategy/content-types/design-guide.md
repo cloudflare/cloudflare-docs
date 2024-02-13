@@ -8,7 +8,7 @@ title: Design guide
 
 ## Purpose
 
-The purpose of a how to is to explain how to complete a task within the product.
+Help the reader understand how to plan and design a solution using Cloudflare. Typically these are a subset of a reference architecture.
 
 ## Tone
 
@@ -16,7 +16,11 @@ instructional, straightforward
 
 ## content_type
 
-`how-to`
+`design-guide`
+
+## Examples
+
+[Securely deliver applications with Cloudflare](/reference-architecture/design-guides/secure-application-delivery/)
 
 ## Structure
 
@@ -24,25 +28,17 @@ instructional, straightforward
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases. 
 
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
+[**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the document subject matter.
 
-[**Next steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): What users should see as the end result of the steps and/or actionable next steps.
+[**Who is this for?**](/style-guide/documentation-content-strategy/component-attributes/who-is-this-for/): Numbered steps that complete a task.
 
 ### Optional components
-
-[**Context**](/style-guide/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
-
-Provide context to the reader that is not in the section heading.
-
-End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
-
-Do not provide context for steps with a partial sentence that is completed by the numbered steps.
-
-[**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
 
 [**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 
 [**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
+
+[**Diagrams**](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
 
 **Screenshots**
 
@@ -50,96 +46,33 @@ Do not provide context for steps with a partial sentence that is completed by th
 
 ## Template
 
-Single procedure how-to
-
 ```
 
 ---
-weight: xx
-pcx_content_type: how-to
+title: "Example design guide"
+pcx_content_type: design-guide
+weight:
+meta:
+  title: "Design guide: An example"
 ---
- 
-# Second-person imperative verb phrase
- 
-Context for procedure (optional)
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
+# Design guide title
 
-How-to with multiple procedures
+## Introduction
+Provide context to what this guide is going to cover. Ensure you describe the end state of the solution this guide will detail. 
 
-```
+### Who is this document for and what will you learn?
+This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
 
----
-weight: xx
-pcx_content_type: how-to
----
- 
-# Second-person imperative verb phrase
- 
-Context for procedures on page (optional)
- 
-## Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
-## Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
+## Heading 1
+### Subheading 1
 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
+## Heading 2
+### Subheading 2
 
-How-to with multiple procedures that must be completed in order
+## Heading 3
+### Subheading 4
 
-```
+## Summary
 
----
-weight: xx
-pcx_content_type: how-to
----
- 
-# Second-person imperative verb phrase
- 
-Context for procedures on page (optional)
- 
-## 1. Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
-## 2. Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
-## 3. Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
 ```

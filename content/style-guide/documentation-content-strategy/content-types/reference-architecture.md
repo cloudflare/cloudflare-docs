@@ -8,15 +8,25 @@ title: Reference architecture
 
 ## Purpose
 
-The purpose of a how to is to explain how to complete a task within the product.
+A reference architecture contains a visual representation of a specific solution along with conceptual details that provides a foundational knowledge of the Cloudflare platform and products. It also describes how this architecture aligns with existing infrastructure and what use cases it applies to. Note while these are technical in nature, they should always tell a story and lead the reader from an initial concept through to a fully realized solution.
+
+They are typically long documents, if you need to describe a single architecture without a great deal of content, please use a [Reference architecture diagram](/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/)
 
 ## Tone
 
-instructional, straightforward
+Guiding, educational, authoritative
 
 ## content_type
 
-`how-to`
+`reference-architecture`
+
+## Examples
+
+[Cloudflare Load Balancing Reference Architecture](/reference-architecture/architectures/load-balancing/)
+
+[Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
+
+[Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
 
 ## Structure
 
@@ -24,25 +34,19 @@ instructional, straightforward
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases. 
 
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
+[**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the document subject matter.
 
-[**Next steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): What users should see as the end result of the steps and/or actionable next steps.
+[**Who is this for?**](/style-guide/documentation-content-strategy/component-attributes/who-is-this-for/): Numbered steps that complete a task.
+
+[**Reference architecture diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-architecture-diagram/): What users should see as the end result of the steps and/or actionable next steps.
 
 ### Optional components
-
-[**Context**](/style-guide/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
-
-Provide context to the reader that is not in the section heading.
-
-End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
-
-Do not provide context for steps with a partial sentence that is completed by the numbered steps.
-
-[**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
 
 [**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 
 [**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
+
+[**Diagrams**](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
 
 **Screenshots**
 
@@ -50,96 +54,44 @@ Do not provide context for steps with a partial sentence that is completed by th
 
 ## Template
 
-Single procedure how-to
-
 ```
 
 ---
-weight: xx
-pcx_content_type: how-to
+title: Cloudflare Reference Architecture
+pcx_content_type: reference-architecture
+weight: 1
+meta:
+    title: "Reference Architecture: An example Cloudflare solution"
 ---
  
-# Second-person imperative verb phrase
+# Cloudflare Reference Architecture
  
-Context for procedure (optional)
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
+## Introduction
+Cloudflare provides software as a service solutions (SaaS) solutions for performance, security, reliability, and developer services. This reference architecture focuses on the security of the platform and the network these services are built on, as well as the broad security capabilities the services offer for both public facing and internal facing assets.  
 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
+### Who is this document for and what will you learn?
+This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
 
-How-to with multiple procedures
+## Heading 1
+### Subheading 1
+Start by describing the technology which this architecture refers to. Ideally you open with a diagram that either describes the final architecture, or is a base diagram from which the document will build.
 
-```
+![Example reference architecture diagram](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg "The above is an example reference architecture diagram")
 
----
-weight: xx
-pcx_content_type: how-to
----
- 
-# Second-person imperative verb phrase
- 
-Context for procedures on page (optional)
- 
-## Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
-## Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
+## Heading 2
+### Subheading 2
+Then introduce how Cloudflare fits in
 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
+## Heading 3
+### Subheading 4
+Start to dig into the details of the technology
 
-How-to with multiple procedures that must be completed in order
+## Heading 5
+### Subheading 5
+End with mapping the architecture to real world use cases. Important to connect the reader to how this architecture is used in their own organization.
 
-```
+## Summary
+End the document by summarizing everything so far and provide a list of further reading
 
----
-weight: xx
-pcx_content_type: how-to
----
- 
-# Second-person imperative verb phrase
- 
-Context for procedures on page (optional)
- 
-## 1. Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
-## 2. Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
-## 3. Second-person imperative verb phrase
- 
-1. Step one
-1. Step two
-1. Step three
-1. ...
- 
-Next steps sentence - what users should see as the end result and/or actionable next steps.
+
 ```
