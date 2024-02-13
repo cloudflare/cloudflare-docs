@@ -6,7 +6,7 @@ weight: 8
 
 # Cloudflare Logpush integration
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Only available on Enterprise plans.
 
@@ -14,9 +14,13 @@ Only available on Enterprise plans.
 
 With Cloudflare's [Logpush](/logs/about/) service, you can configure the automatic export of Zero Trust logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
 
+## Export Zero Trust logs with Logpush
+
+{{<Aside header="Logpush limitation" type="warning">}}
+
 Zero Trust does not support [Cloudflare R2](/logs/get-started/enable-destinations/r2/) as a Logpush destination.
 
-## Export Zero Trust logs with Logpush
+{{</Aside>}}
 
 To enable Logpush for Zero Trust logs:
 
