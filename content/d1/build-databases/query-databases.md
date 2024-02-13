@@ -70,7 +70,7 @@ D1 automatically converts supported JavaScript (including TypeScript) types pass
 
 ## Return object
 
-The methods `stmt.run()`, `stmt.all()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
+The methods `stmt.raw()`, `stmt.all()`, `stmt.first()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
 {
@@ -104,8 +104,8 @@ The `db.exec()` method returns a `D1ExecResult` object:
 
 The D1 API supports the following query statement methods:
 
-* [`await stmt.first( [column] )`](/d1/build-databases/query-databases/#await-stmtfirstcolumn)
 * [`await stmt.all()`](/d1/build-databases/query-databases/#await-stmtall)
+* [`await stmt.first( [column] )`](/d1/build-databases/query-databases/#await-stmtfirstcolumn)
 * [`await stmt.raw()`](/d1/build-databases/query-databases/#await-stmtraw)
 * [`await stmt.run()`](/d1/build-databases/query-databases/#await-stmtrun)
 * [`await db.dump()`](/d1/build-databases/query-databases/#await-dbdump)
