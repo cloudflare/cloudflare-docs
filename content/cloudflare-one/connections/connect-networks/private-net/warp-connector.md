@@ -112,7 +112,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       If the registration did not go through, try the following troubleshooting strategies:
 
       - Ensure that `mdm.xml` is formatted correctly and stored in `/var/lib/cloudflare-warp`.
-      - Ensure that you have a [device enrollment rule](/cloudflare-one/connections/connect-networks/private-net/warp-connector/#2-add-a-device-enrollment-rule) for the service token.
+      - Ensure that you have a [device enrollment rule](/cloudflare-one/connections/connect-networks/private-net/warp-connector/#2-add-a-device-enrollment-rule) with the _Service Auth_ action (not _Allow_).
       - Restart the WARP systemd service:
         ```sh
         $ sudo systemctl restart warp-svc.service
