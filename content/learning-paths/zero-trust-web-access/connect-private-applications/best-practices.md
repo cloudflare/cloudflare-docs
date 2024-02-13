@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-We recommend following these best practices when you deploy Cloudflare Tunnel for the ZTWA use case.
+We recommend following these best practices when you deploy Cloudflare Tunnel for Zero Trust Web Access.
 
 ## Deploy another instance of cloudflared
 
