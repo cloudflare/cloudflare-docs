@@ -1,10 +1,10 @@
 ---
-title: Workers API
+title: Vectorize API
 pcx_content_type: concept
 weight: 2
 ---
 
-# Workers API
+# Vectorize API
 
 This page covers the Vectorize API available within [Cloudflare Workers](/workers/), including usage examples.
 
