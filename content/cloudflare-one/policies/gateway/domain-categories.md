@@ -8,13 +8,13 @@ weight: 9
 
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
-At Cloudflare, we categorize domains into content categories and security categories, which cover security risks and security threats. 
-  + Content Categories: Our content categories for domains are provided by an upstream vendor. These categories help us organize domains into broad topic areas. However, the specific criteria and methods used by our vendor may not be disclosed. 
-  + Security Risks: We determine security risks for domains using our internal models. These models analyze various factors, including the age of a domain and its reputation. This allows us to identify potentially risky domains. 
-  + Security Threats: To identify malicious domains that pose security threats, we employ a mix of internal data sources, machine learning models, commercial feeds, and open-source threat intelligence.
-  
-This combination helps us stay ahead of emerging threats. While we cannot disclose specific methodologies due to security considerations, please rest assured that we continually strive to protect your online experience.
+At Cloudflare, we categorize domains into content categories and security categories, which cover security risks and security threats.
 
+- Content Categories: Our content categories for domains are provided by an upstream vendor. These categories help us organize domains into broad topic areas. However, the specific criteria and methods used by our vendor may not be disclosed.
+- Security Risks: We determine security risks for domains using our internal models. These models analyze various factors, including the age of a domain and its reputation. This allows us to identify potentially risky domains.
+- Security Threats: To identify malicious domains that pose security threats, we employ a mix of internal data sources, machine learning models, commercial feeds, and open-source threat intelligence.
+
+This combination helps us stay ahead of emerging threats. While we cannot disclose specific methodologies due to security considerations, please rest assured that we continually strive to protect your online experience.
 
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
