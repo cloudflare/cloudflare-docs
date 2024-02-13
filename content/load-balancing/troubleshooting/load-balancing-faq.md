@@ -41,7 +41,7 @@ To learn more about how origins and pools become unhealthy, refer to [Origin and
 If you know that your origin server is healthy but load balancing is reporting it as unhealthy, check the following settings on the [origin's monitor](/load-balancing/monitors):
 
 -   Perform a `curl` request against the configured endpoint. Make sure the response you are seeing matches your settings for the monitor.
--   Ensure your firewall or web server does not block or rate limit [our health monitors](/fundamentals/reference/cloudflare-site-crawling/#specific-products) and accepts requests from [Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/).
+-   Ensure your firewall or web server does not block or rate limit [our health monitors](/fundamentals/reference/cloudflare-site-crawling/#specific-products) and accepts requests from [Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/).
 -   If you are looking for a specific value in the **Response Body**, make sure that value is relatively static and within the first 10 KB of the HTML page.
 -   If your origin responds with a `301` or `302` status code, make sure **Follow Redirects** is selected.
 -   Try increasing the **Timeout** value.

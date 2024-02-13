@@ -114,7 +114,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
   - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
-  - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
+  - Retrieves the most recent value passed to `state.serializeAttachment()`, or `null` if none exists.
 
 {{</definitions>}}
 
@@ -132,7 +132,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
   - After calling `state.acceptWebSocket(ws)`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object.
 
-  - `tags` are optional string tags used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
+  - `tags` are optional string tags used to look up the WebSocket with `state.getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
 
   - The Hibernatable WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
@@ -144,9 +144,19 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
 - {{<code>}}getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
 
-  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets <sup>1</sup> are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
+  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets <sup>1</sup> are automatically removed from the list. Calling `state.getWebSockets()` with no `tag` argument will return all WebSockets.
 
-  - <sup>1</sup> `getWebSockets()` may still return websockets even after `ws.close()` has been called. For example, if your server-side WebSocket (the Durable Object) sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the `CLOSING` "readyState". The client might send more messages, so the WebSocket is technically not disconnected.
+  - <sup>1</sup> `state.getWebSockets()` may still return websockets even after `ws.close()` has been called. For example, if your server-side WebSocket (the Durable Object) sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the `CLOSING` "readyState". The client might send more messages, so the WebSocket is technically not disconnected.
+
+{{</definitions>}}
+
+### getTags
+
+{{<definitions>}}
+
+- {{<code>}}getTags(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Array\<string>{{</type>}}
+
+  - Returns an Array of tags associated with the given WebSocket. Throws an error if you have not called `state.acceptWebSocket()` on the given WebSocket.
 
 {{</definitions>}}
 
@@ -160,7 +170,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
   - `state.setWebSocketAutoResponse` receives {{<code>}}WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}}){{</code>}} as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`.
 
-  - `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the WebSocket from hibernation, preventing unnecessary duration charges.
+  - `state.setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `state.setWebSocketAutoResponse()` handles application level ping/pongs without waking the WebSocket from hibernation, preventing unnecessary duration charges.
 
   - Both `request` and `response` are limited to 2,048 characters each.
 
@@ -187,6 +197,28 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 - {{<code>}}getWebSocketAutoResponseTimestamp(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Date | null{{</type>}}
 
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
+
+{{</definitions>}}
+
+### setHibernatableWebSocketEventTimeout
+
+{{<definitions>}}
+
+- {{<code>}}setHibernatableWebSocketEventTimeout(timeout{{<param-type>}}number{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Sets the maximum amount of milliseconds a WebSocket event (refer to the handler methods below) can run for.
+  - If `0`, or no value is given for the `timeout`, the previously set timeout (if any) will be unset.
+  - The maximum value of `timeout` is 604,800,000 ms (7 days).
+
+{{</definitions>}}
+
+### getHibernatableWebSocketEventTimeout
+
+{{<definitions>}}
+
+- {{<code>}}getHibernatableWebSocketEventTimeout(){{</code>}} : {{<type>}}number | null{{</type>}}
+
+  - Gets the currently set hibernatable WebSocket event timeout if any had been set with `state.setHibernatableWebSocketEventTimeout()`.
 
 {{</definitions>}}
 

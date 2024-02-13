@@ -11,7 +11,7 @@ The [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) prov
 
 {{<Aside type="note">}}
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker and must be executed within a [handler](/workers/runtime-apis/handlers/). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
+Asynchronous tasks such as `fetch` must be executed within a [handler](/workers/runtime-apis/handlers/). If you try to call `fetch()` within [global scope](https://developer.mozilla.org/en-US/docs/Glossary/Global_scope), your Worker will throw an error. Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
 {{</Aside>}}
 
@@ -62,7 +62,7 @@ async function eventHandler(event) {
 
 {{<definitions>}}
 
-- {{<code>}}fetch(request, init {{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type-link href="/runtime-apis/response">}}Promise`<Response>`{{</type-link>}}
+- {{<code>}}fetch(resource, options {{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type-link href="/runtime-apis/response">}}Promise`<Response>`{{</type-link>}}
 
   - Fetch returns a promise to a Response.
 
@@ -72,12 +72,10 @@ async function eventHandler(event) {
 
 {{<definitions>}}
 
-- `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}} | {{<type>}}string{{</type>}}
+- [`resource`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#resource) {{<type-link href="/workers/runtime-apis/request/">}}Request{{</type-link>}} | {{<type>}}string{{</type>}} | {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/URL">}}URL{{</type>}}
 
-  - The [`Request`](/workers/runtime-apis/request/) object or a string represents the URL to fetch.
-
-- `init` {{<type-link href="/runtime-apis/request#requestinit">}}RequestInit{{</type-link>}}
-  - The content of the request.
+- `options` {{<type-link href="/runtime-apis/request/#the-cf-property-requestinitcfproperties">}}options{{</type-link>}}
+  - An object that defines the content and behavior of the request.
 
 {{</definitions>}}
 

@@ -6,7 +6,7 @@ weight: 2
 
 # Available Notifications
 
-Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/fundamentals/account-and-billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
+Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/fundamentals/subscriptions-and-billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
 
 Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.
 
@@ -113,7 +113,7 @@ Investigate and potentially block any suspicious domains that may be trying to i
 
 **Who is it for?**
 
-Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers.
 
 Specifically, the notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
 

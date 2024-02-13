@@ -36,25 +36,41 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 
 ### Enable the Gateway proxy
 
-1. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP.
-2. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
-3. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
-
-   1. Select **ICMP**.
-   2. On Linux servers:
-
-   - Ensure that the Group ID for the `cloudflared` process is included in `/proc/sys/net/ipv4/ping_group_range`.
-   - If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
-
-   ```sh
-   $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
-   ```
-
-Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp). For more information on how Gateway forwards traffic, refer to [Gateway proxy](/cloudflare-one/policies/gateway/proxy/).
+{{<render file="tunnel/_enable-gateway-proxy.md">}}
 
 ### Create Zero Trust policies
 
-{{<render file="access/_create-zt-policy.md" productFolder="cloudflare-one">}}
+You can create Zero Trust policies to manage access to specific applications on your network.
+
+1. Go to **Access** > **Applications** > **Add an application**.
+2. Select **Private Network**.
+3. Name your application.
+4. For **Application type**, select _Destination IP_.
+5. For **Value**, enter the IP address for your application (for example, `10.128.0.7`).
+   {{<Aside type="note">}}
+   If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/gateway/network-policies/) using the **Destination IP** selector.
+   {{</Aside>}}
+
+6. Configure your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
+7. Select **Next**. You will see two auto-generated Gateway Network policies: one that allows access to the destination IP and another that blocks access.
+8. Modify the policies to include additional identity-based conditions. For example:
+
+   - **Policy 1**
+     | Selector       | Operator      | Value            | Logic | Action |
+     | -------------- | ------------- | ---------------- | ----- | ------ |
+     | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
+     | User Email     | matches regex | `.*@example.com` |       |        |
+
+   - **Policy 2**
+     | Selector       | Operator | Value        | Action |
+     | -------------- | -------- | ------------ | ------ |
+     | Destination IP | in       | `10.128.0.7` | Block  |
+
+   Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
+
+9. Select **Add application**.
+
+Your application will appear on the **Applications** page.
 
 ## 5. Connect as a user
 

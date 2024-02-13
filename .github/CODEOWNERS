@@ -18,6 +18,8 @@
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
 /content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
+/content/workers-ai/tutorials @craigsdennis @logangrasby @cloudflare/pcx-technical-writing
+/content/workers-ai/static @craigsdennis @logangrasby @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
@@ -57,8 +59,8 @@
 /data/changelogs/stream.yaml @tsmith512 @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing @irvinebroque @admah
-/content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
-/data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
+/content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
+/data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
 /content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
@@ -86,6 +88,10 @@
 # Radar
 /content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
 /data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
+
+# Reference architecture
+/content/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
+/assets/images/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing

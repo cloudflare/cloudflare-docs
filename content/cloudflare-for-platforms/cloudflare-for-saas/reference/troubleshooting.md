@@ -73,6 +73,6 @@ More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubl
 
 ## Custom hostname fails to verify because the zone is held
 
-The [zone hold feature](/fundamentals/account-and-billing/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
-When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
+The [zone hold feature](/fundamentals/setup/account/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
+When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
 
