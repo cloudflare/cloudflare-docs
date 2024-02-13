@@ -141,12 +141,15 @@ console.log(results);
 
 ### await stmt.raw()
 
-Returns results as an array of arrays, with each row represented by an array. Column names are not included in the result set.
+Returns results as an array of arrays, with each row represented by an array.
+
+Column names are not included in the result set by default. To include column names as the first row of the result array, set `.raw({columnNames: true})`.
 
 ```js
 const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
 const raw = await stmt.raw();
 console.log(raw);
+
 /*
 [
   [ "John", 42 ],
@@ -154,11 +157,19 @@ console.log(raw);
   [ "Dave", 29 ],
 ]
 */
-console.log(raw.map(row => row.join(',')).join("\n"));
+
+// With columnNames: true
+const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
+const raw = await stmt.raw({columnNames: true});
+console.log(raw);
+
 /*
-John,42
-Anthony,37
-Dave,29
+[
+  [ "name", age ], // The first result array includes the column names
+  [ "John", 42 ],
+  [ "Anthony", 37 ],
+  [ "Dave", 29 ],
+]
 */
 ```
 
