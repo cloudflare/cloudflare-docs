@@ -30,7 +30,7 @@ instructional, straightforward
 
 [**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the document subject matter.
 
-[**Who is this for?**](/style-guide/documentation-content-strategy/component-attributes/who-is-this-for/): Numbered steps that complete a task.
+[**Who is this for?**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/): Numbered steps that complete a task.
 
 ### Optional components
 

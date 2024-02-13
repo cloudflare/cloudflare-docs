@@ -16,7 +16,7 @@ A single diagram which portrays all or part of Cloudflare's platform and it's re
 
 ## Structure
 
-A single diagram which shows a complete Cloudflare architecture aligned with a specific infrastructure or use case. Note the image should, whenever possible, be an SVG. Also refer to basic guide for a [diagram](/style-guide/documentation-content-strategy/component-attributes/diagram/)
+A single diagram which shows a complete Cloudflare architecture aligned with a specific infrastructure or use case. Note the image should, whenever possible, be an SVG. Also refer to basic guide for a [diagram](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
 
 **Examples**
 
