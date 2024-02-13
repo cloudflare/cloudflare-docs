@@ -9,6 +9,8 @@ weight: 6
 
 ## Cloudflare Images
 
+Cloudflare Images lets you store, optimize, and deliver images from one unified API.
+
 |<div style="width:150px">Plan</div>| Images stored | Images delivered |
 |-----------------------------------|---------------|------------------|
 | Free, Pro, Basic                  | $5.00 per 100K images stored per month | $1.00 per 100K images delivered per month
@@ -28,7 +30,7 @@ The Images Light plan lets you transform images that are stored outside of Cloud
 
 Each unique transformation is billed once per 30 day period, regardless of cache. The 30-day period begins when the unique transformation is first made.
 
-To use Images Light, select “Use my own storage” when purchasing Images in the Dash.
+To use Images Light, select **Use my own storage** when purchasing Images in the Dash.
 
 |<div style="width:150px">Plan</div>| Images transformed |
 |-----------------------------------|--------------------|
