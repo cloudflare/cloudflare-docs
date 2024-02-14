@@ -197,6 +197,22 @@ Once a Worker has six connections open, it can still attempt to open additional 
 
 If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
 
+For example, consider the following code:
+
+```js
+const promises = []
+for (auto i = 0; i < 6; ++i) {
+  promises.push(fetch(""))
+}
+
+// While I wait for my assets, let's fetch my configuration.
+const response = await fetch(configurationUrl);
+
+// Now read the asset bodies.
+const assetBodies = promises.map(p => await p.text());
+```
+
+
 {{<Aside type="note">}}
 
 Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
