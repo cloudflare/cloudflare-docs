@@ -42,23 +42,27 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 | Social Networking                              | Applications used for social networking.                                                                                                                                                                                                                                                                                      |
 | Sports                                         | Applications used to view sports.                                                                                                                                                                                                                                                                                             |
 | Video Streaming                                | Applications used for streaming video.                                                                                                                                                                                                                                                                                        |
-| [Do Not Inspect](#do-not-inspect-applications) | Applications that are incompatible with the TLS man-in-the-middle certificate that is required for the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
+| [Do Not Inspect](#do-not-inspect-applications) | Applications that are incompatible with the TLS man-in-the-middle certificate that is required for the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) to function. |
 
 {{</table-wrap>}}
 
 ### Do Not Inspect applications
 
-Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for a variety of reasons, such as {{<glossary-tooltip term_id="certificate pinning">}}certificate pinning{{</glossary-tooltip>}} and non-web traffic.
+#### TLS decryption limitations
 
-This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
+Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons, such as certificate pinning and non-web traffic.
 
-This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
+{{<glossary-tooltip term_id="certificate pinning">}}Certificate pinning{{</glossary-tooltip>}} combats man-in-the-middle attacks where an attacker presents a trusted (but false) certificate on behalf of the origin in order to decrypt the traffic. TLS interception in a Secure Web Gateway also presents a trusted certificate to decrypt traffic, although for the purpose of securing a user's web traffic.
+
+Some applications send non-web traffic over TLS, such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP). Gateway cannot inspect these protocols.
+
+#### Application grouping
 
 Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can [create an HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) for all _Do Not Inspect_ applications.
 
 Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you will ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Install Cloudflare certificate manually to allow TLS decryption">}}
 Instead of setting up a _Do Not Inspect_ policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 {{</Aside>}}
 
