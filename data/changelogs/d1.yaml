@@ -13,7 +13,7 @@ entries:
       
       This may be a breaking change for some applications that expected `.raw()` to return an array of objects.
 
-    Visit the [query databases documentation](/d1/build-databases/query-databases/) to review D1's query methods, return types and TypeScript support in detail.
+      Visit the [query databases documentation](/d1/build-databases/query-databases/) to review D1's query methods, return types and TypeScript support in detail.
 
   - publish_date: "2024-01-18"
     title: Support for LIMIT on UPDATE and DELETE statements
