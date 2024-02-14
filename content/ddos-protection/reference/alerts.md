@@ -20,7 +20,7 @@ Each notification email includes the following information:
 * Rule that matched the attack (ID and description)
 * Rule override, if any
 
-Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. Monthly Application Security Reports are available for WAF/CDN customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
+Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. Monthly application security reports are available for WAF/CDN customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
 {{<Aside type="note">}}
 {{<render file="_alerts-and-reports-independent.md">}}
