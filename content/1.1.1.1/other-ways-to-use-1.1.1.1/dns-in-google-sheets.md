@@ -104,7 +104,7 @@ Or - depending on your regional settings - you may have to use this formula:
 NSLookup(B1; B2)
 ```
 
-<div class="medium-img">
+<div class="medium-img centered">
 
 ![Google sheets function](/images/1.1.1.1/google-sheet-function.png)
 
