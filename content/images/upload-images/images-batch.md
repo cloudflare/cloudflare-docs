@@ -29,6 +29,7 @@ $ curl -H "Authorization: Bearer <CLOUDFLARE_API_TOKEN>" \
 After getting your token, you can use it to make requests for:
 
 - [Upload an image](https://developers.cloudflare.com/api/operations/cloudflare-images-upload-an-image-via-url) - `POST /images/v1`
+- [Delete an image](https://developers.cloudflare.com/api/operations/cloudflare-images-delete-image) - `DELETE /images/v1/{identifier}`
 - [Image details](https://developers.cloudflare.com/api/operations/cloudflare-images-image-details) - `GET /images/v1/{identifier}`
 - [Update image](https://developers.cloudflare.com/api/operations/cloudflare-images-update-image) - `PATCH /images/v1/{identifier}`
 - [List images V2](https://developers.cloudflare.com/api/operations/cloudflare-images-list-images-v2) - `GET /images/v2`
