@@ -19,5 +19,6 @@ This value is not required for {{<glossary-tooltip term_id="IPsec tunnel">}}IPse
   - `172.16.0.0/12`
   - `192.168.0.0/16`
   - $1
+  {{<Aside type="warning">}}For cloud service providers that automatically generate the tunnel endpoint prefixes, make sure the prefixes are within the allowed `169.254.240.0/20` range. If the prefixes fall outside this range, override them or the tunnel will not work.{{</Aside>}}
 - **TTL**: Time to Live (TTL) in number of hops for the {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnel. The default value is 64.
 - **MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
