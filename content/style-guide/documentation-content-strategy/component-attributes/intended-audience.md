@@ -1,14 +1,14 @@
 ---
 pcx_content_type: concept
-title: Who is this document for and what will you learn
+title: Intended audience
 
 ---
 
-# Who is this document for and what will you learn?
+# Intended audience
 
 ## Definition
 
-Summary of who the document is aimed at and what they will learn by reading it. The goal is, when combined with the introduction, the reader has a full understanding of what the rest of the document is about and if it is worth their time reading.
+Summary of who the content is aimed at and what users will learn. When combined with an [Introduction](/style-guide/documentation-content-strategy/component-attributes/introduction/), the purpose is to provide users with an understanding of what the page is about and whether the content is relevant for their role.
 
 ## Used in
 
@@ -16,9 +16,13 @@ Summary of who the document is aimed at and what they will learn by reading it. 
 
 ## Structure
 
-No longer than half a page. Usually 1-3 paragraphs. The first paragraph should describe the type of person this document was written for. If the document relies on existing knowledge, link to 3-5 other resources the reader can consume prior to reading this document. The final paragraph should contain 2-3 specific bullets on what the reader is going to learn from this document.
+Begin with the subtitle **Who is this for?**
 
-**Example**
+Usually 1-3 paragraphs. The first paragraph should describe the type of person this document was written for. If the document relies on existing knowledge, link to 3-5 other resources the reader can consume prior to reading this document. The final paragraph should contain 2-3 specific bullets on what the reader is going to learn from this document.
+
+## Examples
+
+**Who is this for?**
 
 This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
 
@@ -36,4 +40,3 @@ Those who read this reference architecture will learn:
 - How to plan for deploying Cloudflare One
 
 While this document examines Cloudflare One at a technical level, it does not offer fine detail about every product in the platform. Instead, it looks at how all the services in Cloudflare One enable networking and network security to be consolidated on one architecture. Visit the developer documentation for further information specific to a product area or use case.
-

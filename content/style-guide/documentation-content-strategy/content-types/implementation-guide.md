@@ -44,32 +44,3 @@ instructional, straightforward
 
 ## Template
 
-```
----
-title: "Example implementation guide"
-pcx_content_type: implementation-guide
-weight:
-meta:
-  title: "Implementation guide: An example"
----
-
-# Implementation guide title
-
-## Introduction
-Provide context to what this guide is going to cover. Ensure you describe the end state of the solution this guide detail. 
-
-### Who is this document for and what will you learn?
-This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
-
-## Heading 1
-### Subheading 1
-
-## Heading 2
-### Subheading 2
-
-## Heading 3
-### Subheading 4
-
-## Summary
-
-```

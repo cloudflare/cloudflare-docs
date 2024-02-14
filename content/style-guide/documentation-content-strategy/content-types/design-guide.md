@@ -8,7 +8,7 @@ title: Design guide
 
 ## Purpose
 
-Help the reader understand how to plan and design a solution using Cloudflare. Typically these are a subset of a reference architecture.
+Help users understand how to plan and design a solution using Cloudflare. Typically design guides are a subset of a reference architecture.
 
 ## Tone
 
@@ -26,11 +26,11 @@ instructional, straightforward
 
 ### Required components
 
-[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases. 
+[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases.
 
-[**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the document subject matter.
+[**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the subject matter.
 
-[**Who is this for?**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/): Numbered steps that complete a task.
+[**Intended audience**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/): Summary of who the content is aimed at and what users will learn.
 
 ### Optional components
 
@@ -61,7 +61,7 @@ meta:
 ## Introduction
 Provide context to what this guide is going to cover. Ensure you describe the end state of the solution this guide will detail. 
 
-### Who is this document for and what will you learn?
+### Who is this for?
 This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
 
 ## Heading 1

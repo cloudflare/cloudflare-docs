@@ -8,7 +8,7 @@ title: Introduction
 
 ## Definition
 
-Overview of what the document will cover. Used only in long documents where the reader wants to understand if their investment of time is worthwhile.
+Overview of what the content will cover. Used in lengthier documents to help users understand whether they should invest time in reading the content.
 
 ## Used in
 
@@ -16,9 +16,9 @@ Overview of what the document will cover. Used only in long documents where the 
 
 ## Structure
 
-No longer than half a page. Usually 1-3 paragraphs. The first paragraph should explain, quickly and clearly, what the subject of the document is for and the last paragraph or statement should inform the reader what this document contains.
+No longer than half a page. Usually 1-3 paragraphs. The first paragraph should quickly and clearly explain the topic and the last paragraph explain what the document contains.
 
-**Example**
+## Example
 
 Cloudflare One is a secure access service edge (SASE) platform that protects enterprise applications, users, devices, and networks. By progressively adopting Cloudflare One, organizations can move away from their patchwork of hardware appliances and other point solutions and instead consolidate security and networking capabilities on one unified control plane. Such network and security transformation helps address key challenges modern businesses face, including:
 
@@ -32,4 +32,3 @@ Cloudflare One is built on Cloudflare’s connectivity cloud, ​​a unified, i
 As a result, Cloudflare operates within ~50 ms of ~95% of the world’s Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
 This document describes a reference architecture for organizations working towards a SASE architecture, and shows how Cloudflare One enables such security and networking transformation.
-

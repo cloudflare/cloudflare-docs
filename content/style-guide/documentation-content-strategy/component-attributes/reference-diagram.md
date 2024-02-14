@@ -8,7 +8,7 @@ title: Reference diagram
 
 ## Definition
 
-A single diagram which portrays all or part of Cloudflare's platform and it's relationship with a customer's infrastructure or use case. 
+A single diagram that portrays all or part of Cloudflare's platform and how Cloudflare would align with a customer's infrastructure or use case.
 
 ## Used in
 
@@ -16,9 +16,9 @@ A single diagram which portrays all or part of Cloudflare's platform and it's re
 
 ## Structure
 
-A single diagram which shows a complete Cloudflare architecture aligned with a specific infrastructure or use case. Note the image should, whenever possible, be an SVG. Also refer to basic guide for a [diagram](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
+A single diagram that shows a complete Cloudflare architecture aligned with a specific infrastructure or use case. Whenever possible, the image should be an SVG. For more information, refer to [Diagrams](/style-guide/documentation-content-strategy/component-attributes/diagrams/).
 
-**Examples**
+## Examples
 
 ![A fully deployed SASE solution with Cloudflare protects every aspect of your business. Ensuring all access to applications is secured and all threats from the Internet mitigated.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-21.svg "A fully deployed SASE solution with Cloudflare")
 
