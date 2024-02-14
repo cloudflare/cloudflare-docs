@@ -299,7 +299,7 @@ const platform = await getPlatformProxy(options);
 *   `dispose()` {{<type>}}() => Promise\<void>{{</type>}}
 
     *   Terminates the underlying `workerd` process.
-    *   Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you don't need to call this function.
+    *   Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you do not need to call this function.
 
 {{</definitions>}}
 
