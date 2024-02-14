@@ -5,9 +5,9 @@ entries:
   - publish_date: "2024-02-13"
     title: API changes to `.raw()`, `.all()` and `.run()`
     description: |-
-      D1's `.raw()`, `.all()` and `.run()` [query statement methods](/d1/build-databases/query-databases/#query-statement-methods) have been updated to reflect their intended behaviour and improving compatibility with ORMs.
+      D1's `.raw()`, `.all()` and `.run()` [query statement methods](/d1/build-databases/query-databases/#query-statement-methods) have been updated to reflect their intended behaviour and improve compatibility with ORMs libraries.
       
-      `.raw()` now correctly returns results an array of arrays, allowing the correct handling of duplicate column names (such as when joining tables), as compared to `.all()`, which is unchanged and returns an array of objects. To include an array of column names in the results when using `.raw()`, use `.raw({columnNames: true})`.
+      `.raw()` now correctly returns results as an array of arrays, allowing the correct handling of duplicate column names (such as when joining tables), as compared to `.all()`, which is unchanged and returns an array of objects. To include an array of column names in the results when using `.raw()`, use `.raw({columnNames: true})`.
       
       `.run()` no longer incorrectly returns a `D1Result` and instead returns a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object) as originally intended and documented.
       
