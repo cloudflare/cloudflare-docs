@@ -2,6 +2,15 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2024-02-05'
+  title:
+  description: |-
+    * **Dashboard** rename "tracks" to "events" for consistency
+    * **Click listeners** fix bug where anchor link click events were not bubbling
+    * **Pinterest Conversion API MC** fix installation
+    * **http MC** update _settings prefix usage handling
+    * better minification of client-side js
+    * begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration
 - publish_date: '2023-12-19'
   title:
   description: |-

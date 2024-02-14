@@ -64,3 +64,7 @@ entries:
 - term: time-to-live (TTL)
   general_definition: |-
     the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.
+
+- term: cache lock
+  general_definition: |-
+    cache lock (or mutex) is a mechanism employed by CDN data centers, comprising numerous servers, to prevent the overloading of origin servers. This mechanism ensures that only one server can request a specific file from the origin at any given time, facilitating efficient coordination among the servers.

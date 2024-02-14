@@ -74,7 +74,7 @@ async function eventHandler(event) {
 
 - [`resource`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#resource) {{<type-link href="/workers/runtime-apis/request/">}}Request{{</type-link>}} | {{<type>}}string{{</type>}} | {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/URL">}}URL{{</type>}}
 
-- `options` {{<type-link href="/runtime-apis/request#requestinit">}}options{{</type-link>}}
+- `options` {{<type-link href="/runtime-apis/request/#the-cf-property-requestinitcfproperties">}}options{{</type-link>}}
   - An object that defines the content and behavior of the request.
 
 {{</definitions>}}

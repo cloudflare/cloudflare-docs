@@ -12,9 +12,6 @@ Zaraz Worker Variables are a powerful type of variable that you can configure an
 2. A Worker Variable that takes a cookie, makes a request to your backend, and returns the User ID
 3. A Worker Variable that hashes a value before sending it to a third-party vendor
 
-{{<Aside type="note">}}
-Worker Variables are only available for accounts on a [Workers Paid plan](/workers/platform/pricing/).
-{{</Aside>}}
 
 ## Creating a Worker
 

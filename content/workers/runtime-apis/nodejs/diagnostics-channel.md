@@ -37,7 +37,7 @@ All `Channel` instances are singletons per each Isolate/context (for example, th
 
 ## Integration with Tail Workers
 
-When using [Tail Workers](/workers/observability/tail-workers/), all messages published to any channel will be forwarded also to the [Tail Worker](/workers/observability/tail-workers/). Within the Tail Worker, the diagnostic channel messages can be accessed via the `diagnosticsChannelEvents` property:
+When using [Tail Workers](/workers/observability/logging/tail-workers/), all messages published to any channel will be forwarded also to the [Tail Worker](/workers/observability/logging/tail-workers/). Within the Tail Worker, the diagnostic channel messages can be accessed via the `diagnosticsChannelEvents` property:
 
 ```js
 export default {

@@ -23,58 +23,59 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-01-29</td>
-      <td>2024-02-04</td>
+      <td>2024-02-12</td>
+      <td>2024-02-19</td>
       <td>Block</td>
-      <td>100624</td>
-      <td>...52d6027b</td>
-      <td>GoAnywhere - Auth Bypass - CVE:CVE-2024-0204</td>
-      <td>New Detection</td>
+      <td>100622B, 100622C</td>
+      <td>...9a5581d0</td>
+      <td>Ivanti - Command Injection - CVE:CVE-2023-46805, CVE:CVE-2024-21887, CVE:CVE-2024-22024</td>
+      <td>N/A</td>
     </tr>
     <tr>
-      <td>2024-01-29</td>
-      <td>2024-02-04</td>
-      <td>Log</td>
+      <td>2024-02-12</td>
+      <td>2024-02-19</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...014fc5b9</td>
-      <td>AngularJS - XSS - Beta</td>
-      <td>This detection will replace ...7736c63c in new WAF</td>
+      <td>...50c86f85</td>
+      <td>Microsoft ASP.NET - Code Injection - Function response.write - Beta</td>
+      <td>This will replace the ...d0b325aa in NEW WAF</td>
     </tr>
     <tr>
-      <td>2024-01-29</td>
-      <td>2024-02-04</td>
-      <td>Log</td>
+      <td>2024-02-12</td>
+      <td>2024-02-19</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...10cae4a8</td>
-      <td>Apache HTTP Server - Server-Side Includes - Beta</td>
-      <td>This detection will replace ...a02344cb in new WAF</td>
+      <td>...4ba436bb</td>
+      <td>NoSQL, MongoDB - SQLi - Comparison - Beta</td>
+      <td>This will replace the ...1b138b3e in NEW WAF</td>
     </tr>
     <tr>
-      <td>2024-01-29</td>
-      <td>2024-02-04</td>
-      <td>Log</td>
+      <td>2024-02-12</td>
+      <td>2024-02-19</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...d2a0991c</td>
-      <td>Command Injection - CVE:CVE-2014-6271 - Beta</td>
-      <td>This detection will replace ...af52d528 in new WAF</td>
+      <td>...f67956b2</td>
+      <td>NoSQL, MongoDB - SQLi - Expression - Beta</td>
+      <td>This will replace the ...8f66903c in NEW WAF</td>
     </tr>
     <tr>
-      <td>2024-01-29</td>
-      <td>2024-02-04</td>
-      <td>Log</td>
+      <td>2024-02-12</td>
+      <td>2024-02-19</td>
+      <td>Disabled</td>
       <td>N/A</td>
-      <td>...da3d944c</td>
-      <td>Command Injection - Nslookup - Beta</td>
-      <td>This detection will replace ...b090ba9a in new WAF</td>
+      <td>...2a1f3a04</td>
+      <td>PHP - Code Injection - Beta</td>
+      <td>This will replace the ...2d2e031c in NEW WAF</td>
     </tr>
     <tr>
-      <td>2024-01-29</td>
-      <td>2024-02-04</td>
-      <td>Log</td>
+      <td>2024-02-12</td>
+      <td>2024-02-19</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...70f4f073</td>
-      <td>Microsoft ASP.NET - Code Injection - Beta</td>
-      <td>This detection will replace ...d5a14a5e in new WAF</td>
+      <td>...dcd12482</td>
+      <td>PHP, vBulletin, jQuery File Upload - Code Injection, Dangerous File Upload
+  - CVE:CVE-2018-9206, CVE:CVE-2019-17132 - Beta</td>
+      <td>This will replace the ...824b817c in NEW WAF</td>
     </tr>
   </tbody>
 </table>

@@ -1,12 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/202032590-Using-Cloudflare-with-various-forums-vBulletin-Xenforo-MyBB-
-title: Using Cloudflare with various forums (vBulletin, Xenforo, MyBB)
+title: Using Cloudflare with various forums
 ---
 
-# Using Cloudflare with various forums (vBulletin, Xenforo, MyBB)
-
-
+# Using Cloudflare with various forums
 
 ## Overview
 
@@ -14,9 +12,10 @@ Many widely used forum platforms are compatible with Cloudflare.
 
 These include:
 
--   vBulletin
--   Xenforo
--   MyBB
+- [Discourse](https://community.cloudflare.com/t/using-discourse-with-cloudflare-best-practices/602890)
+- vBulletin
+- Xenforo
+- MyBB
 
 If you have a forum using these platforms, you can increase its speed and safety by adding Cloudflare.
 

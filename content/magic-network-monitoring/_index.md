@@ -33,7 +33,7 @@ Create rules to configure the threshold for data flowing from your network.
 
 {{<feature header="Magic Transit integration" href="/magic-network-monitoring/magic-transit-integration/">}}
 
-Magic Transit On Demand customers can use Magic Network Monitoring to enable DDoS mitigatios when a DDoS attack is detected.
+Magic Transit On Demand customers can use Magic Network Monitoring to enable DDoS mitigation when a DDoS attack is detected.
 
 {{</feature>}}
 

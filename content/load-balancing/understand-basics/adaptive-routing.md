@@ -6,7 +6,7 @@ weight: 18
 
 # Adaptive routing
 
-Adaptive routing controls features that modify the routing of requests to pools and origins in response to dynamic conditions, such as during the interval between active health monitoring requests. If there is another healthy origin in the same pool, the request is retried once against this origin when receiving HTTP 521, 522, and 523 response codes.
+Adaptive routing controls features that modify the routing of requests to pools and origins in response to dynamic conditions, such as during the interval between active health monitoring requests. {{<render file="_zero-downtime-failover-retry-on-error.md" productFolder="fundamentals">}}
 
 ## Failover across pools
 

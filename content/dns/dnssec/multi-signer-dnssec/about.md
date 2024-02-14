@@ -9,7 +9,7 @@ meta:
 # About multi-signer DNSSEC
 
 {{<Aside type="note">}}
-This is a simplified explanation to give you context and clarify what is involved in a [multi-signer DNSSEC setup](/dns/dnssec/multi-signer-dnssec/setup/). For technical details refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html). To read more about DNSSEC, refer to our blog post [DNSSEC: An Introduction](https://blog.cloudflare.com/dnssec-an-introduction/).
+This is a simplified explanation to give you context and clarify what is involved in a [multi-signer DNSSEC setup](/dns/dnssec/multi-signer-dnssec/setup/). For technical details refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html). To read more about DNSSEC, refer to [How DNSSEC works](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/).
 {{</Aside>}}
 
 ## How it works
