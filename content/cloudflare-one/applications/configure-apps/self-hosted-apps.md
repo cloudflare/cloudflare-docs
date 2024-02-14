@@ -15,8 +15,6 @@ Cloudflare Access allows you to securely publish internal tools and applications
 - An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 - Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
 
-The domain must be in an **Active** status.
-
 ## 1. Add your application to Access
 
 
