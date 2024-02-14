@@ -147,8 +147,8 @@ Column names are not included in the result set by default. To include column na
 
 ```js
 const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
-const raw = await stmt.raw();
-console.log(raw);
+const rows = await stmt.raw();
+console.log(rows);
 
 /*
 [
@@ -160,16 +160,11 @@ console.log(raw);
 
 // With columnNames: true
 const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
-const raw = await stmt.raw({columnNames: true});
-console.log(raw);
+const [columns, ...rows] = await stmt.raw({columnNames: true});
+console.log(columns);
 
 /*
-[
-  [ "name", age ], // The first result array includes the column names
-  [ "John", 42 ],
-  [ "Anthony", 37 ],
-  [ "Dave", 29 ],
-]
+[ "name", age ], // The first result array includes the column names
 */
 ```
 
