@@ -16,13 +16,11 @@ Each notification email includes the following information:
 * Detection and mitigation time of attack
 * Attack type
 * Maximum rate of attack
-* Attack target
+* Attack target (zone, host, or IP address)
 * Rule that matched the attack (ID and description)
 * Rule override, if any
 
-Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target {{<glossary-tooltip term_id="hostname">}}hostname{{</glossary-tooltip>}}.
-
-Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
+Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. Monthly application security reports are available for WAF/CDN customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
 {{<Aside type="note">}}
 {{<render file="_alerts-and-reports-independent.md">}}
