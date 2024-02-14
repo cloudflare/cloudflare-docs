@@ -32,7 +32,7 @@ Block a section of a site without blocking the entire site. For example, you can
 | -------- | ------------- | ----------- | ------ |
 | URL      | matches regex | `/r/gaming` | Block  |
 
-{{<render file="gateway/_block-content-categories.md">}}
+{{<render file="gateway/_content-categories.md">}}
 
 {{<render file="gateway/_block-applications.md">}}
 
