@@ -16,6 +16,8 @@ The search results will display the following information:
 
 - [Categorization](/cloudflare-one/policies/gateway/domain-categories/): A domain can have multiple categories. Cloudflare displays both the parent category and the detailed child category.
 
+    {{<render file="gateway/_content-security-categories.md" productFolder="cloudflare-one">}}
+
     You can view and [request categorization](/security-center/investigate/change-categorization/) for a domain. Uncategorized domains can also request to have a category added. This request goes through an approval process through the Cloudflare team.
 
 - IP resolution (current)
