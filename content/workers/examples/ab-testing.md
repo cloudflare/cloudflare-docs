@@ -58,7 +58,7 @@ export default {
 ```ts
 const NAME = "myExampleWorkersABTest";
 
-const handler: ExportedHandler = {
+export default {
   async fetch(req) {
     const url = new URL(req.url);
     // Enable Passthrough to allow direct access to control and test routes.
@@ -87,9 +87,7 @@ const handler: ExportedHandler = {
     }
     return fetch(url);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

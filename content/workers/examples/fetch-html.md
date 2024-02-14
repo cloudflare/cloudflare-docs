@@ -20,7 +20,7 @@ updated: 2024-01-11
 {{<tab label="ts">}}
 
 ```ts
-export default <ExportedHandler>{
+export default {
   async fetch(request) {
     /**
      * Replace `remote` with the host you wish to send requests to
@@ -29,7 +29,7 @@ export default <ExportedHandler>{
 
     return await fetch(remote, request);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

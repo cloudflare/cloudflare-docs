@@ -185,7 +185,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     let grads = [
       [
@@ -349,9 +349,7 @@ const handler: ExportedHandler = {
       headers: { "content-type": "text/html;charset=UTF-8" },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

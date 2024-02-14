@@ -45,7 +45,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const url = new URL(request.url);
     // Only use the path for the cache key, removing query strings
@@ -67,9 +67,7 @@ const handler: ExportedHandler = {
     response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -131,7 +129,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     let url = new URL(request.url);
 
@@ -146,9 +144,7 @@ const handler: ExportedHandler = {
       cf: { cacheKey: request.url },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -224,11 +220,11 @@ export default {
                       '400-499': cache.clientError,
                       '500-599': cache.serverError
                       },
-                  cacheTags: [ 
+                  cacheTags: [
                       'static'
                       ]
               },
-          
+
           })
 
   const response = new Response(newResponse.body, newResponse)
@@ -239,6 +235,7 @@ export default {
   }
 }
 ```
+
 {{</tab>}}
 {{<tab label="js/sw">}}
 
@@ -285,11 +282,11 @@ const newResponse = await fetch(request,
                     '400-499': cache.clientError,
                     '500-599': cache.serverError
                     },
-                cacheTags: [ 
+                cacheTags: [
                     'static'
                     ]
             },
-        
+
         })
 
 const response = new Response(newResponse.body, newResponse)
@@ -299,5 +296,6 @@ response.headers.set('debug', JSON.stringify(cache))
 return response
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}

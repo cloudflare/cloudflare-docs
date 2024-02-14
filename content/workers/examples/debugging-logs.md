@@ -60,7 +60,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request, env, ctx) {
     // Service configured to receive logs
     const LOG_URL = "https://log-service.example.com/";
@@ -99,9 +99,7 @@ const handler: ExportedHandler = {
     }
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
