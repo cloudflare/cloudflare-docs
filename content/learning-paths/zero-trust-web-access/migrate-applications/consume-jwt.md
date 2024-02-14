@@ -1,5 +1,5 @@
 ---
-title: Pass authentication information to a private application
+title: Pass user identity to a private application
 pcx_content_type: overview
 weight: 2
 layout: learning-unit
