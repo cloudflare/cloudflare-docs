@@ -12,11 +12,23 @@ Customers can create Magic Network Monitoring rules which will monitor specific 
 
 After Magic Transit is activated and your traffic is flowing through Cloudflare, malicious DDoS traffic will be blocked, and your origin servers will only receive clean network traffic via IPsec or GRE tunnels.
 
+<div class="large-img centered">
+
 ![The diagram shows the flow of traffic when you send flow data from your network to Cloudflare for analysis.](/images/magic-network-monitoring/1-flowdata.png)
+
+</div>
+
+<div class="large-img centered">
 
 ![Cloudflare automatically notifies you when we detect an attack based on your flow data.](/images/magic-network-monitoring/2-flowdata.png)
 
-![The last step is to activate Magic Transit to protect your IPs from a DDoS atack.](/images/magic-network-monitoring/3-flowdata.png)
+</div>
+
+<div class="large-img centered">
+
+![You can create rules to activate Magic Transit automatically, to protect your IP addresses from a DDoS atack.](/images/magic-network-monitoring/3-flowdata.png)
+
+</div>
 
 ## Activate IP auto-advertisement
 
