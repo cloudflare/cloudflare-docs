@@ -49,7 +49,7 @@ The resource is served from Cloudflare's cache but is stale. The resource was re
 
 ## `UPDATING`
 
-The resource was served from Cloudflare's cache and was expired, but the origin web server is updating the resource. UPDATING is typically only seen for very popular cached resources.
+The resource was served from Cloudflare's cache and was expired, but the origin web server is updating the resource. `UPDATING` is typically only seen for very popular cached resources.
 
 ## `DYNAMIC`
 
