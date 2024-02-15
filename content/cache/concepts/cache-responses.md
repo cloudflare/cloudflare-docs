@@ -7,17 +7,17 @@ meta:
 
 # Cloudflare cache responses
 
-The `CF-Cache-Status` header output indicates whether a resource is cached or not. To investigate cache responses returned by this header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
+The `CF-Cache-Status` header output indicates whether a resource is cached or not. To investigate cache responses returned by this header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome's Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
 Below you can find a comprehensive breakdown of Cloudflare's cache response statuses.
 
 ## HIT
 
-The resource was found in Cloudflare’s cache.
+The resource was found in Cloudflare's cache.
 
 ## MISS
 
-The resource was not found in Cloudflare’s cache and was served from the origin web server.
+The resource was not found in Cloudflare's cache and was served from the origin web server.
 
 ## NONE/UNKNOWN
 
@@ -33,11 +33,11 @@ Cloudflare generated a response that denotes the asset is not eligible for cachi
 
 ## EXPIRED
 
-The resource was found in Cloudflare’s cache but was expired and served from the origin web server.
+The resource was found in Cloudflare's cache but was expired and served from the origin web server.
 
 ## STALE
 
-The resource was served from Cloudflare’s cache but was expired. Cloudflare could not contact the origin to retrieve an updated resource.
+The resource was served from Cloudflare's cache but was expired. Cloudflare could not contact the origin to retrieve an updated resource.
 
 ## BYPASS
 
@@ -45,11 +45,11 @@ The origin server instructed Cloudflare to bypass cache via a `Cache-Control` he
 
 ## REVALIDATED
 
-The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by either an `If-Modified-Since` header or an `If-None-Match` header.
+The resource is served from Cloudflare's cache but is stale. The resource was revalidated by either an `If-Modified-Since` header or an `If-None-Match` header.
 
 ## UPDATING
 
-The resource was served from Cloudflare’s cache and was expired, but the origin web server is updating the resource. UPDATING is typically only seen for very popular cached resources.
+The resource was served from Cloudflare's cache and was expired, but the origin web server is updating the resource. UPDATING is typically only seen for very popular cached resources.
 
 ## DYNAMIC
 
