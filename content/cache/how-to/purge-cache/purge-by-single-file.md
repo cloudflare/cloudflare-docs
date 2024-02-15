@@ -50,3 +50,7 @@ For information on how to use single-file purge to purge assets cached by a Work
 If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the non-transform (end user) URL when performing single file purge so that purge can take effect.
 
 {{</Aside>}}
+
+## Resulting cache status
+
+Single-file purge deletes the resource: for the next request the [CF-Cache-Status](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `MISS`.
