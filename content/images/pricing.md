@@ -28,7 +28,7 @@ For more information on how you can save costs by increasing caching in browsers
 
 The Images Light plan lets you transform images that are stored outside of Cloudflare Images without purchasing any storage.
 
-Each unique transformation is billed once per 30 day period, regardless of cache. The 30-day period begins when the unique transformation is first made.
+Each unique transformation is billed once per 30-day period, regardless of cache. The 30-day period begins when the unique transformation is first made.
 
 To use Images Light, select **Use my own storage** when purchasing Images in the dashboard.
 
