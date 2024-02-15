@@ -74,7 +74,7 @@ _acme-challenge.example.com TXT <CERTIFICATE_VALIDATION_VALUE>
 ```
 {{</Aside>}}
 
-Once the 'CNAME' records are in place, Cloudflare will add TXT DCV tokens for every hostname on the Advanced certificate that has a DCV delegation record in place, as long as the zone is [active](/dns/zone-setups/reference/domain-status/) on Cloudflare.
+Once the `CNAME` records are in place, Cloudflare will add TXT DCV tokens for every hostname on the Advanced certificate that has a DCV delegation record in place, as long as the zone is [active](/dns/zone-setups/reference/domain-status/) on Cloudflare.
 
 Because DCV happens regularly, do not remove the `CNAME` record(s) at your authoritative DNS provider. Otherwise, Cloudflare will not be able to perform DCV on your behalf and your certificate will not be issued.
 
