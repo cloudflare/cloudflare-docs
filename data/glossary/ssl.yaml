@@ -4,7 +4,7 @@ entries:
 - term: Authenticated Origin Pulls
   general_definition: |-
     authenticated Origin Pulls allow origin web servers to validate that a web request came from Cloudflare using TLS client certificate authentication.
-  associated_products: 
+  associated_products:
     - Cloudflare One
   related_terms: []
   cloudflare_specific: false
@@ -47,7 +47,7 @@ entries:
 
 - term: certificate pinning
   general_definition: |-
-    certificate pinning is a security mechanism used to prevent on-path attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it is trusted by the system, the application will refuse to connect.
+    a security mechanism used to prevent on-path attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it is trusted by the system, the application will refuse to connect.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
@@ -83,7 +83,7 @@ entries:
 - term: mTLS (mutual TLS)
   general_definition: |-
     mTLS is a common security practice that uses client TLS certificates to provide an additional layer of protection, allowing to cryptographically verify the client information.
-  associated_products: 
+  associated_products:
     - API Shield
   related_terms:
     - TLS
@@ -92,7 +92,7 @@ entries:
 - term: origin certificate
   general_definition: |-
     a Cloudflare Origin Certificate is a free SSL/TLS certificate issued by Cloudflare that can be installed on your origin server to facilitate making sure your data is encrypted in transit from Cloudflare to your origin server using HTTPS.
-  associated_products: 
+  associated_products:
     - Cloudflare One
   related_terms: []
   cloudflare_specific: false
@@ -132,8 +132,8 @@ entries:
 
 - term: Server Name Indication (SNI)
   general_definition: |-
-    SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. 
-    
+    SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs.
+
     Cloudflare uses SNI for all Universal SSL certificates.
 
 - term: Subject Alternative Names (SANs)

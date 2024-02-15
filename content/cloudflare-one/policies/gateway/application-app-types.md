@@ -52,7 +52,7 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 
 Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
 
-{{<glossary-definition term_id="certificate pinning" prepend="- **Certificate pinning**: ">}}
+{{<glossary-definition term_id="certificate pinning" prepend="- **Certificate pinning**: Certificate pinning is ">}}
 
 - **Non-web traffic**: Some applications send non-web traffic over TLS, such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP). Gateway cannot inspect these protocols.
 
