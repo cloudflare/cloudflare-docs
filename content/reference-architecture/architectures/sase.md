@@ -409,19 +409,23 @@ All of the above methods result in only the DNS requests — not all traffic —
 
 The following table summarizes SWG capabilities for the various methods of forwarding traffic to Cloudflare (as of Oct 2023):
 
-|                                | IP tunnel or Interconnect (Magic WAN) | Device Agent (WARP) *1 | Remote Browser | Browser proxy | DNS proxy |
-|--------------------------------|---------------------------------------|------------------------|----------------|---------------|-----------|
-| Types of traffic forwarded     | TCP/UDP                               | TPC/UDP                | HTTP           | HTTP          | DNS       |
-| **Policy types**               |                                       |                        |                |               |           |
-| DNS                            | Yes                                   | Yes                    | No             | No            | Yes       |
-| HTTP/S *2                      | Yes                                   | Yes                    | Yes            | Yes           | N/A       |
-| Network (L3/L4 parameter)      | Yes                                   | Yes                    | Yes            | Yes           | No        |
-| **Data available in policies** |                                       |                        |                |               |           |
-| Identity information           | No                                    | Yes                    | Yes            | No            | No *3     |
-| Device posture                 | No                                    | Yes                    | No             | No            | No        |
-| **Capabilities**               |                                       |                        |                |               |           |
-| Remote browser isolation       | Yes                                   | Yes                    | Yes            | Yes           | N/A       |
-| Enforce egress IP              | Yes                                   | Yes                    | Yes            | Yes           | N/A       |
+{{<table-wrap>}}
+
+|                                | IP tunnel or Interconnect (Magic WAN) | Device Agent (WARP)<sup>*1</sup> | Remote Browser | Browser proxy | DNS proxy       |
+| ------------------------------ | ------------------------------------- | -------------------------------- | -------------- | ------------- | --------------- |
+| Types of traffic forwarded     | TCP/UDP                               | TPC/UDP                          | HTTP           | HTTP          | DNS             |
+| **Policy types**               |                                       |                                  |                |               |                 |
+| DNS                            | Yes                                   | Yes                              | No             | No            | Yes             |
+| HTTP/S<sup>*2</sup>            | Yes                                   | Yes                              | Yes            | Yes           | N/A             |
+| Network (L3/L4 parameter)      | Yes                                   | Yes                              | Yes            | Yes           | No              |
+| **Data available in policies** |                                       |                                  |                |               |                 |
+| Identity information           | No                                    | Yes                              | Yes            | No            | No<sup>*3</sup> |
+| Device posture                 | No                                    | Yes                              | No             | No            | No              |
+| **Capabilities**               |                                       |                                  |                |               |                 |
+| Remote browser isolation       | Yes                                   | Yes                              | Yes            | Yes           | N/A             |
+| Enforce egress IP              | Yes                                   | Yes                              | Yes            | Yes           | N/A             |
+
+{{</table-wrap>}}
 
 Notes:
 
