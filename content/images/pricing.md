@@ -13,7 +13,7 @@ Cloudflare Images lets you store, optimize, and deliver images from one unified 
 
 |<div style="width:150px">Plan</div>| Images stored | Images delivered |
 |-----------------------------------|---------------|------------------|
-| Free, Pro, Basic                  | $5.00 per 100K images stored per month | $1.00 per 100K images delivered per month
+| Free, Pro, Business                  | $5.00 per 100K images stored per month | $1.00 per 100K images delivered per month
 | Enterprise      | - $5.00 per 100K images stored per month<br> - 500K images included per month | - $1.00 per 100K images delivered per month<br> - 5M deliveries included per month |
 
 {{<Aside type="note" header="Note">}}
