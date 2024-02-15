@@ -27,7 +27,7 @@ To adjust rule behavior, use one of the following methods:
 
 * [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
 * [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/configure-api/).
-* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#configure-network-layer-ddos-attack-protection).
+* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-network).
 
 You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 

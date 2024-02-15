@@ -34,7 +34,7 @@ To adjust rule behavior, do one of the following:
 
 * [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
 * [Configure the managed ruleset via API](/ddos-protection/managed-rulesets/http/configure-api/).
-* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#configure-network-layer-ddos-attack-protection).
+* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-http).
 
 For more information on the available configuration parameters, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 

@@ -10,8 +10,8 @@ meta:
 
 This page provides examples of configuring DDoS managed rulesets in your zone or account using Terraform. It covers the following configurations:
 
-* [Configure HTTP DDoS Attack Protection](#configure-http-ddos-attack-protection)
-* [Configure Network-layer DDoS Attack Protection](#configure-network-layer-ddos-attack-protection)
+* [Example: Configure HTTP DDoS Attack Protection](#example-http)
+* [Example: Configure Network-layer DDoS Attack Protection](#example-network)
 
 DDoS managed rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
@@ -29,7 +29,7 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 ---
 
-## Configure HTTP DDoS Attack Protection
+## Example: Configure HTTP DDoS Attack Protection { #example-http }
 
 This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID `fdfdac75430c4c47a959592f0aa5e68a` to `low`.
 
@@ -62,7 +62,7 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
 
 For more information about HTTP DDoS Attack Protection, refer to [HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/).
 
-## Configure Network-layer DDoS Attack Protection
+## Example: Configure Network-layer DDoS Attack Protection { #example-network }
 
 This example configures the [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) managed ruleset for an account using Terraform, changing the sensitivity level of rule with ID `599dab0942ff4898ac1b7797e954e98b` to `low` using an override.
 
