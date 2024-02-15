@@ -415,7 +415,7 @@ The following table summarizes SWG capabilities for the various methods of forwa
 | ------------------------------ | ------------------------------------- | -------------------------------- | -------------- | ------------- | --------------- |
 | Types of traffic forwarded     | TCP/UDP                               | TPC/UDP                          | HTTP           | HTTP          | DNS             |
 | **Policy types**               |                                       |                                  |                |               |                 |
-| DNS                            | Yes                                   | Yes                              | No             | No            | Yes             |
+| DNS                            | Yes                                   | Yes                              | Yes            | No            | Yes             |
 | HTTP/S<sup>*2</sup>            | Yes                                   | Yes                              | Yes            | Yes           | N/A             |
 | Network (L3/L4 parameter)      | Yes                                   | Yes                              | Yes            | Yes           | No              |
 | **Data available in policies** |                                       |                                  |                |               |                 |
