@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Maintenance
+title: Network options
 weight: 6
 ---
 
