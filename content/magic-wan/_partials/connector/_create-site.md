@@ -49,7 +49,7 @@ To add a site:
 5. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 6. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
     - **DHCP**: Choose this option if the IP address for your Connector is fetched from a DHCP server.
-    - **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](/magic-wan/configuration/connector/dhcp/dhcp-server/).
+    - **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
 7. Select **Save**.
 8. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
@@ -58,8 +58,8 @@ To add a site:
 Magic WAN Connector supports different types of DHCP configurations. Connector can:
 
 - Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
-- Act as a [DHCP server](/magic-wan/configuration/connector/dhcp/dhcp-server/).
-- Use [DHCP relay](/magic-wan/configuration/connector/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
-- [Reserve IP addresses](/magic-wan/configuration/connector/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
+- Act as a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+- Use [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
 
-Refer to [DHCP options](/magic-wan/configuration/connector/dhcp/) to learn more.
+Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.
