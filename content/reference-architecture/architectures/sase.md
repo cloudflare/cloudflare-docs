@@ -150,7 +150,7 @@ Once tunnels have been established, there are two methods for how user traffic i
 
 Each public hostname is specific to an address, protocol, and port associated with a private application, allowing for narrow access to a specific service when there might be multiple applications running on the same host.
 
-For example, organizations can define a public hostname (mywebapp.domain.com) to provide access to a web server running on <https://localhost:8080>, while ensuring no access to local Kubernetes services.
+For example, organizations can define a public hostname (`mywebapp.domain.com`) to provide access to a web server running on `https://localhost:8080`, while ensuring no access to local Kubernetes services.
 
 Key capabilities:
 
