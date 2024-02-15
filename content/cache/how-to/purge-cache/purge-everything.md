@@ -14,3 +14,8 @@ Purging everything immediately clears all resources from your CDN cache in all C
 2. Select **Caching** > **Configuration**.
 3. Under **Purge Cache**, select **Purge Everything**. A warning window appears.
 4. If you agree, select **Purge Everything**.
+
+
+## Resulting cache status
+
+Purge Everything invalidates the resource: for the next request the [CF-Cache-Status](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `EXPIRED`.
