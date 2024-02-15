@@ -31,7 +31,7 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 ## Configure HTTP DDoS Attack Protection
 
-This example configures HTTP DDoS Attack Protection for a zone using Terraform, changing the sensitivity level of rule with ID `fdfdac75430c4c47a959592f0aa5e68a` to `low`.
+This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID `fdfdac75430c4c47a959592f0aa5e68a` to `low`.
 
 ```tf
 resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
@@ -64,7 +64,7 @@ For more information about HTTP DDoS Attack Protection, refer to [HTTP DDoS Atta
 
 ## Configure Network-layer DDoS Attack Protection
 
-This example configures Network-layer DDoS Attack Protection for an account using Terraform, changing the sensitivity level of rule with ID `599dab0942ff4898ac1b7797e954e98b` to `low` using an override.
+This example configures the [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) managed ruleset for an account using Terraform, changing the sensitivity level of rule with ID `599dab0942ff4898ac1b7797e954e98b` to `low` using an override.
 
 {{<Aside type="warning" header="Important">}}
 * Only Magic Transit and Spectrum customers on an Enterprise plan can configure this managed ruleset using overrides.
