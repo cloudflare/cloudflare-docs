@@ -13,4 +13,4 @@ The Interrupt window defines when Magic WAN Connector can update its systems. Wh
 4. In **Interrupt window**, select the most appropriate time for the Connector to update its systems:
     - **Timezone**: Select the time zone for the Connector to update.
     - **Hour of day**: Choose an hour for the Connector to start updating. Cloudflare recommends you choose an hour when there is minimal activity in your network, to avoid potential disruptions.
-    - **Duration**: Duration indicates the time window during which the Connector is scheduled to update. For example, if you configure your Connector to update at `22:00` and specify a **Duration** of `4 hours`, the Connector will attempt to update within the four-hour period following `01:00`.
+    - **Duration**: Duration indicates the time window during which the Connector is scheduled to update. For example, if you configure your Connector to update at `22:00` and specify a **Duration** of `4 hours`, the Connector will attempt to update within the four-hour period following `22:00`.
