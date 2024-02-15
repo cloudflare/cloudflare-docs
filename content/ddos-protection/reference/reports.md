@@ -15,7 +15,7 @@ WAF/CDN customers can download a monthly report in Account Home > **Security Cen
 Additionally, if you are a Magic Transit or Spectrum BYOIP customer, you will receive weekly DDoS reports by email with a snapshot of the DDoS attacks that Cloudflare detected and mitigated in the previous week.
 
 {{<Aside type="note" header="Note">}}
-To receive DDoS reports by email you must have opted in to the `Analytics` category in the [communication preferences](/fundamentals/setup/account/customize-account/communication-preference/) for your profile.
+To receive DDoS reports by email you must have opted in to the **Analytics** category in the [communication preferences](/fundamentals/setup/account/customize-account/communication-preference/) for your profile.
 {{</Aside>}}
 
 ## Weekly DDoS reports
