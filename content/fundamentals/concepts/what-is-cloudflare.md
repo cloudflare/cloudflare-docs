@@ -15,7 +15,7 @@ Cloudflare is an integrated global cloud platform, offering services for use cas
 
 ## **But, what exactly is Cloudflare?** 
 
-Cloudflare is a connectivity cloud company. We empower organizations to make their employees, applications and networks faster and more secure everywhere, while reducing complexity and cost. Cloudflare’s connectivity cloud delivers the most full-featured, unified platform of cloud-native products and developer tools, so any organization can gain the control they need to work, develop, and accelerate their business. 
+Cloudflare is a connectivity cloud company. We empower organizations to make their employees, applications and networks faster and more secure everywhere, while reducing complexity and cost. Cloudflare's connectivity cloud delivers the most full-featured, unified platform of cloud-native products and developer tools, so any organization can gain the control they need to work, develop, and accelerate their business. 
 
 ![Connectivity Cloud](/images/fundamentals/connectivity-cloud.png)
 
@@ -51,4 +51,4 @@ The most common use cases that Cloudflare offers are:
 | [SASE and SSE services](/products/?product-group=Cloudflare+One) | Connect and secure your employees, contractors, devices, networks, apps, and data everywhere they live. |
 | [Application and infrastructure services](/products/?product-group=Application+performance%2CApplication+security) | Give your digital products and services top-notch security, reliability, and performance for customers everywhere. |
 | [Developer services](/products/?product-group=Developer+platform) | Easily build and deploy full-stack applications everywhere, thanks to integrated compute, storage, and networking. | 
-| [AI services](/products/?product-group=AI) | Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network. |
+| [AI services](/products/?product-group=AI) | Run machine learning models, powered by serverless GPUs, on Cloudflare's global network. |

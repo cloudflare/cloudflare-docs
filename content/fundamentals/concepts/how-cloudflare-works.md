@@ -12,52 +12,31 @@ weight: 2
 
 ### How Cloudflare handles DNS queries
 
-In a [full setup](/dns/zone-setups/full-setup/), when you connect your domain to Cloudflare, we become your authoritative DNS provider. When Cloudflare receives a DNS query for your domain, our response is determined by the configuration set in your DNS table, including the value of the record, the record's proxy eligibility and it's proxy status. 
+In a [full DNS setup](/dns/zone-setups/full-setup/), when you [connect a domain](/fundamentals/setup/manage-domains/connect-your-domain/) to Cloudflare, we become the authoritative DNS provider for that domain. When Cloudflare receives a DNS query for your domain, our response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the value of the record, the record's proxy eligibility, and it's (/dns/manage-dns-records/reference/proxied-dns-records/). 
 
-Most importantly, if a records proxy is enabled, Cloudflare will respond with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), **not** the value defined in your DNS table. This approach informs the end device that the request should route to Cloudflare's network. In contrast, when a DNS record is 'DNS only', meaning the proxy is off, Cloudflare responds with the value defined in your DNS table, which is the DNS record's actual content, (i.e., an IP address or CNAME record.)
+If a DNS record is proxied, and the [domain status](/dns/zone-setups/reference/domain-status/) is active, Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), **not** the value defined in your DNS table. This approach informs the requesting entity that the request should route to Cloudflare's network, instead of directly to the origin server. In contrast, when a DNS record is set to 'DNS only', meaning the proxy is off, Cloudflare responds with the value defined in your DNS table (i.e., an IP address or CNAME record). This means `HTTP/S` requests go directly to the origins erver and are not processed or protected by Cloudflare.
 
 ### Proxying traffic
 
-Cloudflare is both an authoritative DNS server and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) that sits between two distinct networks and depending the proxy status, Cloudflare will respond to the DNS query with different values. This hybrid design is how Cloudflare can respond to both DNS queries and `HTTP/S` traffic depending on the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of the hostname. 
+Cloudflare is both an authoritative DNS server and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) that sits between two distinct networks. Depending the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of individual DNS records, Cloudflare responds to DNS queries with different values. This hybrid design allows Cloudflare to respond to both DNS queries and `HTTP/S` traffic, depending on the proxy status of individual hostnames, and the its [domain status](/dns/zone-setups/reference/domain-status/).
 
-You can find the proxy status of your records on the DNS records page under your domain.
+In the Cloudflare dashboard, you can the proxy status of your records, within each of your domains, on the DNS records page.
 
 {{<Aside>}}
-To proxy `HTTP/S` traffic on non-standard ports or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/). 
+To proxy `HTTP/S` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
 {{</Aside>}}
 
 | Type | Name | Content | Proxy status | TTL | Actions |
 | :---: |  :---: |  :---: |  :---: |  :---: |  ---: |
-| `A` | `blog` | `192.0.2.1` | `Proxy enabled` | `Auto` | `Edit` | 
+| `A` | `blog` | `192.0.2.1` | `Proxy on` | `Auto` | `Edit` | 
 | `A` | `shop` | `192.0.2.2` | `DNS only` | `Auto` | `Edit` | 
 
-In the table above, there are two subdomain records, one with the proxy enabled, `blog`, and one without, `shop`.
-
-### Proxy eligibility 
-
-Proxy eligibility is based on whether the record serves `HTTP` or `HTTPS` traffic. By default, `A`, `AAAA`, and `CNAME` DNS records that serve `HTTP/S` traffic can be proxied.
-
-The following types of DNS records may be in your DNS configuration, but cannot be proxied:
-
-- `CAA`
-- `DKIM`
-- `DMARC`
-- `DNSKEY`
-- `DS`
-- `HTTPS`
-- `MX`
-- `NS`
-- `PTR`
-- `SOA`
-- `SPF`
-- `SRV`
-- `SVCB`
-- `TXT`
+In the table above, there are two DNS records, one with the proxy on, `blog`, and one with the proxy off, `shop`, (i.e. DNS only).
 
 #### Proxy enabled example
 
-When the browser initiates a `HTTP/S` request to `blog.example.com`, a DNS resolver will convert the hostname into an IP address. Since the records proxy function is enabled, Cloudflare will return an anycast IP address. Then, the browser initiates a `HTTP/S` request to Cloudflare. When Cloudflare receives this request, it performs a lookup to find the matching domain and account configuration and processes the request according to them. Cloudflare forwards it to the configured origin server, which is `192.0.2.1`.
+When the browser initiates a `HTTP/S` request to `blog.example.com`, a DNS resolver will convert the hostname into an IP address. Since this domain is using Cloudflare as its Authoritative DNS provider, the DNS query will be routed to Cloudflare and because the proxy is on, Cloudflare will answer with an anycast IP address. Subsequently, the browser initiates a `HTTP/S` request back to Cloudflare. When Cloudflare receives this request, it performs a lookup to find the matching domain and account configuration and processes the request according to them. Cloudflare forwards it to the configured origin server, which is `192.0.2.1`.
 
 #### DNS-only example
 
-When the browser initiates a `HTTP/S` request to `shop.example.com`, a DNS resolver will convert the hostname into an IP address. Since the record's proxy status is `DNS only`, Cloudflare will simply return `192.0.2.2`. Then the browser initiates a `HTTP/S` request to the server hosted at `192.0.2.2`.
+When the browser initiates a `HTTP/S` request to `shop.example.com`, a DNS resolver will convert the hostname into an IP address. Since this domain is using Cloudflare as its Authoritative DNS provider, the DNS query will be routed to Cloudflare and because the proxy is off (i.e. `DNS only`), Cloudflare will answer with `192.0.2.2`. Finally, the browser initiates a `HTTP/S` request to the server hosted at `192.0.2.2`.
