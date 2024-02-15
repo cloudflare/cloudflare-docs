@@ -59,7 +59,6 @@ After setting up your LANs, you can configure your Connector to enable communica
 
 After setting up your LANs, you can configure your Connector to enable communication between them without traffic leaving your premises.
 
-
 #### DHCP options
 
 Magic WAN Connector supports different types of DHCP configurations. Connector can:
