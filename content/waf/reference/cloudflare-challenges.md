@@ -82,6 +82,10 @@ This behavior commonly occurs because an extension modifies your browser's defau
 
 {{</Aside>}}
 
+### Mobile device emulation
+
+Challenges are not supported when device emulation is enabled on a browser, for example, using the browser's developer tools.
+
 ---
 
 ## Resolve a challenge
