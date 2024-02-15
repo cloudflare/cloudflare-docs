@@ -46,6 +46,9 @@ If you have a [Transform Rule](/rules/transform/) in place that is modifying par
 
 Purging by prefix deletes the resource: for the next request the [CF-Cache-Status](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `MISS`.
 
+If [tiered cache](https://developers.cloudflare.com/cache/how-to/tiered-cache/) is used, purging by prefix may return `EXPIRED` because lower tier tries to revalidate with upper tier to reduce load on upper tier.
+Depending on whether the upper tier has the resource or not, and whether the eyeball is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.
+
 ## Limitations
 
 There are several limitations regarding purge by prefix:
