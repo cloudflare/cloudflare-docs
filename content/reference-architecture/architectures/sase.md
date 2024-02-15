@@ -48,7 +48,7 @@ While this document examines Cloudflare One at a technical level, it does not of
 
 Traditionally, most employees worked in an office and connected locally to the company network via Ethernet or Wi-Fi. Most business systems (e.g. file servers, printers, applications) were located on and accessible only from this internal network. Once connected, users would typically have broad access to local resources. A security perimeter was created around the network to protect against outsider threats, most of which came from the public Internet. The majority of business workloads were hosted on-premises and only accessible inside the network, with very little or no company data or applications existing on the Internet.
 
-However, three important trends created problems for this “castle and moat” approach to IT security:
+However, three important trends created problems for this "castle and moat" approach to IT security:
 
 1. **Employees became more mobile**. Organizations increasingly embrace remote / hybrid work and support the use of personal (i.e. not company-owned) devices.
 2. **Cloud migration accelerated**. Organizations are moving applications, data, and infrastructure from expensive on-premises data centers to public or private cloud environments in order to improve flexibility, scalability, and cost-effectiveness.
@@ -177,7 +177,7 @@ For both methods, it is important to note that `cloudflared` only proxies inboun
 
 This is the desirable outcome in most network topologies, but there are some instances in which network services need to communicate directly with a remotely-connected user, or with services on other segmented networks.
 
-If users require connections that originate from the server or network to be routed through Cloudflare, there are multiple on-ramps through which to achieve this, which will be explained further in the “Connecting Networks” section.
+If users require connections that originate from the server or network to be routed through Cloudflare, there are multiple on-ramps through which to achieve this, which will be explained further in the "Connecting Networks" section.
 
 #### SaaS applications
 
@@ -270,7 +270,7 @@ Cloudflare Tunnel via `cloudflared` is the primary method for connecting users t
 
 Where it is not optimal or possible to install software agents, networks can also be connected to Cloudflare using existing network equipment, such as routers and network firewalls. To do this, organizations create IPsec or GRE tunnels that connect to Cloudflare's cloud-native [Magic WAN](https://www.cloudflare.com/network-services/products/magic-wan/) service. With Magic WAN, existing network hardware can connect and route traffic from their respective network locations to Cloudflare through a) secure, IPsec-based tunnels over the Internet or, b) across [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI) — private, direct connections that link existing network locations to the nearest Cloudflare data center.
 
-Cloudflare's WAN service uses a “light-branch, heavy-cloud” architecture that represents the evolution of software-defined WAN (SD-WAN) connectivity. With Magic WAN, as depicted in the network architecture diagram below, the Cloudflare global network functions as a centrally-managed connectivity hub that securely and efficiently routes traffic between all existing network locations:
+Cloudflare's WAN service uses a "light-branch, heavy-cloud" architecture that represents the evolution of software-defined WAN (SD-WAN) connectivity. With Magic WAN, as depicted in the network architecture diagram below, the Cloudflare global network functions as a centrally-managed connectivity hub that securely and efficiently routes traffic between all existing network locations:
 
 ![Cloudflare's Connectivity Cloud securely links a variety of network locations to the Internet through products such as Firewall, ZTNA, CASB and Load Balancer.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-12.svg)
 
@@ -357,7 +357,7 @@ The agent can also be configured with flexible routing controls that allow for s
 
 ![Using the device agent allows Internet and company application bound traffic to be secured by Cloudflare's SWG and ZTNA services.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-16.svg)
 
-The agent is more than just a network proxy; it is able to examine the device's security posture, such as if the operating system is fully up-to-date or if the hard disk is encrypted. Cloudflare's integrations with [CrowdStrike](https://www.cloudflare.com/partners/technology-partners/crowdstrike/endpoint-partners/), [SentinelOne](https://www.cloudflare.com/partners/technology-partners/sentinelone/), and other third-party services also provide additional data about the security posture of the device. All of this information is associated with each request and, therefore, available for use in company policies — as explained in the “Unified Management” section.
+The agent is more than just a network proxy; it is able to examine the device's security posture, such as if the operating system is fully up-to-date or if the hard disk is encrypted. Cloudflare's integrations with [CrowdStrike](https://www.cloudflare.com/partners/technology-partners/crowdstrike/endpoint-partners/), [SentinelOne](https://www.cloudflare.com/partners/technology-partners/sentinelone/), and other third-party services also provide additional data about the security posture of the device. All of this information is associated with each request and, therefore, available for use in company policies — as explained in the "Unified Management" section.
 
 The agent can be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/) to a device either manually or using existing endpoint management (UEM) technologies. Using the agent, users register and authenticate their device to Cloudflare with the integrated identity providers. Identity information — combined with information about the local device — is then used in your SWG and ZTNA policies (including inline CASB capabilities shared across these Cloudflare services).
 
@@ -378,7 +378,7 @@ From there, configure a proxy endpoint where the browser will send all HTTP requ
 
 #### Using remote browser instances
 
-Another option to ensure device traffic is sent to Cloudflare is to use [remote browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/) (RBI). When a remote user attempts to visit a website, the corresponding requests and responses are handled by a headless remote browser running in the Cloudflare network that functions as a “clone” of the user device's local browser. This shields the user's device from potential harmful content and code execution that may be downloaded from the website it visits.
+Another option to ensure device traffic is sent to Cloudflare is to use [remote browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/) (RBI). When a remote user attempts to visit a website, the corresponding requests and responses are handled by a headless remote browser running in the Cloudflare network that functions as a "clone" of the user device's local browser. This shields the user's device from potential harmful content and code execution that may be downloaded from the website it visits.
 
 RBI renders the received content in an isolated and secure cloud environment. Instead of executing the web content locally, the user device receives commands for how to "draw" the final rendered web page over a highly optimized protocol supported by all HTML5-compliant browsers on all operating systems. Because the remote browser runs on Cloudflare's servers, SWG policies are automatically applied to all browser requests.
 
@@ -395,11 +395,11 @@ All requests via a remote browser pass through the Cloudflare SWG; therefore, po
 - Disable file uploads/downloads to ensure sensitive company data is not sent to — or downloaded from — certain websites.
 - Disable keyboard input (in combination with other policies) to limit data being exposed, such as someone typing in passwords to a phishing site.
 
-Isolating web applications and applying policies to risky websites helps organizations limit data loss from cyber threats or user error. And, like many Cloudflare One capabilities, RBI can be leveraged across other areas of the SASE architecture. Cloudflare's [email security](https://www.cloudflare.com/learning/email-security/what-is-email-security/) service, for example, can automatically rewrite and isolate suspicious links in emails. This “email link isolation” capability helps protect the user from potential malicious activity such as credential harvesting phishing.
+Isolating web applications and applying policies to risky websites helps organizations limit data loss from cyber threats or user error. And, like many Cloudflare One capabilities, RBI can be leveraged across other areas of the SASE architecture. Cloudflare's [email security](https://www.cloudflare.com/learning/email-security/what-is-email-security/) service, for example, can automatically rewrite and isolate suspicious links in emails. This "email link isolation" capability helps protect the user from potential malicious activity such as credential harvesting phishing.
 
 #### Agentless DNS Filtering
 
-Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/policies/gateway/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use “[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or “[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)”.
+Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/policies/gateway/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
 
 When using source IP addresses, either the device will need to be told which DNS servers to use, or the local DNS server on the network the device is connected to needs to forward all DNS queries to Cloudflare. For DNS over TLS or HTTPS support, the devices need to be configured and support varies. Our recommendation is to use DNS over HTTPS which has wider operating system support.
 
@@ -548,7 +548,7 @@ There is even a profile for source code, so users can detect and block the trans
 
 To reduce the risk of false positives, internal users have the option to establish a match count on the profile. This means that a specific number of matches within the data are required before profile triggers. This approach prevents scenarios where a random string resembling PII or a credit card number would trigger the profile unnecessarily. By implementing a match count, the policy demands that multiple data elements align with the profile, significantly increasing its accuracy.
 
-Organizations can further increase the accuracy of the DLP profile by enabling context analysis. This feature requires certain proximity keywords to exist within approximately 1000 characters of a match. For example, the string “123-45-6789” will only count as a detection if it is in proximity to keywords such as “ssn”. This contextual requirement bolsters the accuracy of the detection process.
+Organizations can further increase the accuracy of the DLP profile by enabling context analysis. This feature requires certain proximity keywords to exist within approximately 1000 characters of a match. For example, the string "123-45-6789" will only count as a detection if it is in proximity to keywords such as "ssn". This contextual requirement bolsters the accuracy of the detection process.
 
 The DLP service seamlessly integrates with both Cloudflare's SWG and API-driven CASB services. In the case of the API CASB, DLP profiles are selected for scanning each integration with each SaaS application. This customization allows tailored detection criteria based on the type of data you wish to secure within each application.
 
@@ -560,7 +560,7 @@ Access Groups are a powerful tool in the ZTNA service for aggregating users or d
 
 Consider an Access Group designed to manage access to critical server infrastructure. The same Access Group can be used in a device agent policy that prevents administrators from disabling their connection to Cloudflare. This approach streamlines policy management and ensures consistency across various policy implementations.
 
-Below is a diagram featuring an Access Group named “Secure Administrators,” which uses a range of attributes to define the characteristics of secure administrators. The diagram shows the addition of two other Access Groups within “Secure Administrators”. The groups include devices running on either the latest Windows or macOS, along with the requirement that the device must have either File Vault or Bitlocker enabled.
+Below is a diagram featuring an Access Group named "Secure Administrators," which uses a range of attributes to define the characteristics of secure administrators. The diagram shows the addition of two other Access Groups within "Secure Administrators". The groups include devices running on either the latest Windows or macOS, along with the requirement that the device must have either File Vault or Bitlocker enabled.
 
 ![An example of using Access Groups can be for grouping up many device, network or user attributes into a single policy that can be reused across applications.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-24.svg)
 
@@ -581,21 +581,21 @@ In this example, consider two services: a database administration application ([
 The policies that enable access rely on two Access Groups.
 
 - Contractors
-  - Users who authenticate through Okta and are part of the Okta group labeled “Contractors”
+  - Users who authenticate through Okta and are part of the Okta group labeled "Contractors"
   - Authentication requires the use of a hardware token
 - Database and IT administrators
-  - Users who authenticate through Okta and are in the Okta groups “IT administrators” or “Database administrators”
+  - Users who authenticate through Okta and are in the Okta groups "IT administrators" or "Database administrators"
   - Authentication requires the use of a hardware token
-  - Users should be on a device with a serial number in the “Managed Devices” list
+  - Users should be on a device with a serial number in the "Managed Devices" list
 
 Both of these groups are then used in two different access policies.
 
 - Database administration tool access
   - Database and IT admins are allowed access
-  - Members of the “Contractor” access group are allowed access, but each authenticated session requires the user to complete a justification request
+  - Members of the "Contractor" access group are allowed access, but each authenticated session requires the user to complete a justification request
   - The admin tool is rendered in an isolated browser on Cloudflare's Edge network and file downloads are disabled
 - Database server SSH access
-  - “Database and IT administrators” group is allowed access
+  - "Database and IT administrators" group is allowed access
   - Their device must pass a Crowdstrike risk score of at least 80
   - Access must come from a device that is running our device agent and is connected to Cloudflare
 
