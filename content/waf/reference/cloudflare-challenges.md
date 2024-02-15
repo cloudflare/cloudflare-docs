@@ -82,10 +82,6 @@ This behavior commonly occurs because an extension modifies your browser's defau
 
 {{</Aside>}}
 
-### Mobile browsers
-
-Challenges are not supported for desktop mode on mobile browsers or mobile mode on desktop browsers.
-
 ---
 
 ## Resolve a challenge
